@@ -1,2 +1,2 @@
 # blockchain
-A tabletop game where wizards chain blocks of micro-code spell fragments.
+A tabletop game where wizards chain together blocks of micro-code spell fragments.
