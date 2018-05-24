@@ -1307,6 +1307,10 @@ of you as an available spell. The first person to cast this spell
 will gain ownership. You may only have 1 recalled Water spell at a time.
 
 
+## Other Spells
+
+These spells were added later and not part of the prototypes.
+
 ### Terraform
 
 Change terrain type
