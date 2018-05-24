@@ -1,4 +1,3 @@
-
 # Spell Cards - Prototype 2
 
 Note: These spells were inadvertently made too complicated because they jump from simple (2-block without an Element) to complex (4-block with an Element). There are basically no 3-block spells because of this error. Oops.
@@ -20,7 +19,7 @@ No effect, but may be used to chain 2 spells together.
 ```
 
 Target up to <n> spaces away where n = B-A. Negative values = 0
-(?: Target up to <n> spaces away where n = lowest of A or B.)
+(or possibly: Target up to <n> spaces away where n = lowest of A or B.)
 
 ### Split
 
