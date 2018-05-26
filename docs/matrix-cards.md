@@ -1,4 +1,4 @@
-# Matrix Card Distribution
+# Matrix Cards
 
 Order of Elements: A F E W
 So fire and water are not (usually) near to each other
