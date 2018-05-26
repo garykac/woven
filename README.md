@@ -1,6 +1,6 @@
 # Blockchain
 
-A tabletop game where wizards chain together blocks of micro-code spell fragments.
+A tabletop game where fragile wizards chain together blocks of micro-code spell fragments.
 
 ![Sample card layout](img/cards-intro.png)
 
