@@ -58,16 +58,3 @@ on the cards.
 1 blank spot: a
 
 * a:  A  F  E  W
-
-## 6
-
-```
-+---------+
-| X  X  X |
-| X  X  X |
-+---------+
-```
-
-4 copies of each card
-
-0 blank spots
