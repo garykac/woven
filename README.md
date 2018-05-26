@@ -4,7 +4,9 @@ A tabletop game where wizards chain together blocks of micro-code spell fragment
 
 ![Sample card layout](img/cards-intro.png)
 
-[Rules](rules.md)
+* [Rules](rules.md)
+   * [Placing Matrix Cards](placing-matrix-cards.md)
+	* [Casting Spells](casting-spells.md)
 
-_Note: The name "blockchain" is a placeholder name until
-I come up with a real one._
+_(Note: The name "blockchain" is a placeholder until
+I come up with a real one.)_

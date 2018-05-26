@@ -53,8 +53,8 @@ Actions and their AP code:
 | Move into Forest | 2 AP |
 | Move into Mountain | 3 AP |
 | Draw and [Place 1 Matrix Card](placing-matrix-cards.md) | 2 AP |
-| Place 1 spell marker to Cast a spell | 1 AP |
-| Place 3 spell markers to Cast spells | 2 AP |
-| Place 6 spell markers to Cast spells | 3 AP |
+| Place 1 spell marker to [Cast a spell](casting-spells.md) | 1 AP |
+| Place 3 spell markers to [Cast spells](casting-spells.md) | 2 AP |
+| Place 6 spell markers to [Cast spells](casting-spells.md) | 3 AP |
 | Remove 1 additional spell marker from Matrix | 1 AP |
 
