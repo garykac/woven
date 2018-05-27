@@ -6,7 +6,7 @@ By default, a mage can manage up to 2 independent targets.
 
 ## Default Target
 
-By default, all targets are set to the Astral plane, but the mage can, at any time, set a target to the
+By default, all targets are set to the Astral plane, but the mage can, at any time during their turn, set a target to the
 mage's current location.
 
 Unless stated otherwise, spells have no effect when targeting the Astral plane.
@@ -19,7 +19,7 @@ When a target is set (e.g., using the Target spell), a marker is placed at that 
 
 When target is canceled or dispelled, the target is reset. This places the target back to the Astral plane.
 
-At any time, a mage may choose to reset any target they currently have.
+At any time during their turn, a mage may choose to reset any target they currently have.
 
 When a mage is killed, all of their targets are reset (except the Home target, see below).
 
