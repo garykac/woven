@@ -6,8 +6,6 @@ Matrix card (which is simply placed in front of the
 player), when Matrix cards are placed they must overlap
 part of a previously placed card in the Matrix.
 
-Cards may not be tucked under previously placed cards.
-
 For example:
 
 ![Card overlap](img/placement1a.png)
@@ -24,7 +22,11 @@ Or they can even cover an entire card:
 
 ![Card overlap](img/placement6.png)
 
+## Invalid Placement
+
 The following placement is invalid because the placed
-card does not overlap with the previous card.
+card does not overlap with a previously placed card.
 
 ![Invalid - Cards must overlap](img/placement0.png)
+
+Cards may not be tucked under previously placed cards.
