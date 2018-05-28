@@ -34,6 +34,7 @@ List of candidate spells.
 * Haste through terrain
 * Terraform - change terrain of target location
 * Flood - temporarily change all plain to water
+* Destroy bridges (and other objects on map)
 
 ## Attack
 
@@ -58,6 +59,8 @@ List of candidate spells.
 * Summon Minion that you can control
 * Summon creature of a particular type
 * Summon creature (type determined by terrain)
+	* Enchant forest to raise Ents
+	* Enchant Pit to raise undead army
 * Summon Elemental that you can't control
 
 ## Misc
