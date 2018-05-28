@@ -6,7 +6,9 @@ on the cards.
 
 Empty spots on card are label a,b,c,d from left to right.
 
-## 3
+Total number of cards = 33 = 3x4 + 3x6 + 3
+
+## 3 / 5
 
 ```
 +---------+       +---------+
@@ -43,16 +45,12 @@ Reverse side, 1 element spot: d
 
 ## 4
 
+### Mirror Images
+
 ```
 +---------+       +---------+
 | X  X  X |  <->  | X  X  X |
 | X       |       |       X |
-+---------+       +---------+
-```
-```
-+---------+       +---------+
-| X  X  X |  <->  | X  X  X |
-|    X    |       |    X    |
 +---------+       +---------+
 ```
 ```
@@ -77,24 +75,26 @@ Reverse side, 1 element spot: d
 
 Reverse side, 2 element spots: c,d
 
-* c:  E  F  F  W  A  A
-* d:  W  W  E  A  E  F
+* c:  W  F  F  W  A  A
+* d:  E  W  E  A  E  F
 
-## 5
+### Identical
 
 ```
-+---------+  +---------+  +---------+
-| X  X  X |  | X  X  X |  | X  X  X |
-| X  X    |  | X     X |  |    X  X |
-+---------+  +---------+  +---------+
++---------+       +---------+
+| X  X  X |  <->  | X  X  X |
+|    X    |       |    X    |
++---------+       +---------+
 ```
 
-4 copies of each card
+3 copies of card
 
-1 blank spot: a
+2 blank spots: a,b
 
-* a:  A  F  E  W
+* a:  A  A  W
+* b:  F  E  A
 
-Reverse side, 3 element spots, b,c,d
+Reverse side, 2 element spots: c,d
 
-See #3 for layout.
+* c:  W  F  F
+* d:  E  W  E

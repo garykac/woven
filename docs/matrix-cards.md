@@ -4,6 +4,8 @@ Order of Elements: A F E W
 So fire and water are not (usually) near to each other
 on the cards.
 
+Total number of cards = 66 = 3x4 + 7x6 + 3x4
+
 ## 3
 
 ```
