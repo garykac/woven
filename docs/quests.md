@@ -12,8 +12,10 @@
 	* Destroy/kill something
 	* Take X to Y and destroy it (e.g., in a volcano)
 * Collect N objects
+	* Go to terrain type and perform action (harvest)
 * Find hidden object/person
 * Sneak into location without being discovered
+* Obstacle course
 
 ## Team coöp goals
 
@@ -37,3 +39,7 @@ For coöp team goals, quests can have a set of events that trigger
 * Protect X vs. Attack X
 	* Team A storms castle/stronghold/town that team B wants to protect
 * Pursuit (or be pursued) or ambush
+
+## Solo goals:
+
+* Prevent robot opponent (goblins/ghouls + bad-mage) from going to the Volcano and summoning a dragon.
