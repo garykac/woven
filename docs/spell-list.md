@@ -1,6 +1,77 @@
-# Spell Candidates
+# Spell List
 
-List of candidate spells.
+## Basic Spells
+
+Available to all players.
+
+### Target
+```
+X
+```
+Element: None
+
+Move a target one space in any direction.
+
+### Teleport Self from Astral
+```
+X . .
+. . X
+```
+Element: None
+
+When in Astral plane, move self to a target.
+
+### Haste
+```
+@ X
+```
+Element: Air
+
+Gain 2 AP for normal movement
+
+### Fire Burst
+```
+. X
+@ .
+```
+Element: Fire
+
+Attack target 1pt damage
+
+### Protection
+```
+. X
+@ .
+```
+Element: Earth
+
+Defense: 1/2
+
+Persistant: Place charge marker when cast
+
+Two charges protect agains 1 pt attack.
+
+### Teleport Self to Astral
+```
+. X
+@ .
+```
+Element: Water
+
+Move self into Astral Plane.
+
+## Spells added during playtest
+
+### Cancel
+```
+X . @ . X
+```
+Element: Water
+
+Removes all targets from target location (including this one).
+
+
+
 
 ## Targeting
 
