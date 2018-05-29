@@ -30,14 +30,14 @@ to start their Matrix
 
 ## Each Turn
 
-### Remove a Spell Marker
+### Remove Mana from Spell
 
-At the start of their turn, players may remove 1
-spell marker from their Matrix at no cost.
+At the start of their turn, players who are not in the Astral Plane may remove 1
+Mana token from their Matrix at no cost.
 
 If the player is
 drawing a Matrix Card on this turn, then they may
-choose to remove this marker after they have placed
+choose to remove this mana after they have placed
 the Matrix Card.
 
 ### Spend Action Points
@@ -53,10 +53,10 @@ Actions and their AP code:
 | 2 AP | Move into Forest |
 | 3 AP | Move into Mountain |
 | 2 AP | Draw and [Place 1 Matrix Card](placing-matrix-cards.md) |
-| 1 AP | Place 1 spell marker to [Cast a spell](casting-spells.md) |
-| 2 AP | Place 3 spell markers to [Cast spells](casting-spells.md) |
-| 3 AP | Place 6 spell markers to [Cast spells](casting-spells.md) |
-| 1 AP | Remove 1 spell marker from Matrix |
+| 1 AP | Place 1 Mana to [Cast a spell](casting-spells.md) |
+| 2 AP | Place 3 Mana to [Cast spells](casting-spells.md) |
+| 3 AP | Place 6 Mana to [Cast spells](casting-spells.md) |
+| 1 AP | Remove 1 Mana from Matrix |
 
 ## Death
 
@@ -64,4 +64,4 @@ When a mage is killed:
 
 * They are sent to the Astral Plane
 * They lose all their targets (except their home target)
-* They reset all dice on their Matrix
+* They remove all Mana from their Matrix
