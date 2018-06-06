@@ -260,13 +260,12 @@ class CardGen(object):
 					cell = pattern[row][col]
 					if cell == '@':
 						self.write('<use x="0" y="0" xlink:href="#element-%s" transform="translate(%d,%d)" width="100%%" height="100%%" />\n' % (element, clone_x0 + x, clone_y0 + y))
+					elif cell == 'X':
+						self.write('<rect style="%s" width="20" height="20" x="%.3g" y="%.3g" />\n' % (style_box, px0 + x, py0 + y))
+					elif cell == '.':
+						self.write('<circle style="%s" id="center-dot" cx="%.3g" cy="%.3g" r="2.5" />\n' % (style_empty, dot_x0 + x, dot_y0 + y))
 					else:
-						style = style_empty
-						if cell == 'X':
-							style = style_box
-							self.write('<rect style="%s" width="20" height="20" x="%.3g" y="%.3g" />\n' % (style, px0 + x, py0 + y))
-						else:
-							self.write('<circle style="%s" id="center-dot" cx="%.3g" cy="%.3g" r="2.5" />\n' % (style, dot_x0 + x, dot_y0 + y))
+						error('Unrecognized pattern symbol: ' + cell)
 		self.outdent()
 		
 	
