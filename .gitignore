@@ -1,0 +1,16 @@
+*~
+*.pyc
+*.afphoto
+
+# Temp data files
+_tmp/
+
+# Component output files
+components/spell-cards/pdf/
+components/spell-cards/svg/
+components/tapestry-cards/png_out/
+components/tapestry-cards/svg_out/
+
+# Maps
+maps/*.png
+maps/*.jpg
