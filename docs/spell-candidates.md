@@ -6,15 +6,17 @@ List of candidate spell fragments.
 
 ### Moving Tendrils
 
-* Creep - Move a TENDRIL under your control 1 space in any direction.
-* If TENDRIL in forest, move it to any other location in that forest
-* If TENDRIL in forest, move it to any location in another forest that is smaller in size
-* If TENDRIL in mountain, move it to any other location in that forest
-* If TENDRIL in field, move to another field within 3 spaces
-* If TENDRIL in field, move up to 6 spaces through fields
-* Move TENDRILs a total of 5 spaces, split amongst any number of TENDRILs
+* Creep - Select a TENDRIL (T) you control; move T 1 space in any direction.
+* Select a TENDRIL (T) you control that is located in a forest (F); move T to any other location in F
+* Select a TENDRIL (T) you control that is located in a forest (F1); move T to any location in another forest (F2) such that size(F2) < size(F1)
+* Select a TENDRIL (T) you control that is located in a forest (F); move T to any forest location
+* Select a TENDRIL (T) you control that is located in mountain (M), move T to any other location in M
+* Select a TENDRIL (T) you control that is located in mountain (M), move T to any other mountain location
+* Select a TENDRIL (T) you control that is located in a plain (P); move T to another plain location within 4 spaces of P
+* Select a TENDRIL (T) you control that is located in a plain (P); move T up to 7 spaces through neighboring plain locations
+* Move TENDRILs you control a total of 5 spaces, split amongst any number of TENDRILs
 * Move TENDRILs a total of 9 spaces, split amongst any number of TENDRILs
-* Move all TENDRILs 1 space
+* Move all TENDRILs you control 1 space
 
 ### Adding New Tendrils
 
