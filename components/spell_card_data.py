@@ -63,78 +63,103 @@
 ## Neutral
 # Creep [STARTER]
 # Return [STARTER]
-# * Copy - When in the same location as a TENDRIL controlled by another mage, make a duplicate copy of any one of their TENDRILs
-# * Move opponent's target up to 3 spaces when on their space
 
 ## Air
-# Haste [STARTER]
-# * Levitate - N charges. Spend a charge to ignore terrain restrictions (so movement cost is 0) when you move into (or are moved into) a location
-# * Fly
-# * Push - Move creature in targeted space (my choice where vs. your choice)
-# * Forest Run - If in or next to forest, pay cost to move into any space within or adjacent to that forest, crossing rivers if necessary
-# * Mountain Run - If in or next to mountain, pay cost to move into any space within or adjacent to that mountain
-# * Haste through terrain - If in Plain, move through 6 adjacent Plains
-# * When in forest, add TENDRIL to any 1- or 2-space forest
-# * When in forest, add TENDRIL to any forest
-# * Shield Pierce - Causes 3 points of damage to any shield in targeted location
-# * Select a TENDRIL (T) you control that is located in a plain (P); move T up to 7 spaces through neighboring plain locations
-# * Select a TENDRIL (T) you control that is located in a forest (F1); move T to any location in another forest (F2) such that size(F2) < size(F1)
-# * Select a TENDRIL (T) you control that is located in a forest (F); move T to any forest location
-# * Select a TENDRIL (T) you control that is located in mountain (M), move T to any other mountain location
+# Basic:
+#  * Haste [STARTER]
+#  * Haste through terrain - If in Plain, move through 6 adjacent Plains
+# Terrain:
+#  * Forest Run - If in or next to forest, pay cost to move into any space within or adjacent to that forest, crossing rivers if necessary
+#  * When in forest, add TENDRIL to any 1- or 2-space forest
+#  * When in forest, add TENDRIL to any forest
+#  * Mountain Run - If in or next to mountain, pay cost to move into any space within or adjacent to that mountain
+# Levitate
+#  * Levitate - N charges. Spend a charge to ignore terrain restrictions (so movement cost is 0) when you move into (or are moved into) a location
+#  * Fly
+# Tendril Terrain:
+#  * Select a TENDRIL (T) you control that is located in a plain (P); move T up to 7 spaces through neighboring plain locations
+#  * Select a TENDRIL (T) you control that is located in a forest (F1); move T to any location in another forest (F2) such that size(F2) < size(F1)
+#  * Select a TENDRIL (T) you control that is located in a forest (F); move T to any forest location
+#  * Select a TENDRIL (T) you control that is located in mountain (M), move T to any other mountain location
+# Misc:
+#  * Push - When in adjacent space, move creature out and enter space (my choice where vs. your choice)
+#  * Dodge - Charged. Move out of the way of an attack
+#  * Shield Pierce - Causes 3 points of damage to any shield in targeted location
 
 ## Fire
-# Fire Arrow [STARTER]
-# * FIRE Move all TENDRILs you control 1 space
-# * Move TENDRILs you control a total of 5 spaces, split amongst any number of TENDRILs
-# * Move TENDRILs a total of 9 spaces, split amongst any number of TENDRILs
-# * Boost - Place CHARGE that can be used to increase a later attack by 1
-# * Fire Ball - Attack all creatures in the target location for 2 damage.
-# * Fire Burst - Attack all creatures in all neighboring locations for 1 damage.
-# * Ricochet Blast - Attack all creatures in a single neighboring location for 2 damage
-# * Wall of Flame - Charged. 3 or more adjacent TENDRILS cause 1 damage
-# * Forest Fire - When targeting a forest location, all creatures in that forest take 2 damage
-# * FIRE Reflection - Charge protects against 1 damage and reflects 1 damage back to attacker
-# * Creatures in all TENDRILs you control take 1 damage
-# * Remove all TENDRILs from location (including this one)
-# * Remove - When in the same location as a TENDRIL controlled by another mage, remove any one of their TENDRILs
+# Attack:
+#  * Fire Arrow [STARTER]
+#  * Fire Ball - Attack all creatures in the target location for 2 damage.
+#  * Fire Burst - Attack all creatures in all neighboring locations for 1 damage.
+#  * Ricochet Blast - Attack all creatures in a single neighboring location for 2 damage
+#  * Wall of Flame - Charged. 3 or more adjacent TENDRILS cause 1 damage
+#  * Creatures in all TENDRILs you control take 1 damage
+#  * Boost - Place CHARGE that can be used to increase a later attack by 1
+# Terrain Attack:
+#  * Volcanic Rift - When targeting a mountain location, all targeted creatures take 3 damage
+#  * Forest Fire - When targeting a forest location, all creatures in that forest take 2 damage
+# Tendril Movement:
+#  * FIRE Move all TENDRILs you control 1 space
+#  * Move TENDRILs you control a total of 5 spaces, split amongst any number of TENDRILs
+#  * Move TENDRILs a total of 9 spaces, split amongst any number of TENDRILs
+# Tendril Attack:
+#  * Remove all TENDRILs from location (including this one)
+#  * Remove - When in the same location as a TENDRIL controlled by another mage, remove any one of their TENDRILs
+# Defense:
+#  * FIRE Reflection - Charge protects against 1 damage and reflects 1 damage back to attacker
 
 ## Earth
-# Protection [STARTER]
-# Split
-# * When in mountain, add TENDRIL to any 1- or 2-space mountain
-# * When in mountain, add TENDRIL to any mountain
-# * EARTH Shield - deflects up to 2 damage with 1 charge, remove if it takes 2 or more damage in a single attack
-# * EARTH Reactive Shield - Charge that activates a 2 defense shield when the caster is the same location as an opponent's TENDRIL
-# * EARTH Shield Boost - Charge that can be used to temporarily boost a shield by 2 points. Boost takes damage before the shield.
-# * Anchor - Resist attempt to move out of location (+ shield?)
-# * Trap creatures at location - until what?
-# * Trap - Charge that automatically activates when targeted to cause 1 damage to target owner
-# * Growth - All fields within 5 spaces of target are forest for the remainder of this turn.
-# * Remove all opponent TENDRILs from location
-# * Remove all TENDRILs from neighboring location
-# * Delete All - When in the same location as a TENDRIL controlled by another mage, remove all of their TENDRILs from the map.
+# Protection:
+#  * Protection [STARTER]
+#  * EARTH Shield - deflects up to 2 damage with 1 charge, remove if it takes 2 or more damage in a single attack
+#  * EARTH Reactive Shield - Charge that activates a 2 defense shield when the caster is the same location as an opponent's TENDRIL
+#  * EARTH Shield Boost - Charge that can be used to temporarily boost a shield by 2 points. Boost takes damage before the shield.
+#  * Shield Block - Charge on shield, while active no one else can enter or move tendril into your location
+#  * Anchor - Resist attempt to move out of location (+ shield?)
+# Tendril:
+#  * Split
+#  * When in mountain, add TENDRIL to any 1- or 2-space mountain
+#  * When in mountain, add TENDRIL to any mountain
+# Terrain:
+#  * Growth - All fields within 5 spaces of target are forest for the remainder of this turn.
+# Tendril attack:
+#  * Remove all opponent TENDRILs from location
+#  * Remove all TENDRILs from neighboring location
+#  * Delete All - When in the same location as a TENDRIL controlled by another mage, remove all of their TENDRILs from the map.
+# Misc:
+#  * Stone cage - Trap creatures at location - until 2 pts of damage done to location
+#  * Trap - Charge that automatically activates when targeted to cause 1 damage to target owner
 
 ## Water
-# Teleport Away [STARTER]
-# * Astral Prison
-# * Reverse Tendril - Exchange locations between the caster and a TENDRIL controlled by the caster.
-# * Reverse target - follow a TENDRIL back to its caster's location and add a TENDRIL there
-# * Water Moccasins - Charge that can be spent to cross river or move into 1 water space.
-# * River Run - If next to river/lake, pay cost to move into any space adjacent to that river/lake without passing a bridge
-# * Flood - All fields within 5 spaces of target are water for the remainder of this turn.
-# * Dodge - Move out of the way
-# * WATER Recovery - Deflects 1 damage. caster may recover up to 2 THREADs from their TAPESTRY when this shield defends against an attack
-# * WATER: Move 2 THREADs in TAPESTRY to new locations
-# * WATER: Remove a THREAD from TAPESTRY
-# * When next to a river or lake, add a TENDRIL to any space adjacent to that river/lake as long as it doesn't require passing a bridge
-# * When next to a river or lake, add a TENDRIL to any space adjacent to that river/lake passing at most 1 bridge
-# * Move a TENDRIL you control that is adjacent to a River
+# Astral Movement:
+#  * Teleport Away [STARTER]
+#  * Teleport: Move target creature into Astral Plane
+#  * Teleport: Move creature in Astral plane to tendril
+# Tendril:
+#  * Reverse Tendril - Exchange locations between the caster and a TENDRIL controlled by the caster.
+#  * Reverse target - follow a TENDRIL back to its caster's location and add a TENDRIL there
+#  * Copy - When in the same location as a TENDRIL controlled by another mage, make a duplicate copy of any one of their TENDRILs
+# Terrain Movement:
+#  * Water Moccasins - Charge that can be spent to cross river or move into 1 water space.
+#  * River Run - If next to river/lake, pay cost to move into any space adjacent to that river/lake without passing a bridge
+# Terrain:
+#  * Flood - All fields within 5 spaces of target are water for the remainder of this turn.
+# Defense:
+#  * WATER Recovery - Deflects 1 damage. caster may recover up to 2 THREADs from their TAPESTRY when this shield defends against an attack
+# Tapestry:
+#  * WATER: Move 2 THREADs in TAPESTRY to new locations
+#  * WATER: Remove a THREAD from TAPESTRY
+# Tendril Terrain:
+#  * When next to a river or lake, add a TENDRIL to any space adjacent to that river/lake as long as it doesn't require passing a bridge
+#  * When next to a river or lake, add a TENDRIL to any space adjacent to that river/lake passing at most 1 bridge
+#  * Move a TENDRIL you control that is adjacent to a River
 
 
 ## Unused
 # Add damage marker to opponent's Tapestry
 # Leech - When in same location as an opponent, take mana from opponent and add to your Tapestry
-# * Volcanic Rift - When targeting a mountain location, all targeted creatures take 3 damage
+# * Astral Prison - stuck in prison until 2 pts damage done to it
+# * Move opponent's target up to 3 spaces when on their space
 # * Select a TENDRIL (T) you control that is located in a plain (P); move T to another plain location within 4 spaces of P
 # * Select a TENDRIL (T) you control that is located in a forest (F); move T to any other location in F
 # * Select a TENDRIL (T) you control that is located in mountain (M), move T to any other location in M
