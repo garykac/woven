@@ -41,6 +41,13 @@ class CardGen(object):
 		self.out = 0
 		self.indent_count = 0
 		
+		self.name2id = {}
+		self.pattern_elements = {}
+		self.elements = {}
+		self.categories = {}
+		self.id2name = {}
+		self.max_id = 0
+		
 		# Poker size cards: 2.5" x 3.5"
 		# Bridge size cards: 2.25" x 3.5" = 202.5px x 315px
 		self.card_width = in2px(2.25)
@@ -48,14 +55,17 @@ class CardGen(object):
 
 		# Paper size: Letter = 8.5" x 11" = 765px x 990px = 612pt x 792pt
 		self.paper_type = 'letter'
-		self.paper_width = 765
-		self.paper_height = 990
+		self.paper_width = in2px(8.5)
+		self.paper_height = in2px(11)
 		
 		if options['a4']:
 			# Paper size: A4 = 210mm x 297mm = 744.09449px x 1052.36220px
 			self.paper_type = 'a4'
 			self.paper_width = 744.09449
 			self.paper_height = 1052.36220
+
+		self.valid_elements = ['none', 'air', 'fire', 'earth', 'water']
+		self.valid_categories = ['astral', 'attack', 'defend', 'move', 'tendril', 'terrain']
 
 	def write(self, str):
 		self.out.write('  ' * self.indent_count)
@@ -180,12 +190,21 @@ class CardGen(object):
 		attrs = card[1]
 		desc = card[2]
 		self.validate_attrs(name, attrs)
-				
+		self.record_attrs(name, attrs)
+		self.validate_pattern(name, pattern)
+		
+		pe_tag = self.pattern_key(pattern) + '-' + attrs['element']
+		if pe_tag in self.pattern_elements:
+			error('Pattern for "%s" already used for "%s"' % (name, self.pattern_elements[pe_tag]))
+		self.pattern_elements[pe_tag] = name
+
 		self.start_card_page_transform(id)
 
 		self.draw_border()
 		self.draw_title(name)
-		#self.draw_subtitle('xxx')
+		self.draw_id(attrs['id'])
+		if 'starter' in attrs:
+			self.draw_starter()
 		
 		self.draw_pattern(pattern, attrs['element'])
 
@@ -201,9 +220,13 @@ class CardGen(object):
 		id = "c%d-title" % self.curr_card
 		self.draw_text(id, self.card_width / 2, 30, title, 18, align='center', weight='bold', font='Arial Narrow')
 		
-	def draw_subtitle(self, subtitle):
-		id = "c%d-subtitle" % self.curr_card
-		self.draw_text(id, self.card_width / 2, self.card_height, subtitle, 10, align='center', style='italic', font='Georgia')
+	def draw_id(self, spell_id):
+		card_id = "c%d-spell-id" % self.curr_card
+		self.draw_text(card_id, self.card_width / 2, self.card_height-15, str(spell_id), 10, align='center', style='italic', font='Georgia')
+
+	def draw_starter(self):
+		id = "c%d-starter" % self.curr_card
+		self.draw_text(id, self.card_width / 2, self.card_height-25, "STARTER", 10, align='center', style='italic', font='Georgia')
 
 	def draw_desc(self, desc):
 		width = 155
@@ -272,19 +295,74 @@ class CardGen(object):
 	
 	# Spell
 	
+	def validate_pattern(self, name, pattern):
+		first_row = True
+		num_cols = 0
+		for row in pattern:
+			cols = row.split()
+			if first_row:
+				num_cols = len(cols)
+				first_row = False
+			if len(cols) != num_cols:
+				error(name + ": Mismatch number of columns in pattern")
+		
 	def validate_attrs(self, name, attrs):
-		valid_elements = ['none', 'air', 'fire', 'earth', 'water']
+		if name in self.name2id:
+			error(name + ': Spell name already used by spell ID ' + str(self.name2id[name]))
+
 		if not 'element' in attrs:
-			error(name + ': Missing element attribute')
-		if not attrs['element'] in valid_elements:
+			error(name + ': Missing "element" attribute')
+		if not attrs['element'] in self.valid_elements:
 			error(name + ': Invalid element: ' + attrs['element'])
 		
-		valid_categories = ['astral', 'attack', 'defend', 'move', 'tendril']
 		if not 'category' in attrs:
-			error(name + ': Missing category attribute')
-		if not attrs['category'] in valid_categories:
-			error(name + ': Invalid category: ' + attrs['category'])
+			error(name + ': Missing "category" attribute')
+		for cat in attrs['category'].split(','):
+			if not cat in self.valid_categories:
+				error(name + ': Invalid category: ' + cat)
+
+		if not 'id' in attrs:
+			error(name + ': Missing "id" attribute')
+		if attrs['id'] in self.id2name:
+			error(name + ': ID ' + str(attrs['id']) + ' already used by "' + self.id2name[attrs['id']] +'"')
 		
+	def record_attrs(self, name, attrs):
+		id = attrs['id']
+		self.name2id[name] = id
+		self.id2name[id] = name
+		if id > self.max_id:
+			self.max_id = id
+
+		spell_name = "%s (%d)" % (name, id) 
+
+		element = attrs['element']
+		if not element in self.elements:
+			self.elements[element] = []
+		self.elements[element].append(spell_name)
+
+		for cat in attrs['category'].split(','):
+			if not cat in self.categories:
+				self.categories[cat] = []
+			self.categories[cat].append(spell_name)
+		
+	def print_summary(self):
+		print 'Element Summary:'
+		for e in self.valid_elements:
+			print ' ', e
+			print '   ', self.elements[e]
+			print '   Total spells:', len(self.elements[e])
+
+		print 'Category Summary:'
+		for c in self.valid_categories:
+			print ' ', c
+			print '   ', self.categories[c]
+
+		print 'Max ID:', self.max_id
+	
+	def pattern_key(self, pattern):
+		"""Convert pattern array into a simple string that can be used as a key."""
+		return '/'.join([''.join(x.split()) for x in pattern])
+
 	# Utilities
 
 	def draw_text(self, id, x, y, text, size=18, align='center', style='normal', weight='normal', font='Sans'):
@@ -416,6 +494,7 @@ def main():
 			
 	cgen = CardGen(options)
 	cgen.gen_cards()
+	cgen.print_summary()
 
 if __name__ == '__main__':
 	main()
