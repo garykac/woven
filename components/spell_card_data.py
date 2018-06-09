@@ -14,6 +14,7 @@
 #
 #   <attribute>:
 #     'element': 'air', 'fire', 'earth', 'water' or 'none'
+#     'category': <string> to group spells by general category
 #     'starter': 'true' if this is a basic, starter spell
 
 # Spell patterns are normalized:
@@ -61,29 +62,31 @@
 # Spell Fragments
 
 ## Neutral
-# Creep [STARTER]
-# Return [STARTER]
+# Tendril:
+#  * Creep [STARTER]
+# Astral:
+#  * Return [STARTER]
 
 ## Air
-# Basic:
+# Movement:
 #  * Haste [STARTER]
-#  * Haste through terrain - If in Plain, move through 6 adjacent Plains
+#  * Plains Walker - Move through 6 adjacent Plains
+#  * Levitate - N charges. Spend a charge to ignore terrain restrictions (so movement cost is 0) when you move into (or are moved into) a location
+#  * Fly - Fly over 4 locations
 # Terrain:
 #  * Forest Run - If in or next to forest, pay cost to move into any space within or adjacent to that forest, crossing rivers if necessary
+#  * Mountain Run - If in or next to mountain, pay cost to move into any space within or adjacent to that mountain
+# Tendril Terrain:
 #  * When in forest, add TENDRIL to any 1- or 2-space forest
 #  * When in forest, add TENDRIL to any forest
-#  * Mountain Run - If in or next to mountain, pay cost to move into any space within or adjacent to that mountain
-# Levitate
-#  * Levitate - N charges. Spend a charge to ignore terrain restrictions (so movement cost is 0) when you move into (or are moved into) a location
-#  * Fly
-# Tendril Terrain:
 #  * Select a TENDRIL (T) you control that is located in a plain (P); move T up to 7 spaces through neighboring plain locations
 #  * Select a TENDRIL (T) you control that is located in a forest (F1); move T to any location in another forest (F2) such that size(F2) < size(F1)
-#  * Select a TENDRIL (T) you control that is located in a forest (F); move T to any forest location
+#  * Select a TENDRIL (T) you control that is located in a forest (F); move T to any 1,2 forest location
 #  * Select a TENDRIL (T) you control that is located in mountain (M), move T to any other mountain location
-# Misc:
-#  * Push - When in adjacent space, move creature out and enter space (my choice where vs. your choice)
+# Defend:
 #  * Dodge - Charged. Move out of the way of an attack
+# Attack:
+#  * Push - When in adjacent space, move creature out and enter space (my choice where vs. your choice)
 #  * Shield Pierce - Causes 3 points of damage to any shield in targeted location
 
 ## Fire
@@ -105,11 +108,11 @@
 # Tendril Attack:
 #  * Remove all TENDRILs from location (including this one)
 #  * Remove - When in the same location as a TENDRIL controlled by another mage, remove any one of their TENDRILs
-# Defense:
+# Defend:
 #  * FIRE Reflection - Charge protects against 1 damage and reflects 1 damage back to attacker
 
 ## Earth
-# Protection:
+# Defend:
 #  * Protection [STARTER]
 #  * EARTH Shield - deflects up to 2 damage with 1 charge, remove if it takes 2 or more damage in a single attack
 #  * EARTH Reactive Shield - Charge that activates a 2 defense shield when the caster is the same location as an opponent's TENDRIL
@@ -118,20 +121,21 @@
 #  * Anchor - Resist attempt to move out of location (+ shield?)
 # Tendril:
 #  * Split
+# Tendril Attack:
+#  * Remove all opponent TENDRILs from location
+#  * Remove all TENDRILs from neighboring location
+#  * Delete All - When in the same location as a TENDRIL controlled by another mage, remove all of their TENDRILs from the map.
+# Tendril Terrain:
 #  * When in mountain, add TENDRIL to any 1- or 2-space mountain
 #  * When in mountain, add TENDRIL to any mountain
 # Terrain:
 #  * Growth - All fields within 5 spaces of target are forest for the remainder of this turn.
-# Tendril attack:
-#  * Remove all opponent TENDRILs from location
-#  * Remove all TENDRILs from neighboring location
-#  * Delete All - When in the same location as a TENDRIL controlled by another mage, remove all of their TENDRILs from the map.
-# Misc:
+# Attack:
 #  * Stone cage - Trap creatures at location - until 2 pts of damage done to location
 #  * Trap - Charge that automatically activates when targeted to cause 1 damage to target owner
 
 ## Water
-# Astral Movement:
+# Astral:
 #  * Teleport Away [STARTER]
 #  * Teleport: Move target creature into Astral Plane
 #  * Teleport: Move creature in Astral plane to tendril
@@ -144,7 +148,7 @@
 #  * River Run - If next to river/lake, pay cost to move into any space adjacent to that river/lake without passing a bridge
 # Terrain:
 #  * Flood - All fields within 5 spaces of target are water for the remainder of this turn.
-# Defense:
+# Defend:
 #  * WATER Recovery - Deflects 1 damage. caster may recover up to 2 THREADs from their TAPESTRY when this shield defends against an attack
 # Tapestry:
 #  * WATER: Move 2 THREADs in TAPESTRY to new locations
@@ -156,6 +160,7 @@
 
 
 ## Unused
+# Obstacles - all TENDRILS become obstacles that others may not move into or pass through.
 # Add damage marker to opponent's Tapestry
 # Leech - When in same location as an opponent, take mana from opponent and add to your Tapestry
 # * Astral Prison - stuck in prison until 2 pts damage done to it
@@ -186,7 +191,7 @@ spell_card_data = [
 	[	[	"X",
 		],
 		[	["Creep",
-				{'element': 'none', 'starter': 'true'},
+				{'element': 'none', 'category': 'tendril', 'starter': 'true'},
 				["Move a TENDRIL you control one space in any direction."] ],
 		],
 	],
@@ -218,7 +223,7 @@ spell_card_data = [
 			". . X",
 		],
 		[	["Return",
-				{'element': 'none', 'starter': 'true'},
+				{'element': 'none', 'category': 'astral', 'starter': 'true'},
 				["When in the Astral Plane, return to the Physical Realm at a TENDRIL you control or at your home location."] ],
 		],
 	],
@@ -287,11 +292,11 @@ spell_card_data = [
 	[	[	"@ X",
 		],
 		[	["Haste",
-				{'element': 'air', 'starter': 'true'},
-				["Gain 3 MP to use this turn"] ],
+				{'element': 'air', 'category': 'move', 'starter': 'true'},
+				["Gain 3 MP to use at any time during this turn:", "* 1MP - Move into Plains", "* 2MP - Move into Forests", "* 3MP - Move into Mountains"] ],
 			["Protection",
-				{'element': 'earth', 'starter': 'true'},
-				["Place 1 charge on this spell.", "Spend a charge at any time to protect against 1 or more points of damage."] ],
+				{'element': 'earth', 'category': 'defend', 'starter': 'true'},
+				["Place 1 charge on this spell.", "Spend a charge at any time to protect against 1 or more points of damage from a single attack."] ],
 		],
 	],
 
@@ -303,10 +308,10 @@ spell_card_data = [
 			". X",
 		],
 		[	["Fire Burst",
-				{'element': 'fire', 'starter': 'true'},
+				{'element': 'fire', 'category': 'attack', 'starter': 'true'},
 				["Attack all creatures at a TENDRIL you control for 1pt damage."] ],
 			["Teleport Away",
-				{'element': 'water', 'starter': 'true'},
+				{'element': 'water', 'category': 'astral', 'starter': 'true'},
 				["Move yourself to the Astral Plane."] ],
 		],
 	],
@@ -350,6 +355,13 @@ spell_card_data = [
 	# +-------+                     +-----+
 	# | X @ X |  Level 2 - Built on | @ X |
 	# +-------+                     +-----+
+	[	[	"X @ X",
+		],
+		[	["Plains Walker",
+				{'element': 'air', 'category': 'move'},
+				["Move through up to 6 contiguous Plains locations."] ],
+		],
+	],
 
 	# +-----+                     +-----+
 	# | @ X |  Level 2 - Built on | @ X |
@@ -359,7 +371,7 @@ spell_card_data = [
 			"X .",
 		],
 		[	["Split",
-				{'element': 'earth'},
+				{'element': 'earth', 'category': 'tendril'},
 				["Place a new TENDRIL in the same location where you already control a TENDRIL."] ],
 		],
 	],
@@ -368,6 +380,14 @@ spell_card_data = [
 	# | . @ X |  Level 2 - Built on | @ X | and | @ . | 
 	# | X . . |                     +-----+     | . X |
 	# +-------+                                 +-----+
+	[	[	". @ X",
+			"X . .",
+		],
+		[	["Levitate",
+				{'element': 'air', 'category': 'move'},
+				["Place a CHARGE on this spell.", "Spend CHARGE to ignore terrain cost and effects when you move into (or are forced into) a location."] ],
+		],
+	],
 
 	# +-----+                     +-----+     +-----+
 	# | @ . |  Level 2 - Built on | @ X | and | @ . |
@@ -381,11 +401,27 @@ spell_card_data = [
 	# +---------+                     +-----+     +-------+
 	# | X @ . X |  Level 3 - Built on | @ X | and | @ . X |
 	# +---------+                     +-----+     +-------+
+	[	[	"X @ . X",
+		],
+		[	["Fly",
+				{'element': 'air', 'category': 'move'},
+				["Ignore terrain cost and effects when moving into 4 locations this turn."] ],
+		],
+	],
 
 	# +-------+                     +-----+     +-------+
 	# | @ . X |  Level 2 - Built on | @ X | and | @ . X |
 	# | X . . |                     +-----+     +-------+
 	# +-------+
+	[	[	"@ . X",
+			"X . .",
+		],
+		[	["Forest Run",
+				{'element': 'air', 'category': 'terrain'},
+				["If in or next to a Forest location, pay terrain cost to move into any location within or adjacent to that Forest, bypassing any obstacles."] ],
+		],
+	],
+
 
 	# +-------+                     +-----+     +-------+
 	# | @ X . |  Level 2 - Built on | @ X | and | @ . . |
@@ -396,6 +432,14 @@ spell_card_data = [
 	# | @ . . |  Level 2 - Built on | @ X | and | @ . . |
 	# | X . X |                     +-----+     | . . X |
 	# +-------+                                 +-------+
+	[	[	"@ . .",
+			"X . X",
+		],
+		[	["Mountain Climb",
+				{'element': 'air', 'category': 'terrain'},
+				["If in or next to a Mountain location, pay terrain cost to move into any location within or adjacent to that Mountain Range, bypassing any obstacles."] ],
+		],
+	],
 
 	# +---------+                     +-----+     +-------+
 	# | X @ . . |  Level 3 - Built on | @ X | and | @ . . |

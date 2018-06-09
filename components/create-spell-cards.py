@@ -179,6 +179,7 @@ class CardGen(object):
 		name = card[0]
 		attrs = card[1]
 		desc = card[2]
+		self.validate_attrs(name, attrs)
 				
 		self.start_card_page_transform(id)
 
@@ -269,6 +270,21 @@ class CardGen(object):
 		self.outdent()
 		
 	
+	# Spell
+	
+	def validate_attrs(self, name, attrs):
+		valid_elements = ['none', 'air', 'fire', 'earth', 'water']
+		if not 'element' in attrs:
+			error(name + ': Missing element attribute')
+		if not attrs['element'] in valid_elements:
+			error(name + ': Invalid element: ' + attrs['element'])
+		
+		valid_categories = ['astral', 'attack', 'defend', 'move', 'tendril']
+		if not 'category' in attrs:
+			error(name + ': Missing category attribute')
+		if not attrs['category'] in valid_categories:
+			error(name + ': Invalid category: ' + attrs['category'])
+		
 	# Utilities
 
 	def draw_text(self, id, x, y, text, size=18, align='center', style='normal', weight='normal', font='Sans'):
@@ -370,7 +386,7 @@ def usage():
 	print "where <options> are:"
 	print "  --pdf       Generate PDF output files"
 	print "  --combine   Combine into single PDF file"
-	print "  --per-page  Num cards per page (8 or 9)"
+	print "  --per-page  Num cards per page: 8 or 9 (default)"
 	print "  --a4        A4 output (default = letter)"
 	sys.exit(2)
 
@@ -384,7 +400,7 @@ def main():
 
 	options = {
 		'pdf': False,
-		'per-page': 8,
+		'per-page': 9,
 		'combine': False,
 		'a4': False,
 	}
