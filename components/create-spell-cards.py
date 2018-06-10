@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import datetime
 import getopt
 import os
 import subprocess
@@ -46,6 +47,9 @@ class CardGen(object):
 		self.elements = {}
 		self.categories = {}
 		self.id2name = {}
+		self.id2pattern = {}
+		self.id2attrs = {}
+		self.id2desc = {}
 		self.max_id = 0
 		
 		# Poker size cards: 2.5" x 3.5"
@@ -190,8 +194,8 @@ class CardGen(object):
 		attrs = card[1]
 		desc = card[2]
 		self.validate_attrs(name, attrs)
-		self.record_attrs(name, attrs)
 		self.validate_pattern(name, pattern)
+		self.record_spell_info(name, pattern, attrs, desc)
 		
 		pe_tag = self.pattern_key(pattern) + '-' + attrs['element']
 		if pe_tag in self.pattern_elements:
@@ -326,15 +330,17 @@ class CardGen(object):
 		if attrs['id'] in self.id2name:
 			error(name + ': ID ' + str(attrs['id']) + ' already used by "' + self.id2name[attrs['id']] +'"')
 		
-	def record_attrs(self, name, attrs):
+	def record_spell_info(self, name, pattern, attrs, desc):
 		id = attrs['id']
 		self.name2id[name] = id
 		self.id2name[id] = name
 		if id > self.max_id:
 			self.max_id = id
 
-		spell_name = "%s (%d)" % (name, id) 
-
+		self.id2pattern[id] = pattern
+		self.id2attrs[id] = attrs
+		self.id2desc[id] = desc
+		
 		element = attrs['element']
 		if not element in self.elements:
 			self.elements[element] = []
@@ -445,20 +451,73 @@ class CardGen(object):
 				"-o", os.path.join(self.out_dir, 'cards.pdf')] + self.pdf_files
 			subprocess.call(cmd)
 
-	def gen_summary(self):
-		print 'Element Summary:'
-		for e in self.valid_elements:
-			print ' ', e
-			print '   ', self.elements[e]
-			print '   Total spells:', len(self.elements[e])
+	def spell_link(self, sid):
+		name = self.id2name[sid]
+		link_name = '-'.join(name.lower().split())
+		return ('[%s](#%s)' % (name, link_name))
 
-		print 'Category Summary:'
+	def element_name(self, e):
+		if e == 'none':
+			return 'Neutral'
+		else:
+			return e[0].upper() + e[1:]
+
+	def summary_spells_sorted_by_name(self, summary_file, spells):
+		names = [self.id2name[id] for id in spells]
+		for name in sorted(names):
+			summary_file.write('* %s\n' % self.spell_link(self.name2id[name]))
+
+	def gen_summary(self):
+		summary = open('spell-list.md', "w")
+
+		summary.write('# List of Spell Fragments\n\n')
+
+		now = datetime.datetime.now()
+		summary.write('Generated on %04d/%02d/%02d @ %02d:%02d\n\n' % (now.year, now.month, now.day, now.hour, now.minute))
+
+		summary.write('## By Category\n\n')
+
 		for c in self.valid_categories:
-			print ' ', c
-			print '   ', self.categories[c]
+			summary.write('%s (%d)\n\n' % (c[0].upper() + c[1:], len(self.categories[c])))
+			self.summary_spells_sorted_by_name(summary, self.categories[c])
+			summary.write('\n')
+			
+		summary.write('## By Element\n\n')
+
+		for e in self.valid_elements:
+			eName = self.element_name(e)
+
+			summary.write('%s (%d)\n\n' % (eName, len(self.elements[e])))
+			self.summary_spells_sorted_by_name(summary, self.elements[e])
+			summary.write('\n')
+
+		summary.write('## By Name\n\n')
+					
+		for name,sid in sorted(self.name2id.iteritems()):
+			summary.write('### %s\n' % self.id2name[sid])
+			summary.write('```\n')
+			for prow in self.id2pattern[sid]:
+				summary.write(prow + '\n')
+			summary.write('```\n')
+			summary.write('Element: %s\n\n' % self.element_name(self.id2attrs[sid]['element']))
+
+			summary.write('Category: ')
+			summary.write(', '.join([cat[0].upper() + cat[1:] for cat in self.id2attrs[sid]['category'].split(',')]))
+			summary.write('\n\n')
+
+			is_bullet_list = False
+			for d in self.id2desc[sid]:
+				summary.write(d + '\n')
+				is_bullet_list = d[0] == '*'
+				if not is_bullet_list:
+					summary.write('\n')
+			# If description ends with a bullet list, then we need to add another newline.
+			if is_bullet_list:
+				summary.write('\n')
 
 		print 'Max ID:', self.max_id
-	
+		summary.close()
+		
 
 def usage():
 	print "Usage: %s <options>" % sys.argv[0]
