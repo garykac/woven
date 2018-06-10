@@ -30,51 +30,38 @@ Spells that do not contain an ELEMENT are NEUTRAL.
 * Constraints within the squares of the pattern
 
 
+# Element properties
 
-# Element Dimensions
-
-Good at one aspect, counter element is bad at the same.
+In general, if an element is good at one aspect, the opposing element is bad at the same.
 
 ## Air
-
-Vs. Earth
-
-General Properties: masculine, active, light (weight), bright, thin, motion, sound
-mind, imagination, ideas, travel, finding, teaching, freedom, flying, hot, fluid
-
-Physical Movement
-
-permanent (via charges)
-few targets
-
-## Earth
-
-Vs. Air
-
-General Properties: feminine, passive, heavy, dark, thick, stability, quiet
-stability, birth, fertility, strength, stone, heavy, cool, solid
-
-Living
-lots of targets
-temporary
-
-Defense, few targets, don't get consumed
+* Opposed to Earth
+* Properties: masculine, active, light (weight), bright, thin
+movement, travel, flying, finding, teaching, imagination, sound
+* Primary Ability: Physical movement
+* Secondary Abilities:
+* Tendrils: manipulate
 
 ## Fire
+* Opposed to Water
+* Properties: masculine, active, light (weight), bright, thin
+movement, transformation, change, destruction, hot
+* Primary Ability: Attack
+* Secondary Abilities:
+* Tendrils: quick, many, temporary, attack
 
-Vs. Water
-
-General Properties: masculine, active, light (weight), bright, thin, motion, sound
-hot, solid, transformation, change, destructive
-
-Attack - lots of targets, get consumed when cast
-Follow target back to caster
+## Earth
+* Opposed to Air
+* Properties: feminine, passive, heavy, dark, thick
+stability, quiet, birth, fertility, strength, cool, solid
+* Primary Ability: Defense, Stability
+* Secondary Abilities:
+* Tendrils: slow, safe, stable, anchored
 
 ## Water
-
-Vs. Fire
-
-General Properties: feminine, passive, heavy, dark, thick, motion, quiet
-flowing, living. clensing, healing, psychic, scrying, mirrors, dark, thick, motion, dreams, cool, wet/moist, fluid.
-
-
+* Opposed to Fire
+* Properties: feminine, passive, heavy, dark, thick
+motion, flowing, living, cleansing, psychic, scrying/mirrors, dreams, cool
+* Primary Ability: Astral Movement
+* Secondary Abilities:
+* Tendrils: quick, few, stable

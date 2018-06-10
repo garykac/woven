@@ -24,41 +24,6 @@
 #  * Else 'X' in upper-left corner. 
 #  * Prefer wider spells over taller spells.
 
-# Element properties
-# ==================
-#
-# Air
-#  * Opposed to Earth
-#  * Properties: masculine, active, light (weight), bright, thin
-#      movement, travel, flying, finding, teaching, imagination, sound
-#  * Primary Ability: Physical movement
-#  * Secondary Abilities:
-#  * Tendrils: manipulate
-#
-# Fire
-#  * Opposed to Water
-#  * Properties: masculine, active, light (weight), bright, thin
-#      movement, transformation, change, destruction, hot
-#  * Primary Ability: Attack
-#  * Secondary Abilities:
-#  * Tendrils: quick, many, temporary, attack
-#
-# Earth
-#  * Opposed to Air
-#  * Properties: feminine, passive, heavy, dark, thick
-#      stability, quiet, birth, fertility, strength, cool, solid
-#  * Primary Ability: Defense, Stability
-#  * Secondary Abilities:
-#  * Tendrils: slow, safe, stable, anchored
-#
-# Water
-#  * Opposed to Fire
-#  * Properties: feminine, passive, heavy, dark, thick
-#      motion, flowing, living, cleansing, psychic, scrying/mirrors, dreams, cool
-#  * Primary Ability: Astral Movement
-#  * Secondary Abilities:
-#  * Tendrils: quick, few, stable
-
 # Spell Fragments
 
 ## Neutral
