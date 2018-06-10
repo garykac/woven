@@ -338,27 +338,13 @@ class CardGen(object):
 		element = attrs['element']
 		if not element in self.elements:
 			self.elements[element] = []
-		self.elements[element].append(spell_name)
+		self.elements[element].append(id)
 
 		for cat in attrs['category'].split(','):
 			if not cat in self.categories:
 				self.categories[cat] = []
-			self.categories[cat].append(spell_name)
+			self.categories[cat].append(id)
 		
-	def print_summary(self):
-		print 'Element Summary:'
-		for e in self.valid_elements:
-			print ' ', e
-			print '   ', self.elements[e]
-			print '   Total spells:', len(self.elements[e])
-
-		print 'Category Summary:'
-		for c in self.valid_categories:
-			print ' ', c
-			print '   ', self.categories[c]
-
-		print 'Max ID:', self.max_id
-	
 	def pattern_key(self, pattern):
 		"""Convert pattern array into a simple string that can be used as a key."""
 		return '/'.join([''.join(x.split()) for x in pattern])
@@ -459,6 +445,21 @@ class CardGen(object):
 				"-o", os.path.join(self.out_dir, 'cards.pdf')] + self.pdf_files
 			subprocess.call(cmd)
 
+	def gen_summary(self):
+		print 'Element Summary:'
+		for e in self.valid_elements:
+			print ' ', e
+			print '   ', self.elements[e]
+			print '   Total spells:', len(self.elements[e])
+
+		print 'Category Summary:'
+		for c in self.valid_categories:
+			print ' ', c
+			print '   ', self.categories[c]
+
+		print 'Max ID:', self.max_id
+	
+
 def usage():
 	print "Usage: %s <options>" % sys.argv[0]
 	print "where <options> are:"
@@ -472,7 +473,7 @@ def main():
 	try:
 		opts, args = getopt.getopt(sys.argv[1:],
 			'p',
-			['pdf', 'per-page=', 'combine', 'a4'])
+			['pdf', 'per-page=', 'combine', 'a4', 'summary'])
 	except getopt.GetoptError:
 		usage()
 
@@ -481,6 +482,7 @@ def main():
 		'per-page': 9,
 		'combine': False,
 		'a4': False,
+		'summary': False,
 	}
 	for opt,arg in opts:
 		if opt in ('-p', '--pdf'):
@@ -491,10 +493,13 @@ def main():
 			options['combine'] = True
 		if opt in ('--a4'):
 			options['a4'] = True
+		if opt in ('--summary'):
+			options['summary'] = True
 			
 	cgen = CardGen(options)
 	cgen.gen_cards()
-	cgen.print_summary()
+	if options['summary']:
+		cgen.gen_summary()
 
 if __name__ == '__main__':
 	main()
