@@ -479,7 +479,7 @@ spell_card_data = [
 				["If in a Mountain location, add a TENDRIL to a location in any Mountain range."] ],
 			["River Run",
 				{'element': 'water', 'category': 'move,terrain', 'id': 55},
-				["If next to a river or water location, pay terrain cost to move into any other space adjacent to that river or water location.", "Restrictions:", "For rivers: Without passing a bridge", "For water: Crossing 6 water locations max."] ],
+				["If next to a river or water location, pay terrain cost to move into any other space adjacent to that river or water location.", "Restrictions:", "* Rivers: Without passing a bridge", "* Water: Crossing 4 water locations max."] ],
 		],
 	],
 
@@ -605,7 +605,7 @@ spell_card_data = [
 				["Move a TENDRIL you control that is in a Plains location up to 7 spaces through connecting Plains locations."] ],
 			["Water Skip",
 				{'element': 'water', 'category': 'tendril,terrain', 'id': 60},
-				["Move a TENDRIL you control that is adjacent to a river or water location into any other space adjacent to that river or water location.", "Restrictions:", "For rivers: Without passing a bridge", "For Water: Crossing 4 water locations max."] ],
+				["Move a TENDRIL you control that is adjacent to a river or water location into any other space adjacent to that river or water location.", "Restrictions:", "* Rivers: Without passing a bridge", "* Water: Crossing 4 water locations max."] ],
 		],
 	],
 
@@ -626,7 +626,7 @@ spell_card_data = [
 				["Attack for 2 damage in single location adjacent to a TENDRIL you control."] ],
 			["Water Hop",
 				{'element': 'water', 'category': 'tendril,terrain', 'id': 61},
-				["When next to a river or Water location, add a TENDRIL to any location adjacent to that water.", "Restrictions:", "For rivers: Without passing a bridge", "For Water: Crossing 3 water locations max."] ],
+				["When next to a river or Water location, add a TENDRIL to any location adjacent to that water.", "Restrictions:", "* Rivers: Without passing a bridge", "* Water: Crossing 3 water locations max."] ],
 		],
 	],
 
@@ -662,7 +662,7 @@ spell_card_data = [
 				["Attack for 2 all locations in a Forest with a TENDRIL you control."] ],
 			["Water Jump",
 				{'element': 'water', 'category': 'tendril,terrain', 'id': 62},
-				["When next to a river or Water location, add a TENDRIL to any location adjacent to that water.", "Restrictions:", "For rivers: Passing at most 1 bridge", "For Water: Crossing 5 water locations max."] ],
+				["When next to a river or Water location, add a TENDRIL to any location adjacent to that water.", "Restrictions:", "* Rivers: Passing at most 1 bridge", "* Water: Crossing 5 water locations max."] ],
 		],
 	],
 
