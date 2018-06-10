@@ -118,8 +118,10 @@
 #  * EARTH Shield - deflects up to 2 damage with 1 charge, remove if it takes 2 or more damage in a single attack
 #  * EARTH Reactive Shield - Charge that activates a 2 defense shield when the caster is the same location as an opponent's TENDRIL
 #  * EARTH Shield Boost - Charge that can be used to temporarily boost a shield by 2 points. Boost takes damage before the shield.
-#  * Shield Block - Charge on shield, while active no one else can enter or move tendril into your location
+# Move Defend:
 #  * Anchor - Resist attempt to move out of location (+ shield?)
+# Tendril Defend
+#  * Shield Block - Charge on shield, while active no one else can enter or move tendril into your location
 # Tendril:
 #  * Split
 # Tendril Attack:
@@ -161,9 +163,8 @@
 
 
 ## Unused
-# Remove all TENDRILs from location except this one
-#  * Remove - When in the same location as a TENDRIL controlled by another mage, Move any one of their TENDRILs 2 spaces
-#  * When in forest, add TENDRIL to any forest
+# * Remove - When in the same location as a TENDRIL controlled by another mage, Move any one of their TENDRILs 2 spaces
+# * When in forest, add TENDRIL to any forest
 # Add damage marker to opponent's Tapestry
 # Leech - When in same location as an opponent, take mana from opponent and add to your Tapestry
 # * Astral Prison - stuck in prison until 2 pts damage done to it
@@ -302,7 +303,7 @@ spell_card_data = [
 				["Gain 3 MP to use at any time during this turn:", "* 1MP - Move into Plains", "* 2MP - Move into Forest", "* 3MP - Move into Mountain"] ],
 			["Protection",
 				{'element': 'earth', 'category': 'defend', 'id': 4, 'starter': 'true'},
-				["Place 1 charge on this spell.", "Spend a charge at any time to protect against 1 or more points of damage from a single attack."] ],
+				["Place a charge on this spell.", "This shield absorbs all damage from attacks.", "Remove CHARGE when it takes 1 or more damage from a single attack."] ],
 		],
 	],
 
@@ -337,6 +338,16 @@ spell_card_data = [
 	# | . . . |
 	# | . . X |
 	# +-------+
+	[	[	"@ . .",
+			". . .",
+			". . X",
+		],
+		[
+			["Shield Boost",
+				{'element': 'earth', 'category': 'defend', 'id': 37},
+				["Place a CHARGE on this spell. Spend this CHARGE to boost the defense power of any spell by 1."] ],
+		],
+	],
 
 	# +---------+
 	# | @ . . X |  Level 2
@@ -418,12 +429,23 @@ spell_card_data = [
 			["Fire Ball",
 				{'element': 'fire', 'category': 'attack', 'id': 22},
 				["Attack for 2 damage at a TENDRIL you control."] ],
+			["Double Shield",
+				{'element': 'earth', 'category': 'defend', 'id': 36},
+				["Place a CHARGE on this spell.", "When CHARGED, this shield absorbs all damage from attacks.", "Remove CHARGE when it takes 2 or more damage from a single attack."] ],
 		],
 	],
 
 	# +-------+                     +-----+     +-------+
 	# | @ X X |  Level 2 - Built on | @ X | and | @ . X |
 	# +-------+                     +-----+     +-------+
+	[	[	"@ X X",
+		],
+		[
+			["Reactive Shield",
+				{'element': 'earth', 'category': 'defend', 'id': 38},
+				["Place a CHARGE on this spell.", "When in the same location as a TENDRIL controlled by another mage, this shield absorbs all damage from attacks.", "Remove CHARGE when it takes 3 or more damage from a single attack."] ],
+		],
+	],
 
 	# +---------+                     +-----+     +-------+
 	# | X @ . X |  Level 3 - Built on | @ X | and | @ . X |
@@ -434,6 +456,9 @@ spell_card_data = [
 			["Fly",
 				{'element': 'air', 'category': 'move', 'id': 10},
 				["Ignore terrain cost and effects when moving into 4 locations this turn."] ],
+			["Anchor Shield",
+				{'element': 'earth', 'category': 'move,defend', 'id': 39},
+				["Place a CHARGE on this spell.", "When CHARGEd, this shield absorbs all damage from attacks and prevents you from being involuntary moved out of your location.", "Remove CHARGE when it takes 1 or more damage from a single attack."] ],
 		],
 	],
 
@@ -456,6 +481,15 @@ spell_card_data = [
 	# | @ X . |  Level 2 - Built on | @ X | and | @ . . |
 	# | . . X |                     +-----+     | . . X |
 	# +-------+                                 +-------+
+	[	[	"@ X .",
+			". . X",
+		],
+		[
+			["Resist Shield",
+				{'element': 'earth', 'category': 'defend,tendril', 'id': 40},
+				["Place a CHARGE on this spell.", "When CHARGEd, this shield absorbs all damage from attacks and prevents others from placing new TENDRILs on your location.", "Remove CHARGE when it takes 1 or more damage from a single attack."] ],
+		],
+	],
 
 	# +-------+                     +-----+     +-------+
 	# | @ . . |  Level 2 - Built on | @ X | and | @ . . |
@@ -468,6 +502,9 @@ spell_card_data = [
 			["Mountain Climb",
 				{'element': 'air', 'category': 'terrain,move', 'id': 12},
 				["If in or next to a Mountain location, pay terrain cost to move into any location within or adjacent to that Mountain Range, bypassing any obstacles."] ],
+			["Mountain Ranger",
+				{'element': 'earth', 'category': 'terrain,move', 'id': 44},
+				["If in a Mountain location, add a TENDRIL to a location in any Mountain range."] ],
 		],
 	],
 
@@ -475,6 +512,15 @@ spell_card_data = [
 	# | X @ . . |  Level 3 - Built on | @ X | and | @ . . |
 	# | . . . X |                     +-----+     | . . X |
 	# +---------+                                 +-------+
+	[	[	"X @ . .",
+			". . . X",
+		],
+		[
+			["Mountain Reach",
+				{'element': 'earth', 'category': 'terrain,move', 'id': 45},
+				["If in or adjacent to a Mountain location, add a TENDRIL to any location in a 1- or 2-size Mountain range."] ],
+		],
+	],
 
 	# +-------+                     +-----+     +-------+
 	# | X . . |  Level 3 - Built on | @ X | and | @ . . |
@@ -541,6 +587,9 @@ spell_card_data = [
 			["Fire Burst",
 				{'element': 'fire', 'category': 'tendril,terrain', 'id': 23},
 				["Attack for 1 damage in all locations adjacent to a TENDRIL you control."] ],
+			["Selective Prune",
+				{'element': 'earth', 'category': 'tendril,attack', 'id': 41},
+				["Remove all TENDRILs (except the one used for this spell) from a location where you control a TENDRIL."] ],
 		],
 	],
 
@@ -591,6 +640,9 @@ spell_card_data = [
 			["Forest Link",
 				{'element': 'air', 'category': 'tendril,terrain', 'id': 17},
 				["Move a TENDRIL you control that is in a Forest location to another location in any Forest that is smaller then the Forest with the TENDRIL."] ],
+			["Prune Neighbor",
+				{'element': 'earth', 'category': 'tendril,attack', 'id': 42},
+				["Remove all TENDRILs from a location adjacent to where you control a TENDRIL."] ],
 		],
 	],
 
@@ -640,6 +692,9 @@ spell_card_data = [
 			["Whirlwind",
 				{'element': 'air', 'category': 'tendril', 'id': 13},
 				["Place CHARGE on this spell.", "While CHARGEd, all TENDRILs you control are obstacles that other mages may not move into or pass through."] ],
+			["Delete All",
+				{'element': 'earth', 'category': 'tendril,attack', 'id': 43},
+				["When in a location with a TENDRIL controlled by another mage, remove all of that mage's TENDRILs.", "If multiple mages, choose one."] ],
 		],
 	],
 
@@ -946,6 +1001,17 @@ spell_card_data = [
 	# | . . X . . |                     | . . X |
 	# | . . . . @ |                     +-------+
 	# +-----------+
+	[
+		[	"@ . . . .",
+			". . X . .",
+			". . . . @",
+		],
+		[
+			["Stone Cage",
+				{'element': 'earth', 'category': 'attack', 'id': 47},
+				["PLace a CHARGE on this spell. While CHARGEd, there is a barrier at a TENDRIL you control that traps the occupants of that location and prevents them from moving out.", "CHARGE is lost if the TENDRIL moves or if the barrier takes 1 damage."] ],
+		],
+	],
 
 	#  _____ _                   _       _    ___      _      ___ 
 	# |   __| |___ _____ ___ ___| |_ ___| |  |_  |   _| |_   |_  |
@@ -969,7 +1035,33 @@ spell_card_data = [
 	],
 
 	# +-------+                     +-----+
-	# | . @ . |  Level 3 - Built on | @ . |
+	# | @ X . |  Level 3 - Built on | @ X |
+	# | . @ X |                     +-----+
+	# +-------+
+	[
+		[	"@ X .",
+		 	". @ X",
+		],
+		[
+			["Trap",
+				{'element': 'earth', 'category': 'attack', 'id': 48},
+				["Place 1 charge on this spell.", "When an opponent's TENDRIL moves into your location, that opponent takes 1 damage and this CHARGE is removed."] ],
+		],
+	],
+
+	# +-------+                     +-----+
+	# | X . . |  Level 4 - Built on | @ X |
+	# | @ . . |                     +-----+
+	# | . @ X |
+	# +-------+
+
+	# +---------+                     +-----+
+	# | X @ . . |  Level 3 - Built on | @ X |
+	# | . . @ X |                     +-----+
+	# +---------+
+
+	# +-------+                     +-----+
+	# | . @ . |  Level 4 - Built on | @ . |
 	# | X . X |                     | . X |
 	# | . @ . |                     +-----+
 	# +-------+
@@ -982,6 +1074,9 @@ spell_card_data = [
 			["Shield Pierce",
 				{'element': 'air', 'category': 'attack', 'id': 21},
 				["Cause 3 points of damage to all shields at a TENDRIL you control."] ],
+			["Growth",
+				{'element': 'earth', 'category': 'terrain', 'id': 46},
+				["Place CHARGE on this spell.", "While CHARGEd, all groups of 2 or more adjacent TENDRILs you control change all neighboring locations to Forest.", "CHARGE is lost immediately when you do not have 2 adjacent TENDRILs."] ],
 		],
 	],
 
