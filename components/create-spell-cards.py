@@ -65,7 +65,7 @@ class CardGen(object):
 			self.paper_height = 1052.36220
 
 		self.valid_elements = ['none', 'air', 'fire', 'earth', 'water']
-		self.valid_categories = ['astral', 'attack', 'defend', 'move', 'tendril', 'terrain']
+		self.valid_categories = ['astral', 'attack', 'defend', 'move', 'tendril', 'tapestry', 'terrain']
 
 	def write(self, str):
 		self.out.write('  ' * self.indent_count)

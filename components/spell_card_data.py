@@ -140,12 +140,12 @@
 ## Water
 # Astral:
 #  * Teleport Away [STARTER]
-#  * Teleport: Move target creature into Astral Plane
-#  * Teleport: Move creature in Astral plane to tendril
+#  * Teleport Other: Move target creature into Astral Plane
+#  * Return Other: Move creature in Astral plane to tendril
 # Tendril:
-#  * Reverse Tendril - Exchange locations between the caster and a TENDRIL controlled by the caster.
+#  * Exchange Tendril - Exchange locations between the caster and a TENDRIL controlled by the caster.
 #  * Reverse target - follow a TENDRIL back to its caster's location and add a TENDRIL there
-#  * Copy - When in the same location as a TENDRIL controlled by another mage, make a duplicate copy of any one of their TENDRILs
+#  * Duplicate - When in the same location as a TENDRIL controlled by another mage, make a duplicate copy of any one of their TENDRILs
 # Move Terrain:
 #  * Water Moccasins - Charge that can be spent to cross river or move into 1 water space.
 #  * River Run - If next to river/lake, pay cost to move into any space adjacent to that river/lake without passing a bridge
@@ -163,6 +163,7 @@
 
 
 ## Unused
+# WATER Move <n> THREADs to a single location on your TAPESTRY
 # * Remove - When in the same location as a TENDRIL controlled by another mage, Move any one of their TENDRILs 2 spaces
 # * When in forest, add TENDRIL to any forest
 # Add damage marker to opponent's Tapestry
@@ -473,6 +474,9 @@ spell_card_data = [
 			["Forest Run",
 				{'element': 'air', 'category': 'terrain,move', 'id': 11},
 				["If in or next to a Forest location, pay terrain cost to move into any location within or adjacent to that Forest, bypassing any obstacles."] ],
+			["Recovery Shield",
+				{'element': 'water', 'category': 'defend,tapestry', 'id': 57},
+				["Place a CHARGE on this spell.", "When CHARGEd, this shield absorbs all damage from attacks.", "Remove CHARGE and 2 THREADs from your TAPESTRY when it takes 1 or more damage from a single attack."] ],
 		],
 	],
 
@@ -488,6 +492,9 @@ spell_card_data = [
 			["Resist Shield",
 				{'element': 'earth', 'category': 'defend,tendril', 'id': 40},
 				["Place a CHARGE on this spell.", "When CHARGEd, this shield absorbs all damage from attacks and prevents others from placing new TENDRILs on your location.", "Remove CHARGE when it takes 1 or more damage from a single attack."] ],
+			["Water Moccasins",
+				{'element': 'water', 'category': 'move,terrain', 'id': 54},
+				["Place a CHARGE on this spell.", "This charge can be spent at any time to cross a river or move into a water location."] ],
 		],
 	],
 
@@ -505,6 +512,9 @@ spell_card_data = [
 			["Mountain Ranger",
 				{'element': 'earth', 'category': 'terrain,move', 'id': 44},
 				["If in a Mountain location, add a TENDRIL to a location in any Mountain range."] ],
+			["River Run",
+				{'element': 'water', 'category': 'move,terrain', 'id': 55},
+				["If next to a river or water location, pay terrain cost to move into any other space adjacent to that river or water location.", "Restrictions:", "For rivers: Without passing a bridge", "For water: Crossing 6 water locations max."] ],
 		],
 	],
 
@@ -535,6 +545,9 @@ spell_card_data = [
 			["Fire Reign",
 				{'element': 'fire', 'category': 'attack', 'id': 26},
 				["Attack for 1 damage at every TENDRIL you control."] ],
+			["Reverse Tendril",
+				{'element': 'water', 'category': 'tendril', 'id': 52},
+				["When in the same location as an opponent's TENDRIL, add a TENDRIL at the opponent's location."] ],
 		],
 	],
 
@@ -555,11 +568,29 @@ spell_card_data = [
 	# | @ X . . |  Level 3 - Built on | @ X | and | @ . . . |
 	# | . . . X |                     +-----+     | . . . X |
 	# +---------+                                 +---------+
+	[	[	"@ X . .",
+			". . . X",
+		],
+		[
+			["Rest",
+				{'element': 'water', 'category': 'tapestry', 'id': 58},
+				["Move 2 THREADs on your TAPESTRY to empty positions."] ],
+		],
+	],
 
 	# +---------+                     +-----+     +---------+
 	# | @ . . . |  Level 3 - Built on | @ X | and | @ . . . |
 	# | X . . X |                     +-----+     | . . . X |
 	# +---------+                                 +---------+
+	[	[	"@ . . .",
+			"X . . X",
+		],
+		[
+			["Recover",
+				{'element': 'water', 'category': 'tapestry', 'id': 59},
+				["Remove a THREAD from your TAPESTRY and place it back in your MANA POOL."] ],
+		],
+	],
 
 	# +-----------+                     +-----+     +---------+
 	# | X @ . . . |  Level 3 - Built on | @ X | and | @ . . . |
@@ -607,6 +638,9 @@ spell_card_data = [
 			["Plains Link",
 				{'element': 'air', 'category': 'tendril,terrain', 'id': 15},
 				["Move a TENDRIL you control that is in a Plains location up to 7 spaces through connecting Plains locations."] ],
+			["Water Skip",
+				{'element': 'water', 'category': 'tendril,terrain', 'id': 60},
+				["Move a TENDRIL you control that is adjacent to a river or water location into any other space adjacent to that river or water location.", "Restrictions:", "For rivers: Without passing a bridge", "For Water: Crossing 4 water locations max."] ],
 		],
 	],
 
@@ -625,6 +659,9 @@ spell_card_data = [
 			["Ricochet Blast",
 				{'element': 'fire', 'category': 'tendril,terrain', 'id': 24},
 				["Attack for 2 damage in single location adjacent to a TENDRIL you control."] ],
+			["Water Hop",
+				{'element': 'water', 'category': 'tendril,terrain', 'id': 61},
+				["When next to a river or Water location, add a TENDRIL to any location adjacent to that water.", "Restrictions:", "For rivers: Without passing a bridge", "For Water: Crossing 3 water locations max."] ],
 		],
 	],
 
@@ -658,6 +695,9 @@ spell_card_data = [
 			["Forest Fire",
 				{'element': 'fire', 'category': 'attack,terrain', 'id': 29},
 				["Attack for 2 all locations in a Forest with a TENDRIL you control."] ],
+			["Water Jump",
+				{'element': 'water', 'category': 'tendril,terrain', 'id': 62},
+				["When next to a river or Water location, add a TENDRIL to any location adjacent to that water.", "Restrictions:", "For rivers: Passing at most 1 bridge", "For Water: Crossing 5 water locations max."] ],
 		],
 	],
 
@@ -676,6 +716,9 @@ spell_card_data = [
 			["Boulder Tumble",
 				{'element': 'fire', 'category': 'attack,terrain', 'id': 28},
 				["Attack for 3 all neighboring locations to a TENDRIL you control that is in a Mountain location."] ],
+			["Duplicate",
+				{'element': 'water', 'category': 'tendril', 'id': 53},
+				["When in the same location as an opponent's TENDRIL, add a TENDRIL at any location where that opponent controls a TENDRIL."] ],
 		],
 	],
 
@@ -711,6 +754,9 @@ spell_card_data = [
 			["Prune",
 				{'element': 'fire', 'category': 'attack', 'id': 33},
 				["Remove all TENDRILs from a location where you control a TENDRIL.", "Yes, that includes the TENDRIL used to cast this spell."] ],
+			["Exchange Tendril",
+				{'element': 'water', 'category': 'tendril', 'id': 51},
+				["Exchange locations with a TENDRIL you control."] ],
 		],
 	],
 
@@ -818,12 +864,31 @@ spell_card_data = [
 	# | @ . X |  Level 2 - Built on | @ . X | and | @ . . |
 	# | . . X |                     +-------+     | . . X |
 	# +-------+                                   +-------+
+	[	[	"@ . X",
+			". . X",
+		],
+		[
+			["Teleport Other",
+				{'element': 'water', 'category': 'astral', 'id': 49},
+				["Move a mage in the same location as a TENDRIL you control to the Astral Plane."] ],
+		],
+	],
 
 	# +-------+                     +-------+     +-------+
 	# | @ . X |  Level 2 - Built on | @ . X | and | @ . . |
 	# | . . . |                     +-------+     | . . X |
 	# | . X . |                                   +-------+
 	# +-------+
+	[	[	"@ . X",
+			". . .",
+			". X .",
+		],
+		[
+			["Return Other",
+				{'element': 'water', 'category': 'astral', 'id': 50},
+				["Move a mage in the Astral Plane to any TENDRIL you control."] ],
+		],
+	],
 
 	# +-----------+                     +-------+     +-------+
 	# | X . @ . . |  Level 3 - Built on | @ . X | and | @ . . |
@@ -1059,6 +1124,21 @@ spell_card_data = [
 	# | X @ . . |  Level 3 - Built on | @ X |
 	# | . . @ X |                     +-----+
 	# +---------+
+	[
+		[	"X @ . .",
+		 	". . @ X",
+		],
+		[
+			["Flood",
+				{'element': 'water', 'category': 'terrain', 'id': 56},
+				["Place CHARGE on this spell.", "While CHARGEd, all groups of 2 or more adjacent TENDRILs you control change all Plains locations to Water up to 3 spaces away from the TENDRILs.", "CHARGE is lost immediately when you do not have 2 adjacent TENDRILs."] ],
+		],
+	],
+
+	# +-------+                     +-----+
+	# | @ . . |  Level 3 - Built on | @ X |
+	# | X @ X |                     +-----+
+	# +-------+
 
 	# +-------+                     +-----+
 	# | . @ . |  Level 4 - Built on | @ . |
@@ -1079,5 +1159,16 @@ spell_card_data = [
 				["Place CHARGE on this spell.", "While CHARGEd, all groups of 2 or more adjacent TENDRILs you control change all neighboring locations to Forest.", "CHARGE is lost immediately when you do not have 2 adjacent TENDRILs."] ],
 		],
 	],
+
+	# +---------+                     +-----+
+	# | . @ @ . |  Level 4 - Built on | @ . |
+	# | X . . X |                     | . X |
+	# +---------+                     +-----+
+
+	# +---------+                     +-----+
+	# | X . . . |  Level 4 - Built on | @ . |
+	# | . @ @ . |                     | . X |
+	# | . . . X |                     +-----+
+	# +---------+
 
 ]
