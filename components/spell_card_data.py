@@ -1007,7 +1007,7 @@ spell_card_data = [
 		[
 			["Blur",
 				{'element': 'air', 'category': 'defend', 'id': 19},
-				["Place a CHARGE on this spell. Spend a CHARGE at any time to move into a neighboring location ignoring terrain cost."] ],
+				["Place a CHARGE on this spell.", "Spend a CHARGE at any time to move into a neighboring location ignoring terrain cost."] ],
 		],
 	],
 

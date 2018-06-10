@@ -66,6 +66,9 @@ List of candidate spell fragments.
 * Haste through terrain
 * River Run - If next to river/lake, pay cost to move into any space adjacent to that river/lake without passing a bridge
 * Forest Run - If in or next to forest, pay cost to move into any space within or adjacent to that forest, crossing rivers if necessary
+
+## Terrain
+
 * Flood - All fields within 5 spaces of target are water for the remainder of this turn.
 * Growth - All fields within 5 spaces of target are forest for the remainder of this turn.
 * Fire wall to block off an area
@@ -143,6 +146,7 @@ List of candidate spell fragments.
 ## Map
 
 * Destroy bridges (and other objects on map)
+	* Issue: don't want special tokens for marking updated terrain
 * Terraform - change terrain of target location
 	* Issue: don't want special tokens for marking new terrain
 
@@ -150,7 +154,7 @@ List of candidate spell fragments.
 
 * Clone spell from another player
 * Duplicate spell just cast
-	* Issue: can be achieved more generally by allowing threads to be removed
+	* Issue: can be achieved more generally by allowing a thread to be removed
 * Spells that work with any element
 * Dispel
 	* Issue: Use more specific cancel spells.

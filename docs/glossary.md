@@ -14,5 +14,3 @@ LOCATION - a single hex on the map
 MINION - a CREATURE summoned into this world
 
 MAGE - the player
-
-UNASSIGNED BLOCK - a square block in a matrix that does not have a die assigned to it
