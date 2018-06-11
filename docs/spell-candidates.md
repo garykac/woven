@@ -2,107 +2,39 @@
 
 List of candidate spell fragments.
 
-## Tendril Management
+These have either not yet
+been added to the list of spells, or have been removed.
 
-### Moving Tendrils
+## Astral
 
-* Creep - Select a TENDRIL (T) you control; move T 1 space in any direction.
-* Select a TENDRIL (T) you control that is located in a forest (F); move T to any other location in F
-* Select a TENDRIL (T) you control that is located in a forest (F1); move T to any location in another forest (F2) such that size(F2) < size(F1)
-* Select a TENDRIL (T) you control that is located in a forest (F); move T to any forest location
-* Select a TENDRIL (T) you control that is located in mountain (M), move T to any other location in M
-* Select a TENDRIL (T) you control that is located in mountain (M), move T to any other mountain location
-* Select a TENDRIL (T) you control that is located in a plain (P); move T to another plain location within 4 spaces of P
-* Select a TENDRIL (T) you control that is located in a plain (P); move T up to 7 spaces through neighboring plain locations
-* Move TENDRILs you control a total of 5 spaces, split amongst any number of TENDRILs
-* Move TENDRILs a total of 9 spaces, split amongst any number of TENDRILs
-* Move all TENDRILs you control 1 space
-
-### Adding New Tendrils
-
-* Split - Add another TENDRIL to any location where you already have a TENDRIL
-* When in forest, add TENDRIL to any 1-space forest
-* When in forest, add TENDRIL to any 1- or 2-space forest
-* When in forest, add TENDRIL to any forest 4 or less in size
-* When in forest, add TENDRIL to any forest
-* When next to a river or lake, add a TENDRIL to any space adjacent to that river/lake as long as it doesn't require passing a bridge
-* When next to a river or lake, add a TENDRIL to any space adjacent to that river/lake passing at most 1 bridge
-* When next to a river or lake, add a TENDRIL to any space adjacent to that river/lake passing at most 2 bridges
-* When in mountain, add TENDRIL to any 1- or 2-space mountain
-* When in mountain, add TENDRIL to any mountain
-
-### Removing Tendrils
-
-* Remove all TENDRILs from location (including this one)
-* Remove all opponent TENDRILs from location
-* Remove all TENDRILs from neighboring location
-
-### Interacting with Other Tendrils
-
-* Reverse target - follow a TENDRIL back to its caster's location and add a TENDRIL there
-* Copy - When in the same location as a TENDRIL controlled by another mage, make a duplicate copy of any one of their TENDRILs
-* Remove - When in the same location as a TENDRIL controlled by another mage, remove any one of their TENDRILs
-* Delete All - When in the same location as a TENDRIL controlled by another mage, remove all of their TENDRILs from the map.
-* Move opponent's target when on their space
-* Effects that trigger when player is targeted by another player.
-
-## Astral Movement
-
-* Return - When in the Astral Plane, this moves the caster to a TENDRIL in the physical realm.
-* Teleport - Move caster to TENDRIL location
-* Reverse Tendril - Exchange locations between the caster and a TENDRIL controlled by the caster.
-
-## Corporeal Movement
-
-* Haste - Gain 2MP to spend this turn
-* Levitate - N charges. Spend a charge to ignore terrain restrictions (so movement cost is 0) when you move into (or are moved into) a location
-* Water Moccasins - Charge that can be spent to cross river or move into 1 water space.
-* Push - Move creature in targeted space (my choice where vs. your choice)
-* Anchor - Resist attempt to move out of location
-* Dodge - Move out of the way
-* Trap creatures at location
-* Trap triggered when visited
-* Terrain boost over certain types of terrain
-* Haste through terrain
-* River Run - If next to river/lake, pay cost to move into any space adjacent to that river/lake without passing a bridge
-* Forest Run - If in or next to forest, pay cost to move into any space within or adjacent to that forest, crossing rivers if necessary
-
-## Terrain
-
-* Flood - All fields within 5 spaces of target are water for the remainder of this turn.
-* Growth - All fields within 5 spaces of target are forest for the remainder of this turn.
-* Fire wall to block off an area
+* Astral Prison - stuck in prison until 2 pts damage done to it
+	* Damage doesn't have to be from a single attack
 
 ## Attack
 
-* Fire Arrow - Attack all creatures in the target location for 1 damage.
-* Boost - Place CHARGE that can be used to increase a later attack by 1
-* Fire Ball - Attack all creatures in the target location for 2 damage.
-* Fire Burst - Attack all creatures in all neighboring locations for 1 damage.
-* Ricochet Blast - Attack all creatures in a single neighboring location for 2 damage
 * Volcanic Rift - When targeting a mountain location, all targeted creatures take 2 damage
-* Forest Fire - When targeting a forest location, all creatures in that forest take 1 damage
-* Shield Pierce - Causes 3 points of damage to any shield in targeted location
-* Trap - Charge that automatically activates when targeted to cause 1 damage to target owner
+* Leech - When in same location as an opponent, take mana from opponent and add to your Tapestry
 
-## Protection
+## Defend
 
-* Shield - deflects 1 damage, remove if it takes 1 or more damage in a single attack
-* Shield - deflects up to 2 damage with 1 charge, remove if it takes 2 or more damage in a single attack
-* Reactive Shield - Charge that activates a 2 defense shield when the caster is the same location as an opponent's TENDRIL
-* Shield Boost - Charge that can be used to temporarily boost a shield by 2 points. Boost takes damage before the shield.
-* Reflection - Charge protects against 1 damage and reflects 1 damage back to attacker
-* Recovery - Deflects 1 damage. caster may recover up to 2 THREADs from their TAPESTRY when this shield defends against an attack
+* Effects that trigger when player is targeted by another player.
 * Shield trigger an effect when attacked
+* Trap triggered when visited/targeted
 
 ## Tapestry Weaving
 
-* Move 2 THREADs in TAPESTRY to new locations
-* Remove a THREAD from TAPESTRY
-* Gain extra cubes permanently - can only be cast once
-* Gain extra colorless (temporary) cubes - these cubes can only be used once. return when removed from matrix
+* WATER Move <n> THREADs to a single location on your TAPESTRY
+* Add damage marker to opponent's Tapestry
+* Gain extra mana (temporary) - this mana can only be used once. return when removed from matrix
+	* different color to distinguish
+
+## Tendrils
+
+* Move opponent's tendril when on their space
 
 # Obsolete Spells
+
+Spells that have been removed from the game along with a rational.
 
 ## Targeting
 
@@ -114,7 +46,7 @@ List of candidate spell fragments.
 ## Astral Movement
 
 * Teleport to terrain type
-	* Issue: Set target instead
+	* Issue: Set tendril to terrain instead
 
 ## Attack
 
@@ -161,6 +93,7 @@ List of candidate spell fragments.
 
 ## Matrix Manipulation
 
+* Gain extra mana permanently - this spell can only be cast once
 * Lose cubes - must be recovered as if from Matrix
 * Place cube ignoring contraints
 	* Issue: No longer have constraints

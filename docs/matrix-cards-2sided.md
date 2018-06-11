@@ -1,7 +1,7 @@
 # 2-sided Reversible Matrix Cards
 
-Order of Elements: A F E W
-So fire and water are not (usually) near to each other
+Order of Elements: `A F E W`
+so that Fire and Water (and Air/Earth) are not (usually) near to each other
 on the cards.
 
 Empty spots on card are label a,b,c,d from left to right.

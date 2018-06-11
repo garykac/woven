@@ -9,6 +9,8 @@
 * Field (cost = 1 AP)
 * Forest (cost = 2 AP)
 * Mountain (cost = 3 AP)
+* River (between hexes) cannot be crossed
+* Water/Swamp cannot be entered
 
 ## Boundaries
 
