@@ -24,129 +24,6 @@
 #  * Else 'X' in upper-left corner. 
 #  * Prefer wider spells over taller spells.
 
-# Spell Fragments
-
-## Neutral
-# Tendril:
-#  * Creep [STARTER]
-# Astral:
-#  * Return [STARTER]
-
-## Air
-# Move:
-#  * Haste [STARTER]
-#  * Plains Walker - Move through 6 adjacent Plains
-#  * Levitate - N charges. Spend a charge to ignore terrain restrictions (so movement cost is 0) when you move into (or are moved into) a location
-#  * Fly - Fly over 4 locations
-# Move Terrain:
-#  * Forest Run - If in or next to forest, pay cost to move into any space within or adjacent to that forest, crossing rivers if necessary
-#  * Mountain Run - If in or next to mountain, pay cost to move into any space within or adjacent to that mountain
-# Tendril
-#  * Whirlwind - Charged. all TENDRILS become obstacles that others may not move into or pass through.
-# Tendril Terrain:
-#  * When in forest, add TENDRIL to any forest smaller than yours
-#  * Select a TENDRIL (T) you control that is located in a plain (P); move T up to 7 spaces through neighboring plain locations
-#  * Select a TENDRIL (T) you control that is located in a forest (F1); move T to any location in another forest (F2) such that size(F2) < size(F1)
-#  * Select a TENDRIL (T) you control that is located in a forest (F); move T to any 1,2 forest location
-#  * Select a TENDRIL (T) you control that is located in mountain (M), move T to any other mountain location
-# Defend:
-#  * Dodge - Charged. Move out of the way of an attack
-# Attack:
-#  * Push - When in adjacent space, move creature out and enter space (my choice where vs. your choice)
-#  * Shield Pierce - Causes 3 points of damage to any shield in targeted location
-
-## Fire
-# Attack:
-#  * Fire Arrow [STARTER]
-#  * Fire Ball - Attack all creatures in the target location for 2 damage.
-#  * Fire Burst - Attack all creatures in all neighboring locations for 1 damage.
-#  * Ricochet Blast - Attack all creatures in a single neighboring location for 2 damage
-#  * Wall of Flame - Charged. 3 or more adjacent TENDRILS cause 1 damage
-#  * Fire Reign - Creatures in all TENDRILs you control take 1 damage
-#  * Boost - Place CHARGE that can be used to increase a later attack by 1
-# Attack Terrain:
-#  * Boulder Tumble - When targeting a mountain location, all neighboring locations take 3 damage
-#  * Forest Fire - When targeting a forest location, all creatures in that forest take 2 damage
-# Tendril:
-#  * Scatter - FIRE Move all TENDRILs you control 1 space
-#  * Scatter Wide - Move TENDRILs you control a total of 5 spaces, split amongst any number of TENDRILs
-#  * Scatter Far - Move TENDRILs a total of 9 spaces, split amongst at most 2 TENDRILs
-# Tendril Attack:
-#  * Remove all TENDRILs from location (including this one)
-#  * Remove - When in the same location as a TENDRIL controlled by another mage, remove any one of their TENDRILs
-# Defend:
-#  * FIRE Reflection - Charge protects against 1 damage and reflects 1 damage back to attacker
-
-## Earth
-# Defend:
-#  * Protection [STARTER]
-#  * EARTH Shield - deflects up to 2 damage with 1 charge, remove if it takes 2 or more damage in a single attack
-#  * EARTH Reactive Shield - Charge that activates a 2 defense shield when the caster is the same location as an opponent's TENDRIL
-#  * EARTH Shield Boost - Charge that can be used to temporarily boost a shield by 2 points. Boost takes damage before the shield.
-# Move Defend:
-#  * Anchor - Resist attempt to move out of location (+ shield?)
-# Tendril Defend
-#  * Shield Block - Charge on shield, while active no one else can enter or move tendril into your location
-# Tendril:
-#  * Split
-# Tendril Attack:
-#  * Remove all opponent TENDRILs from location
-#  * Remove all TENDRILs from neighboring location
-#  * Delete All - When in the same location as a TENDRIL controlled by another mage, remove all of their TENDRILs from the map.
-# Tendril Terrain:
-#  * When in mountain, add TENDRIL to any 1- or 2-space mountain
-#  * When in mountain, add TENDRIL to any mountain
-# Terrain:
-#  * Growth - All fields within 5 spaces of target are forest for the remainder of this turn.
-# Attack:
-#  * Stone cage - Trap creatures at location - until 2 pts of damage done to location
-#  * Trap - Charge that automatically activates when targeted to cause 1 damage to target owner
-
-## Water
-# Astral:
-#  * Teleport Away [STARTER]
-#  * Teleport Other: Move target creature into Astral Plane
-#  * Return Other: Move creature in Astral plane to tendril
-# Tendril:
-#  * Exchange Tendril - Exchange locations between the caster and a TENDRIL controlled by the caster.
-#  * Reverse target - follow a TENDRIL back to its caster's location and add a TENDRIL there
-#  * Duplicate - When in the same location as a TENDRIL controlled by another mage, make a duplicate copy of any one of their TENDRILs
-# Move Terrain:
-#  * Water Moccasins - Charge that can be spent to cross river or move into 1 water space.
-#  * River Run - If next to river/lake, pay cost to move into any space adjacent to that river/lake without passing a bridge
-# Terrain:
-#  * Flood - All fields within 5 spaces of target are water for the remainder of this turn.
-# Defend:
-#  * WATER Recovery - Deflects 1 damage. caster may recover up to 2 THREADs from their TAPESTRY when this shield defends against an attack
-# Tapestry:
-#  * WATER: Move 2 THREADs in TAPESTRY to new locations
-#  * WATER: Remove a THREAD from TAPESTRY
-# Tendril Terrain:
-#  * When next to a river or lake, add a TENDRIL to any space adjacent to that river/lake as long as it doesn't require passing a bridge
-#  * When next to a river or lake, add a TENDRIL to any space adjacent to that river/lake passing at most 1 bridge
-#  * Move a TENDRIL you control that is adjacent to a River
-
-
-## Unused
-# WATER Move <n> THREADs to a single location on your TAPESTRY
-# * Remove - When in the same location as a TENDRIL controlled by another mage, Move any one of their TENDRILs 2 spaces
-# * When in forest, add TENDRIL to any forest
-# Add damage marker to opponent's Tapestry
-# Leech - When in same location as an opponent, take mana from opponent and add to your Tapestry
-# * Astral Prison - stuck in prison until 2 pts damage done to it
-# * Move opponent's target up to 3 spaces when on their space
-# * Select a TENDRIL (T) you control that is located in a plain (P); move T to another plain location within 4 spaces of P
-# * Select a TENDRIL (T) you control that is located in a forest (F); move T to any other location in F
-# * Select a TENDRIL (T) you control that is located in mountain (M), move T to any other location in M
-# * When next to a river or lake, add a TENDRIL to any space adjacent to that river/lake passing at most 2 bridges
-# * When in forest, add TENDRIL to any 1-space forest
-# * When in forest, add TENDRIL to any forest 4 or less in size
-# * Effects that trigger when player is targeted by another player.
-# * Shield trigger an effect when attacked
-# * Trap triggered when visited/targeted
-# * Gain extra cubes permanently - can only be cast once
-# * Gain extra colorless (temporary) cubes - these cubes can only be used once. return when removed from matrix
-
 spell_card_data = [
 
 	#  _____         _           _    ___   
@@ -269,7 +146,7 @@ spell_card_data = [
 				["Gain 3 MP to use at any time during this turn:", "* 1MP - Move into Plains", "* 2MP - Move into Forest", "* 3MP - Move into Mountain"] ],
 			["Protection",
 				{'element': 'earth', 'category': 'defend', 'id': 4, 'starter': 'true'},
-				["Place a charge on this spell.", "This shield absorbs all damage from attacks.", "Remove CHARGE when it takes 1 or more damage from a single attack."] ],
+				["Place a charge on this spell.", "-", "This shield absorbs all damage from attacks.", "-", "Remove CHARGE when it takes 1 or more damage from a single attack."] ],
 		],
 	],
 
@@ -311,7 +188,7 @@ spell_card_data = [
 		[
 			["Shield Boost",
 				{'element': 'earth', 'category': 'defend', 'id': 37},
-				["Place a CHARGE on this spell. Spend this CHARGE to boost the defense power of any spell by 1."] ],
+				["Place a CHARGE on this spell.", "-", "Spend this CHARGE to boost the defense power of any spell by 1."] ],
 		],
 	],
 
@@ -323,7 +200,7 @@ spell_card_data = [
 		[
 			["Fire Boost",
 				{'element': 'fire', 'category': 'attack', 'id': 27},
-				["Place a CHARGE on this spell. Spend this CHARGE to boost the attack power of any spell by 1."] ],
+				["Place a CHARGE on this spell.", "-", "Spend this CHARGE to boost the attack power of any spell by 1."] ],
 		],
 	],
 
@@ -380,7 +257,7 @@ spell_card_data = [
 		[
 			["Levitate",
 				{'element': 'air', 'category': 'move', 'id': 9},
-				["Place a CHARGE on this spell.", "Spend CHARGE to ignore terrain cost and effects when you move into (or are forced into) a location."] ],
+				["Place a CHARGE on this spell.", "-", "Spend CHARGE to ignore terrain cost and effects when you move into (or are forced into) a location."] ],
 		],
 	],
 
@@ -397,7 +274,7 @@ spell_card_data = [
 				["Attack for 2 damage at a TENDRIL you control."] ],
 			["Double Shield",
 				{'element': 'earth', 'category': 'defend', 'id': 36},
-				["Place a CHARGE on this spell.", "When CHARGED, this shield absorbs all damage from attacks.", "Remove CHARGE when it takes 2 or more damage from a single attack."] ],
+				["Place a CHARGE on this spell.", "-", "When CHARGED, this shield absorbs all damage from attacks.", "-", "Remove CHARGE when it takes 2 or more damage from a single attack."] ],
 		],
 	],
 
@@ -409,7 +286,7 @@ spell_card_data = [
 		[
 			["Reactive Shield",
 				{'element': 'earth', 'category': 'defend', 'id': 38},
-				["Place a CHARGE on this spell.", "When in the same location as a TENDRIL controlled by another mage, this shield absorbs all damage from attacks.", "Remove CHARGE when it takes 3 or more damage from a single attack."] ],
+				["Place a CHARGE on this spell.", "-", "When in the same location as a TENDRIL controlled by another mage, this shield absorbs all damage from attacks.", "-", "Remove CHARGE when it takes 3 or more damage from a single attack."] ],
 		],
 	],
 
@@ -424,7 +301,7 @@ spell_card_data = [
 				["Ignore terrain cost and effects when moving into 4 locations this turn."] ],
 			["Anchor Shield",
 				{'element': 'earth', 'category': 'move,defend', 'id': 39},
-				["Place a CHARGE on this spell.", "When CHARGEd, this shield absorbs all damage from attacks and prevents you from being involuntary moved out of your location.", "Remove CHARGE when it takes 1 or more damage from a single attack."] ],
+				["Place a CHARGE on this spell.", "-", "When CHARGEd, this shield absorbs all damage from attacks and prevents you from being involuntary moved out of your location.", "-", "Remove CHARGE when it takes 1 or more damage from a single attack."] ],
 		],
 	],
 
@@ -441,7 +318,7 @@ spell_card_data = [
 				["If in or next to a Forest location, pay terrain cost to move into any location within or adjacent to that Forest, bypassing any obstacles."] ],
 			["Recovery Shield",
 				{'element': 'water', 'category': 'defend,tapestry', 'id': 57},
-				["Place a CHARGE on this spell.", "When CHARGEd, this shield absorbs all damage from attacks.", "Remove CHARGE and 2 THREADs from your TAPESTRY when it takes 1 or more damage from a single attack."] ],
+				["Place a CHARGE on this spell.", "-", "When CHARGEd, this shield absorbs all damage from attacks.", "-", "Remove CHARGE and 2 THREADs from your TAPESTRY when it takes 1 or more damage from a single attack."] ],
 		],
 	],
 
@@ -456,10 +333,10 @@ spell_card_data = [
 		[
 			["Resist Shield",
 				{'element': 'earth', 'category': 'defend,tendril', 'id': 40},
-				["Place a CHARGE on this spell.", "When CHARGEd, this shield absorbs all damage from attacks and prevents others from placing new TENDRILs on your location.", "Remove CHARGE when it takes 1 or more damage from a single attack."] ],
+				["Place a CHARGE on this spell.", "-", "When CHARGEd, this shield absorbs all damage from attacks and prevents others from placing new TENDRILs on your location.", "-", "Remove CHARGE when it takes 1 or more damage from a single attack."] ],
 			["Water Moccasins",
 				{'element': 'water', 'category': 'move,terrain', 'id': 54},
-				["Place a CHARGE on this spell.", "This charge can be spent at any time to cross a river or move into a water location."] ],
+				["Place a CHARGE on this spell.", "-", "This charge can be spent at any time to cross a river or move into a water location."] ],
 		],
 	],
 
@@ -479,7 +356,7 @@ spell_card_data = [
 				["If in a Mountain location, add a TENDRIL to a location in any Mountain range."] ],
 			["River Run",
 				{'element': 'water', 'category': 'move,terrain', 'id': 55},
-				["If next to a river or water location, pay terrain cost to move into any other space adjacent to that river or water location.", "Restrictions:", "* Rivers: Without passing a bridge", "* Water: Crossing 4 water locations max."] ],
+				["If next to a river or water location, pay terrain cost to move into any other space adjacent to that river or water location.", "-", "Restrictions:", "* Rivers: Without passing a bridge", "* Water: Crossing 4 water locations max."] ],
 		],
 	],
 
@@ -605,7 +482,7 @@ spell_card_data = [
 				["Move a TENDRIL you control that is in a Plains location up to 7 spaces through connecting Plains locations."] ],
 			["Water Skip",
 				{'element': 'water', 'category': 'tendril,terrain', 'id': 60},
-				["Move a TENDRIL you control that is adjacent to a river or water location into any other space adjacent to that river or water location.", "Restrictions:", "* Rivers: Without passing a bridge", "* Water: Crossing 4 water locations max."] ],
+				["Move a TENDRIL you control that is adjacent to a river or water location into any other space adjacent to that river or water location.", "-", "Restrictions:", "* Rivers: Without passing a bridge", "* Water: Crossing 4 water locations max."] ],
 		],
 	],
 
@@ -626,7 +503,7 @@ spell_card_data = [
 				["Attack for 2 damage in single location adjacent to a TENDRIL you control."] ],
 			["Water Hop",
 				{'element': 'water', 'category': 'tendril,terrain', 'id': 61},
-				["When next to a river or Water location, add a TENDRIL to any location adjacent to that water.", "Restrictions:", "* Rivers: Without passing a bridge", "* Water: Crossing 3 water locations max."] ],
+				["When next to a river or Water location, add a TENDRIL to any location adjacent to that water.", "-", "Restrictions:", "* Rivers: Without passing a bridge", "* Water: Crossing 3 water locations max."] ],
 		],
 	],
 
@@ -662,7 +539,7 @@ spell_card_data = [
 				["Attack for 2 all locations in a Forest with a TENDRIL you control."] ],
 			["Water Jump",
 				{'element': 'water', 'category': 'tendril,terrain', 'id': 62},
-				["When next to a river or Water location, add a TENDRIL to any location adjacent to that water.", "Restrictions:", "* Rivers: Passing at most 1 bridge", "* Water: Crossing 5 water locations max."] ],
+				["When next to a river or Water location, add a TENDRIL to any location adjacent to that water.", "-", "Restrictions:", "* Rivers: Passing at most 1 bridge", "* Water: Crossing 5 water locations max."] ],
 		],
 	],
 
@@ -699,10 +576,10 @@ spell_card_data = [
 		[
 			["Whirlwind",
 				{'element': 'air', 'category': 'tendril', 'id': 13},
-				["Place CHARGE on this spell.", "While CHARGEd, all TENDRILs you control are obstacles that other mages may not move into or pass through."] ],
+				["Place CHARGE on this spell.", "-", "While CHARGEd, all TENDRILs you control are obstacles that other mages may not move into or pass through."] ],
 			["Delete All",
 				{'element': 'earth', 'category': 'tendril,attack', 'id': 43},
-				["When in a location with a TENDRIL controlled by another mage, remove all of that mage's TENDRILs.", "If multiple mages, choose one."] ],
+				["When in a location with a TENDRIL controlled by another mage, remove all of that mage's TENDRILs.", "-", "If multiple mages, choose one."] ],
 		],
 	],
 
@@ -718,7 +595,7 @@ spell_card_data = [
 		[
 			["Prune",
 				{'element': 'fire', 'category': 'attack', 'id': 33},
-				["Remove all TENDRILs from a location where you control a TENDRIL.", "Yes, that includes the TENDRIL used to cast this spell."] ],
+				["Remove all TENDRILs from a location where you control a TENDRIL.", "-", "Yes, that includes the TENDRIL used to cast this spell."] ],
 			["Exchange Tendril",
 				{'element': 'water', 'category': 'tendril', 'id': 51},
 				["Exchange locations with a TENDRIL you control."] ],
@@ -737,7 +614,7 @@ spell_card_data = [
 		[
 			["Wall of Flame",
 				{'element': 'fire', 'category': 'attack', 'id': 25},
-				["Place CHARGE on this spell.", "While CHARGEd, all groups of 3 adjacent TENDRILs you control are on fire and cause 1 damage.", "CHARGE is lost immediately when you do not have 3 adjacent TENDRILs."] ],
+				["Place CHARGE on this spell.", "-", "While CHARGEd, all groups of 3 adjacent TENDRILs you control are on fire and cause 1 damage.", "-", "CHARGE is lost immediately when you do not have 3 adjacent TENDRILs."] ],
 		],
 	],
 
@@ -1007,7 +884,7 @@ spell_card_data = [
 		[
 			["Blur",
 				{'element': 'air', 'category': 'defend', 'id': 19},
-				["Place a CHARGE on this spell.", "Spend a CHARGE at any time to move into a neighboring location ignoring terrain cost."] ],
+				["Place a CHARGE on this spell.", "-", "Spend a CHARGE at any time to move into a neighboring location ignoring terrain cost."] ],
 		],
 	],
 
@@ -1022,7 +899,7 @@ spell_card_data = [
 		[
 			["Push",
 				{'element': 'air', 'category': 'attack', 'id': 20},
-				["Move into an adjacent location and push out all current occupants of that location into neighboring locations.", "Former occupants get to choose where they move."] ],
+				["Move into an adjacent location and push out all current occupants of that location into neighboring locations.", "-", "Former occupants get to choose where they move."] ],
 		],
 	],
 
@@ -1039,7 +916,7 @@ spell_card_data = [
 		[
 			["Stone Cage",
 				{'element': 'earth', 'category': 'attack', 'id': 47},
-				["PLace a CHARGE on this spell. While CHARGEd, there is a barrier at a TENDRIL you control that traps the occupants of that location and prevents them from moving out.", "CHARGE is lost if the TENDRIL moves or if the barrier takes 1 damage."] ],
+				["PLace a CHARGE on this spell.", "-", "While CHARGEd, there is a barrier at a TENDRIL you control that traps the occupants of that location and prevents them from moving out.", "-", "CHARGE is lost if the TENDRIL moves or if the barrier takes 1 damage."] ],
 		],
 	],
 
@@ -1060,7 +937,7 @@ spell_card_data = [
 		[
 			["Reflection Shield",
 				{'element': 'fire', 'category': 'defend,attack', 'id': 35},
-				["Place 1 charge on this spell.", "Spend a charge at any time to protect against 1 or more points of damage and reflect 1 point of damage back at the attacker."] ],
+				["Place 1 charge on this spell.", "-", "Spend a charge at any time to protect against 1 or more points of damage and reflect 1 point of damage back at the attacker."] ],
 		],
 	],
 
@@ -1075,7 +952,7 @@ spell_card_data = [
 		[
 			["Trap",
 				{'element': 'earth', 'category': 'attack', 'id': 48},
-				["Place 1 charge on this spell.", "When an opponent's TENDRIL moves into your location, that opponent takes 1 damage and this CHARGE is removed."] ],
+				["Place 1 charge on this spell.", "-", "When an opponent's TENDRIL moves into your location, that opponent takes 1 damage and this CHARGE is removed."] ],
 		],
 	],
 
@@ -1096,7 +973,7 @@ spell_card_data = [
 		[
 			["Flood",
 				{'element': 'water', 'category': 'terrain', 'id': 56},
-				["Place CHARGE on this spell.", "While CHARGEd, all groups of 2 or more adjacent TENDRILs you control change all Plains locations to Water up to 3 spaces away from the TENDRILs.", "CHARGE is lost immediately when you do not have 2 adjacent TENDRILs."] ],
+				["Place CHARGE on this spell.", "-", "While CHARGEd, all groups of 2 or more adjacent TENDRILs you control change all Plains locations to Water up to 3 spaces away from the TENDRILs.", "-", "CHARGE is lost immediately when you do not have 2 adjacent TENDRILs."] ],
 		],
 	],
 
@@ -1121,7 +998,7 @@ spell_card_data = [
 				["Cause 3 points of damage to all shields at a TENDRIL you control."] ],
 			["Growth",
 				{'element': 'earth', 'category': 'terrain', 'id': 46},
-				["Place CHARGE on this spell.", "While CHARGEd, all groups of 2 or more adjacent TENDRILs you control change all neighboring locations to Forest.", "CHARGE is lost immediately when you do not have 2 adjacent TENDRILs."] ],
+				["Place CHARGE on this spell.", "-", "While CHARGEd, all groups of 2 or more adjacent TENDRILs you control change all neighboring locations to Forest.", "-", "CHARGE is lost immediately when you do not have 2 adjacent TENDRILs."] ],
 		],
 	],
 
