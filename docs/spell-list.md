@@ -1,196 +1,196 @@
 # List of Spell Fragments
 
-Generated on 2018/06/10 @ 09:51
+Generated on 2018/06/12 @ 06:56
 
 ## By Category
 
 Astral (4)
 
-* [Return](#return)
-* [Return Other](#return-other)
-* [Teleport Away](#teleport-away)
-* [Teleport Other](#teleport-other)
+* [Return](#return) - _Neutral_
+* [Return Other](#return-other) - _Water_
+* [Teleport Away](#teleport-away) - _Water_
+* [Teleport Other](#teleport-other) - _Water_
 
 Attack (16)
 
-* [Boulder Tumble](#boulder-tumble)
-* [Delete All](#delete-all)
-* [Fire Arrow](#fire-arrow)
-* [Fire Ball](#fire-ball)
-* [Fire Boost](#fire-boost)
-* [Fire Reign](#fire-reign)
-* [Forest Fire](#forest-fire)
-* [Prune](#prune)
-* [Prune Neighbor](#prune-neighbor)
-* [Push](#push)
-* [Reflection Shield](#reflection-shield)
-* [Selective Prune](#selective-prune)
-* [Shield Pierce](#shield-pierce)
-* [Stone Cage](#stone-cage)
-* [Trap](#trap)
-* [Wall of Flame](#wall-of-flame)
+* [Boulder Tumble](#boulder-tumble) - _Fire_
+* [Delete All](#delete-all) - _Earth_
+* [Fire Arrow](#fire-arrow) - _Fire_
+* [Fire Ball](#fire-ball) - _Fire_
+* [Fire Boost](#fire-boost) - _Fire_
+* [Fire Reign](#fire-reign) - _Fire_
+* [Forest Fire](#forest-fire) - _Fire_
+* [Prune](#prune) - _Fire_
+* [Prune Neighbor](#prune-neighbor) - _Earth_
+* [Push](#push) - _Air_
+* [Reflection Shield](#reflection-shield) - _Fire_
+* [Selective Prune](#selective-prune) - _Earth_
+* [Shield Pierce](#shield-pierce) - _Air_
+* [Stone Cage](#stone-cage) - _Earth_
+* [Trap](#trap) - _Earth_
+* [Wall of Flame](#wall-of-flame) - _Fire_
 
 Defend (9)
 
-* [Anchor Shield](#anchor-shield)
-* [Blur](#blur)
-* [Double Shield](#double-shield)
-* [Protection](#protection)
-* [Reactive Shield](#reactive-shield)
-* [Recovery Shield](#recovery-shield)
-* [Reflection Shield](#reflection-shield)
-* [Resist Shield](#resist-shield)
-* [Shield Boost](#shield-boost)
+* [Anchor Shield](#anchor-shield) - _Earth_
+* [Blur](#blur) - _Air_
+* [Double Shield](#double-shield) - _Earth_
+* [Protection](#protection) - _Earth_
+* [Reactive Shield](#reactive-shield) - _Earth_
+* [Recovery Shield](#recovery-shield) - _Water_
+* [Reflection Shield](#reflection-shield) - _Fire_
+* [Resist Shield](#resist-shield) - _Earth_
+* [Shield Boost](#shield-boost) - _Earth_
 
 Move (11)
 
-* [Anchor Shield](#anchor-shield)
-* [Fly](#fly)
-* [Forest Run](#forest-run)
-* [Haste](#haste)
-* [Levitate](#levitate)
-* [Mountain Climb](#mountain-climb)
-* [Mountain Ranger](#mountain-ranger)
-* [Mountain Reach](#mountain-reach)
-* [Plains Walker](#plains-walker)
-* [River Run](#river-run)
-* [Water Moccasins](#water-moccasins)
+* [Anchor Shield](#anchor-shield) - _Earth_
+* [Fly](#fly) - _Air_
+* [Forest Run](#forest-run) - _Air_
+* [Haste](#haste) - _Air_
+* [Levitate](#levitate) - _Air_
+* [Mountain Climb](#mountain-climb) - _Air_
+* [Mountain Ranger](#mountain-ranger) - _Earth_
+* [Mountain Reach](#mountain-reach) - _Earth_
+* [Plains Walker](#plains-walker) - _Air_
+* [River Run](#river-run) - _Water_
+* [Water Moccasins](#water-moccasins) - _Water_
 
 Tendril (24)
 
-* [Creep](#creep)
-* [Delete All](#delete-all)
-* [Distraction](#distraction)
-* [Duplicate](#duplicate)
-* [Exchange Tendril](#exchange-tendril)
-* [Fire Burst](#fire-burst)
-* [Forest Bind](#forest-bind)
-* [Forest Link](#forest-link)
-* [Forest Link Minor](#forest-link-minor)
-* [Mountain Link](#mountain-link)
-* [Plains Link](#plains-link)
-* [Prune Neighbor](#prune-neighbor)
-* [Resist Shield](#resist-shield)
-* [Reverse Tendril](#reverse-tendril)
-* [Ricochet Blast](#ricochet-blast)
-* [Scatter](#scatter)
-* [Scatter Far](#scatter-far)
-* [Scatter Wide](#scatter-wide)
-* [Selective Prune](#selective-prune)
-* [Split](#split)
-* [Water Hop](#water-hop)
-* [Water Jump](#water-jump)
-* [Water Skip](#water-skip)
-* [Whirlwind](#whirlwind)
+* [Creep](#creep) - _Neutral_
+* [Delete All](#delete-all) - _Earth_
+* [Distraction](#distraction) - _Fire_
+* [Duplicate](#duplicate) - _Water_
+* [Exchange Tendril](#exchange-tendril) - _Water_
+* [Fire Burst](#fire-burst) - _Fire_
+* [Forest Bind](#forest-bind) - _Air_
+* [Forest Link](#forest-link) - _Air_
+* [Forest Link Minor](#forest-link-minor) - _Air_
+* [Mountain Link](#mountain-link) - _Air_
+* [Plains Link](#plains-link) - _Air_
+* [Prune Neighbor](#prune-neighbor) - _Earth_
+* [Resist Shield](#resist-shield) - _Earth_
+* [Reverse Tendril](#reverse-tendril) - _Water_
+* [Ricochet Blast](#ricochet-blast) - _Fire_
+* [Scatter](#scatter) - _Fire_
+* [Scatter Far](#scatter-far) - _Fire_
+* [Scatter Wide](#scatter-wide) - _Fire_
+* [Selective Prune](#selective-prune) - _Earth_
+* [Split](#split) - _Earth_
+* [Water Hop](#water-hop) - _Water_
+* [Water Jump](#water-jump) - _Water_
+* [Water Skip](#water-skip) - _Water_
+* [Whirlwind](#whirlwind) - _Air_
 
 Tapestry (3)
 
-* [Recover](#recover)
-* [Recovery Shield](#recovery-shield)
-* [Rest](#rest)
+* [Recover](#recover) - _Water_
+* [Recovery Shield](#recovery-shield) - _Water_
+* [Rest](#rest) - _Water_
 
 Terrain (21)
 
-* [Boulder Tumble](#boulder-tumble)
-* [Fire Burst](#fire-burst)
-* [Flood](#flood)
-* [Forest Bind](#forest-bind)
-* [Forest Fire](#forest-fire)
-* [Forest Link](#forest-link)
-* [Forest Link Minor](#forest-link-minor)
-* [Forest Run](#forest-run)
-* [Growth](#growth)
-* [Mountain Climb](#mountain-climb)
-* [Mountain Link](#mountain-link)
-* [Mountain Ranger](#mountain-ranger)
-* [Mountain Reach](#mountain-reach)
-* [Plains Link](#plains-link)
-* [Plains Walker](#plains-walker)
-* [Ricochet Blast](#ricochet-blast)
-* [River Run](#river-run)
-* [Water Hop](#water-hop)
-* [Water Jump](#water-jump)
-* [Water Moccasins](#water-moccasins)
-* [Water Skip](#water-skip)
+* [Boulder Tumble](#boulder-tumble) - _Fire_
+* [Fire Burst](#fire-burst) - _Fire_
+* [Flood](#flood) - _Water_
+* [Forest Bind](#forest-bind) - _Air_
+* [Forest Fire](#forest-fire) - _Fire_
+* [Forest Link](#forest-link) - _Air_
+* [Forest Link Minor](#forest-link-minor) - _Air_
+* [Forest Run](#forest-run) - _Air_
+* [Growth](#growth) - _Earth_
+* [Mountain Climb](#mountain-climb) - _Air_
+* [Mountain Link](#mountain-link) - _Air_
+* [Mountain Ranger](#mountain-ranger) - _Earth_
+* [Mountain Reach](#mountain-reach) - _Earth_
+* [Plains Link](#plains-link) - _Air_
+* [Plains Walker](#plains-walker) - _Air_
+* [Ricochet Blast](#ricochet-blast) - _Fire_
+* [River Run](#river-run) - _Water_
+* [Water Hop](#water-hop) - _Water_
+* [Water Jump](#water-jump) - _Water_
+* [Water Moccasins](#water-moccasins) - _Water_
+* [Water Skip](#water-skip) - _Water_
 
 ## By Element
 
 Neutral (2)
 
-* [Creep](#creep)
-* [Return](#return)
+* [Creep](#creep) - _Tendril_
+* [Return](#return) - _Astral_
 
 Air (15)
 
-* [Blur](#blur)
-* [Fly](#fly)
-* [Forest Bind](#forest-bind)
-* [Forest Link](#forest-link)
-* [Forest Link Minor](#forest-link-minor)
-* [Forest Run](#forest-run)
-* [Haste](#haste)
-* [Levitate](#levitate)
-* [Mountain Climb](#mountain-climb)
-* [Mountain Link](#mountain-link)
-* [Plains Link](#plains-link)
-* [Plains Walker](#plains-walker)
-* [Push](#push)
-* [Shield Pierce](#shield-pierce)
-* [Whirlwind](#whirlwind)
+* [Blur](#blur) - _Defend_
+* [Fly](#fly) - _Move_
+* [Forest Bind](#forest-bind) - _Tendril, Terrain_
+* [Forest Link](#forest-link) - _Tendril, Terrain_
+* [Forest Link Minor](#forest-link-minor) - _Tendril, Terrain_
+* [Forest Run](#forest-run) - _Terrain, Move_
+* [Haste](#haste) - _Move_
+* [Levitate](#levitate) - _Move_
+* [Mountain Climb](#mountain-climb) - _Terrain, Move_
+* [Mountain Link](#mountain-link) - _Tendril, Terrain_
+* [Plains Link](#plains-link) - _Tendril, Terrain_
+* [Plains Walker](#plains-walker) - _Terrain, Move_
+* [Push](#push) - _Attack_
+* [Shield Pierce](#shield-pierce) - _Attack_
+* [Whirlwind](#whirlwind) - _Tendril_
 
 Fire (15)
 
-* [Boulder Tumble](#boulder-tumble)
-* [Distraction](#distraction)
-* [Fire Arrow](#fire-arrow)
-* [Fire Ball](#fire-ball)
-* [Fire Boost](#fire-boost)
-* [Fire Burst](#fire-burst)
-* [Fire Reign](#fire-reign)
-* [Forest Fire](#forest-fire)
-* [Prune](#prune)
-* [Reflection Shield](#reflection-shield)
-* [Ricochet Blast](#ricochet-blast)
-* [Scatter](#scatter)
-* [Scatter Far](#scatter-far)
-* [Scatter Wide](#scatter-wide)
-* [Wall of Flame](#wall-of-flame)
+* [Boulder Tumble](#boulder-tumble) - _Attack, Terrain_
+* [Distraction](#distraction) - _Tendril_
+* [Fire Arrow](#fire-arrow) - _Attack_
+* [Fire Ball](#fire-ball) - _Attack_
+* [Fire Boost](#fire-boost) - _Attack_
+* [Fire Burst](#fire-burst) - _Tendril, Terrain_
+* [Fire Reign](#fire-reign) - _Attack_
+* [Forest Fire](#forest-fire) - _Attack, Terrain_
+* [Prune](#prune) - _Attack_
+* [Reflection Shield](#reflection-shield) - _Defend, Attack_
+* [Ricochet Blast](#ricochet-blast) - _Tendril, Terrain_
+* [Scatter](#scatter) - _Tendril_
+* [Scatter Far](#scatter-far) - _Tendril_
+* [Scatter Wide](#scatter-wide) - _Tendril_
+* [Wall of Flame](#wall-of-flame) - _Attack_
 
 Earth (15)
 
-* [Anchor Shield](#anchor-shield)
-* [Delete All](#delete-all)
-* [Double Shield](#double-shield)
-* [Growth](#growth)
-* [Mountain Ranger](#mountain-ranger)
-* [Mountain Reach](#mountain-reach)
-* [Protection](#protection)
-* [Prune Neighbor](#prune-neighbor)
-* [Reactive Shield](#reactive-shield)
-* [Resist Shield](#resist-shield)
-* [Selective Prune](#selective-prune)
-* [Shield Boost](#shield-boost)
-* [Split](#split)
-* [Stone Cage](#stone-cage)
-* [Trap](#trap)
+* [Anchor Shield](#anchor-shield) - _Move, Defend_
+* [Delete All](#delete-all) - _Tendril, Attack_
+* [Double Shield](#double-shield) - _Defend_
+* [Growth](#growth) - _Terrain_
+* [Mountain Ranger](#mountain-ranger) - _Terrain, Move_
+* [Mountain Reach](#mountain-reach) - _Terrain, Move_
+* [Protection](#protection) - _Defend_
+* [Prune Neighbor](#prune-neighbor) - _Tendril, Attack_
+* [Reactive Shield](#reactive-shield) - _Defend_
+* [Resist Shield](#resist-shield) - _Defend, Tendril_
+* [Selective Prune](#selective-prune) - _Tendril, Attack_
+* [Shield Boost](#shield-boost) - _Defend_
+* [Split](#split) - _Tendril_
+* [Stone Cage](#stone-cage) - _Attack_
+* [Trap](#trap) - _Attack_
 
 Water (15)
 
-* [Duplicate](#duplicate)
-* [Exchange Tendril](#exchange-tendril)
-* [Flood](#flood)
-* [Recover](#recover)
-* [Recovery Shield](#recovery-shield)
-* [Rest](#rest)
-* [Return Other](#return-other)
-* [Reverse Tendril](#reverse-tendril)
-* [River Run](#river-run)
-* [Teleport Away](#teleport-away)
-* [Teleport Other](#teleport-other)
-* [Water Hop](#water-hop)
-* [Water Jump](#water-jump)
-* [Water Moccasins](#water-moccasins)
-* [Water Skip](#water-skip)
+* [Duplicate](#duplicate) - _Tendril_
+* [Exchange Tendril](#exchange-tendril) - _Tendril_
+* [Flood](#flood) - _Terrain_
+* [Recover](#recover) - _Tapestry_
+* [Recovery Shield](#recovery-shield) - _Defend, Tapestry_
+* [Rest](#rest) - _Tapestry_
+* [Return Other](#return-other) - _Astral_
+* [Reverse Tendril](#reverse-tendril) - _Tendril_
+* [River Run](#river-run) - _Move, Terrain_
+* [Teleport Away](#teleport-away) - _Astral_
+* [Teleport Other](#teleport-other) - _Astral_
+* [Water Hop](#water-hop) - _Tendril, Terrain_
+* [Water Jump](#water-jump) - _Tendril, Terrain_
+* [Water Moccasins](#water-moccasins) - _Move, Terrain_
+* [Water Skip](#water-skip) - _Tendril, Terrain_
 
 ## By Name
 
@@ -204,7 +204,11 @@ Category: Move, Defend
 
 Place a CHARGE on this spell.
 
+-
+
 When CHARGEd, this shield absorbs all damage from attacks and prevents you from being involuntary moved out of your location.
+
+-
 
 Remove CHARGE when it takes 1 or more damage from a single attack.
 
@@ -219,6 +223,8 @@ Element: Air
 Category: Defend
 
 Place a CHARGE on this spell.
+
+-
 
 Spend a CHARGE at any time to move into a neighboring location ignoring terrain cost.
 
@@ -255,6 +261,8 @@ Category: Tendril, Attack
 
 When in a location with a TENDRIL controlled by another mage, remove all of that mage's TENDRILs.
 
+-
+
 If multiple mages, choose one.
 
 ### Distraction
@@ -279,7 +287,11 @@ Category: Defend
 
 Place a CHARGE on this spell.
 
+-
+
 When CHARGED, this shield absorbs all damage from attacks.
+
+-
 
 Remove CHARGE when it takes 2 or more damage from a single attack.
 
@@ -336,7 +348,11 @@ Element: Fire
 
 Category: Attack
 
-Place a CHARGE on this spell. Spend this CHARGE to boost the attack power of any spell by 1.
+Place a CHARGE on this spell.
+
+-
+
+Spend this CHARGE to boost the attack power of any spell by 1.
 
 ### Fire Burst
 ```
@@ -372,7 +388,11 @@ Category: Terrain
 
 Place CHARGE on this spell.
 
+-
+
 While CHARGEd, all groups of 2 or more adjacent TENDRILs you control change all Plains locations to Water up to 3 spaces away from the TENDRILs.
+
+-
 
 CHARGE is lost immediately when you do not have 2 adjacent TENDRILs.
 
@@ -453,7 +473,11 @@ Category: Terrain
 
 Place CHARGE on this spell.
 
+-
+
 While CHARGEd, all groups of 2 or more adjacent TENDRILs you control change all neighboring locations to Forest.
+
+-
 
 CHARGE is lost immediately when you do not have 2 adjacent TENDRILs.
 
@@ -481,6 +505,8 @@ Element: Air
 Category: Move
 
 Place a CHARGE on this spell.
+
+-
 
 Spend CHARGE to ignore terrain cost and effects when you move into (or are forced into) a location.
 
@@ -560,7 +586,11 @@ Category: Defend
 
 Place a charge on this spell.
 
+-
+
 This shield absorbs all damage from attacks.
+
+-
 
 Remove CHARGE when it takes 1 or more damage from a single attack.
 
@@ -575,6 +605,8 @@ Element: Fire
 Category: Attack
 
 Remove all TENDRILs from a location where you control a TENDRIL.
+
+-
 
 Yes, that includes the TENDRIL used to cast this spell.
 
@@ -600,6 +632,8 @@ Category: Attack
 
 Move into an adjacent location and push out all current occupants of that location into neighboring locations.
 
+-
+
 Former occupants get to choose where they move.
 
 ### Reactive Shield
@@ -612,7 +646,11 @@ Category: Defend
 
 Place a CHARGE on this spell.
 
+-
+
 When in the same location as a TENDRIL controlled by another mage, this shield absorbs all damage from attacks.
+
+-
 
 Remove CHARGE when it takes 3 or more damage from a single attack.
 
@@ -638,7 +676,11 @@ Category: Defend, Tapestry
 
 Place a CHARGE on this spell.
 
+-
+
 When CHARGEd, this shield absorbs all damage from attacks.
+
+-
 
 Remove CHARGE and 2 THREADs from your TAPESTRY when it takes 1 or more damage from a single attack.
 
@@ -653,6 +695,8 @@ Category: Defend, Attack
 
 Place 1 charge on this spell.
 
+-
+
 Spend a charge at any time to protect against 1 or more points of damage and reflect 1 point of damage back at the attacker.
 
 ### Resist Shield
@@ -666,7 +710,11 @@ Category: Defend, Tendril
 
 Place a CHARGE on this spell.
 
+-
+
 When CHARGEd, this shield absorbs all damage from attacks and prevents others from placing new TENDRILs on your location.
+
+-
 
 Remove CHARGE when it takes 1 or more damage from a single attack.
 
@@ -738,6 +786,8 @@ Category: Move, Terrain
 
 If next to a river or water location, pay terrain cost to move into any other space adjacent to that river or water location.
 
+-
+
 Restrictions:
 
 * Rivers: Without passing a bridge
@@ -796,7 +846,11 @@ Element: Earth
 
 Category: Defend
 
-Place a CHARGE on this spell. Spend this CHARGE to boost the defense power of any spell by 1.
+Place a CHARGE on this spell.
+
+-
+
+Spend this CHARGE to boost the defense power of any spell by 1.
 
 ### Shield Pierce
 ```
@@ -831,7 +885,13 @@ Element: Earth
 
 Category: Attack
 
-PLace a CHARGE on this spell. While CHARGEd, there is a barrier at a TENDRIL you control that traps the occupants of that location and prevents them from moving out.
+PLace a CHARGE on this spell.
+
+-
+
+While CHARGEd, there is a barrier at a TENDRIL you control that traps the occupants of that location and prevents them from moving out.
+
+-
 
 CHARGE is lost if the TENDRIL moves or if the barrier takes 1 damage.
 
@@ -868,6 +928,8 @@ Category: Attack
 
 Place 1 charge on this spell.
 
+-
+
 When an opponent's TENDRIL moves into your location, that opponent takes 1 damage and this CHARGE is removed.
 
 ### Wall of Flame
@@ -882,7 +944,11 @@ Category: Attack
 
 Place CHARGE on this spell.
 
+-
+
 While CHARGEd, all groups of 3 adjacent TENDRILs you control are on fire and cause 1 damage.
+
+-
 
 CHARGE is lost immediately when you do not have 3 adjacent TENDRILs.
 
@@ -896,6 +962,8 @@ Element: Water
 Category: Tendril, Terrain
 
 When next to a river or Water location, add a TENDRIL to any location adjacent to that water.
+
+-
 
 Restrictions:
 
@@ -913,6 +981,8 @@ Category: Tendril, Terrain
 
 When next to a river or Water location, add a TENDRIL to any location adjacent to that water.
 
+-
+
 Restrictions:
 
 * Rivers: Passing at most 1 bridge
@@ -929,6 +999,8 @@ Category: Move, Terrain
 
 Place a CHARGE on this spell.
 
+-
+
 This charge can be spent at any time to cross a river or move into a water location.
 
 ### Water Skip
@@ -942,6 +1014,8 @@ Element: Water
 Category: Tendril, Terrain
 
 Move a TENDRIL you control that is adjacent to a river or water location into any other space adjacent to that river or water location.
+
+-
 
 Restrictions:
 
@@ -959,6 +1033,8 @@ Element: Air
 Category: Tendril
 
 Place CHARGE on this spell.
+
+-
 
 While CHARGEd, all TENDRILs you control are obstacles that other mages may not move into or pass through.
 

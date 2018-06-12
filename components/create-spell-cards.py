@@ -474,10 +474,8 @@ class CardGen(object):
 		else:
 			return e[0].upper() + e[1:]
 
-	def summary_spells_sorted_by_name(self, summary_file, spells):
-		names = [self.id2name[id] for id in spells]
-		for name in sorted(names):
-			summary_file.write('* %s\n' % self.spell_link(self.name2id[name]))
+	def category_list(self, cats):
+		return', '.join([cat[0].upper() + cat[1:] for cat in cats.split(',')])
 
 	def gen_spell_summary(self):
 		summary = open('spell-list.md', "w")
@@ -491,7 +489,12 @@ class CardGen(object):
 
 		for c in self.valid_categories:
 			summary.write('%s (%d)\n\n' % (c[0].upper() + c[1:], len(self.categories[c])))
-			self.summary_spells_sorted_by_name(summary, self.categories[c])
+
+			names = [self.id2name[id] for id in self.categories[c]]
+			for name in sorted(names):
+				sid = self.name2id[name]
+				summary.write('* %s - _%s_\n' % (self.spell_link(sid), self.element_name(self.id2attrs[sid]['element'])))
+
 			summary.write('\n')
 			
 		summary.write('## By Element\n\n')
@@ -500,7 +503,12 @@ class CardGen(object):
 			eName = self.element_name(e)
 
 			summary.write('%s (%d)\n\n' % (eName, len(self.elements[e])))
-			self.summary_spells_sorted_by_name(summary, self.elements[e])
+
+			names = [self.id2name[id] for id in self.elements[e]]
+			for name in sorted(names):
+				sid = self.name2id[name]
+				summary.write('* %s - _%s_\n' % (self.spell_link(sid), self.category_list(self.id2attrs[sid]['category'])))
+
 			summary.write('\n')
 
 		summary.write('## By Name\n\n')
@@ -514,7 +522,7 @@ class CardGen(object):
 			summary.write('Element: %s\n\n' % self.element_name(self.id2attrs[sid]['element']))
 
 			summary.write('Category: ')
-			summary.write(', '.join([cat[0].upper() + cat[1:] for cat in self.id2attrs[sid]['category'].split(',')]))
+			summary.write(self.category_list(self.id2attrs[sid]['category']))
 			summary.write('\n\n')
 
 			is_bullet_list = False
