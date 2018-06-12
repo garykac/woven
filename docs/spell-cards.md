@@ -13,12 +13,12 @@ An evocative title for the spell.
 
 ## Pattern
 
-This is the representation of the layout that must be created in the mage's tapestry
-in order to cast this spell.
+This is the representation of the layout that must be created in the mage's tapestry in order to cast this spell.
 
-The Pattern may or may not contain an ELEMENT.
+Patterns contain zero or more ELEMENTs.
+Patterns that do not contain any ELEMENT are NEUTRAL.
 
-Spells that do not contain an ELEMENT are NEUTRAL.
+Patterns contain one or more THREADs. Whenever a mage places a thread, they may cast any one spell they control whose pattern is completed by that thread.
 
 ## Effect
 
