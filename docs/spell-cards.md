@@ -2,31 +2,36 @@
 
 A spell card contains the following information:
 
-* Name
-* Pattern
-* Effect
+* Name.
+* Pattern.
+* Effect.
+* (Optional) Flavor text.
 
 ## Name
 
-Just a name
+An evocative title for the spell.
 
 ## Pattern
 
-This is the representation of the layout that must be created in the mage's matrix
+This is the representation of the layout that must be created in the mage's tapestry
 in order to cast this spell.
 
-The Pattern may or may not contain an ELEMENT as part of the pattern.
+The Pattern may or may not contain an ELEMENT.
 
 Spells that do not contain an ELEMENT are NEUTRAL.
 
 ## Effect
 
+Spell effects have three parts:
+
+1. An effect that occurs at the time the spell is cast.
+2. A permanent effect for when the spell has one or more charges on it.
+3. A reactionary effect that requires a charge on the spell and costs something (often a charge) to use.
 
 ## Design space expansions for Spells
 
 * Multiple elements in pattern
 * Constraints within the squares of the pattern
-
 
 # Element properties
 
@@ -98,3 +103,10 @@ For patterns, earth avoids diagonals; blocky L shapes (no knight moves, even) ma
 Neutral spells are just straight worse than others, almost always requiring an extra mana for the same (or even a worse) effect. On the other hand, they have no symbol requirement, and no particular ability weakness. A three-mana neutral spell might do damage, or give you a bunch of movement, or whatever.
 
 For patterns, neutral takes on the desire of the elements its copying. (The primary one-mana neutral spell without a pattern just drops a tendril in your current location.)
+
+## Elemental Pairs
+
+- Fire / Air is a quick-moving mage that shoots fireballs, but they're a glass cannon that has to re-target with each attack.
+- Air / Water is a flexible, hard-to-predict mage that can send out a bunch of chaff to hide their intentions, but they're poor at reacting quickly.
+- Water / Earth is a slow-moving "tower mage" that might only cast one actual spell a turn, but affects the whole map with their permanent-power, wave-like tendrils.
+- Earth / Fire is a tank with a flamethrower, prepared to deal with nearby threats but unable to affect the distant map.
