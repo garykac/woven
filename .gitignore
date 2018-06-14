@@ -11,6 +11,5 @@ components/spell-cards/svg/
 components/tapestry-cards/png_out/
 components/tapestry-cards/svg_out/
 
-# Maps
+# Maps (large files)
 maps/*.png
-maps/*.jpg
