@@ -7,7 +7,7 @@ A tabletop game where fragile wizards chain together blocks of micro-code spell 
 Common:
 
 * 1 Hex map with terrain (field, forest, mountain)
-* [33 double-sided Tapestry cards](docs/matrix-cards.md)
+* [33 double-sided Tapestry cards](tapestry-cards-2sided.md)
 * <n> Basic Spell Fragment cards
 * <n> Spell Fragment cards
 
