@@ -1,10 +1,10 @@
-# Placing Matrix Cards
+# Tapestry Card Placement
 
-Each player has a Matrix of cards in front of them
+Each player has a Tapestry of cards in front of them
 that allow them to cast spells. After the first
-Matrix card (which is simply placed in front of the
-player), when Matrix cards are placed they must overlap
-part of a previously placed card in the Matrix.
+Tapestry card (which is simply placed in front of the
+player), when Tapestry cards are placed they must overlap
+part of a previously placed card in the Tapestry.
 
 For example:
 

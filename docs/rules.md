@@ -4,64 +4,130 @@ A tabletop game where fragile wizards chain together blocks of micro-code spell 
 
 ## Components
 
+Common:
+
 * 1 Hex map with terrain (field, forest, mountain)
-* [66 Matrix cards](docs/matrix-cards.md)
+* [33 double-sided Tapestry cards](docs/matrix-cards.md)
 * <n> Basic Spell Fragment cards
-* <n> Advanced Spell Fragment cards
-* 6 Mage tokens (1/player)
-* 12 Target markers (2/player)
-* 72 Spell markers (12/player)
+* <n> Spell Fragment cards
+
+Per-player:
+
+* 1 Mage tokens
+* 11 Mana counters
 
 ## Setup
 
 General setup:
 
 * Map in middle of table
-* Stack of Matrix Cards with top 3 revealed
-* Basic Spell Fragments revealed for all players
-* Choose starting player
+* Stack of Tapestry Cards
+* All Basic Spell Fragments are revealed for all players
 
 For each player:
 
 * Assign starting home position on map
-* Place Mage marker on home position
-* Deal random Matrix Card and place in front
-to start their Matrix
+* Place Mage token on home position
+* Deal random Tapestry Card and place in front
+to start their TAPESTRY
+
+## General Terms and Definitions
+
+Each player has:
+
+* a MANA POOL where their mana is stored.
+* a SPENT POOL (initially empty) where spent mana is kept.
+* a TAPESTRY of cards where they can build patterns to cast spells
+
+When:
+
+* mana is placed on the TAPESTRY it becomes a THREAD that can be used to cast spells
+* mana is placed on the map it becomes a TENDRIL that can be used by spells to target locations
+* mana is placed on a spell, it becomes a CHARGE for that spell
+* mana is spent for movement or to acquire cards, it is moved into the SPENT POOL
+
+The Astral Plane is where you start the game and where you will be sent if your physical form is destroyed.
 
 ## Each Turn
 
-### Remove Mana from Spell
+### Recover 1 Thread from Tapestry
 
-At the start of their turn, players who are not in the Astral Plane may remove 1
-Mana token from their Matrix at no cost.
+At the start of your turn, take 1 THREAD from your TAPESTRY and place it back in your MANA POOL.
 
-If the player is
-drawing a Matrix Card on this turn, then they may
-choose to remove this mana after they have placed
-the Matrix Card.
+### Spend Mana
 
-### Spend Action Points
+Spend as much mana as you wish from your MANA POOL.
 
-Players are given 3 Action Points (APs) to spend each
-turn. Any unspent APs are lost at the end of the turn.
+Mana can be placed on the TAPESTRY as THREADs to cast spells. See [Casting Spells](#casting-spells).
 
-Actions and their AP code:
+Mana can also be spent on the following actions:
+
+|  Cost  | Action |
+| ------ | ------ |
+| 1 mana | Gain 1 Movement Point (MP) |
+| 2 mana | Draw a first Tapestry Card |
+| 3 mana | Draw a second Tapestry Card |
+
+Mana that is spent for these actions is moved into your SPENT POOL until the end of your turn.
+
+Any Tapestry Cards that are acquired are set aside until the end of your turn.
+
+### Movement
+
+You can gain Movement Points (MPs) by spending mana or casting certain spells.
+
+MPs can be spent as follows to move around the Map:
 
 | Cost | Action |
 | ---- | ------ |
-| 1 AP | Move into Field |
-| 2 AP | Move into Forest |
-| 3 AP | Move into Mountain |
-| 2 AP | Draw and [Place 1 Matrix Card](placing-matrix-cards.md) |
-| 1 AP | Place 1 Mana to [Cast a spell](casting-spells.md) |
-| 2 AP | Place 3 Mana to [Cast spells](casting-spells.md) |
-| 3 AP | Place 6 Mana to [Cast spells](casting-spells.md) |
-| 1 AP | Remove 1 Mana from Matrix |
+| 1 MP | Move into Field or along Road |
+| 2 MP | Move into Forest |
+| 3 MP | Move into Mountain |
 
-## Death
+MPs can be spent at any time during your turn. Any unused MPs at the end of your turn are lost.
 
-When a mage is killed:
+### Casting Spells
 
-* They are sent to the Astral Plane
-* They lose all their targets (except their home target)
-* They remove all Mana from their Matrix
+When you place a new THREAD on your TAPESTRY that completes a pattern on one of your spells, you cast that spell and trigger its effects.
+
+TODO: Add Example
+
+#### Tendrils
+
+When the effect of a spell is to place a new TENDRIL on the map, you must take mana from your MANA POOL and place it on the map.
+
+If you do not have any mana available in your MANA POOL, then the spell has no effect.
+
+#### Charges
+
+When a spell requires a CHARGE, you must take mana from your MANA POOL and place it on the spell.
+
+If you do not have any mana available in your MANA POOL, then the spell has no effect.
+
+### End of Turn Actions
+
+These end of turn actions can be done in parallel with the next player starting their turn.
+
+#### Recover all Spent Mana
+
+Move all mana from your SPENT POOL back into your MANA POOL.
+
+#### Place Tapestry Cards
+
+If you acquired any new Tapestry Cards, then you may add them to your TAPESTRY at this time. Newly added cards must overlap at least one symbol or box on an existing card. See the [placement rules](tapestry-card-placement.md).
+
+Any THREADs that are covered by the newly added card are removed from the TAPESTRY and added back into your MANA POOL.
+
+Alternately, you may choose to set aside your newly acquired Tapestry Cards and hold onto them to use at a later point. But note that they can only be added to your TAPESTRY at the end of one of your turns.
+
+## Live and Death
+
+When you take a single point of damage, your physical
+form is destroyed and you are sent back to the Astral Plane.
+
+When you are killed:
+
+* You are sent to the Astral Plane
+* You discard your TAPESTRY and draw a new Tapestry Card to start a new one
+* You recover all mana back into your MANA POOL
+	* This means you lose all TENDRILs and CHARGEs

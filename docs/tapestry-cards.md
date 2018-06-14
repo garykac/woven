@@ -1,4 +1,4 @@
-# Matrix Cards
+# Tapestry Cards - Single-sided
 
 Order of Elements: `A F E W`
 so that Fire and Water (and Air/Earth) are not (usually) near to each other
