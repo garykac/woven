@@ -8,28 +8,14 @@ Common:
 
 * 1 Hex map with terrain (field, forest, mountain)
 * [33 double-sided Tapestry cards](tapestry-cards-2sided.md)
-* <n> Basic Spell Fragment cards
-* <n> Spell Fragment cards
+* _n_ Basic Spell Fragment cards
+* _n_ Spell Fragment cards
+* _n_ Home location cards
 
 Per-player:
 
 * 1 Mage tokens
 * 11 Mana counters
-
-## Setup
-
-General setup:
-
-* Map in middle of table
-* Stack of Tapestry Cards
-* All Basic Spell Fragments are revealed for all players
-
-For each player:
-
-* Assign starting home position on map
-* Place Mage token on home position
-* Deal random Tapestry Card and place in front
-to start their TAPESTRY
 
 ## General Terms and Definitions
 
@@ -39,14 +25,43 @@ Each player has:
 * a SPENT POOL (initially empty) where spent mana is kept.
 * a TAPESTRY of cards where they can build patterns to cast spells
 
-When:
+When mana is:
 
-* mana is placed on the TAPESTRY it becomes a THREAD that can be used to cast spells
-* mana is placed on the map it becomes a TENDRIL that can be used by spells to target locations
-* mana is placed on a spell, it becomes a CHARGE for that spell
-* mana is spent for movement or to acquire cards, it is moved into the SPENT POOL
+* Placed on the TAPESTRY, it becomes a THREAD that can be used to cast spells
+* Placed on the map, it becomes a TENDRIL that can be used by spells to target locations
+* Placed on a spell, it becomes a CHARGE for that spell
+* Spent for movement or to acquire cards, it is moved into the SPENT POOL
 
 The Astral Plane is where you start the game and where you will be sent if your physical form is destroyed.
+
+## Setup
+
+General setup:
+
+* Map in middle of table
+* Stack of Tapestry Cards
+* All Basic Spell Fragments are revealed for all players
+
+## Start Game
+
+Deal a random Home Card to each player. Keep it hidden for now.
+
+Deal a random Tapestry Card to each player.
+
+For each player:
+
+* Choose a color and take the mage and mana tokens of that color
+* Place the mage token in front of you (but not on map). Your starting position is in the Astral Plane, which is not shown on the map.
+
+### Spell Draft
+
+* Deal 7 cards to each player
+* Choose 1 and pass remaining to your left (clockwise)
+	* Repeat until there are no cards remaining to pass
+
+You should keep these spells hidden from other players until you cast the spell.
+ 
+After the spell draft, the initial Tapestry Card that was dealt should be placed in front of you to start your TAPESTRY. You may choose either side to be face up.
 
 ## Each Turn
 
@@ -98,11 +113,17 @@ When the effect of a spell is to place a new TENDRIL on the map, you must take m
 
 If you do not have any mana available in your MANA POOL, then the spell has no effect.
 
+You can abandon a TENDRIL and return the mana back into your MANA POOL at any time during your turn.
+
 #### Charges
 
-When a spell requires a CHARGE, you must take mana from your MANA POOL and place it on the spell.
+When a spell requires a CHARGE, you must take mana from your MANA POOL and place it on the spell card.
 
 If you do not have any mana available in your MANA POOL, then the spell has no effect.
+
+Unless otherwise specified, CHARGEs can be spent at any time (even during another player's turn). A common use for CHARGEs is to be able to react to an opponent's action (attacking, pushing, et al.)
+
+You can abandon a CHARGE and return the mana back into your MANA POOL at any time during your turn.
 
 ### End of Turn Actions
 
@@ -120,7 +141,7 @@ Any THREADs that are covered by the newly added card are removed from the TAPEST
 
 Alternately, you may choose to set aside your newly acquired Tapestry Cards and hold onto them to use at a later point. But note that they can only be added to your TAPESTRY at the end of one of your turns.
 
-## Live and Death
+## Life and Death
 
 When you take a single point of damage, your physical
 form is destroyed and you are sent back to the Astral Plane.
