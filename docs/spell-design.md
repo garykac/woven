@@ -18,7 +18,7 @@ This is the representation of the layout that must be created in the mage's tape
 Patterns contain zero or more ELEMENTs.
 Patterns that do not contain any ELEMENT are NEUTRAL.
 
-Patterns contain one or more THREADs. Whenever a mage places a thread, they may cast any one spell they control whose pattern is completed by that thread.
+Patterns specify one or more THREADs that are required for this spell. Whenever a mage places a thread, they may cast any one spell they control whose pattern is completed by that thread.
 
 ## Effect
 
