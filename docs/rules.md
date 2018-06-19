@@ -10,7 +10,7 @@ Common:
 * [33 double-sided Tapestry cards](tapestry-cards-2sided.md)
 * _n_ Basic Spell Fragment cards
 * _n_ Spell Fragment cards
-* _n_ Home location cards
+* 5 Home location cards
 
 Per-player:
 
@@ -39,40 +39,41 @@ The Astral Plane is where you start the game and where you will be sent if your 
 
 ## Start Game
 
-### General setup
+General Setup:
 
-Place map in middle of table
-
-Place stack of Tapestry Cards when everyone can access
-
-Place the basic Spells where all players can see
-
-### For Each Player
+* Place map in middle of table
+* Place stack of Tapestry Cards when everyone can access
+* Place the basic Spells where all players can see
 
 Each player should perform the following actions:
 
-#### Choose Color
+* Choose Color
+* Assign Home Location
+* Draft Spell Cards
+* Initialize Tapestry
+
+### Choose Color
 
 Choose a color and take the mage and mana tokens of that color
 
 Place your mage token in front of you (but not on map). Your starting position is in the Astral Plane, which is not shown on the map.
 
-#### Assign Home Location
+### Assign Home Location
 
 Draw a random Home Card.
 
 Keep it hidden for now. You will reveal your home position when you make your first move on the map.
 
-#### Draft Spell Cards
+### Draft Spell Cards
 
-* Deal 7 cards to each player
+* Deal 7 spell cards to each player
 * Choose 1 and pass remaining to your left (clockwise)
 	* Repeat until there are no cards remaining to pass
 
 You should keep these spells hidden from other players.
 Reveal a spell (by placing it in front of you) when you cast it for the first time.
 
-#### Initialize Tapestry 
+### Initialize Tapestry 
 
 Deal a random Tapestry Card to each player.
 
@@ -132,6 +133,8 @@ MPs can be spent as follows to move around the Map:
 
 MPs can be spent at any time during your turn. Any unused MPs at the end of your turn are lost.
 
+When moving, you may enter or pass through spaces that are occupied by other creatures without penalty.
+
 ## Casting Spells
 
 There are two parts to casting a spell:
@@ -142,7 +145,7 @@ There are two parts to casting a spell:
 When you place a new THREAD on your TAPESTRY that completes a pattern on one of your spells, you cast that spell and trigger its effects. If the newly added THREAD completes
 multiple spell patterns, then you must choose one.
 
-THREADs can only be placed in empty boxes on your Tapestry Cards. Unless otherwise stated, they may not be placed on top of the element symbols on the Tapestry Cards.
+THREADs can only be placed in empty boxes on your Tapestry Cards. Unless otherwise stated, they may not be placed on top of the element symbols in your TAPESTRY.
 
 If you are casting a spell that you have hidden in your hand,
 then you must reveal that spell by placing it in front of you.
