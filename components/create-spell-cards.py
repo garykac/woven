@@ -8,6 +8,7 @@ import subprocess
 import sys
 
 from spell_card_data import spell_card_data
+from spell_card_data import spell_card_revision
 
 def error(msg):
 	print '\nERROR: %s\n' % msg
@@ -69,6 +70,21 @@ class CardGen(object):
 			self.paper_width = 744.09449
 			self.paper_height = 1052.36220
 
+		self.card_spacing_col = 0
+		self.card_spacing_row = 0
+		
+		if self.cards_per_page == 21:
+			# 12x18 printplaygames 21-up Bridge page.
+			# https://www.printplaygames.com/prototypes/formatting-guidelines/card-formatting-templates/
+			self.paper_type = '12x18'
+			self.paper_width = in2px(12)
+			self.paper_height = in2px(18)
+
+			# row-spacing = 22.5
+			# col-spacing: ;719.99377 - 382.41348 - 44.83316
+			self.card_spacing_col = 22.5803
+			self.card_spacing_row = 22.5
+		
 		self.valid_elements = ['none', 'air', 'fire', 'earth', 'water']
 		self.valid_categories = ['astral', 'attack', 'defend', 'move', 'tendril', 'tapestry', 'terrain']
 
@@ -86,21 +102,29 @@ class CardGen(object):
 		self.indent_count -= count
 		
 	def write_header(self):
+		self.write('<?xml version="1.0" encoding="UTF-8" standalone="no"?>\n')
+
+		self.write('<svg version="1.1"\n')
+		self.indent()
 		namespaces = [
-			'xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"',
-			'xmlns="http://www.w3.org/2000/svg"',
-			'xmlns:cc="http://creativecommons.org/ns#"',
-			'xmlns:xlink="http://www.w3.org/1999/xlink"',
 			'xmlns:dc="http://purl.org/dc/elements/1.1/"',
+			'xmlns:cc="http://creativecommons.org/ns#"',
+			'xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"',
+			#'xmlns:svg="http://www.w3.org/2000/svg"',
+			'xmlns="http://www.w3.org/2000/svg"',
+			'xmlns:xlink="http://www.w3.org/1999/xlink"',
 			'xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"',
 			'xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"',
 			]
-		self.write('<svg version="1.1"')
+		for ns in namespaces:
+			self.write('%s\n' % ns)
 		if self.paper_type == 'a4':
-			self.write(' height="297mm" width="210mm"')
+			self.write('height="297mm" width="210mm"\n')
 		else:
-			self.write(' height="%dpt" width="%dpt"' % (px2pt(self.paper_height), px2pt(self.paper_width)))
-		self.write(' %s>\n' % ' '.join(namespaces))
+			self.write('height="%d" width="%d"\n' % (self.paper_height, self.paper_width))
+		#self.write('viewBox="0 0 %d %d"\n' % (self.paper_height, self.paper_width))
+		self.write('>\n')
+		self.outdent()
 		self.write('<metadata>\n')
 		self.write('<rdf:RDF>\n')
 		self.indent()
@@ -157,13 +181,9 @@ class CardGen(object):
 			#  | 6 | 7 | 8 |
 			#  |   |   |   |
 			#  *---+---+---+
-			# Bottom-left point of bottom left card on page.
-			origin0_x = (self.paper_width - (3 * self.card_width)) / 2
-			origin0_y = self.paper_height - ((self.paper_height - (3 * self.card_height)) / 2)
-			# Set origin to top-left of current card.
-			origin_x = origin0_x + (id % 3) * self.card_width
-			origin_y = origin0_y + (int(id / 3) - 3) * self.card_height
-			self.write('<g id="card%d" transform="translate(%f,%f)">\n' % (id, origin_x, origin_y))
+			rows = 3
+			cols = 3
+			rotate = False
 		elif self.cards_per_page == 8:
 			# +----+----+
 			# | 3  | 7  |
@@ -174,15 +194,51 @@ class CardGen(object):
 			# +----+----+
 			# | 0  | 4  |
 			# *----+----+
-			# Bottom-left point of bottom left card on page (ignoring rotation).
-			origin0_x = (self.paper_width - (2 * self.card_height)) / 2
-			origin0_y = self.paper_height - ((self.paper_height - (4 * self.card_width)) / 2)
-			# Set origin to top-left of current card and add rotate transformation.
-			origin_x = origin0_x + int(id / 4) * self.card_height
-			origin_y = origin0_y - (id % 4) * self.card_width
-			self.write('<g id="card%d" transform="matrix(0,-1,1,0,%f,%f)">\n' % (id, origin_x, origin_y))
+			rows = 2
+			cols = 4
+			rotate = True
+		elif self.cards_per_page == 21:
+			# +----+----+----+
+			# | 6  | 13 | 20 |
+			# +----+----+----+
+			# | .  | .  | .  |
+			#   .    .    .
+			# | .  | .  | .  |
+			# +----+----+----+
+			# | 0  | 7  | 14 |
+			# *----+----+----+
+			rows = 3
+			cols = 7
+			rotate = True
 		else:
 			error("Invalid number of cards per page: %d" % self.cards_per_page)
+
+		card_x_px = self.card_width
+		card_y_px = self.card_height
+		card_x = (id % cols)
+		card_y = (int(id / cols) - rows)
+		dir_x = 1
+		dir_y = 1
+		if rotate:
+			card_x_px = self.card_height
+			card_y_px = self.card_width
+			card_x = int(id / cols)
+			card_y = (id % cols)
+			dir_x = 1
+			dir_y = -1
+
+		# Bottom-left point of bottom left card on printed page.
+		origin0_x = (self.paper_width - (rows * card_x_px) - ((rows-1) * self.card_spacing_row)) / 2
+		origin0_y = self.paper_height - ((self.paper_height - (cols * card_y_px) - ((cols-1) * self.card_spacing_col)) / 2)
+
+		# Set origin to top-left of current card.
+		origin_x = origin0_x + dir_x * ((card_x * card_x_px) + ((card_x) * self.card_spacing_row))
+		origin_y = origin0_y + dir_y * ((card_y * card_y_px) + ((card_y) * self.card_spacing_col))
+
+		if rotate:
+			self.write('<g id="card%d" transform="matrix(0,-1,1,0,%f,%f)">\n' % (id, origin_x, origin_y))
+		else:
+			self.write('<g id="card%d" transform="translate(%f,%f)">\n' % (id, origin_x, origin_y))
 
 		self.indent()
 
@@ -207,7 +263,7 @@ class CardGen(object):
 
 		self.draw_border()
 		self.draw_title(name)
-		self.draw_id(attrs['id'])
+		self.draw_card_id(attrs['id'])
 		if 'starter' in attrs:
 			self.draw_starter()
 		
@@ -226,9 +282,10 @@ class CardGen(object):
 		id = "c%d-title" % self.curr_card
 		self.draw_text(id, self.card_width / 2, 30, title, 18, align='center', weight='bold', font='Arial Narrow')
 		
-	def draw_id(self, spell_id):
+	def draw_card_id(self, spell_id):
 		card_id = "c%d-spell-id" % self.curr_card
-		self.draw_text(card_id, self.card_width / 2, self.card_height-15, str(spell_id), 10, align='center', style='italic', font='Georgia')
+		id_string = 'id #%d (r%d)' % (spell_id, spell_card_revision)
+		self.draw_text(card_id, self.card_width / 2, self.card_height-15, id_string, 10, align='center', style='italic', font='Georgia')
 
 	def draw_starter(self):
 		id = "c%d-starter" % self.curr_card

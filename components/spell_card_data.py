@@ -24,6 +24,8 @@
 #  * Else 'X' in upper-left corner. 
 #  * Prefer wider spells over taller spells.
 
+spell_card_revision = 1
+
 spell_card_data = [
 
 	#  _____         _           _    ___   
