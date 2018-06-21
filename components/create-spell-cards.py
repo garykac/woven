@@ -545,6 +545,8 @@ class CardGen(object):
 		summary.write('## By Category\n\n')
 
 		for c in self.valid_categories:
+			if not c in self.categories:
+				continue
 			summary.write('%s (%d)\n\n' % (c[0].upper() + c[1:], len(self.categories[c])))
 
 			names = [self.id2name[id] for id in self.categories[c]]
@@ -558,7 +560,9 @@ class CardGen(object):
 
 		for e in self.valid_elements:
 			eName = self.element_name(e)
-
+			if not e in self.elements:
+				continue
+				
 			summary.write('%s (%d)\n\n' % (eName, len(self.elements[e])))
 
 			names = [self.id2name[id] for id in self.elements[e]]
@@ -592,7 +596,6 @@ class CardGen(object):
 			if is_bullet_list:
 				summary.write('\n')
 
-		print 'Max ID:', self.max_id
 		summary.close()
 		
 	def processing_summary(self):
