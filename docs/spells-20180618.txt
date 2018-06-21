@@ -1,0 +1,146 @@
+Spells
+
+|                      |      | target   | target   |      |
+| type                 | self | creature | location | desc |
+
+| Move                 |  x   |          |          | Move self on map (gain MPs) |
+| Move Other           |      |    x     |          | Push other creature on map |
+| Anchor               |  x   |          |          | Protect from being moved |
+| Anchor Other         |      |    x     |          | Protect target creature from being moved |
+| Attack               |  x   |          |          | ??? |
+| Attack Other         |      |    x     |          | Fireball target creatures |
+| Defend               |  x   |          |          | Shield self |
+| Defend Other         |      |    x     |          | Shield target creature (coop/minions) |
+
+| Create Tendril       |  x   |          |          | Create tendril at current location |
+| Move Tendril         |  x   |          |    x     | Move tendril you control |
+| Move other T         |      |    x     |          | |
+| Anchor Tendril       |  x   |          |    x     | Anchor tendril you control |
+| Anchor other T       |      |    x     |          | |
+| Attack Tendril       |  x   |          |    x     | Damage tendril you control |
+| Attack other T       |      |    x     |          | |
+| Defend Tendril       |  x   |          |    x     | Shield tendril you control |
+| Defend other T       |      |    x     |          | |
+
+| Teleport self away   |  x   |          |          | |
+| Teleport target away |      |    x     |          | |
+| Teleport self back   |  x   |          |    x     | |
+| Teleport target back |      |          |    x     | |
+
+Coop:
+Create Tendil at other mage location (if they agree)
+
+
+Basic spells (neutral)
+* Return to Home (2 or 3)
+* Place TENDRIL in current location (2)
+
+
+Game Actions (and Dimensions)
+
+* Move creature on map (Air)
+	* move self vs. target creature
+		* self: Haste
+		* other: Push
+	* immediate vs. charge to spend vs. permanent charge
+		* immed: Haste
+		* charge: Levitate, Blur
+	* anyplace vs. terrain vs. neighboring location
+* Anchor creature (Earth)
+	* anchor self vs. target creature
+		* self: prevent unwanted movement
+		* other: imprison
+	* immediate vs. charge to spend vs. permanent charge
+	* anyplace vs. terrain vs. neighboring location
+
+* Attack creature (Fire)
+	* attack self vs. target creature
+		* self: ???
+		* target: fireball
+	* immediate vs. charge to spend vs. permanent charge
+	* anyplace vs. terrain vs. neighboring location
+* Defend creature (Earth, Water)
+	* defend self vs. target creature
+	* immediate vs. charge to spend vs. permanent charge
+	* anyplace vs. terrain vs. neighboring location
+
+* Create tendril
+	* create at self vs. at target location
+		* self: create at self
+		* target: Split/duplicate tendril
+	* immediate vs. charge to spend vs. permanent charge
+	* anyplace vs. terrain vs. neighboring location
+* Reverse tendril
+	* create at self vs. at target location
+		* self: when other tendril is targeting self, follow back to originator
+	* immediate vs. charge to spend vs. permanent charge
+	* anyplace vs. terrain vs. neighboring location
+* Tendril detect/trigger - trigger when tendrils overlap (Water)
+	* create at self vs. at target location
+	* immediate vs. charge to spend vs. permanent charge
+	* anyplace vs. terrain vs. neighboring location
+
+* Move tendril (Air)
+	* move tendril you control vs. owned by target creature/other tendril
+	* immediate vs. charge to spend vs. permanent charge
+	* anyplace vs. terrain vs. neighboring location
+* Anchor tendril (earth)
+	* anchor tendril you control vs. other
+	* immediate vs. charge to spend vs. permanent charge
+	* anyplace vs. terrain vs. neighboring location
+
+* Attack tendril (fire)
+	* attack tendril you control vs. other
+	* immediate vs. charge to spend vs. permanent charge
+	* anyplace vs. terrain vs. neighboring location
+* Defend tendril (earth, water)
+	* defend tendril you control vs. other
+		* self: Shield
+		* other: Shield for other
+	* immediate vs. charge to spend vs. permanent charge
+		* immediate: ???
+		* charge: charge to use shield as needed
+	* anyplace vs. terrain vs. neighboring location
+
+* Teleport away (Water)
+	* teleport self vs. other
+		* self: teleport self
+		* other: teleport other
+	* immediate vs. charge to spend vs. permanent charge
+		* immediate: teleport now
+		* charge: teleport at some point in the future
+	* anyplace vs. terrain vs. neighboring location
+* Teleport back (Earth)
+	* teleport self vs. other
+	* immediate vs. charge to spend vs. permanent charge
+	* anyplace vs. terrain vs. neighboring location
+
+* Tapestry add thread (Water)
+	* self vs. other
+		* other for attack
+	* immediate vs. charge to spend vs. permanent charge
+		* immed: place 2 damage threads now
+		* charge: place 1 damage thread at any time
+	* anyplace vs. terrain vs. neighboring location
+* Tapestry move thread (Air)
+	* self vs. other
+	* immediate vs. charge to spend vs. permanent charge
+	* anyplace vs. terrain vs. neighboring location
+* Tapestry remove thread (Fire)
+	* self vs. target creature
+		* other for coop
+	* immediate vs. charge to spend vs. permanent charge
+		* immed: Remove 1
+		* charge: Remove 2 at end of turn
+	* anyplace vs. terrain vs. neighboring location
+
+Boost Attack
+Boost Defend
+Boost Tendril Attack
+Boost Tendril Defend
+* Barrier Tendril - tendrils are obstacles
+* Swap locations with a tendril
+Terrain growth/terraforming
+Trap
+
+Move opponent's tendrils

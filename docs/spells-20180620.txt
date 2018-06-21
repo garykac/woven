@@ -1,0 +1,122 @@
+Basic actions:
+
+Cost  Action
+ 1   Move into Plains
+ 2   Move into Forest
+ 3   Move into Mountain
+ 2   Drop Tendril in current location
+ 3   Acquire Tapestry Card
+ n   Cast Spell
+
+
+Artifacts: (provide additional player-specific action)
+
+Ability: When adjacent to Forest, move to any location within that connected Forest
+Action: Moving into Forest costs 0
+
+Ability: When in a Mountain, move to any location within that connected Mountain
+Action: Moving into Mountain costs 0
+
+Ability: You may cross Rivers
+Action: When adjacent to Water, move across Water
+
+Ability: When in a Forest, you may drop a Tendril
+Action: If Tendril in Forest location, move it to any other location in that connected Forest
+
+Ability: When in a Mountain, you may drop a Tendril
+Action: If Tendril in Mountain location, move it to any other location in that connected Mountain
+
+Ability: When adjacent to a River, you may drop a Tendril
+Action: If Tendril is adjacent to River, move it 5 spaces along that river
+
+Ability: When in a Forest, any defensive shield is doubled
+Action: If in Forest, remove 1 Charge from all players in neighboring Forest location.
+
+Ability: When in a Mountain, any defensive shield is doubled
+Action: If in Mountain, remove 1 Charge from all players in neighboring Mountain location.
+
+Ability: Your tendrils in Forest locations cannot be destroyed by other players
+Action: Move all tendrils in Forest locations 1 space within that connected Forest
+
+Ability: Your tendrils in Mountain locations cannot be destroyed by other players
+Action: Move all tendrils in Mountain locations 1 space within that connected Mountain
+
+
+36 elemental spells total: 9 / element
+
+4 primary
+2 primary + secondary
+1 primary + tertiary
+2 anti opposing element
+
+=========
+Fire (2nd: Air; 3rd Earth; Opposed: Water)
+=========
+Primary Fire Effect: Mage Damage
+Anti Water Effect: Tendril Damage
+Tendril: fast, few, temporary
+Charges: Not used?
+
+1: Attack: Attack 1 at Tendril. Consume Tendril.
+2: Attack: Attack 1 at location next to Tendril. Consume Tendril.
+3: Attack: Attack 1 to all locations adjacent to a Tendril. Consume Tendril.
+4: Attack: Attack 1 at each Tendril you control. Consume all but one.
+5: Attack: Attack 2 at Tendril. Consume Tendril.
+6: Move + Attack: (Hands of Flame) Move 1 and attack 1 at a location adjacent to your new location
+7: Move + Attack: Attack 1 at adjacent location and then move into it.
+8: Anti-Water: Remove all Tendrils in your location
+9: Anti-Water: Move a Tendril 3 spaces, removing all other Tendrils from spaces it moves into
+
+=========
+Air (2nd: Water; 3rd: Fire; Opposed: Earth)
+=========
+Primary Air Effect: Mage Movement
+Anti Earth Effect: 
+Tendril: fast, many, permanent
+Charges: Temp
+
+1: Move: Move 2 spaces
+2: Move: Move 4 spaces; Drop a tendril in final location
+3: Move: (Charge) While charged, may move into or across water; Drop tendril for free when next to river
+4: Move: Move 6 spaces through Plains, drop a tendril in any space you visit
+5: Move T + Move: Move 2 spaces, drop a tendril and move it 3 spaces
+6: Move T + Move: Move 3 spaces, if on an opponent's Tendril, add a new one at owner's location and destroy their tendril in this location.
+7: Attack + Move: Push player out of adjacent location and then move into their old location
+8: Anti-Earth: (Double Attack) Remove 2 shield charges from player at tendril location
+9: Anti-Earth: (Remove Shield) When at another player's Tendril, they must remove a charge from one of their spells
+
+=========
+Water (2nd: Earth; 3rd: Air; Opposed: Fire)
+=========
+Primary Water Effect: Tendril Movement
+Anti Fire Effect: 
+Tendril: slow, many, temporary
+Charges: Temp
+
+1: Move T: May drop Tendril at current location. Move 1 Tendril 3
+2: Move T: May drop Tendril at current location. Move all Tendrils 1
+3: Move T: May drop up to 3 Tendrils at current location. Move all Tendrils 2
+4: Move T: May drop 4 tendrils in neighboring locations. Move all Tendrils 2
+5: Shield + Move T: (Charge) When charged, sacrifice a tendril to defend against 1 damage
+6: Shield + Move T: (Charge) When in same location as Tendril, that tendril acts as 2 shield
+7: Move + Move T: Teleport to Tendril, consume Tendril
+8: Anti-Fire (shield): (Charge) Defend 1, place tendril on attacker's location
+9: Anti-Fire (shield): (Charge) May spend charge to deflect attack to neighboring location
+
+=========
+Earth (2nd: Fire; 3rd: Water; Opposed: Air)
+=========
+Primary Earth Effect: Shields, Defense
+Anti Air Effect: 
+Tendril: slow, few, permanent
+Charges: Permanent
+
+1: Shield: (Charge) Defend 1
+2: Shield: (Charge) Defend 1. when cast, recover 1 mana from tapestry
+3: Shield: (Charge) Defend 1. while charged you may spend this charge to defend a Tendril
+4: Shield: (Charge) Defend 2
+5: Attack + Shield: (Rock Throw) (Charge) Take 1/2 damage (rounded down), reflect full damage back to attacker
+6: Attack + Shield: (Meteor Shower) Remove all charges from mages at target location
+7: Move T + Shield: (Charge) Defend 1; while charged if opponent tendril is adjacent to one of your tendrils, you may move their tendril 1 space any dir
+8: Move T + Shield: (Charge) Defend 1; While charged, move one Tendril 1 space
+9: Anti-Air: (Charge) Defend 1, While charged, all your tendrils are obstacles for Mages
