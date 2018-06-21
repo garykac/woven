@@ -35,7 +35,7 @@ spell_card_data = [
 	#
 
 	# +---+
-	# | X |  Level 0
+	# | X |  Level 0 - Castable on all starting cards.
 	# +---+
 	[	[	"X",
 		],
@@ -53,20 +53,20 @@ spell_card_data = [
 	#
 
 	# +-----+
-	# | X X |  Level 1
+	# | X X |  Level 1 - Castable on all starting cards.
 	# +-----+
 
 	# +-----+
-	# | X . |  Level 1
+	# | X . |  Level 1 - Castable on all starting cards.
 	# | . X |
 	# +-----+
 
-	# +-------+
-	# | X . X |  Level 1
+	# +-------+                                                   xx  xx
+	# | X . X |  Level 1 - Castable on all starting cards except xx    xx
 	# +-------+
 
-	# +-------+
-	# | X . . |  Level 1
+	# +-------+                                                   x    x
+	# | X . . |  Level 1 - Castable on all starting cards except xxx  xxx
 	# | . . X |
 	# +-------+
 	[	[	"X . .",
@@ -110,13 +110,13 @@ spell_card_data = [
 	# | X X X |  Level 2
 	# +-------+
 
-	# +-------+
-	# | X X . |  Level 2
+	# +-------+                                                   x    x
+	# | X X . |  Level 2 - Castable on all starting cards except xxx  xxx
 	# | . . X |
 	# +-------+
 
 	# +-----+
-	# | X X |  Level 2
+	# | X X |  Level 2 - Castable on all starting cards.
 	# | . X |
 	# +-----+
 
