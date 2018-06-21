@@ -11,7 +11,7 @@ Cost  Action
 
 Artifacts: (provide additional player-specific action)
 
-Ability: When adjacent to Forest, move to any location within that connected Forest
+Ability: When in to Forest, move to any location within that connected Forest
 Action: Moving into Forest costs 0
 
 Ability: When in a Mountain, move to any location within that connected Mountain

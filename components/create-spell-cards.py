@@ -10,6 +10,8 @@ import sys
 from spell_card_data import spell_card_data
 from spell_card_data import spell_card_revision
 
+from artifact_card_data import artifact_card_data
+
 def error(msg):
 	print '\nERROR: %s\n' % msg
 	sys.exit(0)
@@ -37,6 +39,7 @@ class CardGen(object):
 		self.svg_out_dir = os.path.join(self.out_dir, 'svg')
 		self.pdf_out_dir = os.path.join(self.out_dir, 'pdf')
 		
+		self.curr_filename = ''
 		self.pdf_files = []
 		
 		self.curr_file = 0
@@ -274,6 +277,33 @@ class CardGen(object):
 		
 		self.end_card_page_transform()
 	
+	def draw_artifact_card(self, id, artifact):
+		self.start_card_page_transform(id)
+
+		self.draw_border()
+		self.draw_title('Artifact')
+
+		width = 155
+		height = 145
+		x = (self.card_width - width) / 2
+		y = 80
+		self.draw_text("c%d-ability-id" % id, x, y, 'Special Ability', size=12, align='left', weight='bold', font='Arial')
+		y += 10
+		rect = { 'x': x, 'y': y, 'width': width, 'height': height }
+		self.draw_flow_text(rect, [artifact['ability']], size=10)
+
+		y = 180
+		self.draw_text("c%d-action-id" % id, x, y, 'Special Action', size=12, align='left', weight='bold', font='Arial')
+		y += 10
+		rect = { 'x': x, 'y': y, 'width': width, 'height': height }
+		self.draw_flow_text(rect, [artifact['action']], size=10)
+		
+		print artifact['ability']
+		print artifact['action']
+		#self.draw_desc(artifact['ability'])
+		
+		self.end_card_page_transform()
+
 	def draw_border(self):
 		style = 'fill:#ffffff;fill-opacity:1;stroke:#c0c0c0;stroke-width:0.88582677;stroke-opacity:1'
 		self.write('<rect id="c%d-border" x="%.03f" y="%.03f" width="%.03f" height="%.03f" rx="11.25" ry="11.25" style="%s"/>\n' % (self.curr_card, 0, 0, self.card_width, self.card_height, style))
@@ -489,31 +519,43 @@ class CardGen(object):
 				"--without-gui"
 				])
 
+	def pre_card(self):
+		if self.curr_filename == '':
+			self.curr_file += 1
+			self.curr_filename = 'out%02d' % self.curr_file
+			print 'opening', self.curr_filename
+			self.create_svg_file(self.curr_filename)
+		self.curr_card += 1
+	
+	def post_card(self):
+		if self.curr_card == (self.cards_per_page - 1):
+			print 'closing', self.curr_filename
+			self.close_svg_file(self.curr_filename)
+			self.curr_filename = ''
+			self.curr_card = -1
+	
 	def gen_cards(self):
 		self.curr_file = -1
 		self.curr_card = -1
-		filename = ''
+		self.curr_filename = ''
 		for card_pattern in spell_card_data:
 			pattern = card_pattern[0]
 
 			for card in card_pattern[1]:
-				if filename == '':
-					self.curr_file += 1
-					filename = 'out%02d' % self.curr_file
-					self.create_svg_file(filename)
-				self.curr_card += 1
-				
+				self.pre_card()
 				if self.verbose:
 					print self.curr_file, self.curr_card, card[0]
 				self.draw_card(self.curr_card, pattern, card)
+				self.post_card()
 
-				if self.curr_card == (self.cards_per_page - 1):
-					self.close_svg_file(filename)
-					filename = ''
-					self.curr_card = -1
+		for artifact in artifact_card_data:
+			self.pre_card()
+			self.draw_artifact_card(self.curr_card, artifact)
+			self.post_card()
 
-		if filename != '':
-			self.close_svg_file(filename)
+		if self.curr_filename != '':
+			print 'closing', self.curr_filename
+			self.close_svg_file(self.curr_filename)
 		
 		if self.gen_pdf and self.combine_pdf:
 			cmd = ["/System/Library/Automator/Combine PDF Pages.action/Contents/Resources/join.py",
