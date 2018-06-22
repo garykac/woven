@@ -588,7 +588,13 @@ class CardGen(object):
 			return e[0].upper() + e[1:]
 
 	def category_list(self, cats):
-		return', '.join([cat[0].upper() + cat[1:] for cat in cats.split(',')])
+		uppercats = []
+		for cat in cats.split(','):
+			uppercat = ' '.join([catword[0].upper() + catword[1:] for catword in cat.split('-')])
+			uppercats.append(uppercat)
+		catstr = ', '.join(uppercats)
+		print catstr
+		return catstr
 
 	def gen_spell_summary(self):
 		summary = open('spell-list.md', "w")
@@ -603,7 +609,7 @@ class CardGen(object):
 		for c in self.valid_categories:
 			if not c in self.categories:
 				continue
-			summary.write('%s (%d)\n\n' % (c[0].upper() + c[1:], len(self.categories[c])))
+			summary.write('%s (%d)\n\n' % (self.category_list(c), len(self.categories[c])))
 
 			names = [self.id2name[id] for id in self.categories[c]]
 			for name in sorted(names):
@@ -644,6 +650,8 @@ class CardGen(object):
 
 			is_bullet_list = False
 			for d in self.id2desc[sid]:
+				if d == '-':
+					continue
 				summary.write(d + '\n')
 				is_bullet_list = d[0] == '*'
 				if not is_bullet_list:
