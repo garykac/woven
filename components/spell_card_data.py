@@ -28,6 +28,8 @@
 
 spell_card_revision = 2
 
+spell_card_categories = ['astral', 'attack', 'defend', 'move', 'tendril', 'tapestry', 'terrain']
+
 spell_card_data = [
 
 	#  _____         _           _    ___   

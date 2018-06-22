@@ -276,10 +276,10 @@
      inkscape:window-width="1680"
      units="in"
      showgrid="false"
-     inkscape:current-layer="layer6"
+     inkscape:current-layer="layer3"
      inkscape:document-units="px"
-     inkscape:cy="241.88023"
-     inkscape:cx="73.6322"
+     inkscape:cy="231.7787"
+     inkscape:cx="70.349204"
      inkscape:zoom="3.959798"
      inkscape:pageshadow="2"
      inkscape:pageopacity="0.0"
@@ -358,7 +358,7 @@
            style="font-size:12.5px;" /></flowRegion><flowPara
          id="flowPara4274">line1</flowPara><flowPara
          id="flowPara4362"
-         style="font-size:5px"> </flowPara><flowPara
+         style="font-size:5px" /><flowPara
          id="flowPara4280">line2</flowPara></flowRoot>  </g>
   <g
      inkscape:groupmode="layer"
@@ -372,16 +372,16 @@
        width="20"
        height="20"
        x="13.25"
-       y="46" />
+       y="50" />
     <rect
-       y="46"
+       y="50"
        x="39.25"
        height="20"
        width="20"
        id="rect4173"
        style="opacity:0.081;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
     <rect
-       y="46"
+       y="50"
        x="65.25"
        height="20"
        width="20"
@@ -393,16 +393,16 @@
        width="20"
        height="20"
        x="91.25"
-       y="46" />
+       y="50" />
     <rect
        style="opacity:0.081;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect4183"
        width="20"
        height="20"
        x="117.25"
-       y="46" />
+       y="50" />
     <rect
-       y="46"
+       y="50"
        x="143.25"
        height="20"
        width="20"
@@ -414,9 +414,9 @@
        width="20"
        height="20"
        x="169.25"
-       y="46" />
+       y="50" />
     <rect
-       y="72"
+       y="76"
        x="13.25"
        height="20"
        width="20"
@@ -428,23 +428,23 @@
        width="20"
        height="20"
        x="39.25"
-       y="72" />
+       y="76" />
     <rect
        style="opacity:0.081;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect4205"
        width="20"
        height="20"
        x="65.25"
-       y="72" />
+       y="76" />
     <rect
-       y="72"
+       y="76"
        x="91.25"
        height="20"
        width="20"
        id="rect4207"
        style="opacity:0.081;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
     <rect
-       y="72"
+       y="76"
        x="117.25"
        height="20"
        width="20"
@@ -456,16 +456,16 @@
        width="20"
        height="20"
        x="143.25"
-       y="72" />
+       y="76" />
     <rect
-       y="72"
+       y="76"
        x="169.25"
        height="20"
        width="20"
        id="rect4231"
        style="opacity:0.081;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
     <rect
-       y="98"
+       y="102"
        x="13.25"
        height="20"
        width="20"
@@ -477,23 +477,23 @@
        width="20"
        height="20"
        x="39.25"
-       y="98" />
+       y="102" />
     <rect
        style="opacity:0.081;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect4217"
        width="20"
        height="20"
        x="65.25"
-       y="98" />
+       y="102" />
     <rect
-       y="98"
+       y="102"
        x="91.25"
        height="20"
        width="20"
        id="rect4219"
        style="opacity:0.081;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
     <rect
-       y="98"
+       y="102"
        x="117.25"
        height="20"
        width="20"
@@ -505,9 +505,9 @@
        width="20"
        height="20"
        x="143.25"
-       y="98" />
+       y="102" />
     <rect
-       y="98"
+       y="102"
        x="169.25"
        height="20"
        width="20"
@@ -763,7 +763,7 @@
      inkscape:groupmode="layer"
      id="layer2"
      inkscape:label="Safe Area"
-     style="display:none"
+     style="display:inline"
      sodipodi:insensitive="true">
     <rect
        style="opacity:0.081;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"

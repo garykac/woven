@@ -9,6 +9,7 @@ import sys
 
 from spell_card_data import spell_card_data
 from spell_card_data import spell_card_revision
+from spell_card_data import spell_card_categories
 
 from artifact_card_data import artifact_card_data
 
@@ -89,7 +90,7 @@ class CardGen(object):
 			self.card_spacing_row = 22.5
 		
 		self.valid_elements = ['none', 'air', 'fire', 'earth', 'water']
-		self.valid_categories = ['astral', 'attack', 'defend', 'move', 'tendril', 'tapestry', 'terrain']
+		self.valid_categories = spell_card_categories
 
 	def write(self, str):
 		self.out.write('  ' * self.indent_count)
@@ -266,6 +267,7 @@ class CardGen(object):
 
 		self.draw_border()
 		self.draw_title(name)
+		self.draw_title_element(attrs['element'])
 		self.draw_card_id(attrs['id'])
 		if 'starter' in attrs:
 			self.draw_starter()
@@ -329,6 +331,13 @@ class CardGen(object):
 		y = self.card_height - bottom_margin - height
 		rect = { 'x': x, 'y': y, 'width': width, 'height': height }
 		self.draw_flow_text(rect, desc, size=10)
+	
+	def draw_title_element(self, element):
+		x = 0
+		y = -313
+		self.write('<use x="0" y="0" xlink:href="#element-%s" transform="translate(%d,%d)" width="100%%" height="100%%" />\n' % (element, x, y))
+		x = 155
+		self.write('<use x="0" y="0" xlink:href="#element-%s" transform="translate(%d,%d)" width="100%%" height="100%%" />\n' % (element, x, y))
 	
 	def draw_pattern_border(self):
 		self.write('<path')
@@ -523,13 +532,15 @@ class CardGen(object):
 		if self.curr_filename == '':
 			self.curr_file += 1
 			self.curr_filename = 'out%02d' % self.curr_file
-			print 'opening', self.curr_filename
+			if self.verbose:
+				print 'Opening', self.curr_filename
 			self.create_svg_file(self.curr_filename)
 		self.curr_card += 1
 	
 	def post_card(self):
 		if self.curr_card == (self.cards_per_page - 1):
-			print 'closing', self.curr_filename
+			if self.verbose:
+				print 'Closing', self.curr_filename
 			self.close_svg_file(self.curr_filename)
 			self.curr_filename = ''
 			self.curr_card = -1
@@ -554,10 +565,13 @@ class CardGen(object):
 			self.post_card()
 
 		if self.curr_filename != '':
-			print 'closing', self.curr_filename
+			if self.verbose:
+				print 'Closing', self.curr_filename
 			self.close_svg_file(self.curr_filename)
 		
 		if self.gen_pdf and self.combine_pdf:
+			if self.verbose:
+				print 'Combining PDF files...'
 			cmd = ["/System/Library/Automator/Combine PDF Pages.action/Contents/Resources/join.py",
 				"-o", os.path.join(self.out_dir, 'cards.pdf')] + self.pdf_files
 			subprocess.call(cmd)
