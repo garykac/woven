@@ -15,7 +15,6 @@
 #   <attribute>:
 #     'element': 'air', 'fire', 'earth', 'water' or 'none'
 #     'category': <string> to group spells by general category
-#     'starter': 'true' if this is a basic, starter spell
 
 # Spell patterns are normalized:
 #  * If spell has '@', then it should be in upper-left corner
@@ -26,7 +25,7 @@
 
 # Next id = 88
 
-spell_card_revision = 2
+spell_card_revision = 3
 
 spell_card_categories = [
 	'attack-mage',
@@ -61,11 +60,6 @@ spell_card_data = [
 	# +---+
 	# | X |  Level 0 - Castable on all starting cards.
 	# +---+
-	[	[	"X",
-		],
-		[
-		],
-	],
 
 	#  _____         _           _    ___ 
 	# |   | |___ _ _| |_ ___ ___| |  |_  |
@@ -90,12 +84,6 @@ spell_card_data = [
 	# | X . . |  Level 1 - Castable on all starting cards except xxx  xxx
 	# | . . X |
 	# +-------+
-	[	[	"X . .",
-			". . X",
-		],
-		[
-		],
-	],
 
 	# +-------+
 	# | X . . |  Level 2
@@ -166,7 +154,7 @@ spell_card_data = [
 				["Move 2 spaces, ignoring terrain cost."] ],
 			["Protection",
 				{'element': 'earth', 'category': 'defend-mage', 'id': 4},
-				["Place a CHARGE on this spell.", "-", "Defend 1: This shield absorbs all damage from attacks.", "-", "Remove CHARGE when it takes 1 or more damage from a single attack."] ],
+				["Place a CHARGE on this spell.", "-", "Defend 1"] ],
 		],
 	],
 
@@ -180,7 +168,7 @@ spell_card_data = [
 		[
 			["Fire Arrow",
 				{'element': 'fire', 'category': 'attack-mage', 'id': 5},
-				["Attack 1 at a TENDRIL you control.", "-", "Consume that TENDRIL."] ],
+				["Attack 1 at one of your TENDRILs.", "-", "Consume that TENDRIL."] ],
 			["Creep",
 				{'element': 'water', 'category': 'create-tendril,move-tendril', 'id': 73},
 				["Place a TENDRIL.", "-", "Move a TENDRIL 3 spaces."] ],
@@ -195,10 +183,10 @@ spell_card_data = [
 		[
 			["Quick Drop",
 				{'element': 'air', 'category': 'move-mage,create-tendril', 'id': 66},
-				["Move 4 spaces, ignoring terrain cost.", "You may place a TENDRIL in your final location."] ],
+				["Move 4 spaces, ignoring terrain cost.", "Place a TENDRIL in your final location."] ],
 			["Recovery Shield",
 				{'element': 'earth', 'category': 'defend-mage,tapestry', 'id': 82},
-				["Place a CHARGE on this spell.", "-", "Defend 1: This shield absorbs all damage from attacks.", "-", "Remove CHARGE and recover 2 mana from your TAPESTRY when it takes 1 or more damage from a single attack."] ],
+				["Place a CHARGE on this spell.", "-", "Defend 1", "-", "Recover 2 mana from your TAPESTRY when CHARGE is removed."] ],
 		],
 	],
 
@@ -212,7 +200,7 @@ spell_card_data = [
 		[
 			["Ricochet Blast",
 				{'element': 'fire', 'category': 'attack-mage', 'id': 24},
-				["Attack 1 at location adjacent to a TENDRIL you control.", "-", "Consume that TENDRIL."] ],
+				["Attack 1 at location adjacent to one of your TENDRILs.", "-", "Consume that TENDRIL."] ],
 		],
 	],
 
@@ -228,7 +216,7 @@ spell_card_data = [
 		[
 			["Tendril Shield",
 				{'element': 'earth', 'category': 'defend-mage,defend-tendril', 'id': 83},
-				["Place a CHARGE on this spell.", "-", "Defend 1.", "-", "You may choose to remove this CHARGE to prevent a TENDRIL you control from being removed."] ],
+				["Place a CHARGE on this spell.", "-", "Defend 1.", "-", "You may choose to remove this CHARGE to prevent one of your TENDRILs from being removed."] ],
 		],
 	],
 
@@ -240,7 +228,7 @@ spell_card_data = [
 		[
 			["Teleport",
 				{'element': 'water', 'category': 'move-mage', 'id': 78},
-				["Teleport to a location with a TENDRIL you control.", "-", "Consume that TENDRIL."] ],
+				["Teleport to the location of one of your TENDRILs.", "-", "Consume that TENDRIL."] ],
 		],
 	],
 
@@ -329,10 +317,10 @@ spell_card_data = [
 		[
 			["Plains Walker",
 				{'element': 'air', 'category': 'move-mage,terrain', 'id': 7},
-				["Move through up to 6 contiguous Plains locations."] ],
+				["Move through 6 contiguous Plains locations."] ],
 			["Meteor Shower",
 				{'element': 'earth', 'category': 'attack-charge', 'id': 84},
-				["Remove all CHARGEs from all mages at a TENDRIL you control."] ],
+				["Remove all CHARGEs from all mages at one of your TENDRILs."] ],
 		],
 	],
 
@@ -346,7 +334,7 @@ spell_card_data = [
 		[
 			["Water Moccasins",
 				{'element': 'air', 'category': 'move-mage,terrain', 'id': 54},
-				["Place a CHARGE on this spell.", "-", "When CHARGEd, you may move into or across Water locations.", "-", "When CHARGEd and you are in a location adjacent to a River, you may place a TENDRIL in your location."] ],
+				["Place a CHARGE on this spell.", "-", "When CHARGEd, you may move into Water locations or across Rivers.", "-", "When CHARGEd and you are adjacent to Water, place a TENDRIL in your location."] ],
 		],
 	],
 
@@ -361,7 +349,7 @@ spell_card_data = [
 		[
 			["Run and Toss",
 				{'element': 'air', 'category': 'move-mage,create-tendril,move-tendril', 'id': 67},
-				["Move 2, place TENDRIL, then move that TENDRIL 3 spaces."] ],
+				["Move 2 spaces, place a TENDRIL, then move that TENDRIL 3 spaces."] ],
 			["Nudge",
 				{'element': 'earth', 'category': 'defend-mage,move-other-tendril', 'id': 85},
 				["Place a CHARGE on this spell.", "-", "Defend 1.", "-", "When CHARGEd and another mage's TENDRIL is in the same location or adjacent to one of your TENDRILs, you may move their TENDRIL 1 space."] ],
@@ -378,7 +366,7 @@ spell_card_data = [
 		[
 			["Creepy Shield",
 				{'element': 'earth', 'category': 'defend-mage,move-tendril', 'id': 86},
-				["Place a CHARGE on this spell.", "-", "Defend 1.", "-", "When CHARGEd, you may move a TENDRIL you control 1 space."] ],
+				["Place a CHARGE on this spell.", "-", "Defend 1.", "-", "When CHARGEd, you may move one of your TENDRILs 1 space."] ],
 		],
 	],
 
@@ -392,7 +380,7 @@ spell_card_data = [
 		[
 			["Sneaky Stab",
 				{'element': 'fire', 'category': 'attack-mage,move-mage', 'id': 64},
-				["Attack 1 at an adjacent location to a TENDRIL you control and then move into that location."] ],
+				["Attack 1 at an adjacent location to one of your TENDRILs and then move into that location."] ],
 		],
 	],
 
@@ -420,7 +408,7 @@ spell_card_data = [
 		[
 			["Double Attack",
 				{'element': 'air', 'category': 'attack-charge', 'id': 71},
-				["A mage at a TENDRIL you control must remove 2 of their CHARGEs."] ],
+				["A mage at one of your TENDRILs must remove 2 of their CHARGEs."] ],
 		],
 	],
 
@@ -492,7 +480,7 @@ spell_card_data = [
 		[
 			["Fire Burst",
 				{'element': 'fire', 'category': 'attack-mage', 'id': 23},
-				["Attack for 1 damage in all locations adjacent to a TENDRIL you control.", "-", "Consume that TENDRIL."] ],
+				["Attack 1 in all locations adjacent to one of your TENDRILs.", "-", "Consume that TENDRIL."] ],
 		],
 	],
 
@@ -509,7 +497,7 @@ spell_card_data = [
 		[
 			["Spread",
 				{'element': 'water', 'category': 'create-tendril,move-tendril', 'id': 75},
-				["Place a TENDRIL.", "-", "Move all TENDRILs 1 space."] ],
+				["Place a TENDRIL.", "-", "Move all of your TENDRILs 1 space."] ],
 		],
 	],
 
@@ -542,7 +530,7 @@ spell_card_data = [
 				["Move 1 and then Attack 1 at a location adjacent to your new location."] ],
 			["Tendril Coil",
 				{'element': 'water', 'category': 'defend-mage', 'id': 81},
-				["Place a CHARGE on this spell.", "-", "When CHARGEd and you are at a location with a TENDRIL you control, that TENDRIL acts as a shield to Defend 2."] ],
+				["Place a CHARGE on this spell.", "-", "When CHARGEd and you are in the same location as one of your TENDRILs, that TENDRIL acts as a shield to Defend 2."] ],
 		],
 	],
 
@@ -569,7 +557,7 @@ spell_card_data = [
 		[
 			["Burst",
 				{'element': 'water', 'category': 'create-tendril,move-tendril', 'id': 74},
-				["Place 3 TENDRILs.", "-", "Move all TENDRILs 2 spaces."] ],
+				["Place 3 TENDRILs.", "-", "Move all of your TENDRILs 2 spaces."] ],
 		],
 	],
 
@@ -601,7 +589,7 @@ spell_card_data = [
 		[
 			["Fire Ball",
 				{'element': 'fire', 'category': 'attack-mage', 'id': 22},
-				["Attack for 2 damage at a TENDRIL you control.", "-", "Consume that TENDRIL."] ],
+				["Attack 2 at one of your TENDRILs.", "-", "Consume that TENDRIL."] ],
 		],
 	],
 
@@ -617,7 +605,7 @@ spell_card_data = [
 		[
 			["Fire Reign",
 				{'element': 'fire', 'category': 'attack-mage', 'id': 26},
-				["Attack for 1 damage at every TENDRIL you control.", "-", "Consume all of your TENDRILs except one."] ],
+				["Attack 1 at all of your TENDRILs.", "-", "Consume all of your TENDRILs except one."] ],
 		],
 	],
 
@@ -631,7 +619,7 @@ spell_card_data = [
 		[
 			["Erase",
 				{'element': 'fire', 'category': 'move-tendril,attack-tendril', 'id': 65},
-				["Move a TENDRIL you control 3 spaces, removing all other TENDRILs from its starting location and all locations it moves into.", "-", "Consume the TENDRIL you moved for this spell."] ],
+				["Move one of your TENDRILs 3 spaces, removing all other TENDRILs from its starting location and all locations it moves into this turn.", "-", "Consume that TENDRIL."] ],
 		],
 	],
 
@@ -656,7 +644,7 @@ spell_card_data = [
 		[
 			["Diasporate",
 				{'element': 'water', 'category': 'create-tendril,move-tendril', 'id': 77},
-				["Place 4 TENDRILs in neighboring locations.", "-", "Move all TENDRILs 2 spaces."] ],
+				["Place 2 TENDRILs in locations adjacent to your location.", "-", "Move 2 of your TENDRILs 1 space each."] ],
 		],
 	],
 
@@ -709,7 +697,7 @@ spell_card_data = [
 		[
 			["Follow",
 				{'element': 'air', 'category': 'move-mage,create-tendril', 'id': 69},
-				["Move 3. If in a location with a TENDRIL controlled by another mage, place a TENDRIL at that mage's location and remove their TENDRIL in your location."] ],
+				["Move 3. If in a location with a TENDRIL owned by another mage, place a TENDRIL at that mage's location and remove their TENDRIL in your location."] ],
 		],
 	],
 
@@ -984,6 +972,11 @@ spell_card_data = [
 	# +---------+
 
 ]
+
+
+# New spells:
+# Charge, may sacrifice to prevent a tendril from being consumed
+# Remove thread from tapestry. Take another action.
 
 _unused_ = [
 
