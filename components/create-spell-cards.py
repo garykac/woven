@@ -275,7 +275,7 @@ class CardGen(object):
 		self.draw_pattern(pattern, attrs['element'])
 		self.draw_pattern_border()
 
-		self.draw_desc(desc)
+		self.draw_desc(attrs['id'], desc)
 		
 		self.end_card_page_transform()
 	
@@ -323,14 +323,15 @@ class CardGen(object):
 		id = "c%d-starter" % self.curr_card
 		self.draw_text(id, self.card_width / 2, self.card_height-25, "STARTER", 10, align='center', style='italic', font='Georgia')
 
-	def draw_desc(self, desc):
+	def draw_desc(self, id, desc):
 		width = 155
 		height = 145
 		bottom_margin = 25
 		x = (self.card_width - width) / 2
 		y = self.card_height - bottom_margin - height
 		rect = { 'x': x, 'y': y, 'width': width, 'height': height }
-		self.draw_flow_text(rect, desc, size=10)
+
+		self.draw_flow_text(rect, self.expand_desc(id, desc), size=10)
 	
 	def draw_title_element(self, element):
 		x = 0
@@ -458,6 +459,28 @@ class CardGen(object):
 	def pattern_key(self, pattern):
 		"""Convert pattern array into a simple string that can be used as a key."""
 		return '/'.join([''.join(x.split()) for x in pattern])
+	
+	def expand_desc(self, id, raw_desc):
+		keys = ['cast', 'charged', 'bonus']
+		prefix = {
+			'cast': 'When cast: ',
+			'charged': 'While charged: ',
+			'bonus': '',
+		}
+
+		for key in raw_desc.keys():
+			if not key in raw_desc:
+				error('unknown key: %s' % key)
+
+		desc = []
+		for key in keys:
+			if not key in raw_desc:
+				continue
+			d = raw_desc[key]
+			d = d.replace('{{ADD_CHARGE}}', 'Place a CHARGE on this spell.')
+			d = d.replace('{{ADD_ACTION}}', 'Take another action.')
+			desc.append(prefix[key] + d)
+		return desc
 
 	# Utilities
 
@@ -559,10 +582,10 @@ class CardGen(object):
 				self.draw_card(self.curr_card, pattern, card)
 				self.post_card()
 
-		for artifact in artifact_card_data:
-			self.pre_card()
-			self.draw_artifact_card(self.curr_card, artifact)
-			self.post_card()
+		#for artifact in artifact_card_data:
+		#	self.pre_card()
+		#	self.draw_artifact_card(self.curr_card, artifact)
+		#	self.post_card()
 
 		if self.curr_filename != '':
 			if self.verbose:
@@ -593,7 +616,6 @@ class CardGen(object):
 			uppercat = ' '.join([catword[0].upper() + catword[1:] for catword in cat.split('-')])
 			uppercats.append(uppercat)
 		catstr = ', '.join(uppercats)
-		print catstr
 		return catstr
 
 	def gen_spell_summary(self):
@@ -648,16 +670,8 @@ class CardGen(object):
 			summary.write(self.category_list(self.id2attrs[sid]['category']))
 			summary.write('\n\n')
 
-			is_bullet_list = False
-			for d in self.id2desc[sid]:
-				if d == '-':
-					continue
+			for d in self.expand_desc(sid, self.id2desc[sid]):
 				summary.write(d + '\n')
-				is_bullet_list = d[0] == '*'
-				if not is_bullet_list:
-					summary.write('\n')
-			# If description ends with a bullet list, then we need to add another newline.
-			if is_bullet_list:
 				summary.write('\n')
 
 		summary.close()
