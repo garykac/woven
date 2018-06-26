@@ -480,6 +480,7 @@ class CardGen(object):
 			d = d.replace('{{ADD_CHARGE}}', 'Place a CHARGE on this spell.')
 			d = d.replace('{{ADD_ACTION}}', 'Take another action.')
 			desc.append(prefix[key] + d)
+			desc.append('-')
 		return desc
 
 	# Utilities
@@ -671,6 +672,8 @@ class CardGen(object):
 			summary.write('\n\n')
 
 			for d in self.expand_desc(sid, self.id2desc[sid]):
+				if d == '-':
+					continue
 				summary.write(d + '\n')
 				summary.write('\n')
 
