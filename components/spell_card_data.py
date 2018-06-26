@@ -25,13 +25,13 @@
 
 # Complexity info for each spell:
 #  * Level - rough indicator of complexity
-#  * Threads - number of threads
-#  * Cards - min number of cards to create pattern
-#  * Transform - max-cast / max-threads
+#  * Threads - number of threads for single cast
+#  * Cards - min number of cards to create pattern for single cast
+#  * Transform - max-cast: max-threads/max-cards
 #      max-cast: max times this spell can be repeated when centered on the element,
-#         flipping, rotating and mirroring as required
+#         rotating and mirroring as required
 #      max-threads: number of threads to cast max times
-#           
+#      max-cards: min number of cards to cast max times
 
 # Next id = 88
 # Unused: 70
@@ -160,7 +160,7 @@ spell_card_data = [
 	# +-----+  Level 1
 	# | @ X |  Threads 1
 	# +-----+  Cards 1
-	#          Transform 4
+	#          Transform 4: 4/2
 	[	[	"@ X",
 		],
 		[
@@ -181,7 +181,7 @@ spell_card_data = [
 	# +-----+  Level 1
 	# | @ . |  Threads 1
 	# | . X |  Cards 1
-	# +-----+  Transform 4
+	# +-----+  Transform 4: 4/2
 	[	[	"@ .",
 			". X",
 		],
@@ -202,7 +202,7 @@ spell_card_data = [
 	# +-------+  Level 1
 	# | @ . X |  Threads 1
 	# +-------+  Cards 1
-	#            Transform 4
+	#            Transform 4: 4/4
 	[	[	"@ . X",
 		],
 		[
@@ -216,10 +216,11 @@ spell_card_data = [
 		],
 	],
 
-	# +-------+  Level 1
-	# | @ . . |  Threads 1
-	# | . . X |  Cards 1
-	# +-------+  Transform 8
+	# +-------+  Level 1          Transforms  . 6 . 7 .
+	# | @ . . |  Threads 1                    5 . . . 8
+	# | . . X |  Cards 1                      . . @ . .
+	# +-------+  Transform 8: 8/5             4 . . . 1
+	#                                         . 3 . 2 .
 	[	[	"@ . .",
 			". . X",
 		],
@@ -227,11 +228,11 @@ spell_card_data = [
 		],
 	],
 
-	# +-------+  Level 2
-	# | @ . . |  Threads 1
-	# | . . . |  Cards 2
-	# | . . X |  Transform 4
-	# +-------+
+	# +-------+  Level 2          Transforms  3 . . . 2
+	# | @ . . |  Threads 1                    . . . . .
+	# | . . . |  Cards 2                      . . @ . .
+	# | . . X |  Transform 4: 4/6             . . . . .
+	# +-------+                               4 . . . 1
 	[	[	"@ . .",
 			". . .",
 			". . X",
@@ -248,7 +249,7 @@ spell_card_data = [
 	# +---------+  Level 2
 	# | @ . . X |  Threads 1
 	# +---------+  Cards 2
-	#              Transform 4
+	#              Transform 4: 4/6
 	[	[	"@ . . X",
 		],
 		[
@@ -279,20 +280,20 @@ spell_card_data = [
 	# |_____|_|___|_|_|_|___|_|_|_| |__,|_|  |_____|    |_|    |___|
 	#
 
-	# +-------+  Level 2 - Built on +-----+
-	# | X @ X |  Threads 1          | @ X |
-	# +-------+  Cards 1            +-----+
-	#            Transform 2
+	# +-------+  Level 2 - Built on +-----+  Transforms  . 2 .
+	# | X @ X |  Threads 1          | @ X |               1 @ 1
+	# +-------+  Cards 1            +-----+             . 2 .
+	#            Transform 2: 4/2
 	[	[	"X @ X",
 		],
 		[
 		],
 	],
 
-	# +-----+  Level 2 - Built on +-----+
-	# | @ X |  Threads 2          | @ X |
-	# | X . |  Cards 1            +-----+
-	# +-----+  Transform 3
+	# +-----+  Level 2 - Built on +-----+  Transforms  . 2 .
+	# | @ X |  Threads 2          | @ X |              3 @ 1
+	# | X . |  Cards 1            +-----+              . 1 .
+	# +-----+  Transform 3: 4/2
 	[	[	"@ X",
 			"X .",
 		],
@@ -305,10 +306,10 @@ spell_card_data = [
 		],
 	],
 
-	# +-------+  Level 2 - Built on +-----+     +-----+
-	# | . @ X |  Threads 2          | @ X | and | @ . | 
-	# | X . . |  Cards 1            +-----+     | . X |
-	# +-------+  Transform 6                    +-----+
+	# +-------+  Level 2 - Built on +-----+     +-----+  Transforms  7 2 5
+	# | . @ X |  Threads 2          | @ X | and | @ . |              4 @ 1        
+	# | X . . |  Cards 1            +-----+     | . X |              1 6 3
+	# +-------+  Transform 7: 8/2               +-----+
 	[	[	". @ X",
 			"X . .",
 		],
@@ -316,10 +317,10 @@ spell_card_data = [
 		],
 	],
 
-	# +-----+  Level 2 - Built on +-----+     +-----+
-	# | @ . |  Threads 2          | @ X | and | @ . |
-	# | X X |  Cards 1            +-----+     | . X |
-	# +-----+  Transform 7                    +-----+
+	# +-----+  Level 2 - Built on +-----+     +-----+  Transforms  5 4 3
+	# | @ . |  Threads 2          | @ X | and | @ . |              6 @ 2
+	# | X X |  Cards 1            +-----+     | . X |              7 1 1
+	# +-----+  Transform 7: 8/2               +-----+
 	[	[	"@ .",
 			"X X",
 		],
@@ -333,10 +334,11 @@ spell_card_data = [
 		],
 	],
 
-	# +-------+  Level 2 - Built on +-----+     +-------+
-	# | @ X X |  Threads 2          | @ X | and | @ . X |
-	# +-------+  Cards 1            +-----+     +-------+
-	#            Transform 4
+	# +-------+  Level 2 - Built on +-----+     +-------+  Transforms  . . 2 . .
+	# | @ X X |  Threads 2          | @ X | and | @ . X |              . . 2 . .
+	# +-------+  Cards 1            +-----+     +-------+              3 3 @ 1 1
+	#            Transform 4: 8/4                                      . . 4 . .
+	#                                                                  . . 5 . .
 	[	[	"@ X X",
 		],
 		[
@@ -348,10 +350,11 @@ spell_card_data = [
 		],
 	],
 
-	# +---------+  Level 3 - Built on +-----+     +-------+
-	# | X @ . X |  Threads 2          | @ X | and | @ . X |
-	# +---------+  Cards 2            +-----+     +-------+
-	#              Transform 4
+	# +---------+  Level 3 - Built on +-----+     +-------+  Transforms  . . 2 . .
+	# | X @ . X |  Threads 2          | @ X | and | @ . X |              . . 4 . .
+	# +---------+  Cards 2            +-----+     +-------+              3 1 @ 3 1
+	#              Transform 4: 8/4                                      . . 2 . .
+	#                                                                    . . 4 . .
 	[	[	"X @ . X",
 		],
 		[
@@ -363,10 +366,11 @@ spell_card_data = [
 		],
 	],
 
-	# +-------+  Level 2 - Built on +-----+     +-------+
-	# | @ . X |  Threads 2          | @ X | and | @ . X |
-	# | X . . |  Cards 1            +-----+     +-------+
-	# +-------+  Transform 6
+	# +-------+  Level 2 - Built on +-----+     +-------+  Transforms  . . 4 . .
+	# | @ . X |  Threads 2          | @ X | and | @ . X |              . . 2 . .
+	# | X . . |  Cards 1            +-----+     +-------+              3 5 @ 4 1
+	# +-------+  Transform 6: 8/4                                      . . 1 . .
+	#                                                                  . . 6 . .
 	[	[	"@ . X",
 			"X . .",
 		],
@@ -381,10 +385,11 @@ spell_card_data = [
 	],
 
 
-	# +-------+  Level 2 - Built on +-----+     +-------+
-	# | @ X . |  Threads 2          | @ X | and | @ . . |
-	# | . . X |  Cards 1            +-----+     | . . X |
-	# +-------+  Transform 8                    +-------+
+	# +-------+  Level 2 - Built on +-----+     +-------+  Transforms  . 4 . 3 .
+	# | @ X . |  Threads 2          | @ X | and | @ . . |              5 . 3 . 2
+	# | . . X |  Cards 1            +-----+     | . . X |              . 5 @ 1 .
+	# +-------+  Transform 8: 12/5              +-------+              6 . 7 . 1
+	#                                                                  . 7 . 8 .
 	[	[	"@ X .",
 			". . X",
 		],
@@ -398,10 +403,11 @@ spell_card_data = [
 		],
 	],
 
-	# +-------+  Level 2 - Built on +-----+     +-------+
-	# | @ . . |  Threads 2          | @ X | and | @ . . |
-	# | X . X |  Cards 1            +-----+     | . . X |
-	# +-------+  Transform 8                    +-------+
+	# +-------+  Level 2 - Built on +-----+     +-------+  Transforms  . 8 . 5 .
+	# | @ . . |  Threads 2          | @ X | and | @ . . |              3 . 3 . 4
+	# | X . X |  Cards 1            +-----+     | . . X |              . 7 @ 5 .
+	# +-------+  Transform 8: 12/5              +-------+              2 . 1 . 1
+	#                                                                  . 7 . 6 .
 	[	[	"@ . .",
 			"X . X",
 		],
@@ -415,10 +421,11 @@ spell_card_data = [
 		],
 	],
 
-	# +---------+  Level 3 - Built on +-----+     +-------+
-	# | X @ . . |  Threads 2          | @ X | and | @ . . |
-	# | . . . X |  Cards 2            +-----+     | . . X |
-	# +---------+  Transform 8                    +-------+
+	# +---------+  Level 3 - Built on +-----+     +-------+  Transforms  . 4 . 3 .
+	# | X @ . . |  Threads 2          | @ X | and | @ . . |              5 . 7 . 2
+	# | . . . X |  Cards 2            +-----+     | . . X |              . 1 @ 5 .
+	# +---------+  Transform 8: 12/5              +-------+              6 . 3 . 1
+	#                                                                    . 7 . 8 .
 	[	[	"X @ . .",
 			". . . X",
 		],
@@ -431,11 +438,11 @@ spell_card_data = [
 		],
 	],
 
-	# +-------+  Level 3 - Built on +-----+     +-------+
-	# | X . . |  Threads 2          | @ X | and | @ . . |
-	# | @ . . |  Cards 1            +-----+     | . . X |
-	# | . . X |  Transform 8                    +-------+
-	# +-------+
+	# +-------+  Level 3 - Built on +-----+     +-------+  Transforms  . 7 . 3 .
+	# | X . . |  Threads 2          | @ X | and | @ . . |              6 . 1 . 5
+	# | @ . . |  Cards 1            +-----+     | . . X |              . 3 @ 7 .
+	# | . . X |  Transform 8: 12/5              +-------+              2 . 5 . 1
+	# +-------+                                                        . 8 . 4 .
 	[	[	"X . .",
 			"@ . .",
 			". . X",
@@ -453,7 +460,7 @@ spell_card_data = [
 	# +---------+  Level 3 - Built on +-----+     +---------+
 	# | @ X . X |  Threads 2          | @ X | and | @ . . X |
 	# +---------+  Cards 2            +-----+     +---------+
-	#              Transform 4
+	#              Transform 4: 8/6
 	[	[	"@ X . X",
 		],
 		[
@@ -468,7 +475,7 @@ spell_card_data = [
 	# +-----------+  Level 3 - Built on +-----+     +---------+
 	# | X @ . . X |  Threads 2          | @ X | and | @ . . X |
 	# +-----------+  Cards 2            +-----+     +---------+
-	#                Transform 4
+	#                Transform 4: 8/6
 	[	[	"X @ . . X",
 		],
 		[
@@ -481,10 +488,13 @@ spell_card_data = [
 		],
 	],
 
-	# +---------+  Level 3 - Built on +-----+     +---------+
-	# | @ . . X |  Threads 2          | @ X | and | @ . . X |
-	# | X . . . |  Cards 2            +-----+     +---------+
-	# +---------+  Transform 6
+	# +---------+  Level 3 - Built on +-----+     +---------+  Transforms  . . . 4 . . .
+	# | @ . . X |  Threads 2          | @ X | and | @ . . X |              . . . . . . .
+	# | X . . . |  Cards 2            +-----+     +---------+              . . . 2 . . .
+	# +---------+  Transform 6: 8/6                                        3 . 5 @ 4 . 1
+	#                                                                      . . . 1 . . .
+	#                                                                      . . . . . . .
+	#                                                                      . . . 6 . . .
 	[	[	"@ . . X",
 			"X . . .",
 		],
@@ -497,10 +507,13 @@ spell_card_data = [
 		],
 	],
 
-	# +---------+  Level 3 - Built on +-----+     +---------+
-	# | @ X . . |  Threads 2          | @ X | and | @ . . . |
-	# | . . . X |  Cards 2            +-----+     | . . . X |
-	# +---------+  Transform 8                    +---------+
+	# +---------+  Level 3 - Built on +-----+     +---------+  Transforms  . . 4 . 3 . .
+	# | @ X . . |  Threads 2          | @ X | and | @ . . . |              . . . . . . .
+	# | . . . X |  Cards 2            +-----+     | . . . X |              5 . . 3 . . 2
+	# +---------+  Transform 8: 12/8              +---------+              . . 5 @ 1 . .
+	#                                                                      6 . . 7 . . 1
+	#                                                                      . . . . . . .
+	#                                                                      . . 7 . 8 . .
 	[	[	"@ X . .",
 			". . . X",
 		],
@@ -508,10 +521,13 @@ spell_card_data = [
 		],
 	],
 
-	# +---------+  Level 3 - Built on +-----+     +---------+
-	# | @ . . . |  Threads 2          | @ X | and | @ . . . |
-	# | X . . X |  Cards 2            +-----+     | . . . X |
-	# +---------+  Transform 8                    +---------+
+	# +---------+  Level 3 - Built on +-----+     +---------+  Transforms  . . 8 . 5 . .
+	# | @ . . . |  Threads 2          | @ X | and | @ . . . |              . . . . . . .
+	# | X . . X |  Cards 2            +-----+     | . . . X |              3 . . 3 . . 4
+	# +---------+  Transform 8: 12/8              +---------+              . . 7 @ 5 . .
+	#                                                                      2 . . 1 . . 1
+	#                                                                      . . . . . . .
+	#                                                                      . . 7 . 6 . .
 	[	[	"@ . . .",
 			"X . . X",
 		],
@@ -536,10 +552,10 @@ spell_card_data = [
 	# | . . . X |  Transform 8                    +---------+
 	# +---------+
 
-	# +-------+  Level 2 - Built on +-----+
-	# | . @ . |  Threads 2          | @ . |
-	# | X . X |  Cards 1            | . X |
-	# +-------+  Transform 3        +-----+
+	# +-------+  Level 2 - Built on +-----+  Transforms  3 . 2
+	# | . @ . |  Threads 2          | @ . |              . @ .
+	# | X . X |  Cards 1            | . X |              1 . 1
+	# +-------+  Transform 3: 4/2   +-----+
 	[
 		[	". @ .",
 			"X . X",
@@ -548,10 +564,10 @@ spell_card_data = [
 		],
 	],
 
-	# +-------+  Level 3 - Built on +-----+
-	# | X . . |  Threads 2          | @ . |
-	# | . @ . |  Cards 2            | . X |
-	# | . . X |  Transform 2        +-----+
+	# +-------+  Level 3 - Built on +-----+  Transforms  1 . 2
+	# | X . . |  Threads 2          | @ . |              . @ .
+	# | . @ . |  Cards 2            | . X |              2 . 1
+	# | . . X |  Transform 2: 4/2   +-----+
 	# +-------+
 	[
 		[	"X . .",
@@ -567,10 +583,11 @@ spell_card_data = [
 		],
 	],
 
-	# +-------+  Level 2 - Built on +-----+     +-------+
-	# | @ . X |  Threads 2          | @ . | and | @ . X |
-	# | . X . |  Cards 1            | . X |     +-------+
-	# +-------+  Transform 7        +-----+
+	# +-------+  Level 2 - Built on +-----+     +-------+  Transforms  . . 3 . .
+	# | @ . X |  Threads 2          | @ . | and | @ . X |              . 4 . 2 .
+	# | . X . |  Cards 1            | . X |     +-------+              5 . @ . 1
+	# +-------+  Transform 7: 8/4   +-----+                            . 6 . 1 .
+	#                                                                  . . 7 . .
 	[
 		[	"@ . X",
 			". X .",
@@ -585,10 +602,11 @@ spell_card_data = [
 		],
 	],
 
-	# +---------+  Level 3 - Built on +-----+     +-------+
-	# | . @ . X |  Threads 3          | @ . | and | @ . X |
-	# | X . . . |  Cards 2            | . X |     +-------+
-	# +---------+  Transform 7        +-----+
+	# +---------+  Level 3 - Built on +-----+     +-------+  Transforms  . . 3 . .
+	# | . @ . X |  Threads 3          | @ . | and | @ . X |              . 2 . 6 .
+	# | X . . . |  Cards 2            | . X |     +-------+              7 . @ . 1
+	# +---------+  Transform 7: 8/4   +-----+                            . 1 . 4 .
+	#                                                                    . . 5 . .
 	[
 		[	". @ . X",
 			"X . . .",
@@ -603,10 +621,11 @@ spell_card_data = [
 		],
 	],
 
-	# +-------+  Level 2 - Built on +-----+     +-------+
-	# | @ . . |  Threads 2          | @ . | and | @ . . |
-	# | . X X |  Cards 1            | . X |     | . . X |
-	# +-------+  Transform 8         +-----+     +-------+
+	# +-------+  Level 2 - Built on +-----+     +-------+  Transforms  . 6 . 3 .
+	# | @ . . |  Threads 2          | @ . | and | @ . . |              5 5 . 3 4
+	# | . X X |  Cards 1            | . X |     | . . X |              . . @ . .
+	# +-------+  Transform 8: 12/5  +-----+     +-------+              8 7 . 1 1
+	#                                                                  . 7 . 2 .
 	[
 		[	"@ . .",
 			". X X",
@@ -615,10 +634,11 @@ spell_card_data = [
 		],
 	],
 
-	# +---------+  Level 3 - Built on +-----+     +-------+
-	# | . @ . . |  Threads 2          | @ . | and | @ . . |
-	# | X . . X |  Cards 2            | . X |     | . . X |
-	# +---------+  Transform 8        +-----+     +-------+
+	# +---------+  Level 3 - Built on +-----+     +-------+  Transforms  . 2 . 6 .
+	# | . @ . . |  Threads 2          | @ . | and | @ . . |              7 3 . 7 3
+	# | X . . X |  Cards 2            | . X |     | . . X |              . . @ . .
+	# +---------+  Transform 8: 12/5  +-----+     +-------+              5 1 . 5 1
+	#                                                                    . 4 . 8 .
 	[
 		[	". @ . .",
 			"X . . X",
