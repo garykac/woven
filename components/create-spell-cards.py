@@ -33,12 +33,15 @@ class CardGen(object):
 	def __init__(self, options):
 		self.gen_pdf = options['pdf']
 		self.combine_pdf = options['combine']
+		self.gen_png = options['png']
 		self.cards_per_page = options['per-page']
+		self.no_border = options['no-border']
 		self.verbose = options['verbose']
 
 		self.out_dir = 'spell-cards'
 		self.svg_out_dir = os.path.join(self.out_dir, 'svg')
 		self.pdf_out_dir = os.path.join(self.out_dir, 'pdf')
+		self.png_out_dir = os.path.join(self.out_dir, 'png')
 		
 		self.curr_filename = ''
 		self.pdf_files = []
@@ -265,12 +268,11 @@ class CardGen(object):
 
 		self.start_card_page_transform(id)
 
-		self.draw_border()
+		if not self.no_border:
+			self.draw_border()
 		self.draw_title(name)
 		self.draw_title_element(attrs['element'])
 		self.draw_card_id(attrs['id'])
-		if 'starter' in attrs:
-			self.draw_starter()
 		
 		self.draw_pattern(pattern, attrs['element'])
 		self.draw_pattern_border()
@@ -552,6 +554,20 @@ class CardGen(object):
 				"--without-gui"
 				])
 
+		if self.gen_png:
+			# Generate PNG file.
+			if not os.path.isdir(self.png_out_dir):
+				os.makedirs(self.png_out_dir);
+			subprocess.call([
+				"/Applications/Inkscape.app/Contents/Resources/bin/inkscape",
+				"--file=%s" % os.path.abspath(os.path.join(self.svg_out_dir, '%s.svg' % name)),
+				"--export-png=%s" % os.path.abspath(os.path.join(self.png_out_dir, '%s.png' % name)),
+				"--export-dpi=300",
+				"--export-text-to-path",
+				"--export-area-page",
+				"--without-gui"
+				])
+
 	def pre_card(self):
 		if self.curr_filename == '':
 			self.curr_file += 1
@@ -689,7 +705,9 @@ def usage():
 	print "  --a4        A4 output (default = letter)"
 	print "  --combine   Combine into single PDF file"
 	print "  --pdf       Generate PDF output files"
+	print "  --png       Generate PNG output files"
 	print "  --per-page  Num cards per page: 8 or 9 (default)"
+	print "  --no-border Don't draw border around cards"
 	print "  --summary   Generate spell summary document"
 	print "  --verbose   Verbose output"
 	sys.exit(2)
@@ -697,8 +715,8 @@ def usage():
 def main():
 	try:
 		opts, args = getopt.getopt(sys.argv[1:],
-			'pv',
-			['pdf', 'per-page=', 'combine', 'a4', 'summary', 'verbose'])
+			'v',
+			['a4', 'combine', 'no-border', 'pdf', 'per-page=', 'png', 'summary', 'verbose'])
 	except getopt.GetoptError:
 		usage()
 
@@ -706,7 +724,9 @@ def main():
 		'a4': False,
 		'combine': False,
 		'pdf': False,
+		'png': False,
 		'per-page': 9,
+		'no-border': False,
 		'summary': False,
 		'verbose': False,
 	}
@@ -715,10 +735,14 @@ def main():
 			options['a4'] = True
 		if opt in ('--combine'):
 			options['combine'] = True
-		if opt in ('-p', '--pdf'):
+		if opt in ('--pdf'):
 			options['pdf'] = True
+		if opt in ('--png'):
+			options['png'] = True
 		if opt in ('--per-page'):
 			options['per-page'] = int(arg)
+		if opt in ('--no-border'):
+			options['no-border'] = True
 		if opt in ('--summary'):
 			options['summary'] = True
 		if opt in ('-v', '--verbose'):
