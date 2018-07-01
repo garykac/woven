@@ -10,13 +10,16 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   sodipodi:docname="map01.svg"
+   sodipodi:docname="map-v01.svg"
    inkscape:version="0.91 r13725"
    version="1.1"
    id="svg4516"
    viewBox="0 0 900 720"
    height="8in"
-   width="10in">
+   width="10in"
+   inkscape:export-filename="/Users/garykac/projects/github/blockchain/maps/map-v01.png"
+   inkscape:export-xdpi="300"
+   inkscape:export-ydpi="300">
   <sodipodi:namedview
      inkscape:window-maximized="1"
      inkscape:window-y="1"
@@ -28,7 +31,7 @@
      inkscape:current-layer="layer6"
      inkscape:document-units="px"
      inkscape:cy="345.2435"
-     inkscape:cx="819.7866"
+     inkscape:cx="646.7866"
      inkscape:zoom="1"
      inkscape:pageshadow="2"
      inkscape:pageopacity="0.0"
