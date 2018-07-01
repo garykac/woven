@@ -276,10 +276,10 @@
      inkscape:window-width="1680"
      units="in"
      showgrid="false"
-     inkscape:current-layer="layer3"
+     inkscape:current-layer="layer1"
      inkscape:document-units="px"
-     inkscape:cy="231.7787"
-     inkscape:cx="70.349204"
+     inkscape:cy="221.67717"
+     inkscape:cx="77.167734"
      inkscape:zoom="3.959798"
      inkscape:pageshadow="2"
      inkscape:pageopacity="0.0"
@@ -344,7 +344,7 @@
          id="tspan4139"
          x="101.25"
          y="30"
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:condensed;font-size:22.5px;font-family:'Arial Narrow';-inkscape-font-specification:'Arial Narrow Bold Condensed';text-align:center;text-anchor:middle">Title</tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:22.5px;font-family:CCTreasureTrove;-inkscape-font-specification:CCTreasureTrove;text-align:center;text-anchor:middle">Title</tspan></text>
     <flowRoot
        xml:space="preserve"
        id="flowRoot4268"
@@ -359,7 +359,9 @@
          id="flowPara4274">line1</flowPara><flowPara
          id="flowPara4362"
          style="font-size:5px" /><flowPara
-         id="flowPara4280">line2</flowPara></flowRoot>  </g>
+         id="flowPara4280">li<flowSpan
+   style="-inkscape-font-specification:CCTreasureTrove;font-family:CCTreasureTrove;font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal;font-size:12.5px"
+   id="flowSpan4242">ne</flowSpan>2</flowPara></flowRoot>  </g>
   <g
      inkscape:groupmode="layer"
      id="layer3"
