@@ -16,8 +16,8 @@
    id="svg4516"
    version="1.1"
    inkscape:version="0.91 r13725"
-   sodipodi:docname="map-v00.svg"
-   inkscape:export-filename="/Users/garykac/projects/github/blockchain/maps/map-v00.png"
+   sodipodi:docname="map-v01a.svg"
+   inkscape:export-filename="/Users/garykac/projects/github/blockchain/maps/map-v01a.png"
    inkscape:export-xdpi="300"
    inkscape:export-ydpi="300">
   <sodipodi:namedview
@@ -29,11 +29,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1"
-     inkscape:cx="458.86957"
-     inkscape:cy="406.29379"
+     inkscape:zoom="0.70710678"
+     inkscape:cx="639.40402"
+     inkscape:cy="369.3789"
      inkscape:document-units="px"
-     inkscape:current-layer="layer3"
+     inkscape:current-layer="layer1"
      showgrid="false"
      units="in"
      inkscape:window-width="1680"
@@ -2407,11 +2407,10 @@
      id="g33590"
      inkscape:groupmode="layer">
     <path
+       style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:sans-serif;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;baseline-shift:baseline;text-anchor:start;white-space:normal;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#a2c6ff;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       d="m 107.14258,244.4375 a 4.0004,4.0004 0 0 0 -0.45117,0.0273 l -45.990238,5.38477 a 4.0004,4.0004 0 0 0 -3.458984,3.19141 L 41.183594,333.74609 15.242188,356 -9.8847656,356 a 4.0004,4.0004 0 1 0 0,8 l 26.6074216,0 a 4.0004,4.0004 0 0 0 2.603516,-0.96484 l 28.115234,-24.11719 a 4.0004,4.0004 0 0 0 1.31836,-2.25586 l 15.761718,-79.20508 40.894536,-4.78906 48.7539,61.04687 a 4.0004,4.0004 0 0 0 4.53516,1.24805 l 60.80273,-22.88672 22.32031,15.95313 a 4.0004,4.0004 0 0 0 2.77735,0.7207 l 68.29687,-7.75 24.07422,24.89844 4.83789,33.31445 a 4.0004,4.0004 0 0 0 1.15625,2.2793 l 33.33008,32.72851 a 4.0004,4.0004 0 0 0 2.82422,1.14649 l 60.56641,-0.32422 a 4.0004,4.0004 0 0 0 3.19336,-1.62109 l 33.38867,-45.11524 17.68554,-2.94531 75.16407,52.78515 a 4.0004,4.0004 0 0 0 4.42187,0.11719 l 17.07031,-10.6914 60.0918,10.98437 a 4.0004,4.0004 0 0 0 3.24414,-0.83203 l 50.00195,-40.71094 41.8711,5.42578 a 4.0004,4.0004 0 0 0 3.97266,-1.95703 l 21.53906,-37.04883 75.56836,-10.59961 40.88086,49.70704 A 4.0004,4.0004 0 0 0 890.875,364 l 26.69336,0 a 4.0004,4.0004 0 1 0 0,-8 l -24.80469,0 -41.10547,-49.98047 a 4.0004,4.0004 0 0 0 -3.64453,-1.41992 l -79.71484,11.18164 a 4.0004,4.0004 0 0 0 -2.90235,1.94922 l -21.17968,36.43359 -40.94141,-5.30468 a 4.0004,4.0004 0 0 0 -3.04101,0.86523 l -49.9043,40.63086 -59.80469,-10.93164 a 4.0004,4.0004 0 0 0 -2.8418,0.54492 l -16.13476,10.10547 -74.33399,-52.20117 a 4.0004,4.0004 0 0 0 -2.95507,-0.67188 l -20.89649,3.48047 a 4.0004,4.0004 0 0 0 -2.55859,1.56641 l -33.15821,44.80468 -56.91601,0.30469 -31.19336,-30.6289 -4.83008,-33.25782 a 4.0004,4.0004 0 0 0 -1.08203,-2.20508 l -26.33984,-27.24218 a 4.0004,4.0004 0 0 0 -3.32618,-1.19532 l -68.72851,7.80079 -22.80664,-16.30274 a 4.0004,4.0004 0 0 0 -3.73633,-0.48828 l -60.08008,22.61328 -48.32617,-60.50976 a 4.0004,4.0004 0 0 0 -3.13867,-1.50391 z"
        id="path33876"
-       style="fill:none;stroke:#a2c6ff;stroke-width:8;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;stroke-linecap:round;stroke-linejoin:round"
-       d="m -9.8841463,360 26.6066023,0 28.114712,-24.11809 16.32883,-82.05948 45.990352,-5.38513 50.13978,62.78132 62.80108,-23.63788 24.05659,17.19497 70.25553,-7.97283 26.34003,27.24364 5.02393,34.59087 33.33069,32.72928 60.56587,-0.32443 34.3508,-46.41563 20.89621,-3.4803 76.50464,53.72766 18.38546,-11.51546 61.61892,11.26367 51.33487,-41.7955 43.57769,5.64616 22.51677,-38.73121 79.71405,-11.18066 L 890.87458,360 917.569,360"
-       inkscape:connector-curvature="0"
-       sodipodi:nodetypes="cccccccccccccccccccccccc" />
+       inkscape:connector-curvature="0" />
   </g>
   <g
      inkscape:groupmode="layer"
@@ -3220,6 +3219,23 @@
        id="path34726"
        d="M 315.58579,512.46447 C 321.97313,470.67199 331.44575,438.8882 308.5584,400.79155 285.67106,362.69491 252.37809,357.10769 219.80116,341.75116 188.43155,326.96375 174.37913,252.56055 133.82512,224.03873 100.9993,200.95218 41.786873,146.60399 0,144"
        style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:5;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:0, 10;stroke-dashoffset:0;stroke-opacity:0.39215686;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer1"
+     inkscape:label="ID">
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:0.50196078;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="18.8255"
+       y="35.0975"
+       id="text4714"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan4716"
+         x="18.8255"
+         y="35.0975"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:22.5px;font-family:CCTreasureTrove;-inkscape-font-specification:CCTreasureTrove;fill:#000000;fill-opacity:0.50196078">01a</tspan></text>
   </g>
   <g
      inkscape:label="Voronoi border safe area"
