@@ -78,62 +78,81 @@ Reveal a spell (by placing it in front of you) when you cast it for the first ti
 Deal a random Tapestry Card to each player.
 
 This card should be placed in front of you to start your TAPESTRY. You may choose either side to be face up.
+Note that each Tapestry Cards contains one of each element,
+split between the front and back of the card.
 
 ## Each Turn
 
-### Recover 1 Thread from Tapestry
+Each turn, you may either **Rest** or **Take An Action**.
 
-At the start of your turn, take 1 THREAD from your TAPESTRY and place it back in your MANA POOL.
+### Rest
 
-### Spend Mana
+When you rest, you recover one THREAD from your TAPESTRY and
+all of your SPENT MANA. All of these are added back into your
+MANA POOL.
 
-Spend as much mana as you wish from your MANA POOL.
+### Take an Action
 
-Mana can be placed on the TAPESTRY as THREADs to cast spells. See [Casting Spells](#casting-spells).
+Most of these actions require that you take mana from your
+MANA POOL and move it into your SPENT MANA pool. The only 
+way to recover your spent mana is to Rest.
 
-Mana can also be spent on the following actions:
+![Move Plains](../img/action-move-plains.png)
 
-|  Cost  | Action |
-| ------ | ------ |
-| 1 mana | Gain 1 Movement Point (MP) - see [Movement](#movement). |
-| 2 mana | Draw a first Tapestry Card |
-| 3 mana | Draw a second Tapestry Card |
+You may spend 1 mana to move into an adjacent Plains location.
 
-Mana that is spent for these actions is moved into your SPENT POOL until the end of your turn.
+![Move Forest](../img/action-move-forest.png)
 
-Any Tapestry Cards that are acquired are set aside until the end of your turn.
+You may spend 2 mana to move into an adjacent Forest location.
 
-### End of Turn Actions
+![Move Mountains](../img/action-move-mountains.png)
 
-These end of turn actions can be done in parallel with the next player starting their turn.
+You may spend 3 mana to move into an adjacent Mountains location.
 
-#### Recover all Spent Mana
+![Move Water](../img/action-move-water.png)
 
-Move all mana from your SPENT POOL back into your MANA POOL.
+You may spend 5 mana to move into an adjacent Water location.
 
-#### Place Tapestry Cards
+![Cross River](../img/action-cross-river.png)
 
-If you acquired any new Tapestry Cards, then you may add them to your TAPESTRY at this time. Newly added cards must overlap at least one symbol or box on an existing card. See the [placement rules](tapestry-card-placement.md).
+You may spend 3 additional mana to cross a river into an
+adjacent location. This is in addition to the cost of moving
+into that location, so moving into a Mountains location on the
+other side of a river requires 6 mana total.
 
-Any THREADs that are covered by the newly added card are removed from the TAPESTRY and added back into your MANA POOL.
+![Place Thread](../img/action-place-thread.png)
 
-Alternately, you may choose to set aside your newly acquired Tapestry Cards and hold onto them to use at a later point. But note that they can only be added to your TAPESTRY at the end of one of your turns.
+You may take 1 mana and place it as a THREAD in an empty
+box on your tapestry. If this new THREAD completes a
+spell pattern, then you may cast that spell.
+See [Casting Spells](#casting-spells)
 
-## Movement
+If you do not cast a spell, then you may take another action.
 
-You can gain Movement Points (MPs) by spending mana or casting certain spells.
+![Create Tendril](../img/action-create-tendril.png)
 
-MPs can be spent as follows to move around the Map:
+You may spend 1 mana to create a new TENDRIL in your current
+location. The mana for the TENDRIL must come from your
+MANA POOL.
 
-| Cost | Action |
-| ---- | ------ |
-| 1 MP | Move into Field or along Road |
-| 2 MP | Move into Forest |
-| 3 MP | Move into Mountain |
+![Move Tendril](../img/action-move-tendril.png)
 
-MPs can be spent at any time during your turn. Any unused MPs at the end of your turn are lost.
+You may spend 3 mana to move a TENDRIL into an adjacent location. Unless stated otherwise, TENDRILs can move freely
+into any space and are not affected by terrain or barriers.
 
-When moving, you may enter or pass through spaces that are occupied by other creatures without penalty.
+![Tapestry Card](../img/action-tapestry-card.png)
+
+You may spend 3 mana draw a Tapestry Card and add it to your
+TAPESTRY. The newly added card must overlap at least one symbol or box on an existing card.
+See the [placement rules](tapestry-card-placement.md) for adding new Tapestry Cards.
+
+If, when placing this new Tapestry Card, you cover any
+THREADs, then those are recovered back into your MANA POOL.
+
+![Recover Mana](../img/action-recover-mana.png)
+
+You may recover a CHARGE (from one of your spells) or a
+TENDRILs (from the map) and add the mana back into your MANA POOL. If you do, you may take another action.
 
 ## Casting Spells
 
