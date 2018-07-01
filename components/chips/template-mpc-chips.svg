@@ -17,8 +17,8 @@
    width="4.1399999in"
    height="4.1399999in"
    viewBox="0 0 372.6 372.6"
-   sodipodi:docname="template-mpc copy.svg"
-   inkscape:export-filename="/Users/garykac/projects/github/blockchain/cards/air.png"
+   sodipodi:docname="template-mpc-chips.svg"
+   inkscape:export-filename="/Users/garykac/projects/github/woven/components/chips/air.png"
    inkscape:export-xdpi="300"
    inkscape:export-ydpi="300"><defs
      id="defs11"><filter
@@ -128,7 +128,7 @@
          id="feComposite9134" /></filter></defs><metadata
      id="metadata8"><rdf:RDF><cc:Work
          rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
-           rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><dc:title></dc:title></cc:Work></rdf:RDF></metadata><sodipodi:namedview
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><dc:title /></cc:Work></rdf:RDF></metadata><sodipodi:namedview
      pagecolor="#ffffff"
      bordercolor="#666666"
      borderopacity="1"
@@ -142,7 +142,7 @@
      id="namedview4"
      showgrid="false"
      inkscape:zoom="1.7611257"
-     inkscape:cx="250.86092"
+     inkscape:cx="152.6283"
      inkscape:cy="204.7743"
      inkscape:window-x="50"
      inkscape:window-y="7"

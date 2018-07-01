@@ -47,7 +47,7 @@ Need to determine how spell effects would work with the new terrain type.
 
 Temp variation?  Hot / Temperate / Cold
 
-Water variatiin? Dry / Normal / Wet
+Water variation? Dry / Normal / Wet
 
 Possible other terrain types?
 

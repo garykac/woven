@@ -1,6 +1,6 @@
 # Design Space
 
-## Matrix Cards
+## Tapestry Cards
 
 * Elements on card
 	* 4 elements: Air, Fire, Earth, Water
@@ -18,7 +18,7 @@
 * Charges
 * Variable damage (roll dice)
 
-## Spell Pattern
+## Spell Patterns
 
 * Neutral vs. Elemental
 * Number of boxes in spell
@@ -27,15 +27,16 @@
 * Constraints
 	* E.g., Marker in this spot must be "5" or Red
 
-## Spell Markers
+## Mana
 
 * Dice vs. cubes
 * Sharing casting markers with spell charges
 * Limited number available
 
-## Hex Map
+## Map
 
 * Terrain
+* Hex vs. Voronoi
 
 ## Player Interaction
 
@@ -45,9 +46,10 @@
 	* Move to different location
 	* Block in current location
 	* Prevent movement into certain locations
-* Spell Matrix
+* Tapestry
 	* Force removal of card
 	* Force card to be flipped (if double-sided)
 	* Make block unusable
-* Spell Markers
+	* Place mana on opponent's tapestry to block spells
+* Mana
 	* Reduce number of available

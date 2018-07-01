@@ -1,12 +1,12 @@
-# Blockchain Rules!
+# Woven Rules
 
-A tabletop game where fragile wizards chain together spell fragments in a tactical battle.
+A tabletop game of tactical mage combat.
 
 ## Components
 
 Common:
 
-* 1 Hex map with terrain (field, forest, mountain)
+* 1 map with terrain (field, forest, mountain)
 * [33 double-sided Tapestry cards](tapestry-cards-2sided.md)
 * 36 Spell Fragment cards
 
