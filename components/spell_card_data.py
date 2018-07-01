@@ -36,7 +36,7 @@
 # Next id = 88
 # Unused: 70
 
-spell_card_revision = 4
+spell_card_revision = 5
 
 spell_card_categories = [
 	'attack-mage',
@@ -372,7 +372,7 @@ spell_card_data = [
 				{'element': 'air', 'category': 'move-mage,terrain,add-action', 'id': 54},
 				{
 					'cast': "{{ADD_CHARGE}}",
-					'charged': "You may move into Water locations or across Rivers. At the end of this action, if you are adjacent to Water, place a TENDRIL and {{ADD_ACTION}}",
+					'charged': "You may move into Water locations or across Rivers. At the end of your turn, if you are adjacent to Water, place a TENDRIL and {{ADD_ACTION}}",
 				} ],
 		],
 	],
