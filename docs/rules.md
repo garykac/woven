@@ -8,14 +8,12 @@ Common:
 
 * 1 Hex map with terrain (field, forest, mountain)
 * [33 double-sided Tapestry cards](tapestry-cards-2sided.md)
-* _n_ Basic Spell Fragment cards
-* _n_ Spell Fragment cards
-* 5 Home location cards
+* 36 Spell Fragment cards
 
-Per-player:
+Per-player/color:
 
-* 1 Mage tokens
-* 11 Mana counters
+* 1 Mage token
+* 13 Mana counters
 
 ## Overview
 
@@ -28,14 +26,12 @@ Each player has:
 During your turn, mana can be:
 
 * Placed on your TAPESTRY as a THREAD that can be used to cast spells
-* Spent for movement or to acquire cards.
+* Spent for movement, to acquire cards or other actions.
 
 As a spell effect, mana can be:
 
 * Placed on the map as a TENDRIL that can be used by spells to target locations
 * Placed on one of your spells as a CHARGE for that spell
-
-The Astral Plane is where you start the game and where you will be sent if your physical form is destroyed.
 
 ## Start Game
 
@@ -43,12 +39,11 @@ General Setup:
 
 * Place map in middle of table
 * Place stack of Tapestry Cards when everyone can access
-* Place the basic Spells where all players can see
 
 Each player should perform the following actions:
 
 * Choose Color
-* Assign Home Location
+* Determine Starting Position
 * Draft Spell Cards
 * Initialize Tapestry
 
@@ -56,13 +51,16 @@ Each player should perform the following actions:
 
 Choose a color and take the mage and mana tokens of that color
 
-Place your mage token in front of you (but not on map). Your starting position is in the Astral Plane, which is not shown on the map.
+### Determine Starting Position
 
-### Assign Home Location
+Place your mage token in front of you (but not on map).
 
-Draw a random Home Card.
+For a 2-player game: Your starting position can be anywhere
+along the edge closest to you on the map. You will decide
+where when you take your first movement action.
 
-Keep it hidden for now. You will reveal your home position when you make your first move on the map.
+For 3 or more players: Your starting position is in the Astral Plane, which is not shown on the map. Randomly select a
+Home Card to determine your starting location.
 
 ### Draft Spell Cards
 
@@ -99,21 +97,31 @@ way to recover your spent mana is to Rest.
 
 ![Move Plains](../img/action-move-plains.png)
 
+#### Move Into Plains
+
 You may spend 1 mana to move into an adjacent Plains location.
 
 ![Move Forest](../img/action-move-forest.png)
+
+#### Move Into Forest
 
 You may spend 2 mana to move into an adjacent Forest location.
 
 ![Move Mountains](../img/action-move-mountains.png)
 
+#### Move Into Mountains
+
 You may spend 3 mana to move into an adjacent Mountains location.
 
 ![Move Water](../img/action-move-water.png)
 
+#### Move Into Water
+
 You may spend 5 mana to move into an adjacent Water location.
 
 ![Cross River](../img/action-cross-river.png)
+
+#### River Crossing Penalty
 
 You may spend 3 additional mana to cross a river into an
 adjacent location. This is in addition to the cost of moving
@@ -122,14 +130,20 @@ other side of a river requires 6 mana total.
 
 ![Place Thread](../img/action-place-thread.png)
 
+#### Place New Thread
+
 You may take 1 mana and place it as a THREAD in an empty
 box on your tapestry. If this new THREAD completes a
 spell pattern, then you may cast that spell.
 See [Casting Spells](#casting-spells)
 
 If you do not cast a spell, then you may take another action.
+Typically, you'll want to keep adding THREADs until you
+can cast a spell.
 
 ![Create Tendril](../img/action-create-tendril.png)
+
+#### Create Tendril
 
 You may spend 1 mana to create a new TENDRIL in your current
 location. The mana for the TENDRIL must come from your
@@ -137,10 +151,14 @@ MANA POOL.
 
 ![Move Tendril](../img/action-move-tendril.png)
 
+#### Move Tendril
+
 You may spend 3 mana to move a TENDRIL into an adjacent location. Unless stated otherwise, TENDRILs can move freely
 into any space and are not affected by terrain or barriers.
 
 ![Tapestry Card](../img/action-tapestry-card.png)
+
+#### Acquire Tapestry Card
 
 You may spend 3 mana draw a Tapestry Card and add it to your
 TAPESTRY. The newly added card must overlap at least one symbol or box on an existing card.
@@ -151,6 +169,8 @@ THREADs, then those are recovered back into your MANA POOL.
 
 ![Recover Mana](../img/action-recover-mana.png)
 
+#### Recover Mana
+
 You may recover a CHARGE (from one of your spells) or a
 TENDRILs (from the map) and add the mana back into your MANA POOL. If you do, you may take another action.
 
@@ -158,10 +178,10 @@ TENDRILs (from the map) and add the mana back into your MANA POOL. If you do, yo
 
 There are two parts to casting a spell:
 
-* First, build a TAPESTRY that permits you to place THREADs where the spell needs them
-* Then, place THREADs one at a time onto your TAPESTRY
+* First, build a TAPESTRY that permits you to place THREADs in the pattern required by a spell
+* Then, place THREADs one at a time onto your TAPESTRY to form that pattern
 
-When you place a new THREAD on your TAPESTRY that completes a pattern on one of your spells, you cast that spell and trigger its effects. If the newly added THREAD completes
+When you place a new THREAD on your TAPESTRY that completes a pattern on one of your spells, you may immediately cast that spell and trigger its effects. If the newly added THREAD completes
 multiple spell patterns, then you must choose one.
 
 THREADs can only be placed in empty boxes on your Tapestry Cards. Unless otherwise stated, they may not be placed on top of the element symbols in your TAPESTRY.
@@ -175,19 +195,19 @@ TODO: Add Example
 
 When the effect of a spell is to place a new TENDRIL on the map, you must take mana from your MANA POOL and place it on the map.
 
-If you do not have any mana available in your MANA POOL, then the spell has no effect.
+If you do not have any mana available in your MANA POOL, then you cannot add a new TENDRIL.
 
-You can abandon a TENDRIL and return the mana back into your MANA POOL at any time during your turn.
+You can abandon a TENDRIL and return the mana back into your MANA POOL by taking the Recover Mana action.
 
 ### Charges
 
 When a spell requires a CHARGE, you must take mana from your MANA POOL and place it on the spell card.
 
-If you do not have any mana available in your MANA POOL, then the spell has no effect.
+If you do not have any mana available in your MANA POOL, then you cannot add a CHARGE to the spell.
 
 Unless otherwise specified, CHARGEs can be spent at any time (even during another player's turn). A common use for CHARGEs is to be able to react to an opponent's action (attacking, pushing, et al.)
 
-You can abandon a CHARGE and return the mana back into your MANA POOL at any time during your turn.
+You can abandon a CHARGE and return the mana back into your MANA POOL by taking the **Recover Mana** action.
 
 ## Mage Combat
 
@@ -197,11 +217,23 @@ Magical attacks affect all creatures in the target location and do the same amou
 
 ### Defense
 
-Magical barrier spells have CHARGEs that you can spend when you are attacked to deflect the attack.
+Magical barrier spells have CHARGEs that indicate when they are active.
 
-In general, these barriers will completely protect you from any attack, but the barrier will be dispelled if the attack is greater than some threshold. When a barrier is dispelled, the CHARGE token is returned to your MANA POOL.
+In general, these barriers will completely protect you from any attack, but the barrier will be dispelled if the attack is greater than some threshold.
+
+For example, a **Defend 2** barrier will protect against an attack of strength 1 and remain in place. If the attack is 2 or greater, then the barrier still protects against the comlete attack, but the barrier is dispelled (and the CHARGE is removed).
+
+When a barrier is dispelled, the CHARGE token is returned to your SPENT MANA pool.
 
 If you have multiple options to protect yourself from an attack, then you may choose whichever one you prefer. The order in which they were originally created is not relevant.
+
+## Three or more players
+
+Additional rules for 3-5 players.
+
+### Astral Plane
+
+TODO
 
 ### Death
 
@@ -211,8 +243,6 @@ form is destroyed and you are sent back to the Astral Plane.
 When your physical form is destroyed:
 
 * You are sent to the Astral Plane
-* You discard your entire TAPESTRY and draw a new Tapestry Card to start a new one
-* You recover all mana back into your MANA POOL
-	* This means you lose all TENDRILs and CHARGEs
+* You lose all TENDRILs and CHARGEs. Place them in your SPENT MANA pool.
 
 So you're not exactly dead. Not really.
