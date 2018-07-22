@@ -7,11 +7,9 @@ import os
 import subprocess
 import sys
 
-from spell_card_data import spell_card_data
-from spell_card_data import spell_card_revision
-from spell_card_data import spell_card_categories
-
-from artifact_card_data import artifact_card_data
+from data_spell_cards import spell_card_data
+from data_spell_cards import spell_card_revision
+from data_spell_cards import spell_card_categories
 
 def error(msg):
 	print '\nERROR: %s\n' % msg
@@ -281,33 +279,6 @@ class CardGen(object):
 		
 		self.end_card_page_transform()
 	
-	def draw_artifact_card(self, id, artifact):
-		self.start_card_page_transform(id)
-
-		self.draw_border()
-		self.draw_title('Artifact')
-
-		width = 155
-		height = 145
-		x = (self.card_width - width) / 2
-		y = 80
-		self.draw_text("c%d-ability-id" % id, x, y, 'Special Ability', size=12, align='left', weight='bold', font='Arial')
-		y += 10
-		rect = { 'x': x, 'y': y, 'width': width, 'height': height }
-		self.draw_flow_text(rect, [artifact['ability']], size=10)
-
-		y = 180
-		self.draw_text("c%d-action-id" % id, x, y, 'Special Action', size=12, align='left', weight='bold', font='Arial')
-		y += 10
-		rect = { 'x': x, 'y': y, 'width': width, 'height': height }
-		self.draw_flow_text(rect, [artifact['action']], size=10)
-		
-		print artifact['ability']
-		print artifact['action']
-		#self.draw_desc(artifact['ability'])
-		
-		self.end_card_page_transform()
-
 	def draw_border(self):
 		style = 'fill:#ffffff;fill-opacity:1;stroke:#c0c0c0;stroke-width:0.88582677;stroke-opacity:1'
 		self.write('<rect id="c%d-border" x="%.03f" y="%.03f" width="%.03f" height="%.03f" rx="11.25" ry="11.25" style="%s"/>\n' % (self.curr_card, 0, 0, self.card_width, self.card_height, style))
@@ -598,11 +569,6 @@ class CardGen(object):
 					print self.curr_file, self.curr_card, card[0]
 				self.draw_card(self.curr_card, pattern, card)
 				self.post_card()
-
-		#for artifact in artifact_card_data:
-		#	self.pre_card()
-		#	self.draw_artifact_card(self.curr_card, artifact)
-		#	self.post_card()
 
 		if self.curr_filename != '':
 			if self.verbose:

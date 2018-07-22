@@ -7,7 +7,7 @@ import re
 import subprocess
 import sys
 
-from tapestry_card_data import tapestry_card_data
+from data_tapestry_cards import tapestry_card_data
 
 def error(msg):
 	print 'Error: %s' % (msg)
