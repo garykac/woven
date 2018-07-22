@@ -1,4 +1,4 @@
-# Woven Rules
+# Woven
 
 A tabletop game of tactical mage combat.
 
@@ -139,7 +139,7 @@ See [Casting Spells](#casting-spells)
 
 If you do not cast a spell, then you may take another action.
 Typically, you'll want to keep adding THREADs until you
-can cast a spell.
+can complete a spell.
 
 ![Create Tendril](../img/action-create-tendril.png)
 
@@ -172,7 +172,7 @@ THREADs, then those are recovered back into your MANA POOL.
 #### Recover Mana
 
 You may recover a CHARGE (from one of your spells) or a
-TENDRILs (from the map) and add the mana back into your MANA POOL. If you do, you may take another action.
+TENDRIL (from the map) and add the mana back into your MANA POOL. If you do, you may take another action.
 
 ## Casting Spells
 
