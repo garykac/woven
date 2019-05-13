@@ -6,6 +6,9 @@
 _tmp/
 
 # Component output files
+components/effect-cards/pdf/
+components/effect-cards/png/
+components/effect-cards/svg/
 components/spell-cards/pdf/
 components/spell-cards/png/
 components/spell-cards/svg/
