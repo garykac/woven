@@ -5,6 +5,10 @@
 # Temp data files
 _tmp/
 
+# Archive
+archive/maps/v1/map-hex-22x19.jpg
+archive/maps/v1/map-hex-22x19.png
+
 # Component output files
 components/effect-cards/pdf/
 components/effect-cards/png/
