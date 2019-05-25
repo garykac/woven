@@ -1,2 +1,0 @@
-map.jpg filter=lfs diff=lfs merge=lfs -text
-map-hex-22x19.jpg filter=lfs diff=lfs merge=lfs -text
