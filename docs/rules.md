@@ -95,42 +95,42 @@ Most of these actions require that you take mana from your
 MANA POOL and move it into your SPENT MANA pool. The only 
 way to recover your spent mana is to Rest.
 
-![Move Plains](../img/action-move-plains.png)
-
 #### Move Into Plains
+
+![Move Plains](../img/action-move-plains.png)
 
 You may spend 1 mana to move into an adjacent Plains location.
 
-![Move Forest](../img/action-move-forest.png)
-
 #### Move Into Forest
+
+![Move Forest](../img/action-move-forest.png)
 
 You may spend 2 mana to move into an adjacent Forest location.
 
-![Move Mountains](../img/action-move-mountains.png)
-
 #### Move Into Mountains
+
+![Move Mountains](../img/action-move-mountains.png)
 
 You may spend 3 mana to move into an adjacent Mountains location.
 
-![Move Water](../img/action-move-water.png)
-
 #### Move Into Water
+
+![Move Water](../img/action-move-water.png)
 
 You may spend 5 mana to move into an adjacent Water location.
 
-![Cross River](../img/action-cross-river.png)
-
 #### River Crossing Penalty
+
+![Cross River](../img/action-cross-river.png)
 
 You may spend 3 additional mana to cross a river into an
 adjacent location. This is in addition to the cost of moving
 into that location, so moving into a Mountains location on the
 other side of a river requires 6 mana total.
 
-![Place Thread](../img/action-place-thread.png)
-
 #### Place New Thread
+
+![Place Thread](../img/action-place-thread.png)
 
 You may take 1 mana and place it as a THREAD in an empty
 box on your tapestry. If this new THREAD completes a
@@ -141,24 +141,24 @@ If you do not cast a spell, then you may take another action.
 Typically, you'll want to keep adding THREADs until you
 can complete a spell.
 
-![Create Tendril](../img/action-create-tendril.png)
-
 #### Create Tendril
+
+![Create Tendril](../img/action-create-tendril.png)
 
 You may spend 1 mana to create a new TENDRIL in your current
 location. The mana for the TENDRIL must come from your
 MANA POOL.
 
-![Move Tendril](../img/action-move-tendril.png)
-
 #### Move Tendril
+
+![Move Tendril](../img/action-move-tendril.png)
 
 You may spend 3 mana to move a TENDRIL into an adjacent location. Unless stated otherwise, TENDRILs can move freely
 into any space and are not affected by terrain or barriers.
 
-![Tapestry Card](../img/action-tapestry-card.png)
-
 #### Acquire Tapestry Card
+
+![Tapestry Card](../img/action-tapestry-card.png)
 
 You may spend 3 mana draw a Tapestry Card and add it to your
 TAPESTRY. The newly added card must overlap at least one symbol or box on an existing card.
@@ -167,9 +167,9 @@ See the [placement rules](tapestry-card-placement.md) for adding new Tapestry Ca
 If, when placing this new Tapestry Card, you cover any
 THREADs, then those are recovered back into your MANA POOL.
 
-![Recover Mana](../img/action-recover-mana.png)
-
 #### Recover Mana
+
+![Recover Mana](../img/action-recover-mana.png)
 
 You may recover a CHARGE (from one of your spells) or a
 TENDRIL (from the map) and add the mana back into your MANA POOL. If you do, you may take another action.
