@@ -11,9 +11,20 @@
 * Number of exposed elements
 	* Player with most of element X
 	* Caster must have N Xs visible in matrix
+* Place mana on cards to cast spells
+* Remove mana (recovery)
+* Use mana on spells for charges
+* Add cards to expand tapestry during game
+* Remove cards to quickly recover mana
+* ~Other players can interact with your tapestry~
+* Other players add mana to block spells
 
 ## Spell Cards
 
+* Basic spells that all players have
+* Set of possible starting spells
+* Gain spells during game
+* ~Losing spells during game~
 * Vary the pattern on card
 * Charges
 * Variable damage (roll dice)
@@ -21,21 +32,27 @@
 ## Spell Patterns
 
 * Neutral vs. Elemental
-* Number of boxes in spell
+	* Number of elements
+* Number of mana required in spell
 * Overall size of spell
 	* Can pattern be constructed on 1 Matrix Card
-* Constraints
-	* E.g., Marker in this spot must be "5" or Red
+* Symmetry
+* ~Constraints, e.g., Mana in this spot must be "5" or Red~
 
 ## Mana
 
 * Dice vs. cubes
+* ~Different kinds of mana~
 * Sharing casting markers with spell charges
 * Limited number available
+* Start with limited amount and gain more
+* ~Permanent loss of mana during game~
 
 ## Map
 
 * Terrain
+* Special locations
+* Pathways
 * Hex vs. Voronoi
 
 ## Player Interaction
