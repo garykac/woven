@@ -16,7 +16,7 @@
    id="svg4516"
    version="1.1"
    inkscape:version="0.91 r13725"
-   sodipodi:docname="map-v01a.svg"
+   sodipodi:docname="map-01.svg"
    inkscape:export-filename="/Users/garykac/projects/github/woven/maps/map-v01a.png"
    inkscape:export-xdpi="300"
    inkscape:export-ydpi="300">
@@ -30,10 +30,10 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1"
-     inkscape:cx="515.2998"
+     inkscape:cx="342.2998"
      inkscape:cy="381.41543"
      inkscape:document-units="px"
-     inkscape:current-layer="layer4"
+     inkscape:current-layer="layer1"
      showgrid="false"
      units="in"
      inkscape:window-width="1680"
@@ -3243,7 +3243,7 @@
          id="tspan4716"
          x="18.8255"
          y="35.0975"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:22.5px;font-family:CCTreasureTrove;-inkscape-font-specification:CCTreasureTrove;fill:#000000;fill-opacity:0.50196078">01a</tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:22.5px;font-family:CCTreasureTrove;-inkscape-font-specification:CCTreasureTrove;fill:#000000;fill-opacity:0.50196078">01</tspan></text>
     <text
        sodipodi:linespacing="125%"
        id="text4715"
@@ -3255,7 +3255,7 @@
          y="49.0975"
          x="18.8255"
          id="tspan4717"
-         sodipodi:role="line">r1</tspan></text>
+         sodipodi:role="line">r2</tspan></text>
   </g>
   <g
      inkscape:label="Voronoi border safe area"

@@ -13,7 +13,7 @@
    inkscape:export-ydpi="300"
    inkscape:export-xdpi="300"
    inkscape:export-filename="/Users/garykac/projects/github/woven/maps/map-v03a.png"
-   sodipodi:docname="map-v03a.svg"
+   sodipodi:docname="map-05.svg"
    inkscape:version="0.91 r13725"
    version="1.1"
    id="svg4516"
@@ -32,10 +32,10 @@
      inkscape:window-width="1680"
      units="in"
      showgrid="false"
-     inkscape:current-layer="layer9"
+     inkscape:current-layer="layer1"
      inkscape:document-units="px"
      inkscape:cy="366.52878"
-     inkscape:cx="409.2387"
+     inkscape:cx="236.2387"
      inkscape:zoom="1"
      inkscape:pageshadow="2"
      inkscape:pageopacity="0.0"
@@ -3610,7 +3610,7 @@
          y="35.0975"
          x="18.8255"
          id="tspan4716"
-         sodipodi:role="line">03a</tspan></text>
+         sodipodi:role="line">05</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:0.50196078;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
@@ -3622,7 +3622,7 @@
          id="tspan4717"
          x="18.8255"
          y="49.0975"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:15px;font-family:CCTreasureTrove;-inkscape-font-specification:CCTreasureTrove;fill:#000000;fill-opacity:0.50196078">r1</tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:15px;font-family:CCTreasureTrove;-inkscape-font-specification:CCTreasureTrove;fill:#000000;fill-opacity:0.50196078">r2</tspan></text>
   </g>
   <g
      sodipodi:insensitive="true"
