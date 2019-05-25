@@ -6,8 +6,8 @@
 _tmp/
 
 # Archive
-archive/maps/v1/map-hex-22x19.jpg
-archive/maps/v1/map-hex-22x19.png
+archive/maps/v1-hex/map-hex-22x19.jpg
+archive/maps/v1-hex/map-hex-22x19.png
 
 # Component output files
 components/effect-cards/pdf/
