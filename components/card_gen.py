@@ -303,6 +303,88 @@ class CardGen(object):
 		style = 'fill:#ffffff;fill-opacity:1;stroke:#c0c0c0;stroke-width:0.88582677;stroke-opacity:1'
 		self.write('<rect id="c%d-border" x="%.03f" y="%.03f" width="%.03f" height="%.03f" rx="11.25" ry="11.25" style="%s"/>\n' % (self.curr_card, 0, 0, self.card_width, self.card_height, style))
 
+	def start_layer(self, id, label, hidden=False, locked=True):
+		tag = '<g inkscape:groupmode="layer" id="%s" inkscape:label="%s" ' % (id, label)
+		if hidden:
+			tag += 'style="display:none" '
+		else:
+			tag += 'style="display:inline" '
+		if locked:
+			tag += 'sodipodi:insensitive="true" '
+		tag += '>\n'
+		self.write(tag)
+		self.indent()
+		
+	def end_layer(self):
+		self.outdent()
+		self.write('</g>\n')
+	
+	def start_group(self, id='', style='', transform=''):
+		tag = '<g '
+		if id != '':
+			tag += 'id="%s" ' % id
+		if style != '':
+			tag += 'style="%s" ' % style
+		if transform != '':
+			tag += 'transform="%s" ' % transform
+		tag += '>\n'
+		self.write(tag)
+		self.indent()
+
+	def end_group(self):
+		self.outdent()
+		self.write('</g>\n')
+		
+	def draw_path(self, style, path, id='', transform=''):
+		tag = '<path style="%s" ' % style
+		if id != '':
+			tag += 'id="%s" ' % id
+		if transform != '':
+			tag += 'transform="%s" ' % transform
+		tag += 'd="%s" ' % path
+		tag += '/>\n'
+		self.write(tag)
+	
+	def draw_clone(self, link, id='', x=0, y=0, transform='', style=''):
+		tag = '<use xlink:href="#%s" height="100%%" width="100%%" x="%f" y="%f" ' % (link, x, y)
+		if id != '':
+			tag += 'id="%s" ' % id
+		if transform != '':
+			tag += 'transform="%s" ' % transform
+		if style != '':
+			tag += 'style="%s" ' % style
+		tag += '/>\n'
+		self.write(tag)
+
+	def draw_rect(self, style, x, y, width, height, id='', r=0, transform=''):
+		tag = '<rect x="%f" y="%f" width="%f" height="%f" style="%s" ' % (x, y, width, height, style)
+		if r != 0:
+			tag += 'ry="%f" ' % r
+		if id != '':
+			tag += 'id="%s" ' % id
+		if transform != '':
+			tag += 'transform="%s" ' % transform
+		tag += '/>\n'
+		self.write(tag)
+	
+	def draw_circle(self, style, cx, cy, r, id='', transform=''):
+		tag = '<circle cx="%f" cy="%f" r="%f" style="%s" ' % (cx, cy, r, style)
+		if id != '':
+			tag += 'id="%s" ' % id
+		if transform != '':
+			tag += 'transform="%s" ' % transform
+		tag += '/>\n'
+		self.write(tag)
+	
+	def draw_ellipse(self, style, cx, cy, rx, ry, id='', transform=''):
+		tag = '<ellipse cx="%f" cy="%f" rx="%f" ry="%f" style="%s" ' % (cx, cy, rx, ry, style)
+		if id != '':
+			tag += 'id="%s" ' % id
+		if transform != '':
+			tag += 'transform="%s" ' % transform
+		tag += '/>\n'
+		self.write(tag)
+
 	def draw_text(self, id, x, y, text, size=18, align='center', style='normal', weight='normal', font='Sans'):
 		if align == 'left':
 			align = 'start'
