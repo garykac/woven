@@ -2,29 +2,23 @@
 
 ## Size
 
-21x17 hex map
+Mulitple maps:
+
+* Geomorphic - the edges match so they can be combined to form a larger map.
+* Voronoi tesselation - irregular division of map into organic "hex-ish" locations
+* 5 special locations marked on each map
 
 ## Terrain Types
 
-* Field (cost = 1 AP)
-* Forest (cost = 2 AP)
-* Mountain (cost = 3 AP)
-* River (between hexes) cannot be crossed
-* Water/Swamp cannot be entered
-
-## Boundaries
-
-Boundaries are objects that follow the boundary outline of a hex location.
-
-In general, boundaries are barriers that cannot be passed without assistance.
+* Field (cost = 1 MP)
+* Forest (cost = 2 MP)
+* Mountain (cost = 3 MP)
+* River (between locations) (cost = 2MP + cost of terrain on other side)
+* Water/Swamp cannot be entered without a special ability
 
 ### Rivers
 
-The hex on either side of a river is a water location.
-
-### Walls
-
-Walls block normal movement unless the mage controls the locations within the walled area.
+The location on either side of a river is adjacent to water.
 
 ## Special locations
 
