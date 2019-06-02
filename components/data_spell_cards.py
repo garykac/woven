@@ -59,7 +59,6 @@ spell_card_categories = [
 	'move-other-tendril',
 
 	'modify-tapestry',
-	'add-action',
 	'terrain',
 ]
 
@@ -167,7 +166,7 @@ spell_card_data = [
 			["Haste",
 				{'element': 'air', 'category': 'move-mage', 'id': 3},
 				{
-					'cast': "Move 2 spaces, ignoring terrain cost.",
+					'cast': "Move 5 spaces along a road.",
 				} ],
 			["Protection",
 				{'element': 'earth', 'category': 'defend-mage', 'id': 4},
@@ -192,9 +191,9 @@ spell_card_data = [
 					'cast': "Attack 1 at one of your TENDRILs. Consume that TENDRIL.",
 				} ],
 			["Creep",
-				{'element': 'water', 'category': 'create-tendril,move-tendril,add-action', 'id': 73},
+				{'element': 'water', 'category': 'create-tendril,move-tendril', 'id': 73},
 				{
-					'cast': "Place a TENDRIL. Move one of your TENDRILs 2 spaces. {{ADD_ACTION}}",
+					'cast': "Place a TENDRIL. Move one of your TENDRILs 2 spaces.",
 				} ],
 		],
 	],
@@ -292,9 +291,9 @@ spell_card_data = [
 		],
 		[
 			["Split",
-				{'element': 'earth', 'category': 'create-tendril,add-action', 'id': 8},
+				{'element': 'earth', 'category': 'create-tendril', 'id': 8},
 				{
-					'cast': "Place a new TENDRIL in a location where you already have a TENDRIL. {{ADD_ACTION}}",
+					'cast': "Place a new TENDRIL in a location where you already have a TENDRIL.",
 				} ],
 		],
 	],
@@ -336,9 +335,9 @@ spell_card_data = [
 		],
 		[
 			["Push",
-				{'element': 'air', 'category': 'move-mage,move-other-mage,add-action', 'id': 20},
+				{'element': 'air', 'category': 'move-mage,move-other-mage', 'id': 20},
 				{
-					'cast': "Push all mages out of an adjacent location and then move into that location. You choose which location each mage moves into. {{ADD_ACTION}}",
+					'cast': "Push all mages out of an adjacent location and then move into that location. You choose which location each mage moves into.",
 				} ],
 		],
 	],
@@ -352,9 +351,9 @@ spell_card_data = [
 		],
 		[
 			["Plains Walker",
-				{'element': 'air', 'category': 'move-mage,terrain,add-action', 'id': 7},
+				{'element': 'air', 'category': 'move-mage,terrain', 'id': 7},
 				{
-					'cast': "Move through 4 contiguous Plains locations. {{ADD_ACTION}}",
+					'cast': "Move through 4 contiguous Plains locations.",
 				} ],
 		],
 	],
@@ -369,10 +368,10 @@ spell_card_data = [
 		],
 		[
 			["Water Moccasins",
-				{'element': 'air', 'category': 'move-mage,terrain,add-action', 'id': 54},
+				{'element': 'air', 'category': 'move-mage,terrain', 'id': 54},
 				{
 					'cast': "{{ADD_CHARGE}}",
-					'charged': "You may move into Water locations or across Rivers. At the end of your turn, if you are adjacent to Water, place a TENDRIL and {{ADD_ACTION}}",
+					'charged': "You may move into Water locations or across Rivers. At the end of your turn, if you are adjacent to Water, place a TENDRIL.",
 				} ],
 		],
 	],
@@ -424,9 +423,9 @@ spell_card_data = [
 		],
 		[
 			["Quick Drop",
-				{'element': 'air', 'category': 'move-mage,create-tendril,add-action', 'id': 66},
+				{'element': 'air', 'category': 'move-mage,create-tendril', 'id': 66},
 				{
-					'cast': "Move 3 spaces, ignoring terrain cost. Place a TENDRIL in your final location. {{ADD_ACTION}}",
+					'cast': "Move 5. Place a TENDRIL in your final location.",
 				} ],
 		],
 	],
@@ -549,9 +548,9 @@ spell_card_data = [
 		],
 		[
 			["Spread",
-				{'element': 'water', 'category': 'create-tendril,move-tendril,add-action', 'id': 75},
+				{'element': 'water', 'category': 'create-tendril,move-tendril', 'id': 75},
 				{
-					'cast': "Place a TENDRIL. Move all of your TENDRILs 1 space. {{ADD_ACTION}}",
+					'cast': "Place a TENDRIL. Move all of your TENDRILs 1 space.",
 				} ],
 		],
 	],
@@ -760,9 +759,9 @@ spell_card_data = [
 		],
 		[
 			["Teleport",
-				{'element': 'water', 'category': 'move-astral,add-action', 'id': 78},
+				{'element': 'water', 'category': 'move-astral', 'id': 78},
 				{
-					'cast': "Teleport to the location of one of your TENDRILs. Consume that TENDRIL. {{ADD_ACTION}}",
+					'cast': "Teleport to the location of one of your TENDRILs. Consume that TENDRIL.",
 				} ],
 		],
 	],
@@ -806,11 +805,11 @@ spell_card_data = [
 		],
 		[
 			["Recovery Shield",
-				{'element': 'earth', 'category': 'defend-mage,modify-tapestry,add-action', 'id': 82},
+				{'element': 'earth', 'category': 'defend-mage,modify-tapestry', 'id': 82},
 				{
 					'cast': "{{ADD_CHARGE}}",
 					'charged': "Defend 1",
-					'bonus': "During your turn, you may choose to remove a CHARGE from this spell to recover 2 mana from your TAPESTRY into your MANA POOL and {{ADD_ACTION}}.",
+					'bonus': "During your turn, you may choose to remove a CHARGE from this spell to recover 2 mana from your TAPESTRY into your MANA POOL.",
 				} ],
 		],
 	],
@@ -839,9 +838,9 @@ spell_card_data = [
 		],
 		[
 			["Traceback",
-				{'element': 'air', 'category': 'move-mage,create-tendril,add-action', 'id': 69},
+				{'element': 'air', 'category': 'move-mage,create-tendril', 'id': 69},
 				{
-					'cast': "Move 2. If in a location with a TENDRIL owned by another mage, place a TENDRIL at that mage's location and remove their TENDRIL in your location. {{ADD_ACTION}}",
+					'cast': "Move 2. If in a location with a TENDRIL owned by another mage, place a TENDRIL at that mage's location and remove their TENDRIL in your location.",
 				} ],
 		],
 	],
@@ -878,9 +877,9 @@ spell_card_data = [
 		],
 		[
 			["Run and Toss",
-				{'element': 'air', 'category': 'move-mage,create-tendril,move-tendril,add-action', 'id': 67},
+				{'element': 'air', 'category': 'move-mage,create-tendril,move-tendril', 'id': 67},
 				{
-					'cast': "Move 1 space, place a TENDRIL, then move that TENDRIL 2 spaces. {{ADD_ACTION}}",
+					'cast': "Move 1 space, place a TENDRIL, then move that TENDRIL 2 spaces.",
 				} ],
 		],
 	],
@@ -908,9 +907,9 @@ spell_card_data = [
 		],
 		[
 			["Sneak Attack",
-				{'element': 'fire', 'category': 'attack-mage,move-mage,add-action', 'id': 64},
+				{'element': 'fire', 'category': 'attack-mage,move-mage', 'id': 64},
 				{
-					'cast': "Attack 1 at an adjacent location and then move into that location. {{ADD_ACTION}}",
+					'cast': "Attack 1 at an adjacent location and then move into that location.",
 				} ],
 		],
 	],
@@ -1149,9 +1148,9 @@ spell_card_data = [
 		],
 		[
 			["Hands of Flame",
-				{'element': 'fire', 'category': 'move-mage,attack-mage,add-action', 'id': 63},
+				{'element': 'fire', 'category': 'move-mage,attack-mage', 'id': 63},
 				{
-					'cast': "Move 1 and then Attack 1 at a location adjacent to your new location. {{ADD_ACTION}}",
+					'cast': "Move 1 and then Attack 1 at a location adjacent to your new location.",
 				} ],
 		],
 	],
@@ -1185,9 +1184,6 @@ spell_card_data = [
 _unused_ = [
 
 	# Create Tendril
-			["Split",
-				{'element': 'earth', 'category': 'tendril', 'id': 8},
-				["Place a new TENDRIL in the same location where you already control a TENDRIL."] ],
 			["Reverse Tendril",
 				{'element': 'water', 'category': 'tendril', 'id': 52},
 				["When in the same location as an opponent's TENDRIL, add a TENDRIL at the opponent's location."] ],
