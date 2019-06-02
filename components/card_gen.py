@@ -4,6 +4,7 @@
 import datetime
 import getopt
 import os
+import shutil
 import subprocess
 import sys
 
@@ -24,9 +25,10 @@ def in2px(i):
 	return i * 90.0
 
 CardGen_ShortFlags = 'v'
-CardGen_LongFlags = ['a4', 'combine', 'no-border', 'pdf', 'per-page=', 'png', 'verbose']
+CardGen_LongFlags = ['a4', 'clean', 'combine', 'no-border', 'pdf', 'per-page=', 'png', 'verbose']
 CardGen_DefaultOptions = {
 	'a4': False,
+	'clean': False,
 	'combine': False,
 	'pdf': False,
 	'png': False,
@@ -38,6 +40,8 @@ CardGen_DefaultOptions = {
 def CardGen_ProcessOption(options, opt, arg):
 	if opt in ('--a4'):
 		options['a4'] = True
+	if opt in ('--clean'):
+		options['clean'] = True
 	if opt in ('--combine'):
 		options['combine'] = True
 	if opt in ('--pdf'):
@@ -53,6 +57,7 @@ def CardGen_ProcessOption(options, opt, arg):
 
 def CardGen_OptionDesc():
 	print "  --a4        A4 output (default = letter)"
+	print "  --clean     Remove old files"
 	print "  --combine   Combine into single PDF file"
 	print "  --pdf       Generate PDF output files"
 	print "  --png       Generate PNG output files"
@@ -82,10 +87,11 @@ class CardGen(object):
 		self.out = 0
 		self.indent_count = 0
 				
-		# Poker size cards: 2.5" x 3.5"
+		# Poker size cards: 2.5" x 3.5" = 225px x 315px
 		# Bridge size cards: 2.25" x 3.5" = 202.5px x 315px
-		self.card_width = in2px(2.25)
+		self.card_width = in2px(2.5)
 		self.card_height = in2px(3.5)
+		self.card_size = 'poker' # 'bridge'
 
 		# Paper size: Letter = 8.5" x 11" = 765px x 990px = 612pt x 792pt
 		self.paper_type = 'letter'
@@ -101,6 +107,21 @@ class CardGen(object):
 		self.card_spacing_col = 0
 		self.card_spacing_row = 0
 		
+		if self.cards_per_page == 18:
+			# 12x18 printplaygames 18-up Poker page.
+			# https://www.printplaygames.com/prototypes/formatting-guidelines/card-formatting-templates/
+			self.paper_type = '12x18'
+			self.paper_width = in2px(12)
+			self.paper_height = in2px(18)
+
+			# row-spacing = 22.5
+			# col-spacing: ;719.99377 - 382.41348 - 44.83316
+			self.card_spacing_col = 22.5803
+			self.card_spacing_row = 22.5
+			
+			if self.card_size != 'poker':
+				error('18-up must be poker')
+		
 		if self.cards_per_page == 21:
 			# 12x18 printplaygames 21-up Bridge page.
 			# https://www.printplaygames.com/prototypes/formatting-guidelines/card-formatting-templates/
@@ -113,8 +134,21 @@ class CardGen(object):
 			self.card_spacing_col = 22.5803
 			self.card_spacing_row = 22.5
 		
+			if self.card_size != 'bridge':
+				error('21-up must be bridge')
+
 		# Subclass should override
 		self.card_data = []
+		
+		if options['clean']:
+			if os.path.isdir(self.svg_out_dir):
+				shutil.rmtree(self.svg_out_dir)
+			if self.gen_pdf:
+				if os.path.isdir(self.pdf_out_dir):
+					shutil.rmtree(self.pdf_out_dir)
+			if self.gen_png:
+				if os.path.isdir(self.png_out_dir):
+					shutil.rmtree(self.png_out_dir)
 		
 	def write(self, str):
 		self.out.write('  ' * self.indent_count)
@@ -247,6 +281,19 @@ class CardGen(object):
 			# *----+----+
 			rows = 2
 			cols = 4
+			rotate = True
+		elif self.cards_per_page == 18:
+			# +----+----+----+
+			# | 5  | 11 | 17 |
+			# +----+----+----+
+			# | .  | .  | .  |
+			#   .    .    .
+			# | .  | .  | .  |
+			# +----+----+----+
+			# | 0  | 6  | 12 |
+			# *----+----+----+
+			rows = 3
+			cols = 6
 			rotate = True
 		elif self.cards_per_page == 21:
 			# +----+----+----+
