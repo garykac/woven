@@ -1,6 +1,6 @@
 # List of Spell Fragments
 
-Generated on 2018/06/26 @ 22:52
+Generated on 2019/06/05 @ 22:26
 
 ## By Category
 
@@ -95,22 +95,6 @@ Modify Tapestry (1)
 
 * [Recovery Shield](#recovery-shield) - _Earth_
 
-Add Action (13)
-
-* [Creep](#creep) - _Water_
-* [Hands of Flame](#hands-of-flame) - _Fire_
-* [Plains Walker](#plains-walker) - _Air_
-* [Push](#push) - _Air_
-* [Quick Drop](#quick-drop) - _Air_
-* [Recovery Shield](#recovery-shield) - _Earth_
-* [Run and Toss](#run-and-toss) - _Air_
-* [Sneak Attack](#sneak-attack) - _Fire_
-* [Split](#split) - _Earth_
-* [Spread](#spread) - _Water_
-* [Teleport](#teleport) - _Water_
-* [Traceback](#traceback) - _Air_
-* [Water Moccasins](#water-moccasins) - _Air_
-
 Terrain (3)
 
 * [Barrier](#barrier) - _Earth_
@@ -122,14 +106,14 @@ Terrain (3)
 Air (9)
 
 * [Haste](#haste) - _Move Mage_
-* [Plains Walker](#plains-walker) - _Move Mage, Terrain, Add Action_
-* [Push](#push) - _Move Mage, Move Other Mage, Add Action_
-* [Quick Drop](#quick-drop) - _Move Mage, Create Tendril, Add Action_
+* [Plains Walker](#plains-walker) - _Move Mage, Terrain_
+* [Push](#push) - _Move Mage, Move Other Mage_
+* [Quick Drop](#quick-drop) - _Move Mage, Create Tendril_
 * [Remove Tendril](#remove-tendril) - _Attack Tendril_
-* [Run and Toss](#run-and-toss) - _Move Mage, Create Tendril, Move Tendril, Add Action_
+* [Run and Toss](#run-and-toss) - _Move Mage, Create Tendril, Move Tendril_
 * [Shield Pierce](#shield-pierce) - _Attack Charge_
-* [Traceback](#traceback) - _Move Mage, Create Tendril, Add Action_
-* [Water Moccasins](#water-moccasins) - _Move Mage, Terrain, Add Action_
+* [Traceback](#traceback) - _Move Mage, Create Tendril_
+* [Water Moccasins](#water-moccasins) - _Move Mage, Terrain_
 
 Fire (9)
 
@@ -139,9 +123,9 @@ Fire (9)
 * [Fire Ball](#fire-ball) - _Attack Mage_
 * [Fire Burst](#fire-burst) - _Attack Tendril_
 * [Fire Reign](#fire-reign) - _Attack Mage_
-* [Hands of Flame](#hands-of-flame) - _Move Mage, Attack Mage, Add Action_
+* [Hands of Flame](#hands-of-flame) - _Move Mage, Attack Mage_
 * [Ricochet Blast](#ricochet-blast) - _Attack Mage_
-* [Sneak Attack](#sneak-attack) - _Attack Mage, Move Mage, Add Action_
+* [Sneak Attack](#sneak-attack) - _Attack Mage, Move Mage_
 
 Earth (9)
 
@@ -150,20 +134,20 @@ Earth (9)
 * [Harden Shell](#harden-shell) - _Defend Tendril_
 * [Nudge](#nudge) - _Move Other Tendril_
 * [Protection](#protection) - _Defend Mage_
-* [Recovery Shield](#recovery-shield) - _Defend Mage, Modify Tapestry, Add Action_
-* [Split](#split) - _Create Tendril, Add Action_
+* [Recovery Shield](#recovery-shield) - _Defend Mage, Modify Tapestry_
+* [Split](#split) - _Create Tendril_
 * [Stone Reflection](#stone-reflection) - _Defend Mage, Attack Mage_
 * [Tendril Shield](#tendril-shield) - _Defend Mage, Defend Tendril_
 
 Water (9)
 
 * [Burst](#burst) - _Create Tendril, Move Tendril_
-* [Creep](#creep) - _Create Tendril, Move Tendril, Add Action_
+* [Creep](#creep) - _Create Tendril, Move Tendril_
 * [Deflect](#deflect) - _Defend Mage, Attack Mage, Attack Tendril_
 * [Diasporate](#diasporate) - _Create Tendril, Move Tendril_
 * [Snapback](#snapback) - _Defend Mage, Move Tendril_
-* [Spread](#spread) - _Create Tendril, Move Tendril, Add Action_
-* [Teleport](#teleport) - _Move Astral, Add Action_
+* [Spread](#spread) - _Create Tendril, Move Tendril_
+* [Teleport](#teleport) - _Move Astral_
 * [Tendril Coil](#tendril-coil) - _Defend Mage_
 * [Whiplash](#whiplash) - _Defend Mage, Defend Tendril_
 
@@ -201,9 +185,9 @@ When cast: Place 2 TENDRILs. Move all of your TENDRILs 2 spaces.
 ```
 Element: Water
 
-Category: Create Tendril, Move Tendril, Add Action
+Category: Create Tendril, Move Tendril
 
-When cast: Place a TENDRIL. Move one of your TENDRILs 2 spaces. Take another action.
+When cast: Place a TENDRIL. Move one of your TENDRILs 2 spaces.
 
 ### Deflect
 ```
@@ -318,9 +302,9 @@ X . X
 ```
 Element: Fire
 
-Category: Move Mage, Attack Mage, Add Action
+Category: Move Mage, Attack Mage
 
-When cast: Move 1 and then Attack 1 at a location adjacent to your new location. Take another action.
+When cast: Move 1 and then Attack 1 at a location adjacent to your new location.
 
 ### Harden Shell
 ```
@@ -343,7 +327,7 @@ Element: Air
 
 Category: Move Mage
 
-When cast: Move 2 spaces, ignoring terrain cost.
+When cast: Move 5 spaces along a road.
 
 ### Nudge
 ```
@@ -364,9 +348,9 @@ X @ . X
 ```
 Element: Air
 
-Category: Move Mage, Terrain, Add Action
+Category: Move Mage, Terrain
 
-When cast: Move through 4 contiguous Plains locations. Take another action.
+When cast: Move through 4 contiguous Plains locations.
 
 ### Protection
 ```
@@ -386,9 +370,9 @@ While charged: Defend 1.
 ```
 Element: Air
 
-Category: Move Mage, Move Other Mage, Add Action
+Category: Move Mage, Move Other Mage
 
-When cast: Push all mages out of an adjacent location and then move into that location. You choose which location each mage moves into. Take another action.
+When cast: Push all mages out of an adjacent location and then move into that location. You choose which location each mage moves into.
 
 ### Quick Drop
 ```
@@ -397,9 +381,9 @@ X @ . .
 ```
 Element: Air
 
-Category: Move Mage, Create Tendril, Add Action
+Category: Move Mage, Create Tendril
 
-When cast: Move 3 spaces, ignoring terrain cost. Place a TENDRIL in your final location. Take another action.
+When cast: Move 5. Place a TENDRIL in your final location.
 
 ### Recovery Shield
 ```
@@ -409,13 +393,13 @@ X . .
 ```
 Element: Earth
 
-Category: Defend Mage, Modify Tapestry, Add Action
+Category: Defend Mage, Modify Tapestry
 
 When cast: Place a CHARGE on this spell.
 
 While charged: Defend 1
 
-During your turn, you may choose to remove a CHARGE from this spell to recover 2 mana from your TAPESTRY into your MANA POOL and Take another action..
+During your turn, you may choose to remove a CHARGE from this spell to recover 2 mana from your TAPESTRY into your MANA POOL.
 
 ### Remove Tendril
 ```
@@ -448,9 +432,9 @@ X . . .
 ```
 Element: Air
 
-Category: Move Mage, Create Tendril, Move Tendril, Add Action
+Category: Move Mage, Create Tendril, Move Tendril
 
-When cast: Move 1 space, place a TENDRIL, then move that TENDRIL 2 spaces. Take another action.
+When cast: Move 1 space, place a TENDRIL, then move that TENDRIL 2 spaces.
 
 ### Shield Pierce
 ```
@@ -483,9 +467,9 @@ X . X
 ```
 Element: Fire
 
-Category: Attack Mage, Move Mage, Add Action
+Category: Attack Mage, Move Mage
 
-When cast: Attack 1 at an adjacent location and then move into that location. Take another action.
+When cast: Attack 1 at an adjacent location and then move into that location.
 
 ### Split
 ```
@@ -494,9 +478,9 @@ X .
 ```
 Element: Earth
 
-Category: Create Tendril, Add Action
+Category: Create Tendril
 
-When cast: Place a new TENDRIL in a location where you already have a TENDRIL. Take another action.
+When cast: Place a new TENDRIL in a location where you already have a TENDRIL.
 
 ### Spread
 ```
@@ -505,9 +489,9 @@ X . X
 ```
 Element: Water
 
-Category: Create Tendril, Move Tendril, Add Action
+Category: Create Tendril, Move Tendril
 
-When cast: Place a TENDRIL. Move all of your TENDRILs 1 space. Take another action.
+When cast: Place a TENDRIL. Move all of your TENDRILs 1 space.
 
 ### Stone Reflection
 ```
@@ -530,9 +514,9 @@ While charged: You take 1/2 damage (rounded down) from attacks. Full attack dama
 ```
 Element: Water
 
-Category: Move Astral, Add Action
+Category: Move Astral
 
-When cast: Teleport to the location of one of your TENDRILs. Consume that TENDRIL. Take another action.
+When cast: Teleport to the location of one of your TENDRILs. Consume that TENDRIL.
 
 ### Tendril Coil
 ```
@@ -569,9 +553,9 @@ You may sacrifice this CHARGE to prevent one of your TENDRILs from being removed
 ```
 Element: Air
 
-Category: Move Mage, Create Tendril, Add Action
+Category: Move Mage, Create Tendril
 
-When cast: Move 2. If in a location with a TENDRIL owned by another mage, place a TENDRIL at that mage's location and remove their TENDRIL in your location. Take another action.
+When cast: Move 2. If in a location with a TENDRIL owned by another mage, place a TENDRIL at that mage's location and remove their TENDRIL in your location.
 
 ### Water Moccasins
 ```
@@ -580,11 +564,11 @@ X . .
 ```
 Element: Air
 
-Category: Move Mage, Terrain, Add Action
+Category: Move Mage, Terrain
 
 When cast: Place a CHARGE on this spell.
 
-While charged: You may move into Water locations or across Rivers. At the end of this action, if you are adjacent to Water, place a TENDRIL and Take another action.
+While charged: You may move into Water locations or across Rivers. At the end of your turn, if you are adjacent to Water, place a TENDRIL.
 
 ### Whiplash
 ```
