@@ -138,6 +138,7 @@ class CardGen(object):
 				error('21-up must be bridge')
 
 		# Subclass should override
+		self.card_patterns = {}
 		self.card_data = []
 		
 		if options['clean']:
@@ -499,9 +500,17 @@ class CardGen(object):
 		for card_data in self.card_data:
 			self.process_card_data(card_data)
 			
+		while self.curr_filename != '':
+			self.process_blank_card()
+
 		self.__end_card_gen()
 
 	def process_card_data(self, card_data):
+		# Subclass override.
+		# Must call pre_card() and post_card() for each card.
+		return
+
+	def process_blank_card(self):
 		# Subclass override.
 		# Must call pre_card() and post_card() for each card.
 		return

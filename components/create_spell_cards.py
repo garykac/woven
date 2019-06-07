@@ -13,8 +13,10 @@ from card_gen import CardGen_LongFlags
 from card_gen import CardGen_DefaultOptions
 from card_gen import CardGen_ProcessOption
 from card_gen import CardGen_OptionDesc
+from card_gen import error
 
 from data_spell_cards import spell_card_data
+from data_spell_cards import spell_card_patterns
 from data_spell_cards import spell_card_revision
 from data_spell_cards import spell_card_categories
 
@@ -35,8 +37,48 @@ class SpellCardGen(CardGen):
 		self.valid_elements = ['none', 'air', 'fire', 'earth', 'water']
 		self.valid_categories = spell_card_categories
 		
+		self.card_patterns = spell_card_patterns
 		self.card_data = spell_card_data
+		
+		self.validate_patterns()
 
+	# Make sure every pattern ID has an entry.
+	def validate_patterns(self):
+		simple = ['blank', 'N1']
+		ranges = [
+			['N2', 8],
+			['N3', 5],
+			['E1', 8],
+			['E2', 83],
+			['E3', 3],
+			['EE1', 6],
+			['EE2', 8],
+		]
+		for key in simple:
+			self.check_pattern(key)
+		for r in ranges:
+			base = r[0]
+			max = r[1]
+			for i in xrange(1, max+1):
+				self.check_pattern('%s-%d' % (base, i))
+				
+	def check_pattern(self, id):
+		print 'checking', id
+		if not id in self.card_patterns:
+			print id, 'not found'
+		pattern = self.card_patterns[id]
+		print pattern
+		
+		first_row = True
+		num_cols = 0
+		for row in pattern:
+			cols = row.split()
+			if first_row:
+				num_cols = len(cols)
+				first_row = False
+			if len(cols) != num_cols:
+				error(id + ": Mismatch number of columns in pattern")
+		
 	# override
 	def process_card_data(self, card_data):
 		pattern = card_data[0]
@@ -48,26 +90,44 @@ class SpellCardGen(CardGen):
 			self.draw_card(self.curr_card, pattern, card)
 			self.post_card()
 
+	# override
+	def process_blank_card(self):
+		pattern = ['. . . . .', '. . . . .', '. . . . .']
+
+		self.pre_card()
+		if self.verbose:
+			print self.curr_file, self.curr_card
+		attrs = {
+			'element': 'none',
+			'category': 'blank',
+			'id': 1000 + self.curr_card,
+			'pattern': 'blank',
+		}
+		self.draw_card(self.curr_card, pattern, ['', attrs, {}])
+		self.post_card()
+
 	def draw_card(self, id, pattern, card):
 		name = card[0]
 		attrs = card[1]
 		desc = card[2]
-		self.validate_attrs(name, attrs)
-		self.validate_pattern(name, pattern)
+		if attrs['category'] != 'blank':
+			self.validate_attrs(name, attrs)
 		self.record_spell_info(name, pattern, attrs, desc)
 		
-		pe_tag = self.pattern_key(pattern) + '-' + attrs['element']
-		if pe_tag in self.pattern_elements:
-			error('Pattern for "%s" already used for "%s"' % (name, self.pattern_elements[pe_tag]))
-		self.pattern_elements[pe_tag] = name
+		if attrs['category'] != 'blank':
+			pe_tag = self.pattern_key(pattern) + '-' + attrs['element']
+			if pe_tag in self.pattern_elements:
+				error('Pattern for "%s" already used for "%s"' % (name, self.pattern_elements[pe_tag]))
+			self.pattern_elements[pe_tag] = name
 
 		self.start_card_page_transform(id)
 
 		if not self.no_border:
 			self.draw_border()
-		self.draw_title(name)
-		self.draw_title_element(attrs['element'])
-		self.draw_card_id(attrs['id'])
+		if attrs['category'] != 'blank':
+			self.draw_title(name)
+			self.draw_title_element(attrs['element'])
+			self.draw_card_id(attrs['id'])
 		
 		self.draw_pattern(pattern, attrs['element'])
 		self.draw_pattern_border()
@@ -180,17 +240,6 @@ class SpellCardGen(CardGen):
 	
 	# Spell
 	
-	def validate_pattern(self, name, pattern):
-		first_row = True
-		num_cols = 0
-		for row in pattern:
-			cols = row.split()
-			if first_row:
-				num_cols = len(cols)
-				first_row = False
-			if len(cols) != num_cols:
-				error(name + ": Mismatch number of columns in pattern")
-		
 	def validate_attrs(self, name, attrs):
 		if name in self.name2id:
 			error(name + ': Spell name already used by spell ID ' + str(self.name2id[name]))
@@ -209,7 +258,12 @@ class SpellCardGen(CardGen):
 		if not 'id' in attrs:
 			error(name + ': Missing "id" attribute')
 		if attrs['id'] in self.id2name:
-			error(name + ': ID ' + str(attrs['id']) + ' already used by "' + self.id2name[attrs['id']] +'"')
+			error(name + 'ID ' + str(attrs['id']) + ' already used by "' + self.id2name[attrs['id']] +'"')
+		
+		if not 'pattern' in attrs:
+			error(name + ': Missing "pattern" attribute')
+		if not attrs['pattern'] in self.card_patterns:
+			error(name + ': Invalid pattern: ' + attrs['pattern'])
 		
 	def record_spell_info(self, name, pattern, attrs, desc):
 		id = attrs['id']
@@ -383,7 +437,7 @@ def main():
 	except getopt.GetoptError:
 		usage()
 
-	print CardGen_LongFlags + ['summary']
+	#print CardGen_LongFlags + ['summary']
 	options = CardGen_DefaultOptions
 	options['summary'] = False
 	for opt,arg in opts:

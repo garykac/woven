@@ -33,12 +33,14 @@
 #      max-threads: number of threads to cast max times
 #      max-cards: min number of cards to cast max times
 
-# Next id = 88
+# Next id = 92
 # Unused: 70
 
 spell_card_revision = 5
 
 spell_card_categories = [
+	'blank',
+
 	'attack-mage',
 	'attack-tendril',
 	'attack-charge',
@@ -52,15 +54,853 @@ spell_card_categories = [
 	'defend-tapestry',
 
 	'move-mage',
-	'move-astral',
+	#'move-astral',
 	'move-tendril',
 
 	'move-other-mage',
 	'move-other-tendril',
 
 	'modify-tapestry',
+	#'add-action',
 	'terrain',
 ]
+
+spell_card_patterns = {
+
+	'blank':	[	". . . . .",
+					". . . . .",
+					". . . . .",
+				],
+
+	#  _____         _           _    ___   
+	# |   | |___ _ _| |_ ___ ___| |  |_  |  
+	# | | | | -_| | |  _|  _| .'| |   _| |_ 
+	# |_|___|___|___|_| |_| |__,|_|  |_____|
+	#
+
+	# +---+
+	# | X |  Level 0 - Castable on all starting cards.
+	# +---+
+	'N1':		[	"X",
+				],
+
+	#  _____         _           _    ___ 
+	# |   | |___ _ _| |_ ___ ___| |  |_  |
+	# | | | | -_| | |  _|  _| .'| |  |  _|
+	# |_|___|___|___|_| |_| |__,|_|  |___|
+	#
+
+	# +-----+  Level 1 - Castable on all starting cards.
+	# | X X |
+	# +-----+
+	'N2-1':		[	"X X",
+				],
+
+	# +-----+  Level 1 - Castable on all starting cards.
+	# | X . |
+	# | . X |
+	# +-----+
+	'N2-2':		[	"X .",
+					". X",
+				],
+
+	# +-------+  Level 1 - Castable on all starting cards except  xx  xx
+	# | X . X |                                                  xx    xx
+	# +-------+
+	'N2-3':		[	"X . X",
+				],
+
+	# +-------+  Level 1 - Castable on all starting cards except  x    x
+	# | X . . |                                                  xxx  xxx
+	# | . . X |
+	# +-------+
+	'N2-4':		[	"X . .",
+					". . X",
+				],
+
+	# +-------+  Level 2
+	# | X . . |
+	# | . . . |
+	# | . . X |
+	# +-------+
+	'N2-5':		[],
+
+	# +---------+  Level 2
+	# | X . . X |
+	# +---------+
+	'N2-6':		[],
+
+	# +---------+  Level 2
+	# | X . . . |
+	# | . . . X |
+	# +---------+
+	'N2-7':		[],
+
+	# +---------+  Level 2
+	# | X . . . |
+	# | . . . . |
+	# | . . . X |
+	# +---------+
+	# TODO: create 2 tendrils
+	'N2-8':		[],
+
+	#  _____         _           _    ___ 
+	# |   | |___ _ _| |_ ___ ___| |  |_  |
+	# | | | | -_| | |  _|  _| .'| |  |_  |
+	# |_|___|___|___|_| |_| |__,|_|  |___|
+	#
+
+	# +-------+  Level 2
+	# | X X X |
+	# +-------+
+	'N3-1':		[],
+
+	# +-------+  Level 2 - Castable on all starting cards except  x    x
+	# | X X . |                                                  xxx  xxx
+	# | . . X |
+	# +-------+
+	'N3-2':		[],
+
+	# +-----+  Level 2 - Castable on all starting cards.
+	# | X X |
+	# | . X |
+	# +-----+
+	'N3-3':		[],
+
+	# +-------+  Level 2
+	# | X . X |
+	# | . X . |
+	# +-------+
+	'N3-4':		[],
+
+	# +-------+  Level 3
+	# | X . . |
+	# | . X . |
+	# | . . X |
+	# +-------+
+	'N3-5':		[],
+
+	#  _____ _                   _       _    ___        _      ___   
+	# |   __| |___ _____ ___ ___| |_ ___| |  |_  |     _| |_   |_  |  
+	# |   __| | -_|     | -_|   |  _| .'| |   _| |_   |_   _|   _| |_ 
+	# |_____|_|___|_|_|_|___|_|_|_| |__,|_|  |_____|    |_|    |_____|
+	#
+
+	# +-----+  Level 1
+	# | @ X |  Threads 1
+	# +-----+  Cards 1
+	#          Transform 4: 4/2
+	'E1-1':		[	"@ X",
+				],
+
+	# +-----+  Level 1         Transforms  3 . 2
+	# | @ . |  Threads 1                   . @ .
+	# | . X |  Cards 1                     4 . 1
+	# +-----+  Transform 4: 4/2
+	'E1-2':		[	"@ .",
+					". X",
+				],
+
+	# +-------+  Level 1
+	# | @ . X |  Threads 1
+	# +-------+  Cards 1
+	#            Transform 4: 4/4
+	'E1-3':		[	"@ . X",
+				],
+
+	# +-------+  Level 1          Transforms  . 6 . 7 .
+	# | @ . . |  Threads 1                    5 . . . 8
+	# | . . X |  Cards 1                      . . @ . .
+	# +-------+  Transform 8: 8/5             4 . . . 1
+	#                                         . 3 . 2 .
+	'E1-4':		[	"@ . .",
+					". . X",
+				],
+
+	# +-------+  Level 2          Transforms  3 . . . 2
+	# | @ . . |  Threads 1                    . . . . .
+	# | . . . |  Cards 2                      . . @ . .
+	# | . . X |  Transform 4: 4/6             . . . . .
+	# +-------+                               4 . . . 1
+	'E1-5':		[	"@ . .",
+					". . .",
+					". . X",
+				],
+
+	# +---------+  Level 2
+	# | @ . . X |  Threads 1
+	# +---------+  Cards 2
+	#              Transform 4: 4/6
+	'E1-6':		[	"@ . . X",
+				],
+
+	# +---------+  Level 2
+	# | @ . . . |  Threads 1
+	# | . . . X |  Cards 2
+	# +---------+  Transform 8
+	'E1-7':		[],
+
+	# +---------+  Level 2
+	# | @ . . . |  Threads 1
+	# | . . . . |  Cards 3
+	# | . . . X |  Transform 8
+	# +---------+
+	'E1-8':		[],
+
+	#  _____ _                   _       _    ___        _      ___ 
+	# |   __| |___ _____ ___ ___| |_ ___| |  |_  |     _| |_   |_  |
+	# |   __| | -_|     | -_|   |  _| .'| |   _| |_   |_   _|  |  _|
+	# |_____|_|___|_|_|_|___|_|_|_| |__,|_|  |_____|    |_|    |___|
+	#
+
+	# +-------+  Level 2 - Built on +-----+  Transforms  . 2 .
+	# | X @ X |  Threads 1          | @ X |              1 @ 1
+	# +-------+  Cards 1            +-----+              . 2 .
+	#            Transform 2: 4/2
+	'E2-1':		[	"X @ X",
+				],
+
+	# +-----+  Level 2 - Built on +-----+  Transforms  . 2 .
+	# | @ X |  Threads 2          | @ X |              3 @ 1
+	# | X . |  Cards 1            +-----+              . 1 .
+	# +-----+  Transform 3: 4/2
+	'E2-2':		[],
+
+	# +-------+  Level 2 - Built on +-----+     +-----+  Transforms  7 2 5
+	# | . @ X |  Threads 2          | @ X | and | @ . |              4 @ 1        
+	# | X . . |  Cards 1            +-----+     | . X |              1 6 3
+	# +-------+  Transform 7: 8/2               +-----+
+	'E2-3':		[	". @ X",
+					"X . .",
+				],
+
+	# +-----+  Level 2 - Built on +-----+     +-----+  Transforms  5 4 3
+	# | @ . |  Threads 2          | @ X | and | @ . |              6 @ 2
+	# | X X |  Cards 1            +-----+     | . X |              7 1 1
+	# +-----+  Transform 7: 8/2               +-----+
+	'E2-4':		[	"@ .",
+					"X X",
+				],
+
+	# +-------+  Level 2 - Built on +-----+     +-------+  Transforms  . . 2 . .
+	# | @ X X |  Threads 2          | @ X | and | @ . X |              . . 2 . .
+	# +-------+  Cards 1            +-----+     +-------+              3 3 @ 1 1
+	#            Transform 4: 8/4                                      . . 4 . .
+	#                                                                  . . 4 . .
+	'E2-5':		[	"@ X X",
+				],
+
+	# +---------+  Level 3 - Built on +-----+     +-------+  Transforms  . . 2 . .
+	# | X @ . X |  Threads 2          | @ X | and | @ . X |              . . 4 . .
+	# +---------+  Cards 2            +-----+     +-------+              3 1 @ 3 1
+	#              Transform 4: 8/4                                      . . 2 . .
+	#                                                                    . . 4 . .
+	'E2-6':		[	"X @ . X",
+				],
+
+	# +-------+  Level 2 - Built on +-----+     +-------+  Transforms  . . 4 . .
+	# | @ . X |  Threads 2          | @ X | and | @ . X |              . . 2 . .
+	# | X . . |  Cards 1            +-----+     +-------+              3 5 @ 4 1
+	# +-------+  Transform 6: 8/4                                      . . 1 . .
+	#                                                                  . . 6 . .
+	'E2-7':		[	"@ . X",
+					"X . .",
+				],
+
+	# +-------+  Level 2 - Built on +-----+     +-------+  Transforms  . 4 . 3 .
+	# | @ X . |  Threads 2          | @ X | and | @ . . |              5 . 3 . 2
+	# | . . X |  Cards 1            +-----+     | . . X |              . 5 @ 1 .
+	# +-------+  Transform 8: 12/5              +-------+              6 . 7 . 1
+	#                                                                  . 7 . 8 .
+	'E2-8':		[	"@ X .",
+					". . X",
+				],
+
+	# +-------+  Level 2 - Built on +-----+     +-------+  Transforms  . 8 . 5 .
+	# | @ . . |  Threads 2          | @ X | and | @ . . |              3 . 3 . 4
+	# | X . X |  Cards 1            +-----+     | . . X |              . 7 @ 5 .
+	# +-------+  Transform 8: 12/5              +-------+              2 . 1 . 1
+	#                                                                  . 7 . 6 .
+	'E2-9':		[	"@ . .",
+					"X . X",
+				],
+
+	# +---------+  Level 3 - Built on +-----+     +-------+  Transforms  . 4 . 3 .
+	# | X @ . . |  Threads 2          | @ X | and | @ . . |              5 . 7 . 2
+	# | . . . X |  Cards 2            +-----+     | . . X |              . 1 @ 5 .
+	# +---------+  Transform 8: 12/5              +-------+              6 . 3 . 1
+	#                                                                    . 7 . 8 .
+	'E2-10':	[	"X @ . .",
+					". . . X",
+				],
+
+	# +-------+  Level 3 - Built on +-----+     +-------+  Transforms  . 7 . 3 .
+	# | X . . |  Threads 2          | @ X | and | @ . . |              6 . 1 . 5
+	# | @ . . |  Cards 1            +-----+     | . . X |              . 3 @ 7 .
+	# | . . X |  Transform 8: 12/5              +-------+              2 . 5 . 1
+	# +-------+                                                        . 8 . 4 .
+	'E2-11':	[	"X . .",
+					"@ . .",
+					". . X",
+				],
+
+	# +---------+  Level 3 - Built on +-----+     +---------+
+	# | @ X . X |  Threads 2          | @ X | and | @ . . X |
+	# +---------+  Cards 2            +-----+     +---------+
+	#              Transform 4: 8/6
+	'E2-12':	[	"@ X . X",
+				],
+
+	# +-----------+  Level 3 - Built on +-----+     +---------+
+	# | X @ . . X |  Threads 2          | @ X | and | @ . . X |
+	# +-----------+  Cards 2            +-----+     +---------+
+	#                Transform 4: 8/6
+	'E2-13':	[	"X @ . . X",
+				],
+
+	# +---------+  Level 3 - Built on +-----+     +---------+  Transforms  . . . 4 . . .
+	# | @ . . X |  Threads 2          | @ X | and | @ . . X |              . . . . . . .
+	# | X . . . |  Cards 2            +-----+     +---------+              . . . 2 . . .
+	# +---------+  Transform 6: 8/6                                        3 . 5 @ 4 . 1
+	#                                                                      . . . 1 . . .
+	#                                                                      . . . . . . .
+	#                                                                      . . . 6 . . .
+	'E2-14':	[	"@ . . X",
+					"X . . .",
+				],
+
+	# +---------+  Level 3 - Built on +-----+     +---------+  Transforms  . . 4 . 3 . .
+	# | @ X . . |  Threads 2          | @ X | and | @ . . . |              . . . . . . .
+	# | . . . X |  Cards 2            +-----+     | . . . X |              5 . . 3 . . 2
+	# +---------+  Transform 8: 12/8              +---------+              . . 5 @ 1 . .
+	#                                                                      6 . . 7 . . 1
+	#                                                                      . . . . . . .
+	#                                                                      . . 7 . 8 . .
+	'E2-15':	[	"@ X . .",
+					". . . X",
+				],
+
+	# +---------+  Level 3 - Built on +-----+     +---------+  Transforms  . . 8 . 5 . .
+	# | @ . . . |  Threads 2          | @ X | and | @ . . . |              . . . . . . .
+	# | X . . X |  Cards 2            +-----+     | . . . X |              3 . . 3 . . 4
+	# +---------+  Transform 8: 12/8              +---------+              . . 7 @ 5 . .
+	#                                                                      2 . . 1 . . 1
+	#                                                                      . . . . . . .
+	#                                                                      . . 7 . 6 . .
+	'E2-16':	[	"@ . . .",
+					"X . . X",
+				],
+
+	# +-----------+  Level 3 - Built on +-----+     +---------+
+	# | X @ . . . |  Threads 2          | @ X | and | @ . . . |
+	# | . . . . X |  Cards 2            +-----+     | . . . X |
+	# +-----------+  Transform 8                    +---------+
+	'E2-17':	[],
+
+	# +---------+  Level 3 - Built on +-----+     +---------+
+	# | X . . . |  Threads 2          | @ X | and | @ . . . |
+	# | @ . . . |  Cards 3            +-----+     | . . . X |
+	# | . . . X |  Transform 8                    +---------+
+	# +---------+
+	'E2-18':	[],
+
+	# +-------+  Level 2 - Built on +-----+  Transforms  3 . 2
+	# | . @ . |  Threads 2          | @ . |              . @ .
+	# | X . X |  Cards 1            | . X |              1 . 1
+	# +-------+  Transform 3: 4/2   +-----+
+	'E2-19':	[	". @ .",
+					"X . X",
+				],
+
+	# +-------+  Level 3 - Built on +-----+  Transforms  1 . 2
+	# | X . . |  Threads 2          | @ . |              . @ .
+	# | . @ . |  Cards 2            | . X |              2 . 1
+	# | . . X |  Transform 2: 4/2   +-----+
+	# +-------+
+	'E2-20':	[	"X . .",
+					". @ .",
+					". . X",
+				],
+
+	# +-------+  Level 2 - Built on +-----+     +-------+  Transforms  . . 3 . .
+	# | @ . X |  Threads 2          | @ . | and | @ . X |              . 4 . 2 .
+	# | . X . |  Cards 1            | . X |     +-------+              5 . @ . 1
+	# +-------+  Transform 7: 8/4   +-----+                            . 6 . 1 .
+	#                                                                  . . 7 . .
+	'E2-21':	[	"@ . X",
+					". X .",
+				],
+
+	# +---------+  Level 3 - Built on +-----+     +-------+  Transforms  . . 3 . .
+	# | . @ . X |  Threads 3          | @ . | and | @ . X |              . 2 . 6 .
+	# | X . . . |  Cards 2            | . X |     +-------+              7 . @ . 1
+	# +---------+  Transform 7: 8/4   +-----+                            . 1 . 4 .
+	#                                                                    . . 5 . .
+	'E2-22':	[	". @ . X",
+					"X . . .",
+				],
+
+	# +-------+  Level 2 - Built on +-----+     +-------+  Transforms  . 6 . 3 .
+	# | @ . . |  Threads 2          | @ . | and | @ . . |              5 5 . 3 4
+	# | . X X |  Cards 1            | . X |     | . . X |              . . @ . .
+	# +-------+  Transform 8: 12/5  +-----+     +-------+              8 7 . 1 1
+	#                                                                  . 7 . 2 .
+	'E2-23':	[	"@ . .",
+					". X X",
+				],
+
+	# +---------+  Level 3 - Built on +-----+     +-------+  Transforms  . 2 . 6 .
+	# | . @ . . |  Threads 2          | @ . | and | @ . . |              7 3 . 7 3
+	# | X . . X |  Cards 2            | . X |     | . . X |              . . @ . .
+	# +---------+  Transform 8: 12/5  +-----+     +-------+              5 1 . 5 1
+	#                                                                    . 4 . 8 .
+	'E2-24':	[	". @ . .",
+					"X . . X",
+				],
+
+	# +---------+  Level 3 - Built on +-----+     +-------+  Transforms  . 5 . 4 .
+	# | X . . . |  Threads 2          | @ . | and | @ . . |              6 1 . 7 3
+	# | . @ . . |  Cards 3            | . X |     | . . X |              . . @ . .
+	# | . . . X |  Transform 8: 12/5  +-----+     +-------+              8 3 . 5 1
+	# +---------+                                                        . 7 . 2 .
+	'E2-25':	[	"X . . .",
+					". @ . .",
+					". . . X",
+				],
+
+	# +-------+  Level 3 - Built on +-----+     +-------+  Transforms  . 6 . 7 .
+	# | . @ . |  Threads 2          | @ . | and | @ . . |              2 7 . 5 4
+	# | X . . |  Cards 2            | . X |     | . . X |              . . @ . .
+	# | . . X |  Transform 8: 12/5  +-----+     +-------+              8 1 . 3 5
+	# +-------+                                                        . 3 . 1 .
+	'E2-26':	[	". @ .",
+					"X . .",
+					". . X",
+				],
+
+	# +-------+  Level 3 - Built on +-----+     +-------+  Transforms  3 . . . 2
+	# | @ . . |  Threads 2          | @ . | and | @ . . |              . 3 . 2 .
+	# | . X . |  Cards 2            | . X |     | . . . |              . . @ . .
+	# | . . X |  Transform 4: 8/5   +-----+     | . . X |              . 4 . 1 .
+	# +-------+                                 +-------+              4 . . . 1
+	'E2-27':	[	"@ . .",
+					". X .",
+					". . X",
+				],
+
+	# +---------+  Level 3 - Built on +-----+     +---------+  Transforms  . . . 3 . . .
+	# | @ . . X |  Threads 2          | @ . | and | @ . . X |              . . . . . . .
+	# | . X . . |  Cards 2            | . X |     +---------+              . . 4 . 2 . .
+	# +---------+  Transform 7: 8/6   +-----+                              5 . . @ . . 1
+	#                                                                      . . 6 . 1 . .
+	#                                                                      . . . . . . .
+	#                                                                      . . . 7 . . .
+	'E2-28':	[	"@ . . X",
+					". X . .",
+				],
+
+	# +-----------+  Level 3 - Built on +-----+     +---------+  Transforms  . . . 2 . . .
+	# | . @ . . X |  Threads 2          | @ . | and | @ . . X |              . . . . . . .
+	# | X . . . . |  Cards 2            | . X |     +---------+              . . 7 . 5 . .
+	# +-----------+  Transform 7: 8/6   +-----+                              4 . . @ . . 1
+	#                                                                        . . 1 . 3 . .
+	#                                                                        . . . . . . .
+	#                                                                        . . . 6 . . .
+	'E2-29':	[	". @ . . X",
+					"X . . . .",
+				],
+
+	# +---------+  Level 3 - Built on +-----+     +---------+  Transforms  . . 6 . 7 . .
+	# | @ . . . |  Threads 2          | @ . | and | @ . . . |              . . . . . . .
+	# | . X . X |  Cards 2            | . X |     | . . . X |              5 . 5 . 7 . 8
+	# +---------+  Transform 8: 12/8  +-----+     +---------+              . . . @ . . .
+	#                                                                      4 . 3 . 1 . 1
+	#                                                                      . . . . . . .
+	#                                                                      . . 3 . 2 . .
+	'E2-30':	[	"@ . . .",
+					". X . X",
+				],
+
+	# +---------+  Level 3 - Built on +-----+     +---------+  Transforms  . . 2 . 3 . .
+	# | . X . . |  Threads 2          | @ . | and | @ . . . |              . . . . . . .
+	# | @ . . . |  Cards 3            | . X |     | . . . X |              5 . 3 . 1 . 8
+	# | . . . X |  Transform 8: 12/8  +-----+     +---------+              . . . @ . . .
+	# +---------+                                                          4 . 5 . 7 . 1
+	#                                                                      . . . . . . .
+	#                                                                      . . 7 . 6 . .
+	'E2-31':	[	". X . .",
+					"@ . . .",
+					". . . X",
+				],
+
+	# +-----------+  Level 3 - Built on +-----+     +---------+
+	# | . @ . . . |  Threads 2          | @ . | and | @ . . . |
+	# | X . . . X |  Cards 2            | . X |     | . . . X |
+	# +-----------+  Transform 8: 12/8  +-----+     +---------+
+	'E2-32':	[],
+
+	# +-----------+  Level 3 - Built on +-----+     +---------+
+	# | X . . . . |  Threads 2          | @ . | and | @ . . . |
+	# | . @ . . . |  Cards 4            | . X |     | . . . X |
+	# | . . . . X |  Transform 8: 12/8  +-----+     +---------+
+	# +-----------+
+	'E2-33':	[],
+	
+	# +---------+  Level 3 - Build on +-----+     +---------=
+	# | @ . . . |  Threads 2          | @ . | and | @ . . . |
+	# | . X . . |  Cards 3            | . X |     | . . . . |
+	# | . . . X |  Transform 8        +-----+     | . . . X |
+	# +---------+                                 +---------+
+	# + 3 variants
+	'E2-34':	[],
+	'E2-35':	[],
+	'E2-36':	[],
+	'E2-37':	[],
+
+	# +-----------+  Level 3 - Built on +-------+
+	# | X . @ . X |  Threads 2          | @ . X |
+	# +-----------+  Cards 2            +-------+
+	#                Transform 2: 4/4
+	'E2-38':	[	"X . @ . X",
+				],
+
+	# +-------+  Level 3 - Build on +-------+
+	# | @ . X |  Threads 2          | @ . X |
+	# | . . . |  Cards 2            +-------+
+	# | X . . |  Transform 3: 4/4
+	# +-------+
+	'E2-39':	[	"@ . X",
+					". . .",
+					"X . .",
+				],
+
+	# +-------+  Level 2 - Built on +-------+     +-------+  Transforms  . 4 3 3 .
+	# | @ . X |  Threads 2          | @ . X | and | @ . . |              5 . . . 2
+	# | . . X |  Cards 1            +-------+     | . . X |              5 . @ . 1
+	# +-------+  Transform 8: 12/5                +-------+              6 . . . 1
+	#                                                                    . 7 7 8 .
+	'E2-40':	[	"@ . X",
+					". . X",
+				],
+
+	# +-------+  Level 2 - Built on +-------+     +-------+  Transforms  . 3 7 2 .
+	# | @ . X |  Threads 2          | @ . X | and | @ . . |              8 . . . 7
+	# | . . . |  Cards 2            +-------+     | . . X |              3 . @ . 1
+	# | . X . |  Transform 8: 12/5                +-------+              6 . . . 5
+	# +-------+                                                          . 4 5 1 .
+	'E2-41':	[	"@ . X",
+					". . .",
+					". X .",
+				],
+
+	# +-----------+  Level 3 - Built on +-------+     +-------+
+	# | X . @ . . |  Threads 2          | @ . X | and | @ . . |
+	# | . . . . X |  Cards 2            +-------+     | . . X |
+	# +-----------+  Transform 8: 12/5                +-------+
+	'E2-42':	[],
+
+	# +---------+  Level 2 - Built on +-------+     +-------+
+	# | . @ . X |  Threads 2          | @ . X | and | @ . . |
+	# | . . . . |  Cards 3            +-------+     | . . X |
+	# | X . . . |  Trnsform 8: 12/5                 +-------+
+	# +---------+
+	'E2-43':	[],
+
+	# +---------+  Level 3 - Built on +-------+     +---------+
+	# | @ . X X |  Threads 2          | @ . X | and | @ . . X |
+	# +---------+  Cards 2            +-------+     +---------+
+	#              Transform 4: 8/5
+	'E2-44':	[],
+
+	# +-------------+  Level 3 - Built on +-------+     +---------+
+	# | X . @ . . X |  Threads 2          | @ . X | and | @ . . X |
+	# +-------------+  Cards 3            +-------+     +---------+
+	#                  Transform 4: 8/5
+	'E2-45':	[],
+
+	# +---------+  Level 3 - Built on +-------+     +---------+
+	# | @ . . X |  Threads 2          | @ . X | and | @ . . X |
+	# | . . . . |  Cards 3            +-------+     +---------+
+	# | X . . . |  Transform 6: 8/5
+	# +---------+
+	'E2-46':	[	"@ . . X",
+					". . . .",
+					"X . . .",
+				],
+
+	# +---------+  Level 3 - Built on +-------+     +---------+
+	# | @ . X . |  Threads 2          | @ . X | and | @ . . . |
+	# | . . . X |  Cards 2            +-------+     | . . . X |
+	# +---------+  Transform 8: 12/8                +---------+
+	# + 3 variants
+	'E2-47':	[],
+	'E2-48':	[],
+	'E2-49':	[],
+	'E2-50':	[],
+
+	# +-----------+  Level 3 - Built on +-------+     +-----------+
+	# | @ . X . . |  Threads 2          | @ . X | and | @ . . . . |
+	# | . . . . X |  Cards 2            +-------+     | . . . . X |
+	# +-----------+  Transform 8: 12/                 +-----------+
+	# + 3 variants
+	'E2-51':	[],
+	'E2-52':	[],
+	'E2-53':	[],
+	'E2-54':	[],
+
+	# +-------+  Level 3 - Built on +-------+  Transforms  . 3 . 3 .
+	# | . @ . |  Threads 2          | @ . . |              4 . . . 2
+	# | . . . |  Cards 2            | . . X |              . . @ . .
+	# | X . X |  Transform 4: 8/5   +-------+              4 . . . 2
+	# +-------+                                            . 1 . 1 .
+	'E2-55':	[	". @ .",
+					". . .",
+					"X . X",
+				],
+
+	# +---------+  Level 3 - Built on +-------+
+	# | . @ . . |  Threads 2          | @ . . |
+	# | . . . X |  Cards 3            | . . X |
+	# | X . . . |  Transform 6: 8/5   +-------+
+	# +---------+
+	'E2-56':	[],
+
+	# +-----------+  Level 3 - Built on +-------+
+	# | . . @ . . |  Threads 2          | @ . . |
+	# | X . . . X |  Cards 2            | . . X |
+	# +-----------+  Transform 6: 8/5   +-------+
+	'E2-57':	[],
+
+	# +-----------+  Level 3 - Built on +-------+
+	# | X . . . . |  Threads 2          | @ . . |
+	# | . . @ . . |  Cards 4            | . . X |
+	# | . . . . X |  Transform 4: 8/5   +-------+
+	# +-----------+
+	'E2-58':	[],
+
+	# +---------+  Level 3 - Built on +-------+  Transforms  . 2 . 3 .
+	# | . . . X |  Threads 2          | @ . . |              4 . . . 1
+	# | . @ . . |  Cards 4            | . . X |              . . @ . .
+	# | . . . . |  Transform 4: 8/5   +-------+              3 . . . 2
+	# | X . . . |                                            . 1 . 4 .
+	# +---------+
+	'E2-59':	[],
+
+	# +---------+  Level 3 - Built on +-------+     +---------+
+	# | @ . . X |  Threads 2          | @ . . | and | @ . . X |
+	# | . . X . |  Cards 2            | . . X |     +---------+
+	# +---------+  Transform 8: 12/   +-------+
+	# + 3 variants
+	'E2-60':	[],
+	'E2-61':	[],
+	'E2-62':	[],
+	'E2-63':	[],
+
+	# +---------+  Level 3 - Built on +-------+     +---------+
+	# | @ . . . |  Threads 2          | @ . . | and | @ . . . |
+	# | . . X X |  Cards 2            | . . X |     | . . . X |
+	# +---------+  Transform 8: 16/   +-------+     +---------+
+	# + 3 variants
+	'E2-64':	[],
+	'E2-65':	[],
+	'E2-66':	[],
+	'E2-67':	[],
+
+	# +---------+  Level 3 - Built on +-------+     +---------+
+	# | @ . . . |  Threads 2          | @ . . | and | @ . . . |
+	# | . . X . |  Cards 3            | . . X |     | . . . . |
+	# | . . . X |  Transform 8: 16/   +-------+     | . . . X |
+	# +---------+                                   +---------+
+	# + 3 variants
+	'E2-68':	[],
+	'E2-69':	[],
+	'E2-70':	[],
+	'E2-71':	[],
+
+	# +-----------+  Level 3 - Built on +-------+     +-----------+
+	# | @ . . . X |  Threads 2          | @ . . | and | @ . . . X |
+	# | . . X . . |  Cards 2            | . . X |     +-----------+
+	# +-----------+  Transform 8: 12/   +-------+
+	# + 3 variants
+	'E2-72':	[],
+	'E2-73':	[],
+	'E2-74':	[],
+	'E2-75':	[],
+
+	# +-----------+  Level 3 - Built on +-------+     +-----------+
+	# | @ . . . . |  Threads 2          | @ . . | and | @ . . . . |
+	# | . . X . X |  Cards 2            | . . X |     | . . . . X |
+	# +-----------+  Transform 8: 16/   +-------+     +-----------+
+	# + 3 variants
+	'E2-76':	[],
+	'E2-77':	[],
+	'E2-78':	[],
+	'E2-79':	[],
+
+	# +-----------+  Level 3 - Built on +-------+     +-----------+
+	# | @ . . . . |  Threads 2          | @ . . | and | @ . . . . |
+	# | . . X . . |  Cards 4            | . . X |     | . . . . . |
+	# | . . . . X |  Transform 8: 12/   +-------+     | . . . . X |
+	# +-----------+                                   +-----------+
+	# + 3 variants
+	'E2-80':	[],
+	'E2-81':	[],
+	'E2-82':	[],
+	'E2-83':	[],
+
+	#  _____ _                   _       _    ___        _      ___ 
+	# |   __| |___ _____ ___ ___| |_ ___| |  |_  |     _| |_   |_  |
+	# |   __| | -_|     | -_|   |  _| .'| |   _| |_   |_   _|  |_  |
+	# |_____|_|___|_|_|_|___|_|_|_| |__,|_|  |_____|    |_|    |___|
+	#
+
+	# +-------+  Level 4 - Build on +-----+     +-------+
+	# | @ . X |  Threads 3          | @ . | and | @ . X |
+	# | . X . |  Cards 2            | . X |     +-------+
+	# | X . . |  Transform 4: 8/5   +-----+
+	# +-------+
+	'E3-1':		[],
+
+	# +-------+  Level 4 - Build on +-----+     +-------+  Transforms  3 . . . 2
+	# | @ X . |  Threads 3          | @ X | and | @ . . |              . . 2 . .
+	# | X . . |  Cards 2            +-----+     | . . . |              . 3 @ 1 .
+	# | . . X |  Transform 4: 8/5               | . . X |              . . 1 . .
+	# +-------+                                 +-------+              4 . . . 1
+	'E3-2':		[],
+
+	# +-------+  Level 4 - Build on +-------+     +-------+  Transforms  3 . 2 . 2
+	# | @ . X |  Threads 3          | @ . X | and | @ . . |              . . . . .
+	# | . . . |  Cards 2            +-------+     | . . . |              3 . @ . 1
+	# | X . X |  Transform 4: 8/6                 | . . X |              . . . . .
+	# +-------+                                   +-------+              4 . 1 . 1
+	'E3-3':		[],
+
+	#  _____ _                   _       _    ___      _      ___   
+	# |   __| |___ _____ ___ ___| |_ ___| |  |_  |   _| |_   |_  |  
+	# |   __| | -_|     | -_|   |  _| .'| |  |  _|  |_   _|   _| |_ 
+	# |_____|_|___|_|_|_|___|_|_|_| |__,|_|  |___|    |_|    |_____|
+	#
+
+	# +-------+  Level 2 - Built on +-----+
+	# | @ X @ |  Threads 1          | @ X |
+	# +-------+  Cards 2            +-----+
+	#            Transform 1: 1/
+	'EE1-1':	[],
+
+	# +-----+  Level 2 - Built on +-----+
+	# | @ X |  Threads 1          | @ X |
+	# | . @ |  Cards 2            +-----+
+	# +-----+  Transform 2: 2/
+	'EE1-2':	[],
+
+	# +-------+  Level 2 - Built on +-----+     +-------+
+	# | @ @ X |  Threads 1          | @ X | and | @ . X |
+	# +-------+  Cards 2            +-----+     +-------+
+	#            Transform 2: 2/
+	'EE1-3':	[],
+
+	# +-------+  Level 3 - Built on +-----+
+	# | @ . . |  Threads 1          | @ . |
+	# | . X . |  Cards 2            | . X |
+	# | . . @ |  Transform 1: 1/    +-----+
+	# +-------+
+	'EE1-4':	[	"@ . .",
+					". X .",
+					". . @",
+				],
+
+	# +-------+  Level 2 - Built on +-----+
+	# | @ . @ |  Threads 1          | @ . |
+	# | . X . |  Cards 2            | . X |
+	# +-------+  Transform 2: 2/    +-----+
+	'EE1-5':	[	"@ . @",
+					". X .",
+				],
+
+	# +-----------+  Level 3 - Built on +-------+
+	# | @ . . . . |  Threads 1          | @ . . |
+	# | . . X . . |  Cards 4            | . . X |
+	# | . . . . @ |  Transform 1: 1/    +-------+
+	# +-----------+
+	'EE1-6':	[	"@ . . . .",
+					". . X . .",
+					". . . . @",
+				],
+
+	#  _____ _                   _       _    ___      _      ___ 
+	# |   __| |___ _____ ___ ___| |_ ___| |  |_  |   _| |_   |_  |
+	# |   __| | -_|     | -_|   |  _| .'| |  |  _|  |_   _|  |  _|
+	# |_____|_|___|_|_|_|___|_|_|_| |__,|_|  |___|    |_|    |___|
+	#
+
+	# +-----+  Level 3 - Built on +-----+
+	# | @ X |  Threads 2          | @ X |
+	# | X @ |  Cards 2            +-----+
+	# +-----+  Transform 1: 2/
+	'EE2-1':	[	"@ X",
+				 	"X @",
+				],
+
+	# +-------+  Level 3 - Built on +-----+  Transforms  . 2 . .
+	# | @ X . |  Threads 2          | @ X |              3 @ 1 .
+	# | . @ X |  Cards 2            +-----+              . 3 @ 1
+	# +-------+  Transform 4: 6/                         . . 4 .
+	'EE2-2':	[	"@ X .",
+				 	". @ X",
+				],
+
+	# +-------+  Level 4 - Built on +-----+
+	# | X . . |  Threads 2          | @ X |
+	# | @ . . |  Cards 2            +-----+
+	# | . @ X |  Transform 2; 4/
+	# +-------+
+	'EE2-3':	[],
+
+	# +---------+  Level 3 - Built on +-----+
+	# | X @ . . |  Threads 2          | @ X |
+	# | . . @ X |  Cards 2            +-----+
+	# +---------+  Transform 2: 4/
+	'EE2-4':	[	"X @ . .",
+				 	". . @ X",
+				],
+
+	# +-------+  Level 3 - Built on +-----+  Transforms  . 2 . .
+	# | @ . . |  Threads 2          | @ X |              3 @ 3 .
+	# | X @ X |  Cards 2            +-----+              . 1 @ 1
+	# +-------+  Transform 4: 6/                         . . 4 .
+	'EE2-5':	[	"@ . .",
+					"X @ X",
+				],
+
+	# +-------+  Level 4 - Built on +-----+
+	# | . @ . |  Threads 2          | @ . |
+	# | X . X |  Cards 2            | . X |
+	# | . @ . |  Transform 1: 1/    +-----+
+	# +-------+
+	'EE2-6':	[	". @ .",
+				 	"X . X",
+					". @ .",
+				],
+
+	# +---------+  Level 4 - Built on +-----+
+	# | . @ @ . |  Threads 2          | @ . |
+	# | X . . X |  Cards 2            | . X |
+	# +---------+  Transform 2: 4/    +-----+
+	'EE2-7':	[],
+
+	# +---------+  Level 4 - Built on +-----+
+	# | X . . . |  Threads 2          | @ . |
+	# | . @ @ . |  Cards 3            | . X |
+	# | . . . X |  Transform 2: 4/    +-----+
+	# +---------+
+	'EE2-8':	[	"X . . .",
+				 	". @ @ .",
+					". . . X",
+				],
+
+}
+
+
 
 spell_card_data = [
 
@@ -73,6 +913,16 @@ spell_card_data = [
 	# +---+
 	# | X |  Level 0 - Castable on all starting cards.
 	# +---+
+	[	[	"X",
+		],
+		[
+			["Create Tendril",
+				{'element': 'none', 'category': 'create-tendril', 'id': 89, 'pattern': 'N1'},
+				{
+					'cast': "Create a tendril in your location.",
+				} ],
+		],
+	],
 
 	#  _____         _           _    ___ 
 	# |   | |___ _ _| |_ ___ ___| |  |_  |
@@ -88,6 +938,17 @@ spell_card_data = [
 	# | X . |
 	# | . X |
 	# +-----+
+	[	[	"X .",
+			". X",
+		],
+		[
+			["Split",
+				{'element': 'none', 'category': 'create-tendril', 'id': 8, 'pattern': 'N2-2'},
+				{
+					'cast': "Place a new TENDRIL in a location where you already have a TENDRIL.",
+				} ],
+		],
+	],
 
 	# +-------+  Level 1 - Castable on all starting cards except  xx  xx
 	# | X . X |                                                  xx    xx
@@ -97,6 +958,17 @@ spell_card_data = [
 	# | X . . |                                                  xxx  xxx
 	# | . . X |
 	# +-------+
+	[	[	"X . .",
+			". . X",
+		],
+		[
+			["Move Tendril",
+				{'element': 'none', 'category': 'move-tendril', 'id': 90, 'pattern': 'N2-4'},
+				{
+					'cast': "Move one of your TENDRILs one space.",
+				} ],
+		],
+	],
 
 	# +-------+  Level 2
 	# | X . . |
@@ -118,6 +990,7 @@ spell_card_data = [
 	# | . . . . |
 	# | . . . X |
 	# +---------+
+	# TODO: create 2 tendrils
 
 	#  _____         _           _    ___ 
 	# |   | |___ _ _| |_ ___ ___| |  |_  |
@@ -164,15 +1037,15 @@ spell_card_data = [
 		],
 		[
 			["Haste",
-				{'element': 'air', 'category': 'move-mage', 'id': 3},
+				{'element': 'air', 'category': 'move-mage', 'id': 3, 'pattern': 'E1-1'},
 				{
 					'cast': "Move 5 spaces along a road.",
 				} ],
 			["Protection",
-				{'element': 'earth', 'category': 'defend-mage', 'id': 4},
+				{'element': 'earth', 'category': 'defend-mage', 'id': 4, 'pattern': 'E1-1'},
 				{
 					'cast': "{{ADD_CHARGE}}",
-					'charged': "Defend 1.",
+					'charged': "Block attack on mage or tapestry.",
 				} ],
 		],
 	],
@@ -185,13 +1058,13 @@ spell_card_data = [
 			". X",
 		],
 		[
-			["Fire Arrow",
-				{'element': 'fire', 'category': 'attack-mage', 'id': 5},
+			["Delete All",
+				{'element': 'fire', 'category': 'attack-tendril', 'id': 43, 'pattern': 'E1-2'},
 				{
-					'cast': "Attack 1 at one of your TENDRILs. Consume that TENDRIL.",
+					'cast': "Remove all TENDRILs at one of your TENDRIL's location. Yes, including your TENDRIL.",
 				} ],
 			["Creep",
-				{'element': 'water', 'category': 'create-tendril,move-tendril', 'id': 73},
+				{'element': 'water', 'category': 'create-tendril,move-tendril', 'id': 73, 'pattern': 'E1-2'},
 				{
 					'cast': "Place a TENDRIL. Move one of your TENDRILs 2 spaces.",
 				} ],
@@ -231,7 +1104,7 @@ spell_card_data = [
 		],
 		[
 			["Ricochet Blast",
-				{'element': 'fire', 'category': 'attack-mage', 'id': 24},
+				{'element': 'fire', 'category': 'attack-mage', 'id': 24, 'pattern': 'E1-5'},
 				{
 					'cast': "Attack 1 at location adjacent to one of your TENDRILs. Consume that TENDRIL.",
 				} ],
@@ -246,7 +1119,7 @@ spell_card_data = [
 		],
 		[
 			["Tendril Shield",
-				{'element': 'earth', 'category': 'defend-mage,defend-tendril', 'id': 83},
+				{'element': 'earth', 'category': 'defend-mage,defend-tendril', 'id': 83, 'pattern': 'E1-6'},
 				{
 					'cast': "{{ADD_CHARGE}}",
 					'charged': "Defend 1.",
@@ -286,17 +1159,6 @@ spell_card_data = [
 	# | @ X |  Threads 2          | @ X |              3 @ 1
 	# | X . |  Cards 1            +-----+              . 1 .
 	# +-----+  Transform 3: 4/2
-	[	[	"@ X",
-			"X .",
-		],
-		[
-			["Split",
-				{'element': 'earth', 'category': 'create-tendril', 'id': 8},
-				{
-					'cast': "Place a new TENDRIL in a location where you already have a TENDRIL.",
-				} ],
-		],
-	],
 
 	# +-------+  Level 2 - Built on +-----+     +-----+  Transforms  7 2 5
 	# | . @ X |  Threads 2          | @ X | and | @ . |              4 @ 1        
@@ -318,7 +1180,7 @@ spell_card_data = [
 		],
 		[
 			["Stone Reflection",
-				{'element': 'earth', 'category': 'defend-mage,attack-mage', 'id': 88},
+				{'element': 'earth', 'category': 'defend-mage,attack-mage', 'id': 88, 'pattern': 'E2-4'},
 				{
 					'cast': "{{ADD_CHARGE}}",
 					'charged': "You take 1/2 damage (rounded down) from attacks. Full attack damage is reflected back at your attacker.",
@@ -330,12 +1192,12 @@ spell_card_data = [
 	# | @ X X |  Threads 2          | @ X | and | @ . X |              . . 2 . .
 	# +-------+  Cards 1            +-----+     +-------+              3 3 @ 1 1
 	#            Transform 4: 8/4                                      . . 4 . .
-	#                                                                  . . 5 . .
+	#                                                                  . . 4 . .
 	[	[	"@ X X",
 		],
 		[
 			["Push",
-				{'element': 'air', 'category': 'move-mage,move-other-mage', 'id': 20},
+				{'element': 'air', 'category': 'move-mage,move-other-mage', 'id': 20, 'pattern': 'E2-5'},
 				{
 					'cast': "Push all mages out of an adjacent location and then move into that location. You choose which location each mage moves into.",
 				} ],
@@ -351,7 +1213,7 @@ spell_card_data = [
 		],
 		[
 			["Plains Walker",
-				{'element': 'air', 'category': 'move-mage,terrain', 'id': 7},
+				{'element': 'air', 'category': 'move-mage,terrain', 'id': 7, 'pattern': 'E2-6'},
 				{
 					'cast': "Move through 4 contiguous Plains locations.",
 				} ],
@@ -368,7 +1230,7 @@ spell_card_data = [
 		],
 		[
 			["Water Moccasins",
-				{'element': 'air', 'category': 'move-mage,terrain', 'id': 54},
+				{'element': 'air', 'category': 'move-mage,terrain', 'id': 54, 'pattern': 'E2-7'},
 				{
 					'cast': "{{ADD_CHARGE}}",
 					'charged': "You may move into Water locations or across Rivers. At the end of your turn, if you are adjacent to Water, place a TENDRIL.",
@@ -387,7 +1249,7 @@ spell_card_data = [
 		],
 		[
 			["Nudge",
-				{'element': 'earth', 'category': 'move-other-tendril', 'id': 85},
+				{'element': 'earth', 'category': 'move-other-tendril', 'id': 85, 'pattern': 'E2-8'},
 				{
 					'cast': "{{ADD_CHARGE}}",
 					'charged': "At the end of your turn, if another mage's TENDRIL is in the same location or adjacent to one of your TENDRILs, you may move their TENDRIL 2 spaces. Choose one for each charge on this spell.",
@@ -405,7 +1267,7 @@ spell_card_data = [
 		],
 		[
 			["Harden Shell",
-				{'element': 'earth', 'category': 'defend-tendril', 'id': 86},
+				{'element': 'earth', 'category': 'defend-tendril', 'id': 86, 'pattern': 'E2-9'},
 				{
 					'cast': "{{ADD_CHARGE}}", 
 					'charged': "If the number of TENDRILs you have is less than or equal to the number of CHARGEs on this spell, then they are protected from being removed by another mage (but they can still be consumed).",
@@ -423,7 +1285,7 @@ spell_card_data = [
 		],
 		[
 			["Quick Drop",
-				{'element': 'air', 'category': 'move-mage,create-tendril', 'id': 66},
+				{'element': 'air', 'category': 'move-mage,create-tendril', 'id': 66, 'pattern': 'E2-10'},
 				{
 					'cast': "Move 5. Place a TENDRIL in your final location.",
 				} ],
@@ -441,7 +1303,7 @@ spell_card_data = [
 		],
 		[
 			["Barrier",
-				{'element': 'earth', 'category': 'defend-mage,terrain', 'id': 87},
+				{'element': 'earth', 'category': 'defend-mage,terrain', 'id': 87, 'pattern': 'E2-11'},
 				{
 					'cast': "{{ADD_CHARGE}}",
 					'charged': "Defend 1. All locations adjacent to your TENDRILs are obstacles that other mages may not move into.",
@@ -457,7 +1319,7 @@ spell_card_data = [
 		],
 		[
 			["Shield Pierce",
-				{'element': 'air', 'category': 'attack-charge', 'id': 71},
+				{'element': 'air', 'category': 'attack-charge', 'id': 71, 'pattern': 'E2-12'},
 				{
 					'cast': "A mage at one of your TENDRILs must remove 2 of their CHARGEs.",
 				} ],
@@ -472,7 +1334,7 @@ spell_card_data = [
 		],
 		[
 			["Double Shield",
-				{'element': 'earth', 'category': 'defend-mage', 'id': 36},
+				{'element': 'earth', 'category': 'defend-mage', 'id': 36, 'pattern': 'E2-13'},
 				{
 					'cast': "{{ADD_CHARGE}}",
 					'charged': "Defend 2.",
@@ -492,7 +1354,7 @@ spell_card_data = [
 		],
 		[
 			["Remove Tendril",
-				{'element': 'air', 'category': 'attack-tendril', 'id': 72},
+				{'element': 'air', 'category': 'attack-tendril', 'id': 72, 'pattern': 'E2-14'},
 				{
 					'cast': "If in a location with a TENDRIL controlled by another mage, you may remove 2 of their TENDRILs and place them in their SPENT POOL.",
 				} ],
@@ -548,7 +1410,7 @@ spell_card_data = [
 		],
 		[
 			["Spread",
-				{'element': 'water', 'category': 'create-tendril,move-tendril', 'id': 75},
+				{'element': 'water', 'category': 'create-tendril,move-tendril', 'id': 75, 'pattern': 'E2-19'},
 				{
 					'cast': "Place a TENDRIL. Move all of your TENDRILs 1 space.",
 				} ],
@@ -566,6 +1428,11 @@ spell_card_data = [
 			". . X",
 		],
 		[
+			["Burn",
+				{'element': 'fire', 'category': 'attack-tapestry', 'id': 91, 'pattern': 'E2-20'},
+				{
+					'cast': "Disrupt the tapestry of a mage at one of your TENDRILs by placing one of your mana in their tapestry to over an element. Consume the TENDRIL used to target the mage.",
+				} ],
 		],
 	],
 
@@ -580,7 +1447,7 @@ spell_card_data = [
 		],
 		[
 			["Whiplash",
-				{'element': 'water', 'category': 'defend-mage,defend-tendril', 'id': 76},
+				{'element': 'water', 'category': 'defend-mage,defend-tendril', 'id': 76, 'pattern': 'E2-21'},
 				{
 					'cast': "{{ADD_CHARGE}}",
 					'charged': "Defend 1. Or you may sacrifice one of your TENDRILs to prevent another TENDRIL from being removed/consumed.",
@@ -599,7 +1466,7 @@ spell_card_data = [
 		],
 		[
 			["Tendril Coil",
-				{'element': 'water', 'category': 'defend-mage', 'id': 81},
+				{'element': 'water', 'category': 'defend-mage', 'id': 81, 'pattern': 'E2-22'},
 				{
 					'cast': "{{ADD_CHARGE}}",
 					'charged': "If you are in the same location as one of your TENDRILs, that TENDRIL acts as a shield to Defend 2.",
@@ -631,7 +1498,7 @@ spell_card_data = [
 		],
 		[
 			["Snapback",
-				{'element': 'water', 'category': 'defend-mage,move-tendril', 'id': 79},
+				{'element': 'water', 'category': 'defend-mage,move-tendril', 'id': 79, 'pattern': 'E2-24'},
 				{
 					'cast': "{{ADD_CHARGE}}",
 					'charged': "You may sacrifice one of your TENDRILs to Defend 1. Place sacrificed TENDRIL at the location of the mage who attacked you.",
@@ -650,7 +1517,7 @@ spell_card_data = [
 		],
 		[
 			["Deflect",
-				{'element': 'water', 'category': 'defend-mage,attack-mage,attack-tendril', 'id': 80},
+				{'element': 'water', 'category': 'defend-mage,attack-mage,attack-tendril', 'id': 80, 'pattern': 'E2-25'},
 				{
 					'cast': "{{ADD_CHARGE}}",
 					'bonus': "When attacked, you may remove this CHARGE to deflect the attack to an adjacent location. Attack 1 and remove all TENDRILs at that location.",
@@ -669,7 +1536,7 @@ spell_card_data = [
 		],
 		[
 			["Fire Ball",
-				{'element': 'fire', 'category': 'attack-mage', 'id': 22},
+				{'element': 'fire', 'category': 'attack-mage', 'id': 22, 'pattern': 'E2-26'},
 				{
 					'cast': "Attack 2 at one of your TENDRILs. Consume that TENDRIL.",
 				} ],
@@ -687,7 +1554,7 @@ spell_card_data = [
 		],
 		[
 			["Fire Reign",
-				{'element': 'fire', 'category': 'attack-mage', 'id': 26},
+				{'element': 'fire', 'category': 'attack-mage', 'id': 26, 'pattern': 'E2-27'},
 				{
 					'cast': "Attack 1 at all of your TENDRILs. Consume all of your TENDRILs except one.",
 				} ],
@@ -706,7 +1573,7 @@ spell_card_data = [
 		],
 		[
 			["Erase",
-				{'element': 'fire', 'category': 'move-tendril,attack-tendril', 'id': 65},
+				{'element': 'fire', 'category': 'move-tendril,attack-tendril', 'id': 65, 'pattern': 'E2-28'},
 				{
 					'cast': "Move one of your TENDRILs 3 spaces, removing all other TENDRILs from all locations it moves into this turn. Consume that TENDRIL.",
 				} ],
@@ -739,7 +1606,7 @@ spell_card_data = [
 		],
 		[
 			["Fire Burst",
-				{'element': 'fire', 'category': 'attack-tendril', 'id': 23},
+				{'element': 'fire', 'category': 'attack-tendril', 'id': 23, 'pattern': 'E2-30'},
 				{
 					'cast': "Remove all TENDRILs in all locations adjacent to one of your TENDRILs. Consume that TENDRIL.",
 				} ],
@@ -759,7 +1626,7 @@ spell_card_data = [
 		],
 		[
 			["Teleport",
-				{'element': 'water', 'category': 'move-astral', 'id': 78},
+				{'element': 'water', 'category': 'move-mage', 'id': 78, 'pattern': 'E2-31'},
 				{
 					'cast': "Teleport to the location of one of your TENDRILs. Consume that TENDRIL.",
 				} ],
@@ -805,7 +1672,7 @@ spell_card_data = [
 		],
 		[
 			["Recovery Shield",
-				{'element': 'earth', 'category': 'defend-mage,modify-tapestry', 'id': 82},
+				{'element': 'earth', 'category': 'defend-mage,modify-tapestry', 'id': 82, 'pattern': 'E2-39'},
 				{
 					'cast': "{{ADD_CHARGE}}",
 					'charged': "Defend 1",
@@ -838,7 +1705,7 @@ spell_card_data = [
 		],
 		[
 			["Traceback",
-				{'element': 'air', 'category': 'move-mage,create-tendril', 'id': 69},
+				{'element': 'air', 'category': 'move-mage,create-tendril', 'id': 69, 'pattern': 'E2-41'},
 				{
 					'cast': "Move 2. If in a location with a TENDRIL owned by another mage, place a TENDRIL at that mage's location and remove their TENDRIL in your location.",
 				} ],
@@ -877,7 +1744,7 @@ spell_card_data = [
 		],
 		[
 			["Run and Toss",
-				{'element': 'air', 'category': 'move-mage,create-tendril,move-tendril', 'id': 67},
+				{'element': 'air', 'category': 'move-mage,create-tendril,move-tendril', 'id': 67, 'pattern': 'E2-46'},
 				{
 					'cast': "Move 1 space, place a TENDRIL, then move that TENDRIL 2 spaces.",
 				} ],
@@ -907,7 +1774,7 @@ spell_card_data = [
 		],
 		[
 			["Sneak Attack",
-				{'element': 'fire', 'category': 'attack-mage,move-mage', 'id': 64},
+				{'element': 'fire', 'category': 'attack-mage,move-mage', 'id': 64, 'pattern': 'E2-55'},
 				{
 					'cast': "Attack 1 at an adjacent location and then move into that location.",
 				} ],
@@ -1076,11 +1943,6 @@ spell_card_data = [
 		 	"X @",
 		],
 		[
-			["Delete All",
-				{'element': 'fire', 'category': 'attack-tendril', 'id': 43},
-				{
-					'cast': "Remove all TENDRILs from your location.",
-				} ],
 		],
 	],
 
@@ -1094,7 +1956,7 @@ spell_card_data = [
 		],
 		[
 			["Diasporate",
-				{'element': 'water', 'category': 'create-tendril,move-tendril', 'id': 77},
+				{'element': 'water', 'category': 'create-tendril,move-tendril', 'id': 77, 'pattern': 'EE2-2'},
 				{
 					'cast': "Place 3 TENDRILs. Move 3 of your TENDRILs 2 spaces each.",
 				} ],
@@ -1129,7 +1991,7 @@ spell_card_data = [
 		],
 		[
 			["Burst",
-				{'element': 'water', 'category': 'create-tendril,move-tendril', 'id': 74},
+				{'element': 'water', 'category': 'create-tendril,move-tendril', 'id': 74, 'pattern': 'EE2-5'},
 				{
 					'cast': "Place 2 TENDRILs. Move all of your TENDRILs 2 spaces.",
 				} ],
@@ -1148,7 +2010,7 @@ spell_card_data = [
 		],
 		[
 			["Hands of Flame",
-				{'element': 'fire', 'category': 'move-mage,attack-mage', 'id': 63},
+				{'element': 'fire', 'category': 'move-mage,attack-mage', 'id': 63, 'pattern': 'EE2-6'},
 				{
 					'cast': "Move 1 and then Attack 1 at a location adjacent to your new location.",
 				} ],
