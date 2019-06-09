@@ -32,6 +32,7 @@ class SpellCardGen(CardGen):
 		self.id2pattern = {}
 		self.id2attrs = {}
 		self.id2desc = {}
+		self.pattern2id = {}
 		self.max_id = 0
 				
 		self.valid_elements = ['none', 'air', 'fire', 'earth', 'water']
@@ -106,7 +107,8 @@ class SpellCardGen(CardGen):
 		if attrs['category'] != 'blank':
 			self.validate_attrs(name, attrs)
 		pattern = self.card_patterns[attrs['pattern']]
-		self.record_spell_info(name, pattern, attrs, desc)
+		if attrs['category'] != 'blank':
+			self.record_spell_info(name, pattern, attrs, desc)
 		
 		if attrs['category'] != 'blank':
 			pe_tag = self.pattern_key(pattern) + '-' + attrs['element']
@@ -126,7 +128,8 @@ class SpellCardGen(CardGen):
 		self.draw_pattern(pattern, attrs['element'])
 		self.draw_pattern_border()
 
-		self.draw_desc(attrs['id'], desc)
+		if attrs['category'] != 'blank':
+			self.draw_desc(attrs['id'], desc)
 		
 		self.end_card_page_transform()
 	
@@ -270,6 +273,12 @@ class SpellCardGen(CardGen):
 		self.id2attrs[id] = attrs
 		self.id2desc[id] = desc
 		
+		pattern_key = '%s-%s' % (attrs['pattern'], attrs['element'])
+		if pattern_key in self.pattern2id:
+			dup_id = self.pattern2id[pattern_key]
+			error('Pattern already assigned to %d (%s)' % (dup_id, self.id2name[dup_id]))
+		self.pattern2id[pattern_key] = id
+
 		element = attrs['element']
 		if not element in self.elements:
 			self.elements[element] = []
@@ -292,9 +301,15 @@ class SpellCardGen(CardGen):
 			'sacrifice': '',
 		}
 
+		# Ensure all keys are valid.
 		for key in raw_desc.keys():
 			if not key in raw_desc:
 				error('unknown key: %s' % key)
+				
+		# Ensure charged spells have a charge effect.
+		if raw_desc['cast'] == '{{ADD_CHARGE}}':
+			if not 'charged' in raw_desc and not 'sacrifice' in raw_desc:
+				error('charged spell with no effect')			
 
 		desc = []
 		for key in keys:

@@ -6,6 +6,7 @@ spell_card_revision = 5
 
 spell_card_categories = [
 	'blank',
+	'starter',
 
 	'attack-mage',
 	'attack-tendril',
@@ -927,7 +928,7 @@ spell_card_data = [
 	#	|_|___|___|___|_| |_| |__,|_|
     
 	["Create Tendril",
-		{'element': 'none', 'category': 'create-tendril', 'id': 89, 'pattern': 'N1'},
+		{'element': 'none', 'category': 'starter,create-tendril', 'id': 89, 'pattern': 'N1'},
 		{
 			'cast': "Create a tendril in your location.",
 		} ],
@@ -948,23 +949,23 @@ spell_card_data = [
 	#	|_____|_| |__,|_| |_| |___|_|  
 
 	["Haste",
-		{'element': 'air', 'category': 'move-mage', 'id': 3, 'pattern': 'E1-1'},
+		{'element': 'air', 'category': 'starter,move-mage', 'id': 3, 'pattern': 'E1-1'},
 		{
 			'cast': "Move 5 spaces along a road.",
 		} ],
 	["Delete All",
-		{'element': 'fire', 'category': 'attack-tendril', 'id': 43, 'pattern': 'E1-2'},
+		{'element': 'fire', 'category': 'starter,attack-tendril', 'id': 43, 'pattern': 'E1-2'},
 		{
-			'cast': "Remove all TENDRILs at one of your TENDRIL's location. Yes, including your TENDRIL.",
+			'cast': "Remove all opponent TENDRILs at one of your TENDRIL's location. Consume this TENDRIL.",
 		} ],
 	["Protection",
-		{'element': 'earth', 'category': 'defend-tendril', 'id': 4, 'pattern': 'E1-1'},
+		{'element': 'earth', 'category': 'starter,defend-tendril', 'id': 4, 'pattern': 'E1-1'},
 		{
 			'cast': "{{ADD_CHARGE}}",
-			'charged': ".",
+			'sacrifice': "Sacrifice a charge to prevent one of your TENDRILs from being removed.",
 		} ],
 	["Creep",
-		{'element': 'water', 'category': 'create-tendril,move-tendril', 'id': 73, 'pattern': 'E1-2'},
+		{'element': 'water', 'category': 'starter,create-tendril,move-tendril', 'id': 73, 'pattern': 'E1-2'},
 		{
 			'cast': "Place a TENDRIL. Move one of your TENDRILs 2 spaces.",
 		} ],
