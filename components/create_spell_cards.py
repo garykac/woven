@@ -63,11 +63,9 @@ class SpellCardGen(CardGen):
 				self.check_pattern('%s-%d' % (base, i))
 				
 	def check_pattern(self, id):
-		print 'checking', id
 		if not id in self.card_patterns:
 			print id, 'not found'
 		pattern = self.card_patterns[id]
-		print pattern
 		
 		first_row = True
 		num_cols = 0
@@ -81,19 +79,14 @@ class SpellCardGen(CardGen):
 		
 	# override
 	def process_card_data(self, card_data):
-		pattern = card_data[0]
-
-		for card in card_data[1]:
-			self.pre_card()
-			if self.verbose:
-				print self.curr_file, self.curr_card, card[0]
-			self.draw_card(self.curr_card, pattern, card)
-			self.post_card()
+		self.pre_card()
+		if self.verbose:
+			print self.curr_file, self.curr_card, card_data[0]
+		self.draw_card(self.curr_card, card_data)
+		self.post_card()
 
 	# override
 	def process_blank_card(self):
-		pattern = ['. . . . .', '. . . . .', '. . . . .']
-
 		self.pre_card()
 		if self.verbose:
 			print self.curr_file, self.curr_card
@@ -103,15 +96,16 @@ class SpellCardGen(CardGen):
 			'id': 1000 + self.curr_card,
 			'pattern': 'blank',
 		}
-		self.draw_card(self.curr_card, pattern, ['', attrs, {}])
+		self.draw_card(self.curr_card, ['', attrs, {}])
 		self.post_card()
 
-	def draw_card(self, id, pattern, card):
+	def draw_card(self, id, card):
 		name = card[0]
 		attrs = card[1]
 		desc = card[2]
 		if attrs['category'] != 'blank':
 			self.validate_attrs(name, attrs)
+		pattern = self.card_patterns[attrs['pattern']]
 		self.record_spell_info(name, pattern, attrs, desc)
 		
 		if attrs['category'] != 'blank':
@@ -291,11 +285,11 @@ class SpellCardGen(CardGen):
 		return '/'.join([''.join(x.split()) for x in pattern])
 	
 	def expand_desc(self, id, raw_desc):
-		keys = ['cast', 'charged', 'bonus']
+		keys = ['cast', 'charged', 'sacrifice']
 		prefix = {
 			'cast': 'When cast: ',
 			'charged': 'While charged: ',
-			'bonus': '',
+			'sacrifice': '',
 		}
 
 		for key in raw_desc.keys():
