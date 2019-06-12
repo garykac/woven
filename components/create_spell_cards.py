@@ -34,6 +34,7 @@ class SpellCardGen(CardGen):
 		self.id2desc = {}
 		self.pattern2id = {}
 		self.max_id = 0
+		self.blank_count = 0
 				
 		self.valid_elements = ['none', 'air', 'fire', 'earth', 'water']
 		self.valid_categories = spell_card_categories
@@ -106,11 +107,12 @@ class SpellCardGen(CardGen):
 		desc = card[2]
 		if attrs['category'] != 'blank':
 			self.validate_attrs(name, attrs)
-		pattern = self.card_patterns[attrs['pattern']]
+		pattern_id = attrs['pattern']
+		pattern = self.card_patterns[pattern_id]
 		if attrs['category'] != 'blank':
 			self.record_spell_info(name, pattern, attrs, desc)
 		
-		if attrs['category'] != 'blank':
+		if attrs['category'] != 'blank' and pattern_id != 'blank':
 			pe_tag = self.pattern_key(pattern) + '-' + attrs['element']
 			if pe_tag in self.pattern_elements:
 				error('Pattern for "%s" already used for "%s"' % (name, self.pattern_elements[pe_tag]))
@@ -123,7 +125,7 @@ class SpellCardGen(CardGen):
 		if attrs['category'] != 'blank':
 			self.draw_title(name)
 			self.draw_title_element(attrs['element'])
-			self.draw_card_id(attrs['id'])
+			self.draw_card_id(attrs['id'], 'starter' in attrs['category'].split(','))
 		
 		self.draw_pattern(pattern, attrs['element'])
 		self.draw_pattern_border()
@@ -137,9 +139,11 @@ class SpellCardGen(CardGen):
 		id = "c%d-title" % self.curr_card
 		self.draw_text(id, self.card_width / 2, 30, title, 18, align='center', weight='bold', font='Arial Narrow')
 		
-	def draw_card_id(self, spell_id):
+	def draw_card_id(self, spell_id, starter):
 		card_id = "c%d-spell-id" % self.curr_card
 		id_string = 'id #%d (r%d)' % (spell_id, spell_card_revision)
+		if starter:
+			id_string = 'STARTER - ' + id_string
 		self.draw_text(card_id, self.card_width / 2, self.card_height-15, id_string, 10, align='center', style='italic', font='Georgia')
 
 	def draw_starter(self):
@@ -273,11 +277,15 @@ class SpellCardGen(CardGen):
 		self.id2attrs[id] = attrs
 		self.id2desc[id] = desc
 		
-		pattern_key = '%s-%s' % (attrs['pattern'], attrs['element'])
-		if pattern_key in self.pattern2id:
-			dup_id = self.pattern2id[pattern_key]
-			error('Pattern already assigned to %d (%s)' % (dup_id, self.id2name[dup_id]))
-		self.pattern2id[pattern_key] = id
+		pattern_id = attrs['pattern']
+		if pattern_id == 'blank':
+			self.blank_count += 1
+		else:
+			pattern_key = '%s-%s' % (pattern_id, attrs['element'])
+			if pattern_key in self.pattern2id:
+				dup_id = self.pattern2id[pattern_key]
+				error('%s: Pattern %s already assigned to %d (%s)' % (name, pattern_key, dup_id, self.id2name[dup_id]))
+			self.pattern2id[pattern_key] = id
 
 		element = attrs['element']
 		if not element in self.elements:
@@ -294,16 +302,16 @@ class SpellCardGen(CardGen):
 		return '/'.join([''.join(x.split()) for x in pattern])
 	
 	def expand_desc(self, id, raw_desc):
-		keys = ['cast', 'charged', 'sacrifice']
+		keys = ['cast', 'charged', 'sacrifice', 'notes']
 		prefix = {
 			'cast': 'When cast: ',
 			'charged': 'While charged: ',
-			'sacrifice': '',
+			'sacrifice': 'Sacrifice: ',
 		}
 
 		# Ensure all keys are valid.
 		for key in raw_desc.keys():
-			if not key in raw_desc:
+			if not key in keys:
 				error('unknown key: %s' % key)
 				
 		# Ensure charged spells have a charge effect.
@@ -314,6 +322,8 @@ class SpellCardGen(CardGen):
 		desc = []
 		for key in keys:
 			if not key in raw_desc:
+				continue
+			if key == 'notes':
 				continue
 			d = raw_desc[key]
 			d = d.replace('{{ADD_CHARGE}}', 'Place a CHARGE on this spell.')
@@ -376,11 +386,13 @@ class SpellCardGen(CardGen):
 		summary.write('Generated on %04d/%02d/%02d @ %02d:%02d\n\n' % (now.year, now.month, now.day, now.hour, now.minute))
 
 		summary.write('## By Category\n\n')
+		print 'Categories'
 
 		for c in self.valid_categories:
 			if not c in self.categories:
 				continue
 			summary.write('%s (%d)\n\n' % (self.category_list(c), len(self.categories[c])))
+			print '  %s (%d)' % (self.category_list(c), len(self.categories[c]))
 
 			names = [self.id2name[id] for id in self.categories[c]]
 			for name in sorted(names):
@@ -390,6 +402,7 @@ class SpellCardGen(CardGen):
 			summary.write('\n')
 			
 		summary.write('## By Element\n\n')
+		print 'Element'
 
 		for e in self.valid_elements:
 			eName = self.element_name(e)
@@ -397,6 +410,7 @@ class SpellCardGen(CardGen):
 				continue
 				
 			summary.write('%s (%d)\n\n' % (eName, len(self.elements[e])))
+			print '  %s (%d)' % (eName, len(self.elements[e]))
 
 			names = [self.id2name[id] for id in self.elements[e]]
 			for name in sorted(names):
@@ -406,8 +420,10 @@ class SpellCardGen(CardGen):
 			summary.write('\n')
 
 		summary.write('## By Name\n\n')
-					
+		count = 0
+
 		for name,sid in sorted(self.name2id.iteritems()):
+			count += 1
 			summary.write('### %s\n' % self.id2name[sid])
 			summary.write('```\n')
 			for prow in self.id2pattern[sid]:
@@ -426,6 +442,9 @@ class SpellCardGen(CardGen):
 				summary.write('\n')
 
 		summary.close()
+		print 'Total spell count = %d' % count
+		if self.blank_count != 0:
+			print '*** BLANK SPELLS *** = %d' % self.blank_count
 		
 	def processing_summary(self):
 		if self.verbose:
