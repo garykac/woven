@@ -1,0 +1,118 @@
+
+
+Spell
+=====
+
+Immediate (when cast)
+
+Charge (add charge when cast)
+
+	Trigger (if charged)
+	Trigger Effect
+
+	Continuous Effect (if charged)
+
+	Sacrifice Effect (sacrifice charge)
+
+----------------------------
+
+Tendril properties
+* on fire
+* is minion
+
+----------------------------
+
+=========
+Immediate
+=========
+
+Attack
+	* attack at tendril
+	* attack adjacent to tendril
+	* remove charges from spells of other mage
+
+Movement
+	* gain 5mp this turn
+	* move ignoring terrain
+	* push mage in current location
+	* push mage in adjacent location
+
+Tendril
+	* move all tendrils 1 space
+	* move any 2 tendrils up to 9 spaces total
+	* move tendrils up to 5 spaces total
+	* swap 2 tendrils (useful with tendril properties)
+
+At tendril
+	* remove all tendrils from location
+	* remove all tendrils except 1 from a location
+	* remove all tendrils adjacent to
+
+Terrain
+	* change terrain type at tendril
+
+========
+Triggers
+========
+
+at end of turn/action
+at time of spell cast
+action by other player
+
+Other Tendril
+	* if other tendril moves into space where mage is located
+	* if other tendril moves into space adjacent to mage location
+	* if mage at location with other tendril
+	* if tendril at location with other tendril
+	* if tendril adjacent to other tendril
+Terrain
+	* if in terrain X
+	* if adjacent to terrain X
+	* if in or adjacent to water
+	* if tendril in terrain X
+Attack HP
+	* if attack HP
+
+===============
+Trigger Effects
+===============
+
+Any
+	* gain another action
+Other Tendril
+	* follow other tendril back to mage and add tendril there
+	* follow other tendril back to mage and add tendril in same location as any of that mage's tendrils
+	* follow other tendril back to mage and remove any one of their tendrils
+	* follow other tendril back to mage and remove all their tendrils
+	* remove other tendril
+	* move other tendril
+Attack HP
+	* defend HP
+	* redirect all or part of attack back to attacker
+	* deflect attack into adjacent location
+Terrain
+	* add tendril in any X terrain connected to mage location
+	* add tendril in/adjacent to water up to N spaces away
+	* move tendril up to N spaces in terrain X
+	* pass through any number of contiguous terrain X
+
+==================
+Continuous Effects
+==================
+
+May not be moved by spells
+May not be moved by spells cast by others
+May sacrifice a different tendril to save another one
+Tendrils are obstacles that mages may not move into
+Terrain X cost is 1
+Prevent tendrils from moving into your location
+Prevent tendrils from moving onto your tendrils
+
+=================
+Sacrifice Effects
+=================
+
+Defend tendril
+Recover threads from tapestry
+Ignore terrain costs for all movement this turn
+Boost power of another spell (shield)

@@ -23,7 +23,7 @@ been added to the list of spells, or have been removed.
 
 ## Tapestry Weaving
 
-* WATER Move <n> THREADs to a single location on your TAPESTRY
+* WATER Move _n_ THREADs to a single location on your TAPESTRY
 * Add damage marker to opponent's Tapestry
 * Gain extra mana (temporary) - this mana can only be used once. return when removed from matrix
 	* different color to distinguish
@@ -39,14 +39,14 @@ Spells that have been removed from the game along with a rational.
 ## Targeting
 
 * Long distance target
-	* Issue: no longer have parameters for distance
+	* Why: no longer have parameters for distance
 * Obscure target and neighboring hexes (existing targets stay, but new ones cannot be made)
-	* Issue: This requires some marker for the obscured location
+	* Why: This requires some marker for the obscured location
 
 ## Astral Movement
 
 * Teleport to terrain type
-	* Issue: Set tendril to terrain instead
+	* Why: Set tendril to terrain instead
 
 ## Attack
 
@@ -73,28 +73,28 @@ Spells that have been removed from the game along with a rational.
 ## Spell Deck Manipulation
 
 * Search top N cards of a spell deck for spell that matches Element
-	* Issue: no longer have decks of spells
+	* Why: no longer have decks of spells; also tends to be tedious
 
 ## Map
 
 * Destroy bridges (and other objects on map)
-	* Issue: don't want special tokens for marking updated terrain
+	* Why: want to avoid special tokens for marking updated terrain
 * Terraform - change terrain of target location
-	* Issue: don't want special tokens for marking new terrain
+	* Why: don't want special tokens for marking new terrain
 
 ## Misc
 
 * Clone spell from another player
 * Duplicate spell just cast
-	* Issue: can be achieved more generally by allowing a thread to be removed
+	* Why: can be achieved more generally by allowing a thread to be removed
 * Spells that work with any element
 * Dispel
-	* Issue: Use more specific cancel spells.
+	* Why: Use more specific cancel spells.
 
 ## Matrix Manipulation
 
 * Gain extra mana permanently - this spell can only be cast once
 * Lose cubes - must be recovered as if from Matrix
 * Place cube ignoring contraints
-	* Issue: No longer have constraints
+	* Why: No longer have constraints
 

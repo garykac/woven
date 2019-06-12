@@ -14,7 +14,7 @@ Mulitple maps:
 * Forest (cost = 2 MP)
 * Mountain (cost = 3 MP)
 * River (between locations) (cost = 2MP + cost of terrain on other side)
-* Water/Swamp cannot be entered without a special ability
+* Water/Swamp (cost = 4 MP to enter)
 
 ### Rivers
 

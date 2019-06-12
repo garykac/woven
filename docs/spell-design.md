@@ -24,9 +24,9 @@ Patterns specify one or more THREADs that are required for this spell. Whenever 
 
 Spell effects have three parts:
 
-1. An effect that occurs at the time the spell is cast.
-2. A permanent effect for when the spell has one or more charges on it.
-3. A reactionary effect that requires a charge on the spell and costs something (often a charge) to use.
+1. An effect that occurs immediately when the spell is cast.
+2. A permanent effect that lasts as long as the spell has a charge on it.
+4. A sacrifice effect where a charge is placed on the spell and the mage my choose to sacrifice the chage for an effect when certain conditions are met.
 
 ## Design space expansions for Spells
 
@@ -39,27 +39,29 @@ Spell effects have three parts:
 
 | Category           | Element | Description |
 | ------------------ | ------- | ----------- |
-| Attack Mage        | Fire    | Attack other mage. |
-| Attack Tendril     | Fire    | Attack other mage's tendril. |
 | Attack Charge      | Air     | Attack shield/other charged spell. |
 | Attack Tapestry    | Air     | Attack tapestry by blocking squares. |
-| Create Tendril     | Water   | Create new tendril at current location. |
-| Defend Mage        | Earth   | Defend self against attacks. |
+| Move Mage          | Air     | Move self on map. |
+| Move Other Mage    | Air     | Move another mage on the map. |
+| Attack Mage HP     | Fire    | Remove other mage's HP. |
+| Attack Tendril     | Fire    | Attack other mage's tendril. |
+| Defend Mage HP     | Earth   | Defend self against HP (physical) attacks. |
 | Defend Tendril     | Earth   | Defend tendrils from attack. |
 | Defend Charge      | Earth   | Defend charges from attack. |
 | Defend Tapestry    | Earth   | Defend tapestry from attack. |
-| Move Mage          | Air     | Move self on map. |
+| Create Tendril     | Water   | Create new tendril at current location. |
 | Move Astral        | Water   | Move self via astral plane |
 | Move Tendril       | Water   | Move one of your tendrils on map. |
-| Move Other Mage    | Air     | Move another mage on the map. |
 | Move Other Tendril | Water   | Move another mage's tendril on the map. |
 | Modify Tapestry    | Water   | Adjust threads in tapestry. |
+| Heal Mage HP       | Water   | Restore HPs. |
 
 ## Additional Attributes
 
-| Category | Element | Description |
-| -------- | ------- | ----------- |
-| Terrain  |         | Spell effect depends on current terrain. |
+| Category  | Element | Description |
+| --------- | ------- | ----------- |
+| Terrain   |         | Spell effect depends on current terrain. |
+| Elemental |  all    | Elemental being grants power |
 
 # Element properties
 
@@ -102,7 +104,7 @@ General: passive, heavy, dark, thick, flowing, living, cleansing, psychic, scryi
 
 * Enemy: Fire (damage)
 * Primary Ability: Create Tendril, Move Tendril
-* Anti-Fire Ability: 
+* Anti-Fire Ability: Heal HP
 * Secondary Ability: Defend (Earth)
 * Tertiary Ability: Move Mage (Air)
 * Tendrils: many, slow, consumed
@@ -145,10 +147,10 @@ For patterns, neutral takes on the desire of the elements its copying. (The prim
 ## FAQs
 
 * Attack _n_
-	* Attack all creatures in target location for _n_ damage.
+	* Attack all creatures in target location for _n_ HP damage.
 * Defend _n_
-	* When charged, absorbs all damage from attack
-	* Remove charge when it absorbs _n_ or more damage in a single attack
+	* When charged, absorbs all HP damage from attack
+	* Remove charge when it absorbs _n_ or more HP damage in a single attack
 * Move _n_ spaces
 	* Move up to _n_ spaces.
 	* Terrain costs are ignored. Barriers (like Rivers or magical ones) still apply
@@ -157,7 +159,9 @@ For patterns, neutral takes on the desire of the elements its copying. (The prim
 * Move tendril _n_ spaces
 	* Optionally move a tendril up to _n_ spaces.
 	* Tendril movement ignores all terrain costs and physical barriers
-* Remove or Consume tendril
-	* Remove tendril from map and place marker in spent pool
+* Remove tendril
+	* Remove tendril from map and return to owner
+* Consume tendril
+	* Remove your tendril that was used to target the spell
 * Adjacent to Water
 	* In a location adjacent to a River or adjacent to a body of water (like a Lake)
