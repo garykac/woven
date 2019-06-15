@@ -8062,8 +8062,8 @@
      inkscape:object-nodes="true"
      inkscape:snap-page="false"
      inkscape:zoom="0.82408495"
-     inkscape:cx="547.55048"
-     inkscape:cy="1204.6341"
+     inkscape:cx="452.29331"
+     inkscape:cy="1350.2502"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="0"
@@ -8748,7 +8748,8 @@
        height="100%" />
     <g
        id="g9057"
-       clip-path="url(#clipPath9121)">
+       clip-path="url(#clipPath9121)"
+       transform="matrix(-1,0,0,-1,1398.4528,-519.32114)">
       <use
          x="0"
          y="0"
