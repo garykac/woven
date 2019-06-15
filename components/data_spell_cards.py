@@ -2,7 +2,7 @@
 
 # Text -> ASCII Art: http://patorjk.com/software/taag/#p=display&f=Rectangles&t=Monster
 
-spell_card_revision = 5
+spell_card_revision = 6
 
 spell_card_categories = [
 	'blank',
