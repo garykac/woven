@@ -9,24 +9,24 @@ These maps are geomorphic voronoi tessellations with Plains, Forest, Mountain an
 
 Map 1
 
-<a href="http:garykac.github.io/woven/maps/map-01.jpg"><img src="map-01.jpg" height="200"/></a>
+<a href="http:garykac.github.io/woven/archive/maps/v2-voronoi-r2/map-01.jpg"><img src="../archive/maps/v2-voronoi-r2/map-01.jpg" height="200"/></a>
 
 Map 2
 
-<a href="http:garykac.github.io/woven/maps/map-02.jpg"><img src="map-02.jpg" height="200"/></a>
+<a href="http:garykac.github.io/woven/maps/map-02.jpg"><img src="../archive/maps/v2-voronoi-r2/map-02.jpg" height="200"/></a>
 
 Map 3
 
-<a href="http:garykac.github.io/woven/maps/map-03.jpg"><img src="map-03.jpg" height="200"/></a>
+<a href="http:garykac.github.io/woven/maps/map-03.jpg"><img src="../archive/maps/v2-voronoi-r2/map-03.jpg" height="200"/></a>
 
 Map 4
 
-<a href="http:garykac.github.io/woven/maps/map-04.jpg"><img src="map-04.jpg" height="200"/></a>
+<a href="http:garykac.github.io/woven/maps/map-04.jpg"><img src="../archive/maps/v2-voronoi-r2/map-04.jpg" height="200"/></a>
 
 Map 5
 
-<a href="http:garykac.github.io/woven/maps/map-05.jpg"><img src="map-05.jpg" height="200"/></a>
+<a href="http:garykac.github.io/woven/maps/map-05.jpg"><img src="../archive/maps/v2-voronoi-r2/map-05.jpg" height="200"/></a>
 
 Map 6
 
-<a href="http:garykac.github.io/woven/maps/map-06.jpg"><img src="map-06.jpg" height="200"/></a>
+<a href="http:garykac.github.io/woven/maps/map-06.jpg"><img src="../archive/maps/v2-voronoi-r2/map-06.jpg" height="200"/></a>
