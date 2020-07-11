@@ -9,24 +9,24 @@ spell_card_categories = [
     'starter',
 
     #'attack-mage',
-    'attack-tendril',
+    'attack-eye',
     'attack-charge',
     'attack-tapestry',
 
-    'create-tendril',
+    'create-eye',
 
     #'defend-mage',
     'defend-move',
-    'defend-tendril',
+    'defend-eye',
     'defend-charge',
     'defend-tapestry',
 
     'move-mage',
     #'move-astral',
-    'move-tendril',
+    'move-eye',
 
     'move-other-mage',
-    'move-other-tendril',
+    'move-other-eye',
 
     'thread',
     
@@ -141,7 +141,7 @@ spell_card_patterns = {
     # | . . . . |
     # | . . . X |
     # +---------+
-    # TODO: create 2 tendrils
+    # TODO: create 2 eyes
     'N2-8':     [],
 
     #  _____         _           _    ___ 
@@ -934,15 +934,15 @@ spell_card_data = [
     #
     # Neutral spells are basic spells that are always worse than corresponding elemental spells.
     
-    ["Create Tendril",
-        {'element': 'none', 'category': 'starter,create-tendril', 'id': 89, 'pattern': 'N1'},
+    ["Create Eye",
+        {'element': 'none', 'category': 'starter,create-eye', 'id': 89, 'pattern': 'N1'},
         {
-            'cast': "Create a tendril in your location.",
+            'cast': "Create a eye in your location.",
         } ],
-    ["Move Tendril",
-        {'element': 'none', 'category': 'starter,move-tendril', 'id': 90, 'pattern': 'N2-4'},
+    ["Move Eye",
+        {'element': 'none', 'category': 'starter,move-eye', 'id': 90, 'pattern': 'N2-4'},
         {
-            'cast': "Move one of your TENDRILs one space.",
+            'cast': "Move one of your EYEs one space.",
         } ],
              
     #     _____ _           _           
@@ -957,21 +957,21 @@ spell_card_data = [
         {
             'cast': "Move 5 spaces along a road.",
         } ],
-    ["Burn Tendril",
-        {'element': 'fire', 'category': 'starter,attack-tendril', 'id': 92, 'pattern': 'E1-2'},
+    ["Burn Eye",
+        {'element': 'fire', 'category': 'starter,attack-eye', 'id': 92, 'pattern': 'E1-2'},
         {
-            'cast': "Remove an opponent's TENDRIL at one of your TENDRIL's location. Consume this TENDRIL.",
+            'cast': "Remove an opponent's EYE at one of your EYE's location. Consume this EYE.",
         } ],
     ["Protection",
-        {'element': 'earth', 'category': 'starter,defend-tendril', 'id': 4, 'pattern': 'E1-1'},
+        {'element': 'earth', 'category': 'starter,defend-eye', 'id': 4, 'pattern': 'E1-1'},
         {
             'cast': "{{ADD_CHARGE}}",
-            'sacrifice': "Sacrifice a charge to prevent one of your TENDRILs from being removed.",
+            'sacrifice': "Sacrifice a charge to prevent one of your EYEs from being removed.",
         } ],
     ["Creep",
-        {'element': 'water', 'category': 'starter,create-tendril,move-tendril', 'id': 73, 'pattern': 'E1-2'},
+        {'element': 'water', 'category': 'starter,create-eye,move-eye', 'id': 73, 'pattern': 'E1-2'},
         {
-            'cast': "Place a TENDRIL. Move one of your TENDRILs 2 spaces.",
+            'cast': "Place a EYE. Move one of your EYEs 2 spaces.",
         } ],
 
     #     _____                _____     _ ___ 
@@ -993,8 +993,8 @@ spell_card_data = [
     ["Forest Jump",
         {'element': 'air', 'category': 'terrain,move-mage', 'id': 93, 'pattern': 'E2-13'},
         {
-            'cast': "If in a Forest location, swap positions with one of your TENDRILs that is in a Forest location no more than 5 spaces away. You may immediately repeat this spell.",
-            'notes': "You may only use each TENDRIL once when you cast this spell.",
+            'cast': "If in a Forest location, swap positions with one of your EYEs that is in a Forest location no more than 5 spaces away. You may immediately repeat this spell.",
+            'notes': "You may only use each EYE once when you cast this spell.",
         } ],
     ["Blur",
         {'element': 'air', 'category': 'move-mage', 'id': 19, 'pattern': 'E2-42'},
@@ -1003,9 +1003,9 @@ spell_card_data = [
             'charged': "Once per turn (per charge), you may move into a neighboring location ignoring terrain cost.",
         } ],
     ["Quick Drop",
-        {'element': 'air', 'category': 'move-mage,create-tendril', 'id': 66, 'pattern': 'E2-10'},
+        {'element': 'air', 'category': 'move-mage,create-eye', 'id': 66, 'pattern': 'E2-10'},
         {
-            'cast': "Move 5mp. Place a TENDRIL in your final location.",
+            'cast': "Move 5mp. Place a EYE in your final location.",
         } ],
 
     #     _____ _   _           _      _____ _   _              _____             
@@ -1022,13 +1022,13 @@ spell_card_data = [
     ["Teleport Random",
         {'element': 'fire', 'category': 'move-other-mage', 'id': 95, 'pattern': 'E2-8'},
         {
-            'cast': "Move all mages at one of your TENDRILs to a random star location. Consume that TENDRIL.",
+            'cast': "Move all mages at one of your EYEs to a random star location. Consume that EYE.",
         } ],
     ["Barrier",
         {'element': 'earth', 'category': 'move-other-mage', 'id': 87, 'pattern': 'E2-10'},
         {
             'cast': "{{ADD_CHARGE}}",
-            'charged': "All locations adjacent to your TENDRILs are obstacles that other mages may not move into.",
+            'charged': "All locations adjacent to your EYEs are obstacles that other mages may not move into.",
         } ],
 
     #     ____      ___           _    _____                _____     _ ___ 
@@ -1043,120 +1043,124 @@ spell_card_data = [
             'charged': "You may not be involuntarily moved by other mages.",
         } ],
 
-    #     _____             _          _____           _     _ _ 
-    #    |     |___ ___ ___| |_ ___   |_   _|___ ___ _| |___|_| |
-    #    |   --|  _| -_| .'|  _| -_|    | | | -_|   | . |  _| | |
-    #    |_____|_| |___|__,|_| |___|    |_| |___|_|_|___|_| |_|_|
+    #     _____             _          _____         
+    #    |     |___ ___ ___| |_ ___   |   __|_ _ ___ 
+    #    |   --|  _| -_| .'|  _| -_|  |   __| | | -_|
+    #    |_____|_| |___|__,|_| |___|  |_____|_  |___|
+    #                                       |___|    
 
     ["Split",
-        {'element': 'water', 'category': 'create-tendril', 'id': 8, 'pattern': 'E2-27'},
+        {'element': 'water', 'category': 'create-eye', 'id': 8, 'pattern': 'E2-27'},
         {
-            'cast': "Place a new TENDRIL in a location where you already have a TENDRIL.",
+            'cast': "Place a new EYE in a location where you already have a EYE.",
         } ],
-    ["Mountain Tendril",
-        {'element': 'earth', 'category': 'terrain,create-tendril', 'id': 12, 'pattern': 'E2-11'},
+    ["Mountain Eye",
+        {'element': 'earth', 'category': 'terrain,create-eye', 'id': 12, 'pattern': 'E2-11'},
         {
             'cast': "{{ADD_CHARGE}}",
-            'charged': "If in or next to a Mountain location, add a TENDRIL adjacent to any Mountain location connected to that Mountain location.",
+            'charged': "If in or next to a Mountain location, add a EYE adjacent to any Mountain location connected to that Mountain location.",
         } ],
     ["Snapback",
-        {'element': 'water', 'category': 'create-tendril', 'id': 79, 'pattern': 'E2-25'},
+        {'element': 'water', 'category': 'create-eye', 'id': 79, 'pattern': 'E2-25'},
         {
             'cast': "{{ADD_CHARGE}}",
-            'sacrifice': "If at same location as another mage's TENDRIL, you may sacrifice a charge to place a TENDRIL at that mage's location.",
+            'sacrifice': "If at same location as another mage's EYE, you may sacrifice a charge to place a EYE at that mage's location.",
         } ],
 
-    #     _____                _____           _     _ _ 
-    #    |     |___ _ _ ___   |_   _|___ ___ _| |___|_| |
-    #    | | | | . | | | -_|    | | | -_|   | . |  _| | |
-    #    |_|_|_|___|\_/|___|    |_| |___|_|_|___|_| |_|_|
-
+    #     _____                _____         
+    #    |     |___ _ _ ___   |   __|_ _ ___ 
+    #    | | | | . | | | -_|  |   __| | | -_|
+    #    |_|_|_|___|\_/|___|  |_____|_  |___|
+    #                               |___|
+    
     ["Run and Toss",
-        {'element': 'air', 'category': 'move-mage,create-tendril,move-tendril', 'id': 67, 'pattern': 'E2-46'},
+        {'element': 'air', 'category': 'move-mage,create-eye,move-eye', 'id': 67, 'pattern': 'E2-46'},
         {
-            'cast': "Move 1 space, place a TENDRIL, then move that TENDRIL 2 spaces.",
+            'cast': "Move 1 space, place a EYE, then move that EYE 2 spaces.",
         } ],
     ["Spread",
-        {'element': 'water', 'category': 'create-tendril,move-tendril', 'id': 75, 'pattern': 'E2-20'},
+        {'element': 'water', 'category': 'create-eye,move-eye', 'id': 75, 'pattern': 'E2-20'},
         {
-            'cast': "Place a TENDRIL. Move all of your TENDRILs 1 space.",
+            'cast': "Place a EYE. Move all of your EYEs 1 space.",
         } ],
     ["Burst",
-        {'element': 'water', 'category': 'create-tendril,move-tendril', 'id': 74, 'pattern': 'E2-31'},
+        {'element': 'water', 'category': 'create-eye,move-eye', 'id': 74, 'pattern': 'E2-31'},
         {
-            'cast': "Place 2 TENDRILs. Move 3 of your TENDRILs 2 spaces each.",
+            'cast': "Place 2 EYEs. Move 3 of your EYEs 2 spaces each.",
         } ],
     ["Traceback",
-        {'element': 'water', 'category': 'move-tendril,create-tendril', 'id': 69, 'pattern': 'E2-41'},
+        {'element': 'water', 'category': 'move-eye,create-eye', 'id': 69, 'pattern': 'E2-41'},
         {
-            'cast': "Move a TENDRIL 2. If you have a TENDRIL in the same location as a TENDRIL owned by another mage, move your TENDRIL to that mage's location.",
+            'cast': "Move a EYE 2. If you have a EYE in the same location as a EYE owned by another mage, move your EYE to that mage's location.",
         } ],
 
-    #     _____ _   _           _      _____           _     _ _ 
-    #    |  _  | |_| |_ ___ ___| |_   |_   _|___ ___ _| |___|_| |
-    #    |     |  _|  _| .'|  _| '_|    | | | -_|   | . |  _| | |
-    #    |__|__|_| |_| |__,|___|_,_|    |_| |___|_|_|___|_| |_|_|
+    #     _____ _   _           _      _____         
+    #    |  _  | |_| |_ ___ ___| |_   |   __|_ _ ___ 
+    #    |     |  _|  _| .'|  _| '_|  |   __| | | -_|
+    #    |__|__|_| |_| |__,|___|_,_|  |_____|_  |___|
+    #                                       |___|    
 
-    ["Remove Tendril",
-        {'element': 'fire', 'category': 'attack-tendril', 'id': 72, 'pattern': 'E2-19'},
+    ["Remove Eye",
+        {'element': 'fire', 'category': 'attack-eye', 'id': 72, 'pattern': 'E2-19'},
         {
-            'cast': "If in a location with a TENDRIL controlled by another mage, you may remove 2 of their TENDRILs.",
+            'cast': "If in a location with a EYE controlled by another mage, you may remove 2 of their EYEs.",
         } ],
     ["Prune",
-        {'element': 'fire', 'category': 'attack-tendril', 'id': 33, 'pattern': 'E2-23'},
+        {'element': 'fire', 'category': 'attack-eye', 'id': 33, 'pattern': 'E2-23'},
         {
-            'cast': "Remove all opponent TENDRILs from a location where you control a TENDRIL. Consume this TENDRIL.",
+            'cast': "Remove all opponent EYEs from a location where you control a EYE. Consume this EYE.",
         } ],
     ["Prune Neighbor",
-        {'element': 'fire', 'category': 'attack-tendril', 'id': 42, 'pattern': 'E2-31'},
+        {'element': 'fire', 'category': 'attack-eye', 'id': 42, 'pattern': 'E2-31'},
         {
-            'cast': "Remove all TENDRILs from a location adjacent to where you control a TENDRIL. Consume this TNDRIL.",
+            'cast': "Remove all EYEs from a location adjacent to where you control a EYE. Consume this EYE.",
         } ],
     ["Erase",
-        {'element': 'fire', 'category': 'move-tendril,attack-tendril', 'id': 65, 'pattern': 'E2-28'},
+        {'element': 'fire', 'category': 'move-eye,attack-eye', 'id': 65, 'pattern': 'E2-28'},
         {
-            'cast': "Move one of your TENDRILs 3 spaces, removing one opponent TENDRIL from each location it moves into this turn. Consume this TENDRIL.",
+            'cast': "Move one of your EYEs 3 spaces, removing one opponent EYE from each location it moves into this turn. Consume this EYE.",
         } ],
     ["Fire Burst",
-        {'element': 'fire', 'category': 'attack-tendril', 'id': 23, 'pattern': 'E2-30'},
+        {'element': 'fire', 'category': 'attack-eye', 'id': 23, 'pattern': 'E2-30'},
         {
-            'cast': "Remove all TENDRILs in all locations adjacent to one of your TENDRILs. Consume that TENDRIL.",
+            'cast': "Remove all EYEs in all locations adjacent to one of your EYEs. Consume that EYE.",
         } ],
     ["Nudge",
-        {'element': 'earth', 'category': 'move-other-tendril', 'id': 85, 'pattern': 'E2-8'},
+        {'element': 'earth', 'category': 'move-other-eye', 'id': 85, 'pattern': 'E2-8'},
         {
             'cast': "{{ADD_CHARGE}}",
-            'charged': "At the end of your turn, if another mage's TENDRIL is in the same location or adjacent to one of your TENDRILs, you may move their TENDRIL 1 space. Choose one for each charge on this spell.",
-            'sacrifice': "Sacrifice a charge to move the tendril(s) 4 spaces."
+            'charged': "At the end of your turn, if another mage's EYE is in the same location or adjacent to one of your EYEs, you may move their EYE 1 space. Choose one for each charge on this spell.",
+            'sacrifice': "Sacrifice a charge to move the eye(s) 4 spaces."
         } ],
     ["Sneak Attack",
-        {'element': 'fire', 'category': 'attack-tendril,move-mage', 'id': 64, 'pattern': 'E2-55'},
+        {'element': 'fire', 'category': 'attack-eye,move-mage', 'id': 64, 'pattern': 'E2-55'},
         {
-            'cast': "Remove TENDRILs from a adjacent location and then move into that location.",
+            'cast': "Remove EYEs from a adjacent location and then move into that location.",
         } ],
 
-    #     ____      ___           _    _____           _     _ _ 
-    #    |    \ ___|  _|___ ___ _| |  |_   _|___ ___ _| |___|_| |
-    #    |  |  | -_|  _| -_|   | . |    | | | -_|   | . |  _| | |
-    #    |____/|___|_| |___|_|_|___|    |_| |___|_|_|___|_| |_|_|
+    #     ____      ___           _    _____         
+    #    |    \ ___|  _|___ ___ _| |  |   __|_ _ ___ 
+    #    |  |  | -_|  _| -_|   | . |  |   __| | | -_|
+    #    |____/|___|_| |___|_|_|___|  |_____|_  |___|
+    #                                       |___|
 
-    ["Tendril Shield",
-        {'element': 'earth', 'category': 'defend-tendril', 'id': 83, 'pattern': 'E1-6'},
+    ["Eye Shield",
+        {'element': 'earth', 'category': 'defend-eye', 'id': 83, 'pattern': 'E1-6'},
         {
             'cast': "{{ADD_CHARGE}}",
-            'sacrifice': "You may sacrifice this CHARGE to prevent one of your TENDRILs from being removed or consumed.",
+            'sacrifice': "You may sacrifice this CHARGE to prevent one of your EYEs from being removed or consumed.",
         } ],
     ["Harden Shell",
-        {'element': 'earth', 'category': 'defend-tendril', 'id': 86, 'pattern': 'E2-9'},
+        {'element': 'earth', 'category': 'defend-eye', 'id': 86, 'pattern': 'E2-9'},
         {
             'cast': "{{ADD_CHARGE}}", 
-            'charged': "If the number of TENDRILs you have is less than or equal to the number of CHARGEs on this spell, then they are protected from being removed by another mage (but they can still be consumed).",
+            'charged': "If the number of EYEs you have is less than or equal to the number of CHARGEs on this spell, then they are protected from being removed by another mage (but they can still be consumed).",
         } ],
     ["Whiplash",
-        {'element': 'water', 'category': 'defend-tendril', 'id': 76, 'pattern': 'E2-21'},
+        {'element': 'water', 'category': 'defend-eye', 'id': 76, 'pattern': 'E2-21'},
         {
             'cast': "{{ADD_CHARGE}}",
-            'sacrifice': "You may sacrifice one of your TENDRILs to prevent another TENDRIL from being removed/consumed.",
+            'sacrifice': "You may sacrifice one of your EYEs to prevent another EYE from being removed/consumed.",
         } ],
 
     #     _____ _   _           _        _____ _____ 
@@ -1178,7 +1182,7 @@ spell_card_data = [
     ["Burn",
         {'element': 'fire', 'category': 'attack-tapestry', 'id': 91, 'pattern': 'E2-20'},
         {
-            'cast': "Disrupt the tapestry of a mage at one of your TENDRILs by placing one of your mana in their tapestry to cover an element. Consume the TENDRIL used to target the mage.",
+            'cast': "Disrupt the tapestry of a mage at one of your EYEs by placing one of your mana in their tapestry to cover an element. Consume the EYE used to target the mage.",
         } ],
 
     #     _____ _                   
@@ -1190,12 +1194,12 @@ spell_card_data = [
     ["Drain",
         {'element': 'air', 'category': 'attack-charge', 'id': 71, 'pattern': 'E2-12'},
         {
-            'cast': "A mage at one of your TENDRILs must remove 2 of their CHARGEs. Consume that TENDRIL.",
+            'cast': "A mage at one of your EYEs must remove 2 of their CHARGEs. Consume that EYE.",
         } ],
     ["Copy Charge",
         {'element': 'earth', 'category': 'attack-charge', 'id': 94, 'pattern': 'E2-13'},
         {
-            'cast': "If you have a TENDRIL on or adjacent to another mage, you may add a charge to one of their spells. You gain all the effects of that spell.",
+            'cast': "If you have a EYE on or adjacent to another mage, you may add a charge to one of their spells. You gain all the effects of that spell.",
             'notes': "Even if mage removes their charge, yours stays active.",
         } ],
     
@@ -1239,7 +1243,7 @@ spell_card_data = [
         {
             'cast': "{{ADD_CHARGE}}",
             'charged': "Rivers cost 0mp to cross. Water locations cost 1mp to enter.",
-            'sacrifice': "If you are adjacent to River/Water, sacrifice charge to place a TENDRIL up to 3 spaces away along water.",
+            'sacrifice': "If you are adjacent to River/Water, sacrifice charge to place a EYE up to 3 spaces away along water.",
         } ],
 
 ]
@@ -1258,7 +1262,7 @@ spell_card_data = [
 #    |   __| |  _| -_|
 #    |__|  |_|_| |___|
 #
-# Primary: Attack HP, Attack Tendril
+# Primary: Attack HP, Attack Eye
 # Opposite: Water
 
 #     _____         _   _   
@@ -1266,7 +1270,7 @@ spell_card_data = [
 #    |   __| .'|  _|  _|   |
 #    |_____|__,|_| |_| |_|_|
 #
-# Primary: Defend Tendril, Defend HP, Defend Move Self, Charge
+# Primary: Defend Eye, Defend HP, Defend Move Self, Charge
 # Opposite: Air
 
 #     _ _ _     _           
@@ -1274,7 +1278,7 @@ spell_card_data = [
 #    | | | | .'|  _| -_|  _|
 #    |_____|__,|_| |___|_|  
 #
-# Primary: Create Tendril, Move Tendril, Heal HP, Thread
+# Primary: Create Eye, Move Eye, Heal HP, Thread
 # Opposite: Fire
     
 
@@ -1290,7 +1294,7 @@ _unused_ = [
     ["Teleport",
         {'element': 'air', 'category': 'move-mage', 'id': 78, 'pattern': 'E2-31'},
         {
-            'cast': "Teleport to the location of one of your TENDRILs. Consume that TENDRIL.",
+            'cast': "Teleport to the location of one of your EYEs. Consume that EYE.",
         } ],
     ["Levitate",
         {'element': 'air', 'category': 'move', 'id': 9},
@@ -1300,109 +1304,109 @@ _unused_ = [
         ["Ignore terrain cost and effects when moving into 4 locations this turn."] ],
     ["Mountain Ranger",
         {'element': 'earth', 'category': 'terrain,move', 'id': 44},
-        ["If in a Mountain location, add a TENDRIL to a location in any Mountain range."] ],
+        ["If in a Mountain location, add a EYE to a location in any Mountain range."] ],
     ["River Run",
         {'element': 'water', 'category': 'move,terrain', 'id': 55},
         ["If next to a river or water location, pay terrain cost to move into any other space adjacent to that river or water location.", "-", "Restrictions:", "* Rivers: Without passing a bridge", "* Water: Crossing 4 water locations max."] ],
     ["Mountain Reach",
         {'element': 'earth', 'category': 'terrain,move', 'id': 45},
-        ["If in or adjacent to a Mountain location, add a TENDRIL to any location in a 1- or 2-size Mountain range."] ],
+        ["If in or adjacent to a Mountain location, add a EYE to any location in a 1- or 2-size Mountain range."] ],
 
     # Attack Other Move
 
     # Defend Move Self
 
-    # Create Tendril
+    # Create Eye
 
-    ["Reverse Tendril",
-        {'element': 'water', 'category': 'tendril', 'id': 52},
-        ["When in the same location as an opponent's TENDRIL, add a TENDRIL at the opponent's location."] ],
+    ["Reverse Eye",
+        {'element': 'water', 'category': 'eye', 'id': 52},
+        ["When in the same location as an opponent's EYE, add a EYE at the opponent's location."] ],
     ["Forest Bind",
-        {'element': 'air', 'category': 'tendril,terrain', 'id': 14},
-        ["When in a Forest location, add a TENDRIL to any location in Forest that is smaller in size than the one you occupy."] ],
+        {'element': 'air', 'category': 'eye,terrain', 'id': 14},
+        ["When in a Forest location, add a EYE to any location in Forest that is smaller in size than the one you occupy."] ],
     ["Water Hop",
-        {'element': 'water', 'category': 'tendril,terrain', 'id': 61},
-        ["When next to a river or Water location, add a TENDRIL to any location adjacent to that water.", "-", "Restrictions:", "* Rivers: Without passing a bridge", "* Water: Crossing 3 water locations max."] ],
+        {'element': 'water', 'category': 'eye,terrain', 'id': 61},
+        ["When next to a river or Water location, add a EYE to any location adjacent to that water.", "-", "Restrictions:", "* Rivers: Without passing a bridge", "* Water: Crossing 3 water locations max."] ],
     ["Water Jump",
-        {'element': 'water', 'category': 'tendril,terrain', 'id': 62},
-        ["When next to a river or Water location, add a TENDRIL to any location adjacent to that water.", "-", "Restrictions:", "* Rivers: Passing at most 1 bridge", "* Water: Crossing 5 water locations max."] ],
+        {'element': 'water', 'category': 'eye,terrain', 'id': 62},
+        ["When next to a river or Water location, add a EYE to any location adjacent to that water.", "-", "Restrictions:", "* Rivers: Passing at most 1 bridge", "* Water: Crossing 5 water locations max."] ],
     ["Duplicate",
-        {'element': 'water', 'category': 'tendril', 'id': 53},
-        ["When in the same location as an opponent's TENDRIL, add a TENDRIL at any location where that opponent controls a TENDRIL."] ],
+        {'element': 'water', 'category': 'eye', 'id': 53},
+        ["When in the same location as an opponent's EYE, add a EYE at any location where that opponent controls a EYE."] ],
 
-    # Move Tendril
+    # Move Eye
 
     ["Diasporate",
-        {'element': 'water', 'category': 'create-tendril,move-tendril', 'id': 77, 'pattern': 'EE2-2'},
+        {'element': 'water', 'category': 'create-eye,move-eye', 'id': 77, 'pattern': 'EE2-2'},
         {
-            'cast': "Place 3 TENDRILs. Move 3 of your TENDRILs 2 spaces each.",
+            'cast': "Place 3 EYEs. Move 3 of your EYEs 2 spaces each.",
         } ],
     ["Plains Link",
-        {'element': 'air', 'category': 'tendril,terrain', 'id': 15},
-        ["Move a TENDRIL you control that is in a Plains location up to 7 spaces through connecting Plains locations."] ],
+        {'element': 'air', 'category': 'eye,terrain', 'id': 15},
+        ["Move a EYE you control that is in a Plains location up to 7 spaces through connecting Plains locations."] ],
     ["Water Skip",
-        {'element': 'water', 'category': 'tendril,terrain', 'id': 60},
-        ["Move a TENDRIL you control that is adjacent to a river or water location into any other space adjacent to that river or water location.", "-", "Restrictions:", "* Rivers: Without passing a bridge", "* Water: Crossing 4 water locations max."] ],
+        {'element': 'water', 'category': 'eye,terrain', 'id': 60},
+        ["Move a EYE you control that is adjacent to a river or water location into any other space adjacent to that river or water location.", "-", "Restrictions:", "* Rivers: Without passing a bridge", "* Water: Crossing 4 water locations max."] ],
     ["Forest Link Minor",
-        {'element': 'air', 'category': 'tendril,terrain', 'id': 16},
-        ["Move a TENDRIL you control that is in a Forest location to another location in any Forest of size 1 or 2."] ],
+        {'element': 'air', 'category': 'eye,terrain', 'id': 16},
+        ["Move a EYE you control that is in a Forest location to another location in any Forest of size 1 or 2."] ],
     ["Forest Link",
-        {'element': 'air', 'category': 'tendril,terrain', 'id': 17},
-        ["Move a TENDRIL you control that is in a Forest location to another location in any Forest that is smaller then the Forest with the TENDRIL."] ],
+        {'element': 'air', 'category': 'eye,terrain', 'id': 17},
+        ["Move a EYE you control that is in a Forest location to another location in any Forest that is smaller then the Forest with the EYE."] ],
     ["Mountain Link",
-        {'element': 'air', 'category': 'tendril,terrain', 'id': 18},
-        ["Move a TENDRIL you control that is in a Mountain location to any other Mountain location."] ],
-    ["Exchange Tendril",
-        {'element': 'water', 'category': 'tendril', 'id': 51},
-        ["Exchange locations with a TENDRIL you control."] ],
+        {'element': 'air', 'category': 'eye,terrain', 'id': 18},
+        ["Move a EYE you control that is in a Mountain location to any other Mountain location."] ],
+    ["Exchange Eye",
+        {'element': 'water', 'category': 'eye', 'id': 51},
+        ["Exchange locations with a EYE you control."] ],
     ["Scatter",
-        {'element': 'fire', 'category': 'tendril', 'id': 30},
-        ["Move all TENDRILs you control 1 space."] ],
+        {'element': 'fire', 'category': 'eye', 'id': 30},
+        ["Move all EYEs you control 1 space."] ],
     ["Scatter Far",
-        {'element': 'fire', 'category': 'tendril', 'id': 32},
-        ["Move any 2 TENDRILs you control a total of 9 spaces."] ],
+        {'element': 'fire', 'category': 'eye', 'id': 32},
+        ["Move any 2 EYEs you control a total of 9 spaces."] ],
     ["Scatter Wide",
-        {'element': 'fire', 'category': 'tendril', 'id': 31},
-        ["Move TENDRILs you control a total of 5 spaces, split amongst any number of TENDRILs."] ],
+        {'element': 'fire', 'category': 'eye', 'id': 31},
+        ["Move EYEs you control a total of 5 spaces, split amongst any number of EYEs."] ],
 
-    # Attack Tendril
+    # Attack Eye
 
     ["Selective Prune",
-        {'element': 'earth', 'category': 'tendril,attack', 'id': 41},
-        ["Remove all TENDRILs (except the one used for this spell) from a location where you control a TENDRIL."] ],
+        {'element': 'earth', 'category': 'eye,attack', 'id': 41},
+        ["Remove all EYEs (except the one used for this spell) from a location where you control a EYE."] ],
     ["Whirlwind",
-        {'element': 'air', 'category': 'tendril', 'id': 13},
-        ["Place CHARGE on this spell.", "-", "While CHARGEd, all TENDRILs you control are obstacles that other mages may not move into or pass through."] ],
+        {'element': 'air', 'category': 'eye', 'id': 13},
+        ["Place CHARGE on this spell.", "-", "While CHARGEd, all EYEs you control are obstacles that other mages may not move into or pass through."] ],
     ["Delete All 2",
-        {'element': 'earth', 'category': 'tendril,attack', 'id': 43},
-        ["When in a location with a TENDRIL controlled by another mage, remove all of that mage's TENDRILs.", "-", "If multiple mages, choose one."] ],
+        {'element': 'earth', 'category': 'eye,attack', 'id': 43},
+        ["When in a location with a EYE controlled by another mage, remove all of that mage's EYEs.", "-", "If multiple mages, choose one."] ],
     ["Distraction",
-        {'element': 'fire', 'category': 'tendril', 'id': 34},
-        ["When in the same location as a TENDRIL controlled by another mage, remove any one of their TENDRILs."] ],
+        {'element': 'fire', 'category': 'eye', 'id': 34},
+        ["When in the same location as a EYE controlled by another mage, remove any one of their EYEs."] ],
     ["Delete All",
-        {'element': 'fire', 'category': 'attack-tendril', 'id': 43, 'pattern': 'E1-2'},
+        {'element': 'fire', 'category': 'attack-eye', 'id': 43, 'pattern': 'E1-2'},
         {
-            'cast': "Remove all opponent TENDRILs at one of your TENDRIL's location. Consume this TENDRIL.",
+            'cast': "Remove all opponent EYEs at one of your EYE's location. Consume this EYE.",
         } ],
 
-    # Defend Tendril
+    # Defend Eye
 
     # Attack HP
 
     ["Ricochet Blast",
         {'element': 'fire', 'category': 'attack-mage', 'id': 24, 'pattern': 'E1-5'},
         {
-            'cast': "Attack 1 at location adjacent to one of your TENDRILs. Consume that TENDRIL.",
+            'cast': "Attack 1 at location adjacent to one of your EYEs. Consume that EYE.",
         } ],
     ["Fire Ball",
         {'element': 'fire', 'category': 'attack-mage', 'id': 22, 'pattern': 'E2-26'},
         {
-            'cast': "Attack 2 at one of your TENDRILs. Consume that TENDRIL.",
+            'cast': "Attack 2 at one of your EYEs. Consume that EYE.",
         } ],
     ["Fire Reign",
         {'element': 'fire', 'category': 'attack-mage', 'id': 26, 'pattern': 'E2-27'},
         {
-            'cast': "Attack 1 at all of your TENDRILs. Consume all of your TENDRILs except one.",
+            'cast': "Attack 1 at all of your EYEs. Consume all of your EYEs except one.",
         } ],
     ["Hands of Flame",
         {'element': 'fire', 'category': 'move-mage,attack-mage', 'id': 63, 'pattern': 'EE2-6'},
@@ -1414,20 +1418,20 @@ _unused_ = [
         ["Place a CHARGE on this spell.", "-", "Spend this CHARGE to boost the attack power of any spell by 1."] ],
     ["Forest Fire",
         {'element': 'fire', 'category': 'attack,terrain', 'id': 29},
-        ["Attack for 2 all locations in a Forest with a TENDRIL you control."] ],
+        ["Attack for 2 all locations in a Forest with a EYE you control."] ],
     ["Boulder Tumble",
         {'element': 'fire', 'category': 'attack,terrain', 'id': 28},
-        ["Attack for 3 all neighboring locations to a TENDRIL you control that is in a Mountain location."] ],
+        ["Attack for 3 all neighboring locations to a EYE you control that is in a Mountain location."] ],
     ["Wall of Flame",
         {'element': 'fire', 'category': 'attack', 'id': 25},
-        ["Place CHARGE on this spell.", "-", "While CHARGEd, all groups of 3 adjacent TENDRILs you control are on fire and cause 1 damage.", "-", "CHARGE is lost immediately when you do not have 3 adjacent TENDRILs."] ],
+        ["Place CHARGE on this spell.", "-", "While CHARGEd, all groups of 3 adjacent EYEs you control are on fire and cause 1 damage.", "-", "CHARGE is lost immediately when you do not have 3 adjacent EYEs."] ],
     ["Shield Pierce",
         {'element': 'air', 'category': 'attack', 'id': 21},
-        ["Cause 3 points of damage to all shields at a TENDRIL you control."] ],
+        ["Cause 3 points of damage to all shields at a EYE you control."] ],
     ["Meteor Shower",
         {'element': 'earth', 'category': 'attack-charge', 'id': 84},
         {
-            'cast': "Remove all CHARGEs from all mages at one of your TENDRILs.",
+            'cast': "Remove all CHARGEs from all mages at one of your EYEs.",
         } ],
 
     # Defend HP
@@ -1444,27 +1448,27 @@ _unused_ = [
             'cast': "{{ADD_CHARGE}}",
             'charged': "Defend 2.",
         } ],
-    ["Tendril Coil",
+    ["Eye Coil",
         {'element': 'water', 'category': 'defend-mage', 'id': 81, 'pattern': 'E2-22'},
         {
             'cast': "{{ADD_CHARGE}}",
-            'charged': "If you are in the same location as one of your TENDRILs, that TENDRIL acts as a shield to Defend 2.",
+            'charged': "If you are in the same location as one of your EYEs, that EYE acts as a shield to Defend 2.",
         } ],
     ["Deflect",
-        {'element': 'water', 'category': 'defend-mage,attack-mage,attack-tendril', 'id': 80, 'pattern': 'E2-25'},
+        {'element': 'water', 'category': 'defend-mage,attack-mage,attack-eye', 'id': 80, 'pattern': 'E2-25'},
         {
             'cast': "{{ADD_CHARGE}}",
-            'sacrifice': "When attacked, you may remove this CHARGE to deflect the attack to an adjacent location. Attack 1 and remove all TENDRILs at that location.",
+            'sacrifice': "When attacked, you may remove this CHARGE to deflect the attack to an adjacent location. Attack 1 and remove all EYEs at that location.",
         } ],    
     ["Shield Boost",
         {'element': 'earth', 'category': 'defend', 'id': 37},
         ["Place a CHARGE on this spell.", "-", "Spend this CHARGE to boost the defense power of any spell by 1."] ],
     ["Reactive Shield",
         {'element': 'earth', 'category': 'defend', 'id': 38},
-        ["Place a CHARGE on this spell.", "-", "When in the same location as a TENDRIL controlled by another mage, this shield absorbs all damage from attacks.", "-", "Remove CHARGE when it takes 3 or more damage from a single attack."] ],
+        ["Place a CHARGE on this spell.", "-", "When in the same location as a EYE controlled by another mage, this shield absorbs all damage from attacks.", "-", "Remove CHARGE when it takes 3 or more damage from a single attack."] ],
     ["Resist Shield",
-        {'element': 'earth', 'category': 'defend,tendril', 'id': 40},
-        ["Place a CHARGE on this spell.", "-", "When CHARGEd, this shield absorbs all damage from attacks and prevents others from placing new TENDRILs on your location.", "-", "Remove CHARGE when it takes 1 or more damage from a single attack."] ],
+        {'element': 'earth', 'category': 'defend,eye', 'id': 40},
+        ["Place a CHARGE on this spell.", "-", "When CHARGEd, this shield absorbs all damage from attacks and prevents others from placing new EYEs on your location.", "-", "Remove CHARGE when it takes 1 or more damage from a single attack."] ],
     ["Reflection Shield",
         {'element': 'fire', 'category': 'defend,attack', 'id': 35},
         ["Place 1 charge on this spell.", "-", "Spend a charge at any time to protect against 1 or more points of damage and reflect 1 point of damage back at the attacker."] ],
@@ -1476,10 +1480,10 @@ _unused_ = [
         ["Remove a THREAD from your TAPESTRY and place it back in your MANA POOL."] ],
     ["Stone Cage",
         {'element': 'earth', 'category': 'attack', 'id': 47},
-        ["PLace a CHARGE on this spell.", "-", "While CHARGEd, there is a barrier at a TENDRIL you control that traps the occupants of that location and prevents them from moving out.", "-", "CHARGE is lost if the TENDRIL moves or if the barrier takes 1 damage."] ],
+        ["PLace a CHARGE on this spell.", "-", "While CHARGEd, there is a barrier at a EYE you control that traps the occupants of that location and prevents them from moving out.", "-", "CHARGE is lost if the EYE moves or if the barrier takes 1 damage."] ],
     ["Trap",
         {'element': 'earth', 'category': 'attack', 'id': 48},
-        ["Place 1 charge on this spell.", "-", "When an opponent's TENDRIL moves into your location, that opponent takes 1 damage and this CHARGE is removed."] ],
+        ["Place 1 charge on this spell.", "-", "When an opponent's EYE moves into your location, that opponent takes 1 damage and this CHARGE is removed."] ],
     ["Recovery Shield",
         {'element': 'water', 'category': 'defend,tapestry', 'id': 57},
         ["Place a CHARGE on this spell.", "-", "When CHARGEd, this shield absorbs all damage from attacks.", "-", "Remove CHARGE and 2 THREADs from your TAPESTRY when it takes 1 or more damage from a single attack."] ],
@@ -1500,25 +1504,25 @@ _unused_ = [
 
     ["Flood",
         {'element': 'water', 'category': 'terrain', 'id': 56},
-        ["Place CHARGE on this spell.", "-", "While CHARGEd, all groups of 2 or more adjacent TENDRILs you control change all Plains locations to Water up to 3 spaces away from the TENDRILs.", "-", "CHARGE is lost immediately when you do not have 2 adjacent TENDRILs."] ],
+        ["Place CHARGE on this spell.", "-", "While CHARGEd, all groups of 2 or more adjacent EYEs you control change all Plains locations to Water up to 3 spaces away from the EYEs.", "-", "CHARGE is lost immediately when you do not have 2 adjacent EYEs."] ],
     ["Growth",
         {'element': 'earth', 'category': 'terrain', 'id': 46},
-        ["Place CHARGE on this spell.", "-", "While CHARGEd, all groups of 2 or more adjacent TENDRILs you control change all neighboring locations to Forest.", "-", "CHARGE is lost immediately when you do not have 2 adjacent TENDRILs."] ],
+        ["Place CHARGE on this spell.", "-", "While CHARGEd, all groups of 2 or more adjacent EYEs you control change all neighboring locations to Forest.", "-", "CHARGE is lost immediately when you do not have 2 adjacent EYEs."] ],
 
     # Astral
 
     ["Return",
         {'element': 'none', 'category': 'astral', 'id': 2},
-        ["When in the Astral Plane, return to the Physical Realm at a TENDRIL you control or at your home location."] ],
+        ["When in the Astral Plane, return to the Physical Realm at a EYE you control or at your home location."] ],
     ["Teleport Away",
         {'element': 'water', 'category': 'astral', 'id': 6},
         ["Move yourself to the Astral Plane."] ],
     ["Teleport Other",
         {'element': 'water', 'category': 'astral', 'id': 49},
-        ["Move a mage in the same location as a TENDRIL you control to the Astral Plane."] ],
+        ["Move a mage in the same location as a EYE you control to the Astral Plane."] ],
     ["Return Other",
         {'element': 'water', 'category': 'astral', 'id': 50},
-        ["Move a mage in the Astral Plane to any TENDRIL you control."] ],
+        ["Move a mage in the Astral Plane to any EYE you control."] ],
 
 
 ]
