@@ -1,20 +1,25 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 import getopt
 import os.path
+import platform
 import re
 import subprocess
 import sys
 
 from data_tapestry_cards import tapestry_card_data
 
+inkscape_app = 'inkscape'
+if platform.system() != 'Linux':
+        inkscape_app = "/Applications/Inkscape.app/Contents/Resources/bin/inkscape"
+
 def error(msg):
-	print 'Error: %s' % (msg)
+	print('Error: %s' % (msg))
 	sys.exit(1)
 
 class Parser():
-	"""Build Tapestry Card for BlockChain"""
+	"""Build Tapestry Card for Woven"""
 
 	def __init__(self, template, basename, pattern, elements, gen_png):
 		self.svg_template = template
@@ -163,12 +168,13 @@ class Parser():
 			png_path = os.path.join(png_dir, png_name)
 
 			subprocess.call([
-				"/Applications/Inkscape.app/Contents/Resources/bin/inkscape",
+				inkscape_app,
 				"--file=%s" % os.path.abspath(svg_relpath),
 				"--export-png=%s" % os.path.abspath(png_path),
 				"--export-dpi=300",
 				"--export-text-to-path",
-				"--export-area-page",
+				#"--export-area-page",
+                                "--export-id=%s" % 'cut-line',
 				"--without-gui"
 				])
 
@@ -177,9 +183,9 @@ def process_card(basename, pattern, elements, gen_png):
 	parser.process()
 
 def usage():
-	print "Usage: %s <options>" % sys.argv[0]
-	print "where <options> are:"
-	print "  --png   Generate PNG output files"
+	print("Usage: %s <options>" % sys.argv[0])
+	print("where <options> are:")
+	print("  --png   Generate PNG output files")
 	sys.exit(2)
 
 def main():
@@ -197,7 +203,7 @@ def main():
 
 	id = 1
 	for card in tapestry_card_data:
-		print card['name']
+		print(card['name'])
 		p = card['pattern']
 		# Patterns are interleaved to make the raw data easier to read.
 		# Patterns are also rotated relative to the SVG output:
@@ -208,9 +214,9 @@ def main():
 		back_pattern = [[p[1][4], p[3][4]], [p[1][2], p[3][2]], [p[1][0], p[3][0]]]
 		for elements in card['elements']:
 			name = '%02d-%s-%s' % (id, card['name'], elements)
-			print 'Processing card', id, 'front:', front_pattern, elements
+			print('Processing card', id, 'front:', front_pattern, elements)
 			process_card('t%s-front' % name, front_pattern, elements, gen_png)
-			print 'Processing card', id, 'back:', back_pattern, elements
+			print('Processing card', id, 'back:', back_pattern, elements)
 			process_card('t%s-back' % name, back_pattern, elements, gen_png)
 			id += 1
 
