@@ -2,7 +2,7 @@
 
 # Text -> ASCII Art: http://patorjk.com/software/taag/#p=display&f=Rectangles&t=Monster
 
-spell_card_revision = 6
+spell_card_revision = 7
 
 spell_card_categories = [
     'blank',
@@ -926,6 +926,12 @@ spell_card_patterns = {
 # Unused: 70
 
 spell_card_data = [
+
+    ["???",
+        {'element': 'none', 'category': 'starter', 'id': 0, 'pattern': 'blank'},
+        {
+            'cast': "???",
+        } ],
 
     #     _____         _           _ 
     #    |   | |___ _ _| |_ ___ ___| |
