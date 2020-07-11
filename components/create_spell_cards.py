@@ -61,12 +61,12 @@ class SpellCardGen(CardGen):
 		for r in ranges:
 			base = r[0]
 			max = r[1]
-			for i in xrange(1, max+1):
+			for i in range(1, max+1):
 				self.check_pattern('%s-%d' % (base, i))
 				
 	def check_pattern(self, id):
 		if not id in self.card_patterns:
-			print id, 'not found'
+			print(id, 'not found')
 		pattern = self.card_patterns[id]
 		
 		first_row = True
@@ -83,7 +83,7 @@ class SpellCardGen(CardGen):
 	def process_card_data(self, card_data):
 		self.pre_card()
 		if self.verbose:
-			print self.curr_file, self.curr_card, card_data[0]
+			print(self.curr_file, self.curr_card, card_data[0])
 		self.draw_card(self.curr_card, card_data)
 		self.post_card()
 
@@ -91,7 +91,7 @@ class SpellCardGen(CardGen):
 	def process_blank_card(self):
 		self.pre_card()
 		if self.verbose:
-			print self.curr_file, self.curr_card
+			print(self.curr_file, self.curr_card)
 		attrs = {
 			'element': 'none',
 			'category': 'blank',
@@ -217,8 +217,8 @@ class SpellCardGen(CardGen):
 		if self.card_size == 'poker':
 			self.start_group(transform='translate(%d,%d)' % (11.25,0))
 		self.indent()
-		for iy in xrange(0, max_height):
-			for ix in xrange(0, max_width):
+		for iy in range(0, max_height):
+			for ix in range(0, max_width):
 				if ix >= x_begin and ix < x_end and iy >= y_begin and iy < y_end:
 					x = ix * offset
 					y = iy * offset
@@ -386,13 +386,13 @@ class SpellCardGen(CardGen):
 		summary.write('Generated on %04d/%02d/%02d @ %02d:%02d\n\n' % (now.year, now.month, now.day, now.hour, now.minute))
 
 		summary.write('## By Category\n\n')
-		print 'Categories'
+		print('Categories')
 
 		for c in self.valid_categories:
 			if not c in self.categories:
 				continue
 			summary.write('%s (%d)\n\n' % (self.category_list(c), len(self.categories[c])))
-			print '  %s (%d)' % (self.category_list(c), len(self.categories[c]))
+			print('  %s (%d)' % (self.category_list(c), len(self.categories[c])))
 
 			names = [self.id2name[id] for id in self.categories[c]]
 			for name in sorted(names):
@@ -402,7 +402,7 @@ class SpellCardGen(CardGen):
 			summary.write('\n')
 			
 		summary.write('## By Element\n\n')
-		print 'Element'
+		print('Element')
 
 		for e in self.valid_elements:
 			eName = self.element_name(e)
@@ -410,7 +410,7 @@ class SpellCardGen(CardGen):
 				continue
 				
 			summary.write('%s (%d)\n\n' % (eName, len(self.elements[e])))
-			print '  %s (%d)' % (eName, len(self.elements[e]))
+			print('  %s (%d)' % (eName, len(self.elements[e])))
 
 			names = [self.id2name[id] for id in self.elements[e]]
 			for name in sorted(names):
@@ -442,19 +442,19 @@ class SpellCardGen(CardGen):
 				summary.write('\n')
 
 		summary.close()
-		print 'Total spell count = %d' % count
+		print('Total spell count = %d' % count)
 		if self.blank_count != 0:
-			print '*** BLANK SPELLS *** = %d' % self.blank_count
+			print('*** BLANK SPELLS *** = %d' % self.blank_count)
 		
 	def processing_summary(self):
 		if self.verbose:
-			print 'Max ID:', self.max_id
+			print('Max ID:', self.max_id)
 	
 def usage():
-	print "Usage: %s <options>" % sys.argv[0]
-	print "where <options> are:"
+	print("Usage: %s <options>" % sys.argv[0])
+	print("where <options> are:")
 	CardGen_OptionDesc()
-	print "  --summary   Generate spell summary document"
+	print("  --summary   Generate spell summary document")
 	sys.exit(2)
 
 def main():
@@ -465,9 +465,10 @@ def main():
 	except getopt.GetoptError:
 		usage()
 
-	#print CardGen_LongFlags + ['summary']
+	#print(CardGen_LongFlags + ['summary'])
 	options = CardGen_DefaultOptions
 	options['summary'] = False
+	options['per-page'] = 1
 	for opt,arg in opts:
 		if opt in ('--summary'):
 			options['summary'] = True

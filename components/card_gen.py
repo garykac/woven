@@ -4,25 +4,33 @@
 import datetime
 import getopt
 import os
+import platform
 import shutil
 import subprocess
 import sys
 
+# Inkscape 0.91 and earlier use 90 ppi. 0.92 and later use the CSS defined 96 ppi.
+PIXELS_PER_INCH = 96.0
+
+INKSCAPE_APP = 'inkscape'
+if platform.system() != 'Linux':
+	INKSCAPE_APP = "/Applications/Inkscape.app/Contents/Resources/bin/inkscape"
+
 def error(msg):
-	print '\nERROR: %s\n' % msg
+	print('\nERROR: %s\n' % msg)
 	sys.exit(0)
 
-# Convert points (=1/72 inch) into 90dpi pixels
+# Convert points (=1/72 inch) into pixels
 def pt2px(p):
-	return (p * 90.0) / 72.0
+	return (p * PIXELS_PER_INCH) / 72.0
 
-# Convert 90dpi pixels into points (=1/72 inch)
+# Convert pixels into points (=1/72 inch)
 def px2pt(px):
-	return (px * 72.0) / 90.0
+	return (px * 72.0) / PIXELS_PER_INCH
 
-# Convert inches to 90dpi pixels
+# Convert inches to pixels
 def in2px(i):
-	return i * 90.0
+	return i * PIXELS_PER_INCH
 
 CardGen_ShortFlags = 'v'
 CardGen_LongFlags = ['a4', 'clean', 'combine', 'no-border', 'pdf', 'per-page=', 'png', 'verbose']
@@ -56,14 +64,14 @@ def CardGen_ProcessOption(options, opt, arg):
 		options['verbose'] = True
 
 def CardGen_OptionDesc():
-	print "  --a4        A4 output (default = letter)"
-	print "  --clean     Remove old files"
-	print "  --combine   Combine into single PDF file"
-	print "  --pdf       Generate PDF output files"
-	print "  --png       Generate PNG output files"
-	print "  --per-page  Num cards per page: 8 or 9 (default)"
-	print "  --no-border Don't draw border around cards"
-	print "  --verbose   Verbose output"
+	print("  --a4        A4 output (default = letter)")
+	print("  --clean     Remove old files")
+	print("  --combine   Combine into single PDF file")
+	print("  --pdf       Generate PDF output files")
+	print("  --png       Generate PNG output files")
+	print("  --per-page  Num cards per page: 8 or 9 (default)")
+	print("  --no-border Don't draw border around cards")
+	print("  --verbose   Verbose output")
 
 class CardGen(object):
 	def __init__(self, options):
@@ -137,6 +145,11 @@ class CardGen(object):
 			if self.card_size != 'bridge':
 				error('21-up must be bridge')
 
+		if self.cards_per_page == 1:
+			self.paper_type = self.card_size
+			self.paper_width = self.card_width
+			self.paper_height = self.card_height
+
 		# Subclass should override
 		self.card_patterns = {}
 		self.card_data = []
@@ -182,7 +195,7 @@ class CardGen(object):
 				os.makedirs(self.pdf_out_dir);
 			self.pdf_files.append(os.path.abspath(os.path.join(self.pdf_out_dir, '%s.pdf' % name)))
 			subprocess.call([
-				"/Applications/Inkscape.app/Contents/Resources/bin/inkscape",
+				INKSCAPE_APP,
 				"--file=%s" % os.path.abspath(os.path.join(self.svg_out_dir, '%s.svg' % name)),
 				"--export-pdf=%s" % os.path.abspath(os.path.join(self.pdf_out_dir, '%s.pdf' % name)),
 				"--export-dpi=300",
@@ -195,7 +208,7 @@ class CardGen(object):
 			if not os.path.isdir(self.png_out_dir):
 				os.makedirs(self.png_out_dir);
 			subprocess.call([
-				"/Applications/Inkscape.app/Contents/Resources/bin/inkscape",
+				INKSCAPE_APP,
 				"--file=%s" % os.path.abspath(os.path.join(self.svg_out_dir, '%s.svg' % name)),
 				"--export-png=%s" % os.path.abspath(os.path.join(self.png_out_dir, '%s.png' % name)),
 				"--export-dpi=300",
@@ -309,6 +322,10 @@ class CardGen(object):
 			rows = 3
 			cols = 7
 			rotate = True
+		elif self.cards_per_page == 1:
+			rows = 1
+			cols = 1
+			rotate = False
 		else:
 			error("Invalid number of cards per page: %d" % self.cards_per_page)
 
@@ -484,12 +501,12 @@ class CardGen(object):
 	def __end_card_gen(self):
 		if self.curr_filename != '':
 			if self.verbose:
-				print 'Closing', self.curr_filename
+				print('Closing', self.curr_filename)
 			self.__close_svg_file(self.curr_filename)
 		
 		if self.gen_pdf and self.combine_pdf:
 			if self.verbose:
-				print 'Combining PDF files...'
+				print('Combining PDF files...')
 			cmd = ["/System/Library/Automator/Combine PDF Pages.action/Contents/Resources/join.py",
 				"-o", os.path.join(self.out_dir, 'cards.pdf')] + self.pdf_files
 			subprocess.call(cmd)
@@ -520,14 +537,14 @@ class CardGen(object):
 			self.curr_file += 1
 			self.curr_filename = 'out%02d' % self.curr_file
 			if self.verbose:
-				print 'Opening', self.curr_filename
+				print('Opening', self.curr_filename)
 			self.__create_svg_file(self.curr_filename)
 		self.curr_card += 1
 	
 	def post_card(self):
 		if self.curr_card == (self.cards_per_page - 1):
 			if self.verbose:
-				print 'Closing', self.curr_filename
+				print('Closing', self.curr_filename)
 			self.__close_svg_file(self.curr_filename)
 			self.curr_filename = ''
 			self.curr_card = -1
