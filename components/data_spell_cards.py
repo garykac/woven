@@ -943,7 +943,7 @@ spell_card_data = [
     ["Create Eye",
         {'element': 'none', 'category': 'starter,create-eye', 'id': 89, 'pattern': 'N1'},
         {
-            'cast': "Create a eye in your location.",
+            'cast': "Create a EYE in your location.",
         } ],
     ["Move Eye",
         {'element': 'none', 'category': 'starter,move-eye', 'id': 90, 'pattern': 'N2-4'},
