@@ -180,7 +180,7 @@ class SpellCardGen(CardGen):
 			self.end_group()
 
 	def draw_pattern(self, pattern_raw, element):
-		style_empty = 'opacity:1;fill:#e0e0e0;fill-opacity:1;stroke:none;stroke-width:0;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1'
+		style_empty = 'opacity:1;fill:#c0c0c0;fill-opacity:1;stroke:none;stroke-width:0;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1'
 		style_box = 'opacity:1;fill:none;fill-opacity:1;stroke:#000000;stroke-width:2;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1'
 		
 		pattern = [x.split() for x in pattern_raw]
