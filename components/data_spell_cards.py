@@ -909,6 +909,48 @@ spell_card_patterns = {
 
 }
 
+#     _____ _     
+#    |  _  |_|___ 
+#    |     | |  _|
+#    |__|__|_|_|  
+#
+# Primary: Move Self, Move Other
+# Secondary:
+# Opposite: Earth
+
+#     _____ _         
+#    |   __|_|___ ___ 
+#    |   __| |  _| -_|
+#    |__|  |_|_| |___|
+#
+# Primary: Attack HP, Attack Eye
+# Secondary:
+# Opposite: Water
+
+#     _____         _   _   
+#    |   __|___ ___| |_| |_ 
+#    |   __| .'|  _|  _|   |
+#    |_____|__,|_| |_| |_|_|
+#
+# Primary: Defend Eye, Defend HP, Defend Move Self, Charge
+# Secondary: Rough Terrain
+# Opposite: Air
+
+#     _ _ _     _           
+#    | | | |___| |_ ___ ___ 
+#    | | | | .'|  _| -_|  _|
+#    |_____|__,|_| |___|_|  
+#
+# Primary: Create Eye, Move Eye, Heal HP, Thread
+# Secondary: Water Terrain
+# Opposite: Fire
+    
+# Unassigned:
+#   Tapestry, Other Tapestry, Defend Tapestry
+#   Move Other Eye, Defend Move Eye
+#   Spell, Other Spell
+#   Terrain
+
 # Data Format:
 #   spell_card_data:
 #     List of <card>s
@@ -927,11 +969,12 @@ spell_card_patterns = {
 
 spell_card_data = [
 
-    ["???",
-        {'element': 'none', 'category': 'starter', 'id': 0, 'pattern': 'blank'},
-        {
-            'cast': "???",
-        } ],
+    # Blank card (for TTS)
+    #["???",
+    #    {'element': 'none', 'category': 'starter', 'id': 0, 'pattern': 'blank'},
+    #    {
+    #        'cast': "???",
+    #    } ],
 
     #     _____         _           _ 
     #    |   | |___ _ _| |_ ___ ___| |
@@ -956,7 +999,7 @@ spell_card_data = [
     #    |__   |  _| .'|  _|  _| -_|  _|
     #    |_____|_| |__,|_| |_| |___|_|  
     #
-    # One representative spell for each element.
+    # Representative spell for each element.
 
     ["Haste",
         {'element': 'air', 'category': 'starter,move-mage', 'id': 3, 'pattern': 'E1-1'},
@@ -983,7 +1026,9 @@ spell_card_data = [
     #     _____                _____     _ ___ 
     #    |     |___ _ _ ___   |   __|___| |  _|
     #    | | | | . | | | -_|  |__   | -_| |  _|
-    #    |_|_|_|___|\_/|___|  |_____|___|_|_|  
+    #    |_|_|_|___|\_/|___|  |_____|___|_|_|
+    #
+    # Move mage
 
     ["Plains Walker",
         {'element': 'air', 'category': 'move-mage,terrain', 'id': 7, 'pattern': 'E2-6'},
@@ -1014,11 +1059,13 @@ spell_card_data = [
             'cast': "Move 5mp. Place a EYE in your final location.",
         } ],
 
-    #     _____ _   _           _      _____ _   _              _____             
-    #    |  _  | |_| |_ ___ ___| |_   |     | |_| |_ ___ ___   |     |___ _ _ ___ 
-    #    |     |  _|  _| .'|  _| '_|  |  |  |  _|   | -_|  _|  | | | | . | | | -_|
-    #    |__|__|_| |_| |__,|___|_,_|  |_____|_| |_|_|___|_|    |_|_|_|___|\_/|___|
-
+    #     _____                _____ _   _           
+    #    |     |___ _ _ ___   |     | |_| |_ ___ ___ 
+    #    | | | | . | | | -_|  |  |  |  _|   | -_|  _|
+    #    |_|_|_|___|\_/|___|  |_____|_| |_|_|___|_|
+    #
+    # Attack by moving another player's mage
+                                                                         
     ["Push",
         {'element': 'air', 'category': 'move-mage,move-other-mage', 'id': 20, 'pattern': 'E2-5'},
         {
@@ -1040,7 +1087,9 @@ spell_card_data = [
     #     ____      ___           _    _____                _____     _ ___ 
     #    |    \ ___|  _|___ ___ _| |  |     |___ _ _ ___   |   __|___| |  _|
     #    |  |  | -_|  _| -_|   | . |  | | | | . | | | -_|  |__   | -_| |  _|
-    #    |____/|___|_| |___|_|_|___|  |_|_|_|___|\_/|___|  |_____|___|_|_|  
+    #    |____/|___|_| |___|_|_|___|  |_|_|_|___|\_/|___|  |_____|___|_|_|
+    #
+    # Defend against being moved by another mage
 
     ["Anchor",
         {'element': 'earth', 'category': 'defend-move', 'id': 39, 'pattern': 'E2-16'},
@@ -1053,7 +1102,9 @@ spell_card_data = [
     #    |     |___ ___ ___| |_ ___   |   __|_ _ ___ 
     #    |   --|  _| -_| .'|  _| -_|  |   __| | | -_|
     #    |_____|_| |___|__,|_| |___|  |_____|_  |___|
-    #                                       |___|    
+    #                                       |___|
+    #
+    # Convert mana into an Eye on the map
 
     ["Split",
         {'element': 'water', 'category': 'create-eye', 'id': 8, 'pattern': 'E2-27'},
@@ -1078,6 +1129,8 @@ spell_card_data = [
     #    | | | | . | | | -_|  |   __| | | -_|
     #    |_|_|_|___|\_/|___|  |_____|_  |___|
     #                               |___|
+    #
+    # Move one of your Eyes on the map
     
     ["Run and Toss",
         {'element': 'air', 'category': 'move-mage,create-eye,move-eye', 'id': 67, 'pattern': 'E2-46'},
@@ -1100,11 +1153,29 @@ spell_card_data = [
             'cast': "Move a EYE 2. If you have a EYE in the same location as a EYE owned by another mage, move your EYE to that mage's location.",
         } ],
 
+    #     _____                _____ _   _              _____         
+    #    |     |___ _ _ ___   |     | |_| |_ ___ ___   |   __|_ _ ___ 
+    #    | | | | . | | | -_|  |  |  |  _|   | -_|  _|  |   __| | | -_|
+    #    |_|_|_|___|\_/|___|  |_____|_| |_|_|___|_|    |_____|_  |___|
+    #                                                        |___|
+    #
+    # Move an opponent's Eye
+
+    #     ____      ___           _    _____                _____         
+    #    |    \ ___|  _|___ ___ _| |  |     |___ _ _ ___   |   __|_ _ ___ 
+    #    |  |  | -_|  _| -_|   | . |  | | | | . | | | -_|  |   __| | | -_|
+    #    |____/|___|_| |___|_|_|___|  |_|_|_|___|\_/|___|  |_____|_  |___|
+    #                                                            |___|
+    #
+    # Defend against an opponent moving your Eyes
+    
     #     _____ _   _           _      _____         
     #    |  _  | |_| |_ ___ ___| |_   |   __|_ _ ___ 
     #    |     |  _|  _| .'|  _| '_|  |   __| | | -_|
     #    |__|__|_| |_| |__,|___|_,_|  |_____|_  |___|
-    #                                       |___|    
+    #                                       |___|
+    #
+    # Remove an opponent's Eye
 
     ["Remove Eye",
         {'element': 'fire', 'category': 'attack-eye', 'id': 72, 'pattern': 'E2-19'},
@@ -1149,6 +1220,8 @@ spell_card_data = [
     #    |  |  | -_|  _| -_|   | . |  |   __| | | -_|
     #    |____/|___|_| |___|_|_|___|  |_____|_  |___|
     #                                       |___|
+    #
+    # Defend against an opponent removing one of your eyes
 
     ["Eye Shield",
         {'element': 'earth', 'category': 'defend-eye', 'id': 83, 'pattern': 'E1-6'},
@@ -1172,18 +1245,39 @@ spell_card_data = [
     #     _____ _   _           _        _____ _____ 
     #    |  _  | |_| |_ ___ ___| |_     |  |  |  _  |
     #    |     |  _|  _| .'|  _| '_|    |     |   __|
-    #    |__|__|_| |_| |__,|___|_,_|    |__|__|__|   
+    #    |__|__|_| |_| |__,|___|_,_|    |__|__|__|
+    #
+    # Attack another mage
 
     #     ____      ___           _      _____ _____ 
     #    |    \ ___|  _|___ ___ _| |    |  |  |  _  |
     #    |  |  | -_|  _| -_|   | . |    |     |   __|
-    #    |____/|___|_| |___|_|_|___|    |__|__|__|   
+    #    |____/|___|_| |___|_|_|___|    |__|__|__|
+    #
+    # Defend against being attacked
 
     #     _____                 _           
     #    |_   _|___ ___ ___ ___| |_ ___ _ _ 
     #      | | | .'| . | -_|_ -|  _|  _| | |
     #      |_| |__,|  _|___|___|_| |_| |_  |
     #              |_|                 |___|
+    #
+    # Tapestry modification
+    # Spell: Remove thread from tapestry. Take another action.
+
+    ["Rest",
+        {'element': 'water', 'category': 'thread', 'id': 58, 'pattern': 'E2-19'},
+        {
+            'cast': "Remove 3 THREADs from your TAPESTRY.",
+        } ],
+
+    #     _____ _   _              _____                 _           
+    #    |     | |_| |_ ___ ___   |_   _|___ ___ ___ ___| |_ ___ _ _ 
+    #    |  |  |  _|   | -_|  _|    | | | .'| . | -_|_ -|  _|  _| | |
+    #    |_____|_| |_|_|___|_|      |_| |__,|  _|___|___|_| |_| |_  |
+    #                                       |_|                 |___|
+    # Attack an opponent's tapestry
+    # Spell: Attack tapestry, cover a spot in another mage's tapestry.
 
     ["Burn",
         {'element': 'fire', 'category': 'attack-tapestry', 'id': 91, 'pattern': 'E2-20'},
@@ -1191,11 +1285,27 @@ spell_card_data = [
             'cast': "Disrupt the tapestry of a mage at one of your EYEs by placing one of your mana in their tapestry to cover an element. Consume the EYE used to target the mage.",
         } ],
 
-    #     _____ _                   
-    #    |     | |_ ___ ___ ___ ___ 
-    #    |   --|   | .'|  _| . | -_|
-    #    |_____|_|_|__,|_| |_  |___|
-    #                      |___|    
+    #     ____      ___           _    _____                 _           
+    #    |    \ ___|  _|___ ___ _| |  |_   _|___ ___ ___ ___| |_ ___ _ _ 
+    #    |  |  | -_|  _| -_|   | . |    | | | .'| . | -_|_ -|  _|  _| | |
+    #    |____/|___|_| |___|_|_|___|    |_| |__,|  _|___|___|_| |_| |_  |
+    #                                           |_|                 |___|
+    # Defend tapestry from attack
+
+    #     _____         _ _ 
+    #    |   __|___ ___| | |
+    #    |__   | . | -_| | |
+    #    |_____|  _|___|_|_|
+    #          |_|
+    # Interact with your spells
+    # Spell: Duplicate Charge
+
+    #     _____ _   _              _____         _ _ 
+    #    |     | |_| |_ ___ ___   |   __|___ ___| | |
+    #    |  |  |  _|   | -_|  _|  |__   | . | -_| | |
+    #    |_____|_| |_|_|___|_|    |_____|  _|___|_|_|
+    #                                   |_|
+    # Remove a charge from an opponent's spell
 
     ["Drain",
         {'element': 'air', 'category': 'attack-charge', 'id': 71, 'pattern': 'E2-12'},
@@ -1209,28 +1319,13 @@ spell_card_data = [
             'notes': "Even if mage removes their charge, yours stays active.",
         } ],
     
-    #     _____ _                 _ 
-    #    |_   _| |_ ___ ___ ___ _| |
-    #      | | |   |  _| -_| .'| . |
-    #      |_| |_|_|_| |___|__,|___|
-
-    ["Rest",
-        {'element': 'water', 'category': 'thread', 'id': 58, 'pattern': 'E2-19'},
-        {
-            'cast': "Remove 3 THREADs from your TAPESTRY.",
-        } ],
-
-    #     _____         _ _ 
-    #    |   __|___ ___| | |
-    #    |__   | . | -_| | |
-    #    |_____|  _|___|_|_|
-    #          |_|          
-
 
     #     _____     _   _         
     #    |  _  |___| |_|_|___ ___ 
     #    |     |  _|  _| | . |   |
     #    |__|__|___|_| |_|___|_|_|
+    #
+    # Gain an extra action
 
     ["Store Action",
         {'element': 'earth', 'category': 'add-action', 'id': 96, 'pattern': 'E2-39'},
@@ -1253,45 +1348,6 @@ spell_card_data = [
         } ],
 
 ]
-
-
-#     _____ _     
-#    |  _  |_|___ 
-#    |     | |  _|
-#    |__|__|_|_|  
-#
-# Primary: Move Self, Attack Other Move, Tapestry
-# Opposite: Earth
-
-#     _____ _         
-#    |   __|_|___ ___ 
-#    |   __| |  _| -_|
-#    |__|  |_|_| |___|
-#
-# Primary: Attack HP, Attack Eye
-# Opposite: Water
-
-#     _____         _   _   
-#    |   __|___ ___| |_| |_ 
-#    |   __| .'|  _|  _|   |
-#    |_____|__,|_| |_| |_|_|
-#
-# Primary: Defend Eye, Defend HP, Defend Move Self, Charge
-# Opposite: Air
-
-#     _ _ _     _           
-#    | | | |___| |_ ___ ___ 
-#    | | | | .'|  _| -_|  _|
-#    |_____|__,|_| |___|_|  
-#
-# Primary: Create Eye, Move Eye, Heal HP, Thread
-# Opposite: Fire
-    
-
-# New spells:
-# Remove thread from tapestry. Take another action.
-# Attack tapestry, cover a spot in another mage's tapestry.
-
 
 _unused_ = [
 

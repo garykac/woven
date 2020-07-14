@@ -378,7 +378,7 @@ class SpellCardGen(CardGen):
 		return catstr
 
 	def gen_spell_summary(self):
-		summary = open('spell-list.md', "w")
+		summary = open('../docs/spell-list.md', "w")
 
 		summary.write('# List of Spell Fragments\n\n')
 
@@ -422,7 +422,7 @@ class SpellCardGen(CardGen):
 		summary.write('## By Name\n\n')
 		count = 0
 
-		for name,sid in sorted(self.name2id.iteritems()):
+		for name,sid in sorted(self.name2id.items()):
 			count += 1
 			summary.write('### %s\n' % self.id2name[sid])
 			summary.write('```\n')

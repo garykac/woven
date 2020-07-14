@@ -1,26 +1,26 @@
 # List of Spell Fragments
 
-Generated on 2019/06/12 @ 08:35
+Generated on 2020/07/13 @ 20:24
 
 ## By Category
 
 Starter (6)
 
-* [Burn Tendril](#burn-tendril) - _Fire_
-* [Create Tendril](#create-tendril) - _Neutral_
+* [Burn Eye](#burn-eye) - _Fire_
+* [Create Eye](#create-eye) - _Neutral_
 * [Creep](#creep) - _Water_
 * [Haste](#haste) - _Air_
-* [Move Tendril](#move-tendril) - _Neutral_
+* [Move Eye](#move-eye) - _Neutral_
 * [Protection](#protection) - _Earth_
 
-Attack Tendril (7)
+Attack Eye (7)
 
-* [Burn Tendril](#burn-tendril) - _Fire_
+* [Burn Eye](#burn-eye) - _Fire_
 * [Erase](#erase) - _Fire_
 * [Fire Burst](#fire-burst) - _Fire_
 * [Prune](#prune) - _Fire_
 * [Prune Neighbor](#prune-neighbor) - _Fire_
-* [Remove Tendril](#remove-tendril) - _Fire_
+* [Remove Eye](#remove-eye) - _Fire_
 * [Sneak Attack](#sneak-attack) - _Fire_
 
 Attack Charge (2)
@@ -32,12 +32,12 @@ Attack Tapestry (1)
 
 * [Burn](#burn) - _Fire_
 
-Create Tendril (10)
+Create Eye (10)
 
 * [Burst](#burst) - _Water_
-* [Create Tendril](#create-tendril) - _Neutral_
+* [Create Eye](#create-eye) - _Neutral_
 * [Creep](#creep) - _Water_
-* [Mountain Tendril](#mountain-tendril) - _Earth_
+* [Mountain Eye](#mountain-eye) - _Earth_
 * [Quick Drop](#quick-drop) - _Air_
 * [Run and Toss](#run-and-toss) - _Air_
 * [Snapback](#snapback) - _Water_
@@ -49,11 +49,11 @@ Defend Move (1)
 
 * [Anchor](#anchor) - _Earth_
 
-Defend Tendril (4)
+Defend Eye (4)
 
+* [Eye Shield](#eye-shield) - _Earth_
 * [Harden Shell](#harden-shell) - _Earth_
 * [Protection](#protection) - _Earth_
-* [Tendril Shield](#tendril-shield) - _Earth_
 * [Whiplash](#whiplash) - _Water_
 
 Move Mage (10)
@@ -69,12 +69,12 @@ Move Mage (10)
 * [Sneak Attack](#sneak-attack) - _Fire_
 * [Water Moccasins](#water-moccasins) - _Water_
 
-Move Tendril (7)
+Move Eye (7)
 
 * [Burst](#burst) - _Water_
 * [Creep](#creep) - _Water_
 * [Erase](#erase) - _Fire_
-* [Move Tendril](#move-tendril) - _Neutral_
+* [Move Eye](#move-eye) - _Neutral_
 * [Run and Toss](#run-and-toss) - _Air_
 * [Spread](#spread) - _Water_
 * [Traceback](#traceback) - _Water_
@@ -85,7 +85,7 @@ Move Other Mage (3)
 * [Push](#push) - _Air_
 * [Teleport Random](#teleport-random) - _Fire_
 
-Move Other Tendril (1)
+Move Other Eye (1)
 
 * [Nudge](#nudge) - _Earth_
 
@@ -101,7 +101,7 @@ Terrain (5)
 
 * [Forest Jump](#forest-jump) - _Air_
 * [Forest Run](#forest-run) - _Air_
-* [Mountain Tendril](#mountain-tendril) - _Earth_
+* [Mountain Eye](#mountain-eye) - _Earth_
 * [Plains Walker](#plains-walker) - _Air_
 * [Water Moccasins](#water-moccasins) - _Water_
 
@@ -109,8 +109,8 @@ Terrain (5)
 
 Neutral (2)
 
-* [Create Tendril](#create-tendril) - _Starter, Create Tendril_
-* [Move Tendril](#move-tendril) - _Starter, Move Tendril_
+* [Create Eye](#create-eye) - _Starter, Create Eye_
+* [Move Eye](#move-eye) - _Starter, Move Eye_
 
 Air (9)
 
@@ -121,19 +121,19 @@ Air (9)
 * [Haste](#haste) - _Starter, Move Mage_
 * [Plains Walker](#plains-walker) - _Move Mage, Terrain_
 * [Push](#push) - _Move Mage, Move Other Mage_
-* [Quick Drop](#quick-drop) - _Move Mage, Create Tendril_
-* [Run and Toss](#run-and-toss) - _Move Mage, Create Tendril, Move Tendril_
+* [Quick Drop](#quick-drop) - _Move Mage, Create Eye_
+* [Run and Toss](#run-and-toss) - _Move Mage, Create Eye, Move Eye_
 
 Fire (9)
 
 * [Burn](#burn) - _Attack Tapestry_
-* [Burn Tendril](#burn-tendril) - _Starter, Attack Tendril_
-* [Erase](#erase) - _Move Tendril, Attack Tendril_
-* [Fire Burst](#fire-burst) - _Attack Tendril_
-* [Prune](#prune) - _Attack Tendril_
-* [Prune Neighbor](#prune-neighbor) - _Attack Tendril_
-* [Remove Tendril](#remove-tendril) - _Attack Tendril_
-* [Sneak Attack](#sneak-attack) - _Attack Tendril, Move Mage_
+* [Burn Eye](#burn-eye) - _Starter, Attack Eye_
+* [Erase](#erase) - _Move Eye, Attack Eye_
+* [Fire Burst](#fire-burst) - _Attack Eye_
+* [Prune](#prune) - _Attack Eye_
+* [Prune Neighbor](#prune-neighbor) - _Attack Eye_
+* [Remove Eye](#remove-eye) - _Attack Eye_
+* [Sneak Attack](#sneak-attack) - _Attack Eye, Move Mage_
 * [Teleport Random](#teleport-random) - _Move Other Mage_
 
 Earth (9)
@@ -141,24 +141,24 @@ Earth (9)
 * [Anchor](#anchor) - _Defend Move_
 * [Barrier](#barrier) - _Move Other Mage_
 * [Copy Charge](#copy-charge) - _Attack Charge_
-* [Harden Shell](#harden-shell) - _Defend Tendril_
-* [Mountain Tendril](#mountain-tendril) - _Terrain, Create Tendril_
-* [Nudge](#nudge) - _Move Other Tendril_
-* [Protection](#protection) - _Starter, Defend Tendril_
+* [Eye Shield](#eye-shield) - _Defend Eye_
+* [Harden Shell](#harden-shell) - _Defend Eye_
+* [Mountain Eye](#mountain-eye) - _Terrain, Create Eye_
+* [Nudge](#nudge) - _Move Other Eye_
+* [Protection](#protection) - _Starter, Defend Eye_
 * [Store Action](#store-action) - _Add Action_
-* [Tendril Shield](#tendril-shield) - _Defend Tendril_
 
 Water (9)
 
-* [Burst](#burst) - _Create Tendril, Move Tendril_
-* [Creep](#creep) - _Starter, Create Tendril, Move Tendril_
+* [Burst](#burst) - _Create Eye, Move Eye_
+* [Creep](#creep) - _Starter, Create Eye, Move Eye_
 * [Rest](#rest) - _Thread_
-* [Snapback](#snapback) - _Create Tendril_
-* [Split](#split) - _Create Tendril_
-* [Spread](#spread) - _Create Tendril, Move Tendril_
-* [Traceback](#traceback) - _Move Tendril, Create Tendril_
+* [Snapback](#snapback) - _Create Eye_
+* [Split](#split) - _Create Eye_
+* [Spread](#spread) - _Create Eye, Move Eye_
+* [Traceback](#traceback) - _Move Eye, Create Eye_
 * [Water Moccasins](#water-moccasins) - _Move Mage, Terrain_
-* [Whiplash](#whiplash) - _Defend Tendril_
+* [Whiplash](#whiplash) - _Defend Eye_
 
 ## By Name
 
@@ -186,7 +186,7 @@ Category: Move Other Mage
 
 When cast: Place a CHARGE on this spell.
 
-While charged: All locations adjacent to your TENDRILs are obstacles that other mages may not move into.
+While charged: All locations adjacent to your EYEs are obstacles that other mages may not move into.
 
 ### Blur
 ```
@@ -211,18 +211,18 @@ Element: Fire
 
 Category: Attack Tapestry
 
-When cast: Disrupt the tapestry of a mage at one of your TENDRILs by placing one of your mana in their tapestry to cover an element. Consume the TENDRIL used to target the mage.
+When cast: Disrupt the tapestry of a mage at one of your EYEs by placing one of your mana in their tapestry to cover an element. Consume the EYE used to target the mage.
 
-### Burn Tendril
+### Burn Eye
 ```
 @ .
 . X
 ```
 Element: Fire
 
-Category: Starter, Attack Tendril
+Category: Starter, Attack Eye
 
-When cast: Remove an opponent's TENDRIL at one of your TENDRIL's location. Consume this TENDRIL.
+When cast: Remove an opponent's EYE at one of your EYE's location. Consume this EYE.
 
 ### Burst
 ```
@@ -232,9 +232,9 @@ When cast: Remove an opponent's TENDRIL at one of your TENDRIL's location. Consu
 ```
 Element: Water
 
-Category: Create Tendril, Move Tendril
+Category: Create Eye, Move Eye
 
-When cast: Place 2 TENDRILs. Move 3 of your TENDRILs 2 spaces each.
+When cast: Place 2 EYEs. Move 3 of your EYEs 2 spaces each.
 
 ### Copy Charge
 ```
@@ -244,17 +244,17 @@ Element: Earth
 
 Category: Attack Charge
 
-When cast: If you have a TENDRIL on or adjacent to another mage, you may add a charge to one of their spells. You gain all the effects of that spell.
+When cast: If you have a EYE on or adjacent to another mage, you may add a charge to one of their spells. You gain all the effects of that spell.
 
-### Create Tendril
+### Create Eye
 ```
 X
 ```
 Element: Neutral
 
-Category: Starter, Create Tendril
+Category: Starter, Create Eye
 
-When cast: Create a tendril in your location.
+When cast: Create a EYE in your location.
 
 ### Creep
 ```
@@ -263,9 +263,9 @@ When cast: Create a tendril in your location.
 ```
 Element: Water
 
-Category: Starter, Create Tendril, Move Tendril
+Category: Starter, Create Eye, Move Eye
 
-When cast: Place a TENDRIL. Move one of your TENDRILs 2 spaces.
+When cast: Place a EYE. Move one of your EYEs 2 spaces.
 
 ### Drain
 ```
@@ -275,7 +275,7 @@ Element: Air
 
 Category: Attack Charge
 
-When cast: A mage at one of your TENDRILs must remove 2 of their CHARGEs. Consume that TENDRIL.
+When cast: A mage at one of your EYEs must remove 2 of their CHARGEs. Consume that EYE.
 
 ### Erase
 ```
@@ -284,9 +284,21 @@ When cast: A mage at one of your TENDRILs must remove 2 of their CHARGEs. Consum
 ```
 Element: Fire
 
-Category: Move Tendril, Attack Tendril
+Category: Move Eye, Attack Eye
 
-When cast: Move one of your TENDRILs 3 spaces, removing one opponent TENDRIL from each location it moves into this turn. Consume this TENDRIL.
+When cast: Move one of your EYEs 3 spaces, removing one opponent EYE from each location it moves into this turn. Consume this EYE.
+
+### Eye Shield
+```
+@ . . X
+```
+Element: Earth
+
+Category: Defend Eye
+
+When cast: Place a CHARGE on this spell.
+
+Sacrifice: You may sacrifice this CHARGE to prevent one of your EYEs from being removed or consumed.
 
 ### Fire Burst
 ```
@@ -295,9 +307,9 @@ When cast: Move one of your TENDRILs 3 spaces, removing one opponent TENDRIL fro
 ```
 Element: Fire
 
-Category: Attack Tendril
+Category: Attack Eye
 
-When cast: Remove all TENDRILs in all locations adjacent to one of your TENDRILs. Consume that TENDRIL.
+When cast: Remove all EYEs in all locations adjacent to one of your EYEs. Consume that EYE.
 
 ### Forest Jump
 ```
@@ -307,7 +319,7 @@ Element: Air
 
 Category: Terrain, Move Mage
 
-When cast: If in a Forest location, swap positions with one of your TENDRILs that is in a Forest location no more than 5 spaces away. You may immediately repeat this spell.
+When cast: If in a Forest location, swap positions with one of your EYEs that is in a Forest location no more than 5 spaces away. You may immediately repeat this spell.
 
 ### Forest Run
 ```
@@ -329,11 +341,11 @@ X . X
 ```
 Element: Earth
 
-Category: Defend Tendril
+Category: Defend Eye
 
 When cast: Place a CHARGE on this spell.
 
-While charged: If the number of TENDRILs you have is less than or equal to the number of CHARGEs on this spell, then they are protected from being removed by another mage (but they can still be consumed).
+While charged: If the number of EYEs you have is less than or equal to the number of CHARGEs on this spell, then they are protected from being removed by another mage (but they can still be consumed).
 
 ### Haste
 ```
@@ -345,7 +357,7 @@ Category: Starter, Move Mage
 
 When cast: Move 5 spaces along a road.
 
-### Mountain Tendril
+### Mountain Eye
 ```
 X . .
 @ . .
@@ -353,22 +365,22 @@ X . .
 ```
 Element: Earth
 
-Category: Terrain, Create Tendril
+Category: Terrain, Create Eye
 
 When cast: Place a CHARGE on this spell.
 
-While charged: If in or next to a Mountain location, add a TENDRIL adjacent to any Mountain location connected to that Mountain location.
+While charged: If in or next to a Mountain location, add a EYE adjacent to any Mountain location connected to that Mountain location.
 
-### Move Tendril
+### Move Eye
 ```
 X . .
 . . X
 ```
 Element: Neutral
 
-Category: Starter, Move Tendril
+Category: Starter, Move Eye
 
-When cast: Move one of your TENDRILs one space.
+When cast: Move one of your EYEs one space.
 
 ### Nudge
 ```
@@ -377,13 +389,13 @@ When cast: Move one of your TENDRILs one space.
 ```
 Element: Earth
 
-Category: Move Other Tendril
+Category: Move Other Eye
 
 When cast: Place a CHARGE on this spell.
 
-While charged: At the end of your turn, if another mage's TENDRIL is in the same location or adjacent to one of your TENDRILs, you may move their TENDRIL 1 space. Choose one for each charge on this spell.
+While charged: At the end of your turn, if another mage's EYE is in the same location or adjacent to one of your EYEs, you may move their EYE 1 space. Choose one for each charge on this spell.
 
-Sacrifice: Sacrifice a charge to move the tendril(s) 4 spaces.
+Sacrifice: Sacrifice a charge to move the eye(s) 4 spaces.
 
 ### Plains Walker
 ```
@@ -401,11 +413,11 @@ When cast: Move through 5 contiguous Plains locations.
 ```
 Element: Earth
 
-Category: Starter, Defend Tendril
+Category: Starter, Defend Eye
 
 When cast: Place a CHARGE on this spell.
 
-Sacrifice: Sacrifice a charge to prevent one of your TENDRILs from being removed.
+Sacrifice: Sacrifice a charge to prevent one of your EYEs from being removed.
 
 ### Prune
 ```
@@ -414,9 +426,9 @@ Sacrifice: Sacrifice a charge to prevent one of your TENDRILs from being removed
 ```
 Element: Fire
 
-Category: Attack Tendril
+Category: Attack Eye
 
-When cast: Remove all opponent TENDRILs from a location where you control a TENDRIL. Consume this TENDRIL.
+When cast: Remove all opponent EYEs from a location where you control a EYE. Consume this EYE.
 
 ### Prune Neighbor
 ```
@@ -426,9 +438,9 @@ When cast: Remove all opponent TENDRILs from a location where you control a TEND
 ```
 Element: Fire
 
-Category: Attack Tendril
+Category: Attack Eye
 
-When cast: Remove all TENDRILs from a location adjacent to where you control a TENDRIL. Consume this TNDRIL.
+When cast: Remove all EYEs from a location adjacent to where you control a EYE. Consume this EYE.
 
 ### Push
 ```
@@ -447,20 +459,20 @@ X @ . .
 ```
 Element: Air
 
-Category: Move Mage, Create Tendril
+Category: Move Mage, Create Eye
 
-When cast: Move 5mp. Place a TENDRIL in your final location.
+When cast: Move 5mp. Place a EYE in your final location.
 
-### Remove Tendril
+### Remove Eye
 ```
 . @ .
 X . X
 ```
 Element: Fire
 
-Category: Attack Tendril
+Category: Attack Eye
 
-When cast: If in a location with a TENDRIL controlled by another mage, you may remove 2 of their TENDRILs.
+When cast: If in a location with a EYE controlled by another mage, you may remove 2 of their EYEs.
 
 ### Rest
 ```
@@ -481,9 +493,9 @@ X . . .
 ```
 Element: Air
 
-Category: Move Mage, Create Tendril, Move Tendril
+Category: Move Mage, Create Eye, Move Eye
 
-When cast: Move 1 space, place a TENDRIL, then move that TENDRIL 2 spaces.
+When cast: Move 1 space, place a EYE, then move that EYE 2 spaces.
 
 ### Snapback
 ```
@@ -493,11 +505,11 @@ X . . .
 ```
 Element: Water
 
-Category: Create Tendril
+Category: Create Eye
 
 When cast: Place a CHARGE on this spell.
 
-Sacrifice: If at same location as another mage's TENDRIL, you may sacrifice a charge to place a TENDRIL at that mage's location.
+Sacrifice: If at same location as another mage's EYE, you may sacrifice a charge to place a EYE at that mage's location.
 
 ### Sneak Attack
 ```
@@ -507,9 +519,9 @@ X . X
 ```
 Element: Fire
 
-Category: Attack Tendril, Move Mage
+Category: Attack Eye, Move Mage
 
-When cast: Remove TENDRILs from a adjacent location and then move into that location.
+When cast: Remove EYEs from a adjacent location and then move into that location.
 
 ### Split
 ```
@@ -519,9 +531,9 @@ When cast: Remove TENDRILs from a adjacent location and then move into that loca
 ```
 Element: Water
 
-Category: Create Tendril
+Category: Create Eye
 
-When cast: Place a new TENDRIL in a location where you already have a TENDRIL.
+When cast: Place a new EYE in a location where you already have a EYE.
 
 ### Spread
 ```
@@ -531,9 +543,9 @@ X . .
 ```
 Element: Water
 
-Category: Create Tendril, Move Tendril
+Category: Create Eye, Move Eye
 
-When cast: Place a TENDRIL. Move all of your TENDRILs 1 space.
+When cast: Place a EYE. Move all of your EYEs 1 space.
 
 ### Store Action
 ```
@@ -558,19 +570,7 @@ Element: Fire
 
 Category: Move Other Mage
 
-When cast: Move all mages at one of your TENDRILs to a random star location. Consume that TENDRIL.
-
-### Tendril Shield
-```
-@ . . X
-```
-Element: Earth
-
-Category: Defend Tendril
-
-When cast: Place a CHARGE on this spell.
-
-Sacrifice: You may sacrifice this CHARGE to prevent one of your TENDRILs from being removed or consumed.
+When cast: Move all mages at one of your EYEs to a random star location. Consume that EYE.
 
 ### Traceback
 ```
@@ -580,9 +580,9 @@ Sacrifice: You may sacrifice this CHARGE to prevent one of your TENDRILs from be
 ```
 Element: Water
 
-Category: Move Tendril, Create Tendril
+Category: Move Eye, Create Eye
 
-When cast: Move a TENDRIL 2. If you have a TENDRIL in the same location as a TENDRIL owned by another mage, move your TENDRIL to that mage's location.
+When cast: Move a EYE 2. If you have a EYE in the same location as a EYE owned by another mage, move your EYE to that mage's location.
 
 ### Water Moccasins
 ```
@@ -597,7 +597,7 @@ When cast: Place a CHARGE on this spell.
 
 While charged: Rivers cost 0mp to cross. Water locations cost 1mp to enter.
 
-Sacrifice: If you are adjacent to River/Water, sacrifice charge to place a TENDRIL up to 3 spaces away along water.
+Sacrifice: If you are adjacent to River/Water, sacrifice charge to place a EYE up to 3 spaces away along water.
 
 ### Whiplash
 ```
@@ -606,9 +606,9 @@ Sacrifice: If you are adjacent to River/Water, sacrifice charge to place a TENDR
 ```
 Element: Water
 
-Category: Defend Tendril
+Category: Defend Eye
 
 When cast: Place a CHARGE on this spell.
 
-Sacrifice: You may sacrifice one of your TENDRILs to prevent another TENDRIL from being removed/consumed.
+Sacrifice: You may sacrifice one of your EYEs to prevent another EYE from being removed/consumed.
 
