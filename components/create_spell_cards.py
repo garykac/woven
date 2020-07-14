@@ -388,7 +388,7 @@ class SpellCardGen(CardGen):
         summary.write('## By Category\n\n')
         print('Categories')
 
-        for c in self.valid_categories:
+        for c in sorted(self.valid_categories):
             if not c in self.categories:
                 continue
             summary.write('%s (%d)\n\n' % (self.category_list(c), len(self.categories[c])))
