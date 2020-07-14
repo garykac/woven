@@ -1,6 +1,6 @@
 # List of Spell Fragments
 
-Generated on 2020/07/13 @ 20:24
+Generated on 2020/07/13 @ 21:04
 
 ## By Category
 
@@ -159,6 +159,47 @@ Water (9)
 * [Traceback](#traceback) - _Move Eye, Create Eye_
 * [Water Moccasins](#water-moccasins) - _Move Mage, Terrain_
 * [Whiplash](#whiplash) - _Defend Eye_
+
+## By Pattern
+
+* E1-1 [Haste](#haste) (air)
+* E1-1 [Protection](#protection) (earth)
+* E1-2 [Burn Eye](#burn-eye) (fire)
+* E1-2 [Creep](#creep) (water)
+* E1-6 [Eye Shield](#eye-shield) (earth)
+* E2-10 [Quick Drop](#quick-drop) (air)
+* E2-10 [Barrier](#barrier) (earth)
+* E2-11 [Mountain Eye](#mountain-eye) (earth)
+* E2-12 [Drain](#drain) (air)
+* E2-13 [Forest Jump](#forest-jump) (air)
+* E2-13 [Copy Charge](#copy-charge) (earth)
+* E2-14 [Forest Run](#forest-run) (air)
+* E2-16 [Anchor](#anchor) (earth)
+* E2-19 [Remove Eye](#remove-eye) (fire)
+* E2-19 [Rest](#rest) (water)
+* E2-20 [Burn](#burn) (fire)
+* E2-20 [Spread](#spread) (water)
+* E2-21 [Whiplash](#whiplash) (water)
+* E2-23 [Prune](#prune) (fire)
+* E2-24 [Water Moccasins](#water-moccasins) (water)
+* E2-25 [Snapback](#snapback) (water)
+* E2-27 [Split](#split) (water)
+* E2-28 [Erase](#erase) (fire)
+* E2-30 [Fire Burst](#fire-burst) (fire)
+* E2-31 [Prune Neighbor](#prune-neighbor) (fire)
+* E2-31 [Burst](#burst) (water)
+* E2-39 [Store Action](#store-action) (earth)
+* E2-41 [Traceback](#traceback) (water)
+* E2-42 [Blur](#blur) (air)
+* E2-46 [Run and Toss](#run-and-toss) (air)
+* E2-55 [Sneak Attack](#sneak-attack) (fire)
+* E2-5 [Push](#push) (air)
+* E2-6 [Plains Walker](#plains-walker) (air)
+* E2-8 [Nudge](#nudge) (earth)
+* E2-8 [Teleport Random](#teleport-random) (fire)
+* E2-9 [Harden Shell](#harden-shell) (earth)
+* N1 [Create Eye](#create-eye) (none)
+* N2-4 [Move Eye](#move-eye) (none)
 
 ## By Name
 

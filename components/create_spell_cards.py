@@ -281,7 +281,7 @@ class SpellCardGen(CardGen):
         if pattern_id == 'blank':
             self.blank_count += 1
         else:
-            pattern_key = '%s-%s' % (pattern_id, attrs['element'])
+            pattern_key = '%s:%s' % (pattern_id, attrs['element'])
             if pattern_key in self.pattern2id:
                 dup_id = self.pattern2id[pattern_key]
                 error('%s: Pattern %s already assigned to %d (%s)' % (name, pattern_key, dup_id, self.id2name[dup_id]))
@@ -419,6 +419,14 @@ class SpellCardGen(CardGen):
 
             summary.write('\n')
 
+        summary.write('## By Pattern\n\n')
+        for pattern_key in sorted(self.pattern2id.keys()):
+            print(pattern_key)
+            (pattern, element) = pattern_key.split(':')
+            sid = self.pattern2id[pattern_key]
+            summary.write('* %s %s (%s)\n' % (pattern, self.spell_link(sid), element))
+        summary.write('\n')
+        
         summary.write('## By Name\n\n')
         count = 0
 
