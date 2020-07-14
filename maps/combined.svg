@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg1914"
+   inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)"
+   sodipodi:docname="combined.svg"
+   inkscape:export-filename="/home/garykac/projects/github/woven/maps/combined.png"
+   inkscape:export-xdpi="72.005653"
+   inkscape:export-ydpi="72.005653">
+  <defs
+     id="defs1908" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.24748737"
+     inkscape:cx="301.39497"
+     inkscape:cy="993.87116"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="3440"
+     inkscape:window-height="1406"
+     inkscape:window-x="0"
+     inkscape:window-y="417"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata1911">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <image
+       sodipodi:absref="/home/garykac/projects/github/woven/maps/map-00.png"
+       xlink:href="map-00.png"
+       width="374.38541"
+       height="374.38541"
+       preserveAspectRatio="none"
+       id="image2617"
+       x="243.60568"
+       y="-540.6897" />
+    <image
+       sodipodi:absref="/home/garykac/projects/github/woven/maps/map-01.png"
+       xlink:href="map-01.png"
+       transform="rotate(90)"
+       width="374.38541"
+       height="374.38541"
+       preserveAspectRatio="none"
+       id="image2628"
+       x="-540.6897"
+       y="-243.60565" />
+    <image
+       sodipodi:absref="/home/garykac/projects/github/woven/maps/map-1a.png"
+       xlink:href="map-1a.png"
+       transform="scale(-1)"
+       width="374.38541"
+       height="374.38541"
+       preserveAspectRatio="none"
+       id="image2639"
+       x="130.77975"
+       y="-208.08112" />
+    <image
+       sodipodi:absref="/home/garykac/projects/github/woven/maps/map-05.png"
+       xlink:href="map-05.png"
+       transform="rotate(-90)"
+       width="374.38541"
+       height="374.38541"
+       preserveAspectRatio="none"
+       id="image2650"
+       x="-208.08112"
+       y="617.99109" />
+    <image
+       sodipodi:absref="/home/garykac/projects/github/woven/maps/map-w02a.png"
+       xlink:href="map-w02a.png"
+       width="748.77081"
+       height="374.38541"
+       preserveAspectRatio="none"
+       id="image2661"
+       x="-505.16516"
+       y="208.08112" />
+    <image
+       sodipodi:absref="/home/garykac/projects/github/woven/maps/map-w41a.png"
+       xlink:href="map-w41a.png"
+       transform="scale(-1)"
+       width="748.77081"
+       height="374.38541"
+       preserveAspectRatio="none"
+       id="image2672"
+       x="-617.99109"
+       y="-208.08112" />
+  </g>
+</svg>
