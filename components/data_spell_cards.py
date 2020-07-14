@@ -8,30 +8,29 @@ spell_card_categories = [
     'blank',
     'starter',
 
-    #'attack-mage',
-    'attack-eye',
     'attack-charge',
     'attack-tapestry',
 
-    'create-eye',
+    'eye-create',
+    'eye-move',
+    'eye-defend',  # Protect eyes from being destroyed
+    'eye-other-attack',
+    'eye-other-move',
 
-    #'defend-mage',
-    'defend-move',
-    'defend-eye',
     'defend-charge',
     'defend-tapestry',
 
-    'move-mage',
-    #'move-astral',
-    'move-eye',
+    'mage-move',
+    #'mage-move-astral',
+    'mage-anchor',  # Prevent mage from being moved
+    #'mage-defend',  # Shields to prevent HP damage
+    'mage-other-move',
+    #'mage-other-attack',  # Damage mage HP
 
-    'move-other-mage',
-    'move-other-eye',
-
-    'thread',
+    'tapestry-thread',
     
-    'modify-tapestry',
-    'add-action',
+    #'modify-tapestry',
+    #'add-action',
     'terrain',
 ]
 
@@ -186,6 +185,7 @@ spell_card_patterns = {
     # |_____|_|___|_|_|_|___|_|_|_| |__,|_|  |_____|    |_|    |_____|
     #
 
+    # Air/Earth
     # +-----+  Level 1
     # | @ X |  Threads 1
     # +-----+  Cards 1
@@ -193,6 +193,7 @@ spell_card_patterns = {
     'E1-1':     [   "@ X",
                 ],
 
+    # Fire/Water
     # +-----+  Level 1         Transforms  3 . 2
     # | @ . |  Threads 1                   . @ .
     # | . X |  Cards 1                     4 . 1
@@ -201,6 +202,7 @@ spell_card_patterns = {
                     ". X",
                 ],
 
+    # Air/Earth
     # +-------+  Level 1
     # | @ . X |  Threads 1
     # +-------+  Cards 1
@@ -208,6 +210,7 @@ spell_card_patterns = {
     'E1-3':     [    "@ . X",
                 ],
 
+    # All
     # +-------+  Level 1          Transforms  . 6 . 7 .
     # | @ . . |  Threads 1                    5 . . . 8
     # | . . X |  Cards 1                      . . @ . .
@@ -217,6 +220,7 @@ spell_card_patterns = {
                     ". . X",
                 ],
 
+    # Fire/Water
     # +-------+  Level 2          Transforms  3 . . . 2
     # | @ . . |  Threads 1                    . . . . .
     # | . . . |  Cards 2                      . . @ . .
@@ -227,6 +231,7 @@ spell_card_patterns = {
                     ". . X",
                 ],
 
+    # Air/Earth
     # +---------+  Level 2
     # | @ . . X |  Threads 1
     # +---------+  Cards 2
@@ -258,6 +263,7 @@ spell_card_patterns = {
     # |_____|_|___|_|_|_|___|_|_|_| |__,|_|  |_____|    |_|    |___|
     #
 
+    # Air/Earth
     # +-------+  Level 2 - Built on +-----+  Transforms  . 2 .
     # | X @ X |  Threads 1          | @ X |              1 @ 1
     # +-------+  Cards 1            +-----+              . 2 .
@@ -265,6 +271,7 @@ spell_card_patterns = {
     'E2-1':     [   "X @ X",
                 ],
 
+    # Air/Earth
     # +-----+  Level 2 - Built on +-----+  Transforms  . 2 .
     # | @ X |  Threads 2          | @ X |              3 @ 1
     # | X . |  Cards 1            +-----+              . 1 .
@@ -273,6 +280,7 @@ spell_card_patterns = {
                     "X .",
                 ],
 
+    # All
     # +-------+  Level 2 - Built on +-----+     +-----+  Transforms  7 2 5
     # | . @ X |  Threads 2          | @ X | and | @ . |              4 @ 1        
     # | X . . |  Cards 1            +-----+     | . X |              1 6 3
@@ -281,6 +289,7 @@ spell_card_patterns = {
                     "X . .",
                 ],
 
+    # All
     # +-----+  Level 2 - Built on +-----+     +-----+  Transforms  5 4 3
     # | @ . |  Threads 2          | @ X | and | @ . |              6 @ 2
     # | X X |  Cards 1            +-----+     | . X |              7 1 1
@@ -289,6 +298,7 @@ spell_card_patterns = {
                     "X X",
                 ],
 
+    # Air/Earth
     # +-------+  Level 2 - Built on +-----+     +-------+  Transforms  . . 2 . .
     # | @ X X |  Threads 2          | @ X | and | @ . X |              . . 2 . .
     # +-------+  Cards 1            +-----+     +-------+              3 3 @ 1 1
@@ -297,6 +307,7 @@ spell_card_patterns = {
     'E2-5':     [    "@ X X",
                 ],
 
+    # Air/Earth
     # +---------+  Level 3 - Built on +-----+     +-------+  Transforms  . . 2 . .
     # | X @ . X |  Threads 2          | @ X | and | @ . X |              . . 4 . .
     # +---------+  Cards 2            +-----+     +-------+              3 1 @ 3 1
@@ -305,6 +316,7 @@ spell_card_patterns = {
     'E2-6':     [   "X @ . X",
                 ],
 
+    # Air/Earth
     # +-------+  Level 2 - Built on +-----+     +-------+  Transforms  . . 4 . .
     # | @ . X |  Threads 2          | @ X | and | @ . X |              . . 2 . .
     # | X . . |  Cards 1            +-----+     +-------+              3 5 @ 4 1
@@ -314,6 +326,7 @@ spell_card_patterns = {
                     "X . .",
                 ],
 
+    # Air/Earth
     # +-------+  Level 2 - Built on +-----+     +-------+  Transforms  . 4 . 3 .
     # | @ X . |  Threads 2          | @ X | and | @ . . |              5 . 3 . 2
     # | . . X |  Cards 1            +-----+     | . . X |              . 5 @ 1 .
@@ -323,6 +336,7 @@ spell_card_patterns = {
                     ". . X",
                 ],
 
+    # Air/Earth
     # +-------+  Level 2 - Built on +-----+     +-------+  Transforms  . 8 . 5 .
     # | @ . . |  Threads 2          | @ X | and | @ . . |              3 . 3 . 4
     # | X . X |  Cards 1            +-----+     | . . X |              . 7 @ 5 .
@@ -332,6 +346,7 @@ spell_card_patterns = {
                     "X . X",
                 ],
 
+    # Air/Earth
     # +---------+  Level 3 - Built on +-----+     +-------+  Transforms  . 4 . 3 .
     # | X @ . . |  Threads 2          | @ X | and | @ . . |              5 . 7 . 2
     # | . . . X |  Cards 2            +-----+     | . . X |              . 1 @ 5 .
@@ -341,6 +356,7 @@ spell_card_patterns = {
                     ". . . X",
                 ],
 
+    # Air/Earth
     # +-------+  Level 3 - Built on +-----+     +-------+  Transforms  . 7 . 3 .
     # | X . . |  Threads 2          | @ X | and | @ . . |              6 . 1 . 5
     # | @ . . |  Cards 1            +-----+     | . . X |              . 3 @ 7 .
@@ -351,6 +367,7 @@ spell_card_patterns = {
                     ". . X",
                 ],
 
+    # Air/Earth
     # +---------+  Level 3 - Built on +-----+     +---------+
     # | @ X . X |  Threads 2          | @ X | and | @ . . X |
     # +---------+  Cards 2            +-----+     +---------+
@@ -358,6 +375,7 @@ spell_card_patterns = {
     'E2-12':    [   "@ X . X",
                 ],
 
+    # Air/Earth
     # +-----------+  Level 3 - Built on +-----+     +---------+
     # | X @ . . X |  Threads 2          | @ X | and | @ . . X |
     # +-----------+  Cards 2            +-----+     +---------+
@@ -365,6 +383,7 @@ spell_card_patterns = {
     'E2-13':    [   "X @ . . X",
                 ],
 
+    # Air/Earth
     # +---------+  Level 3 - Built on +-----+     +---------+  Transforms  . . . 4 . . .
     # | @ . . X |  Threads 2          | @ X | and | @ . . X |              . . . . . . .
     # | X . . . |  Cards 2            +-----+     +---------+              . . . 2 . . .
@@ -376,6 +395,7 @@ spell_card_patterns = {
                     "X . . .",
                 ],
 
+    # Air/Earth
     # +---------+  Level 3 - Built on +-----+     +---------+  Transforms  . . 4 . 3 . .
     # | @ X . . |  Threads 2          | @ X | and | @ . . . |              . . . . . . .
     # | . . . X |  Cards 2            +-----+     | . . . X |              5 . . 3 . . 2
@@ -387,6 +407,7 @@ spell_card_patterns = {
                     ". . . X",
                 ],
 
+    # Air/Earth
     # +---------+  Level 3 - Built on +-----+     +---------+  Transforms  . . 8 . 5 . .
     # | @ . . . |  Threads 2          | @ X | and | @ . . . |              . . . . . . .
     # | X . . X |  Cards 2            +-----+     | . . . X |              3 . . 3 . . 4
@@ -398,12 +419,14 @@ spell_card_patterns = {
                     "X . . X",
                 ],
 
+    # Air/Earth
     # +-----------+  Level 3 - Built on +-----+     +---------+
     # | X @ . . . |  Threads 2          | @ X | and | @ . . . |
     # | . . . . X |  Cards 2            +-----+     | . . . X |
     # +-----------+  Transform 8                    +---------+
     'E2-17':    [],
 
+    # Air/Earth
     # +---------+  Level 3 - Built on +-----+     +---------+
     # | X . . . |  Threads 2          | @ X | and | @ . . . |
     # | @ . . . |  Cards 3            +-----+     | . . . X |
@@ -411,6 +434,7 @@ spell_card_patterns = {
     # +---------+
     'E2-18':    [],
 
+    # Fire/Water
     # +-------+  Level 2 - Built on +-----+  Transforms  3 . 2
     # | . @ . |  Threads 2          | @ . |              . @ .
     # | X . X |  Cards 1            | . X |              1 . 1
@@ -419,6 +443,7 @@ spell_card_patterns = {
                     "X . X",
                 ],
 
+    # Fire/Water
     # +-------+  Level 3 - Built on +-----+  Transforms  1 . 2
     # | X . . |  Threads 2          | @ . |              . @ .
     # | . @ . |  Cards 2            | . X |              2 . 1
@@ -429,6 +454,7 @@ spell_card_patterns = {
                     ". . X",
                 ],
 
+    # All
     # +-------+  Level 2 - Built on +-----+     +-------+  Transforms  . . 3 . .
     # | @ . X |  Threads 2          | @ . | and | @ . X |              . 4 . 2 .
     # | . X . |  Cards 1            | . X |     +-------+              5 . @ . 1
@@ -438,6 +464,7 @@ spell_card_patterns = {
                     ". X .",
                 ],
 
+    # All
     # +---------+  Level 3 - Built on +-----+     +-------+  Transforms  . . 3 . .
     # | . @ . X |  Threads 3          | @ . | and | @ . X |              . 2 . 6 .
     # | X . . . |  Cards 2            | . X |     +-------+              7 . @ . 1
@@ -447,6 +474,7 @@ spell_card_patterns = {
                     "X . . .",
                 ],
 
+    # Fire/Water
     # +-------+  Level 2 - Built on +-----+     +-------+  Transforms  . 6 . 3 .
     # | @ . . |  Threads 2          | @ . | and | @ . . |              5 5 . 3 4
     # | . X X |  Cards 1            | . X |     | . . X |              . . @ . .
@@ -456,6 +484,7 @@ spell_card_patterns = {
                     ". X X",
                 ],
 
+    # Fire/Water
     # +---------+  Level 3 - Built on +-----+     +-------+  Transforms  . 2 . 6 .
     # | . @ . . |  Threads 2          | @ . | and | @ . . |              7 3 . 7 3
     # | X . . X |  Cards 2            | . X |     | . . X |              . . @ . .
@@ -465,6 +494,7 @@ spell_card_patterns = {
                     "X . . X",
                 ],
 
+    # Fire/Water
     # +---------+  Level 3 - Built on +-----+     +-------+  Transforms  . 5 . 4 .
     # | X . . . |  Threads 2          | @ . | and | @ . . |              6 1 . 7 3
     # | . @ . . |  Cards 3            | . X |     | . . X |              . . @ . .
@@ -475,6 +505,7 @@ spell_card_patterns = {
                     ". . . X",
                 ],
 
+    # Fire/Water
     # +-------+  Level 3 - Built on +-----+     +-------+  Transforms  . 6 . 7 .
     # | . @ . |  Threads 2          | @ . | and | @ . . |              2 7 . 5 4
     # | X . . |  Cards 2            | . X |     | . . X |              . . @ . .
@@ -485,6 +516,7 @@ spell_card_patterns = {
                     ". . X",
                 ],
 
+    # Fire/Water
     # +-------+  Level 3 - Built on +-----+     +-------+  Transforms  3 . . . 2
     # | @ . . |  Threads 2          | @ . | and | @ . . |              . 3 . 2 .
     # | . X . |  Cards 2            | . X |     | . . . |              . . @ . .
@@ -495,6 +527,7 @@ spell_card_patterns = {
                     ". . X",
                 ],
 
+    # All
     # +---------+  Level 3 - Built on +-----+     +---------+  Transforms  . . . 3 . . .
     # | @ . . X |  Threads 2          | @ . | and | @ . . X |              . . . . . . .
     # | . X . . |  Cards 2            | . X |     +---------+              . . 4 . 2 . .
@@ -506,6 +539,7 @@ spell_card_patterns = {
                     ". X . .",
                 ],
 
+    # All
     # +-----------+  Level 3 - Built on +-----+     +---------+  Transforms  . . . 2 . . .
     # | . @ . . X |  Threads 2          | @ . | and | @ . . X |              . . . . . . .
     # | X . . . . |  Cards 2            | . X |     +---------+              . . 7 . 5 . .
@@ -517,6 +551,7 @@ spell_card_patterns = {
                     "X . . . .",
                 ],
 
+    # Fire/Water
     # +---------+  Level 3 - Built on +-----+     +---------+  Transforms  . . 6 . 7 . .
     # | @ . . . |  Threads 2          | @ . | and | @ . . . |              . . . . . . .
     # | . X . X |  Cards 2            | . X |     | . . . X |              5 . 5 . 7 . 8
@@ -528,6 +563,7 @@ spell_card_patterns = {
                     ". X . X",
                 ],
 
+    # Fire/Water
     # +---------+  Level 3 - Built on +-----+     +---------+  Transforms  . . 2 . 3 . .
     # | . X . . |  Threads 2          | @ . | and | @ . . . |              . . . . . . .
     # | @ . . . |  Cards 3            | . X |     | . . . X |              5 . 3 . 1 . 8
@@ -540,12 +576,14 @@ spell_card_patterns = {
                     ". . . X",
                 ],
 
+    # Fire/Water
     # +-----------+  Level 3 - Built on +-----+     +---------+
     # | . @ . . . |  Threads 2          | @ . | and | @ . . . |
     # | X . . . X |  Cards 2            | . X |     | . . . X |
     # +-----------+  Transform 8: 12/8  +-----+     +---------+
     'E2-32':    [],
 
+    # Fire/Water
     # +-----------+  Level 3 - Built on +-----+     +---------+
     # | X . . . . |  Threads 2          | @ . | and | @ . . . |
     # | . @ . . . |  Cards 4            | . X |     | . . . X |
@@ -553,6 +591,7 @@ spell_card_patterns = {
     # +-----------+
     'E2-33':    [],
     
+    # Fire/Water
     # +---------+  Level 3 - Build on +-----+     +---------=
     # | @ . . . |  Threads 2          | @ . | and | @ . . . |
     # | . X . . |  Cards 3            | . X |     | . . . . |
@@ -564,6 +603,7 @@ spell_card_patterns = {
     'E2-36':    [],
     'E2-37':    [],
 
+    # Air/Earth
     # +-----------+  Level 3 - Built on +-------+
     # | X . @ . X |  Threads 2          | @ . X |
     # +-----------+  Cards 2            +-------+
@@ -571,6 +611,7 @@ spell_card_patterns = {
     'E2-38':    [   "X . @ . X",
                 ],
 
+    # Air/Earth
     # +-------+  Level 3 - Build on +-------+
     # | @ . X |  Threads 2          | @ . X |
     # | . . . |  Cards 2            +-------+
@@ -581,6 +622,7 @@ spell_card_patterns = {
                     "X . .",
                 ],
 
+    # Air/Earth
     # +-------+  Level 2 - Built on +-------+     +-------+  Transforms  . 4 3 3 .
     # | @ . X |  Threads 2          | @ . X | and | @ . . |              5 . . . 2
     # | . . X |  Cards 1            +-------+     | . . X |              5 . @ . 1
@@ -590,6 +632,7 @@ spell_card_patterns = {
                     ". . X",
                 ],
 
+    # Air/Earth
     # +-------+  Level 2 - Built on +-------+     +-------+  Transforms  . 3 7 2 .
     # | @ . X |  Threads 2          | @ . X | and | @ . . |              8 . . . 7
     # | . . . |  Cards 2            +-------+     | . . X |              3 . @ . 1
@@ -600,6 +643,7 @@ spell_card_patterns = {
                     ". X .",
                 ],
 
+    # Air/Earth
     # +-----------+  Level 3 - Built on +-------+     +-------+
     # | X . @ . . |  Threads 2          | @ . X | and | @ . . |
     # | . . . . X |  Cards 2            +-------+     | . . X |
@@ -608,6 +652,7 @@ spell_card_patterns = {
                     ". . . . X",
                 ],
 
+    # Air/Earth
     # +---------+  Level 2 - Built on +-------+     +-------+
     # | . @ . X |  Threads 2          | @ . X | and | @ . . |
     # | . . . . |  Cards 3            +-------+     | . . X |
@@ -615,18 +660,21 @@ spell_card_patterns = {
     # +---------+
     'E2-43':    [],
 
+    # Air/Earth
     # +---------+  Level 3 - Built on +-------+     +---------+
     # | @ . X X |  Threads 2          | @ . X | and | @ . . X |
     # +---------+  Cards 2            +-------+     +---------+
     #              Transform 4: 8/5
     'E2-44':    [],
 
+    # Air/Earth
     # +-------------+  Level 3 - Built on +-------+     +---------+
     # | X . @ . . X |  Threads 2          | @ . X | and | @ . . X |
     # +-------------+  Cards 3            +-------+     +---------+
     #                  Transform 4: 8/5
     'E2-45':    [],
 
+    # Air/Earth
     # +---------+  Level 3 - Built on +-------+     +---------+
     # | @ . . X |  Threads 2          | @ . X | and | @ . . X |
     # | . . . . |  Cards 3            +-------+     +---------+
@@ -637,6 +685,7 @@ spell_card_patterns = {
                     "X . . .",
                 ],
 
+    # Air/Earth
     # +---------+  Level 3 - Built on +-------+     +---------+
     # | @ . X . |  Threads 2          | @ . X | and | @ . . . |
     # | . . . X |  Cards 2            +-------+     | . . . X |
@@ -647,6 +696,7 @@ spell_card_patterns = {
     'E2-49':    [],
     'E2-50':    [],
 
+    # Air/Earth
     # +-----------+  Level 3 - Built on +-------+     +-----------+
     # | @ . X . . |  Threads 2          | @ . X | and | @ . . . . |
     # | . . . . X |  Cards 2            +-------+     | . . . . X |
@@ -657,6 +707,7 @@ spell_card_patterns = {
     'E2-53':    [],
     'E2-54':    [],
 
+    # All
     # +-------+  Level 3 - Built on +-------+  Transforms  . 3 . 3 .
     # | . @ . |  Threads 2          | @ . . |              4 . . . 2
     # | . . . |  Cards 2            | . . X |              . . @ . .
@@ -667,6 +718,7 @@ spell_card_patterns = {
                     "X . X",
                 ],
 
+    # All
     # +---------+  Level 3 - Built on +-------+
     # | . @ . . |  Threads 2          | @ . . |
     # | . . . X |  Cards 3            | . . X |
@@ -674,12 +726,14 @@ spell_card_patterns = {
     # +---------+
     'E2-56':    [],
 
+    # All
     # +-----------+  Level 3 - Built on +-------+
     # | . . @ . . |  Threads 2          | @ . . |
     # | X . . . X |  Cards 2            | . . X |
     # +-----------+  Transform 6: 8/5   +-------+
     'E2-57':    [],
 
+    # All
     # +-----------+  Level 3 - Built on +-------+
     # | X . . . . |  Threads 2          | @ . . |
     # | . . @ . . |  Cards 4            | . . X |
@@ -687,6 +741,7 @@ spell_card_patterns = {
     # +-----------+
     'E2-58':    [],
 
+    # All
     # +---------+  Level 3 - Built on +-------+  Transforms  . 2 . 3 .
     # | . . . X |  Threads 2          | @ . . |              4 . . . 1
     # | . @ . . |  Cards 4            | . . X |              . . @ . .
@@ -695,6 +750,7 @@ spell_card_patterns = {
     # +---------+
     'E2-59':    [],
 
+    # Air/Earth
     # +---------+  Level 3 - Built on +-------+     +---------+
     # | @ . . X |  Threads 2          | @ . . | and | @ . . X |
     # | . . X . |  Cards 2            | . . X |     +---------+
@@ -705,6 +761,7 @@ spell_card_patterns = {
     'E2-62':    [],
     'E2-63':    [],
 
+    # All
     # +---------+  Level 3 - Built on +-------+     +---------+
     # | @ . . . |  Threads 2          | @ . . | and | @ . . . |
     # | . . X X |  Cards 2            | . . X |     | . . . X |
@@ -715,6 +772,7 @@ spell_card_patterns = {
     'E2-66':    [],
     'E2-67':    [],
 
+    # All
     # +---------+  Level 3 - Built on +-------+     +---------+
     # | @ . . . |  Threads 2          | @ . . | and | @ . . . |
     # | . . X . |  Cards 3            | . . X |     | . . . . |
@@ -726,6 +784,7 @@ spell_card_patterns = {
     'E2-70':    [],
     'E2-71':    [],
 
+    # Air/Earth
     # +-----------+  Level 3 - Built on +-------+     +-----------+
     # | @ . . . X |  Threads 2          | @ . . | and | @ . . . X |
     # | . . X . . |  Cards 2            | . . X |     +-----------+
@@ -736,6 +795,7 @@ spell_card_patterns = {
     'E2-74':    [],
     'E2-75':    [],
 
+    # All
     # +-----------+  Level 3 - Built on +-------+     +-----------+
     # | @ . . . . |  Threads 2          | @ . . | and | @ . . . . |
     # | . . X . X |  Cards 2            | . . X |     | . . . . X |
@@ -746,6 +806,7 @@ spell_card_patterns = {
     'E2-78':    [],
     'E2-79':    [],
 
+    # All
     # +-----------+  Level 3 - Built on +-------+     +-----------+
     # | @ . . . . |  Threads 2          | @ . . | and | @ . . . . |
     # | . . X . . |  Cards 4            | . . X |     | . . . . . |
@@ -763,6 +824,7 @@ spell_card_patterns = {
     # |_____|_|___|_|_|_|___|_|_|_| |__,|_|  |_____|    |_|    |___|
     #
 
+    # All
     # +-------+  Level 4 - Build on +-----+     +-------+
     # | @ . X |  Threads 3          | @ . | and | @ . X |
     # | . X . |  Cards 2            | . X |     +-------+
@@ -770,6 +832,7 @@ spell_card_patterns = {
     # +-------+
     'E3-1':     [],
 
+    # All
     # +-------+  Level 4 - Build on +-----+     +-------+  Transforms  3 . . . 2
     # | @ X . |  Threads 3          | @ X | and | @ . . |              . . 2 . .
     # | X . . |  Cards 2            +-----+     | . . . |              . 3 @ 1 .
@@ -777,6 +840,7 @@ spell_card_patterns = {
     # +-------+                                 +-------+              4 . . . 1
     'E3-2':     [],
 
+    # All
     # +-------+  Level 4 - Build on +-------+     +-------+  Transforms  3 . 2 . 2
     # | @ . X |  Threads 3          | @ . X | and | @ . . |              . . . . .
     # | . . . |  Cards 2            +-------+     | . . . |              3 . @ . 1
@@ -790,24 +854,28 @@ spell_card_patterns = {
     # |_____|_|___|_|_|_|___|_|_|_| |__,|_|  |___|    |_|    |_____|
     #
 
+    # Air/Earth
     # +-------+  Level 2 - Built on +-----+
     # | @ X @ |  Threads 1          | @ X |
     # +-------+  Cards 2            +-----+
     #            Transform 1: 1/
     'EE1-1':    [],
 
+    # Air/Earth
     # +-----+  Level 2 - Built on +-----+
     # | @ X |  Threads 1          | @ X |
     # | . @ |  Cards 2            +-----+
     # +-----+  Transform 2: 2/
     'EE1-2':    [],
 
+    # Air/Earth
     # +-------+  Level 2 - Built on +-----+     +-------+
     # | @ @ X |  Threads 1          | @ X | and | @ . X |
     # +-------+  Cards 2            +-----+     +-------+
     #            Transform 2: 2/
     'EE1-3':    [],
 
+    # Fire/Water
     # +-------+  Level 3 - Built on +-----+
     # | @ . . |  Threads 1          | @ . |
     # | . X . |  Cards 2            | . X |
@@ -818,6 +886,7 @@ spell_card_patterns = {
                     ". . @",
                 ],
 
+    # Fire/Water
     # +-------+  Level 2 - Built on +-----+
     # | @ . @ |  Threads 1          | @ . |
     # | . X . |  Cards 2            | . X |
@@ -826,6 +895,7 @@ spell_card_patterns = {
                     ". X .",
                 ],
 
+    # All
     # +-----------+  Level 3 - Built on +-------+
     # | @ . . . . |  Threads 1          | @ . . |
     # | . . X . . |  Cards 4            | . . X |
@@ -842,6 +912,7 @@ spell_card_patterns = {
     # |_____|_|___|_|_|_|___|_|_|_| |__,|_|  |___|    |_|    |___|
     #
 
+    # Air/Earth
     # +-----+  Level 3 - Built on +-----+
     # | @ X |  Threads 2          | @ X |
     # | X @ |  Cards 2            +-----+
@@ -850,6 +921,7 @@ spell_card_patterns = {
                     "X @",
                 ],
 
+    # Air/Earth
     # +-------+  Level 3 - Built on +-----+  Transforms  . 2 . .
     # | @ X . |  Threads 2          | @ X |              3 @ 1 .
     # | . @ X |  Cards 2            +-----+              . 3 @ 1
@@ -858,6 +930,7 @@ spell_card_patterns = {
                     ". @ X",
                 ],
 
+    # Air/Earth
     # +-------+  Level 4 - Built on +-----+
     # | X . . |  Threads 2          | @ X |
     # | @ . . |  Cards 2            +-----+
@@ -865,6 +938,7 @@ spell_card_patterns = {
     # +-------+
     'EE2-3':    [],
 
+    # Air/Earth
     # +---------+  Level 3 - Built on +-----+
     # | X @ . . |  Threads 2          | @ X |
     # | . . @ X |  Cards 2            +-----+
@@ -873,6 +947,7 @@ spell_card_patterns = {
                     ". . @ X",
                 ],
 
+    # Air/Earth
     # +-------+  Level 3 - Built on +-----+  Transforms  . 2 . .
     # | @ . . |  Threads 2          | @ X |              3 @ 3 .
     # | X @ X |  Cards 2            +-----+              . 1 @ 1
@@ -881,6 +956,7 @@ spell_card_patterns = {
                     "X @ X",
                 ],
 
+    # Fire/Water
     # +-------+  Level 4 - Built on +-----+
     # | . @ . |  Threads 2          | @ . |
     # | X . X |  Cards 2            | . X |
@@ -891,12 +967,14 @@ spell_card_patterns = {
                     ". @ .",
                 ],
 
+    # Fire/Water
     # +---------+  Level 4 - Built on +-----+
     # | . @ @ . |  Threads 2          | @ . |
     # | X . . X |  Cards 2            | . X |
     # +---------+  Transform 2: 4/    +-----+
     'EE2-7':    [],
 
+    # Fire/Water
     # +---------+  Level 4 - Built on +-----+
     # | X . . . |  Threads 2          | @ . |
     # | . @ @ . |  Cards 3            | . X |
@@ -965,7 +1043,6 @@ spell_card_patterns = {
 #     'pattern': name of pattern
 
 # Next id = 97
-# Unused: 70
 
 spell_card_data = [
 
@@ -984,12 +1061,12 @@ spell_card_data = [
     # Neutral spells are basic spells that are always worse than corresponding elemental spells.
     
     ["Create Eye",
-        {'element': 'none', 'category': 'starter,create-eye', 'id': 89, 'pattern': 'N1'},
+        {'element': 'none', 'category': 'starter,eye-create', 'id': 89, 'pattern': 'N1'},
         {
             'cast': "Create a EYE in your location.",
         } ],
     ["Move Eye",
-        {'element': 'none', 'category': 'starter,move-eye', 'id': 90, 'pattern': 'N2-4'},
+        {'element': 'none', 'category': 'starter,eye-move', 'id': 90, 'pattern': 'N2-4'},
         {
             'cast': "Move one of your EYEs one space.",
         } ],
@@ -1002,23 +1079,23 @@ spell_card_data = [
     # Representative spell for each element.
 
     ["Haste",
-        {'element': 'air', 'category': 'starter,move-mage', 'id': 3, 'pattern': 'E1-1'},
+        {'element': 'air', 'category': 'starter,mage-move', 'id': 3, 'pattern': 'E1-1'},
         {
-            'cast': "Move 5 spaces along a road.",
+            'cast': "Move 6mp.",
         } ],
-    ["Burn Eye",
-        {'element': 'fire', 'category': 'starter,attack-eye', 'id': 92, 'pattern': 'E1-2'},
+    ["Eye for Eye",
+        {'element': 'fire', 'category': 'starter,eye-other-attack', 'id': 92, 'pattern': 'E1-2'},
         {
             'cast': "Remove an opponent's EYE at one of your EYE's location. Consume this EYE.",
         } ],
-    ["Protection",
-        {'element': 'earth', 'category': 'starter,defend-eye', 'id': 4, 'pattern': 'E1-1'},
+    ["Eye Protection",
+        {'element': 'earth', 'category': 'starter,eye-defend', 'id': 4, 'pattern': 'E1-1'},
         {
             'cast': "{{ADD_CHARGE}}",
             'sacrifice': "Sacrifice a charge to prevent one of your EYEs from being removed.",
         } ],
     ["Creep",
-        {'element': 'water', 'category': 'starter,create-eye,move-eye', 'id': 73, 'pattern': 'E1-2'},
+        {'element': 'water', 'category': 'starter,eye-create,eye-move', 'id': 73, 'pattern': 'E1-2'},
         {
             'cast': "Place a EYE. Move one of your EYEs 2 spaces.",
         } ],
@@ -1031,32 +1108,37 @@ spell_card_data = [
     # Move mage
 
     ["Plains Walker",
-        {'element': 'air', 'category': 'move-mage,terrain', 'id': 7, 'pattern': 'E2-6'},
+        {'element': 'air', 'category': 'mage-move,terrain', 'id': 7, 'pattern': 'E2-6'},
         {
             'cast': "Move through 5 contiguous Plains locations.",
         } ],
     ["Forest Run",
-        {'element': 'air', 'category': 'terrain,move-mage', 'id': 11, 'pattern': 'E2-14'},
+        {'element': 'air', 'category': 'terrain,mage-move', 'id': 11, 'pattern': 'E2-14'},
         {
             'cast': "{{ADD_CHARGE}}",
-            'charged': "If in or next to a Forest location, pay 2mp to move through any number of connected Forest locations, bypassing any Rivers.",
+            'charged': "If you start your turn in a Forest location, you may immediately move through up to 5 connected Forest locations.",
         } ],
     ["Forest Jump",
-        {'element': 'air', 'category': 'terrain,move-mage', 'id': 93, 'pattern': 'E2-13'},
+        {'element': 'air', 'category': 'terrain,mage-move', 'id': 93, 'pattern': 'E2-13'},
         {
             'cast': "If in a Forest location, swap positions with one of your EYEs that is in a Forest location no more than 5 spaces away. You may immediately repeat this spell.",
             'notes': "You may only use each EYE once when you cast this spell.",
         } ],
     ["Blur",
-        {'element': 'air', 'category': 'move-mage', 'id': 19, 'pattern': 'E2-42'},
+        {'element': 'air', 'category': 'mage-move', 'id': 19, 'pattern': 'E2-42'},
         {
             'cast': "{{ADD_CHARGE}}",
             'charged': "Once per turn (per charge), you may move into a neighboring location ignoring terrain cost.",
         } ],
     ["Quick Drop",
-        {'element': 'air', 'category': 'move-mage,create-eye', 'id': 66, 'pattern': 'E2-10'},
+        {'element': 'air', 'category': 'mage-move,eye-create', 'id': 66, 'pattern': 'E2-10'},
         {
             'cast': "Move 5mp. Place a EYE in your final location.",
+        } ],
+    ["Air Walk",
+        {'element': 'air', 'category': 'mage-move', 'id': 70, 'pattern': 'E2-11'},
+        {
+            'cast': "Move up to 4 spaces over the same or lower terrain than your starting position. You must end your move on a space of the same level.",
         } ],
 
     #     _____                _____ _   _           
@@ -1067,18 +1149,13 @@ spell_card_data = [
     # Attack by moving another player's mage
                                                                          
     ["Push",
-        {'element': 'air', 'category': 'move-mage,move-other-mage', 'id': 20, 'pattern': 'E2-5'},
+        {'element': 'air', 'category': 'mage-move,mage-other-move', 'id': 20, 'pattern': 'E2-5'},
         {
             'cast': "Push all mages out of an adjacent location and then move into that location. You choose which location each mage moves into.",
-            'notes': "If there are multiple mages, they can be pushed in to different locations."
-        } ],
-    ["Teleport Random",
-        {'element': 'fire', 'category': 'move-other-mage', 'id': 95, 'pattern': 'E2-8'},
-        {
-            'cast': "Move all mages at one of your EYEs to a random star location. Consume that EYE.",
+            'notes': "If there are multiple mages, they can be pushed into different locations."
         } ],
     ["Barrier",
-        {'element': 'earth', 'category': 'move-other-mage', 'id': 87, 'pattern': 'E2-10'},
+        {'element': 'earth', 'category': 'mage-other-move', 'id': 87, 'pattern': 'E2-10'},
         {
             'cast': "{{ADD_CHARGE}}",
             'charged': "All locations adjacent to your EYEs are obstacles that other mages may not move into.",
@@ -1091,8 +1168,8 @@ spell_card_data = [
     #
     # Defend against being moved by another mage
 
-    ["Anchor",
-        {'element': 'earth', 'category': 'defend-move', 'id': 39, 'pattern': 'E2-16'},
+    ["Stance",
+        {'element': 'earth', 'category': 'mage-anchor', 'id': 39, 'pattern': 'E2-16'},
         {
             'cast': "{{ADD_CHARGE}}",
             'charged': "You may not be involuntarily moved by other mages.",
@@ -1107,18 +1184,18 @@ spell_card_data = [
     # Convert mana into an Eye on the map
 
     ["Split",
-        {'element': 'water', 'category': 'create-eye', 'id': 8, 'pattern': 'E2-27'},
+        {'element': 'water', 'category': 'eye-create', 'id': 8, 'pattern': 'E2-27'},
         {
             'cast': "Place a new EYE in a location where you already have a EYE.",
         } ],
     ["Mountain Eye",
-        {'element': 'earth', 'category': 'terrain,create-eye', 'id': 12, 'pattern': 'E2-11'},
+        {'element': 'earth', 'category': 'terrain,eye-create', 'id': 12, 'pattern': 'E2-11'},
         {
             'cast': "{{ADD_CHARGE}}",
             'charged': "If in or next to a Mountain location, add a EYE adjacent to any Mountain location connected to that Mountain location.",
         } ],
     ["Snapback",
-        {'element': 'water', 'category': 'create-eye', 'id': 79, 'pattern': 'E2-25'},
+        {'element': 'water', 'category': 'eye-create', 'id': 79, 'pattern': 'E2-25'},
         {
             'cast': "{{ADD_CHARGE}}",
             'sacrifice': "If at same location as another mage's EYE, you may sacrifice a charge to place a EYE at that mage's location.",
@@ -1133,22 +1210,22 @@ spell_card_data = [
     # Move one of your Eyes on the map
     
     ["Run and Toss",
-        {'element': 'air', 'category': 'move-mage,create-eye,move-eye', 'id': 67, 'pattern': 'E2-46'},
+        {'element': 'air', 'category': 'mage-move,eye-create,eye-move', 'id': 67, 'pattern': 'E2-46'},
         {
             'cast': "Move 1 space, place a EYE, then move that EYE 2 spaces.",
         } ],
     ["Spread",
-        {'element': 'water', 'category': 'create-eye,move-eye', 'id': 75, 'pattern': 'E2-20'},
+        {'element': 'water', 'category': 'eye-create,eye-move', 'id': 75, 'pattern': 'E2-20'},
         {
             'cast': "Place a EYE. Move all of your EYEs 1 space.",
         } ],
     ["Burst",
-        {'element': 'water', 'category': 'create-eye,move-eye', 'id': 74, 'pattern': 'E2-31'},
+        {'element': 'water', 'category': 'eye-create,eye-move', 'id': 74, 'pattern': 'E2-31'},
         {
             'cast': "Place 2 EYEs. Move 3 of your EYEs 2 spaces each.",
         } ],
     ["Traceback",
-        {'element': 'water', 'category': 'move-eye,create-eye', 'id': 69, 'pattern': 'E2-41'},
+        {'element': 'water', 'category': 'eye-move,eye-create', 'id': 69, 'pattern': 'E2-41'},
         {
             'cast': "Move a EYE 2. If you have a EYE in the same location as a EYE owned by another mage, move your EYE to that mage's location.",
         } ],
@@ -1178,39 +1255,39 @@ spell_card_data = [
     # Remove an opponent's Eye
 
     ["Remove Eye",
-        {'element': 'fire', 'category': 'attack-eye', 'id': 72, 'pattern': 'E2-19'},
+        {'element': 'fire', 'category': 'eye-other-attack', 'id': 72, 'pattern': 'E2-19'},
         {
             'cast': "If in a location with a EYE controlled by another mage, you may remove 2 of their EYEs.",
         } ],
     ["Prune",
-        {'element': 'fire', 'category': 'attack-eye', 'id': 33, 'pattern': 'E2-23'},
+        {'element': 'fire', 'category': 'eye-other-attack', 'id': 33, 'pattern': 'E2-23'},
         {
             'cast': "Remove all opponent EYEs from a location where you control a EYE. Consume this EYE.",
         } ],
     ["Prune Neighbor",
-        {'element': 'fire', 'category': 'attack-eye', 'id': 42, 'pattern': 'E2-31'},
+        {'element': 'fire', 'category': 'eye-other-attack', 'id': 42, 'pattern': 'E2-31'},
         {
             'cast': "Remove all EYEs from a location adjacent to where you control a EYE. Consume this EYE.",
         } ],
     ["Erase",
-        {'element': 'fire', 'category': 'move-eye,attack-eye', 'id': 65, 'pattern': 'E2-28'},
+        {'element': 'fire', 'category': 'eye-move,eye-other-attack', 'id': 65, 'pattern': 'E2-28'},
         {
             'cast': "Move one of your EYEs 3 spaces, removing one opponent EYE from each location it moves into this turn. Consume this EYE.",
         } ],
     ["Fire Burst",
-        {'element': 'fire', 'category': 'attack-eye', 'id': 23, 'pattern': 'E2-30'},
+        {'element': 'fire', 'category': 'eye-other-attack', 'id': 23, 'pattern': 'E2-30'},
         {
             'cast': "Remove all EYEs in all locations adjacent to one of your EYEs. Consume that EYE.",
         } ],
     ["Nudge",
-        {'element': 'earth', 'category': 'move-other-eye', 'id': 85, 'pattern': 'E2-8'},
+        {'element': 'earth', 'category': 'eye-other-move', 'id': 85, 'pattern': 'E2-8'},
         {
             'cast': "{{ADD_CHARGE}}",
             'charged': "At the end of your turn, if another mage's EYE is in the same location or adjacent to one of your EYEs, you may move their EYE 1 space. Choose one for each charge on this spell.",
             'sacrifice': "Sacrifice a charge to move the eye(s) 4 spaces."
         } ],
     ["Sneak Attack",
-        {'element': 'fire', 'category': 'attack-eye,move-mage', 'id': 64, 'pattern': 'E2-55'},
+        {'element': 'fire', 'category': 'eye-other-attack,mage-move', 'id': 64, 'pattern': 'E2-55'},
         {
             'cast': "Remove EYEs from a adjacent location and then move into that location.",
         } ],
@@ -1224,19 +1301,19 @@ spell_card_data = [
     # Defend against an opponent removing one of your eyes
 
     ["Eye Shield",
-        {'element': 'earth', 'category': 'defend-eye', 'id': 83, 'pattern': 'E1-6'},
+        {'element': 'earth', 'category': 'eye-defend', 'id': 83, 'pattern': 'E1-6'},
         {
             'cast': "{{ADD_CHARGE}}",
             'sacrifice': "You may sacrifice this CHARGE to prevent one of your EYEs from being removed or consumed.",
         } ],
     ["Harden Shell",
-        {'element': 'earth', 'category': 'defend-eye', 'id': 86, 'pattern': 'E2-9'},
+        {'element': 'earth', 'category': 'eye-defend', 'id': 86, 'pattern': 'E2-9'},
         {
             'cast': "{{ADD_CHARGE}}", 
             'charged': "If the number of EYEs you have is less than or equal to the number of CHARGEs on this spell, then they are protected from being removed by another mage (but they can still be consumed).",
         } ],
     ["Whiplash",
-        {'element': 'water', 'category': 'defend-eye', 'id': 76, 'pattern': 'E2-21'},
+        {'element': 'water', 'category': 'eye-defend', 'id': 76, 'pattern': 'E2-21'},
         {
             'cast': "{{ADD_CHARGE}}",
             'sacrifice': "You may sacrifice one of your EYEs to prevent another EYE from being removed/consumed.",
@@ -1266,7 +1343,7 @@ spell_card_data = [
     # Spell: Remove thread from tapestry. Take another action.
 
     ["Rest",
-        {'element': 'water', 'category': 'thread', 'id': 58, 'pattern': 'E2-19'},
+        {'element': 'water', 'category': 'tapestry-thread', 'id': 58, 'pattern': 'E2-19'},
         {
             'cast': "Remove 3 THREADs from your TAPESTRY.",
         } ],
@@ -1278,12 +1355,6 @@ spell_card_data = [
     #                                       |_|                 |___|
     # Attack an opponent's tapestry
     # Spell: Attack tapestry, cover a spot in another mage's tapestry.
-
-    ["Burn",
-        {'element': 'fire', 'category': 'attack-tapestry', 'id': 91, 'pattern': 'E2-20'},
-        {
-            'cast': "Disrupt the tapestry of a mage at one of your EYEs by placing one of your mana in their tapestry to cover an element. Consume the EYE used to target the mage.",
-        } ],
 
     #     ____      ___           _    _____                 _           
     #    |    \ ___|  _|___ ___ _| |  |_   _|___ ___ ___ ___| |_ ___ _ _ 
@@ -1307,19 +1378,6 @@ spell_card_data = [
     #                                   |_|
     # Remove a charge from an opponent's spell
 
-    ["Drain",
-        {'element': 'air', 'category': 'attack-charge', 'id': 71, 'pattern': 'E2-12'},
-        {
-            'cast': "A mage at one of your EYEs must remove 2 of their CHARGEs. Consume that EYE.",
-        } ],
-    ["Copy Charge",
-        {'element': 'earth', 'category': 'attack-charge', 'id': 94, 'pattern': 'E2-13'},
-        {
-            'cast': "If you have a EYE on or adjacent to another mage, you may add a charge to one of their spells. You gain all the effects of that spell.",
-            'notes': "Even if mage removes their charge, yours stays active.",
-        } ],
-    
-
     #     _____     _   _         
     #    |  _  |___| |_|_|___ ___ 
     #    |     |  _|  _| | . |   |
@@ -1327,20 +1385,13 @@ spell_card_data = [
     #
     # Gain an extra action
 
-    ["Store Action",
-        {'element': 'earth', 'category': 'add-action', 'id': 96, 'pattern': 'E2-39'},
-        {
-            'cast': "{{ADD_CHARGE}}",
-            'sacrifice': "During your turn, you may sacrifice a charge to gain an extra action.",
-        } ],
-    
     #     _____                 _     
     #    |_   _|___ ___ ___ ___|_|___ 
     #      | | | -_|  _|  _| .'| |   |
     #      |_| |___|_| |_| |__,|_|_|_|
 
     ["Water Moccasins",
-        {'element': 'water', 'category': 'move-mage,terrain', 'id': 54, 'pattern': 'E2-24'},
+        {'element': 'water', 'category': 'mage-move,terrain', 'id': 54, 'pattern': 'E2-24'},
         {
             'cast': "{{ADD_CHARGE}}",
             'charged': "Rivers cost 0mp to cross. Water locations cost 1mp to enter.",
@@ -1354,7 +1405,7 @@ _unused_ = [
     # Move Self
 
     ["Teleport",
-        {'element': 'air', 'category': 'move-mage', 'id': 78, 'pattern': 'E2-31'},
+        {'element': 'air', 'category': 'mage-move', 'id': 78, 'pattern': 'E2-31'},
         {
             'cast': "Teleport to the location of one of your EYEs. Consume that EYE.",
         } ],
@@ -1374,7 +1425,13 @@ _unused_ = [
         {'element': 'earth', 'category': 'terrain,move', 'id': 45},
         ["If in or adjacent to a Mountain location, add a EYE to any location in a 1- or 2-size Mountain range."] ],
 
-    # Attack Other Move
+    # Move Other
+
+    ["Teleport Random",
+        {'element': 'fire', 'category': 'mage-other-move', 'id': 95, 'pattern': 'E2-8'},
+        {
+            'cast': "Move all mages at one of your EYEs to a random star location. Consume that EYE.",
+        } ],
 
     # Defend Move Self
 
@@ -1399,7 +1456,7 @@ _unused_ = [
     # Move Eye
 
     ["Diasporate",
-        {'element': 'water', 'category': 'create-eye,move-eye', 'id': 77, 'pattern': 'EE2-2'},
+        {'element': 'water', 'category': 'eye-create,eye-move', 'id': 77, 'pattern': 'EE2-2'},
         {
             'cast': "Place 3 EYEs. Move 3 of your EYEs 2 spaces each.",
         } ],
@@ -1431,6 +1488,10 @@ _unused_ = [
         {'element': 'fire', 'category': 'eye', 'id': 31},
         ["Move EYEs you control a total of 5 spaces, split amongst any number of EYEs."] ],
 
+    # Move Other Eye
+
+    # Defend Move Eye
+    
     # Attack Eye
 
     ["Selective Prune",
@@ -1446,7 +1507,7 @@ _unused_ = [
         {'element': 'fire', 'category': 'eye', 'id': 34},
         ["When in the same location as a EYE controlled by another mage, remove any one of their EYEs."] ],
     ["Delete All",
-        {'element': 'fire', 'category': 'attack-eye', 'id': 43, 'pattern': 'E1-2'},
+        {'element': 'fire', 'category': 'eye-other-attack', 'id': 43, 'pattern': 'E1-2'},
         {
             'cast': "Remove all opponent EYEs at one of your EYE's location. Consume this EYE.",
         } ],
@@ -1456,22 +1517,22 @@ _unused_ = [
     # Attack HP
 
     ["Ricochet Blast",
-        {'element': 'fire', 'category': 'attack-mage', 'id': 24, 'pattern': 'E1-5'},
+        {'element': 'fire', 'category': 'mage-other-attack', 'id': 24, 'pattern': 'E1-5'},
         {
             'cast': "Attack 1 at location adjacent to one of your EYEs. Consume that EYE.",
         } ],
     ["Fire Ball",
-        {'element': 'fire', 'category': 'attack-mage', 'id': 22, 'pattern': 'E2-26'},
+        {'element': 'fire', 'category': 'mage-other-attack', 'id': 22, 'pattern': 'E2-26'},
         {
             'cast': "Attack 2 at one of your EYEs. Consume that EYE.",
         } ],
     ["Fire Reign",
-        {'element': 'fire', 'category': 'attack-mage', 'id': 26, 'pattern': 'E2-27'},
+        {'element': 'fire', 'category': 'mage-other-attack', 'id': 26, 'pattern': 'E2-27'},
         {
             'cast': "Attack 1 at all of your EYEs. Consume all of your EYEs except one.",
         } ],
     ["Hands of Flame",
-        {'element': 'fire', 'category': 'move-mage,attack-mage', 'id': 63, 'pattern': 'EE2-6'},
+        {'element': 'fire', 'category': 'mage-move,mage-other-attack', 'id': 63, 'pattern': 'EE2-6'},
         {
             'cast': "Move 1 and then Attack 1 at a location adjacent to your new location.",
         } ],
@@ -1499,25 +1560,25 @@ _unused_ = [
     # Defend HP
 
     ["Stone Reflection",
-        {'element': 'earth', 'category': 'defend-mage,attack-mage', 'id': 88, 'pattern': 'E2-4'},
+        {'element': 'earth', 'category': 'mage-defend,mage-other-attack', 'id': 88, 'pattern': 'E2-4'},
         {
             'cast': "{{ADD_CHARGE}}",
             'charged': "You take 1/2 damage (rounded down) from attacks. Full attack damage is reflected back at your attacker.",
         } ],
     ["Double Shield",
-        {'element': 'earth', 'category': 'defend-mage', 'id': 36, 'pattern': 'E2-13'},
+        {'element': 'earth', 'category': 'mage-defend', 'id': 36, 'pattern': 'E2-13'},
         {
             'cast': "{{ADD_CHARGE}}",
             'charged': "Defend 2.",
         } ],
     ["Eye Coil",
-        {'element': 'water', 'category': 'defend-mage', 'id': 81, 'pattern': 'E2-22'},
+        {'element': 'water', 'category': 'mage-defend', 'id': 81, 'pattern': 'E2-22'},
         {
             'cast': "{{ADD_CHARGE}}",
             'charged': "If you are in the same location as one of your EYEs, that EYE acts as a shield to Defend 2.",
         } ],
     ["Deflect",
-        {'element': 'water', 'category': 'defend-mage,attack-mage,attack-eye', 'id': 80, 'pattern': 'E2-25'},
+        {'element': 'water', 'category': 'mage-defend,mage-other-attack,eye-other-attack', 'id': 80, 'pattern': 'E2-25'},
         {
             'cast': "{{ADD_CHARGE}}",
             'sacrifice': "When attacked, you may remove this CHARGE to deflect the attack to an adjacent location. Attack 1 and remove all EYEs at that location.",
@@ -1550,18 +1611,49 @@ _unused_ = [
         {'element': 'water', 'category': 'defend,tapestry', 'id': 57},
         ["Place a CHARGE on this spell.", "-", "When CHARGEd, this shield absorbs all damage from attacks.", "-", "Remove CHARGE and 2 THREADs from your TAPESTRY when it takes 1 or more damage from a single attack."] ],
 
-    # Charge
-
-    # Thread
-
     ["Recovery Shield",
-        {'element': 'earth', 'category': 'defend-mage,modify-tapestry', 'id': 82, 'pattern': 'E2-39'},
+        {'element': 'earth', 'category': 'mage-defend,modify-tapestry', 'id': 82, 'pattern': 'E2-39'},
         {
             'cast': "{{ADD_CHARGE}}",
             'charged': "Defend 1",
             'sacrifice': "During your turn, you may choose to remove a CHARGE from this spell to recover 2 mana from your TAPESTRY into your MANA POOL.",
         } ],
 
+    # Other Tapestry
+
+    ["Burn",
+        {'element': 'fire', 'category': 'attack-tapestry', 'id': 91, 'pattern': 'E2-20'},
+        {
+            'cast': "Disrupt the tapestry of a mage at one of your EYEs by placing one of your mana in their tapestry to cover an element. Consume the EYE used to target the mage.",
+        } ],
+
+    # Defend Tapestry
+    
+    # Spell
+
+    # Other Spell
+
+    ["Drain",
+        {'element': 'air', 'category': 'attack-charge', 'id': 71, 'pattern': 'E2-12'},
+        {
+            'cast': "A mage at one of your EYEs must remove 2 of their CHARGEs. Consume that EYE.",
+        } ],
+    ["Copy Charge",
+        {'element': 'earth', 'category': 'attack-charge', 'id': 94, 'pattern': 'E2-13'},
+        {
+            'cast': "If you have a EYE on or adjacent to another mage, you may add a charge to one of their spells. You gain all the effects of that spell.",
+            'notes': "Even if mage removes their charge, yours stays active.",
+        } ],
+    
+    # Action
+
+    ["Store Action",
+        {'element': 'earth', 'category': 'add-action', 'id': 96, 'pattern': 'E2-39'},
+        {
+            'cast': "{{ADD_CHARGE}}",
+            'sacrifice': "During your turn, you may sacrifice a charge to gain an extra action.",
+        } ],
+    
     # Terrain
 
     ["Flood",

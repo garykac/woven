@@ -1,38 +1,10 @@
 # List of Spell Fragments
 
-Generated on 2020/07/13 @ 21:04
+Generated on 2020/07/14 @ 00:11
 
 ## By Category
 
-Starter (6)
-
-* [Burn Eye](#burn-eye) - _Fire_
-* [Create Eye](#create-eye) - _Neutral_
-* [Creep](#creep) - _Water_
-* [Haste](#haste) - _Air_
-* [Move Eye](#move-eye) - _Neutral_
-* [Protection](#protection) - _Earth_
-
-Attack Eye (7)
-
-* [Burn Eye](#burn-eye) - _Fire_
-* [Erase](#erase) - _Fire_
-* [Fire Burst](#fire-burst) - _Fire_
-* [Prune](#prune) - _Fire_
-* [Prune Neighbor](#prune-neighbor) - _Fire_
-* [Remove Eye](#remove-eye) - _Fire_
-* [Sneak Attack](#sneak-attack) - _Fire_
-
-Attack Charge (2)
-
-* [Copy Charge](#copy-charge) - _Earth_
-* [Drain](#drain) - _Air_
-
-Attack Tapestry (1)
-
-* [Burn](#burn) - _Fire_
-
-Create Eye (10)
+Eye Create (10)
 
 * [Burst](#burst) - _Water_
 * [Create Eye](#create-eye) - _Neutral_
@@ -45,19 +17,44 @@ Create Eye (10)
 * [Spread](#spread) - _Water_
 * [Traceback](#traceback) - _Water_
 
-Defend Move (1)
+Eye Defend (4)
 
-* [Anchor](#anchor) - _Earth_
-
-Defend Eye (4)
-
+* [Eye Protection](#eye-protection) - _Earth_
 * [Eye Shield](#eye-shield) - _Earth_
 * [Harden Shell](#harden-shell) - _Earth_
-* [Protection](#protection) - _Earth_
 * [Whiplash](#whiplash) - _Water_
 
-Move Mage (10)
+Eye Move (7)
 
+* [Burst](#burst) - _Water_
+* [Creep](#creep) - _Water_
+* [Erase](#erase) - _Fire_
+* [Move Eye](#move-eye) - _Neutral_
+* [Run and Toss](#run-and-toss) - _Air_
+* [Spread](#spread) - _Water_
+* [Traceback](#traceback) - _Water_
+
+Eye Other Attack (7)
+
+* [Erase](#erase) - _Fire_
+* [Eye for Eye](#eye-for-eye) - _Fire_
+* [Fire Burst](#fire-burst) - _Fire_
+* [Prune](#prune) - _Fire_
+* [Prune Neighbor](#prune-neighbor) - _Fire_
+* [Remove Eye](#remove-eye) - _Fire_
+* [Sneak Attack](#sneak-attack) - _Fire_
+
+Eye Other Move (1)
+
+* [Nudge](#nudge) - _Earth_
+
+Mage Anchor (1)
+
+* [Stance](#stance) - _Earth_
+
+Mage Move (11)
+
+* [Air Walk](#air-walk) - _Air_
 * [Blur](#blur) - _Air_
 * [Forest Jump](#forest-jump) - _Air_
 * [Forest Run](#forest-run) - _Air_
@@ -69,33 +66,23 @@ Move Mage (10)
 * [Sneak Attack](#sneak-attack) - _Fire_
 * [Water Moccasins](#water-moccasins) - _Water_
 
-Move Eye (7)
-
-* [Burst](#burst) - _Water_
-* [Creep](#creep) - _Water_
-* [Erase](#erase) - _Fire_
-* [Move Eye](#move-eye) - _Neutral_
-* [Run and Toss](#run-and-toss) - _Air_
-* [Spread](#spread) - _Water_
-* [Traceback](#traceback) - _Water_
-
-Move Other Mage (3)
+Mage Other Move (2)
 
 * [Barrier](#barrier) - _Earth_
 * [Push](#push) - _Air_
-* [Teleport Random](#teleport-random) - _Fire_
 
-Move Other Eye (1)
+Starter (6)
 
-* [Nudge](#nudge) - _Earth_
+* [Create Eye](#create-eye) - _Neutral_
+* [Creep](#creep) - _Water_
+* [Eye Protection](#eye-protection) - _Earth_
+* [Eye for Eye](#eye-for-eye) - _Fire_
+* [Haste](#haste) - _Air_
+* [Move Eye](#move-eye) - _Neutral_
 
-Thread (1)
+Tapestry Thread (1)
 
 * [Rest](#rest) - _Water_
-
-Add Action (1)
-
-* [Store Action](#store-action) - _Earth_
 
 Terrain (5)
 
@@ -109,75 +96,69 @@ Terrain (5)
 
 Neutral (2)
 
-* [Create Eye](#create-eye) - _Starter, Create Eye_
-* [Move Eye](#move-eye) - _Starter, Move Eye_
+* [Create Eye](#create-eye) - _Starter, Eye Create_
+* [Move Eye](#move-eye) - _Starter, Eye Move_
 
 Air (9)
 
-* [Blur](#blur) - _Move Mage_
-* [Drain](#drain) - _Attack Charge_
-* [Forest Jump](#forest-jump) - _Terrain, Move Mage_
-* [Forest Run](#forest-run) - _Terrain, Move Mage_
-* [Haste](#haste) - _Starter, Move Mage_
-* [Plains Walker](#plains-walker) - _Move Mage, Terrain_
-* [Push](#push) - _Move Mage, Move Other Mage_
-* [Quick Drop](#quick-drop) - _Move Mage, Create Eye_
-* [Run and Toss](#run-and-toss) - _Move Mage, Create Eye, Move Eye_
+* [Air Walk](#air-walk) - _Mage Move_
+* [Blur](#blur) - _Mage Move_
+* [Forest Jump](#forest-jump) - _Terrain, Mage Move_
+* [Forest Run](#forest-run) - _Terrain, Mage Move_
+* [Haste](#haste) - _Starter, Mage Move_
+* [Plains Walker](#plains-walker) - _Mage Move, Terrain_
+* [Push](#push) - _Mage Move, Mage Other Move_
+* [Quick Drop](#quick-drop) - _Mage Move, Eye Create_
+* [Run and Toss](#run-and-toss) - _Mage Move, Eye Create, Eye Move_
 
-Fire (9)
+Fire (7)
 
-* [Burn](#burn) - _Attack Tapestry_
-* [Burn Eye](#burn-eye) - _Starter, Attack Eye_
-* [Erase](#erase) - _Move Eye, Attack Eye_
-* [Fire Burst](#fire-burst) - _Attack Eye_
-* [Prune](#prune) - _Attack Eye_
-* [Prune Neighbor](#prune-neighbor) - _Attack Eye_
-* [Remove Eye](#remove-eye) - _Attack Eye_
-* [Sneak Attack](#sneak-attack) - _Attack Eye, Move Mage_
-* [Teleport Random](#teleport-random) - _Move Other Mage_
+* [Erase](#erase) - _Eye Move, Eye Other Attack_
+* [Eye for Eye](#eye-for-eye) - _Starter, Eye Other Attack_
+* [Fire Burst](#fire-burst) - _Eye Other Attack_
+* [Prune](#prune) - _Eye Other Attack_
+* [Prune Neighbor](#prune-neighbor) - _Eye Other Attack_
+* [Remove Eye](#remove-eye) - _Eye Other Attack_
+* [Sneak Attack](#sneak-attack) - _Eye Other Attack, Mage Move_
 
-Earth (9)
+Earth (7)
 
-* [Anchor](#anchor) - _Defend Move_
-* [Barrier](#barrier) - _Move Other Mage_
-* [Copy Charge](#copy-charge) - _Attack Charge_
-* [Eye Shield](#eye-shield) - _Defend Eye_
-* [Harden Shell](#harden-shell) - _Defend Eye_
-* [Mountain Eye](#mountain-eye) - _Terrain, Create Eye_
-* [Nudge](#nudge) - _Move Other Eye_
-* [Protection](#protection) - _Starter, Defend Eye_
-* [Store Action](#store-action) - _Add Action_
+* [Barrier](#barrier) - _Mage Other Move_
+* [Eye Protection](#eye-protection) - _Starter, Eye Defend_
+* [Eye Shield](#eye-shield) - _Eye Defend_
+* [Harden Shell](#harden-shell) - _Eye Defend_
+* [Mountain Eye](#mountain-eye) - _Terrain, Eye Create_
+* [Nudge](#nudge) - _Eye Other Move_
+* [Stance](#stance) - _Mage Anchor_
 
 Water (9)
 
-* [Burst](#burst) - _Create Eye, Move Eye_
-* [Creep](#creep) - _Starter, Create Eye, Move Eye_
-* [Rest](#rest) - _Thread_
-* [Snapback](#snapback) - _Create Eye_
-* [Split](#split) - _Create Eye_
-* [Spread](#spread) - _Create Eye, Move Eye_
-* [Traceback](#traceback) - _Move Eye, Create Eye_
-* [Water Moccasins](#water-moccasins) - _Move Mage, Terrain_
-* [Whiplash](#whiplash) - _Defend Eye_
+* [Burst](#burst) - _Eye Create, Eye Move_
+* [Creep](#creep) - _Starter, Eye Create, Eye Move_
+* [Rest](#rest) - _Tapestry Thread_
+* [Snapback](#snapback) - _Eye Create_
+* [Split](#split) - _Eye Create_
+* [Spread](#spread) - _Eye Create, Eye Move_
+* [Traceback](#traceback) - _Eye Move, Eye Create_
+* [Water Moccasins](#water-moccasins) - _Mage Move, Terrain_
+* [Whiplash](#whiplash) - _Eye Defend_
 
 ## By Pattern
 
 * E1-1 [Haste](#haste) (air)
-* E1-1 [Protection](#protection) (earth)
-* E1-2 [Burn Eye](#burn-eye) (fire)
+* E1-1 [Eye Protection](#eye-protection) (earth)
+* E1-2 [Eye for Eye](#eye-for-eye) (fire)
 * E1-2 [Creep](#creep) (water)
 * E1-6 [Eye Shield](#eye-shield) (earth)
 * E2-10 [Quick Drop](#quick-drop) (air)
 * E2-10 [Barrier](#barrier) (earth)
+* E2-11 [Air Walk](#air-walk) (air)
 * E2-11 [Mountain Eye](#mountain-eye) (earth)
-* E2-12 [Drain](#drain) (air)
 * E2-13 [Forest Jump](#forest-jump) (air)
-* E2-13 [Copy Charge](#copy-charge) (earth)
 * E2-14 [Forest Run](#forest-run) (air)
-* E2-16 [Anchor](#anchor) (earth)
+* E2-16 [Stance](#stance) (earth)
 * E2-19 [Remove Eye](#remove-eye) (fire)
 * E2-19 [Rest](#rest) (water)
-* E2-20 [Burn](#burn) (fire)
 * E2-20 [Spread](#spread) (water)
 * E2-21 [Whiplash](#whiplash) (water)
 * E2-23 [Prune](#prune) (fire)
@@ -188,7 +169,6 @@ Water (9)
 * E2-30 [Fire Burst](#fire-burst) (fire)
 * E2-31 [Prune Neighbor](#prune-neighbor) (fire)
 * E2-31 [Burst](#burst) (water)
-* E2-39 [Store Action](#store-action) (earth)
 * E2-41 [Traceback](#traceback) (water)
 * E2-42 [Blur](#blur) (air)
 * E2-46 [Run and Toss](#run-and-toss) (air)
@@ -196,25 +176,23 @@ Water (9)
 * E2-5 [Push](#push) (air)
 * E2-6 [Plains Walker](#plains-walker) (air)
 * E2-8 [Nudge](#nudge) (earth)
-* E2-8 [Teleport Random](#teleport-random) (fire)
 * E2-9 [Harden Shell](#harden-shell) (earth)
 * N1 [Create Eye](#create-eye) (none)
 * N2-4 [Move Eye](#move-eye) (none)
 
 ## By Name
 
-### Anchor
+### Air Walk
 ```
-@ . . .
-X . . X
+X . .
+@ . .
+. . X
 ```
-Element: Earth
+Element: Air
 
-Category: Defend Move
+Category: Mage Move
 
-When cast: Place a CHARGE on this spell.
-
-While charged: You may not be involuntarily moved by other mages.
+When cast: Move up to 4 spaces over the same or lower terrain than your starting position. You must end your move on a space of the same level.
 
 ### Barrier
 ```
@@ -223,7 +201,7 @@ X @ . .
 ```
 Element: Earth
 
-Category: Move Other Mage
+Category: Mage Other Move
 
 When cast: Place a CHARGE on this spell.
 
@@ -236,34 +214,11 @@ X . @ . .
 ```
 Element: Air
 
-Category: Move Mage
+Category: Mage Move
 
 When cast: Place a CHARGE on this spell.
 
 While charged: Once per turn (per charge), you may move into a neighboring location ignoring terrain cost.
-
-### Burn
-```
-X . .
-. @ .
-. . X
-```
-Element: Fire
-
-Category: Attack Tapestry
-
-When cast: Disrupt the tapestry of a mage at one of your EYEs by placing one of your mana in their tapestry to cover an element. Consume the EYE used to target the mage.
-
-### Burn Eye
-```
-@ .
-. X
-```
-Element: Fire
-
-Category: Starter, Attack Eye
-
-When cast: Remove an opponent's EYE at one of your EYE's location. Consume this EYE.
 
 ### Burst
 ```
@@ -273,19 +228,9 @@ When cast: Remove an opponent's EYE at one of your EYE's location. Consume this 
 ```
 Element: Water
 
-Category: Create Eye, Move Eye
+Category: Eye Create, Eye Move
 
 When cast: Place 2 EYEs. Move 3 of your EYEs 2 spaces each.
-
-### Copy Charge
-```
-X @ . . X
-```
-Element: Earth
-
-Category: Attack Charge
-
-When cast: If you have a EYE on or adjacent to another mage, you may add a charge to one of their spells. You gain all the effects of that spell.
 
 ### Create Eye
 ```
@@ -293,7 +238,7 @@ X
 ```
 Element: Neutral
 
-Category: Starter, Create Eye
+Category: Starter, Eye Create
 
 When cast: Create a EYE in your location.
 
@@ -304,19 +249,9 @@ When cast: Create a EYE in your location.
 ```
 Element: Water
 
-Category: Starter, Create Eye, Move Eye
+Category: Starter, Eye Create, Eye Move
 
 When cast: Place a EYE. Move one of your EYEs 2 spaces.
-
-### Drain
-```
-@ X . X
-```
-Element: Air
-
-Category: Attack Charge
-
-When cast: A mage at one of your EYEs must remove 2 of their CHARGEs. Consume that EYE.
 
 ### Erase
 ```
@@ -325,9 +260,21 @@ When cast: A mage at one of your EYEs must remove 2 of their CHARGEs. Consume th
 ```
 Element: Fire
 
-Category: Move Eye, Attack Eye
+Category: Eye Move, Eye Other Attack
 
 When cast: Move one of your EYEs 3 spaces, removing one opponent EYE from each location it moves into this turn. Consume this EYE.
+
+### Eye Protection
+```
+@ X
+```
+Element: Earth
+
+Category: Starter, Eye Defend
+
+When cast: Place a CHARGE on this spell.
+
+Sacrifice: Sacrifice a charge to prevent one of your EYEs from being removed.
 
 ### Eye Shield
 ```
@@ -335,11 +282,22 @@ When cast: Move one of your EYEs 3 spaces, removing one opponent EYE from each l
 ```
 Element: Earth
 
-Category: Defend Eye
+Category: Eye Defend
 
 When cast: Place a CHARGE on this spell.
 
 Sacrifice: You may sacrifice this CHARGE to prevent one of your EYEs from being removed or consumed.
+
+### Eye for Eye
+```
+@ .
+. X
+```
+Element: Fire
+
+Category: Starter, Eye Other Attack
+
+When cast: Remove an opponent's EYE at one of your EYE's location. Consume this EYE.
 
 ### Fire Burst
 ```
@@ -348,7 +306,7 @@ Sacrifice: You may sacrifice this CHARGE to prevent one of your EYEs from being 
 ```
 Element: Fire
 
-Category: Attack Eye
+Category: Eye Other Attack
 
 When cast: Remove all EYEs in all locations adjacent to one of your EYEs. Consume that EYE.
 
@@ -358,7 +316,7 @@ X @ . . X
 ```
 Element: Air
 
-Category: Terrain, Move Mage
+Category: Terrain, Mage Move
 
 When cast: If in a Forest location, swap positions with one of your EYEs that is in a Forest location no more than 5 spaces away. You may immediately repeat this spell.
 
@@ -369,11 +327,11 @@ X . . .
 ```
 Element: Air
 
-Category: Terrain, Move Mage
+Category: Terrain, Mage Move
 
 When cast: Place a CHARGE on this spell.
 
-While charged: If in or next to a Forest location, pay 2mp to move through any number of connected Forest locations, bypassing any Rivers.
+While charged: If you start your turn in a Forest location, you may immediately move through up to 5 connected Forest locations.
 
 ### Harden Shell
 ```
@@ -382,7 +340,7 @@ X . X
 ```
 Element: Earth
 
-Category: Defend Eye
+Category: Eye Defend
 
 When cast: Place a CHARGE on this spell.
 
@@ -394,9 +352,9 @@ While charged: If the number of EYEs you have is less than or equal to the numbe
 ```
 Element: Air
 
-Category: Starter, Move Mage
+Category: Starter, Mage Move
 
-When cast: Move 5 spaces along a road.
+When cast: Move 6mp.
 
 ### Mountain Eye
 ```
@@ -406,7 +364,7 @@ X . .
 ```
 Element: Earth
 
-Category: Terrain, Create Eye
+Category: Terrain, Eye Create
 
 When cast: Place a CHARGE on this spell.
 
@@ -419,7 +377,7 @@ X . .
 ```
 Element: Neutral
 
-Category: Starter, Move Eye
+Category: Starter, Eye Move
 
 When cast: Move one of your EYEs one space.
 
@@ -430,7 +388,7 @@ When cast: Move one of your EYEs one space.
 ```
 Element: Earth
 
-Category: Move Other Eye
+Category: Eye Other Move
 
 When cast: Place a CHARGE on this spell.
 
@@ -444,21 +402,9 @@ X @ . X
 ```
 Element: Air
 
-Category: Move Mage, Terrain
+Category: Mage Move, Terrain
 
 When cast: Move through 5 contiguous Plains locations.
-
-### Protection
-```
-@ X
-```
-Element: Earth
-
-Category: Starter, Defend Eye
-
-When cast: Place a CHARGE on this spell.
-
-Sacrifice: Sacrifice a charge to prevent one of your EYEs from being removed.
 
 ### Prune
 ```
@@ -467,7 +413,7 @@ Sacrifice: Sacrifice a charge to prevent one of your EYEs from being removed.
 ```
 Element: Fire
 
-Category: Attack Eye
+Category: Eye Other Attack
 
 When cast: Remove all opponent EYEs from a location where you control a EYE. Consume this EYE.
 
@@ -479,7 +425,7 @@ When cast: Remove all opponent EYEs from a location where you control a EYE. Con
 ```
 Element: Fire
 
-Category: Attack Eye
+Category: Eye Other Attack
 
 When cast: Remove all EYEs from a location adjacent to where you control a EYE. Consume this EYE.
 
@@ -489,7 +435,7 @@ When cast: Remove all EYEs from a location adjacent to where you control a EYE. 
 ```
 Element: Air
 
-Category: Move Mage, Move Other Mage
+Category: Mage Move, Mage Other Move
 
 When cast: Push all mages out of an adjacent location and then move into that location. You choose which location each mage moves into.
 
@@ -500,7 +446,7 @@ X @ . .
 ```
 Element: Air
 
-Category: Move Mage, Create Eye
+Category: Mage Move, Eye Create
 
 When cast: Move 5mp. Place a EYE in your final location.
 
@@ -511,7 +457,7 @@ X . X
 ```
 Element: Fire
 
-Category: Attack Eye
+Category: Eye Other Attack
 
 When cast: If in a location with a EYE controlled by another mage, you may remove 2 of their EYEs.
 
@@ -522,7 +468,7 @@ X . X
 ```
 Element: Water
 
-Category: Thread
+Category: Tapestry Thread
 
 When cast: Remove 3 THREADs from your TAPESTRY.
 
@@ -534,7 +480,7 @@ X . . .
 ```
 Element: Air
 
-Category: Move Mage, Create Eye, Move Eye
+Category: Mage Move, Eye Create, Eye Move
 
 When cast: Move 1 space, place a EYE, then move that EYE 2 spaces.
 
@@ -546,7 +492,7 @@ X . . .
 ```
 Element: Water
 
-Category: Create Eye
+Category: Eye Create
 
 When cast: Place a CHARGE on this spell.
 
@@ -560,7 +506,7 @@ X . X
 ```
 Element: Fire
 
-Category: Attack Eye, Move Mage
+Category: Eye Other Attack, Mage Move
 
 When cast: Remove EYEs from a adjacent location and then move into that location.
 
@@ -572,7 +518,7 @@ When cast: Remove EYEs from a adjacent location and then move into that location
 ```
 Element: Water
 
-Category: Create Eye
+Category: Eye Create
 
 When cast: Place a new EYE in a location where you already have a EYE.
 
@@ -584,34 +530,22 @@ X . .
 ```
 Element: Water
 
-Category: Create Eye, Move Eye
+Category: Eye Create, Eye Move
 
 When cast: Place a EYE. Move all of your EYEs 1 space.
 
-### Store Action
+### Stance
 ```
-@ . X
-. . .
-X . .
+@ . . .
+X . . X
 ```
 Element: Earth
 
-Category: Add Action
+Category: Mage Anchor
 
 When cast: Place a CHARGE on this spell.
 
-Sacrifice: During your turn, you may sacrifice a charge to gain an extra action.
-
-### Teleport Random
-```
-@ X .
-. . X
-```
-Element: Fire
-
-Category: Move Other Mage
-
-When cast: Move all mages at one of your EYEs to a random star location. Consume that EYE.
+While charged: You may not be involuntarily moved by other mages.
 
 ### Traceback
 ```
@@ -621,7 +555,7 @@ When cast: Move all mages at one of your EYEs to a random star location. Consume
 ```
 Element: Water
 
-Category: Move Eye, Create Eye
+Category: Eye Move, Eye Create
 
 When cast: Move a EYE 2. If you have a EYE in the same location as a EYE owned by another mage, move your EYE to that mage's location.
 
@@ -632,7 +566,7 @@ X . . X
 ```
 Element: Water
 
-Category: Move Mage, Terrain
+Category: Mage Move, Terrain
 
 When cast: Place a CHARGE on this spell.
 
@@ -647,7 +581,7 @@ Sacrifice: If you are adjacent to River/Water, sacrifice charge to place a EYE u
 ```
 Element: Water
 
-Category: Defend Eye
+Category: Eye Defend
 
 When cast: Place a CHARGE on this spell.
 
