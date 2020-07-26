@@ -25,7 +25,7 @@ spell_card_categories = [
     'mage-anchor',  # Prevent mage from being moved
     #'mage-defend',  # Shields to prevent HP damage
     'mage-other-move',
-    #'mage-other-attack',  # Damage mage HP
+    'mage-other-attack',  # Damage mage HP
 
     'tapestry-thread',
     
@@ -1043,15 +1043,9 @@ spell_card_patterns = {
 #     'pattern': name of pattern
 
 # Next id = 97
+# Unused = 41
 
 spell_card_data = [
-
-    # Blank card (for TTS)
-    #["???",
-    #    {'element': 'none', 'category': 'starter', 'id': 0, 'pattern': 'blank'},
-    #    {
-    #        'cast': "???",
-    #    } ],
 
     #     _____         _           _ 
     #    |   | |___ _ _| |_ ___ ___| |
@@ -1260,7 +1254,7 @@ spell_card_data = [
             'cast': "If in a location with a EYE controlled by another mage, you may remove 2 of their EYEs.",
         } ],
     ["Prune",
-        {'element': 'fire', 'category': 'eye-other-attack', 'id': 33, 'pattern': 'E2-23'},
+        {'element': 'earth', 'category': 'eye-other-attack', 'id': 33, 'pattern': 'E2-23'},
         {
             'cast': "Remove all opponent EYEs from a location where you control a EYE. Consume this EYE.",
         } ],
@@ -1325,6 +1319,12 @@ spell_card_data = [
     #    |__|__|_| |_| |__,|___|_,_|    |__|__|__|
     #
     # Attack another mage
+
+    ["Fire Ball",
+        {'element': 'fire', 'category': 'mage-other-attack', 'id': 22, 'pattern': 'E2-26'},
+        {
+            'cast': "Attack 1 at one of your EYEs. Consume that EYE.",
+        } ],
 
     #     ____      ___           _      _____ _____ 
     #    |    \ ___|  _|___ ___ _| |    |  |  |  _  |
@@ -1397,6 +1397,14 @@ spell_card_data = [
             'charged': "Rivers cost 0mp to cross. Water locations cost 1mp to enter.",
             'sacrifice': "If you are adjacent to River/Water, sacrifice charge to place a EYE up to 3 spaces away along water.",
         } ],
+
+
+    # Blank card (for TTS)
+    #["???",
+    #    {'element': 'none', 'category': 'starter', 'id': 0, 'pattern': 'blank'},
+    #    {
+    #        'cast': "???",
+    #    } ],
 
 ]
 
@@ -1494,9 +1502,6 @@ _unused_ = [
     
     # Attack Eye
 
-    ["Selective Prune",
-        {'element': 'earth', 'category': 'eye,attack', 'id': 41},
-        ["Remove all EYEs (except the one used for this spell) from a location where you control a EYE."] ],
     ["Whirlwind",
         {'element': 'air', 'category': 'eye', 'id': 13},
         ["Place CHARGE on this spell.", "-", "While CHARGEd, all EYEs you control are obstacles that other mages may not move into or pass through."] ],
@@ -1506,7 +1511,7 @@ _unused_ = [
     ["Distraction",
         {'element': 'fire', 'category': 'eye', 'id': 34},
         ["When in the same location as a EYE controlled by another mage, remove any one of their EYEs."] ],
-    ["Delete All",
+    ["Delete",
         {'element': 'fire', 'category': 'eye-other-attack', 'id': 43, 'pattern': 'E1-2'},
         {
             'cast': "Remove all opponent EYEs at one of your EYE's location. Consume this EYE.",
@@ -1520,11 +1525,6 @@ _unused_ = [
         {'element': 'fire', 'category': 'mage-other-attack', 'id': 24, 'pattern': 'E1-5'},
         {
             'cast': "Attack 1 at location adjacent to one of your EYEs. Consume that EYE.",
-        } ],
-    ["Fire Ball",
-        {'element': 'fire', 'category': 'mage-other-attack', 'id': 22, 'pattern': 'E2-26'},
-        {
-            'cast': "Attack 2 at one of your EYEs. Consume that EYE.",
         } ],
     ["Fire Reign",
         {'element': 'fire', 'category': 'mage-other-attack', 'id': 26, 'pattern': 'E2-27'},
