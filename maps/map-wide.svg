@@ -29,10 +29,10 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="2.0018324"
-     inkscape:cx="406.76863"
-     inkscape:cy="252.90557"
+     inkscape:cx="232.9279"
+     inkscape:cy="259.89916"
      inkscape:document-units="px"
-     inkscape:current-layer="g5469"
+     inkscape:current-layer="layer11"
      showgrid="false"
      units="mm"
      inkscape:window-width="3440"
@@ -64,7 +64,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -86,7 +86,7 @@
      inkscape:groupmode="layer"
      id="layer1"
      inkscape:label="Map 02a"
-     style="display:none">
+     style="display:inline">
     <g
        transform="translate(0,-1015.9842)"
        inkscape:groupmode="layer"
@@ -1541,26 +1541,24 @@
          d="m 321.9209,429.60381 c -2.32968,-8.29764 -5.25626,-12.82936 -12.15015,-18.73625 l 8.89037,-5.7653 c 2.45872,8.74664 5.45176,13.33015 12.15022,18.73632 z"
          style="display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:8.10000038;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:8.1, 16.2;stroke-dashoffset:0;stroke-opacity:1" />
       <text
-         transform="translate(0,-295.98423)"
          xml:space="preserve"
          style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;display:inline;fill:#000000;fill-opacity:0.50196078;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
          x="4.8254995"
-         y="313.0975"
+         y="15.113274"
          id="text4714"><tspan
            sodipodi:role="line"
            id="tspan4716"
            x="4.8254995"
-           y="313.0975"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;line-height:1.25;font-family:CCTreasureTrove;-inkscape-font-specification:CCTreasureTrove;fill:#000000;fill-opacity:0.50196078">02a</tspan></text>
+           y="15.113274"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;line-height:1.25;font-family:CCTreasureTrove;-inkscape-font-specification:CCTreasureTrove;fill:#000000;fill-opacity:0.50196078">02a</tspan></text>
       <text
-         transform="translate(0,-295.98423)"
          id="text4715"
-         y="325.0975"
+         y="25.113274"
          x="4.8254995"
          style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;display:inline;fill:#000000;fill-opacity:0.50196078;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
          xml:space="preserve"><tspan
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;line-height:1.25;font-family:CCTreasureTrove;-inkscape-font-specification:CCTreasureTrove;fill:#000000;fill-opacity:0.50196078"
-           y="325.0975"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8px;line-height:1.25;font-family:CCTreasureTrove;-inkscape-font-specification:CCTreasureTrove;fill:#000000;fill-opacity:0.50196078"
+           y="25.113274"
            x="4.8254995"
            id="tspan4717"
            sodipodi:role="line">r0</tspan></text>
@@ -1977,8 +1975,8 @@
     </g>
   </g>
   <g
-     style="display:inline"
-     inkscape:label="Map 02a copy"
+     style="display:none"
+     inkscape:label="Map 41a"
      id="g5471"
      inkscape:groupmode="layer">
     <g
@@ -4123,12 +4121,14 @@
          inkscape:connector-curvature="0" />
       <path
          id="path21853"
-         style="display:inline;fill:none;stroke:#000000;stroke-width:7.55905512;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
-         d="M 269.39088,194.85916 259.73149,153.71708 221.24105,128.96444 220.49811,103.42648 177.05942,60.383408 176.97598,49.937189 142.0631,8.5956923 V 0 m 319.5135,368.96654 -1.37964,35.47641 54.03927,41.68708 -10e-6,7.41328 M 0,392.8504 h 11.168582 l 44.109515,-70.67607 13.392804,-0.77104 45.593069,-55.50663 49.80646,23.08931 50.52411,-37.89315 0.24933,-13.46389 54.54701,-42.76977 34.40095,13.76039 16.06949,53.04656 -18.46625,28.77863 15.39936,42.41021 44.14611,24.68247 33.26765,-23.28681 67.36841,34.71593 32.87871,-32.31104 67.57854,26.56787 14.97953,-16.68719 74.97728,1.33335 11.48722,-51.74033 64.08357,-10.70081 5.23619,-10.00546 73.62278,-25.45375 12.12297,9.27363 34.63912,2.48764 41.04252,49.74975 h 12.86158" />
+         style="display:inline;fill:none;stroke:#000000;stroke-width:7.55905533;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="M 269.39088,194.85916 259.73149,153.71708 221.24105,128.96444 220.49811,103.42648 177.05942,60.383408 176.97598,49.937189 142.0631,8.5956923 V 0 m 319.5135,368.96654 -1.37964,35.47641 54.03927,41.68708 -10e-6,7.41328 M 0,392.8504 h 11.168582 l 44.109515,-70.67607 13.392804,-0.77104 45.593069,-55.50663 49.80646,23.08931 50.52411,-37.89315 0.24933,-13.46389 54.54701,-42.76977 34.40095,13.76039 16.06949,53.04656 -18.46625,28.77863 15.39936,42.41021 44.14611,24.68247 33.26765,-23.28681 67.36841,34.71593 32.87871,-32.31104 67.57854,26.56787 14.97953,-16.68719 74.97728,1.33335 11.48722,-51.74033 64.08357,-10.70081 5.23619,-10.00546 73.62278,-25.45375 12.12297,9.27363 34.63912,2.48764 41.04252,49.74975 h 12.86158"
+         inkscape:connector-curvature="0" />
       <path
          d="M 269.39088,194.85916 259.73149,153.71708 221.24105,128.96444 220.49811,103.42648 177.05942,60.383408 176.97598,49.937189 142.0631,8.5956923 V 0 m 319.5135,368.96654 -1.37964,35.47641 54.03927,41.68708 -10e-6,7.41328 M 0,392.8504 h 11.168582 l 44.109515,-70.67607 13.392804,-0.77104 45.593069,-55.50663 49.80646,23.08931 50.52411,-37.89315 0.24933,-13.46389 54.54701,-42.76977 34.40095,13.76039 16.06949,53.04656 -18.46625,28.77863 15.39936,42.41021 44.14611,24.68247 33.26765,-23.28681 67.36841,34.71593 32.87871,-32.31104 67.57854,26.56787 14.97953,-16.68719 74.97728,1.33335 11.48722,-51.74033 64.08357,-10.70081 5.23619,-10.00546 73.62278,-25.45375 12.12297,9.27363 34.63912,2.48764 41.04252,49.74975 h 12.86158"
-         style="display:inline;fill:none;stroke:#a2c6ff;stroke-width:5.66929134;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
-         id="path21857" />
+         style="display:inline;fill:none;stroke:#a2c6ff;stroke-width:5.6692915;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="path21857"
+         inkscape:connector-curvature="0" />
     </g>
     <g
        style="display:inline"
@@ -4499,13 +4499,12 @@
          sodipodi:nodetypes="ccccc" />
       <text
          id="text5323"
-         y="313.0975"
+         y="15.113274"
          x="4.8254995"
          style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;display:inline;fill:#000000;fill-opacity:0.50196078;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-         xml:space="preserve"
-         transform="translate(0,-295.98423)"><tspan
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;line-height:1.25;font-family:CCTreasureTrove;-inkscape-font-specification:CCTreasureTrove;fill:#000000;fill-opacity:0.50196078"
-           y="313.0975"
+         xml:space="preserve"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;line-height:1.25;font-family:CCTreasureTrove;-inkscape-font-specification:CCTreasureTrove;fill:#000000;fill-opacity:0.50196078"
+           y="15.113274"
            x="4.8254995"
            id="tspan5321"
            sodipodi:role="line">41a</tspan></text>
@@ -4513,14 +4512,13 @@
          xml:space="preserve"
          style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;display:inline;fill:#000000;fill-opacity:0.50196078;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
          x="4.8254995"
-         y="325.0975"
-         id="text5327"
-         transform="translate(0,-295.98423)"><tspan
+         y="25.113274"
+         id="text5327"><tspan
            sodipodi:role="line"
            id="tspan5325"
            x="4.8254995"
-           y="325.0975"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;line-height:1.25;font-family:CCTreasureTrove;-inkscape-font-specification:CCTreasureTrove;fill:#000000;fill-opacity:0.50196078">r0</tspan></text>
+           y="25.113274"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8px;line-height:1.25;font-family:CCTreasureTrove;-inkscape-font-specification:CCTreasureTrove;fill:#000000;fill-opacity:0.50196078">r0</tspan></text>
       <path
          sodipodi:nodetypes="ccccc"
          inkscape:connector-curvature="0"
