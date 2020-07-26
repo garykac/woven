@@ -1,6 +1,6 @@
 # List of Spell Fragments
 
-Generated on 2020/07/14 @ 00:11
+Generated on 2020/07/15 @ 18:04
 
 ## By Category
 
@@ -39,7 +39,7 @@ Eye Other Attack (7)
 * [Erase](#erase) - _Fire_
 * [Eye for Eye](#eye-for-eye) - _Fire_
 * [Fire Burst](#fire-burst) - _Fire_
-* [Prune](#prune) - _Fire_
+* [Prune](#prune) - _Earth_
 * [Prune Neighbor](#prune-neighbor) - _Fire_
 * [Remove Eye](#remove-eye) - _Fire_
 * [Sneak Attack](#sneak-attack) - _Fire_
@@ -65,6 +65,10 @@ Mage Move (11)
 * [Run and Toss](#run-and-toss) - _Air_
 * [Sneak Attack](#sneak-attack) - _Fire_
 * [Water Moccasins](#water-moccasins) - _Water_
+
+Mage Other Attack (1)
+
+* [Fire Ball](#fire-ball) - _Fire_
 
 Mage Other Move (2)
 
@@ -115,13 +119,13 @@ Fire (7)
 
 * [Erase](#erase) - _Eye Move, Eye Other Attack_
 * [Eye for Eye](#eye-for-eye) - _Starter, Eye Other Attack_
+* [Fire Ball](#fire-ball) - _Mage Other Attack_
 * [Fire Burst](#fire-burst) - _Eye Other Attack_
-* [Prune](#prune) - _Eye Other Attack_
 * [Prune Neighbor](#prune-neighbor) - _Eye Other Attack_
 * [Remove Eye](#remove-eye) - _Eye Other Attack_
 * [Sneak Attack](#sneak-attack) - _Eye Other Attack, Mage Move_
 
-Earth (7)
+Earth (8)
 
 * [Barrier](#barrier) - _Mage Other Move_
 * [Eye Protection](#eye-protection) - _Starter, Eye Defend_
@@ -129,6 +133,7 @@ Earth (7)
 * [Harden Shell](#harden-shell) - _Eye Defend_
 * [Mountain Eye](#mountain-eye) - _Terrain, Eye Create_
 * [Nudge](#nudge) - _Eye Other Move_
+* [Prune](#prune) - _Eye Other Attack_
 * [Stance](#stance) - _Mage Anchor_
 
 Water (9)
@@ -161,9 +166,10 @@ Water (9)
 * E2-19 [Rest](#rest) (water)
 * E2-20 [Spread](#spread) (water)
 * E2-21 [Whiplash](#whiplash) (water)
-* E2-23 [Prune](#prune) (fire)
+* E2-23 [Prune](#prune) (earth)
 * E2-24 [Water Moccasins](#water-moccasins) (water)
 * E2-25 [Snapback](#snapback) (water)
+* E2-26 [Fire Ball](#fire-ball) (fire)
 * E2-27 [Split](#split) (water)
 * E2-28 [Erase](#erase) (fire)
 * E2-30 [Fire Burst](#fire-burst) (fire)
@@ -299,6 +305,18 @@ Category: Starter, Eye Other Attack
 
 When cast: Remove an opponent's EYE at one of your EYE's location. Consume this EYE.
 
+### Fire Ball
+```
+. @ .
+X . .
+. . X
+```
+Element: Fire
+
+Category: Mage Other Attack
+
+When cast: Attack 1 at one of your EYEs. Consume that EYE.
+
 ### Fire Burst
 ```
 @ . . .
@@ -411,7 +429,7 @@ When cast: Move through 5 contiguous Plains locations.
 @ . .
 . X X
 ```
-Element: Fire
+Element: Earth
 
 Category: Eye Other Attack
 
