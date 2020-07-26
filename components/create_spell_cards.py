@@ -16,9 +16,10 @@ from card_gen import CardGen_OptionDesc
 from card_gen import error
 
 from data_spell_cards import spell_card_data
-from data_spell_cards import spell_card_patterns
 from data_spell_cards import spell_card_revision
 from data_spell_cards import spell_card_categories
+
+from data_spell_patterns import spell_card_patterns
 
 class SpellCardGen(CardGen):
     def __init__(self, options):
