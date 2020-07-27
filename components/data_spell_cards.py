@@ -34,6 +34,14 @@ spell_card_categories = [
     'terrain',
 ]
 
+valid_ops = [
+    'eye',            # Create eye
+    'move',           # Move mage
+    'move-eye',       # Move mage OR Create eye
+    'tapestry-eye',   # Draw tapestry card OR Create eye
+    'thread',         # Recover thread
+]
+
 #     _____ _     
 #    |  _  |_|___ 
 #    |     | |  _|
@@ -85,9 +93,10 @@ spell_card_categories = [
 #
 #   <attribute>:
 #     'element': 'air', 'fire', 'earth', 'water' or 'none'
-#     'category': <string> to group spells by general category
-#     'id': spell id
 #     'pattern': name of pattern
+#     'op': alternate action at bottom of card
+#     'id': spell id
+#     'category': <string> to group spells by general category
 
 # Next id = 97
 # Unused = 41
@@ -102,12 +111,15 @@ spell_card_data = [
     # Neutral spells are basic spells that are always worse than corresponding elemental spells.
     
     ["Create Eye",
-        {'element': 'none', 'category': 'starter,eye-create', 'id': 89, 'pattern': 'N1'},
+        {'element': 'none', 'pattern': 'N1', 'op': 'tapestry-eye',
+         'id': 89, 'category': 'starter,eye-create'},
         {
             'cast': "Create a EYE in your location.",
         } ],
+
     ["Move Eye",
-        {'element': 'none', 'category': 'starter,eye-move', 'id': 90, 'pattern': 'N2-4'},
+        {'element': 'none', 'pattern': 'N2-4', 'op': 'move',
+         'id': 90, 'category': 'starter,eye-move'},
         {
             'cast': "Move one of your EYEs one space.",
         } ],
@@ -120,23 +132,30 @@ spell_card_data = [
     # Representative spell for each element.
 
     ["Haste",
-        {'element': 'air', 'category': 'starter,mage-move', 'id': 3, 'pattern': 'E1-1'},
+        {'element': 'air', 'pattern': 'E1-1', 'op': 'move',
+         'id': 3, 'category': 'starter,mage-move'},
         {
             'cast': "Move 6mp.",
         } ],
+
     ["Eye for Eye",
-        {'element': 'fire', 'category': 'starter,eye-other-attack', 'id': 92, 'pattern': 'E1-2'},
+        {'element': 'fire', 'pattern': 'E1-2', 'op': 'move',
+         'id': 92, 'category': 'starter,eye-other-attack'},
         {
             'cast': "Remove an opponent's EYE at one of your EYE's location. Consume this EYE.",
         } ],
+
     ["Eye Protection",
-        {'element': 'earth', 'category': 'starter,eye-defend', 'id': 4, 'pattern': 'E1-1'},
+        {'element': 'earth', 'pattern': 'E1-1', 'op': 'move',
+         'id': 4, 'category': 'starter,eye-defend'},
         {
             'cast': "{{ADD_CHARGE}}",
             'sacrifice': "Sacrifice a charge to prevent one of your EYEs from being removed.",
         } ],
+
     ["Creep",
-        {'element': 'water', 'category': 'starter,eye-create,eye-move', 'id': 73, 'pattern': 'E1-2'},
+        {'element': 'water', 'pattern': 'E1-2', 'op': 'move',
+         'id': 73, 'category': 'starter,eye-create,eye-move'},
         {
             'cast': "Place a EYE. Move one of your EYEs 2 spaces.",
         } ],
@@ -149,35 +168,46 @@ spell_card_data = [
     # Move mage
 
     ["Plains Walker",
-        {'element': 'air', 'category': 'mage-move,terrain', 'id': 7, 'pattern': 'E2-6'},
+        {'element': 'air', 'pattern': 'E2-6', 'op': 'move',
+         'id': 7, 'category': 'mage-move,terrain'},
         {
             'cast': "Move through 5 contiguous Plains locations.",
         } ],
+
     ["Forest Run",
-        {'element': 'air', 'category': 'terrain,mage-move', 'id': 11, 'pattern': 'E2-14'},
+        {'element': 'air', 'pattern': 'E2-14', 'op': 'move',
+         'id': 11, 'category': 'terrain,mage-move'},
         {
             'cast': "{{ADD_CHARGE}}",
             'charged': "If you start your turn in a Forest location, you may immediately move through up to 5 connected Forest locations.",
         } ],
+
     ["Forest Jump",
-        {'element': 'air', 'category': 'terrain,mage-move', 'id': 93, 'pattern': 'E2-13'},
+        {'element': 'air', 'pattern': 'E2-13', 'op': 'move',
+         'id': 93, 'category': 'terrain,mage-move'},
         {
             'cast': "If in a Forest location, swap positions with one of your EYEs that is in a Forest location no more than 5 spaces away. You may immediately repeat this spell.",
             'notes': "You may only use each EYE once when you cast this spell.",
         } ],
+
     ["Blur",
-        {'element': 'air', 'category': 'mage-move', 'id': 19, 'pattern': 'E2-42'},
+        {'element': 'air', 'pattern': 'E2-42', 'op': 'move',
+         'id': 19, 'category': 'mage-move'},
         {
             'cast': "{{ADD_CHARGE}}",
             'charged': "Once per turn (per charge), you may move into a neighboring location ignoring terrain cost.",
         } ],
+
     ["Quick Drop",
-        {'element': 'air', 'category': 'mage-move,eye-create', 'id': 66, 'pattern': 'E2-10'},
+        {'element': 'air', 'pattern': 'E2-10', 'op': 'move',
+         'id': 66, 'category': 'mage-move,eye-create'},
         {
             'cast': "Move 5mp. Place a EYE in your final location.",
         } ],
+
     ["Air Walk",
-        {'element': 'air', 'category': 'mage-move', 'id': 70, 'pattern': 'E2-11'},
+        {'element': 'air', 'pattern': 'E2-11', 'op': 'move',
+         'id': 70, 'category': 'mage-move'},
         {
             'cast': "Move up to 4 spaces over the same or lower terrain than your starting position. You must end your move on a space of the same level.",
         } ],
@@ -190,13 +220,16 @@ spell_card_data = [
     # Attack by moving another player's mage
                                                                          
     ["Push",
-        {'element': 'air', 'category': 'mage-move,mage-other-move', 'id': 20, 'pattern': 'E2-5'},
+        {'element': 'air', 'pattern': 'E2-5', 'op': 'move',
+         'id': 20, 'category': 'mage-move,mage-other-move'},
         {
             'cast': "Push all mages out of an adjacent location and then move into that location. You choose which location each mage moves into.",
             'notes': "If there are multiple mages, they can be pushed into different locations."
         } ],
+
     ["Barrier",
-        {'element': 'earth', 'category': 'mage-other-move', 'id': 87, 'pattern': 'E2-10'},
+        {'element': 'earth', 'pattern': 'E2-10', 'op': 'move',
+         'id': 87, 'category': 'mage-other-move'},
         {
             'cast': "{{ADD_CHARGE}}",
             'charged': "All locations adjacent to your EYEs are obstacles that other mages may not move into.",
@@ -210,7 +243,8 @@ spell_card_data = [
     # Defend against being moved by another mage
 
     ["Stance",
-        {'element': 'earth', 'category': 'mage-anchor', 'id': 39, 'pattern': 'E2-16'},
+        {'element': 'earth', 'pattern': 'E2-16', 'op': 'move',
+         'id': 39, 'category': 'mage-anchor'},
         {
             'cast': "{{ADD_CHARGE}}",
             'charged': "You may not be involuntarily moved by other mages.",
@@ -225,18 +259,23 @@ spell_card_data = [
     # Convert mana into an Eye on the map
 
     ["Split",
-        {'element': 'water', 'category': 'eye-create', 'id': 8, 'pattern': 'E2-27'},
+        {'element': 'water', 'pattern': 'E2-27', 'op': 'move',
+         'id': 8, 'category': 'eye-create'},
         {
             'cast': "Place a new EYE in a location where you already have a EYE.",
         } ],
+
     ["Mountain Eye",
-        {'element': 'earth', 'category': 'terrain,eye-create', 'id': 12, 'pattern': 'E2-11'},
+        {'element': 'earth', 'pattern': 'E2-11', 'op': 'move',
+         'id': 12, 'category': 'terrain,eye-create'},
         {
             'cast': "{{ADD_CHARGE}}",
             'charged': "If in or next to a Mountain location, add a EYE adjacent to any Mountain location connected to that Mountain location.",
         } ],
+
     ["Snapback",
-        {'element': 'water', 'category': 'eye-create', 'id': 79, 'pattern': 'E2-25'},
+        {'element': 'water', 'pattern': 'E2-25', 'op': 'move',
+         'id': 79, 'category': 'eye-create'},
         {
             'cast': "{{ADD_CHARGE}}",
             'sacrifice': "If at same location as another mage's EYE, you may sacrifice a charge to place a EYE at that mage's location.",
@@ -251,22 +290,29 @@ spell_card_data = [
     # Move one of your Eyes on the map
     
     ["Run and Toss",
-        {'element': 'air', 'category': 'mage-move,eye-create,eye-move', 'id': 67, 'pattern': 'E2-46'},
+        {'element': 'air', 'pattern': 'E2-46', 'op': 'move',
+         'id': 67, 'category': 'mage-move,eye-create,eye-move'},
         {
             'cast': "Move 1 space, place a EYE, then move that EYE 2 spaces.",
         } ],
+
     ["Spread",
-        {'element': 'water', 'category': 'eye-create,eye-move', 'id': 75, 'pattern': 'E2-20'},
+        {'element': 'water', 'pattern': 'E2-20', 'op': 'move',
+         'id': 75, 'category': 'eye-create,eye-move'},
         {
             'cast': "Place a EYE. Move all of your EYEs 1 space.",
         } ],
+
     ["Burst",
-        {'element': 'water', 'category': 'eye-create,eye-move', 'id': 74, 'pattern': 'E2-31'},
+        {'element': 'water', 'pattern': 'E2-31', 'op': 'move',
+         'id': 74, 'category': 'eye-create,eye-move'},
         {
             'cast': "Place 2 EYEs. Move 3 of your EYEs 2 spaces each.",
         } ],
+
     ["Traceback",
-        {'element': 'water', 'category': 'eye-move,eye-create', 'id': 69, 'pattern': 'E2-41'},
+        {'element': 'water', 'pattern': 'E2-41', 'op': 'move',
+         'id': 69, 'category': 'eye-move,eye-create'},
         {
             'cast': "Move a EYE 2. If you have a EYE in the same location as a EYE owned by another mage, move your EYE to that mage's location.",
         } ],
@@ -296,39 +342,52 @@ spell_card_data = [
     # Remove an opponent's Eye
 
     ["Remove Eye",
-        {'element': 'fire', 'category': 'eye-other-attack', 'id': 72, 'pattern': 'E2-19'},
+        {'element': 'fire', 'pattern': 'E2-19', 'op': 'move',
+         'id': 72, 'category': 'eye-other-attack'},
         {
             'cast': "If in a location with a EYE controlled by another mage, you may remove 2 of their EYEs.",
         } ],
+
     ["Prune",
-        {'element': 'earth', 'category': 'eye-other-attack', 'id': 33, 'pattern': 'E2-23'},
+        {'element': 'earth', 'pattern': 'E2-23', 'op': 'move',
+         'id': 33, 'category': 'eye-other-attack'},
         {
             'cast': "Remove all opponent EYEs from a location where you control a EYE. Consume this EYE.",
         } ],
+
     ["Prune Neighbor",
-        {'element': 'fire', 'category': 'eye-other-attack', 'id': 42, 'pattern': 'E2-31'},
+        {'element': 'fire', 'pattern': 'E2-31', 'op': 'move',
+         'id': 42, 'category': 'eye-other-attack'},
         {
             'cast': "Remove all EYEs from a location adjacent to where you control a EYE. Consume this EYE.",
         } ],
+
     ["Erase",
-        {'element': 'fire', 'category': 'eye-move,eye-other-attack', 'id': 65, 'pattern': 'E2-28'},
+        {'element': 'fire', 'pattern': 'E2-28', 'op': 'move',
+         'id': 65, 'category': 'eye-move,eye-other-attack'},
         {
             'cast': "Move one of your EYEs 3 spaces, removing one opponent EYE from each location it moves into this turn. Consume this EYE.",
         } ],
+
     ["Fire Burst",
-        {'element': 'fire', 'category': 'eye-other-attack', 'id': 23, 'pattern': 'E2-30'},
+        {'element': 'fire', 'pattern': 'E2-30', 'op': 'move',
+         'id': 23, 'category': 'eye-other-attack'},
         {
             'cast': "Remove all EYEs in all locations adjacent to one of your EYEs. Consume that EYE.",
         } ],
+
     ["Nudge",
-        {'element': 'earth', 'category': 'eye-other-move', 'id': 85, 'pattern': 'E2-8'},
+        {'element': 'earth', 'pattern': 'E2-8', 'op': 'move',
+         'id': 85, 'category': 'eye-other-move'},
         {
             'cast': "{{ADD_CHARGE}}",
             'charged': "At the end of your turn, if another mage's EYE is in the same location or adjacent to one of your EYEs, you may move their EYE 1 space. Choose one for each charge on this spell.",
             'sacrifice': "Sacrifice a charge to move the eye(s) 4 spaces."
         } ],
+
     ["Sneak Attack",
-        {'element': 'fire', 'category': 'eye-other-attack,mage-move', 'id': 64, 'pattern': 'E2-55'},
+        {'element': 'fire', 'pattern': 'E2-55', 'op': 'move',
+         'id': 64, 'category': 'eye-other-attack,mage-move'},
         {
             'cast': "Remove EYEs from a adjacent location and then move into that location.",
         } ],
@@ -342,19 +401,24 @@ spell_card_data = [
     # Defend against an opponent removing one of your eyes
 
     ["Eye Shield",
-        {'element': 'earth', 'category': 'eye-defend', 'id': 83, 'pattern': 'E1-6'},
+        {'element': 'earth', 'pattern': 'E1-6', 'op': 'move',
+         'id': 83, 'category': 'eye-defend'},
         {
             'cast': "{{ADD_CHARGE}}",
             'sacrifice': "You may sacrifice this CHARGE to prevent one of your EYEs from being removed or consumed.",
         } ],
+
     ["Harden Shell",
-        {'element': 'earth', 'category': 'eye-defend', 'id': 86, 'pattern': 'E2-9'},
+        {'element': 'earth', 'pattern': 'E2-9', 'op': 'move',
+         'id': 86, 'category': 'eye-defend'},
         {
             'cast': "{{ADD_CHARGE}}", 
             'charged': "If the number of EYEs you have is less than or equal to the number of CHARGEs on this spell, then they are protected from being removed by another mage (but they can still be consumed).",
         } ],
+
     ["Whiplash",
-        {'element': 'water', 'category': 'eye-defend', 'id': 76, 'pattern': 'E2-21'},
+        {'element': 'water', 'pattern': 'E2-21', 'op': 'move',
+         'id': 76, 'category': 'eye-defend'},
         {
             'cast': "{{ADD_CHARGE}}",
             'sacrifice': "You may sacrifice one of your EYEs to prevent another EYE from being removed/consumed.",
@@ -368,7 +432,8 @@ spell_card_data = [
     # Attack another mage
 
     ["Fire Ball",
-        {'element': 'fire', 'category': 'mage-other-attack', 'id': 22, 'pattern': 'E2-26'},
+        {'element': 'fire', 'pattern': 'E2-26', 'op': 'move',
+         'id': 22, 'category': 'mage-other-attack'},
         {
             'cast': "Attack 1 at one of your EYEs. Consume that EYE.",
         } ],
@@ -390,7 +455,8 @@ spell_card_data = [
     # Spell: Remove thread from tapestry. Take another action.
 
     ["Rest",
-        {'element': 'water', 'category': 'tapestry-thread', 'id': 58, 'pattern': 'E2-19'},
+        {'element': 'water', 'pattern': 'E2-19', 'op': 'move',
+         'id': 58, 'category': 'tapestry-thread'},
         {
             'cast': "Remove 3 THREADs from your TAPESTRY.",
         } ],
@@ -438,7 +504,8 @@ spell_card_data = [
     #      |_| |___|_| |_| |__,|_|_|_|
 
     ["Water Moccasins",
-        {'element': 'water', 'category': 'mage-move,terrain', 'id': 54, 'pattern': 'E2-24'},
+        {'element': 'water', 'pattern': 'E2-24', 'op': 'move',
+         'id': 54, 'category': 'mage-move,terrain'},
         {
             'cast': "{{ADD_CHARGE}}",
             'charged': "Rivers cost 0mp to cross. Water locations cost 1mp to enter.",
@@ -448,7 +515,8 @@ spell_card_data = [
 
     # Blank card (for TTS)
     #["???",
-    #    {'element': 'none', 'category': 'starter', 'id': 0, 'pattern': 'blank'},
+    #    {'element': 'none', 'pattern': 'blank',
+    #      'id': 0, 'category': 'starter'},
     #    {
     #        'cast': "???",
     #    } ],
