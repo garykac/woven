@@ -70,7 +70,7 @@ class SpellCardGen(CardGen):
     def check_pattern(self, id):
         if not id in self.card_patterns:
             print(id, 'not found')
-        pattern = self.card_patterns[id]
+        pattern = self.card_patterns[id]['pattern']
         
         first_row = True
         num_cols = 0
@@ -111,7 +111,7 @@ class SpellCardGen(CardGen):
         if attrs['category'] != 'blank':
             self.validate_attrs(name, attrs)
         pattern_id = attrs['pattern']
-        pattern = self.card_patterns[pattern_id]
+        pattern = self.card_patterns[pattern_id]['pattern']
         if attrs['category'] != 'blank':
             self.record_spell_info(name, pattern, attrs, desc)
         
@@ -323,7 +323,7 @@ class SpellCardGen(CardGen):
         return '/'.join([''.join(x.split()) for x in pattern])
     
     def expand_desc(self, id, raw_desc):
-        keys = ['cast', 'charged', 'sacrifice', 'notes']
+        keys = ['cast', 'charged', 'sacrifice', 'notes', 'comment']
         prefix = {
             'cast': 'When cast: ',
             'charged': 'While charged: ',
@@ -345,8 +345,8 @@ class SpellCardGen(CardGen):
         for key in keys:
             if not key in raw_desc:
                 continue
-            #if key == 'notes':
-            #    continue
+            if key == 'comment':
+                continue
             d = raw_desc[key]
             d = d.replace('{{ADD_CHARGE}}', 'Place a CHARGE on this spell.')
             d = d.replace('{{ADD_ACTION}}', 'Take another action.')
