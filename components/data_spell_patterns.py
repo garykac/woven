@@ -1,8 +1,12 @@
 # Data Format:
 #   spell_card_patterns:
-#     Dictionary of spell <name> to <pattern>
+#     Dictionary of spell <name> to <pattern-info>
 #
 #   <name>: string
+#
+#   <pattern-info>: dict
+#     'elements' String with valid elements for this pattern
+#     'pattern': <pattern>
 #
 #   <pattern>:
 #     List of strings (one for each row of the pattern)
@@ -26,7 +30,7 @@
 
 spell_card_patterns = {
 
-    'blank':    {'elements': '',
+    'blank':    {'elements': 'none',
                  'pattern': [   ". . . . .",
                                 ". . . . .",
                                 ". . . . .",
@@ -42,7 +46,7 @@ spell_card_patterns = {
     # +---+
     # | X |  Level 0 - Castable on all starting cards.
     # +---+
-    'N1':       {'elements': '',
+    'N1':       {'elements': 'none',
                  'pattern': [   "X",
                             ],
                 },
@@ -56,7 +60,7 @@ spell_card_patterns = {
     # +-----+  Level 1 - Castable on all starting cards.
     # | X X |
     # +-----+
-    'N2-1':     {'elements': '',
+    'N2-1':     {'elements': 'none',
                  'pattern': [   "X X",
                             ],
                 },
@@ -65,7 +69,7 @@ spell_card_patterns = {
     # | X . |
     # | . X |
     # +-----+
-    'N2-2':     {'elements': '',
+    'N2-2':     {'elements': 'none',
                  'pattern': [   "X .",
                                 ". X",
                             ],
@@ -74,7 +78,7 @@ spell_card_patterns = {
     # +-------+  Level 1 - Castable on all starting cards except  xx  xx
     # | X . X |                                                  xx    xx
     # +-------+
-    'N2-3':     {'elements': '',
+    'N2-3':     {'elements': 'none',
                  'pattern': [   "X . X",
                             ],
                 },
@@ -83,7 +87,7 @@ spell_card_patterns = {
     # | X . . |                                                  xxx  xxx
     # | . . X |
     # +-------+
-    'N2-4':     {'elements': '',
+    'N2-4':     {'elements': 'none',
                  'pattern': [   "X . .",
                                 ". . X",
                             ],
@@ -94,7 +98,7 @@ spell_card_patterns = {
     # | . . . |
     # | . . X |
     # +-------+
-    'N2-5':     {'elements': '',
+    'N2-5':     {'elements': 'none',
                  'pattern': [   "X . .",
                                 ". . .",
                                 ". . X",
@@ -104,7 +108,7 @@ spell_card_patterns = {
     # +---------+  Level 2
     # | X . . X |
     # +---------+
-    'N2-6':     {'elements': '',
+    'N2-6':     {'elements': 'none',
                  'pattern': [   "X . . X",
                             ],
                 },
@@ -113,7 +117,7 @@ spell_card_patterns = {
     # | X . . . |
     # | . . . X |
     # +---------+
-    'N2-7':     {'elements': '',
+    'N2-7':     {'elements': 'none',
                  'pattern': [],
                 },
 
@@ -122,7 +126,7 @@ spell_card_patterns = {
     # | . . . . |
     # | . . . X |
     # +---------+
-    'N2-8':     {'elements': '',
+    'N2-8':     {'elements': 'none',
                  'pattern': [],
                 },
 
@@ -135,7 +139,7 @@ spell_card_patterns = {
     # +-------+  Level 2
     # | X X X |
     # +-------+
-    'N3-1':     {'elements': '',
+    'N3-1':     {'elements': 'none',
                  'pattern': [],
                 },
 
@@ -143,7 +147,7 @@ spell_card_patterns = {
     # | X X . |                                                  xxx  xxx
     # | . . X |
     # +-------+
-    'N3-2':     {'elements': '',
+    'N3-2':     {'elements': 'none',
                  'pattern': [],
                 },
 
@@ -151,7 +155,7 @@ spell_card_patterns = {
     # | X X |
     # | . X |
     # +-----+
-    'N3-3':     {'elements': '',
+    'N3-3':     {'elements': 'none',
                  'pattern': [],
                 },
 
@@ -159,7 +163,7 @@ spell_card_patterns = {
     # | X . X |
     # | . X . |
     # +-------+
-    'N3-4':     {'elements': '',
+    'N3-4':     {'elements': 'none',
                  'pattern': [],
                 },
 
@@ -168,7 +172,7 @@ spell_card_patterns = {
     # | . X . |
     # | . . X |
     # +-------+
-    'N3-5':     {'elements': '',
+    'N3-5':     {'elements': 'none',
                  'pattern': [],
                 },
 
@@ -178,68 +182,62 @@ spell_card_patterns = {
     # |_____|_|___|_|_|_|___|_|_|_| |__,|_|  |_____|    |_|    |_____|
     #
 
-    # Air/Earth
     # +-----+  Level 1
     # | @ X |  Threads 1
     # +-----+  Cards 1
     #          Transform 4: 4/2
-    'E1-1':     {'elements': '',
+    'E1-1':     {'elements': 'ae',
                  'pattern': [   "@ X",
                             ],
                 },
 
-    # Fire/Water
     # +-----+  Level 1         Transforms  3 . 2
     # | @ . |  Threads 1                   . @ .
     # | . X |  Cards 1                     4 . 1
     # +-----+  Transform 4: 4/2
-    'E1-2':     {'elements': '',
+    'E1-2':     {'elements': 'fw',
                  'pattern': [   "@ .",
                                 ". X",
                             ],
                 },
 
-    # Air/Earth
     # +-------+  Level 1
     # | @ . X |  Threads 1
     # +-------+  Cards 1
     #            Transform 4: 4/4
-    'E1-3':     {'elements': '',
+    'E1-3':     {'elements': 'ae',
                  'pattern': [    "@ . X",
                             ],
                 },
 
-    # All
     # +-------+  Level 1          Transforms  . 6 . 7 .
     # | @ . . |  Threads 1                    5 . . . 8
     # | . . X |  Cards 1                      . . @ . .
     # +-------+  Transform 8: 8/5             4 . . . 1
     #                                         . 3 . 2 .
-    'E1-4':     {'elements': '',
+    'E1-4':     {'elements': 'aefw',
                  'pattern': [   "@ . .",
                                 ". . X",
                             ],
                 },
 
-    # Fire/Water
     # +-------+  Level 2          Transforms  3 . . . 2
     # | @ . . |  Threads 1                    . . . . .
     # | . . . |  Cards 2                      . . @ . .
     # | . . X |  Transform 4: 4/6             . . . . .
     # +-------+                               4 . . . 1
-    'E1-5':     {'elements': '',
+    'E1-5':     {'elements': 'fw',
                  'pattern': [   "@ . .",
                                 ". . .",
                                 ". . X",
                             ],
                 },
 
-    # Air/Earth
     # +---------+  Level 2
     # | @ . . X |  Threads 1
     # +---------+  Cards 2
     #              Transform 4: 4/6
-    'E1-6':     {'elements': '',
+    'E1-6':     {'elements': 'ae',
                  'pattern': [    "@ . . X",
                             ],
                 },
@@ -248,7 +246,7 @@ spell_card_patterns = {
     # | @ . . . |  Threads 1
     # | . . . X |  Cards 2
     # +---------+  Transform 8
-    'E1-7':     {'elements': '',
+    'E1-7':     {'elements': 'aefw',
                  'pattern': [   "@ . . .",
                                 ". . . X",
                             ],
@@ -259,7 +257,7 @@ spell_card_patterns = {
     # | . . . . |  Cards 3
     # | . . . X |  Transform 8
     # +---------+
-    'E1-8':     {'elements': '',
+    'E1-8':     {'elements': 'aefw',
                  'pattern': [   "@ . . .",
                                 ". . . .",
                                 ". . . X",
@@ -272,153 +270,139 @@ spell_card_patterns = {
     # |_____|_|___|_|_|_|___|_|_|_| |__,|_|  |_____|    |_|    |___|
     #
 
-    # Air/Earth
     # +-------+  Level 2 - Built on +-----+  Transforms  . 2 .
     # | X @ X |  Threads 1          | @ X |              1 @ 1
     # +-------+  Cards 1            +-----+              . 2 .
     #            Transform 2: 4/2
-    'E2-1':     {'elements': '',
+    'E2-1':     {'elements': 'ae',
                  'pattern': [   "X @ X",
                             ],
                 },
 
-    # Air/Earth
     # +-----+  Level 2 - Built on +-----+  Transforms  . 2 .
     # | @ X |  Threads 2          | @ X |              3 @ 1
     # | X . |  Cards 1            +-----+              . 1 .
     # +-----+  Transform 3: 4/2
-    'E2-2':     {'elements': '',
+    'E2-2':     {'elements': 'ae',
                  'pattern': [   "@ X",
                                 "X .",
                             ],
                 },
 
-    # All
     # +-------+  Level 2 - Built on +-----+     +-----+  Transforms  7 2 5
     # | . @ X |  Threads 2          | @ X | and | @ . |              4 @ 1        
     # | X . . |  Cards 1            +-----+     | . X |              1 6 3
     # +-------+  Transform 7: 8/2               +-----+
-    'E2-3':     {'elements': '',
+    'E2-3':     {'elements': 'aefw',
                  'pattern': [   ". @ X",
                                 "X . .",
                             ],
                 },
 
-    # All
     # +-----+  Level 2 - Built on +-----+     +-----+  Transforms  5 4 3
     # | @ . |  Threads 2          | @ X | and | @ . |              6 @ 2
     # | X X |  Cards 1            +-----+     | . X |              7 1 1
     # +-----+  Transform 7: 8/2               +-----+
-    'E2-4':     {'elements': '',
+    'E2-4':     {'elements': 'aefw',
                  'pattern': [   "@ .",
                                 "X X",
                             ],
                 },
 
-    # Air/Earth
     # +-------+  Level 2 - Built on +-----+     +-------+  Transforms  . . 2 . .
     # | @ X X |  Threads 2          | @ X | and | @ . X |              . . 2 . .
     # +-------+  Cards 1            +-----+     +-------+              3 3 @ 1 1
     #            Transform 4: 8/4                                      . . 4 . .
     #                                                                  . . 4 . .
-    'E2-5':     {'elements': '',
+    'E2-5':     {'elements': 'ae',
                  'pattern': [    "@ X X",
                             ],
                 },
 
-    # Air/Earth
     # +---------+  Level 3 - Built on +-----+     +-------+  Transforms  . . 2 . .
     # | X @ . X |  Threads 2          | @ X | and | @ . X |              . . 4 . .
     # +---------+  Cards 2            +-----+     +-------+              3 1 @ 3 1
     #              Transform 4: 8/4                                      . . 2 . .
     #                                                                    . . 4 . .
-    'E2-6':     {'elements': '',
+    'E2-6':     {'elements': 'ae',
                  'pattern': [   "X @ . X",
                             ],
                 },
 
-    # Air/Earth
     # +-------+  Level 2 - Built on +-----+     +-------+  Transforms  . . 4 . .
     # | @ . X |  Threads 2          | @ X | and | @ . X |              . . 2 . .
     # | X . . |  Cards 1            +-----+     +-------+              3 5 @ 4 1
     # +-------+  Transform 6: 8/4                                      . . 1 . .
     #                                                                  . . 6 . .
-    'E2-7':     {'elements': '',
+    'E2-7':     {'elements': 'ae',
                  'pattern': [   "@ . X",
                                 "X . .",
                             ],
                 },
 
-    # Air/Earth
     # +-------+  Level 2 - Built on +-----+     +-------+  Transforms  . 4 . 3 .
     # | @ X . |  Threads 2          | @ X | and | @ . . |              5 . 3 . 2
     # | . . X |  Cards 1            +-----+     | . . X |              . 5 @ 1 .
     # +-------+  Transform 8: 12/5              +-------+              6 . 7 . 1
     #                                                                  . 7 . 8 .
-    'E2-8':     {'elements': '',
+    'E2-8':     {'elements': 'ae',
                  'pattern': [   "@ X .",
                                 ". . X",
                             ],
                 },
 
-    # Air/Earth
     # +-------+  Level 2 - Built on +-----+     +-------+  Transforms  . 8 . 5 .
     # | @ . . |  Threads 2          | @ X | and | @ . . |              3 . 3 . 4
     # | X . X |  Cards 1            +-----+     | . . X |              . 7 @ 5 .
     # +-------+  Transform 8: 12/5              +-------+              2 . 1 . 1
     #                                                                  . 7 . 6 .
-    'E2-9':     {'elements': '',
+    'E2-9':     {'elements': 'ae',
                  'pattern': [   "@ . .",
                                 "X . X",
                             ],
                 },
 
-    # Air/Earth
     # +---------+  Level 3 - Built on +-----+     +-------+  Transforms  . 4 . 3 .
     # | X @ . . |  Threads 2          | @ X | and | @ . . |              5 . 7 . 2
     # | . . . X |  Cards 2            +-----+     | . . X |              . 1 @ 5 .
     # +---------+  Transform 8: 12/5              +-------+              6 . 3 . 1
     #                                                                    . 7 . 8 .
-    'E2-10':    {'elements': '',
+    'E2-10':    {'elements': 'ae',
                  'pattern': [   "X @ . .",
                                 ". . . X",
                             ],
                 },
 
-    # Air/Earth
     # +-------+  Level 3 - Built on +-----+     +-------+  Transforms  . 7 . 3 .
     # | X . . |  Threads 2          | @ X | and | @ . . |              6 . 1 . 5
     # | @ . . |  Cards 1            +-----+     | . . X |              . 3 @ 7 .
     # | . . X |  Transform 8: 12/5              +-------+              2 . 5 . 1
     # +-------+                                                        . 8 . 4 .
-    'E2-11':    {'elements': '',
+    'E2-11':    {'elements': 'ae',
                  'pattern': [   "X . .",
                                 "@ . .",
                                 ". . X",
                             ],
                 },
 
-    # Air/Earth
     # +---------+  Level 3 - Built on +-----+     +---------+
     # | @ X . X |  Threads 2          | @ X | and | @ . . X |
     # +---------+  Cards 2            +-----+     +---------+
     #              Transform 4: 8/6
-    'E2-12':    {'elements': '',
+    'E2-12':    {'elements': 'ae',
                  'pattern': [   "@ X . X",
                             ],
                 },
 
-    # Air/Earth
     # +-----------+  Level 3 - Built on +-----+     +---------+
     # | X @ . . X |  Threads 2          | @ X | and | @ . . X |
     # +-----------+  Cards 2            +-----+     +---------+
     #                Transform 4: 8/6
-    'E2-13':    {'elements': '',
+    'E2-13':    {'elements': 'ae',
                  'pattern': [   "X @ . . X",
                             ],
                 },
 
-    # Air/Earth
     # +---------+  Level 3 - Built on +-----+     +---------+  Transforms  . . . 4 . . .
     # | @ . . X |  Threads 2          | @ X | and | @ . . X |              . . . . . . .
     # | X . . . |  Cards 2            +-----+     +---------+              . . . 2 . . .
@@ -426,13 +410,12 @@ spell_card_patterns = {
     #                                                                      . . . 1 . . .
     #                                                                      . . . . . . .
     #                                                                      . . . 6 . . .
-    'E2-14':    {'elements': '',
+    'E2-14':    {'elements': 'ae',
                  'pattern': [   "@ . . X",
                                 "X . . .",
                             ],
                 },
 
-    # Air/Earth
     # +---------+  Level 3 - Built on +-----+     +---------+  Transforms  . . 4 . 3 . .
     # | @ X . . |  Threads 2          | @ X | and | @ . . . |              . . . . . . .
     # | . . . X |  Cards 2            +-----+     | . . . X |              5 . . 3 . . 2
@@ -440,13 +423,12 @@ spell_card_patterns = {
     #                                                                      6 . . 7 . . 1
     #                                                                      . . . . . . .
     #                                                                      . . 7 . 8 . .
-    'E2-15':    {'elements': '',
+    'E2-15':    {'elements': 'ae',
                  'pattern': [   "@ X . .",
                                 ". . . X",
                             ],
                 },
 
-    # Air/Earth
     # +---------+  Level 3 - Built on +-----+     +---------+  Transforms  . . 8 . 5 . .
     # | @ . . . |  Threads 2          | @ X | and | @ . . . |              . . . . . . .
     # | X . . X |  Cards 2            +-----+     | . . . X |              3 . . 3 . . 4
@@ -454,143 +436,131 @@ spell_card_patterns = {
     #                                                                      2 . . 1 . . 1
     #                                                                      . . . . . . .
     #                                                                      . . 7 . 6 . .
-    'E2-16':    {'elements': '',
+    'E2-16':    {'elements': 'ae',
                  'pattern': [   "@ . . .",
                                 "X . . X",
                             ],
                 },
 
-    # Air/Earth
     # +-----------+  Level 3 - Built on +-----+     +---------+
     # | X @ . . . |  Threads 2          | @ X | and | @ . . . |
     # | . . . . X |  Cards 2            +-----+     | . . . X |
     # +-----------+  Transform 8                    +---------+
-    'E2-17':    {'elements': '',
+    'E2-17':    {'elements': 'ae',
                  'pattern': [],
                 },
 
-    # Air/Earth
     # +---------+  Level 3 - Built on +-----+     +---------+
     # | X . . . |  Threads 2          | @ X | and | @ . . . |
     # | @ . . . |  Cards 3            +-----+     | . . . X |
     # | . . . X |  Transform 8                    +---------+
     # +---------+
-    'E2-18':    {'elements': '',
+    'E2-18':    {'elements': 'ae',
                  'pattern': [],
                 },
 
-    # Fire/Water
     # +-------+  Level 2 - Built on +-----+  Transforms  3 . 2
     # | . @ . |  Threads 2          | @ . |              . @ .
     # | X . X |  Cards 1            | . X |              1 . 1
     # +-------+  Transform 3: 4/2   +-----+
-    'E2-19':    {'elements': '',
+    'E2-19':    {'elements': 'fw',
                  'pattern': [   ". @ .",
                                 "X . X",
                             ],
                 },
 
-    # Fire/Water
     # +-------+  Level 3 - Built on +-----+  Transforms  1 . 2
     # | X . . |  Threads 2          | @ . |              . @ .
     # | . @ . |  Cards 2            | . X |              2 . 1
     # | . . X |  Transform 2: 4/2   +-----+
     # +-------+
-    'E2-20':    {'elements': '',
+    'E2-20':    {'elements': 'fw',
                  'pattern': [   "X . .",
                                 ". @ .",
                                 ". . X",
                             ],
                 },
 
-    # All
     # +-------+  Level 2 - Built on +-----+     +-------+  Transforms  . . 3 . .
     # | @ . X |  Threads 2          | @ . | and | @ . X |              . 4 . 2 .
     # | . X . |  Cards 1            | . X |     +-------+              5 . @ . 1
     # +-------+  Transform 7: 8/4   +-----+                            . 6 . 1 .
     #                                                                  . . 7 . .
-    'E2-21':    {'elements': '',
+    'E2-21':    {'elements': 'aefw',
                  'pattern': [   "@ . X",
                                 ". X .",
                             ],
                 },
 
-    # All
     # +---------+  Level 3 - Built on +-----+     +-------+  Transforms  . . 3 . .
     # | . @ . X |  Threads 3          | @ . | and | @ . X |              . 2 . 6 .
     # | X . . . |  Cards 2            | . X |     +-------+              7 . @ . 1
     # +---------+  Transform 7: 8/4   +-----+                            . 1 . 4 .
     #                                                                    . . 5 . .
-    'E2-22':    {'elements': '',
+    'E2-22':    {'elements': 'aefw',
                  'pattern': [   ". @ . X",
                                 "X . . .",
                             ],
                 },
 
-    # Fire/Water
     # +-------+  Level 2 - Built on +-----+     +-------+  Transforms  . 6 . 3 .
     # | @ . . |  Threads 2          | @ . | and | @ . . |              5 5 . 3 4
     # | . X X |  Cards 1            | . X |     | . . X |              . . @ . .
     # +-------+  Transform 8: 12/5  +-----+     +-------+              8 7 . 1 1
     #                                                                  . 7 . 2 .
-    'E2-23':    {'elements': '',
+    'E2-23':    {'elements': 'fw',
                  'pattern': [   "@ . .",
                                 ". X X",
                             ],
                 },
 
-    # Fire/Water
     # +---------+  Level 3 - Built on +-----+     +-------+  Transforms  . 2 . 6 .
     # | . @ . . |  Threads 2          | @ . | and | @ . . |              7 3 . 7 3
     # | X . . X |  Cards 2            | . X |     | . . X |              . . @ . .
     # +---------+  Transform 8: 12/5  +-----+     +-------+              5 1 . 5 1
     #                                                                    . 4 . 8 .
-    'E2-24':    {'elements': '',
+    'E2-24':    {'elements': 'fw',
                  'pattern': [   ". @ . .",
                                 "X . . X",
                             ],
                 },
 
-    # Fire/Water
     # +---------+  Level 3 - Built on +-----+     +-------+  Transforms  . 5 . 4 .
     # | X . . . |  Threads 2          | @ . | and | @ . . |              6 1 . 7 3
     # | . @ . . |  Cards 3            | . X |     | . . X |              . . @ . .
     # | . . . X |  Transform 8: 12/5  +-----+     +-------+              8 3 . 5 1
     # +---------+                                                        . 7 . 2 .
-    'E2-25':    {'elements': '',
+    'E2-25':    {'elements': 'fw',
                  'pattern': [   "X . . .",
                                 ". @ . .",
                                 ". . . X",
                             ],
                 },
 
-    # Fire/Water
     # +-------+  Level 3 - Built on +-----+     +-------+  Transforms  . 6 . 7 .
     # | . @ . |  Threads 2          | @ . | and | @ . . |              2 7 . 5 4
     # | X . . |  Cards 2            | . X |     | . . X |              . . @ . .
     # | . . X |  Transform 8: 12/5  +-----+     +-------+              8 1 . 3 5
     # +-------+                                                        . 3 . 1 .
-    'E2-26':    {'elements': '',
+    'E2-26':    {'elements': 'fw',
                  'pattern': [   ". @ .",
                                 "X . .",
                                 ". . X",
                             ],
                 },
 
-    # Fire/Water
     # +-------+  Level 3 - Built on +-----+     +-------+  Transforms  3 . . . 2
     # | @ . . |  Threads 2          | @ . | and | @ . . |              . 3 . 2 .
     # | . X . |  Cards 2            | . X |     | . . . |              . . @ . .
     # | . . X |  Transform 4: 8/5   +-----+     | . . X |              . 4 . 1 .
     # +-------+                                 +-------+              4 . . . 1
-    'E2-27':    {'elements': '',
+    'E2-27':    {'elements': 'fw',
                  'pattern': [   "@ . .",
                                 ". X .",
                                 ". . X",
                             ],
                 },
 
-    # All
     # +---------+  Level 3 - Built on +-----+     +---------+  Transforms  . . . 3 . . .
     # | @ . . X |  Threads 2          | @ . | and | @ . . X |              . . . . . . .
     # | . X . . |  Cards 2            | . X |     +---------+              . . 4 . 2 . .
@@ -598,13 +568,12 @@ spell_card_patterns = {
     #                                                                      . . 6 . 1 . .
     #                                                                      . . . . . . .
     #                                                                      . . . 7 . . .
-    'E2-28':    {'elements': '',
+    'E2-28':    {'elements': 'aefw',
                  'pattern': [   "@ . . X",
                                 ". X . .",
                             ],
                 },
 
-    # All
     # +-----------+  Level 3 - Built on +-----+     +---------+  Transforms  . . . 2 . . .
     # | . @ . . X |  Threads 2          | @ . | and | @ . . X |              . . . . . . .
     # | X . . . . |  Cards 2            | . X |     +---------+              . . 7 . 5 . .
@@ -612,13 +581,12 @@ spell_card_patterns = {
     #                                                                        . . 1 . 3 . .
     #                                                                        . . . . . . .
     #                                                                        . . . 6 . . .
-    'E2-29':    {'elements': '',
+    'E2-29':    {'elements': 'aefw',
                  'pattern': [   ". @ . . X",
                                 "X . . . .",
                             ],
                 },
 
-    # Fire/Water
     # +---------+  Level 3 - Built on +-----+     +---------+  Transforms  . . 6 . 7 . .
     # | @ . . . |  Threads 2          | @ . | and | @ . . . |              . . . . . . .
     # | . X . X |  Cards 2            | . X |     | . . . X |              5 . 5 . 7 . 8
@@ -626,13 +594,12 @@ spell_card_patterns = {
     #                                                                      4 . 3 . 1 . 1
     #                                                                      . . . . . . .
     #                                                                      . . 3 . 2 . .
-    'E2-30':    {'elements': '',
+    'E2-30':    {'elements': 'fw',
                  'pattern': [   "@ . . .",
                                 ". X . X",
                             ],
                 },
 
-    # Fire/Water
     # +---------+  Level 3 - Built on +-----+     +---------+  Transforms  . . 2 . 3 . .
     # | . X . . |  Threads 2          | @ . | and | @ . . . |              . . . . . . .
     # | @ . . . |  Cards 3            | . X |     | . . . X |              5 . 3 . 1 . 8
@@ -640,356 +607,331 @@ spell_card_patterns = {
     # +---------+                                                          4 . 5 . 7 . 1
     #                                                                      . . . . . . .
     #                                                                      . . 7 . 6 . .
-    'E2-31':    {'elements': '',
+    'E2-31':    {'elements': 'fw',
                  'pattern': [   ". X . .",
                                 "@ . . .",
                                 ". . . X",
                             ],
                 },
 
-    # Fire/Water
     # +-----------+  Level 3 - Built on +-----+     +---------+
     # | . @ . . . |  Threads 2          | @ . | and | @ . . . |
     # | X . . . X |  Cards 2            | . X |     | . . . X |
     # +-----------+  Transform 8: 12/8  +-----+     +---------+
-    'E2-32':    {'elements': '',
+    'E2-32':    {'elements': 'fw',
                  'pattern': [],
                 },
 
-    # Fire/Water
     # +-----------+  Level 3 - Built on +-----+     +---------+
     # | X . . . . |  Threads 2          | @ . | and | @ . . . |
     # | . @ . . . |  Cards 4            | . X |     | . . . X |
     # | . . . . X |  Transform 8: 12/8  +-----+     +---------+
     # +-----------+
-    'E2-33':    {'elements': '',
+    'E2-33':    {'elements': 'fw',
                  'pattern': [],
                 },
     
-    # Fire/Water
     # +---------+  Level 3 - Build on +-----+     +---------=
     # | @ . . . |  Threads 2          | @ . | and | @ . . . |
     # | . X . . |  Cards 3            | . X |     | . . . . |
     # | . . . X |  Transform 8        +-----+     | . . . X |
     # +---------+                                 +---------+
     # + 3 variants
-    'E2-34':    {'elements': '',
+    'E2-34':    {'elements': 'fw',
                  'pattern': [],
                 },
-    'E2-35':    {'elements': '',
+    'E2-35':    {'elements': 'fw',
                  'pattern': [],
                 },
-    'E2-36':    {'elements': '',
+    'E2-36':    {'elements': 'fw',
                  'pattern': [],
                 },
-    'E2-37':    {'elements': '',
+    'E2-37':    {'elements': 'fw',
                  'pattern': [],
                 },
 
-    # Air/Earth
     # +-----------+  Level 3 - Built on +-------+
     # | X . @ . X |  Threads 2          | @ . X |
     # +-----------+  Cards 2            +-------+
     #                Transform 2: 4/4
-    'E2-38':    {'elements': '',
+    'E2-38':    {'elements': 'ae',
                  'pattern': [   "X . @ . X",
                             ],
                 },
 
-    # Air/Earth
     # +-------+  Level 3 - Build on +-------+
     # | @ . X |  Threads 2          | @ . X |
     # | . . . |  Cards 2            +-------+
     # | X . . |  Transform 3: 4/4
     # +-------+
-    'E2-39':    {'elements': '',
+    'E2-39':    {'elements': 'ae',
                  'pattern': [   "@ . X",
                                 ". . .",
                                 "X . .",
                             ],
                 },
 
-    # Air/Earth
     # +-------+  Level 2 - Built on +-------+     +-------+  Transforms  . 4 3 3 .
     # | @ . X |  Threads 2          | @ . X | and | @ . . |              5 . . . 2
     # | . . X |  Cards 1            +-------+     | . . X |              5 . @ . 1
     # +-------+  Transform 8: 12/5                +-------+              6 . . . 1
     #                                                                    . 7 7 8 .
-    'E2-40':    {'elements': '',
+    'E2-40':    {'elements': 'ae',
                  'pattern': [   "@ . X",
                                 ". . X",
                             ],
                 },
 
-    # Air/Earth
     # +-------+  Level 2 - Built on +-------+     +-------+  Transforms  . 3 7 2 .
     # | @ . X |  Threads 2          | @ . X | and | @ . . |              8 . . . 7
     # | . . . |  Cards 2            +-------+     | . . X |              3 . @ . 1
     # | . X . |  Transform 8: 12/5                +-------+              6 . . . 5
     # +-------+                                                          . 4 5 1 .
-    'E2-41':    {'elements': '',
+    'E2-41':    {'elements': 'ae',
                  'pattern': [   "@ . X",
                                 ". . .",
                                 ". X .",
                             ],
                 },
 
-    # Air/Earth
     # +-----------+  Level 3 - Built on +-------+     +-------+
     # | X . @ . . |  Threads 2          | @ . X | and | @ . . |
     # | . . . . X |  Cards 2            +-------+     | . . X |
     # +-----------+  Transform 8: 12/5                +-------+
-    'E2-42':    {'elements': '',
+    'E2-42':    {'elements': 'ae',
                  'pattern': [   "X . @ . .",
                                 ". . . . X",
                             ],
                 },
 
-    # Air/Earth
     # +---------+  Level 2 - Built on +-------+     +-------+
     # | . @ . X |  Threads 2          | @ . X | and | @ . . |
     # | . . . . |  Cards 3            +-------+     | . . X |
     # | X . . . |  Trnsform 8: 12/5                 +-------+
     # +---------+
-    'E2-43':    {'elements': '',
+    'E2-43':    {'elements': 'ae',
                  'pattern': [],
                 },
 
-    # Air/Earth
     # +---------+  Level 3 - Built on +-------+     +---------+
     # | @ . X X |  Threads 2          | @ . X | and | @ . . X |
     # +---------+  Cards 2            +-------+     +---------+
     #              Transform 4: 8/5
-    'E2-44':    {'elements': '',
+    'E2-44':    {'elements': 'ae',
                  'pattern': [],
                 },
 
-    # Air/Earth
     # +-------------+  Level 3 - Built on +-------+     +---------+
     # | X . @ . . X |  Threads 2          | @ . X | and | @ . . X |
     # +-------------+  Cards 3            +-------+     +---------+
     #                  Transform 4: 8/5
-    'E2-45':    {'elements': '',
+    'E2-45':    {'elements': 'ae',
                  'pattern': [],
                 },
 
-    # Air/Earth
     # +---------+  Level 3 - Built on +-------+     +---------+
     # | @ . . X |  Threads 2          | @ . X | and | @ . . X |
     # | . . . . |  Cards 3            +-------+     +---------+
     # | X . . . |  Transform 6: 8/5
     # +---------+
-    'E2-46':    {'elements': '',
+    'E2-46':    {'elements': 'ae',
                  'pattern': [   "@ . . X",
                                 ". . . .",
                                 "X . . .",
                             ],
                 },
 
-    # Air/Earth
     # +---------+  Level 3 - Built on +-------+     +---------+
     # | @ . X . |  Threads 2          | @ . X | and | @ . . . |
     # | . . . X |  Cards 2            +-------+     | . . . X |
     # +---------+  Transform 8: 12/8                +---------+
     # + 3 variants
-    'E2-47':    {'elements': '',
+    'E2-47':    {'elements': 'ae',
                  'pattern': [],
                 },
-    'E2-48':    {'elements': '',
+    'E2-48':    {'elements': 'ae',
                  'pattern': [],
                 },
-    'E2-49':    {'elements': '',
+    'E2-49':    {'elements': 'ae',
                  'pattern': [],
                 },
-    'E2-50':    {'elements': '',
+    'E2-50':    {'elements': 'ae',
                  'pattern': [],
                 },
 
-    # Air/Earth
     # +-----------+  Level 3 - Built on +-------+     +-----------+
     # | @ . X . . |  Threads 2          | @ . X | and | @ . . . . |
     # | . . . . X |  Cards 2            +-------+     | . . . . X |
     # +-----------+  Transform 8: 12/                 +-----------+
     # + 3 variants
-    'E2-51':    {'elements': '',
+    'E2-51':    {'elements': 'ae',
                  'pattern': [],
                 },
-    'E2-52':    {'elements': '',
+    'E2-52':    {'elements': 'ae',
                  'pattern': [],
                 },
-    'E2-53':    {'elements': '',
+    'E2-53':    {'elements': 'ae',
                  'pattern': [],
                 },
-    'E2-54':    {'elements': '',
+    'E2-54':    {'elements': 'ae',
                  'pattern': [],
                 },
 
-    # All
     # +-------+  Level 3 - Built on +-------+  Transforms  . 3 . 3 .
     # | . @ . |  Threads 2          | @ . . |              4 . . . 2
     # | . . . |  Cards 2            | . . X |              . . @ . .
     # | X . X |  Transform 4: 8/5   +-------+              4 . . . 2
     # +-------+                                            . 1 . 1 .
-    'E2-55':    {'elements': '',
+    'E2-55':    {'elements': 'aefw',
                  'pattern': [   ". @ .",
                                 ". . .",
                                 "X . X",
                             ],
                 },
 
-    # All
     # +---------+  Level 3 - Built on +-------+
     # | . @ . . |  Threads 2          | @ . . |
     # | . . . X |  Cards 3            | . . X |
     # | X . . . |  Transform 6: 8/5   +-------+
     # +---------+
-    'E2-56':    {'elements': '',
+    'E2-56':    {'elements': 'aefw',
                  'pattern': [],
                 },
 
-    # All
     # +-----------+  Level 3 - Built on +-------+
     # | . . @ . . |  Threads 2          | @ . . |
     # | X . . . X |  Cards 2            | . . X |
     # +-----------+  Transform 6: 8/5   +-------+
-    'E2-57':    {'elements': '',
+    'E2-57':    {'elements': 'aefw',
                  'pattern': [],
                 },
 
-    # All
     # +-----------+  Level 3 - Built on +-------+
     # | X . . . . |  Threads 2          | @ . . |
     # | . . @ . . |  Cards 4            | . . X |
     # | . . . . X |  Transform 4: 8/5   +-------+
     # +-----------+
-    'E2-58':    {'elements': '',
+    'E2-58':    {'elements': 'aefw',
                  'pattern': [],
                 },
 
-    # All
     # +---------+  Level 3 - Built on +-------+  Transforms  . 2 . 3 .
     # | . . . X |  Threads 2          | @ . . |              4 . . . 1
     # | . @ . . |  Cards 4            | . . X |              . . @ . .
     # | . . . . |  Transform 4: 8/5   +-------+              3 . . . 2
     # | X . . . |                                            . 1 . 4 .
     # +---------+
-    'E2-59':    {'elements': '',
+    'E2-59':    {'elements': 'aefw',
                  'pattern': [],
                 },
 
-    # Air/Earth
     # +---------+  Level 3 - Built on +-------+     +---------+
     # | @ . . X |  Threads 2          | @ . . | and | @ . . X |
     # | . . X . |  Cards 2            | . . X |     +---------+
     # +---------+  Transform 8: 12/   +-------+
     # + 3 variants
-    'E2-60':    {'elements': '',
+    'E2-60':    {'elements': 'ae',
                  'pattern': [],
                 },
-    'E2-61':    {'elements': '',
+    'E2-61':    {'elements': 'ae',
                  'pattern': [],
                 },
-    'E2-62':    {'elements': '',
+    'E2-62':    {'elements': 'ae',
                  'pattern': [],
                 },
-    'E2-63':    {'elements': '',
+    'E2-63':    {'elements': 'ae',
                  'pattern': [],
                 },
 
-    # All
     # +---------+  Level 3 - Built on +-------+     +---------+
     # | @ . . . |  Threads 2          | @ . . | and | @ . . . |
     # | . . X X |  Cards 2            | . . X |     | . . . X |
     # +---------+  Transform 8: 16/   +-------+     +---------+
     # + 3 variants
-    'E2-64':    {'elements': '',
+    'E2-64':    {'elements': 'aefw',
                  'pattern': [],
                 },
-    'E2-65':    {'elements': '',
+    'E2-65':    {'elements': 'aefw',
                  'pattern': [],
                 },
-    'E2-66':    {'elements': '',
+    'E2-66':    {'elements': 'aefw',
                  'pattern': [],
                 },
-    'E2-67':    {'elements': '',
+    'E2-67':    {'elements': 'aefw',
                  'pattern': [],
                 },
 
-    # All
     # +---------+  Level 3 - Built on +-------+     +---------+
     # | @ . . . |  Threads 2          | @ . . | and | @ . . . |
     # | . . X . |  Cards 3            | . . X |     | . . . . |
     # | . . . X |  Transform 8: 16/   +-------+     | . . . X |
     # +---------+                                   +---------+
     # + 3 variants
-    'E2-68':    {'elements': '',
+    'E2-68':    {'elements': 'aefw',
                  'pattern': [],
                 },
-    'E2-69':    {'elements': '',
+    'E2-69':    {'elements': 'aefw',
                  'pattern': [],
                 },
-    'E2-70':    {'elements': '',
+    'E2-70':    {'elements': 'aefw',
                  'pattern': [],
                 },
-    'E2-71':    {'elements': '',
+    'E2-71':    {'elements': 'aefw',
                  'pattern': [],
                 },
 
-    # Air/Earth
     # +-----------+  Level 3 - Built on +-------+     +-----------+
     # | @ . . . X |  Threads 2          | @ . . | and | @ . . . X |
     # | . . X . . |  Cards 2            | . . X |     +-----------+
     # +-----------+  Transform 8: 12/   +-------+
     # + 3 variants
-    'E2-72':    {'elements': '',
+    'E2-72':    {'elements': 'ae',
                  'pattern': [],
                 },
-    'E2-73':    {'elements': '',
+    'E2-73':    {'elements': 'ae',
                  'pattern': [],
                 },
-    'E2-74':    {'elements': '',
+    'E2-74':    {'elements': 'ae',
                  'pattern': [],
                 },
-    'E2-75':    {'elements': '',
+    'E2-75':    {'elements': 'ae',
                  'pattern': [],
                 },
 
-    # All
     # +-----------+  Level 3 - Built on +-------+     +-----------+
     # | @ . . . . |  Threads 2          | @ . . | and | @ . . . . |
     # | . . X . X |  Cards 2            | . . X |     | . . . . X |
     # +-----------+  Transform 8: 16/   +-------+     +-----------+
     # + 3 variants
-    'E2-76':    {'elements': '',
+    'E2-76':    {'elements': 'aefw',
                  'pattern': [],
                 },
-    'E2-77':    {'elements': '',
+    'E2-77':    {'elements': 'aefw',
                  'pattern': [],
                 },
-    'E2-78':    {'elements': '',
+    'E2-78':    {'elements': 'aefw',
                  'pattern': [],
                 },
-    'E2-79':    {'elements': '',
+    'E2-79':    {'elements': 'aefw',
                  'pattern': [],
                 },
 
-    # All
     # +-----------+  Level 3 - Built on +-------+     +-----------+
     # | @ . . . . |  Threads 2          | @ . . | and | @ . . . . |
     # | . . X . . |  Cards 4            | . . X |     | . . . . . |
     # | . . . . X |  Transform 8: 12/   +-------+     | . . . . X |
     # +-----------+                                   +-----------+
     # + 3 variants
-    'E2-80':    {'elements': '',
+    'E2-80':    {'elements': 'aefw',
                  'pattern': [],
                 },
-    'E2-81':    {'elements': '',
+    'E2-81':    {'elements': 'aefw',
                  'pattern': [],
                 },
-    'E2-82':    {'elements': '',
+    'E2-82':    {'elements': 'aefw',
                  'pattern': [],
                 },
-    'E2-83':    {'elements': '',
+    'E2-83':    {'elements': 'aefw',
                  'pattern': [],
                 },
 
@@ -999,33 +941,30 @@ spell_card_patterns = {
     # |_____|_|___|_|_|_|___|_|_|_| |__,|_|  |_____|    |_|    |___|
     #
 
-    # All
     # +-------+  Level 4 - Build on +-----+     +-------+
     # | @ . X |  Threads 3          | @ . | and | @ . X |
     # | . X . |  Cards 2            | . X |     +-------+
     # | X . . |  Transform 4: 8/5   +-----+
     # +-------+
-    'E3-1':     {'elements': '',
+    'E3-1':     {'elements': 'aefw',
                  'pattern': [],
                 },
 
-    # All
     # +-------+  Level 4 - Build on +-----+     +-------+  Transforms  3 . . . 2
     # | @ X . |  Threads 3          | @ X | and | @ . . |              . . 2 . .
     # | X . . |  Cards 2            +-----+     | . . . |              . 3 @ 1 .
     # | . . X |  Transform 4: 8/5               | . . X |              . . 1 . .
     # +-------+                                 +-------+              4 . . . 1
-    'E3-2':     {'elements': '',
+    'E3-2':     {'elements': 'aefw',
                  'pattern': [],
                 },
 
-    # All
     # +-------+  Level 4 - Build on +-------+     +-------+  Transforms  3 . 2 . 2
     # | @ . X |  Threads 3          | @ . X | and | @ . . |              . . . . .
     # | . . . |  Cards 2            +-------+     | . . . |              3 . @ . 1
     # | X . X |  Transform 4: 8/6                 | . . X |              . . . . .
     # +-------+                                   +-------+              4 . 1 . 1
-    'E3-3':     {'elements': '',
+    'E3-3':     {'elements': 'aefw',
                  'pattern': [],
                 },
 
@@ -1035,64 +974,58 @@ spell_card_patterns = {
     # |_____|_|___|_|_|_|___|_|_|_| |__,|_|  |___|    |_|    |_____|
     #
 
-    # Air/Earth
     # +-------+  Level 2 - Built on +-----+
     # | @ X @ |  Threads 1          | @ X |
     # +-------+  Cards 2            +-----+
     #            Transform 1: 1/
-    'EE1-1':    {'elements': '',
+    'EE1-1':    {'elements': 'ae',
                  'pattern': [],
                 },
 
-    # Air/Earth
     # +-----+  Level 2 - Built on +-----+
     # | @ X |  Threads 1          | @ X |
     # | . @ |  Cards 2            +-----+
     # +-----+  Transform 2: 2/
-    'EE1-2':    {'elements': '',
+    'EE1-2':    {'elements': 'ae',
                  'pattern': [],
                 },
 
-    # Air/Earth
     # +-------+  Level 2 - Built on +-----+     +-------+
     # | @ @ X |  Threads 1          | @ X | and | @ . X |
     # +-------+  Cards 2            +-----+     +-------+
     #            Transform 2: 2/
-    'EE1-3':    {'elements': '',
+    'EE1-3':    {'elements': 'ae',
                  'pattern': [],
                 },
 
-    # Fire/Water
     # +-------+  Level 3 - Built on +-----+
     # | @ . . |  Threads 1          | @ . |
     # | . X . |  Cards 2            | . X |
     # | . . @ |  Transform 1: 1/    +-----+
     # +-------+
-    'EE1-4':    {'elements': '',
+    'EE1-4':    {'elements': 'fw',
                  'pattern': [   "@ . .",
                                 ". X .",
                                 ". . @",
                             ],
                 },
 
-    # Fire/Water
     # +-------+  Level 2 - Built on +-----+
     # | @ . @ |  Threads 1          | @ . |
     # | . X . |  Cards 2            | . X |
     # +-------+  Transform 2: 2/    +-----+
-    'EE1-5':    {'elements': '',
+    'EE1-5':    {'elements': 'fw',
                  'pattern': [   "@ . @",
                                 ". X .",
                             ],
                 },
 
-    # All
     # +-----------+  Level 3 - Built on +-------+
     # | @ . . . . |  Threads 1          | @ . . |
     # | . . X . . |  Cards 4            | . . X |
     # | . . . . @ |  Transform 1: 1/    +-------+
     # +-----------+
-    'EE1-6':    {'elements': '',
+    'EE1-6':    {'elements': 'aefw',
                  'pattern': [   "@ . . . .",
                                 ". . X . .",
                                 ". . . . @",
@@ -1105,89 +1038,81 @@ spell_card_patterns = {
     # |_____|_|___|_|_|_|___|_|_|_| |__,|_|  |___|    |_|    |___|
     #
 
-    # Air/Earth
     # +-----+  Level 3 - Built on +-----+
     # | @ X |  Threads 2          | @ X |
     # | X @ |  Cards 2            +-----+
     # +-----+  Transform 1: 2/
-    'EE2-1':    {'elements': '',
+    'EE2-1':    {'elements': 'ae',
                  'pattern': [   "@ X",
                                 "X @",
                             ],
                 },
 
-    # Air/Earth
     # +-------+  Level 3 - Built on +-----+  Transforms  . 2 . .
     # | @ X . |  Threads 2          | @ X |              3 @ 1 .
     # | . @ X |  Cards 2            +-----+              . 3 @ 1
     # +-------+  Transform 4: 6/                         . . 4 .
-    'EE2-2':    {'elements': '',
+    'EE2-2':    {'elements': 'ae',
                  'pattern': [   "@ X .",
                                 ". @ X",
                             ],
                 },
 
-    # Air/Earth
     # +-------+  Level 4 - Built on +-----+
     # | X . . |  Threads 2          | @ X |
     # | @ . . |  Cards 2            +-----+
     # | . @ X |  Transform 2; 4/
     # +-------+
-    'EE2-3':    {'elements': '',
+    'EE2-3':    {'elements': 'ae',
                  'pattern': [],
                 },
 
-    # Air/Earth
     # +---------+  Level 3 - Built on +-----+
     # | X @ . . |  Threads 2          | @ X |
     # | . . @ X |  Cards 2            +-----+
     # +---------+  Transform 2: 4/
-    'EE2-4':    {'elements': '',
+    'EE2-4':    {'elements': 'ae',
                  'pattern': [   "X @ . .",
                                 ". . @ X",
                             ],
                 },
 
-    # Air/Earth
     # +-------+  Level 3 - Built on +-----+  Transforms  . 2 . .
     # | @ . . |  Threads 2          | @ X |              3 @ 3 .
     # | X @ X |  Cards 2            +-----+              . 1 @ 1
     # +-------+  Transform 4: 6/                         . . 4 .
-    'EE2-5':    {'elements': '',
+    'EE2-5':    {'elements': 'ae',
                  'pattern': [   "@ . .",
                                 "X @ X",
                             ],
                 },
 
-    # Fire/Water
     # +-------+  Level 4 - Built on +-----+
     # | . @ . |  Threads 2          | @ . |
     # | X . X |  Cards 2            | . X |
     # | . @ . |  Transform 1: 1/    +-----+
     # +-------+
-    'EE2-6':    {'elements': '',
+    'EE2-6':    {'elements': 'fw',
                  'pattern': [   ". @ .",
                                 "X . X",
                                 ". @ .",
                             ],
                 },
 
-    # Fire/Water
     # +---------+  Level 4 - Built on +-----+
     # | . @ @ . |  Threads 2          | @ . |
     # | X . . X |  Cards 2            | . X |
     # +---------+  Transform 2: 4/    +-----+
-    'EE2-7':    {'elements': '',
+    'EE2-7':    {'elements': 'fw',
                  'pattern': [],
                 },
 
-    # Fire/Water
     # +---------+  Level 4 - Built on +-----+
     # | X . . . |  Threads 2          | @ . |
     # | . @ @ . |  Cards 3            | . X |
     # | . . . X |  Transform 2: 4/    +-----+
     # +---------+
-    'EE2-8':    {'elements': '',
+    'EE2-8':    {'elements': 'fw',
                  'pattern': [   "X . . .",
                                 ". @ @ .",
                                 ". . . X",
