@@ -22,6 +22,13 @@ from data_spell_cards import valid_ops
 
 from data_spell_patterns import spell_card_patterns
 
+elem_map = {
+    'a': 'air',
+    'e': 'earth',
+    'f': 'fire',
+    'w': 'water',
+}
+
 class SpellCardGen(CardGen):
     def __init__(self, options):
         CardGen.__init__(self, options)
@@ -51,12 +58,12 @@ class SpellCardGen(CardGen):
     def validate_patterns(self):
         simple = ['blank', 'N1']
         ranges = [
-            ['N2', 8],
+            ['N2', 9],
             ['N3', 5],
-            ['E1', 8],
-            ['E2', 83],
-            ['E3', 3],
-            ['EE1', 6],
+            ['E1', 9],
+            ['E2', 164],
+            ['E3', 32],
+            ['EE1', 7],
             ['EE2', 8],
         ]
         for key in simple:
@@ -66,7 +73,12 @@ class SpellCardGen(CardGen):
             max = r[1]
             for i in range(1, max+1):
                 self.check_pattern('%s-%d' % (base, i))
-                
+            # Check one beyond the last to verify the ranges are correct.
+            id = '%s-%d' % (base, max+1)
+            if id in self.card_patterns:
+                print('Pattern id not in valid range: %s-%d' % (base, max+1))
+                sys.exit()
+
     def check_pattern(self, id):
         if not id in self.card_patterns:
             print(id, 'not found')
@@ -118,22 +130,34 @@ class SpellCardGen(CardGen):
         if attrs['category'] != 'blank' and pattern_id != 'blank':
             pe_tag = self.pattern_key(pattern) + '-' + attrs['element']
             if pe_tag in self.pattern_elements:
-                error('Pattern for "%s" already used for "%s"' % (name, self.pattern_elements[pe_tag]))
+                error('Pattern for "%s" already used for "%s"'
+                      % (name, self.pattern_elements[pe_tag]))
             self.pattern_elements[pe_tag] = name
 
+        # Verify pattern matches spell element
+        element = attrs['element']
+        pelem_data = self.card_patterns[pattern_id]['elements']
+        pelems = []
+        if pelem_data == "none":
+            pelems.append("none")
+        else:
+            pelems = [elem_map[p] for p in pelem_data]
+        if not element in pelems:
+            error('%s: Spell pattern does not match element %s' % (name, element))
+        
         self.start_card_page_transform(id)
 
         if not self.no_border:
             self.draw_border()
         if attrs['category'] != 'blank':
             self.draw_title(name)
-            self.draw_title_element(attrs['element'])
+            self.draw_title_element(element)
             self.draw_card_id(attrs['id'], 'starter' in attrs['category'].split(','))
             self.draw_separator()
             if 'op' in attrs:
                 self.draw_operation(attrs['op'])
             
-        self.draw_pattern(pattern, attrs['element'])
+        self.draw_pattern(pattern, element)
         self.draw_pattern_border()
 
         if attrs['category'] != 'blank':

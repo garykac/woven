@@ -1,6 +1,6 @@
 # List of Spell Fragments
 
-Generated on 2020/07/30 @ 08:09
+Generated on 2020/08/02 @ 14:30
 
 ## By Category
 
@@ -78,15 +78,15 @@ Water (3)
 
 ## By Pattern
 
-* E1-1 [Haste](#haste) (air)
-* E1-2 [Dispel](#dispel) (fire)
-* E1-2 [Creep](#creep) (water)
-* E2-12 [Anchor](#anchor) (earth)
-* E2-13 [Shield](#shield) (earth)
-* E2-20 [Spread](#spread) (water)
-* E2-26 [Shards of Fire](#shards-of-fire) (fire)
-* E2-27 [Reduplication](#reduplication) (water)
-* E2-31 [Disperse Magic](#disperse-magic) (earth)
+* E1-4 [Haste](#haste) (air)
+* E1-4 [Creep](#creep) (water)
+* E1-5 [Dispel](#dispel) (fire)
+* E2-14 [Anchor](#anchor) (earth)
+* E2-15 [Shield](#shield) (earth)
+* E2-28 [Spread](#spread) (water)
+* E2-34 [Shards of Fire](#shards-of-fire) (fire)
+* E2-35 [Reduplication](#reduplication) (water)
+* E2-41 [Disperse Magic](#disperse-magic) (earth)
 * E2-5 [Bellor's Giant Hand](#bellor's-giant-hand) (air)
 
 ## By Name
@@ -117,8 +117,8 @@ If there are multiple mages, they can be pushed into different locations.
 
 ### Creep
 ```
-@ .
-. X
+@ . .
+. . X
 ```
 Element: Water
 
@@ -128,14 +128,15 @@ When cast: Place a Eye. Move one of your Eyes 2 spaces.
 
 ### Dispel
 ```
-@ .
-. X
+@ . .
+. . .
+. . X
 ```
 Element: Fire
 
 Category: Starter, Eye Other Attack
 
-When cast: Remove all Eyes at one of your Eye's location. Consume this Eye.
+When cast: Consume one of your Eyes to remove all Eyes at that location.
 
 ### Disperse Magic
 ```
@@ -151,7 +152,8 @@ When cast: Move all Eyes in your location one space in any direction. If there i
 
 ### Haste
 ```
-@ X
+@ . .
+. . X
 ```
 Element: Air
 
@@ -173,9 +175,8 @@ When cast: Place a new Eye in a location where you already have a Eye.
 
 ### Shards of Fire
 ```
-. @ .
-X . .
-. . X
+. @ . .
+X . . X
 ```
 Element: Fire
 
@@ -185,7 +186,8 @@ When cast: Attack for 1 damage all creatures at one of your Eyes. Consume that E
 
 ### Shield
 ```
-X @ . . X
+@ . . X
+X . . .
 ```
 Element: Earth
 

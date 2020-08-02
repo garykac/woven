@@ -125,21 +125,21 @@ spell_card_data = [
     # Representative spell for each element.
 
     ["Haste",
-        {'element': 'air', 'pattern': 'E1-1', 'op': 'eye',
+        {'element': 'air', 'pattern': 'E1-4', 'op': 'eye',
          'id': 3, 'category': 'starter,mage-move'},
         {
             'cast': "Move 4mp.",
         } ],
 
     ["Dispel",
-        {'element': 'fire', 'pattern': 'E1-2', 'op': 'tapestry-eye',
+        {'element': 'fire', 'pattern': 'E1-5', 'op': 'tapestry-eye',
          'id': 92, 'category': 'starter,eye-other-attack'},
         {
-            'cast': "Remove all Eyes at one of your Eye's location. Consume this Eye.",
+            'cast': "Consume one of your Eyes to remove all Eyes at that location.",
         } ],
 
     ["Creep",
-        {'element': 'water', 'pattern': 'E1-2', 'op': 'move',
+        {'element': 'water', 'pattern': 'E1-4', 'op': 'move',
          'id': 73, 'category': 'starter,eye-create,eye-move'},
         {
             'cast': "Place a Eye. Move one of your Eyes 2 spaces.",
@@ -183,7 +183,7 @@ spell_card_data = [
     # Convert mana into an Eye on the map
 
     ["Reduplication",
-        {'element': 'water', 'pattern': 'E2-27', 'op': 'move-eye',
+        {'element': 'water', 'pattern': 'E2-35', 'op': 'move-eye',
          'id': 8, 'category': 'starter,eye-create'},
         {
             'cast': "Place a new Eye in a location where you already have a Eye.",
@@ -198,7 +198,7 @@ spell_card_data = [
     # Move your Eyes on the map
     
     ["Spread",
-        {'element': 'water', 'pattern': 'E2-20', 'op': 'move',
+        {'element': 'water', 'pattern': 'E2-28', 'op': 'move',
          'id': 75, 'category': 'starter,eye-move'},
         {
             'cast': "Move up to 3 different Eyes 1 space each.",
@@ -213,7 +213,7 @@ spell_card_data = [
     # Move an opponent's Eye
 
     ["Disperse Magic",
-        {'element': 'earth', 'pattern': 'E2-31', 'op': 'thread',
+        {'element': 'earth', 'pattern': 'E2-41', 'op': 'thread',
          'id': 42, 'category': 'eye-other-attack'},
         {
             'cast': "Move all Eyes in your location one space in any direction. If there is an Anchored Eye in your location, it is un-Anchored before being moved.",
@@ -228,7 +228,7 @@ spell_card_data = [
     # Defend against an opponent moving your Eyes
     
     ["Anchor",
-        {'element': 'earth', 'pattern': 'E2-12', 'op': 'thread',
+        {'element': 'earth', 'pattern': 'E2-14', 'op': 'thread',
          'id': 97, 'category': 'starter,eye-defend'},
         {
             'cast': "Anchor one of your Eyes in its current location. Any other Eyes in that location, they are removed. Any Eyes adjacent to this Eye must be moved 1 space away.",
@@ -260,7 +260,7 @@ spell_card_data = [
     # Attack another mage
 
     ["Shards of Fire",
-        {'element': 'fire', 'pattern': 'E2-26', 'op': 'thread',
+        {'element': 'fire', 'pattern': 'E2-34', 'op': 'thread',
          'id': 22, 'category': 'starter,mage-other-attack'},
         {
             'cast': "Attack for 1 damage all creatures at one of your Eyes. Consume that Eye.",
@@ -274,7 +274,7 @@ spell_card_data = [
     # Defend against being attacked
 
     ["Shield",
-        {'element': 'earth', 'pattern': 'E2-13', 'op': 'move-eye',
+        {'element': 'earth', 'pattern': 'E2-15', 'op': 'move-eye',
          'id': 36, 'category': 'starter,mage-defend'},
         {
             'cast': "{{ADD_CHARGE}}",
