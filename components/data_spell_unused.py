@@ -46,30 +46,6 @@ _unused_ = [
             'cast': "Move through 5 contiguous Plains locations.",
         } ],
 
-    ["Forest Run",
-        {'element': 'air', 'pattern': 'E2-14', 'op': 'move',
-         'id': 11, 'category': 'terrain,mage-move'},
-        {
-            'cast': "{{ADD_CHARGE}}",
-            'charged': "If you start your turn in a Forest location, you may immediately move through up to 5 connected Forest locations.",
-        } ],
-
-    ["Forest Jump",
-        {'element': 'air', 'pattern': 'E2-13', 'op': 'move',
-         'id': 93, 'category': 'terrain,mage-move'},
-        {
-            'cast': "If in a Forest location, swap positions with one of your EYEs that is in a Forest location no more than 5 spaces away. You may immediately repeat this spell.",
-            'notes': "You may only use each EYE once when you cast this spell.",
-        } ],
-
-    ["Blur",
-        {'element': 'air', 'pattern': 'E2-42', 'op': 'move',
-         'id': 19, 'category': 'mage-move'},
-        {
-            'cast': "{{ADD_CHARGE}}",
-            'charged': "Once per turn (per charge), you may move into a neighboring location ignoring terrain cost.",
-        } ],
-
     ["Quick Drop",
         {'element': 'air', 'pattern': 'E2-10', 'op': 'move',
          'id': 66, 'category': 'mage-move,eye-create'},
@@ -90,6 +66,14 @@ _unused_ = [
             'cast': "Teleport to the location of one of your EYEs. Consume that EYE.",
         } ],
 
+    ["Teleport Forest",
+        {'element': 'air', 'pattern': 'E2-9', 'op': 'thread',
+         'id': 0, 'category': 'terrain,mage-move'},
+        {
+            'cast': "If in a Forest location, swap positions with one of your Eyes that is in a Forest location no more than 5 spaces away.",
+            'notes': "Each Eye may only be used once per turn for this spell.",
+        } ],
+
     ["Levitate",
         {'element': 'air', 'category': 'move', 'id': 9},
         ["Place a CHARGE on this spell.", "-", "Spend CHARGE to ignore terrain cost and effects when you move into (or are forced into) a location."] ],
@@ -101,14 +85,6 @@ _unused_ = [
     ["Mountain Ranger",
         {'element': 'earth', 'category': 'terrain,move', 'id': 44},
         ["If in a Mountain location, add a EYE to a location in any Mountain range."] ],
-
-    ["River Run",
-        {'element': 'water', 'category': 'move,terrain', 'id': 55},
-        ["If next to a river or water location, pay terrain cost to move into any other space adjacent to that river or water location.", "-", "Restrictions:", "* Rivers: Without passing a bridge", "* Water: Crossing 4 water locations max."] ],
-
-    ["Mountain Reach",
-        {'element': 'earth', 'category': 'terrain,move', 'id': 45},
-        ["If in or adjacent to a Mountain location, add a EYE to any location in a 1- or 2-size Mountain range."] ],
 
     #     _____                _____ _   _           
     #    |     |___ _ _ ___   |     | |_| |_ ___ ___ 
@@ -249,10 +225,6 @@ _unused_ = [
         {'element': 'water', 'category': 'eye', 'id': 51},
         ["Exchange locations with a EYE you control."] ],
 
-    ["Scatter",
-        {'element': 'fire', 'category': 'eye', 'id': 30},
-        ["Move all EYEs you control 1 space."] ],
-
     ["Scatter Far",
         {'element': 'fire', 'category': 'eye', 'id': 32},
         ["Move any 2 EYEs you control a total of 9 spaces."] ],
@@ -386,26 +358,12 @@ _unused_ = [
             'charged': "If the number of EYEs you have is less than or equal to the number of CHARGEs on this spell, then they are protected from being removed by another mage (but they can still be consumed).",
         } ],
 
-    ["Whiplash",
-        {'element': 'water', 'pattern': 'E2-21', 'op': 'move',
-         'id': 76, 'category': 'eye-defend'},
-        {
-            'cast': "{{ADD_CHARGE}}",
-            'sacrifice': "You may sacrifice one of your EYEs to prevent another EYE from being removed/consumed.",
-        } ],
-
     #     _____ _   _           _        _____ _____ 
     #    |  _  | |_| |_ ___ ___| |_     |  |  |  _  |
     #    |     |  _|  _| .'|  _| '_|    |     |   __|
     #    |__|__|_| |_| |__,|___|_,_|    |__|__|__|
     #
     # Attack another mage
-
-    ["Ricochet Blast",
-        {'element': 'fire', 'category': 'mage-other-attack', 'id': 24, 'pattern': 'E1-5'},
-        {
-            'cast': "Attack 1 at location adjacent to one of your EYEs. Consume that EYE.",
-        } ],
 
     ["Fire Reign",
         {'element': 'fire', 'category': 'mage-other-attack', 'id': 26, 'pattern': 'E2-27'},

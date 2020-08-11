@@ -936,14 +936,16 @@ spell_card_patterns = {
                             ],
                 },
 
-    # +-------+  Level 3
-    # | . X . |  Threads 2
-    # | @ . . |  Cards 2
-    # | . . . |  Transform 4: 8/5
-    # | . . X |
-    # +-------+
+    # +---------+  Level 3
+    # | . @ . . |  Threads 2
+    # | X . . . |  Cards 2
+    # | . . . X |  Transform 4: 8/5
+    # +---------+
     'E2-36':    {'elements': 'fw',
-                 'pattern': [],
+                 'pattern': [   ". @ . .",
+                                "X . . .",
+                                ". . . X",
+                            ],
                 },
 
     # +---------+  Level 3

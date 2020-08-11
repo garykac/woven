@@ -37,6 +37,7 @@ class SpellCardGen(CardGen):
         self.pattern_elements = {}
         self.elements = {}
         self.categories = {}
+        self.ops = {}
         self.id2name = {}
         self.id2pattern = {}
         self.id2attrs = {}
@@ -154,10 +155,9 @@ class SpellCardGen(CardGen):
             self.draw_title_element(element)
             self.draw_card_id(attrs['id'], 'starter' in attrs['category'].split(','))
             self.draw_separator()
-            if 'op' in attrs:
-                self.draw_operation(attrs['op'])
+            self.draw_operation(attrs['op'])
             
-        self.draw_pattern(pattern, element)
+        self.draw_pattern(pattern_id, pattern, element)
         self.draw_pattern_border()
 
         if attrs['category'] != 'blank':
@@ -220,12 +220,14 @@ class SpellCardGen(CardGen):
         if self.card_size == 'poker':
             self.end_group()
 
-    def draw_pattern(self, pattern_raw, element):
+    def draw_pattern(self, id, pattern_raw, element):
         style_empty = 'opacity:1;fill:#c0c0c0;fill-opacity:1;stroke:none;stroke-width:0;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1'
         style_box = 'opacity:1;fill:none;fill-opacity:1;stroke:#000000;stroke-width:2;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1'
         
         pattern = [x.split() for x in pattern_raw]
         gheight = len(pattern)
+        if gheight == 0:
+            error('Missing pattern for %s' % id)
         gwidth = len(pattern[0])
 
         offset = 26
@@ -300,16 +302,16 @@ class SpellCardGen(CardGen):
         if not 'id' in attrs:
             error(name + ': Missing "id" attribute')
         if attrs['id'] in self.id2name:
-            error(name + 'ID ' + str(attrs['id']) + ' already used by "' + self.id2name[attrs['id']] +'"')
+            error(name + 'ID ' + str(attrs['id']) + ' already used by "'
+                  + self.id2name[attrs['id']] +'"')
         
         if not 'pattern' in attrs:
             error(name + ': Missing "pattern" attribute')
         if not attrs['pattern'] in self.card_patterns:
             error(name + ': Invalid pattern: ' + attrs['pattern'])
 
-        if 'op' in attrs:
-            if not attrs['op'] in self.valid_ops:
-                error(name + ': Invalid op: ' + attrs['op'])
+        if not attrs['op'] in self.valid_ops:
+            error(name + ': Invalid op: ' + attrs['op'])
         
     def record_spell_info(self, name, pattern, attrs, desc):
         id = attrs['id']
@@ -329,7 +331,8 @@ class SpellCardGen(CardGen):
             pattern_key = '%s:%s' % (pattern_id, attrs['element'])
             if pattern_key in self.pattern2id:
                 dup_id = self.pattern2id[pattern_key]
-                error('%s: Pattern %s already assigned to %d (%s)' % (name, pattern_key, dup_id, self.id2name[dup_id]))
+                error('%s: Pattern %s already assigned to %d (%s)'
+                      % (name, pattern_key, dup_id, self.id2name[dup_id]))
             self.pattern2id[pattern_key] = id
 
         element = attrs['element']
@@ -341,6 +344,11 @@ class SpellCardGen(CardGen):
             if not cat in self.categories:
                 self.categories[cat] = []
             self.categories[cat].append(id)
+
+        op = attrs['op']
+        if not op in self.ops:
+            self.ops[op] = []
+        self.ops[op].append(id)
         
     def pattern_key(self, pattern):
         """Convert pattern array into a simple string that can be used as a key."""
@@ -539,9 +547,14 @@ class SpellCardGen(CardGen):
 
             summary.write('\n')
 
+        print('Ops')
+        for k,v in self.ops.items():
+            print(' %s (%d)' % (k, len(v)))
+        
         summary.write('## By Pattern\n\n')
+        print('Patterns')
         for pattern_key in sorted(self.pattern2id.keys()):
-            print(pattern_key)
+            print(' ', pattern_key)
             (pattern, element) = pattern_key.split(':')
             sid = self.pattern2id[pattern_key]
             summary.write('* %s %s (%s)\n' % (pattern, self.spell_link(sid), element))
