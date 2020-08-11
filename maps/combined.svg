@@ -29,9 +29,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.24748737"
-     inkscape:cx="301.39497"
-     inkscape:cy="993.87116"
+     inkscape:zoom="0.175"
+     inkscape:cx="1022.9717"
+     inkscape:cy="1714.2604"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -48,7 +48,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -59,60 +59,138 @@
     <image
        sodipodi:absref="/home/garykac/projects/github/woven/maps/map-00.png"
        xlink:href="map-00.png"
-       width="374.38541"
-       height="374.38541"
-       preserveAspectRatio="none"
+       transform="scale(-1)"
+       y="166.30429"
+       x="130.77975"
        id="image2617"
-       x="243.60568"
-       y="-540.6897" />
+       preserveAspectRatio="none"
+       height="374.38541"
+       width="374.38541" />
     <image
        sodipodi:absref="/home/garykac/projects/github/woven/maps/map-01.png"
        xlink:href="map-01.png"
+       y="-130.77975"
+       x="166.30429"
+       id="image2628"
+       preserveAspectRatio="none"
+       height="374.38541"
+       width="374.38541"
+       transform="rotate(-90)" />
+    <image
+       sodipodi:absref="/home/garykac/projects/github/woven/maps/map-1a.png"
+       xlink:href="map-1a.png"
+       y="-915.07507"
+       x="243.60568"
+       id="image2639"
+       preserveAspectRatio="none"
+       height="374.38541"
+       width="374.38541" />
+    <image
+       sodipodi:absref="/home/garykac/projects/github/woven/maps/map-05.png"
+       xlink:href="map-05.png"
+       transform="rotate(90)"
+       y="-1978.8944"
+       x="135.69875"
+       id="image2650"
+       preserveAspectRatio="none"
+       height="374.38541"
+       width="374.38541" />
+    <image
+       sodipodi:absref="/home/garykac/projects/github/woven/maps/map-w02a.png"
+       xlink:href="map-w02a.png"
+       transform="scale(-1)"
+       y="-208.08112"
+       x="130.77972"
+       id="image2661"
+       preserveAspectRatio="none"
+       height="374.38541"
+       width="748.77081" />
+    <image
+       sodipodi:absref="/home/garykac/projects/github/woven/maps/map-w41a.png"
+       xlink:href="map-w41a.png"
+       y="-915.07507"
+       x="-505.16513"
+       id="image2672"
+       preserveAspectRatio="none"
+       height="374.38541"
+       width="748.77081" />
+    <image
+       sodipodi:absref="/home/garykac/projects/github/woven/maps/map-02.png"
+       xlink:href="map-02.png"
        transform="rotate(90)"
        width="374.38541"
        height="374.38541"
        preserveAspectRatio="none"
-       id="image2628"
-       x="-540.6897"
-       y="-243.60565" />
+       id="image960"
+       x="-166.30429"
+       y="-243.60568" />
     <image
-       sodipodi:absref="/home/garykac/projects/github/woven/maps/map-1a.png"
-       xlink:href="map-1a.png"
+       sodipodi:absref="/home/garykac/projects/github/woven/maps/map-06.png"
+       xlink:href="map-06.png"
        transform="scale(-1)"
        width="374.38541"
        height="374.38541"
        preserveAspectRatio="none"
-       id="image2639"
-       x="130.77975"
+       id="image1150"
+       x="-617.99109"
        y="-208.08112" />
     <image
-       sodipodi:absref="/home/garykac/projects/github/woven/maps/map-05.png"
-       xlink:href="map-05.png"
+       sodipodi:absref="/home/garykac/projects/github/woven/maps/map-11.png"
+       xlink:href="map-11.png"
+       width="374.38541"
+       height="374.38541"
+       preserveAspectRatio="none"
+       id="image1161"
+       x="243.60565"
+       y="-540.6897" />
+    <image
+       sodipodi:absref="/home/garykac/projects/github/woven/maps/map-29.png"
+       xlink:href="map-29.png"
+       transform="rotate(90)"
+       width="374.38541"
+       height="374.38541"
+       preserveAspectRatio="none"
+       id="image1172"
+       x="-540.68964"
+       y="-992.37646" />
+    <image
+       sodipodi:absref="/home/garykac/projects/github/woven/maps/map-aa.png"
+       xlink:href="map-aa.png"
+       width="374.38541"
+       height="374.38541"
+       preserveAspectRatio="none"
+       id="image1183"
+       x="1601.6741"
+       y="-934.72986" />
+    <image
+       sodipodi:absref="/home/garykac/projects/github/woven/maps/map-26.png"
+       xlink:href="map-26.png"
+       transform="scale(-1)"
+       width="374.38541"
+       height="374.38541"
+       preserveAspectRatio="none"
+       id="image1245"
+       x="-992.37646"
+       y="-208.08118" />
+    <image
+       sodipodi:absref="/home/garykac/projects/github/woven/maps/map-2a.png"
+       xlink:href="map-2a.png"
        transform="rotate(-90)"
        width="374.38541"
        height="374.38541"
        preserveAspectRatio="none"
-       id="image2650"
-       x="-208.08112"
+       id="image1309"
+       x="540.68964"
        y="617.99109" />
     <image
-       sodipodi:absref="/home/garykac/projects/github/woven/maps/map-w02a.png"
-       xlink:href="map-w02a.png"
+       sodipodi:absref="/home/garykac/projects/github/woven/maps/map-w290.png"
+       xlink:href="map-w290.png"
+       transform="rotate(-90)"
        width="748.77081"
        height="374.38541"
        preserveAspectRatio="none"
-       id="image2661"
-       x="-505.16516"
-       y="208.08112" />
-    <image
-       sodipodi:absref="/home/garykac/projects/github/woven/maps/map-w41a.png"
-       xlink:href="map-w41a.png"
-       transform="scale(-1)"
-       width="748.77081"
-       height="374.38541"
-       preserveAspectRatio="none"
-       id="image2672"
-       x="-617.99109"
-       y="-208.08112" />
+       id="image1433"
+       x="166.30426"
+       y="-879.55054" />
   </g>
 </svg>

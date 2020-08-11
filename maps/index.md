@@ -11,18 +11,24 @@ These maps are geomorphic voronoi tessellations with Plains, Forest, Mountain an
 
 <a href="map-00.png"><img src="map-00.png" height="200"/></a>
 <a href="map-01.png"><img src="map-01.png" height="200"/></a>
-
 <a href="map-1a.png"><img src="map-1a.png" height="200"/></a>
-<a href="map-02.png"><img src="map-02.png" height="200"/></a>
 
+<a href="map-02.png"><img src="map-02.png" height="200"/></a>
 <a href="map-05.png"><img src="map-05.png" height="200"/></a>
 <a href="map-06.png"><img src="map-06.png" height="200"/></a>
 
 <a href="map-11.png"><img src="map-11.png" height="200"/></a>
+<a href="map-26.png"><img src="map-26.png" height="200"/></a>
+<a href="map-29.png"><img src="map-29.png" height="200"/></a>
+
+<a href="map-2a.png"><img src="map-2a.png" height="200"/></a>
+<a href="map-aa.png"><img src="map-aa.png" height="200"/></a>
 
 ## Wide Maps
 
 <a href="map-w02a.png"><img src="map-w02a.png" height="200"/></a>
+
+<a href="map-w290.png"><img src="map-w290.png" height="200"/></a>
 
 <a href="map-w41a.png"><img src="map-w41a.png" height="200"/></a>
 
