@@ -1,0 +1,527 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg931"
+   inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)"
+   sodipodi:docname="tapestry.svg"
+   inkscape:export-filename="/home/garykac/projects/github/woven/img/readme/tapestry-mana1.png"
+   inkscape:export-xdpi="39.977718"
+   inkscape:export-ydpi="39.977718">
+  <defs
+     id="defs925">
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath2335">
+      <rect
+         style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers fill stroke"
+         id="rect2337"
+         width="179.3875"
+         height="278.60623"
+         x="267.11584"
+         y="57.155212"
+         ry="15"
+         transform="scale(-1)" />
+    </clipPath>
+    <filter
+       style="color-interpolation-filters:sRGB;"
+       inkscape:label="Card Shadow"
+       id="filter2701">
+      <feFlood
+         flood-opacity="0.498039"
+         flood-color="rgb(0,0,0)"
+         result="flood"
+         id="feFlood2691" />
+      <feComposite
+         in="flood"
+         in2="SourceGraphic"
+         operator="in"
+         result="composite1"
+         id="feComposite2693" />
+      <feGaussianBlur
+         in="composite1"
+         stdDeviation="1"
+         result="blur"
+         id="feGaussianBlur2695" />
+      <feOffset
+         dx="1"
+         dy="1"
+         result="offset"
+         id="feOffset2697" />
+      <feComposite
+         in="SourceGraphic"
+         in2="offset"
+         operator="over"
+         result="composite2"
+         id="feComposite2699" />
+    </filter>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath2737">
+      <rect
+         style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers fill stroke"
+         id="rect2739"
+         width="179.3875"
+         height="278.60626"
+         x="100.74954"
+         y="-419.95569"
+         ry="15"
+         transform="scale(-1)" />
+    </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath2747">
+      <rect
+         style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers fill stroke"
+         id="rect2749"
+         width="179.3875"
+         height="278.60623"
+         x="59.139587"
+         y="-90.166222"
+         ry="15"
+         transform="scale(-1)" />
+    </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath2757">
+      <rect
+         ry="15"
+         y="-177.85669"
+         x="240.56818"
+         height="278.60626"
+         width="179.3875"
+         id="rect2759"
+         style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers fill stroke" />
+    </clipPath>
+    <filter
+       style="color-interpolation-filters:sRGB;"
+       inkscape:label="Mana Shadow"
+       id="filter2905">
+      <feFlood
+         flood-opacity="0.498039"
+         flood-color="rgb(0,0,0)"
+         result="flood"
+         id="feFlood2895" />
+      <feComposite
+         in="flood"
+         in2="SourceGraphic"
+         operator="in"
+         result="composite1"
+         id="feComposite2897" />
+      <feGaussianBlur
+         in="composite1"
+         stdDeviation="2"
+         result="blur"
+         id="feGaussianBlur2899" />
+      <feOffset
+         dx="3"
+         dy="3"
+         result="offset"
+         id="feOffset2901" />
+      <feComposite
+         in="SourceGraphic"
+         in2="offset"
+         operator="over"
+         result="fbSourceGraphic"
+         id="feComposite2903" />
+      <feColorMatrix
+         result="fbSourceGraphicAlpha"
+         in="fbSourceGraphic"
+         values="0 0 0 -1 0 0 0 0 -1 0 0 0 0 -1 0 0 0 0 1 0"
+         id="feColorMatrix2907" />
+      <feFlood
+         id="feFlood2909"
+         flood-opacity="0.498039"
+         flood-color="rgb(0,0,0)"
+         result="flood"
+         in="fbSourceGraphic" />
+      <feComposite
+         in2="fbSourceGraphic"
+         id="feComposite2911"
+         in="flood"
+         operator="in"
+         result="composite1" />
+      <feGaussianBlur
+         id="feGaussianBlur2913"
+         in="composite1"
+         stdDeviation="2"
+         result="blur" />
+      <feOffset
+         id="feOffset2915"
+         dx="3"
+         dy="3"
+         result="offset" />
+      <feComposite
+         in2="offset"
+         id="feComposite2917"
+         in="fbSourceGraphic"
+         operator="over"
+         result="composite2" />
+    </filter>
+    <filter
+       style="color-interpolation-filters:sRGB"
+       inkscape:label="Mana Shadow"
+       id="filter2905-7">
+      <feFlood
+         flood-opacity="0.498039"
+         flood-color="rgb(0,0,0)"
+         result="flood"
+         id="feFlood2895-5" />
+      <feComposite
+         in="flood"
+         in2="SourceGraphic"
+         operator="in"
+         result="composite1"
+         id="feComposite2897-3" />
+      <feGaussianBlur
+         in="composite1"
+         stdDeviation="2"
+         result="blur"
+         id="feGaussianBlur2899-5" />
+      <feOffset
+         dx="3"
+         dy="3"
+         result="offset"
+         id="feOffset2901-6" />
+      <feComposite
+         in="SourceGraphic"
+         in2="offset"
+         operator="over"
+         result="fbSourceGraphic"
+         id="feComposite2903-2" />
+      <feColorMatrix
+         result="fbSourceGraphicAlpha"
+         in="fbSourceGraphic"
+         values="0 0 0 -1 0 0 0 0 -1 0 0 0 0 -1 0 0 0 0 1 0"
+         id="feColorMatrix2907-9" />
+      <feFlood
+         id="feFlood2909-1"
+         flood-opacity="0.498039"
+         flood-color="rgb(0,0,0)"
+         result="flood"
+         in="fbSourceGraphic" />
+      <feComposite
+         in2="fbSourceGraphic"
+         id="feComposite2911-2"
+         in="flood"
+         operator="in"
+         result="composite1" />
+      <feGaussianBlur
+         id="feGaussianBlur2913-7"
+         in="composite1"
+         stdDeviation="2"
+         result="blur" />
+      <feOffset
+         id="feOffset2915-0"
+         dx="3"
+         dy="3"
+         result="offset" />
+      <feComposite
+         in2="offset"
+         id="feComposite2917-9"
+         in="fbSourceGraphic"
+         operator="over"
+         result="composite2" />
+    </filter>
+    <filter
+       style="color-interpolation-filters:sRGB"
+       inkscape:label="Mana Shadow"
+       id="filter2905-6">
+      <feFlood
+         flood-opacity="0.498039"
+         flood-color="rgb(0,0,0)"
+         result="flood"
+         id="feFlood2895-0" />
+      <feComposite
+         in="flood"
+         in2="SourceGraphic"
+         operator="in"
+         result="composite1"
+         id="feComposite2897-6" />
+      <feGaussianBlur
+         in="composite1"
+         stdDeviation="2"
+         result="blur"
+         id="feGaussianBlur2899-2" />
+      <feOffset
+         dx="3"
+         dy="3"
+         result="offset"
+         id="feOffset2901-61" />
+      <feComposite
+         in="SourceGraphic"
+         in2="offset"
+         operator="over"
+         result="fbSourceGraphic"
+         id="feComposite2903-8" />
+      <feColorMatrix
+         result="fbSourceGraphicAlpha"
+         in="fbSourceGraphic"
+         values="0 0 0 -1 0 0 0 0 -1 0 0 0 0 -1 0 0 0 0 1 0"
+         id="feColorMatrix2907-7" />
+      <feFlood
+         id="feFlood2909-9"
+         flood-opacity="0.498039"
+         flood-color="rgb(0,0,0)"
+         result="flood"
+         in="fbSourceGraphic" />
+      <feComposite
+         in2="fbSourceGraphic"
+         id="feComposite2911-20"
+         in="flood"
+         operator="in"
+         result="composite1" />
+      <feGaussianBlur
+         id="feGaussianBlur2913-2"
+         in="composite1"
+         stdDeviation="2"
+         result="blur" />
+      <feOffset
+         id="feOffset2915-3"
+         dx="3"
+         dy="3"
+         result="offset" />
+      <feComposite
+         in2="offset"
+         id="feComposite2917-7"
+         in="fbSourceGraphic"
+         operator="over"
+         result="composite2" />
+    </filter>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.35"
+     inkscape:cx="-188.57143"
+     inkscape:cy="560"
+     inkscape:document-units="mm"
+     inkscape:current-layer="g2931"
+     showgrid="false"
+     inkscape:snap-global="false"
+     inkscape:window-width="2336"
+     inkscape:window-height="1107"
+     inkscape:window-x="166"
+     inkscape:window-y="530"
+     inkscape:window-maximized="0" />
+  <metadata
+     id="metadata928">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <g
+       id="g2341"
+       style="filter:url(#filter2701)"
+       transform="translate(-167.06547,-111.125)"
+       inkscape:export-xdpi="39.977718"
+       inkscape:export-ydpi="39.977718">
+      <image
+         clip-path="url(#clipPath2335)"
+         transform="scale(-1)"
+         width="179.3875"
+         height="278.60626"
+         preserveAspectRatio="none"
+         xlink:href="file:///home/garykac/projects/github/woven/components/tapestry-cards/png_out/t01-knightl35-afew-back.png"
+         id="image1650"
+         x="-446.50299"
+         y="-335.76147"
+         sodipodi:absref="/home/garykac/projects/github/woven/components/tapestry-cards/png_out/t01-knightl35-afew-back.png" />
+      <rect
+         style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers fill stroke"
+         id="rect2333"
+         width="179.3875"
+         height="278.60623"
+         x="267.11584"
+         y="57.155212"
+         ry="15" />
+    </g>
+    <g
+       id="g2753"
+       transform="translate(101.29762,-107.8744)"
+       style="filter:url(#filter2701)"
+       inkscape:export-xdpi="39.977718"
+       inkscape:export-ydpi="39.977718">
+      <image
+         clip-path="url(#clipPath2747)"
+         transform="rotate(-90)"
+         width="179.3875"
+         height="278.60626"
+         preserveAspectRatio="none"
+         xlink:href="file:///home/garykac/projects/github/woven/components/tapestry-cards/png_out/t22-l4-feaw-front.png"
+         id="image2154"
+         x="-238.52708"
+         y="-188.44003"
+         sodipodi:absref="/home/garykac/projects/github/woven/components/tapestry-cards/png_out/t22-l4-feaw-front.png" />
+      <rect
+         style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers fill stroke"
+         id="rect2718"
+         width="179.3875"
+         height="278.60623"
+         x="59.139587"
+         y="-90.166214"
+         ry="15"
+         transform="rotate(90)" />
+    </g>
+    <g
+       id="g2763"
+       transform="translate(106.58929,-108.10119)"
+       style="filter:url(#filter2701)"
+       inkscape:export-xdpi="39.977718"
+       inkscape:export-ydpi="39.977718">
+      <image
+         clip-path="url(#clipPath2757)"
+         transform="rotate(90)"
+         width="179.3875"
+         height="278.60626"
+         preserveAspectRatio="none"
+         xlink:href="file:///home/garykac/projects/github/woven/components/tapestry-cards/png_out/t28-ldot4-feaw-back.png"
+         id="image2328"
+         x="240.56818"
+         y="-177.85669"
+         sodipodi:absref="/home/garykac/projects/github/woven/components/tapestry-cards/png_out/t28-ldot4-feaw-back.png" />
+      <rect
+         transform="matrix(0,0.26458333,-0.26458333,0,178.35669,240.06818)"
+         ry="56.692913"
+         y="1.8897638"
+         x="1.8897638"
+         height="1053"
+         width="678"
+         id="rect2333-3"
+         style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:3.77952766;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers fill stroke" />
+    </g>
+    <g
+       id="g2743"
+       transform="translate(114.14879,-102.05358)"
+       style="filter:url(#filter2701)"
+       inkscape:export-xdpi="39.977718"
+       inkscape:export-ydpi="39.977718">
+      <image
+         clip-path="url(#clipPath2737)"
+         width="179.3875"
+         height="278.60626"
+         preserveAspectRatio="none"
+         xlink:href="file:///home/garykac/projects/github/woven/components/tapestry-cards/png_out/t01-knightl35-afew-front.png"
+         id="image1661"
+         x="-280.13705"
+         y="141.34941"
+         sodipodi:absref="/home/garykac/projects/github/woven/components/tapestry-cards/png_out/t01-knightl35-afew-front.png" />
+      <rect
+         style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers fill stroke"
+         id="rect2718-6"
+         width="179.3875"
+         height="278.60626"
+         x="100.74954"
+         y="-419.95569"
+         ry="15"
+         transform="scale(-1)" />
+    </g>
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="Mana 1"
+     style="display:none">
+    <circle
+       style="fill:#0674fa;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers fill stroke;filter:url(#filter2905)"
+       id="path2785"
+       cx="-35.151775"
+       cy="175.66965"
+       r="25.324406"
+       inkscape:export-xdpi="39.977718"
+       inkscape:export-ydpi="39.977718" />
+    <circle
+       r="25.324406"
+       cy="264.11609"
+       cx="227.91965"
+       id="circle2919"
+       style="fill:#0674fa;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers fill stroke;filter:url(#filter2905)"
+       inkscape:export-xdpi="39.977718"
+       inkscape:export-ydpi="39.977718" />
+  </g>
+  <g
+     inkscape:label="Mana 2"
+     id="g2925"
+     inkscape:groupmode="layer"
+     style="display:none">
+    <circle
+       inkscape:export-ydpi="39.977718"
+       inkscape:export-xdpi="39.977718"
+       r="25.324406"
+       cy="84.199409"
+       cx="232.45537"
+       id="circle2921"
+       style="fill:#0674fa;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers fill stroke;filter:url(#filter2905)" />
+    <circle
+       inkscape:export-ydpi="39.977718"
+       inkscape:export-xdpi="39.977718"
+       style="fill:#0674fa;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers fill stroke;filter:url(#filter2905)"
+       id="circle2923"
+       cx="227.91965"
+       cy="264.11609"
+       r="25.324406" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="g2931"
+     inkscape:label="Mana 3">
+    <circle
+       style="fill:#0674fa;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers fill stroke;filter:url(#filter2905)"
+       id="circle2927"
+       cx="232.45537"
+       cy="84.199409"
+       r="25.324406"
+       inkscape:export-xdpi="39.977718"
+       inkscape:export-ydpi="39.977718" />
+    <circle
+       r="25.324406"
+       cy="264.11609"
+       cx="227.91965"
+       id="circle2929"
+       style="fill:#0674fa;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers fill stroke;filter:url(#filter2905)"
+       inkscape:export-xdpi="39.977718"
+       inkscape:export-ydpi="39.977718" />
+    <circle
+       style="fill:#0674fa;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers fill stroke;filter:url(#filter2905-7)"
+       id="circle2927-3"
+       cx="135.31548"
+       cy="-3.8690486"
+       r="25.324406"
+       inkscape:export-xdpi="39.977718"
+       inkscape:export-ydpi="39.977718" />
+    <circle
+       style="fill:#0674fa;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers fill stroke;filter:url(#filter2905-6)"
+       id="circle2927-5"
+       cx="-34.773811"
+       cy="176.80356"
+       r="25.324406"
+       inkscape:export-xdpi="39.977718"
+       inkscape:export-ydpi="39.977718" />
+  </g>
+</svg>
