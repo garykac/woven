@@ -1,10 +1,15 @@
 # Woven
 
-A tabletop game of tactical wizard combat.
+### Woven is a tabletop game of tactical wizard combat.
 
-_**This game is a Work In Progress and is still in the early playtesting phase.**_
+### It is played on a map
 
-_**Initial print-n-play release planned for mid-2020.**_
+<a href="img/readme/map.jpg"><img src="img/readme/map.jpg" width="600" align="center"/></a>
+
+### You cast spells by making patterns found on spell cards
+
+<a href="img/readme/spell.png"><img src="img/readme/spell.png" height="300" style="margin:auto" /></a>
+
 
 ![Sample card layout](img/cards-intro.png)
 
