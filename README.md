@@ -40,7 +40,7 @@
 <a href="img/readme/tapestry-mana3.png"><img src="img/readme/tapestry-mana3.png" height="300"/></a>
 </p>
 
-### Woven is played on a [Map](map/index.md)
+### Woven is played on a [Map](maps/index.md)
 
 <p align="center"><a href="img/readme/map.jpg"><img src="img/readme/map.jpg" width="600"/></a></p>
 
