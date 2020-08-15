@@ -2,7 +2,8 @@
 
 The current prototype maps for Woven.
 
-These maps are geomorphic voronoi tessellations with Plains, Forest, Mountain and Water regions.
+These maps are geomorphic voronoi tessellations with Low, Mid and High elevation spaces.
+Each space my have forest, dense forest or rough terrain.
 
 * Geomorphic - you can rotate the maps and merge two along the edges
 * Voronoi - map is partitioned into regions that are closest to a seed point (see [Wikipedia](https://en.wikipedia.org/wiki/Voronoi_diagram))
