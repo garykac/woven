@@ -234,7 +234,7 @@ class SpellCardGen(CardGen):
         gwidth = len(pattern[0])
 
         offset = 26
-        px0 = 13.25
+        px0 = 13.25 + 6
         py0 = 50
         clone_x0 = 0
         clone_y0 = -276
