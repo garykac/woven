@@ -45,6 +45,7 @@ class SpellCardGen(CardGen):
         self.pattern2id = {}
         self.max_id = 0
         self.blank_count = 0
+        self.starters = []
                 
         self.valid_elements = ['none', 'air', 'fire', 'earth', 'water']
         self.valid_categories = spell_card_categories
@@ -228,6 +229,8 @@ class SpellCardGen(CardGen):
         gheight = len(pattern)
         if gheight == 0:
             error('Missing pattern for %s' % id)
+        if gheight > 3:
+            error('Tall pattern for %s' % id)
         gwidth = len(pattern[0])
 
         offset = 26
@@ -241,7 +244,7 @@ class SpellCardGen(CardGen):
             max_width = 6
         else:
             max_width = 7
-        if gheight %2 == 0:
+        if gheight % 2 == 0:
             py0 += offset / 2
             clone_y0 += offset / 2
             max_height = 2
@@ -344,6 +347,8 @@ class SpellCardGen(CardGen):
             if not cat in self.categories:
                 self.categories[cat] = []
             self.categories[cat].append(id)
+            if cat == 'starter':
+                self.starters.append(id)
 
         op = attrs['op']
         if not op in self.ops:
@@ -355,9 +360,10 @@ class SpellCardGen(CardGen):
         return '/'.join([''.join(x.split()) for x in pattern])
     
     def expand_desc(self, id, raw_desc):
-        keys = ['cast', 'charged', 'sacrifice', 'notes', 'comment']
+        keys = ['cast', 'react', 'charged', 'sacrifice', 'notes', 'comment']
         prefix = {
             'cast': 'When cast: ',
+            'react': 'Reaction: ',
             'charged': 'While charged: ',
             'sacrifice': 'Sacrifice: ',
             'notes': '',
@@ -445,7 +451,7 @@ class SpellCardGen(CardGen):
         self.write('<circle style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:6.37795258;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" id="circle1696" cx="1461.3002" cy="690.9162" r="27.657145" />')
         self.write('<g id="g1702" transform="translate(-24.615722,-99.147628)">')
         self.write('<path id="path1698" transform="matrix(0.9375,0,0,0.9375,-5.04417,-48.798175)" d="m 1590.3574,884.07227 a 20.714284,20.714284 0 0 0 -18.125,10.69531 20.714284,20.714284 0 0 0 18.125,10.73242 20.714284,20.714284 0 0 0 18.125,-10.69531 20.714284,20.714284 0 0 0 -18.125,-10.73242 z" style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:4.25196838;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers fill stroke" inkscape:connector-curvature="0" />')
-        self.write('<path id="path1700" transform="matrix(0.9375,0,0,0.9375,-5.04417,-48.798175)" d="m 1590.3496,884.57422 a 20.714284,20.714284 0 0 0 -2.707,10.21094 20.714284,20.714284 0 0 0 2.7207,10.21093 20.714284,20.714284 0 0 0 2.709,-10.21093 20.714284,20.714284 0 0 0 -2.7227,-10.21094 z" style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:4.25196838;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers fill stroke" inkscape:connector-curvature="0" />')
+        self.write('<path id="path1700" transform="matrix(0.9375,0,0,0.9375,-5.04417,-48.798175)" d="m 1590.3496,884.57422 a 20.714284,20.714284 0 0 0 -2.707,10.21094 20.714284,20.714284 0 0 0 2.7207,10.21093 20.714284,20.714284 0 0 0 2.709,-10.21093 20.714284,20.714284 0 0 0 -2.7227,-10.21094 z" style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:4.25196838;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers fill stroke" inkscape:connector-curvature="0" />')
         self.write('</g>')
         self.write('</g>')
         self.write('<circle style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:6.37795305;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" id="circle1706" cx="1603.125" cy="901.69257" r="27.657146" />')
@@ -482,8 +488,15 @@ class SpellCardGen(CardGen):
         self.write('</g>')
         self.write('<path sodipodi:nodetypes="cc" inkscape:connector-curvature="0" id="path1878" d="m 1818.5999,1045.9888 -22.6987,86.4075" style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />')
         self.write('<use style="display:inline" x="0" y="0" xlink:href="#op-eye" id="use961" transform="matrix(3.7499998,0,0,3.7499998,1514.1934,-310.85496)" width="100%" height="100%" />')
-        self.write('</g>')  # op-tapestry-eye
+        self.write('</g>\n')  # op-tapestry-eye
         
+        # Op: Draw Tapestry Card OR Create Eye
+        self.write('<g id="op-eye-thread" transform="translate(0,20)">')
+        self.write('<use height="100%" width="100%" transform="translate(-40,-20)" id="use904" xlink:href="#op-eye" y="0" x="0" />')
+        self.write('<use height="100%" width="100%" transform="translate(40,-20)" id="use906" xlink:href="#op-thread" y="0" x="0" />')
+        self.write('<path style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.33333337;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" d="m 121.83788,341.82502 -6.05299,23.042" id="path1878-3" inkscape:connector-curvature="0" sodipodi:nodetypes="cc" />')
+        self.write('</g>\n')
+
         self.write('</g>\n')  # Op Masters
                    
     def spell_link(self, sid):
@@ -553,8 +566,8 @@ class SpellCardGen(CardGen):
         
         summary.write('## By Pattern\n\n')
         print('Patterns')
-        for pattern_key in sorted(self.pattern2id.keys()):
-            print(' ', pattern_key)
+        for pattern_key,sid in sorted(self.pattern2id.items()):
+            print(' ', pattern_key, '-', self.id2name[sid])
             (pattern, element) = pattern_key.split(':')
             sid = self.pattern2id[pattern_key]
             summary.write('* %s %s (%s)\n' % (pattern, self.spell_link(sid), element))
@@ -581,6 +594,11 @@ class SpellCardGen(CardGen):
                     continue
                 summary.write(d + '\n')
                 summary.write('\n')
+
+        print('Starters')
+        for s in self.starters:
+            attr = self.id2attrs[s]
+            print(' {0} - {1} - {2}'.format(self.id2name[s], attr['element'], attr['op']))
 
         summary.close()
         print('Total spell count = %d' % count)
