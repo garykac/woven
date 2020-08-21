@@ -114,6 +114,7 @@ class SpellCardGen(CardGen):
             'category': 'blank',
             'id': 1000 + self.curr_card,
             'pattern': 'blank',
+            'vp': 0,
         }
         self.draw_card(self.curr_card, ['', attrs, {}])
         self.post_card()
@@ -236,7 +237,7 @@ class SpellCardGen(CardGen):
         offset = 26
         px0 = 13.25 + 6
         py0 = 50
-        clone_x0 = 0
+        clone_x0 = 0 + 6
         clone_y0 = -276
         if gwidth % 2 == 0:
             px0 += offset / 2
@@ -459,18 +460,19 @@ class SpellCardGen(CardGen):
         self.write('</g>')  # op-eye
 
         # Op: Move
-        self.write('<g style="display:inline" transform="matrix(0.26666668,0,0,0.26666668,-275.04965,57.894638)" id="op-move">')
+        self.write('<g style="display:inline" transform="matrix(0.26666668,0,0,0.26666668,-285.24036,57.894638)" id="op-move">')
         self.write('<path sodipodi:type="star" style="fill:#e0e0e0;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:3.54375005;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" id="path1786-9" sodipodi:sides="6" sodipodi:cx="1443.2209" sodipodi:cy="1182.9426" sodipodi:r1="44.127022" sodipodi:r2="38.215118" sodipodi:arg1="0.52359878" sodipodi:arg2="1.0471976" inkscape:flatsided="true" inkscape:rounded="0" inkscape:randomized="0" d="m 1481.4361,1205.0061 -38.2152,22.0635 -38.2151,-22.0635 0,-44.127 38.2151,-22.0635 38.2152,22.0635 z" />')
         self.write('<path style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" d="m 1443.2209,1152.7807 c -4.9043,0.1751 -7.3301,3.7938 -7.8379,6.2177 -0.5143,2.4545 0.7003,7.1809 0.7003,7.1809 0,0 -6.8245,2.5193 -9.7209,4.6417 -2.4698,1.8098 -5.9666,4.4615 -6.3931,7.7946 -0.2653,2.0729 1.664,3.7354 3.6785,4.2914 2.6403,0.7289 7.6508,-2.4664 9.1078,-0.2628 1.4342,1.7192 -1.3311,6.5358 -3.1529,9.3707 -2.8609,4.4521 -6.8811,13.5207 -4.4662,13.5741 2.5013,0.055 9.0709,-0.046 13.0492,-0.1747 1.5284,-0.049 3.1085,-7.7072 5.0352,-7.7072 1.9267,0 3.5074,7.6578 5.0358,7.7072 3.9783,0.1286 10.5479,0.2301 13.0492,0.1747 2.415,-0.053 -1.6059,-9.122 -4.4669,-13.5741 -1.8217,-2.8349 -4.5864,-7.6515 -3.1522,-9.3707 1.457,-2.2036 6.4675,0.9917 9.1079,0.2628 2.0145,-0.556 3.9431,-2.2185 3.6778,-4.2914 -0.4265,-3.3331 -3.9234,-5.9848 -6.3932,-7.7946 -2.8964,-2.1224 -9.7209,-4.6417 -9.7209,-4.6417 0,0 1.2153,-4.7264 0.7011,-7.1809 -0.5079,-2.4239 -2.9343,-6.0426 -7.8386,-6.2177 z" id="path1788-1" inkscape:connector-curvature="0" />')
         self.write('<path d="m 1557.8664,1205.0061 -38.2152,22.0635 -38.2151,-22.0635 0,-44.127 38.2151,-22.0635 38.2152,22.0635 z" inkscape:randomized="0" inkscape:rounded="0" inkscape:flatsided="true" sodipodi:arg2="1.0471976" sodipodi:arg1="0.52359878" sodipodi:r2="38.215118" sodipodi:r1="44.127022" sodipodi:cy="1182.9426" sodipodi:cx="1519.6512" sodipodi:sides="6" id="path1865-2" style="fill:#e0e0e0;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:3.54375005;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" sodipodi:type="star" />')
         self.write('<path sodipodi:nodetypes="cccccccc" style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" d="m 1493.3778,1159.8605 v 12.2032 h -19.5254 v 21.7578 h 19.5254 v 12.2031 l 25.002,-23.082 z" id="path1867-7" inkscape:connector-curvature="0" />')
+        self.write('<path d="m 1634.2967,1205.0061 -38.2152,22.0635 -38.2151,-22.0635 0,-44.127 38.2151,-22.0635 38.2152,22.0635 z" inkscape:randomized="0" inkscape:rounded="0" inkscape:flatsided="true" sodipodi:arg2="1.0471976" sodipodi:arg1="0.52359878" sodipodi:r2="38.215118" sodipodi:r1="44.127022" sodipodi:cy="1182.9426" sodipodi:cx="1596.0815" sodipodi:sides="6" id="path1865-2-6" style="display:inline;fill:#e0e0e0;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:3.54375005;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" sodipodi:type="star" />')
         self.write('</g>')  # op-move
 
         # Op: Move OR Create Eye
-        self.write('<g id="op-move-eye" transform="matrix(0.26666668,0,0,0.26666668,-340.2456,57.894638)">')
+        self.write('<g id="op-move-eye" transform="matrix(0.26666668,0,0,0.26666668,-330.24561,57.894638)">')
         self.write('<path style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" d="m 1715.4749,1139.7388 -22.6987,86.4075" id="path5485-8-6" inkscape:connector-curvature="0" sodipodi:nodetypes="cc" />')
         self.write('<use style="display:inline" x="0" y="0" xlink:href="#op-eye" id="use961-3" transform="matrix(3.7499998,0,0,3.7499998,1411.0684,-217.10495)" width="100%" height="100%" />')
-        self.write('<use style="display:inline" x="0" y="0" xlink:href="#op-move" id="use1054" transform="matrix(3.7499998,0,0,3.7499998,1117.6861,-217.10487)" width="100%" height="100%" />')
+        self.write('<use style="display:inline" x="0" y="0" xlink:href="#op-move" id="use1054" transform="matrix(3.7499998,0,0,3.7499998,1080.9013,-217.10487)" width="100%" height="100%" />')
         self.write('</g>')  # op-move-eye        
 
         # Op: Draw Tapestry Card OR Create Eye
