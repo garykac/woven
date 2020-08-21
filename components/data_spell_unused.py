@@ -18,13 +18,6 @@ _unused_ = [
             'cast': "Create a EYE in your location.",
         } ],
 
-    ["Move Eye",
-        {'element': 'none', 'pattern': 'N2-4', 'op': 'move',
-         'id': 90, 'category': 'starter,eye-move'},
-        {
-            'cast': "Move one of your EYEs one space.",
-        } ],
-             
     #     _____ _           _           
     #    |   __| |_ ___ ___| |_ ___ ___ 
     #    |__   |  _| .'|  _|  _| -_|  _|
@@ -38,6 +31,13 @@ _unused_ = [
     #    |_|_|_|___|\_/|___|  |_____|___|_|_|
     #
     # Move mage
+
+    ["River Run",
+        {'element': 'water', 'pattern': 'E2-12', 'op': 'eye',
+         'id': 55, 'category': 'terrain,mage-move'},
+        {
+            'cast': "If you are next to a river, you may cross the river to the other side ignoring terrain cost. May be repeated up to max 6 crossings per cast.",
+        } ],
 
     ["Plains Walker",
         {'element': 'air', 'pattern': 'E2-6', 'op': 'move',
@@ -58,6 +58,14 @@ _unused_ = [
          'id': 70, 'category': 'mage-move'},
         {
             'cast': "Move up to 4 spaces over the same or lower terrain than your starting position. You must end your move on a space of the same level.",
+        } ],
+
+    ["Boots of Xxx",
+        {'element': 'earth', 'pattern': 'E2-17', 'op': 'thread',
+         'id': 98, 'category': 'terrain,mage-move'},
+        {
+            'cast': "{{ADD_CHARGE}}",
+            'charged': "You may ignore the movement penalty for rough terrain.",
         } ],
 
     ["Teleport",
@@ -85,6 +93,23 @@ _unused_ = [
     ["Mountain Ranger",
         {'element': 'earth', 'category': 'terrain,move', 'id': 44},
         ["If in a Mountain location, add a EYE to a location in any Mountain range."] ],
+
+    ["Water Moccasins",
+        {'element': 'water', 'pattern': 'E2-24', 'op': 'move',
+         'id': 54, 'category': 'mage-move,terrain'},
+        {
+            'cast': "{{ADD_CHARGE}}",
+            'charged': "Rivers cost 0mp to cross. Water locations cost 1mp to enter.",
+            'sacrifice': "If you are adjacent to River/Water, sacrifice charge to place a EYE up to 3 spaces away along water.",
+        } ],
+    
+    ["Flood",
+        {'element': 'water', 'category': 'terrain', 'id': 56},
+        ["Place CHARGE on this spell.", "-", "While CHARGEd, all groups of 2 or more adjacent EYEs you control change all Plains locations to Water up to 3 spaces away from the EYEs.", "-", "CHARGE is lost immediately when you do not have 2 adjacent EYEs."] ],
+
+    ["Growth",
+        {'element': 'earth', 'category': 'terrain', 'id': 46},
+        ["Place CHARGE on this spell.", "-", "While CHARGEd, all groups of 2 or more adjacent EYEs you control change all neighboring locations to Forest.", "-", "CHARGE is lost immediately when you do not have 2 adjacent EYEs."] ],
 
     #     _____                _____ _   _           
     #    |     |___ _ _ ___   |     | |_| |_ ___ ___ 
@@ -138,14 +163,6 @@ _unused_ = [
             'charged': "If in or next to a Mountain location, add a EYE adjacent to any Mountain location connected to that Mountain location.",
         } ],
 
-    ["Snapback",
-        {'element': 'water', 'pattern': 'E2-25', 'op': 'move',
-         'id': 79, 'category': 'eye-create'},
-        {
-            'cast': "{{ADD_CHARGE}}",
-            'sacrifice': "If at same location as another mage's EYE, you may sacrifice a charge to place a EYE at that mage's location.",
-        } ],
-
     ["Reverse Eye",
         {'element': 'water', 'category': 'eye', 'id': 52},
         ["When in the same location as an opponent's EYE, add a EYE at the opponent's location."] ],
@@ -174,14 +191,7 @@ _unused_ = [
     #
     # Move one of your Eyes on the map
     
-    ["Run and Toss",
-        {'element': 'air', 'pattern': 'E2-46', 'op': 'move',
-         'id': 67, 'category': 'mage-move,eye-create,eye-move'},
-        {
-            'cast': "Move 1 space, place a EYE, then move that EYE 2 spaces.",
-        } ],
-
-    ["Burst",
+    ["Xxx-74",
         {'element': 'water', 'pattern': 'E2-31', 'op': 'move',
          'id': 74, 'category': 'eye-create,eye-move'},
         {
@@ -333,6 +343,14 @@ _unused_ = [
     #                                       |___|
     #
     # Defend against an opponent removing one of your eyes
+
+    ["Whiplash",
+        {'element': 'water', 'pattern': 'E2-34', 'op': 'move',
+         'id': 76, 'category': 'eye-defend'},
+        {
+            'cast': "{{ADD_CHARGE}}",
+            'sacrifice': "You may sacrifice one of your Eyes to prevent another Eye from being removed/consumed.",
+        } ],
 
     ["Eye Protection",
         {'element': 'earth', 'pattern': 'E1-1', 'op': 'move',
@@ -550,28 +568,6 @@ _unused_ = [
             'sacrifice': "During your turn, you may sacrifice a charge to gain an extra action.",
         } ],
     
-    #     _____                 _     
-    #    |_   _|___ ___ ___ ___|_|___ 
-    #      | | | -_|  _|  _| .'| |   |
-    #      |_| |___|_| |_| |__,|_|_|_|
-
-    ["Water Moccasins",
-        {'element': 'water', 'pattern': 'E2-24', 'op': 'move',
-         'id': 54, 'category': 'mage-move,terrain'},
-        {
-            'cast': "{{ADD_CHARGE}}",
-            'charged': "Rivers cost 0mp to cross. Water locations cost 1mp to enter.",
-            'sacrifice': "If you are adjacent to River/Water, sacrifice charge to place a EYE up to 3 spaces away along water.",
-        } ],
-    
-    ["Flood",
-        {'element': 'water', 'category': 'terrain', 'id': 56},
-        ["Place CHARGE on this spell.", "-", "While CHARGEd, all groups of 2 or more adjacent EYEs you control change all Plains locations to Water up to 3 spaces away from the EYEs.", "-", "CHARGE is lost immediately when you do not have 2 adjacent EYEs."] ],
-
-    ["Growth",
-        {'element': 'earth', 'category': 'terrain', 'id': 46},
-        ["Place CHARGE on this spell.", "-", "While CHARGEd, all groups of 2 or more adjacent EYEs you control change all neighboring locations to Forest.", "-", "CHARGE is lost immediately when you do not have 2 adjacent EYEs."] ],
-
     #     _____     _           _ 
     #    |  _  |___| |_ ___ ___| |
     #    |     |_ -|  _|  _| .'| |
