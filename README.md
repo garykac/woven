@@ -1,6 +1,6 @@
 # Woven
 
-## Woven is a tabletop game of tactical wizard combat
+## Woven is a tabletop game of tactical magecraft
 
 ### Cast spells by making patterns found on Spell Cards
 
