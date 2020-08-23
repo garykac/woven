@@ -29,11 +29,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.175"
-     inkscape:cx="1022.9717"
-     inkscape:cy="1714.2604"
+     inkscape:zoom="0.49497475"
+     inkscape:cx="-83.247376"
+     inkscape:cy="2764.2678"
      inkscape:document-units="mm"
-     inkscape:current-layer="layer1"
+     inkscape:current-layer="g939"
      showgrid="false"
      inkscape:window-width="3440"
      inkscape:window-height="1406"
@@ -53,9 +53,10 @@
     </rdf:RDF>
   </metadata>
   <g
-     inkscape:label="Layer 1"
+     inkscape:label="Map"
      inkscape:groupmode="layer"
-     id="layer1">
+     id="layer1"
+     style="display:inline">
     <image
        sodipodi:absref="/home/garykac/projects/github/woven/maps/map-00.png"
        xlink:href="map-00.png"
@@ -65,7 +66,9 @@
        id="image2617"
        preserveAspectRatio="none"
        height="374.38541"
-       width="374.38541" />
+       width="374.38541"
+       inkscape:export-xdpi="72.005653"
+       inkscape:export-ydpi="72.005653" />
     <image
        sodipodi:absref="/home/garykac/projects/github/woven/maps/map-01.png"
        xlink:href="map-01.png"
@@ -75,7 +78,9 @@
        preserveAspectRatio="none"
        height="374.38541"
        width="374.38541"
-       transform="rotate(-90)" />
+       transform="rotate(-90)"
+       inkscape:export-xdpi="72.005653"
+       inkscape:export-ydpi="72.005653" />
     <image
        sodipodi:absref="/home/garykac/projects/github/woven/maps/map-1a.png"
        xlink:href="map-1a.png"
@@ -84,7 +89,9 @@
        id="image2639"
        preserveAspectRatio="none"
        height="374.38541"
-       width="374.38541" />
+       width="374.38541"
+       inkscape:export-xdpi="72.005653"
+       inkscape:export-ydpi="72.005653" />
     <image
        sodipodi:absref="/home/garykac/projects/github/woven/maps/map-05.png"
        xlink:href="map-05.png"
@@ -104,7 +111,9 @@
        id="image2661"
        preserveAspectRatio="none"
        height="374.38541"
-       width="748.77081" />
+       width="748.77081"
+       inkscape:export-xdpi="72.005653"
+       inkscape:export-ydpi="72.005653" />
     <image
        sodipodi:absref="/home/garykac/projects/github/woven/maps/map-w41a.png"
        xlink:href="map-w41a.png"
@@ -113,7 +122,9 @@
        id="image2672"
        preserveAspectRatio="none"
        height="374.38541"
-       width="748.77081" />
+       width="748.77081"
+       inkscape:export-xdpi="72.005653"
+       inkscape:export-ydpi="72.005653" />
     <image
        sodipodi:absref="/home/garykac/projects/github/woven/maps/map-02.png"
        xlink:href="map-02.png"
@@ -123,7 +134,9 @@
        preserveAspectRatio="none"
        id="image960"
        x="-166.30429"
-       y="-243.60568" />
+       y="-243.60568"
+       inkscape:export-xdpi="72.005653"
+       inkscape:export-ydpi="72.005653" />
     <image
        sodipodi:absref="/home/garykac/projects/github/woven/maps/map-06.png"
        xlink:href="map-06.png"
@@ -133,7 +146,9 @@
        preserveAspectRatio="none"
        id="image1150"
        x="-617.99109"
-       y="-208.08112" />
+       y="-208.08112"
+       inkscape:export-xdpi="72.005653"
+       inkscape:export-ydpi="72.005653" />
     <image
        sodipodi:absref="/home/garykac/projects/github/woven/maps/map-11.png"
        xlink:href="map-11.png"
@@ -142,7 +157,9 @@
        preserveAspectRatio="none"
        id="image1161"
        x="243.60565"
-       y="-540.6897" />
+       y="-540.6897"
+       inkscape:export-xdpi="72.005653"
+       inkscape:export-ydpi="72.005653" />
     <image
        sodipodi:absref="/home/garykac/projects/github/woven/maps/map-29.png"
        xlink:href="map-29.png"
@@ -152,7 +169,9 @@
        preserveAspectRatio="none"
        id="image1172"
        x="-540.68964"
-       y="-992.37646" />
+       y="-992.37646"
+       inkscape:export-xdpi="72.005653"
+       inkscape:export-ydpi="72.005653" />
     <image
        sodipodi:absref="/home/garykac/projects/github/woven/maps/map-aa.png"
        xlink:href="map-aa.png"
@@ -171,7 +190,9 @@
        preserveAspectRatio="none"
        id="image1245"
        x="-992.37646"
-       y="-208.08118" />
+       y="-208.08118"
+       inkscape:export-xdpi="72.005653"
+       inkscape:export-ydpi="72.005653" />
     <image
        sodipodi:absref="/home/garykac/projects/github/woven/maps/map-2a.png"
        xlink:href="map-2a.png"
@@ -181,7 +202,9 @@
        preserveAspectRatio="none"
        id="image1309"
        x="540.68964"
-       y="617.99109" />
+       y="617.99109"
+       inkscape:export-xdpi="72.005653"
+       inkscape:export-ydpi="72.005653" />
     <image
        sodipodi:absref="/home/garykac/projects/github/woven/maps/map-w290.png"
        xlink:href="map-w290.png"
@@ -191,6 +214,149 @@
        preserveAspectRatio="none"
        id="image1433"
        x="166.30426"
-       y="-879.55054" />
+       y="-879.55054"
+       inkscape:export-xdpi="72.005653"
+       inkscape:export-ydpi="72.005653" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer3"
+     inkscape:label="Player"
+     style="display:inline">
+    <path
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#0673fa;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       d="m -27.261499,-308.57665 c -4.853127,0.17332 -7.253555,3.75425 -7.756128,6.15289 -0.508905,2.42891 0.693042,7.10598 0.693042,7.10598 0,0 -6.753278,2.49296 -9.619425,4.59323 -2.444048,1.79096 -5.90442,4.4149 -6.32648,7.71322 -0.262492,2.05131 1.646637,3.69643 3.640116,4.24671 2.61278,0.72123 7.571054,-2.44066 9.012851,-0.26006 1.419175,1.7012 -1.31728,6.46759 -3.120008,9.2729 -2.831099,4.40559 -6.809368,13.37961 -4.419626,13.43247 2.475191,0.0547 8.976276,-0.0457 12.913027,-0.17293 1.512471,-0.0489 3.076045,-7.62677 4.982631,-7.62677 1.906586,0 3.470831,7.57789 4.983303,7.62677 3.936741,0.12725 10.437834,0.22769 12.9130237,0.17293 2.389743,-0.0528 -1.5892007,-9.02688 -4.4202977,-13.43247 -1.802731,-2.80531 -4.538512,-7.5717 -3.119337,-9.2729 1.441796,-2.1806 6.400061,0.98129 9.0128397,0.26006 1.993488,-0.55028 3.901956,-2.1954 3.639466,-4.24671 -0.422074,-3.29832 -3.882446,-5.92226 -6.3264917,-7.71322 -2.866144,-2.10027 -9.619414,-4.59323 -9.619414,-4.59323 0,0 1.202619,-4.67707 0.693703,-7.10598 -0.502568,-2.39864 -2.90367,-5.97957 -7.756795,-6.15289 z"
+       id="path5268"
+       inkscape:connector-curvature="0"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer4"
+     inkscape:label="Mana"
+     style="display:inline">
+    <circle
+       style="fill:#0673fa;fill-opacity:1;stroke:#000000;stroke-width:1.06562901;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers fill stroke"
+       id="path838"
+       cx="29.449005"
+       cy="-480.80365"
+       r="22.5" />
+    <circle
+       style="fill:#0673fa;fill-opacity:1;stroke:#000000;stroke-width:1.06562901;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers fill stroke"
+       id="path838-3"
+       cx="241.0771"
+       cy="-450.28561"
+       r="22.5" />
+    <circle
+       style="fill:#0673fa;fill-opacity:1;stroke:#000000;stroke-width:1.06562901;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers fill stroke"
+       id="path838-6"
+       cx="346.91583"
+       cy="-314.5127"
+       r="22.5" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="Map Overlay"
+     style="display:none">
+    <rect
+       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers fill stroke"
+       id="rect827"
+       width="646.25769"
+       height="372.57397"
+       x="-206.33209"
+       y="-539.55353"
+       inkscape:export-filename="/home/garykac/projects/github/woven/img/readme/map-player-mana.png"
+       inkscape:export-xdpi="40.008118"
+       inkscape:export-ydpi="40.008118" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer5"
+     inkscape:label="Lots of Mana"
+     style="display:none">
+    <circle
+       style="fill:#0673fa;fill-opacity:1;stroke:#000000;stroke-width:1.06562901;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers fill stroke"
+       id="path838-6-7"
+       cx="-149.1364"
+       cy="-367.96658"
+       r="22.5" />
+    <circle
+       style="fill:#0673fa;fill-opacity:1;stroke:#000000;stroke-width:1.06562901;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers fill stroke"
+       id="path838-6-5"
+       cx="-97.820648"
+       cy="-411.7988"
+       r="22.5" />
+    <circle
+       style="fill:#0673fa;fill-opacity:1;stroke:#000000;stroke-width:1.06562901;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers fill stroke"
+       id="path838-6-3"
+       cx="-76.973625"
+       cy="-356.20673"
+       r="22.5" />
+    <circle
+       style="fill:#0673fa;fill-opacity:1;stroke:#000000;stroke-width:1.06562901;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers fill stroke"
+       id="path838-6-56"
+       cx="-40.624969"
+       cy="-420.35141"
+       r="22.5" />
+    <circle
+       style="fill:#0673fa;fill-opacity:1;stroke:#000000;stroke-width:1.06562901;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers fill stroke"
+       id="path838-6-2"
+       cx="-13.363477"
+       cy="-367.43204"
+       r="22.5" />
+    <circle
+       style="fill:#0673fa;fill-opacity:1;stroke:#000000;stroke-width:1.06562901;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers fill stroke"
+       id="path838-6-9"
+       cx="-49.712132"
+       cy="-312.90906"
+       r="22.5" />
+    <circle
+       style="fill:#0673fa;fill-opacity:1;stroke:#000000;stroke-width:1.06562901;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers fill stroke"
+       id="path838-6-1"
+       cx="50.781212"
+       cy="-349.79227"
+       r="22.5" />
+    <circle
+       style="fill:#0673fa;fill-opacity:1;stroke:#000000;stroke-width:1.06562901;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers fill stroke"
+       id="path838-6-27"
+       cx="29.399649"
+       cy="-418.21326"
+       r="22.5" />
+    <circle
+       style="fill:#0673fa;fill-opacity:1;stroke:#000000;stroke-width:1.06562901;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers fill stroke"
+       id="path838-6-0"
+       cx="108.51143"
+       cy="-426.76587"
+       r="22.5" />
+    <circle
+       style="fill:#0673fa;fill-opacity:1;stroke:#000000;stroke-width:1.06562901;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers fill stroke"
+       id="path838-6-93"
+       cx="102.09696"
+       cy="-363.69028"
+       r="22.5" />
+    <circle
+       style="fill:#0673fa;fill-opacity:1;stroke:#000000;stroke-width:1.06562901;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers fill stroke"
+       id="path838-6-6"
+       cx="157.68903"
+       cy="-394.159"
+       r="22.5" />
+  </g>
+  <g
+     style="display:none"
+     inkscape:label="Mana Overlay"
+     id="g939"
+     inkscape:groupmode="layer">
+    <rect
+       inkscape:export-ydpi="40.008118"
+       inkscape:export-xdpi="40.008118"
+       inkscape:export-filename="/home/garykac/projects/github/woven/img/readme/player-mana.png"
+       y="-477.01245"
+       x="-195.64131"
+       height="215.41963"
+       width="408.92242"
+       id="rect937"
+       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers fill stroke" />
   </g>
 </svg>
