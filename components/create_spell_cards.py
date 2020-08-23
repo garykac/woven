@@ -164,6 +164,12 @@ class SpellCardGen(CardGen):
 
         if attrs['category'] != 'blank':
             self.draw_desc(attrs['id'], desc)
+
+        if attrs['vp'] != 0:
+            self.draw_vp()
+        
+        if attrs['cost'] != 0:
+            self.draw_cost(attrs['cost'])
         
         self.end_card_page_transform()
     
@@ -211,7 +217,22 @@ class SpellCardGen(CardGen):
         self.write('<use x="0" y="0" xlink:href="#element-%s" transform="translate(%d,%d)" width="100%%" height="100%%" />\n' % (element, x, y))
         x = self.card_width - 47 # bridge=155
         self.write('<use x="0" y="0" xlink:href="#element-%s" transform="translate(%d,%d)" width="100%%" height="100%%" />\n' % (element, x, y))
-    
+
+    def draw_cost(self, cost):
+        self.write('<path inkscape:connector-curvature="0" id="icon-star-1" d="m 16.595794,267.48609 -2.808631,4.99336 -5.617263,1.1284 3.881095,4.21457 -0.662626,5.69149 5.207425,-2.38912 5.207418,2.38912 -0.662612,-5.69149 3.881059,-4.21457 -5.617255,-1.1284 z" style="display:inline;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1.54211283;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" sodipodi:nodetypes="ccccccccccc" />')
+
+        if cost >= 2:
+            self.write('<path sodipodi:nodetypes="ccccccccccc" style="display:inline;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1.54211283;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" d="m 36.595794,267.48609 -2.808631,4.99336 -5.617263,1.1284 3.881095,4.21457 -0.662626,5.69149 5.207425,-2.38912 5.207418,2.38912 -0.662612,-5.69149 3.881059,-4.21457 -5.617255,-1.1284 z" id="icon-star-2" inkscape:connector-curvature="0" />')
+
+        if cost >= 3:
+            self.write('<path inkscape:connector-curvature="0" id="icon-star-3" d="m 56.595794,267.48609 -2.808631,4.99336 -5.617263,1.1284 3.881095,4.21457 -0.662626,5.69149 5.207425,-2.38912 5.207418,2.38912 -0.662612,-5.69149 3.881059,-4.21457 -5.617255,-1.1284 z" style="display:inline;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1.54211283;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" sodipodi:nodetypes="ccccccccccc" />')
+        
+    def draw_vp(self):
+        self.write('<g id="icon-vp">')
+        self.write('<circle r="12.101695" cy="274.06781" cx="219.61017" id="path933" style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:1.13385832;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers fill stroke" />')
+        self.write('<path inkscape:connector-curvature="0" id="path964" style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;line-height:1.25;font-family:CCTreasureTrove;-inkscape-font-specification:CCTreasureTrove;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke:none" d="m 222.69706,278.66115 c 0,-0.8 -0.512,-0.704 -0.976,-0.704 -0.736,0 -0.816,-0.208 -0.864,-0.752 -0.048,-0.512 0.016,-1.344 0,-1.856 -0.064,-1.808 0.064,-3.968 0.064,-5.696 0,-0.304 0,-1.264 -0.4,-1.264 -0.32,0 -0.64,0.448 -0.848,0.672 -0.416,0.464 -1.216,1.216 -1.664,1.68 -0.368,0.384 -1.936,1.296 -1.36,1.872 0.304,0.304 1.136,-0.4 1.408,-0.352 0.464,0.08 0.384,2.16 0.384,2.656 0,0.128 0.208,2.688 -0.336,3.04 -0.416,0.272 -1.6,-0.128 -1.456,0.864 0.08,0.576 0.864,0.4 1.216,0.4 0.88,0 1.488,-0.192 2.32,-0.192 0.592,0 1.552,0.096 2.032,0.096 0.224,0 0.48,-0.256 0.48,-0.464 z" />')
+        self.write('</g>')
+        
     def draw_pattern_border(self):
         if self.card_size == 'poker':
             self.start_group(transform='translate(%d,%d)' % (18,0))
