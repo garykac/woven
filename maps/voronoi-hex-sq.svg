@@ -26,10 +26,10 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.49497475"
-     inkscape:cx="1809.8377"
-     inkscape:cy="922.39926"
+     inkscape:cx="1395.6752"
+     inkscape:cy="914.31804"
      inkscape:document-units="mm"
-     inkscape:current-layer="layer1"
+     inkscape:current-layer="g14280"
      showgrid="true"
      inkscape:snap-global="true"
      inkscape:snap-center="true"
@@ -58,7 +58,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -1960,19 +1960,9 @@
          d="M 787.75507,299.99986 V 349.9999"
          inkscape:connector-curvature="0" />
       <path
-         id="path14218"
-         style="fill:none;stroke:#000000;stroke-width:0.26458332;stroke-linecap:round;stroke-linejoin:round"
-         d="m 737.75507,349.9999 h 50"
-         inkscape:connector-curvature="0" />
-      <path
          id="path14220"
          style="fill:none;stroke:#000000;stroke-width:0.26458332;stroke-linecap:round;stroke-linejoin:round"
          d="m 787.75507,349.9999 v 0"
-         inkscape:connector-curvature="0" />
-      <path
-         id="path14222"
-         style="fill:none;stroke:#000000;stroke-width:0.26458332;stroke-linecap:round;stroke-linejoin:round"
-         d="m 687.75507,349.9999 h 50"
          inkscape:connector-curvature="0" />
       <path
          id="path14224"
@@ -2048,11 +2038,6 @@
          id="path14254"
          style="fill:none;stroke:#000000;stroke-width:0.26458332;stroke-linecap:round;stroke-linejoin:round"
          d="M 787.75507,299.99986 H 850"
-         inkscape:connector-curvature="0" />
-      <path
-         id="path14258"
-         style="fill:none;stroke:#000000;stroke-width:0.26458332;stroke-linecap:round;stroke-linejoin:round"
-         d="M 787.75507,349.9999 H 850"
          inkscape:connector-curvature="0" />
       <path
          id="path14260"

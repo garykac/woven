@@ -14,8 +14,8 @@
    viewBox="0 0 765 990"
    id="svg4516"
    version="1.1"
-   inkscape:version="0.91 r13725"
-   sodipodi:docname="mana-diagram.svg">
+   inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)"
+   sodipodi:docname="mana-lifecycle.svg">
   <defs
      id="defs4518">
     <marker
@@ -98,16 +98,16 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.4"
-     inkscape:cx="411.59013"
-     inkscape:cy="605.17487"
+     inkscape:cx="265.16156"
+     inkscape:cy="688.03201"
      inkscape:document-units="px"
-     inkscape:current-layer="g9577"
+     inkscape:current-layer="layer4"
      showgrid="false"
      units="in"
-     inkscape:window-width="1680"
-     inkscape:window-height="1005"
+     inkscape:window-width="3440"
+     inkscape:window-height="1406"
      inkscape:window-x="0"
-     inkscape:window-y="1"
+     inkscape:window-y="417"
      inkscape:window-maximized="1" />
   <metadata
      id="metadata4521">
@@ -117,7 +117,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -940,89 +940,82 @@
      inkscape:label="Labels">
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        x="493.75821"
        y="544.15955"
-       id="text4805"
-       sodipodi:linespacing="125%"><tspan
+       id="text4805"><tspan
          sodipodi:role="line"
          x="493.75821"
          y="544.15955"
          id="tspan4809"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:CCSignLanguage;-inkscape-font-specification:CCSignLanguage">Mana</tspan><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:CCSignLanguage;-inkscape-font-specification:CCSignLanguage">Mana</tspan><tspan
          sodipodi:role="line"
          x="493.75821"
          y="594.15955"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:CCSignLanguage;-inkscape-font-specification:CCSignLanguage"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:CCSignLanguage;-inkscape-font-specification:CCSignLanguage"
          id="tspan9500">Pool</tspan></text>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        x="38.235321"
        y="292.69431"
-       id="text4817"
-       sodipodi:linespacing="125%"><tspan
+       id="text4817"><tspan
          sodipodi:role="line"
          id="tspan4819"
          x="38.235321"
          y="292.69431"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:CCSignLanguage;-inkscape-font-specification:CCSignLanguage">Tapestry</tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:CCSignLanguage;-inkscape-font-specification:CCSignLanguage">Tapestry</tspan></text>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        x="66.233582"
        y="191.55331"
-       id="text4817-9"
-       sodipodi:linespacing="125%"><tspan
+       id="text4817-9"><tspan
          sodipodi:role="line"
          id="tspan4819-3"
          x="66.233582"
          y="191.55331"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:CCSignLanguage;-inkscape-font-specification:CCSignLanguage">Map</tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:CCSignLanguage;-inkscape-font-specification:CCSignLanguage">Map</tspan></text>
     <text
-       sodipodi:linespacing="125%"
        id="text9425"
        y="440.97351"
        x="293.18967"
-       style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        xml:space="preserve"><tspan
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:22.5px;font-family:CCSignLanguage;-inkscape-font-specification:CCSignLanguage"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:22.5px;line-height:1.25;font-family:CCSignLanguage;-inkscape-font-specification:CCSignLanguage"
          y="440.97351"
          x="293.18967"
          id="tspan9427"
          sodipodi:role="line">Thread</tspan></text>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        x="353.18967"
        y="180.97351"
-       id="text9429"
-       sodipodi:linespacing="125%"><tspan
+       id="text9429"><tspan
          sodipodi:role="line"
          id="tspan9431"
          x="353.18967"
          y="180.97351"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:22.5px;font-family:CCSignLanguage;-inkscape-font-specification:CCSignLanguage">Tendril</tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:22.5px;line-height:1.25;font-family:CCSignLanguage;-inkscape-font-specification:CCSignLanguage">Eye</tspan></text>
     <text
-       sodipodi:linespacing="125%"
        id="text9433"
        y="299.96335"
        x="461.2709"
-       style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        xml:space="preserve"><tspan
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:22.5px;font-family:CCSignLanguage;-inkscape-font-specification:CCSignLanguage"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:22.5px;line-height:1.25;font-family:CCSignLanguage;-inkscape-font-specification:CCSignLanguage"
          y="299.96335"
          x="461.2709"
          id="tspan9435"
          sodipodi:role="line">Charge</tspan></text>
     <text
-       sodipodi:linespacing="125%"
        id="text9437"
        y="362.79584"
        x="602.479"
-       style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        xml:space="preserve"><tspan
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:CCSignLanguage;-inkscape-font-specification:CCSignLanguage"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:CCSignLanguage;-inkscape-font-specification:CCSignLanguage"
          y="362.79584"
          x="602.479"
          id="tspan9439"
@@ -1127,19 +1120,18 @@
          id="rect9508"
          style="fill:#ffffff;fill-opacity:0.90196079;fill-rule:nonzero;stroke:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
       <text
-         sodipodi:linespacing="125%"
          id="text9502"
          y="279.21628"
          x="370.75598"
-         style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
          xml:space="preserve"><tspan
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:15px;font-family:CCSignLanguage;-inkscape-font-specification:CCSignLanguage;text-align:center;text-anchor:middle"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:15px;line-height:1.25;font-family:CCSignLanguage;-inkscape-font-specification:CCSignLanguage;text-align:center;text-anchor:middle"
            y="279.21628"
            x="370.75598"
            id="tspan9504"
            sodipodi:role="line">Cast</tspan><tspan
            id="tspan9506"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:15px;font-family:CCSignLanguage;-inkscape-font-specification:CCSignLanguage;text-align:center;text-anchor:middle"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:15px;line-height:1.25;font-family:CCSignLanguage;-inkscape-font-specification:CCSignLanguage;text-align:center;text-anchor:middle"
            y="297.96628"
            x="370.75598"
            sodipodi:role="line">Spell</tspan></text>
@@ -1157,20 +1149,19 @@
          rx="13.1102" />
       <text
          xml:space="preserve"
-         style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
          x="370.75598"
          y="279.21628"
-         id="text9587"
-         sodipodi:linespacing="125%"><tspan
+         id="text9587"><tspan
            sodipodi:role="line"
            id="tspan9589"
            x="370.75598"
            y="279.21628"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:15px;font-family:CCSignLanguage;-inkscape-font-specification:CCSignLanguage;text-align:center;text-anchor:middle">Cast</tspan><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:15px;line-height:1.25;font-family:CCSignLanguage;-inkscape-font-specification:CCSignLanguage;text-align:center;text-anchor:middle">Cast</tspan><tspan
            sodipodi:role="line"
            x="370.75598"
            y="297.96628"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:15px;font-family:CCSignLanguage;-inkscape-font-specification:CCSignLanguage;text-align:center;text-anchor:middle"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:15px;line-height:1.25;font-family:CCSignLanguage;-inkscape-font-specification:CCSignLanguage;text-align:center;text-anchor:middle"
            id="tspan9591">Spell</tspan></text>
     </g>
   </g>
