@@ -141,57 +141,28 @@ spell_card_data = [
     # Representative spells for each element.
 
     ["Haste",
-        {'element': 'air', 'pattern': 'E2-5', 'op': 'eye', 'vp': 0, 'cost': 0,
+        {'element': 'air', 'pattern': 'E1-1', 'op': 'eye', 'vp': 0, 'cost': 0,
          'id': 3, 'category': 'starter,mage-move'},
         {
-            'cast': "Move 5",
+            'cast': "Move 4",
         } ],
 
-    ["Gust",
-        {'element': 'air', 'pattern': 'E1-3', 'op': 'move', 'vp': 0, 'cost': 0,
-         'id': 90, 'category': 'starter,eye-move'},
-        {
-            'cast': "Move your Eyes 4 spaces, split among any number of Eyes.",
-        } ],
-    
     ["Endurance",
-        {'element': 'earth', 'pattern': 'E2-16', 'op': 'tapestry-eye', 'vp': 0, 'cost': 0,
+        {'element': 'earth', 'pattern': 'E1-1', 'op': 'tapestry-eye', 'vp': 0, 'cost': 0,
          'id': 45, 'category': 'starter,terrain,mage-move'},
         {
-            'cast': "For the rest of this turn, you may ignore the movement penalty for rough terrain or changing elevation.",
-        } ],
-
-    ["Stone Hand",
-        {'element': 'earth', 'pattern': 'E2-6', 'op': 'eye-thread', 'vp': 0, 'cost': 0,
-         'id': 20, 'category': 'starter,mage-move,mage-other-move'},
-        {
-            'cast': "Move into an adjacent location without crossing water. If there were any mages in that location, push them out into an adjacent location.",
-            'notes': "If there are multiple mages, they can be pushed into different locations."
-        } ],
-
-    ["Bolt",
-        {'element': 'fire', 'pattern': 'E2-79', 'op': 'move', 'vp': 0, 'cost': 0,
-         'id': 30, 'category': 'starter,eye-move'},
-        {
-            'cast': "Move a single Eye 4 spaces.",
+            'cast': "While this spell is active, you may ignore the movement penalty for rough terrain or changing elevation.",
         } ],
 
     ["Fire Shards",
-        {'element': 'fire', 'pattern': 'E2-27', 'op': 'thread', 'vp': 0, 'cost': 0,
+        {'element': 'fire', 'pattern': 'E1-2', 'op': 'eye-thread', 'vp': 0, 'cost': 0,
          'id': 22, 'category': 'starter,mage-other-attack'},
         {
             'cast': "Consume one of your Eyes to Attack 1 at that location.",
         } ],
 
-    ["Bridge",
-        {'element': 'water', 'pattern': 'E1-2', 'op': 'thread', 'vp': 0, 'cost': 0,
-         'id': 99, 'category': 'starter,terrain,mage-move'},
-        {
-            'cast': "Cross over a river into an adjacent space, ignoring the terrain cost.",
-        } ],
-
     ["Spread",
-        {'element': 'water', 'pattern': 'E2-28', 'op': 'eye', 'vp': 0, 'cost': 0,
+        {'element': 'water', 'pattern': 'E1-2', 'op': 'move-eye', 'vp': 0, 'cost': 0,
          'id': 75, 'category': 'starter,eye-move'},
         {
             'cast': "Move all your Eyes 2 spaces.",
@@ -204,29 +175,44 @@ spell_card_data = [
     #
     # Move mage
 
+    ["Stone Hand",
+        {'element': 'earth', 'pattern': 'E2-6', 'op': 'eye-thread', 'vp': 1, 'cost': 1,
+         'id': 20, 'category': 'mage-move,mage-other-move'},
+        {
+            'cast': "Move into an adjacent location without crossing water. If there were any mages in that location, push them out into an adjacent location.",
+            'notes': "If there are multiple mages, they can be pushed into different locations."
+        } ],
+
+    ["Bridge",
+        {'element': 'water', 'pattern': 'E1-5', 'op': 'thread', 'vp': 1, 'cost': 1,
+         'id': 99, 'category': 'terrain,mage-move'},
+        {
+            'cast': "Cross over a river into an adjacent space, ignoring the terrain cost.",
+        } ],
+
     ["Blur",
-        {'element': 'air', 'pattern': 'E2-51', 'op': 'eye', 'vp': 1, 'cost': 3,
+        {'element': 'air', 'pattern': 'E2-51', 'op': 'eye', 'vp': 2, 'cost': 2,
          'id': 19, 'category': 'mage-move'},
         {
             'cast': "Move 8",
         } ],
 
     ["Forest Blink",
-        {'element': 'air', 'pattern': 'E2-14', 'op': 'eye-thread', 'vp': 1, 'cost': 2,
+        {'element': 'air', 'pattern': 'E2-14', 'op': 'eye-thread', 'vp': 1, 'cost': 1,
          'id': 11, 'category': 'terrain,mage-move'},
         {
             'cast': "If you are in a forest location, you may jump to any connected forest location, ignoring any terrain costs.",
         } ],
 
     ["Dark Passage",
-        {'element': 'air', 'pattern': 'E2-9', 'op': 'thread', 'vp': 1, 'cost': 2,
+        {'element': 'air', 'pattern': 'E2-9', 'op': 'thread', 'vp': 1, 'cost': 1,
          'id': 93, 'category': 'terrain,mage-move'},
         {
             'cast': "If in a Dense Forest location, jump to another Dense Forest location no more than 5 spaces away.",
         } ],
 
     ["Dodge",
-        {'element': 'air', 'pattern': 'E2-86', 'op': 'eye-thread', 'vp': 1, 'cost': 2,
+        {'element': 'air', 'pattern': 'E2-86', 'op': 'eye-thread', 'vp': 1, 'cost': 1,
          'id': 102, 'category': 'mage-move'},
         {
             'cast': "Move 6",
@@ -256,14 +242,14 @@ spell_card_data = [
     # Convert mana into an Eye on the map
 
     ["Duplicate",
-        {'element': 'water', 'pattern': 'E2-35', 'op': 'move-eye', 'vp': 1, 'cost': 2,
+        {'element': 'water', 'pattern': 'E2-35', 'op': 'move-eye', 'vp': 1, 'cost': 1,
          'id': 8, 'category': 'eye-create'},
         {
             'cast': "In a location where you have at least one Eye, split each of your Eyes into two separate Eyes.",
         } ],
 
     ["Traceback",
-        {'element': 'water', 'pattern': 'E2-32', 'op': 'move-eye', 'vp': 1, 'cost': 2,
+        {'element': 'water', 'pattern': 'E2-32', 'op': 'move-eye', 'vp': 1, 'cost': 1,
          'id': 79, 'category': 'eye-create'},
         {
             'cast': "If in a location with another mage's Eye, you may place an Eye at that Mage's location.",
@@ -278,18 +264,32 @@ spell_card_data = [
     #
     # Move your Eyes on the map
     
+    ["Gust",
+        {'element': 'air', 'pattern': 'E1-3', 'op': 'move', 'vp': 1, 'cost': 1,
+         'id': 90, 'category': 'eye-move'},
+        {
+            'cast': "Move your Eyes 4 spaces, split among any number of Eyes.",
+        } ],
+    
     ["Expand",
-        {'element': 'water', 'pattern': 'E2-27', 'op': 'move', 'vp': 1, 'cost': 3,
+        {'element': 'water', 'pattern': 'E2-27', 'op': 'move', 'vp': 2, 'cost': 2,
          'id': 73, 'category': 'eye-create,eye-move'},
         {
             'cast': "Duplicate an existing Eye and then move it 4 spaces.",
         } ],
 
     ["Burst",
-        {'element': 'water', 'pattern': 'E2-47', 'op': 'move', 'vp': 1, 'cost': 2,
+        {'element': 'water', 'pattern': 'E2-47', 'op': 'move', 'vp': 1, 'cost': 1,
          'id': 67, 'category': 'eye-create,eye-move'},
         {
             'cast': "Move all your Eyes 4 spaces each.",
+        } ],
+
+    ["Bolt",
+        {'element': 'fire', 'pattern': 'E2-79', 'op': 'move', 'vp': 1, 'cost': 1,
+         'id': 30, 'category': 'eye-move'},
+        {
+            'cast': "Move a single Eye 4 spaces.",
         } ],
 
     #     _____                _____ _   _              _____         
@@ -301,7 +301,7 @@ spell_card_data = [
     # Move an opponent's Eye
 
     ["Unbind",
-        {'element': 'earth', 'pattern': 'E2-1', 'op': 'tapestry-eye', 'vp': 1, 'cost': 2,
+        {'element': 'earth', 'pattern': 'E2-1', 'op': 'tapestry-eye', 'vp': 1, 'cost': 1,
          'id': 42, 'category': 'eye-other-attack'},
         {
             'cast': "Remove all Anchors from your location. Move all Eyes in your location 3 spaces in any valid direction.",
@@ -316,7 +316,7 @@ spell_card_data = [
     # Defend against an opponent moving your Eyes
     
     ["Anchor",
-        {'element': 'earth', 'pattern': 'E2-14', 'op': 'thread', 'vp': 1, 'cost': 3,
+        {'element': 'earth', 'pattern': 'E2-14', 'op': 'thread', 'vp': 2, 'cost': 2,
          'id': 97, 'category': 'eye-defend'},
         {
             'cast': "Convert an Eye into an Anchor. Any other Eyes in that location are removed. Any Eyes adjacent to the Anchor must be moved 1 space away.",
@@ -333,14 +333,14 @@ spell_card_data = [
     # Remove an opponent's Eye
 
     ["Dispel",
-        {'element': 'fire', 'pattern': 'E2-36', 'op': 'tapestry-eye', 'vp': 1, 'cost': 2,
+        {'element': 'fire', 'pattern': 'E2-36', 'op': 'tapestry-eye', 'vp': 1, 'cost': 1,
          'id': 92, 'category': 'eye-other-attack'},
         {
             'cast': "Consume one of your Eyes to remove all Eyes at that location.",
         } ],
 
     ["Scorch",
-        {'element': 'fire', 'pattern': 'E2-31', 'op': 'eye-thread', 'vp': 1, 'cost': 2,
+        {'element': 'fire', 'pattern': 'E2-31', 'op': 'eye-thread', 'vp': 1, 'cost': 1,
          'id': 65, 'category': 'eye-move,eye-other-attack'},
         {
             'cast': "Move one of your Eyes 3 spaces, removing one opponent Eye from each location it moves into this turn. Consume this Eye.",
@@ -362,14 +362,14 @@ spell_card_data = [
     # Attack another mage
 
     ["Fiery Fire Flame",
-        {'element': 'fire', 'pattern': 'E2-35', 'op': 'eye', 'vp': 1, 'cost': 3,
+        {'element': 'fire', 'pattern': 'E2-35', 'op': 'eye', 'vp': 2, 'cost': 2,
          'id': 24, 'category': 'mage-other-attack'},
         {
             'cast': "Consume one of your Eyes to Attack 1 at location adjacent to that Eye.",
         } ],
 
     ["Redirect",
-        {'element': 'fire', 'pattern': 'E2-106', 'op': 'move-eye', 'vp': 1, 'cost': 2,
+        {'element': 'fire', 'pattern': 'E2-106', 'op': 'move-eye', 'vp': 1, 'cost': 1,
          'id': 101, 'category': 'mage-other-attack'},
         {
             'cast': "Attack 1 at one of your Eyes.",
@@ -385,7 +385,7 @@ spell_card_data = [
     # Defend against being attacked
 
     ["Shield",
-        {'element': 'earth', 'pattern': 'E2-15', 'op': 'move-eye', 'vp': 1, 'cost': 2,
+        {'element': 'earth', 'pattern': 'E2-15', 'op': 'move-eye', 'vp': 1, 'cost': 1,
          'id': 36, 'category': 'mage-defend'},
         {
             'cast': "{{ADD_CHARGE}}",
@@ -393,7 +393,7 @@ spell_card_data = [
         } ],
 
     ["Deflect",
-        {'element': 'earth', 'pattern': 'E2-7', 'op': 'tapestry-eye', 'vp': 1, 'cost': 2,
+        {'element': 'earth', 'pattern': 'E2-7', 'op': 'tapestry-eye', 'vp': 1, 'cost': 1,
          'id': 100, 'category': 'mage-defend'},
         {
             'cast': "Deflect an attack of 1",

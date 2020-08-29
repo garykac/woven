@@ -1,6 +1,6 @@
 # List of Spell Fragments
 
-Generated on 2020/08/21 @ 10:56
+Generated on 2020/08/25 @ 18:22
 
 ## By Category
 
@@ -56,16 +56,12 @@ Mage Other Move (1)
 
 * [Stone Hand](#stone-hand) - _Earth_
 
-Starter (8)
+Starter (4)
 
-* [Bolt](#bolt) - _Fire_
-* [Bridge](#bridge) - _Water_
 * [Endurance](#endurance) - _Earth_
 * [Fire Shards](#fire-shards) - _Fire_
-* [Gust](#gust) - _Air_
 * [Haste](#haste) - _Air_
 * [Spread](#spread) - _Water_
-* [Stone Hand](#stone-hand) - _Earth_
 
 Terrain (4)
 
@@ -82,12 +78,12 @@ Air (6)
 * [Dark Passage](#dark-passage) - _Terrain, Mage Move_
 * [Dodge](#dodge) - _Mage Move_
 * [Forest Blink](#forest-blink) - _Terrain, Mage Move_
-* [Gust](#gust) - _Starter, Eye Move_
+* [Gust](#gust) - _Eye Move_
 * [Haste](#haste) - _Starter, Mage Move_
 
 Fire (6)
 
-* [Bolt](#bolt) - _Starter, Eye Move_
+* [Bolt](#bolt) - _Eye Move_
 * [Dispel](#dispel) - _Eye Other Attack_
 * [Fiery Fire Flame](#fiery-fire-flame) - _Mage Other Attack_
 * [Fire Shards](#fire-shards) - _Starter, Mage Other Attack_
@@ -100,12 +96,12 @@ Earth (6)
 * [Deflect](#deflect) - _Mage Defend_
 * [Endurance](#endurance) - _Starter, Terrain, Mage Move_
 * [Shield](#shield) - _Mage Defend_
-* [Stone Hand](#stone-hand) - _Starter, Mage Move, Mage Other Move_
+* [Stone Hand](#stone-hand) - _Mage Move, Mage Other Move_
 * [Unbind](#unbind) - _Eye Other Attack_
 
 Water (6)
 
-* [Bridge](#bridge) - _Starter, Terrain, Mage Move_
+* [Bridge](#bridge) - _Terrain, Mage Move_
 * [Burst](#burst) - _Eye Create, Eye Move_
 * [Duplicate](#duplicate) - _Eye Create_
 * [Expand](#expand) - _Eye Create, Eye Move_
@@ -114,17 +110,18 @@ Water (6)
 
 ## By Pattern
 
-* E1-2 [Bridge](#bridge) (water)
+* E1-1 [Haste](#haste) (air)
+* E1-1 [Endurance](#endurance) (earth)
+* E1-2 [Fire Shards](#fire-shards) (fire)
+* E1-2 [Spread](#spread) (water)
 * E1-3 [Gust](#gust) (air)
+* E1-5 [Bridge](#bridge) (water)
 * E2-106 [Redirect](#redirect) (fire)
 * E2-14 [Forest Blink](#forest-blink) (air)
 * E2-14 [Anchor](#anchor) (earth)
 * E2-15 [Shield](#shield) (earth)
-* E2-16 [Endurance](#endurance) (earth)
 * E2-1 [Unbind](#unbind) (earth)
-* E2-27 [Fire Shards](#fire-shards) (fire)
 * E2-27 [Expand](#expand) (water)
-* E2-28 [Spread](#spread) (water)
 * E2-31 [Scorch](#scorch) (fire)
 * E2-32 [Traceback](#traceback) (water)
 * E2-35 [Fiery Fire Flame](#fiery-fire-flame) (fire)
@@ -132,7 +129,6 @@ Water (6)
 * E2-36 [Dispel](#dispel) (fire)
 * E2-47 [Burst](#burst) (water)
 * E2-51 [Blur](#blur) (air)
-* E2-5 [Haste](#haste) (air)
 * E2-6 [Stone Hand](#stone-hand) (earth)
 * E2-79 [Bolt](#bolt) (fire)
 * E2-7 [Deflect](#deflect) (earth)
@@ -173,18 +169,19 @@ X . . X
 ```
 Element: Fire
 
-Category: Starter, Eye Move
+Category: Eye Move
 
 When cast: Move a single Eye 4 spaces.
 
 ### Bridge
 ```
-@ .
-. X
+@ . .
+. . .
+. . X
 ```
 Element: Water
 
-Category: Starter, Terrain, Mage Move
+Category: Terrain, Mage Move
 
 When cast: Cross over a river into an adjacent space, ignoring the terrain cost.
 
@@ -263,13 +260,13 @@ When cast: In a location where you have at least one Eye, split each of your Eye
 
 ### Endurance
 ```
-X @ . . X
+@ X
 ```
 Element: Earth
 
 Category: Starter, Terrain, Mage Move
 
-When cast: For the rest of this turn, you may ignore the movement penalty for rough terrain or changing elevation.
+When cast: While this spell is active, you may ignore the movement penalty for rough terrain or changing elevation.
 
 ### Expand
 ```
@@ -296,8 +293,8 @@ When cast: Consume one of your Eyes to Attack 1 at location adjacent to that Eye
 
 ### Fire Shards
 ```
-. @ .
-X . X
+@ .
+. X
 ```
 Element: Fire
 
@@ -321,19 +318,19 @@ When cast: If you are in a forest location, you may jump to any connected forest
 ```
 Element: Air
 
-Category: Starter, Eye Move
+Category: Eye Move
 
 When cast: Move your Eyes 4 spaces, split among any number of Eyes.
 
 ### Haste
 ```
-@ X X
+@ X
 ```
 Element: Air
 
 Category: Starter, Mage Move
 
-When cast: Move 5
+When cast: Move 4
 
 ### Redirect
 ```
@@ -377,9 +374,8 @@ Sacrifice: Remove a charge to deflect an attack of 1 damage.
 
 ### Spread
 ```
-X . .
-. @ .
-. . X
+@ .
+. X
 ```
 Element: Water
 
@@ -394,7 +390,7 @@ X . .
 ```
 Element: Earth
 
-Category: Starter, Mage Move, Mage Other Move
+Category: Mage Move, Mage Other Move
 
 When cast: Move into an adjacent location without crossing water. If there were any mages in that location, push them out into an adjacent location.
 
