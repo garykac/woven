@@ -35,11 +35,15 @@ spell_card_categories = [
 ]
 
 valid_ops = [
+    'tapestry',       # Draw tapestry card
+    'tapestry-eye',   # Draw tapestry card OR Create eye
+    'tapestry-move',  # Draw tapestry card OR Move mage
+    'tapestry-thread',# Draw tapestry card OR Recover thread
     'eye',            # Create eye
+    'eye-move',       # Create eye OR Move mage
     'eye-thread',     # Create eye OR Recover thread
     'move',           # Move mage
-    'move-eye',       # Move mage OR Create eye
-    'tapestry-eye',   # Draw tapestry card OR Create eye
+    'move-thread',    # Move mage OR Recover thread
     'thread',         # Recover thread
 ]
 
@@ -162,7 +166,7 @@ spell_card_data = [
         } ],
 
     ["Spread",
-        {'element': 'water', 'pattern': 'E1-2', 'op': 'move-eye', 'vp': 0, 'cost': 0,
+        {'element': 'water', 'pattern': 'E1-2', 'op': 'eye-move', 'vp': 0, 'cost': 0,
          'id': 75, 'category': 'starter,eye-move'},
         {
             'cast': "Move all your Eyes 2 spaces.",
@@ -242,14 +246,14 @@ spell_card_data = [
     # Convert mana into an Eye on the map
 
     ["Duplicate",
-        {'element': 'water', 'pattern': 'E2-35', 'op': 'move-eye', 'vp': 1, 'cost': 1,
+        {'element': 'water', 'pattern': 'E2-35', 'op': 'eye-move', 'vp': 1, 'cost': 1,
          'id': 8, 'category': 'eye-create'},
         {
             'cast': "In a location where you have at least one Eye, split each of your Eyes into two separate Eyes.",
         } ],
 
     ["Traceback",
-        {'element': 'water', 'pattern': 'E2-32', 'op': 'move-eye', 'vp': 1, 'cost': 1,
+        {'element': 'water', 'pattern': 'E2-32', 'op': 'eye-move', 'vp': 1, 'cost': 1,
          'id': 79, 'category': 'eye-create'},
         {
             'cast': "If in a location with another mage's Eye, you may place an Eye at that Mage's location.",
@@ -369,7 +373,7 @@ spell_card_data = [
         } ],
 
     ["Redirect",
-        {'element': 'fire', 'pattern': 'E2-106', 'op': 'move-eye', 'vp': 1, 'cost': 1,
+        {'element': 'fire', 'pattern': 'E2-106', 'op': 'eye-move', 'vp': 1, 'cost': 1,
          'id': 101, 'category': 'mage-other-attack'},
         {
             'cast': "Attack 1 at one of your Eyes.",
@@ -385,7 +389,7 @@ spell_card_data = [
     # Defend against being attacked
 
     ["Shield",
-        {'element': 'earth', 'pattern': 'E2-15', 'op': 'move-eye', 'vp': 1, 'cost': 1,
+        {'element': 'earth', 'pattern': 'E2-15', 'op': 'eye-move', 'vp': 1, 'cost': 1,
          'id': 36, 'category': 'mage-defend'},
         {
             'cast': "{{ADD_CHARGE}}",
