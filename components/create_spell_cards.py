@@ -25,6 +25,27 @@ elem_map = {
     'w': 'water',
 }
 
+spell_keys = {
+    'cast': {
+        'prefix': "When cast:",
+    },
+    'react': {
+        'prefix': "Reaction: ",
+    },
+    'active': {
+        'prefix': "While active: ",
+    },
+    'charged': {
+        'prefix': "While charged: ",
+    },
+    'sacrifice': {
+        'prefix': "Sacrifice: ",
+    },
+    'notes': {
+        'prefix': "",
+    },
+}
+
 class WovenSpellCards():
     def __init__(self, options):
         self.name2id = {}
@@ -137,18 +158,9 @@ class WovenSpellCards():
             error(name + ': Invalid op: ' + attrs['op'])
         
     def expand_desc(self, raw_desc):
-        keys = ['cast', 'react', 'charged', 'sacrifice', 'notes', 'comment']
-        prefix = {
-            'cast': 'When cast: ',
-            'react': 'Reaction: ',
-            'charged': 'While charged: ',
-            'sacrifice': 'Sacrifice: ',
-            'notes': '',
-        }
-
         # Ensure all keys are valid.
         for key in raw_desc.keys():
-            if not key in keys:
+            if not key in spell_keys:
                 error('unknown key: %s' % key)
                 
         # Ensure charged spells have a charge effect.
@@ -157,17 +169,18 @@ class WovenSpellCards():
                 error('charged spell with no effect')            
 
         desc = []
-        for key in keys:
+        for key in spell_keys:
             if not key in raw_desc:
-                continue
-            if key == 'comment':
                 continue
             d = raw_desc[key]
             d = d.replace('{{ADD_CHARGE}}', 'Place a CHARGE on this spell.')
             d = d.replace('{{ADD_ACTION}}', 'Take another action.')
             if len(desc) != 0:
                 desc.append('-')
-            desc.append(prefix[key] + d)
+            prefix = ""
+            if 'prefix' in spell_keys[key]:
+                prefix = spell_keys[key]['prefix']
+            desc.append(prefix + d)
         return desc
 
     def record_spell_info(self, name, pattern, attrs, desc):
@@ -297,12 +310,7 @@ class WovenSpellCards():
 
             # Draw spell id.
             id_text = svg.add_loaded_element(svg_group, 'spell-id')
-            starter = ""
-            if 'starter' in attrs['category'].split('.'):
-                starter = "STARTER - "
-            id_string = "{0}id #{1} (r{2})".format(starter, attrs['id'],
-                                                   spell_card_revision)
-            SVG.set_text(id_text, id_string)
+            SVG.set_text(id_text, "#{0:d}".format(attrs['id']))
             
             svg.add_loaded_element(svg_group, 'separator')
 
