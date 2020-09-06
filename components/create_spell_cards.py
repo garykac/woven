@@ -626,7 +626,6 @@ def parse_options():
     
 def main():
     options = parse_options()
-    print(options)
     cgen = WovenSpellCards(options)
     cgen.generate_cards()
 
