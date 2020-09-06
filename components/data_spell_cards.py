@@ -143,6 +143,7 @@ spell_card_data = [
     #
     # Representative spells for each element.
 
+    # Doubled by Blur
     ["Haste",
         {'element': 'air', 'pattern': 'E1-1', 'op': 'eye', 'vp': 0, 'cost': 0,
          'id': 3, 'category': 'starter,mage-move'},
@@ -194,7 +195,7 @@ spell_card_data = [
         } ],
 
     ["Blur",
-        {'element': 'air', 'pattern': 'E2-51', 'op': 'eye', 'vp': 2, 'cost': 2,
+        {'element': 'air', 'pattern': 'E2-1', 'op': 'eye', 'vp': 2, 'cost': 2,
          'id': 19, 'category': 'mage-move'},
         {
             'cast': "Move 8",
