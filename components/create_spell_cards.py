@@ -102,16 +102,16 @@ class WovenSpellCards():
             base = r[0]
             max = r[1]
             for i in range(1, max+1):
-                self.check_pattern('%s-%d' % (base, i))
+                self.check_pattern('{0:s}-{1:d}'.format(base, i))
             # Check one beyond the last to verify the ranges are correct.
-            id = '%s-%d' % (base, max+1)
+            id = '{0:s}-{1:d}'.format(base, max+1)
             if id in self.card_patterns:
-                print('Pattern id not in valid range: %s-%d' % (base, max+1))
+                print('Pattern id not in valid range: {0:s}-{1:d}'.format(base, max+1))
                 sys.exit()
 
     def check_pattern(self, id):
         if not id in self.card_patterns:
-            print(id, 'not found')
+            raise Exception("Pattern {0}: Not found".format(id))
         pattern = self.card_patterns[id]['pattern']
         
         first_row = True
@@ -122,7 +122,8 @@ class WovenSpellCards():
                 num_cols = len(cols)
                 first_row = False
             if len(cols) != num_cols:
-                error(id + ": Mismatch number of columns in pattern")
+                raise Exception("Pattern {0}: Mismatch number of columns in pattern"
+                                .format(id))
         
     def pattern_key(self, pattern):
         """Convert pattern array into a simple string that can be used as a key."""
@@ -130,44 +131,47 @@ class WovenSpellCards():
 
     def validate_attrs(self, name, attrs):
         if name in self.name2id:
-            error(name + ': Spell name already used by spell ID ' + str(self.name2id[name]))
+            raise Exception("{0:s}: Spell name already used by spell ID {1}"
+                            .format(name, str(self.name2id[name])))
 
         if not 'element' in attrs:
-            error(name + ': Missing "element" attribute')
+            raise Exception("{0:s}: Missing 'element' attribute".format(name))
         if not attrs['element'] in self.valid_elements:
-            error(name + ': Invalid element: ' + attrs['element'])
+            raise Exception("{0:s}: Invalid element: {1}"
+                            .format(name, attrs['element']))
         
         if not 'category' in attrs:
-            error(name + ': Missing "category" attribute')
+            raise Exception("{0:s}: Missing 'category' attribute".format(name))
         for cat in attrs['category'].split(','):
             if not cat in self.valid_categories:
-                error(name + ': Invalid category: ' + cat)
+                raise Exception("{0:s}: Invalid category: {1}".format(name, cat))
 
         if not 'id' in attrs:
-            error(name + ': Missing "id" attribute')
+            raise Exception("{0:s}: Missing 'id' attribute".format(name))
         if attrs['id'] in self.id2name:
-            error(name + 'ID ' + str(attrs['id']) + ' already used by "'
-                  + self.id2name[attrs['id']] +'"')
+            raise Exception("{0} ID {1} already used by {2}"
+                            .format(name, str(attrs['id']), self.id2name[attrs['id']]))
         
         if not 'pattern' in attrs:
-            error(name + ': Missing "pattern" attribute')
+            raise Exception("{0:s}: Missing 'pattern' attribute".format(name))
         if not attrs['pattern'] in self.card_patterns:
-            error(name + ': Invalid pattern: ' + attrs['pattern'])
+            raise Exception("{0:s}: Invalid pattern: {1}".format(name, attrs['pattern']))
 
         if not attrs['op'] in self.valid_ops:
-            error(name + ': Invalid op: ' + attrs['op'])
-        
-    def expand_desc(self, raw_desc):
-        # Ensure all keys are valid.
-        for key in raw_desc.keys():
-            if not key in spell_keys:
-                error('unknown key: %s' % key)
-                
-        # Ensure charged spells have a charge effect.
-        if raw_desc['cast'] == '{{ADD_CHARGE}}':
-            if not 'charged' in raw_desc and not 'sacrifice' in raw_desc:
-                error('charged spell with no effect')            
+            raise Exception("{0:s}: Invalid op: {1}".format(name, attrs['op']))
 
+    def validate_desc(self, name, desc):
+        # Ensure all keys are valid.
+        for key in desc.keys():
+            if not key in spell_keys:
+                raise Exception("{0:s}: Unknown key: {1:s}".format(name, key))
+
+        # Ensure charged spells have a charge effect.
+        if desc['cast'] == '{{ADD_CHARGE}}':
+            if not 'charged' in desc and not 'sacrifice' in desc:
+                raise Exception("{0:s}: Charged spell with no effect".format(name))            
+
+    def expand_desc(self, raw_desc):
         desc = []
         for key in spell_keys:
             if not key in raw_desc:
@@ -198,11 +202,11 @@ class WovenSpellCards():
         if pattern_id == 'blank':
             self.blank_count += 1
         else:
-            pattern_key = '%s:%s' % (pattern_id, attrs['element'])
+            pattern_key = '{0:s}:{1:s}'.format(pattern_id, attrs['element'])
             if pattern_key in self.pattern2id:
                 dup_id = self.pattern2id[pattern_key]
-                error('%s: Pattern %s already assigned to %d (%s)'
-                      % (name, pattern_key, dup_id, self.id2name[dup_id]))
+                raise Exception("{0:s}: Pattern {1:s} already assigned to {2:d} ({3:s})"
+                      .format(name, pattern_key, dup_id, self.id2name[dup_id]))
             self.pattern2id[pattern_key] = id
 
         element = attrs['element']
@@ -250,6 +254,8 @@ class WovenSpellCards():
         name = card[0]
         attrs = card[1]
         desc = card[2]
+
+        # Validate attributes
         if attrs['category'] != 'blank':
             self.validate_attrs(name, attrs)
         pattern_id = attrs['pattern']
@@ -260,10 +266,13 @@ class WovenSpellCards():
         if attrs['category'] != 'blank' and pattern_id != 'blank':
             pe_tag = self.pattern_key(pattern) + '-' + attrs['element']
             if pe_tag in self.pattern_elements:
-                error('Pattern for "%s" already used for "%s"'
-                      % (name, self.pattern_elements[pe_tag]))
+                raise Exception('Pattern for "{0:s}" already used for "{1:s}"'
+                      .format(name, self.pattern_elements[pe_tag]))
             self.pattern_elements[pe_tag] = name
 
+        # Validate desc
+        self.validate_desc(name, desc)
+        
         # Verify pattern matches spell element
         element = attrs['element']
         pelem_data = self.card_patterns[pattern_id]['elements']
@@ -273,7 +282,8 @@ class WovenSpellCards():
         else:
             pelems = [elem_map[p] for p in pelem_data]
         if not element in pelems:
-            error('%s: Spell pattern does not match element %s' % (name, element))
+            raise Exception("{0:s}: Spell pattern does not match element {1:s}"
+                  .format(name, element))
 
         # Build list of template ids and then load from svg file.
         svg_ids = []
@@ -424,11 +434,12 @@ class WovenSpellCards():
     #
     # Summary
     #
-    
+
+    # Create a markdown style link for the spell.
     def spell_link(self, sid):
         name = self.id2name[sid]
         link_name = '-'.join(name.lower().split())
-        return ('[%s](#%s)' % (name, link_name))
+        return ('[{0:s}](#{1:s})'.format(name, link_name))
 
     def element_name(self, e):
         if e == 'none':
