@@ -136,7 +136,7 @@ class WovenSpellCards():
         if not attrs['op'] in self.valid_ops:
             error(name + ': Invalid op: ' + attrs['op'])
         
-    def expand_desc(self, id, raw_desc):
+    def expand_desc(self, raw_desc):
         keys = ['cast', 'react', 'charged', 'sacrifice', 'notes', 'comment']
         prefix = {
             'cast': 'When cast: ',
@@ -165,8 +165,9 @@ class WovenSpellCards():
             d = raw_desc[key]
             d = d.replace('{{ADD_CHARGE}}', 'Place a CHARGE on this spell.')
             d = d.replace('{{ADD_ACTION}}', 'Take another action.')
+            if len(desc) != 0:
+                desc.append('-')
             desc.append(prefix[key] + d)
-            desc.append('-')
         return desc
 
     def record_spell_info(self, name, pattern, attrs, desc):
@@ -261,6 +262,7 @@ class WovenSpellCards():
         if not element in pelems:
             error('%s: Spell pattern does not match element %s' % (name, element))
 
+        # Build list of template ids and then load from svg file.
         svg_ids = []
         svg_ids.extend(['element-{0}'.format(elem_map[e]) for e in elem_map])
         svg_ids.append('title')
@@ -326,40 +328,8 @@ class WovenSpellCards():
                 svg.add_loaded_element(svg_group, 'icon-star-3')
 
     def draw_description(self, id, raw_desc, svg, svg_group):
-        keys = ['cast', 'react', 'charged', 'sacrifice', 'notes', 'comment']
-        prefix = {
-            'cast': 'When cast: ',
-            'react': 'Reaction: ',
-            'charged': 'While charged: ',
-            'sacrifice': 'Sacrifice: ',
-            'notes': '',
-        }
-
-        # Ensure all keys are valid.
-        for key in raw_desc.keys():
-            if not key in keys:
-                error('unknown key: %s' % key)
-                
-        # Ensure charged spells have a charge effect.
-        if raw_desc['cast'] == '{{ADD_CHARGE}}':
-            if not 'charged' in raw_desc and not 'sacrifice' in raw_desc:
-                error('charged spell with no effect')            
-
-        desc = []
-        for key in keys:
-            if not key in raw_desc:
-                continue
-            if key == 'comment':
-                continue
-            d = raw_desc[key]
-            d = d.replace('{{ADD_CHARGE}}', 'Place a CHARGE on this spell.')
-            d = d.replace('{{ADD_ACTION}}', 'Take another action.')
-            if len(desc) != 0:
-                desc.append('-')
-            desc.append(prefix[key] + d)
-
         text = svg.add_loaded_element(svg_group, 'description')
-        SVG.set_flow_text(text, desc)
+        SVG.set_flow_text(text, self.expand_desc(raw_desc))
         
     def draw_pattern(self, id, pattern_raw, element, svg_group):        
         pattern = [x.split() for x in pattern_raw]
@@ -424,9 +394,8 @@ class WovenSpellCards():
                         box = SVG.rect(0, px0 + x, py0 + y, box_size, box_size)
                         
                         style_box = Style()
-                        style_box.set('fill', "none")
-                        style_box.set('stroke', "#000000")
-                        style_box.set('stroke-width', 0.5)
+                        style_box.set_fill("none")
+                        style_box.set_stroke("#000000", 0.5)
                         style_box.set('stroke-linecap', "round")
                         style_box.set('stroke-miterlimit', 2)
                         box.set_style(style_box)
@@ -436,8 +405,8 @@ class WovenSpellCards():
                         dot = SVG.circle(0, dot_x0 + x, dot_y0 + y, 0.8)
 
                         style_dot = Style()
-                        style_dot.set('fill', "#c0c0c0")
-                        style_dot.set('stroke', "none")
+                        style_dot.set_fill("#c0c0c0")
+                        style_dot.set_stroke("none")
                         dot.set_style(style_dot)
 
                         SVG.add_node(svg_group, dot)
@@ -548,7 +517,7 @@ class WovenSpellCards():
             summary.write(self.category_list(self.id2attrs[sid]['category']))
             summary.write('\n\n')
 
-            for d in self.expand_desc(sid, self.id2desc[sid]):
+            for d in self.expand_desc(self.id2desc[sid]):
                 if d == '-':
                     continue
                 summary.write(d + '\n')
@@ -611,7 +580,6 @@ def parse_options():
                 option_flags.append('-{0}'.format(opt_info['short']))
             option_flags.append('--{0}'.format(opt_name))
 
-            print(option_flags)
             # If matches this option
             if opt in option_flags:
                 type = opt_info['type']
