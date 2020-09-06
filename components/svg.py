@@ -51,6 +51,13 @@ class Style(object):
     def set(self, attr, value):
         self.props[attr] = str(value)
 
+    def set_fill(self, color):
+        self.props['fill'] = str(color)
+
+    def set_stroke(self, color, width = 0):
+        self.props['stroke'] = str(color)
+        self.props['stroke-width'] = str(width)
+        
     def __str__(self):
         return ';'.join([k+':'+self.props[k] for k in self.props.keys()])
 
@@ -69,22 +76,26 @@ class SVG(object):
         ET.register_namespace('', "http://www.w3.org/2000/svg")
         ET.register_namespace('sodipodi', "http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd")
         ET.register_namespace('inkscape', "http://www.inkscape.org/namespaces/inkscape")
-        ET.register_namespace('xlink', "http://www.w3.org/1999/xlink")
-        ET.register_namespace('dc', "http://purl.org/dc/elements/1.1/")
-        ET.register_namespace('cc', "http://creativecommons.org/ns#")
-        ET.register_namespace('rdf', "http://www.w3.org/1999/02/22-rdf-syntax-ns#")
+        #ET.register_namespace('xlink', "http://www.w3.org/1999/xlink")
+        #ET.register_namespace('dc', "http://purl.org/dc/elements/1.1/")
+        #ET.register_namespace('cc', "http://creativecommons.org/ns#")
+        #ET.register_namespace('rdf', "http://www.w3.org/1999/02/22-rdf-syntax-ns#")
 
         self.root = Element('svg')
         svg = self.root
         svg.set('version', "1.1")
         svg.set('id', "svg_root")
- 
-        # 2.5" x 3.5" poker
+
+        # Explicitly add additional namespaces
+        svg.set('xmlns:xlink', "http://www.w3.org/1999/xlink")
+
+        # Width and height of drawing in absolute units (mm).
         svg.set('width', "{0}mm".format(self.width))
         svg.set('height', "{0}mm".format(self.height))
 
         # The viewbox defines the "user units" for the file.
-        # Set each user unit = 1mm.
+        # Set the viewbox to be the same as the width,height in mm so that
+        # each user unit = 1mm.
         svg.set('viewBox', "0 0 {0} {1}".format(self.width, self.height))
 
         self.defs = SubElement(svg, 'defs')
