@@ -120,7 +120,6 @@ valid_ops = [
 #   <info>:
 #     'cast': Description when spell is cast.
 #     'charged': Description when spell is charged.
-#     'comment': Additional comment (not shown on spell).
 #     'notes': Additional notes
 #     'sacrifice': Description when charge is sacrificed.
 
@@ -325,7 +324,7 @@ spell_card_data = [
         {
             'cast': "Convert an Eye into an Anchor. Any other Eyes in that location are removed. Any Eyes adjacent to the Anchor must be moved 1 space away.",
             'notes': "No Eyes are allowed adjacent to an Anchor.",
-            'comment': "You may remove this Anchor at any time on your turn.",
+            # "You may remove this Anchor at any time on your turn.",
         } ],
 
     #     _____ _   _           _      _____         
