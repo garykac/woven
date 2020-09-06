@@ -25,21 +25,27 @@ elem_map = {
     'w': 'water',
 }
 
-spell_keys = {
+# Spell attributes
+spell_attributes = [
+    'element', 'pattern', 'op', 'vp', 'cost', 'id', 'category', 'flavor'
+]
+
+# Spell description keys
+spell_desc_keys = {
     'cast': {
-        'prefix': "When cast:",
+        'prefix': "When cast",
     },
     'react': {
-        'prefix': "Reaction: ",
+        'prefix': "Reaction",
     },
     'active': {
-        'prefix': "While active: ",
+        'prefix': "While active",
     },
     'charged': {
-        'prefix': "While charged: ",
+        'prefix': "While charged",
     },
     'sacrifice': {
-        'prefix': "Sacrifice: ",
+        'prefix': "Sacrifice",
     },
     'notes': {
         'prefix': "",
@@ -130,6 +136,11 @@ class WovenSpellCards():
         return '/'.join([''.join(x.split()) for x in pattern])
 
     def validate_attrs(self, name, attrs):
+        # Ensure all attributes are valid.
+        for attr in attrs.keys():
+            if not attr in spell_attributes:
+                raise Exception("{0:s}: Unknown attribute: {1:s}".format(name, attr))
+            
         if name in self.name2id:
             raise Exception("{0:s}: Spell name already used by spell ID {1}"
                             .format(name, str(self.name2id[name])))
@@ -163,7 +174,7 @@ class WovenSpellCards():
     def validate_desc(self, name, desc):
         # Ensure all keys are valid.
         for key in desc.keys():
-            if not key in spell_keys:
+            if not key in spell_desc_keys:
                 raise Exception("{0:s}: Unknown key: {1:s}".format(name, key))
 
         # Ensure charged spells have a charge effect.
@@ -173,7 +184,7 @@ class WovenSpellCards():
 
     def expand_desc(self, raw_desc):
         desc = []
-        for key in spell_keys:
+        for key in spell_desc_keys:
             if not key in raw_desc:
                 continue
             d = raw_desc[key]
@@ -182,9 +193,9 @@ class WovenSpellCards():
             if len(desc) != 0:
                 desc.append('-')
             prefix = ""
-            if 'prefix' in spell_keys[key]:
-                prefix = spell_keys[key]['prefix']
-            desc.append(prefix + d)
+            if 'prefix' in spell_desc_keys[key]:
+                prefix = spell_desc_keys[key]['prefix']
+            desc.append("{0}: {1}".format(prefix, d))
         return desc
 
     def record_spell_info(self, name, pattern, attrs, desc):
@@ -294,6 +305,7 @@ class WovenSpellCards():
         svg_ids.append('spell-id')
         svg_ids.extend(['icon-star-{0}'.format(n) for n in [1,2,3]])
         svg_ids.append('icon-vp')
+        svg_ids.append('flavor')
         svg_ids.append('separator')
         svg_ids.extend(['op-{0}'.format(op) for op in valid_ops])
         svg.load_ids('spell-cards/spell-template.svg', svg_ids)
@@ -322,6 +334,11 @@ class WovenSpellCards():
             id_text = svg.add_loaded_element(svg_group, 'spell-id')
             SVG.set_text(id_text, "#{0:d}".format(attrs['id']))
             
+            # Draw flavor text (if present).
+            if 'flavor' in attrs:
+                flavor_text = svg.add_loaded_element(svg_group, 'flavor')
+                SVG.set_text(flavor_text, [attrs['flavor']])
+            
             svg.add_loaded_element(svg_group, 'separator')
 
             # Draw alternate action.
@@ -347,7 +364,7 @@ class WovenSpellCards():
 
     def draw_description(self, id, raw_desc, svg, svg_group):
         text = svg.add_loaded_element(svg_group, 'description')
-        SVG.set_flow_text(text, self.expand_desc(raw_desc))
+        SVG.set_text(text, self.expand_desc(raw_desc))
         
     def draw_pattern(self, id, pattern_raw, element, svg_group):        
         pattern = [x.split() for x in pattern_raw]

@@ -151,13 +151,22 @@ class SVG(object):
             tag = m.group(2)
         return [namespace, tag]
 
+    @staticmethod
+    def set_text(elem, text):
+        (ns, tag) = SVG.split_tag(elem.tag)
+        if tag == 'text':
+            SVG.__set_single_text(elem, text)
+        elif tag == 'flowRoot':
+            SVG.__set_flow_text(elem, text)
+        else:
+            raise Exception("Unable to set_text for {0} node".format(tag))
+
     # Set the text within an SVG text span:
     #   <text>
     #     <tspan>
+    # |elem| must be a <text> node.
     @staticmethod
-    def set_text(elem, text):
-        if SVG.split_tag(elem.tag)[1] != 'text':
-            return
+    def __set_single_text(elem, text):
         for child in elem.iter():
             if SVG.split_tag(child.tag)[1] == 'tspan':
                 child.text = text
@@ -167,11 +176,9 @@ class SVG(object):
     #     <flowRegion>
     #     <flowPara>*
     # Given a |text| array, each string in the array is given a separate paragraph.
+    # |elem| must be a <flowRoot> node.
     @staticmethod
-    def set_flow_text(elem, text):
-        if SVG.split_tag(elem.tag)[1] != 'flowRoot':
-            return
-
+    def __set_flow_text(elem, text):
         # Find <flowPara> to use as a template.
         flowpara = None
         for child in elem.iter():
