@@ -1,17 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-import datetime
-import getopt
 import os
-import platform
-import shutil
-import subprocess
-import sys
 
 from svg import SVG, Style, Node
-
-INKSCAPE_APP = 'inkscape'
+from inkscape import Inkscape
 
 class SVGCardGen(object):
     OPTIONS = {
@@ -38,7 +31,7 @@ class SVGCardGen(object):
         self.card_height = options['height']
 
         # Card data to process.
-        # This is an array where each element defines a card.
+        # This is an array where each element defines a single card.
         self.card_data = card_data
 
     def __create_svg_file(self):
@@ -67,15 +60,11 @@ class SVGCardGen(object):
     def __gen_png(self, name):
         if not os.path.isdir(self.png_out_dir):
             os.makedirs(self.png_out_dir);
-        subprocess.call([
-            INKSCAPE_APP,
-            "--file=%s" % os.path.abspath(os.path.join(self.svg_out_dir, '%s.svg' % name)),
-            "--export-png=%s" % os.path.abspath(os.path.join(self.png_out_dir, '%s.png' % name)),
-            "--export-dpi=300",
-            "--export-text-to-path",
-            "--export-area-page",
-            "--without-gui"
-        ])
+        print("Exporting {0:s}.png".format(name))
+        Inkscape.export_png(
+            os.path.abspath(os.path.join(self.svg_out_dir, '{0:s}.svg'.format(name))),
+            os.path.abspath(os.path.join(self.png_out_dir, '{0:s}.png'.format(name))),
+            300)
 
     #
     # PUBLIC METHODS
