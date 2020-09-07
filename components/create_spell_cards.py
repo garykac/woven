@@ -74,6 +74,9 @@ valid_ops = [
     'thread',         # Recover thread
     'thread-tmove',   # Recover thread OR Move thread
     'tmove',          # Move thread
+    'tmove-action',   # Move thread AND take another action
+    'action',         # Take another action
+    'action-action',  # Take another 2 actions
 ]
 
 
@@ -356,7 +359,8 @@ class WovenSpellCards():
         g_masters.set_style("display:none")
         SVG.add_node(svg_group, g_masters)
         for e in [
-                'op-tapestry', 'op-eye', 'op-emove', 'op-mmove', 'op-thread', 'op-tmove',
+                'op-tapestry', 'op-eye', 'op-emove', 'op-mmove', 'op-thread',
+                'op-tmove', 'op-action',
                 'element-air', 'element-earth', 'element-fire', 'element-water',
                 ]:
             svg.add_loaded_element(g_masters, e)
@@ -495,7 +499,37 @@ class WovenSpellCards():
     #   |svg| - the SVG manager
     #   |svg_group| - the svg group node where this card should be added
     def draw_artifact_card(self, metadata, card, svg, svg_group):
-        pass
+        id = metadata['id']
+        name = card[0]
+        attrs = card[1]
+        print(name, attrs)
+
+        # Build list of template ids and then load from svg file.
+        svg_ids = []
+        svg_ids.append('artifact-title')
+        svg_ids.extend(['icon-star-{0}'.format(n) for n in [1,2,3]])
+        svg_ids.append('separator')
+        svg_ids.extend(['op-{0}'.format(op) for op in valid_ops])
+        svg.load_ids('spell-cards/spell-template.svg', svg_ids)
+
+        # Add Element and Op masters (hidden, used for cloning).
+        g_masters = SVG.group('masters')
+        g_masters.set_style("display:none")
+        SVG.add_node(svg_group, g_masters)
+        for e in [
+                'op-tapestry', 'op-eye', 'op-emove', 'op-mmove', 'op-thread',
+                'op-tmove', 'op-action',
+                ]:
+            svg.add_loaded_element(g_masters, e)
+
+        # Draw artifact title.
+        title = svg.add_loaded_element(svg_group, 'artifact-title')
+        SVG.set_text(title, name)
+        
+        svg.add_loaded_element(svg_group, 'separator')
+
+        # Draw alternate action.
+        svg.add_loaded_element(svg_group, 'op-{0}'.format(attrs['op']))
         
     #
     # Summary

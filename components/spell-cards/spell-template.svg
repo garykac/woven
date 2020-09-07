@@ -31,9 +31,9 @@
      inkscape:pageshadow="2"
      inkscape:zoom="3.959798"
      inkscape:cx="79.098587"
-     inkscape:cy="191.69143"
+     inkscape:cy="181.5899"
      inkscape:document-units="mm"
-     inkscape:current-layer="layer16"
+     inkscape:current-layer="layer17"
      showgrid="false"
      inkscape:snap-global="false"
      inkscape:window-width="3440"
@@ -157,9 +157,26 @@
          style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8px;font-family:'Arial Narrow';-inkscape-font-specification:'Arial Narrow Italic';text-align:center;text-anchor:middle">Flavor</flowPara></flowRoot>  </g>
   <g
      inkscape:groupmode="layer"
+     id="layer17"
+     inkscape:label="Artifact Layout">
+    <flowRoot
+       xml:space="preserve"
+       id="artifact-title"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:18px;line-height:1.25;font-family:Lato;-inkscape-font-specification:Lato;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none"
+       transform="matrix(0.26458333,0,0,0.26458333,-5.1505523,-10.634229)"><flowRegion
+         id="flowRegion1885"><rect
+           id="rect1887"
+           width="211.62695"
+           height="49.750004"
+           x="34.092648"
+           y="51.894604" /></flowRegion><flowPara
+         id="flowPara1889"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:18px;font-family:CCTreasureTrove;-inkscape-font-specification:CCTreasureTrove">Artifact Title</flowPara></flowRoot>  </g>
+  <g
+     inkscape:groupmode="layer"
      id="layer16"
      inkscape:label="Ref Layout"
-     style="display:inline">
+     style="display:none">
     <use
        style="display:inline"
        x="0"
@@ -460,12 +477,12 @@
      inkscape:groupmode="layer"
      id="layer4"
      inkscape:label="Op Master"
-     style="display:none">
+     style="display:inline">
     <g
        inkscape:groupmode="layer"
        id="g1455"
        inkscape:label="Op Action + Action"
-       style="display:none">
+       style="display:inline">
       <g
          id="op-action-action">
         <use
@@ -1332,7 +1349,7 @@
        inkscape:groupmode="layer"
        id="layer10"
        inkscape:label="Op Tapestry / Eye"
-       style="display:inline">
+       style="display:none">
       <g
          style="display:inline"
          id="op-tapestry-eye">

@@ -3,8 +3,11 @@
 
 artifact_card_data = [
 
-    ["Sample Artifact",
-        {'op': 'eye-tmove', 'vp': 0,
+    ["Nose Ring of Mental Acuity",
+        {'op': 'tmove-action', 'vp': 0,
         } ],
 
+    ["Visbeth's Glass Eye",
+        {'op': 'action-action', 'vp': 0,
+        } ],
 ]
