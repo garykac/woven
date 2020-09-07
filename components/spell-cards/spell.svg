@@ -9,8 +9,8 @@
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    version="1.1"
-   height="336"
-   width="240"
+   height="88.900002mm"
+   width="63.5mm"
    id="svg98"
    sodipodi:docname="spell.svg"
    inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)"
@@ -33,12 +33,14 @@
      id="namedview100"
      showgrid="false"
      inkscape:zoom="2"
-     inkscape:cx="55.43619"
+     inkscape:cx="-48.06381"
      inkscape:cy="123.89323"
      inkscape:window-x="76"
      inkscape:window-y="498"
      inkscape:window-maximized="0"
-     inkscape:current-layer="g61" />
+     inkscape:current-layer="g61"
+     inkscape:document-units="mm"
+     units="mm" />
   <metadata
      id="metadata2">
     <rdf:RDF>
@@ -47,7 +49,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
