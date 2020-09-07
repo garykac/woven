@@ -14,7 +14,6 @@ from svg import SVG, Style, Node
 from data_spell_cards import spell_card_data
 from data_spell_cards import spell_card_revision
 from data_spell_cards import spell_card_categories
-from data_spell_cards import valid_ops
 
 from data_spell_patterns import spell_card_patterns
 
@@ -50,6 +49,32 @@ spell_desc_keys = {
     },
 }
 
+# Valid Minor Actions
+valid_ops = [
+    'tapestry',       # Draw tapestry card
+    'tapestry-eye',   # Draw tapestry card OR Create eye
+    'tapestry-emove', # Draw tapestry card OR Move eye
+    'tapestry-mmove', # Draw tapestry card OR Move mage
+    'tapestry-thread',# Draw tapestry card OR Recover thread
+    'tapestry-tmove', # Draw tapestry card OR Move thread
+    'eye',            # Create eye
+    'eye-emove',      # Create eye OR Move eye
+    'eye-mmove',      # Create eye OR Move mage
+    'eye-thread',     # Create eye OR Recover thread
+    'eye-tmove',      # Create eye OR Move thread
+    'emove',          # Move eye
+    'emove-mmove',    # Move eye OR Move mage
+    'emove-thread',   # Move eye OR Recover thread
+    'emove-tmove',    # Move eye OR Move thread
+    'mmove',          # Move mage
+    'mmove-thread',   # Move mage OR Recover thread
+    'mmove-tmove',    # Move mage OR Move thread
+    'thread',         # Recover thread
+    'thread-tmove',   # Recover thread OR Move thread
+    'tmove',          # Move thread
+]
+
+
 class WovenSpellCards():
     def __init__(self, options):
         self.name2id = {}
@@ -78,7 +103,7 @@ class WovenSpellCards():
         options['height'] = self.height
         
         # Set data for SVGCardGen.
-        self.card_gen = SVGCardGen(self, spell_card_data, options)
+        self.card_gen = SVGCardGen(self, options)
 
         # Initialize card patterns.
         self.card_patterns = spell_card_patterns
@@ -244,6 +269,11 @@ class WovenSpellCards():
     def generate_cards(self):
         self.card_gen.generate_cards()
 
+    # callback from SVGCardGen
+    def card_data(self):
+        for card in spell_card_data:
+            yield ['spell', card]
+
     # Params:
     #   metadata: card and file index
     #   card_data: data for current card
@@ -251,8 +281,12 @@ class WovenSpellCards():
     #
     # callback from SVGCardGen
     def process_card_data(self, metadata, card_data):
-        svg_group = self.card_gen.pre_card()
-        self.draw_card(metadata, card_data, self.card_gen.get_svg(), svg_group)
+        (svg, svg_group) = self.card_gen.pre_card()
+        (type, data) = card_data
+        if type == 'spell':
+            self.draw_spell_card(metadata, data, svg, svg_group)
+        else:
+            raise Exception("Invalid card type: {0}".format(type))
         self.card_gen.post_card()
 
     # Params:
@@ -260,7 +294,7 @@ class WovenSpellCards():
     #   card_data: data for current card
     #   svg: the SVG manager
     #   svg_group: the svg group node where this card should be added
-    def draw_card(self, metadata, card, svg, svg_group):
+    def draw_spell_card(self, metadata, card, svg, svg_group):
         id = metadata['id']
         name = card[0]
         attrs = card[1]

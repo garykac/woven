@@ -13,7 +13,7 @@ class SVGCardGen(object):
 	'per-page': {'type': 'int', 'default': 1, 'desc': "Set # of cards per page"},
     }
     
-    def __init__(self, card_handler, card_data, options):
+    def __init__(self, card_handler, options):
         self.card_handler = card_handler
         
         self.out_dir = options['out']
@@ -29,10 +29,6 @@ class SVGCardGen(object):
 
         self.card_width = options['width']
         self.card_height = options['height']
-
-        # Card data to process.
-        # This is an array where each element defines a single card.
-        self.card_data = card_data
 
     def __create_svg_file(self):
         self.svg = SVG([self.card_width, self.card_height])
@@ -70,13 +66,10 @@ class SVGCardGen(object):
     # PUBLIC METHODS
     #
 
-    def get_svg(self):
-        return self.svg
-    
     def generate_cards(self):
         self.__start_card_gen()
 
-        for card_data in self.card_data:
+        for card_data in self.card_handler.card_data():
             metadata = {
                 'file': self.curr_file,
                 'id': self.curr_card,
@@ -116,7 +109,7 @@ class SVGCardGen(object):
         SVG.add_node(layer, cut_line)
         
         self._called_pre_card = True
-        return layer
+        return (self.svg, layer)
 	
     def post_card(self):
         if not self._called_pre_card:
