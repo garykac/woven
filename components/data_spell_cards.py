@@ -116,6 +116,7 @@ valid_ops = [
 #     'op': alternate action at bottom of card
 #     'id': spell id
 #     'category': <string> to group spells by general category
+#     'flavor': flavor text for spell
 #
 #   <info>:
 #     'cast': Description when spell is cast.
@@ -188,8 +189,9 @@ spell_card_data = [
         } ],
 
     ["Bridge",
-        {'element': 'water', 'pattern': 'E1-5', 'op': 'thread', 'vp': 1, 'cost': 1,
-         'id': 99, 'category': 'terrain,mage-move'},
+        {'element': 'earth', 'pattern': 'E1-3', 'op': 'thread', 'vp': 1, 'cost': 1,
+         'id': 99, 'category': 'terrain,mage-move',
+         'flavor': "Rising columns of mud form a temporary bridge."},
         {
             'cast': "Cross over a river into an adjacent space, ignoring the terrain cost.",
         } ],
