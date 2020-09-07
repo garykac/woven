@@ -33,7 +33,6 @@ spell_attributes = [
 # Spell description keys
 spell_desc_keys = {
     'cast': {
-        'prefix': "When cast",
     },
     'react': {
         'prefix': "Reaction",
@@ -48,7 +47,6 @@ spell_desc_keys = {
         'prefix': "Sacrifice",
     },
     'notes': {
-        'prefix': "",
     },
 }
 
@@ -192,10 +190,12 @@ class WovenSpellCards():
             d = d.replace('{{ADD_ACTION}}', 'Take another action.')
             if len(desc) != 0:
                 desc.append('-')
-            prefix = ""
+                
             if 'prefix' in spell_desc_keys[key]:
                 prefix = spell_desc_keys[key]['prefix']
-            desc.append("{0}: {1}".format(prefix, d))
+                desc.append("{0}: {1}".format(prefix, d))
+            else:
+                desc.append(d)
         return desc
 
     def record_spell_info(self, name, pattern, attrs, desc):
@@ -315,7 +315,7 @@ class WovenSpellCards():
         g_masters.set_style("display:none")
         SVG.add_node(svg_group, g_masters)
         for e in [
-                'op-tapestry', 'op-eye', 'op-emove', 'op-mmove', 'op-thread',
+                'op-tapestry', 'op-eye', 'op-emove', 'op-mmove', 'op-thread', 'op-tmove',
                 'element-air', 'element-earth', 'element-fire', 'element-water',
                 ]:
             svg.add_loaded_element(g_masters, e)

@@ -40,16 +40,22 @@ valid_ops = [
     'tapestry-emove', # Draw tapestry card OR Move eye
     'tapestry-mmove', # Draw tapestry card OR Move mage
     'tapestry-thread',# Draw tapestry card OR Recover thread
+    'tapestry-tmove', # Draw tapestry card OR Move thread
     'eye',            # Create eye
     'eye-emove',      # Create eye OR Move eye
     'eye-mmove',      # Create eye OR Move mage
     'eye-thread',     # Create eye OR Recover thread
+    'eye-tmove',      # Create eye OR Move thread
     'emove',          # Move eye
     'emove-mmove',    # Move eye OR Move mage
     'emove-thread',   # Move eye OR Recover thread
+    'emove-tmove',    # Move eye OR Move thread
     'mmove',          # Move mage
     'mmove-thread',   # Move mage OR Recover thread
+    'mmove-tmove',    # Move mage OR Move thread
     'thread',         # Recover thread
+    'thread-tmove',   # Recover thread OR Move thread
+    'tmove',          # Move thread
 ]
 
 # Core abilities:
@@ -129,7 +135,7 @@ valid_ops = [
 #     'notes': Additional notes
 #     'sacrifice': Description when charge is sacrificed.
 
-# Next id = 103
+# Next id = 104
 # Unused = 41
 
 spell_card_data = [
@@ -151,14 +157,14 @@ spell_card_data = [
 
     # Doubled by Blur
     ["Haste",
-        {'element': 'air', 'pattern': 'E1-1', 'op': 'eye', 'vp': 0, 'cost': 0,
+        {'element': 'air', 'pattern': 'E1-1', 'op': 'eye-tmove', 'vp': 0, 'cost': 0,
          'id': 3, 'category': 'starter,mage-move'},
         {
             'cast': "Move 4",
         } ],
 
     ["Endurance",
-        {'element': 'earth', 'pattern': 'E1-1', 'op': 'tapestry-eye', 'vp': 0, 'cost': 0,
+        {'element': 'earth', 'pattern': 'E1-1', 'op': 'tapestry-emove', 'vp': 0, 'cost': 0,
          'id': 45, 'category': 'starter,terrain,mage-move'},
         {
             'cast': "While this spell is active, you may ignore the movement penalty for rough terrain or changing elevation.",
@@ -171,11 +177,11 @@ spell_card_data = [
             'cast': "Consume one of your Eyes to Attack 1 at that location.",
         } ],
 
-    ["Spread",
+    ["Extend",
         {'element': 'water', 'pattern': 'E1-2', 'op': 'eye-mmove', 'vp': 0, 'cost': 0,
-         'id': 75, 'category': 'starter,eye-move'},
+         'id': 103, 'category': 'starter,eye-move'},
         {
-            'cast': "Move all your Eyes 2 spaces.",
+            'cast': "Move one of your Eyes 2 spaces.",
         } ],
 
     #     _____                _____     _ ___ 
@@ -282,9 +288,17 @@ spell_card_data = [
             'cast': "Move your Eyes 4 spaces, split among any number of Eyes.",
         } ],
     
+    ["Spread",
+        {'element': 'water', 'pattern': 'E2-27', 'op': 'eye-mmove', 'vp': 1, 'cost': 1,
+         'id': 75, 'category': 'eye-move'},
+        {
+            'cast': "Move all your Eyes 2 spaces.",
+        } ],
+
     ["Expand",
-        {'element': 'water', 'pattern': 'E2-27', 'op': 'mmove', 'vp': 2, 'cost': 2,
-         'id': 73, 'category': 'eye-create,eye-move'},
+        {'element': 'water', 'pattern': 'E2-28', 'op': 'mmove', 'vp': 2, 'cost': 2,
+         'id': 73, 'category': 'eye-create,eye-move',
+         'flavor': "The air crackles as the Eye splits and one part shoots away. "},
         {
             'cast': "Duplicate an existing Eye and then move it 4 spaces.",
         } ],
