@@ -44,7 +44,7 @@ spell_desc_keys = {
         'prefix': "While charged",
     },
     'sacrifice': {
-        'prefix': "Sacrifice",
+        'prefix': "Sacrifice charge",
     },
     'notes': {
     },
@@ -186,7 +186,7 @@ class WovenSpellCards():
             if not key in raw_desc:
                 continue
             d = raw_desc[key]
-            d = d.replace('{{ADD_CHARGE}}', 'Place a CHARGE on this spell.')
+            d = d.replace('{{ADD_CHARGE}}', 'Place a Charge on this spell.')
             d = d.replace('{{ADD_ACTION}}', 'Take another action.')
             if len(desc) != 0:
                 desc.append('-')
