@@ -17,6 +17,8 @@ from data_spell_cards import spell_card_categories
 
 from data_spell_patterns import spell_card_patterns
 
+from data_artifact_cards import artifact_card_data
+
 elem_map = {
     'a': 'air',
     'e': 'earth',
@@ -269,15 +271,18 @@ class WovenSpellCards():
     def generate_cards(self):
         self.card_gen.generate_cards()
 
+    # Returns an iterator that produces an object for each card.
     # callback from SVGCardGen
     def card_data(self):
         for card in spell_card_data:
             yield ['spell', card]
+        for card in artifact_card_data:
+            yield ['artifact', card]
 
     # Params:
-    #   metadata: card and file index
-    #   card_data: data for current card
-    #   svg: the SVG manager
+    #   |metadata| - card and file index
+    #   |card_data| - data for current card
+    #   |svg| - the SVG manager
     #
     # callback from SVGCardGen
     def process_card_data(self, metadata, card_data):
@@ -285,15 +290,17 @@ class WovenSpellCards():
         (type, data) = card_data
         if type == 'spell':
             self.draw_spell_card(metadata, data, svg, svg_group)
+        elif type == 'artifact':
+            self.draw_artifact_card(metadata, data, svg, svg_group)
         else:
             raise Exception("Invalid card type: {0}".format(type))
         self.card_gen.post_card()
 
     # Params:
-    #   metadata: card and file index
-    #   card_data: data for current card
-    #   svg: the SVG manager
-    #   svg_group: the svg group node where this card should be added
+    #   |metadata| - card and file index
+    #   |card_data| - data for current card
+    #   |svg| - the SVG manager
+    #   |svg_group| - the svg group node where this card should be added
     def draw_spell_card(self, metadata, card, svg, svg_group):
         id = metadata['id']
         name = card[0]
@@ -482,6 +489,14 @@ class WovenSpellCards():
                     else:
                         raise Exception("Unrecognized pattern symbol: {0}".format(cell))
 
+    # Params:
+    #   |metadata| - card and file index
+    #   |card_data| - data for current card
+    #   |svg| - the SVG manager
+    #   |svg_group| - the svg group node where this card should be added
+    def draw_artifact_card(self, metadata, card, svg, svg_group):
+        pass
+        
     #
     # Summary
     #
