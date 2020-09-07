@@ -315,7 +315,7 @@ class WovenSpellCards():
         g_masters.set_style("display:none")
         SVG.add_node(svg_group, g_masters)
         for e in [
-                'op-tapestry', 'op-eye', 'op-move', 'op-thread',
+                'op-tapestry', 'op-eye', 'op-emove', 'op-mmove', 'op-thread',
                 'element-air', 'element-earth', 'element-fire', 'element-water',
                 ]:
             svg.add_loaded_element(g_masters, e)

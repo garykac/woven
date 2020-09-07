@@ -37,13 +37,18 @@ spell_card_categories = [
 valid_ops = [
     'tapestry',       # Draw tapestry card
     'tapestry-eye',   # Draw tapestry card OR Create eye
-    'tapestry-move',  # Draw tapestry card OR Move mage
+    'tapestry-emove', # Draw tapestry card OR Move eye
+    'tapestry-mmove', # Draw tapestry card OR Move mage
     'tapestry-thread',# Draw tapestry card OR Recover thread
     'eye',            # Create eye
-    'eye-move',       # Create eye OR Move mage
+    'eye-emove',      # Create eye OR Move eye
+    'eye-mmove',      # Create eye OR Move mage
     'eye-thread',     # Create eye OR Recover thread
-    'move',           # Move mage
-    'move-thread',    # Move mage OR Recover thread
+    'emove',          # Move eye
+    'emove-mmove',    # Move eye OR Move mage
+    'emove-thread',   # Move eye OR Recover thread
+    'mmove',          # Move mage
+    'mmove-thread',   # Move mage OR Recover thread
     'thread',         # Recover thread
 ]
 
@@ -167,7 +172,7 @@ spell_card_data = [
         } ],
 
     ["Spread",
-        {'element': 'water', 'pattern': 'E1-2', 'op': 'eye-move', 'vp': 0, 'cost': 0,
+        {'element': 'water', 'pattern': 'E1-2', 'op': 'eye-mmove', 'vp': 0, 'cost': 0,
          'id': 75, 'category': 'starter,eye-move'},
         {
             'cast': "Move all your Eyes 2 spaces.",
@@ -248,14 +253,14 @@ spell_card_data = [
     # Convert mana into an Eye on the map
 
     ["Duplicate",
-        {'element': 'water', 'pattern': 'E2-35', 'op': 'eye-move', 'vp': 1, 'cost': 1,
+        {'element': 'water', 'pattern': 'E2-35', 'op': 'eye-mmove', 'vp': 1, 'cost': 1,
          'id': 8, 'category': 'eye-create'},
         {
             'cast': "In a location where you have at least one Eye, split each of your Eyes into two separate Eyes.",
         } ],
 
     ["Traceback",
-        {'element': 'water', 'pattern': 'E2-32', 'op': 'eye-move', 'vp': 1, 'cost': 1,
+        {'element': 'water', 'pattern': 'E2-32', 'op': 'eye-mmove', 'vp': 1, 'cost': 1,
          'id': 79, 'category': 'eye-create'},
         {
             'cast': "If in a location with another mage's Eye, you may place an Eye at that Mage's location.",
@@ -271,28 +276,28 @@ spell_card_data = [
     # Move your Eyes on the map
     
     ["Gust",
-        {'element': 'air', 'pattern': 'E1-3', 'op': 'move', 'vp': 1, 'cost': 1,
+        {'element': 'air', 'pattern': 'E1-3', 'op': 'mmove', 'vp': 1, 'cost': 1,
          'id': 90, 'category': 'eye-move'},
         {
             'cast': "Move your Eyes 4 spaces, split among any number of Eyes.",
         } ],
     
     ["Expand",
-        {'element': 'water', 'pattern': 'E2-27', 'op': 'move', 'vp': 2, 'cost': 2,
+        {'element': 'water', 'pattern': 'E2-27', 'op': 'mmove', 'vp': 2, 'cost': 2,
          'id': 73, 'category': 'eye-create,eye-move'},
         {
             'cast': "Duplicate an existing Eye and then move it 4 spaces.",
         } ],
 
     ["Burst",
-        {'element': 'water', 'pattern': 'E2-47', 'op': 'move', 'vp': 1, 'cost': 1,
+        {'element': 'water', 'pattern': 'E2-47', 'op': 'mmove', 'vp': 1, 'cost': 1,
          'id': 67, 'category': 'eye-create,eye-move'},
         {
             'cast': "Move all your Eyes 4 spaces each.",
         } ],
 
     ["Bolt",
-        {'element': 'fire', 'pattern': 'E2-79', 'op': 'move', 'vp': 1, 'cost': 1,
+        {'element': 'fire', 'pattern': 'E2-79', 'op': 'mmove', 'vp': 1, 'cost': 1,
          'id': 30, 'category': 'eye-move'},
         {
             'cast': "Move a single Eye 4 spaces.",
@@ -375,7 +380,7 @@ spell_card_data = [
         } ],
 
     ["Redirect",
-        {'element': 'fire', 'pattern': 'E2-106', 'op': 'eye-move', 'vp': 1, 'cost': 1,
+        {'element': 'fire', 'pattern': 'E2-106', 'op': 'eye-mmove', 'vp': 1, 'cost': 1,
          'id': 101, 'category': 'mage-other-attack'},
         {
             'cast': "Attack 1 at one of your Eyes.",
@@ -391,7 +396,7 @@ spell_card_data = [
     # Defend against being attacked
 
     ["Shield",
-        {'element': 'earth', 'pattern': 'E2-15', 'op': 'eye-move', 'vp': 1, 'cost': 1,
+        {'element': 'earth', 'pattern': 'E2-15', 'op': 'eye-mmove', 'vp': 1, 'cost': 1,
          'id': 36, 'category': 'mage-defend'},
         {
             'cast': "{{ADD_CHARGE}}",
