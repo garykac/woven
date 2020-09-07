@@ -164,10 +164,11 @@ spell_card_data = [
         } ],
 
     ["Endurance",
-        {'element': 'earth', 'pattern': 'E1-1', 'op': 'tapestry-emove', 'vp': 0, 'cost': 0,
+        {'element': 'earth', 'pattern': 'E1-1', 'op': 'tapestry-eye', 'vp': 0, 'cost': 0,
          'id': 45, 'category': 'starter,terrain,mage-move'},
         {
-            'cast': "While this spell is active, you may ignore the movement penalty for rough terrain or changing elevation.",
+            'cast': "{{ADD_ACTION}}",
+            'active': "You may ignore the movement penalty for rough terrain or changing elevation.",
         } ],
 
     ["Fire Shards",
