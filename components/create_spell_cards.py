@@ -28,7 +28,7 @@ elem_map = {
 
 # Spell attributes
 spell_attributes = [
-    'element', 'pattern', 'op', 'vp', 'cost', 'id', 'category', 'flavor'
+    'element', 'pattern', 'op', 'vp', 'id', 'category', 'flavor'
 ]
 
 # Spell description keys
@@ -396,21 +396,20 @@ class WovenSpellCards():
         if attrs['category'] != 'blank':
             self.draw_description(attrs['id'], desc, svg, svg_group)
 
-        if attrs['vp'] != 0:
-            svg.add_loaded_element(svg_group, 'icon-vp')
-        
-        if attrs['cost'] != 0:
-            cost = attrs['cost']
-            svg.add_loaded_element(svg_group, 'icon-star-1')
-            if cost > 1:
-                svg.add_loaded_element(svg_group, 'icon-star-2')
-            if cost > 2:
-                svg.add_loaded_element(svg_group, 'icon-star-3')
+        self.draw_vp(attrs['vp'], svg, svg_group)
 
     def draw_description(self, id, raw_desc, svg, svg_group):
         text = svg.add_loaded_element(svg_group, 'description')
         SVG.set_text(text, self.expand_desc(raw_desc))
-        
+
+    def draw_vp(self, vp, svg, svg_group):
+        if vp != 0:
+            svg.add_loaded_element(svg_group, 'icon-star-1')
+            if vp > 1:
+                svg.add_loaded_element(svg_group, 'icon-star-2')
+            if vp > 2:
+                svg.add_loaded_element(svg_group, 'icon-star-3')
+                
     def draw_pattern(self, id, pattern_raw, element, svg_group):        
         pattern = [x.split() for x in pattern_raw]
         pheight = len(pattern)
@@ -524,13 +523,15 @@ class WovenSpellCards():
 
         # Draw artifact title.
         title = svg.add_loaded_element(svg_group, 'artifact-title')
-        SVG.set_text(title, name)
+        SVG.set_text(title, [name])
         
         svg.add_loaded_element(svg_group, 'separator')
 
         # Draw alternate action.
         svg.add_loaded_element(svg_group, 'op-{0}'.format(attrs['op']))
-        
+
+        self.draw_vp(attrs['vp'], svg, svg_group)
+
     #
     # Summary
     #
