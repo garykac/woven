@@ -17,8 +17,6 @@ from data_spell_cards import spell_card_categories
 
 from data_spell_patterns import spell_card_patterns
 
-from data_artifact_cards import artifact_card_data
-
 elem_map = {
     'a': 'air',
     'e': 'earth',
@@ -277,10 +275,9 @@ class WovenSpellCards():
     # Returns an iterator that produces an object for each card.
     # callback from SVGCardGen
     def card_data(self):
-        for card in spell_card_data:
-            yield ['spell', card]
-        for card in artifact_card_data:
-            yield ['artifact', card]
+        #for card in spell_card_data:
+        #    yield card
+        return spell_card_data
 
     # Params:
     #   |metadata| - card and file index
@@ -290,13 +287,7 @@ class WovenSpellCards():
     # callback from SVGCardGen
     def process_card_data(self, metadata, card_data):
         (svg, svg_group) = self.card_gen.pre_card()
-        (type, data) = card_data
-        if type == 'spell':
-            self.draw_spell_card(metadata, data, svg, svg_group)
-        elif type == 'artifact':
-            self.draw_artifact_card(metadata, data, svg, svg_group)
-        else:
-            raise Exception("Invalid card type: {0}".format(type))
+        self.draw_spell_card(metadata, card_data, svg, svg_group)
         self.card_gen.post_card()
 
     # Params:
@@ -491,46 +482,6 @@ class WovenSpellCards():
                         SVG.add_node(svg_group, dot)
                     else:
                         raise Exception("Unrecognized pattern symbol: {0}".format(cell))
-
-    # Params:
-    #   |metadata| - card and file index
-    #   |card_data| - data for current card
-    #   |svg| - the SVG manager
-    #   |svg_group| - the svg group node where this card should be added
-    def draw_artifact_card(self, metadata, card, svg, svg_group):
-        id = metadata['id']
-        name = card[0]
-        attrs = card[1]
-        print(name, attrs)
-
-        # Build list of template ids and then load from svg file.
-        svg_ids = []
-        svg_ids.append('artifact-title')
-        svg_ids.extend(['icon-star-{0}'.format(n) for n in [1,2,3]])
-        svg_ids.append('separator')
-        svg_ids.extend(['op-{0}'.format(op) for op in valid_ops])
-        svg.load_ids('spell-cards/spell-template.svg', svg_ids)
-
-        # Add Element and Op masters (hidden, used for cloning).
-        g_masters = SVG.group('masters')
-        g_masters.set_style("display:none")
-        SVG.add_node(svg_group, g_masters)
-        for e in [
-                'op-tapestry', 'op-eye', 'op-emove', 'op-mmove', 'op-thread',
-                'op-tmove', 'op-action',
-                ]:
-            svg.add_loaded_element(g_masters, e)
-
-        # Draw artifact title.
-        title = svg.add_loaded_element(svg_group, 'artifact-title')
-        SVG.set_text(title, name)
-        
-        svg.add_loaded_element(svg_group, 'separator')
-
-        # Draw alternate action.
-        svg.add_loaded_element(svg_group, 'op-{0}'.format(attrs['op']))
-
-        self.draw_vp(attrs['vp'], svg, svg_group)
 
     #
     # Summary

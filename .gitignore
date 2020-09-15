@@ -11,9 +11,9 @@ archive/maps/v1-hex/map-hex-22x19.png
 archive/maps/v2-voronoi-r1/*.png
 
 # Component output files
-components/effect-cards/pdf/
-components/effect-cards/png/
-components/effect-cards/svg/
+components/artifact-cards/pdf/
+components/artifact-cards/png/
+components/artifact-cards/svg/
 components/spell-cards/pdf/
 components/spell-cards/png/
 components/spell-cards/svg/
