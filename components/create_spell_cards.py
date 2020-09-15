@@ -1,10 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-import datetime
 import getopt
-import os
-import subprocess
 import sys
 
 from svg_card_gen import SVGCardGen
@@ -112,8 +109,8 @@ class WovenSpellCards():
             # Check one beyond the last to verify the ranges are correct.
             id = '{0:s}-{1:d}'.format(base, max+1)
             if id in self.card_patterns:
-                print('Pattern id not in valid range: {0:s}-{1:d}'.format(base, max+1))
-                sys.exit()
+                raise Exception('Pattern id not in valid range: {0:s}-{1:d}'
+                                .format(base, max+1))
 
     def check_pattern(self, id):
         if not id in self.card_patterns:

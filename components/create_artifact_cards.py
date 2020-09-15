@@ -1,10 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-import datetime
 import getopt
-import os
-import subprocess
 import sys
 
 from svg_card_gen import SVGCardGen
