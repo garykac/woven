@@ -1,248 +1,135 @@
 # Woven
 
-A tabletop game of tactical mage combat.
+A tabletop game of tactical magecraft.
 
 ## Components
 
 Common:
 
-* 1 map with terrain (field, forest, mountain)
+* 1 map with terrain
 * [33 double-sided Tapestry cards](tapestry-cards-2sided.md)
 * 36 Spell Fragment cards
 
 Per-player/color:
 
 * 1 Mage token
-* 13 Mana counters
+* 11 Mana counters
 
-## Overview
+## Setup
 
-Each player has:
+### General
 
-* a MANA POOL where their mana is stored.
-* a TAPESTRY of cards where they can build patterns to cast spells
-* a collection of SPELLs they can cast
+* Map in center of table
+* Tapestry cards: Shuffle and place next to map
+* Spell cards: Remove all starter spells, shuffle, place next to map
 
-During your turn, mana can be:
+### For each player
 
-* Placed on your TAPESTRY as a THREAD that can be used to cast spells
-* Spent for movement, to acquire cards or other actions.
+* Choose a color
+* Place Mage on map
+* Take 4 starting spells
+* Draw a random Tapestry card and choose a side to start Tapestry
 
-As a spell effect, mana can be:
+### To start game
 
-* Placed on the map as a TENDRIL that can be used by spells to target locations
-* Placed on one of your spells as a CHARGE for that spell
+* Choose starting player
+* Draw 4 spells from deck and create a Market
 
-## Start Game
+## Each turn
 
-General Setup:
+Choose one of the following Actions:
 
-* Place map in middle of table
-* Place stack of Tapestry Cards when everyone can access
+* Play a card to **Cast a Spell**
+* Discard a card for its **Minor Effect**
+* **Re-cast** an Active Spell
+* **Recover**
 
-Each player should perform the following actions:
+At any time during your turn, you may Abandon an Eye or Charge and immediately add
+the token back in your Mana Pool.
 
-* Choose Color
-* Determine Starting Position
-* Draft Spell Cards
-* Initialize Tapestry
+### Cast a Spell
 
-### Choose Color
+To cast a spell:
 
-Choose a color and take the mage and mana tokens of that color
+* Place the spell card in the Active Spell area
+* Add Threads to your Tapestry to complete the spell pattern
+    * To add a thread, take mana from your pool and place it on an empty Tapestry square
+    * You must add at least 1 Thread to cast a spell
 
-### Determine Starting Position
+If you cannot complete with pattern, then you may not cast the spell.
 
-Place your mage token in front of you (but not on map).
+If adding a Thread completes multiple spell patterns, then you must choose only 1.
 
-For a 2-player game: Your starting position can be anywhere
-along the edge closest to you on the map. You will decide
-where when you take your first movement action.
+You may cast this spell as many times as you wish
+as long as you complete a new pattern in your tapestry for each cast.
 
-For 3 or more players: Your starting position is in the Astral Plane, which is not shown on the map. Randomly select a
-Home Card to determine your starting location.
+### Minor Effect
 
-### Draft Spell Cards
+Place the card in your discard pile to use the Minor Effect
 
-* Deal 7 spell cards to each player
-* Choose 1 and pass remaining to your left (clockwise)
-	* Repeat until there are no cards remaining to pass
+There are 5 Minor Effects:
 
-You should keep these spells hidden from other players.
-Reveal a spell (by placing it in front of you) when you cast it for the first time.
+* Draw a new Tapestry card and add it to your Tapestry
+* Create a new Eye by taking Mana from your Pool and placing it on the map at your Mage's location
+* Move an Eye 1 space
+* Move your Mage 2 spaces
+* Recover a Thread from your Tapestry (back into your Mana Pool)
 
-### Initialize Tapestry 
+### Re-cast a Spell
 
-Deal a random Tapestry Card to each player.
+Any spell in the Active Spell area may be recast if you add mana
+to your Tapestry to match the pattern.
 
-This card should be placed in front of you to start your TAPESTRY. You may choose either side to be face up.
-Note that each Tapestry Cards contains one of each element,
-split between the front and back of the card.
+### Recover
 
-## Each Turn
+To Recover, perform the following steps:
 
-Each turn, you may either **Rest** or **Take An Action**.
+* Remove a spell from the Market:
+    * If you have control of enough Stars and want to acquire a spell, then
+        * Mark the Stars on the map with Depletion Tokens so the Stars cannot be used again
+        * Take the spell and add it to your Discard pile
+    * Otherwise, discard the lowest spell in the Market
+* Refresh the Market
+    * Slide spells down
+    * Draw new spell and add to top of market
+* Discard all spells from the Active Spell area that don't have a Charge
+* Draw hand back up to 4 cards
 
-### Rest
 
-When you rest, you recover one THREAD from your TAPESTRY and
-all of your SPENT MANA. All of these are added back into your
-MANA POOL.
 
-### Take an Action
+## Spells
 
-Most of these actions require that you take mana from your
-MANA POOL and move it into your SPENT MANA pool. The only 
-way to recover your spent mana is to Rest.
+### Casting Spells
 
-#### Move Into Plains
+The act of casting a spell is a multi-step process.
 
-![Move Plains](../img/action-move-plains.png)
+First, you must create your Tapestry and ensure that it is arranged so that the spell
+pattern can be created.
 
-You may spend 1 mana to move into an adjacent Plains location.
+Then you must play the spell card and add Threads to the Tapestry to complete the pattern.
 
-#### Move Into Forest
+### Spell Patterns
 
-![Move Forest](../img/action-move-forest.png)
+The pattern shown on the spell card is the canonical form for the pattern, but when casting
+you can create that pattern in any mirrored or rotated state.
 
-You may spend 2 mana to move into an adjacent Forest location.
+### Active Spells
 
-#### Move Into Mountains
+A spell is Active after you've cast it, but before you've cleaned up during Recover.
 
-![Move Mountains](../img/action-move-mountains.png)
-
-You may spend 3 mana to move into an adjacent Mountains location.
-
-#### Move Into Water
-
-![Move Water](../img/action-move-water.png)
-
-You may spend 5 mana to move into an adjacent Water location.
-
-#### River Crossing Penalty
-
-![Cross River](../img/action-cross-river.png)
-
-You may spend 3 additional mana to cross a river into an
-adjacent location. This is in addition to the cost of moving
-into that location, so moving into a Mountains location on the
-other side of a river requires 6 mana total.
-
-#### Place New Thread
-
-![Place Thread](../img/action-place-thread.png)
-
-You may take 1 mana and place it as a THREAD in an empty
-box on your tapestry. If this new THREAD completes a
-spell pattern, then you may cast that spell.
-See [Casting Spells](#casting-spells)
-
-If you do not cast a spell, then you may take another action.
-Typically, you'll want to keep adding THREADs until you
-can complete a spell.
-
-#### Create Tendril
-
-![Create Tendril](../img/action-create-tendril.png)
-
-You may spend 1 mana to create a new TENDRIL in your current
-location. The mana for the TENDRIL must come from your
-MANA POOL.
-
-#### Move Tendril
-
-![Move Tendril](../img/action-move-tendril.png)
-
-You may spend 3 mana to move a TENDRIL into an adjacent location. Unless stated otherwise, TENDRILs can move freely
-into any space and are not affected by terrain or barriers.
-
-#### Acquire Tapestry Card
-
-![Tapestry Card](../img/action-tapestry-card.png)
-
-You may spend 3 mana draw a Tapestry Card and add it to your
-TAPESTRY. The newly added card must overlap at least one symbol or box on an existing card.
-See the [placement rules](tapestry-card-placement.md) for adding new Tapestry Cards.
-
-If, when placing this new Tapestry Card, you cover any
-THREADs, then those are recovered back into your MANA POOL.
-
-#### Recover Mana
-
-![Recover Mana](../img/action-recover-mana.png)
-
-You may recover a CHARGE (from one of your spells) or a
-TENDRIL (from the map) and add the mana back into your MANA POOL. If you do, you may take another action.
-
-## Casting Spells
-
-There are two parts to casting a spell:
-
-* First, build a TAPESTRY that permits you to place THREADs in the pattern required by a spell
-* Then, place THREADs one at a time onto your TAPESTRY to form that pattern
-
-When you place a new THREAD on your TAPESTRY that completes a pattern on one of your spells, you may immediately cast that spell and trigger its effects. If the newly added THREAD completes
-multiple spell patterns, then you must choose one.
-
-THREADs can only be placed in empty boxes on your Tapestry Cards. Unless otherwise stated, they may not be placed on top of the element symbols in your TAPESTRY.
-
-If you are casting a spell that you have hidden in your hand,
-then you must reveal that spell by placing it in front of you.
-
-TODO: Add Example
-
-### Tendrils
-
-When the effect of a spell is to place a new TENDRIL on the map, you must take mana from your MANA POOL and place it on the map.
-
-If you do not have any mana available in your MANA POOL, then you cannot add a new TENDRIL.
-
-You can abandon a TENDRIL and return the mana back into your MANA POOL by taking the Recover Mana action.
+Spells that are Active can be cast again.
 
 ### Charges
 
-When a spell requires a CHARGE, you must take mana from your MANA POOL and place it on the spell card.
-
-If you do not have any mana available in your MANA POOL, then you cannot add a CHARGE to the spell.
-
-Unless otherwise specified, CHARGEs can be spent at any time (even during another player's turn). A common use for CHARGEs is to be able to react to an opponent's action (attacking, pushing, et al.)
-
-You can abandon a CHARGE and return the mana back into your MANA POOL by taking the **Recover Mana** action.
+Some spells accept a Charge when they are cast. This Charge can either maintain an ongoing effect
+or it can be Spent for a one-time spell effect.
 
 ## Mage Combat
 
-### Attack
+While you were taught during your training that it's considered improper to attack other people
+(especially other Mages!), there is no one really enforcing this behavior.
 
-Magical attacks affect all creatures in the target location and do the same amount of damage to every creature.
+### Attack
 
 ### Defense
 
-Magical barrier spells have CHARGEs that indicate when they are active.
-
-In general, these barriers will completely protect you from any attack, but the barrier will be dispelled if the attack is greater than some threshold.
-
-For example, a **Defend 2** barrier will protect against an attack of strength 1 and remain in place. If the attack is 2 or greater, then the barrier still protects against the comlete attack, but the barrier is dispelled (and the CHARGE is removed).
-
-When a barrier is dispelled, the CHARGE token is returned to your SPENT MANA pool.
-
-If you have multiple options to protect yourself from an attack, then you may choose whichever one you prefer. The order in which they were originally created is not relevant.
-
-## Three or more players
-
-Additional rules for 3-5 players.
-
-### Astral Plane
-
-TODO
-
-### Death
-
-When you take a single point of damage, your physical
-form is destroyed and you are sent back to the Astral Plane.
-
-When your physical form is destroyed:
-
-* You are sent to the Astral Plane
-* You lose all TENDRILs and CHARGEs. Place them in your SPENT MANA pool.
-
-So you're not exactly dead. Not really.
