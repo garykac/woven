@@ -18,6 +18,7 @@ scar_attributes = [
 
 class WovenScarCards():
     OUTPUT_DIR = 'scar-cards'
+    CARD_TEMPLATE = 'woven-card-template.svg'
     
     def __init__(self, options):
         self.ops = {}
@@ -89,7 +90,7 @@ class WovenScarCards():
         svg_ids.extend(['icon-star-{0}'.format(n) for n in [1,2,3]])
         svg_ids.append('separator')
         svg_ids.extend(['op-{0}'.format(op) for op in valid_ops])
-        svg.load_ids('spell-cards/spell-template.svg', svg_ids)
+        svg.load_ids(WovenScarCards.CARD_TEMPLATE, svg_ids)
 
         # Add Op masters (hidden, used for cloning).
         g_masters = SVG.group('masters')

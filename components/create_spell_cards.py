@@ -51,6 +51,7 @@ spell_desc_keys = {
 
 class WovenSpellCards():
     OUTPUT_DIR = 'spell-cards'
+    CARD_TEMPLATE = 'woven-card-template.svg'
     
     def __init__(self, options):
         self.name2id = {}
@@ -316,7 +317,7 @@ class WovenSpellCards():
         svg_ids.append('flavor')
         svg_ids.append('separator')
         svg_ids.extend(['op-{0}'.format(op) for op in valid_ops])
-        svg.load_ids('spell-cards/spell-template.svg', svg_ids)
+        svg.load_ids(WovenSpellCards.CARD_TEMPLATE, svg_ids)
 
         # Add Element and Op masters (hidden, used for cloning).
         g_masters = SVG.group('masters')
