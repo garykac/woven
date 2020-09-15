@@ -17,6 +17,8 @@ scar_attributes = [
 ]
 
 class WovenScarCards():
+    OUTPUT_DIR = 'scar-cards'
+    
     def __init__(self, options):
         self.ops = {}
                 
@@ -147,7 +149,7 @@ def parse_options():
     options = {}
     for opt,info in option_defs.items():
         options[opt] = info['default']
-    options['out'] = 'scar-cards'
+    options['out'] = WovenScarCards.OUTPUT_DIR
 
     for opt,arg in opts:
         # Build list of short and fullname for this option

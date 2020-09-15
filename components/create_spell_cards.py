@@ -50,6 +50,8 @@ spell_desc_keys = {
 
 
 class WovenSpellCards():
+    OUTPUT_DIR = 'spell-cards'
+    
     def __init__(self, options):
         self.name2id = {}
         self.pattern_elements = {}
@@ -612,7 +614,7 @@ def parse_options():
     options = {}
     for opt,info in option_defs.items():
         options[opt] = info['default']
-    options['out'] = 'spell-cards'
+    options['out'] = WovenSpellCards.OUTPUT_DIR
 
     for opt,arg in opts:
         # Build list of short and fullname for this option

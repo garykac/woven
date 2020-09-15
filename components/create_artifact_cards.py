@@ -17,6 +17,8 @@ artifact_attributes = [
 ]
 
 class WovenArtifactCards():
+    OUTPUT_DIR = 'artifact-cards'
+    
     def __init__(self, options):
         self.ops = {}
                 
@@ -161,7 +163,7 @@ def parse_options():
     options = {}
     for opt,info in option_defs.items():
         options[opt] = info['default']
-    options['out'] = 'artifact-cards'
+    options['out'] = WovenArtifactCards.OUTPUT_DIR
 
     for opt,arg in opts:
         # Build list of short and fullname for this option
