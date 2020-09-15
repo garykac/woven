@@ -12,76 +12,16 @@ from svg_card_gen import SVGCardGen
 from svg import SVG, Style, Node
 
 from data_artifact_cards import artifact_card_data
+from data_ops import valid_ops
 
-# Spell attributes
-spell_attributes = [
-    'element', 'pattern', 'op', 'vp', 'id', 'category', 'flavor'
+# Artifact attributes
+artifact_attributes = [
+    'op', 'vp',
 ]
-
-# Spell description keys
-spell_desc_keys = {
-    'cast': {
-    },
-    'react': {
-        'prefix': "Reaction",
-    },
-    'active': {
-        'prefix': "While active",
-    },
-    'charged': {
-        'prefix': "While charged",
-    },
-    'sacrifice': {
-        'prefix': "Sacrifice charge",
-    },
-    'notes': {
-    },
-}
-
-# Valid Minor Actions
-valid_ops = [
-    'tapestry',       # Draw tapestry card
-    'tapestry-eye',   # Draw tapestry card OR Create eye
-    'tapestry-emove', # Draw tapestry card OR Move eye
-    'tapestry-mmove', # Draw tapestry card OR Move mage
-    'tapestry-thread',# Draw tapestry card OR Recover thread
-    'tapestry-tmove', # Draw tapestry card OR Move thread
-    'eye',            # Create eye
-    'eye-emove',      # Create eye OR Move eye
-    'eye-mmove',      # Create eye OR Move mage
-    'eye-thread',     # Create eye OR Recover thread
-    'eye-tmove',      # Create eye OR Move thread
-    'emove',          # Move eye
-    'emove-mmove',    # Move eye OR Move mage
-    'emove-thread',   # Move eye OR Recover thread
-    'emove-tmove',    # Move eye OR Move thread
-    'mmove',          # Move mage
-    'mmove-thread',   # Move mage OR Recover thread
-    'mmove-tmove',    # Move mage OR Move thread
-    'thread',         # Recover thread
-    'thread-tmove',   # Recover thread OR Move thread
-    'tmove',          # Move thread
-    'tmove-action',   # Move thread AND take another action
-    'action',         # Take another action
-    'action-action',  # Take another 2 actions
-]
-
 
 class WovenArtifactCards():
     def __init__(self, options):
-        self.name2id = {}
-        self.pattern_elements = {}
-        self.elements = {}
-        self.categories = {}
         self.ops = {}
-        self.id2name = {}
-        self.id2pattern = {}
-        self.id2attrs = {}
-        self.id2desc = {}
-        self.pattern2id = {}
-        self.max_id = 0
-        self.blank_count = 0
-        self.starters = []
                 
         self.valid_ops = valid_ops
 
@@ -102,107 +42,12 @@ class WovenArtifactCards():
     def validate_attrs(self, name, attrs):
         # Ensure all attributes are valid.
         for attr in attrs.keys():
-            if not attr in spell_attributes:
+            if not attr in artifact_attributes:
                 raise Exception("{0:s}: Unknown attribute: {1:s}".format(name, attr))
             
-        if name in self.name2id:
-            raise Exception("{0:s}: Spell name already used by spell ID {1}"
-                            .format(name, str(self.name2id[name])))
-
-        if not 'element' in attrs:
-            raise Exception("{0:s}: Missing 'element' attribute".format(name))
-        if not attrs['element'] in self.valid_elements:
-            raise Exception("{0:s}: Invalid element: {1}"
-                            .format(name, attrs['element']))
-        
-        if not 'category' in attrs:
-            raise Exception("{0:s}: Missing 'category' attribute".format(name))
-        for cat in attrs['category'].split(','):
-            if not cat in self.valid_categories:
-                raise Exception("{0:s}: Invalid category: {1}".format(name, cat))
-
-        if not 'id' in attrs:
-            raise Exception("{0:s}: Missing 'id' attribute".format(name))
-        if attrs['id'] in self.id2name:
-            raise Exception("{0} ID {1} already used by {2}"
-                            .format(name, str(attrs['id']), self.id2name[attrs['id']]))
-        
-        if not 'pattern' in attrs:
-            raise Exception("{0:s}: Missing 'pattern' attribute".format(name))
-        if not attrs['pattern'] in self.card_patterns:
-            raise Exception("{0:s}: Invalid pattern: {1}".format(name, attrs['pattern']))
-
         if not attrs['op'] in self.valid_ops:
             raise Exception("{0:s}: Invalid op: {1}".format(name, attrs['op']))
 
-    def validate_desc(self, name, desc):
-        # Ensure all keys are valid.
-        for key in desc.keys():
-            if not key in spell_desc_keys:
-                raise Exception("{0:s}: Unknown key: {1:s}".format(name, key))
-
-        # Ensure charged spells have a charge effect.
-        if desc['cast'] == '{{ADD_CHARGE}}':
-            if not 'charged' in desc and not 'sacrifice' in desc:
-                raise Exception("{0:s}: Charged spell with no effect".format(name))            
-
-    def expand_desc(self, raw_desc):
-        desc = []
-        for key in spell_desc_keys:
-            if not key in raw_desc:
-                continue
-            d = raw_desc[key]
-            d = d.replace('{{ADD_CHARGE}}', 'Place a Charge on this spell.')
-            d = d.replace('{{ADD_ACTION}}', 'Take another action.')
-            if len(desc) != 0:
-                desc.append('-')
-                
-            if 'prefix' in spell_desc_keys[key]:
-                prefix = spell_desc_keys[key]['prefix']
-                desc.append("{0}: {1}".format(prefix, d))
-            else:
-                desc.append(d)
-        return desc
-
-    def record_spell_info(self, name, pattern, attrs, desc):
-        id = attrs['id']
-        self.name2id[name] = id
-        self.id2name[id] = name
-        if id > self.max_id:
-            self.max_id = id
-
-        self.id2pattern[id] = pattern
-        self.id2attrs[id] = attrs
-        self.id2desc[id] = desc
-        
-        pattern_id = attrs['pattern']
-        if pattern_id == 'blank':
-            self.blank_count += 1
-        else:
-            pattern_key = '{0:s}:{1:s}'.format(pattern_id, attrs['element'])
-            if pattern_key in self.pattern2id:
-                dup_id = self.pattern2id[pattern_key]
-                raise Exception("{0:s}: Pattern {1:s} already assigned to {2:d} ({3:s})"
-                      .format(name, pattern_key, dup_id, self.id2name[dup_id]))
-            self.pattern2id[pattern_key] = id
-
-        element = attrs['element']
-        if not element in self.elements:
-            self.elements[element] = []
-        self.elements[element].append(id)
-
-        for cat in attrs['category'].split(','):
-            if not cat in self.categories:
-                self.categories[cat] = []
-            self.categories[cat].append(id)
-            if cat == 'starter':
-                self.starters.append(id)
-
-        op = attrs['op']
-        if not op in self.ops:
-            self.ops[op] = []
-        self.ops[op].append(id)
-        
     #
     # CARD GENERATION
     #
@@ -237,7 +82,9 @@ class WovenArtifactCards():
         id = metadata['id']
         name = card[0]
         attrs = card[1]
-        print(name, attrs)
+
+        # Validate attributes
+        self.validate_attrs(name, attrs)
 
         # Build list of template ids and then load from svg file.
         svg_ids = []
