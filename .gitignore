@@ -11,10 +11,10 @@ archive/maps/v1-hex/map-hex-22x19.png
 archive/maps/v2-voronoi-r1/*.png
 
 # Component output files
-components/artifact-cards/pdf/
 components/artifact-cards/png/
 components/artifact-cards/svg/
-components/spell-cards/pdf/
+components/scar-cards/png/
+components/scar-cards/svg/
 components/spell-cards/png/
 components/spell-cards/svg/
 components/tapestry-cards/png_out/
