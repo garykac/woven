@@ -382,7 +382,7 @@ class WovenSpellCards():
             # Draw flavor text (if present).
             if 'flavor' in attrs:
                 flavor_text = svg.add_loaded_element(svg_group, 'flavor')
-                SVG.set_text(flavor_text, [attrs['flavor']])
+                SVG.set_text(flavor_text, attrs['flavor'])
             
             svg.add_loaded_element(svg_group, 'separator')
 
@@ -523,7 +523,7 @@ class WovenSpellCards():
 
         # Draw artifact title.
         title = svg.add_loaded_element(svg_group, 'artifact-title')
-        SVG.set_text(title, [name])
+        SVG.set_text(title, name)
         
         svg.add_loaded_element(svg_group, 'separator')
 

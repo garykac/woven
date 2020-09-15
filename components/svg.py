@@ -151,12 +151,18 @@ class SVG(object):
             tag = m.group(2)
         return [namespace, tag]
 
+    # |elem| The <text> or <flowRoot> element to update.
+    # |text| A string or a list of strings with the text to add.
     @staticmethod
     def set_text(elem, text):
         (ns, tag) = SVG.split_tag(elem.tag)
         if tag == 'text':
+            if isinstance(text, list):
+                text = text[0]
             SVG.__set_single_text(elem, text)
         elif tag == 'flowRoot':
+            if not isinstance(text, list):
+                text = [text]
             SVG.__set_flow_text(elem, text)
         else:
             raise Exception("Unable to set_text for {0} node".format(tag))
@@ -164,7 +170,8 @@ class SVG(object):
     # Set the text within an SVG text span:
     #   <text>
     #     <tspan>
-    # |elem| must be a <text> node.
+    # |elem| The <text> node to update.
+    # |text| A string 
     @staticmethod
     def __set_single_text(elem, text):
         for child in elem.iter():
@@ -175,8 +182,8 @@ class SVG(object):
     #   <flowRoot>
     #     <flowRegion>
     #     <flowPara>*
-    # Given a |text| array, each string in the array is given a separate paragraph.
-    # |elem| must be a <flowRoot> node.
+    # |elem| The <flowRoot> node to update.
+    # |text| A list of strings (one per paragraph)
     @staticmethod
     def __set_flow_text(elem, text):
         # Find <flowPara> to use as a template.
