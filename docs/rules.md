@@ -146,3 +146,7 @@ real world that you discover the kind of Mage that you really are.
 
 ### Defense
 
+### Curses
+
+While there is no in-game support for curses, you should feel free to hurl curses at other players
+when they perform actions you dislike.
