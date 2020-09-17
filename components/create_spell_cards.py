@@ -308,13 +308,13 @@ class WovenSpellCards():
         # Build list of template ids and then load from svg file.
         svg_ids = []
         svg_ids.extend(['element-{0}'.format(elem_map[e]) for e in elem_map])
-        svg_ids.append('title')
+        svg_ids.append('spell-title')
         svg_ids.append('spell-pattern-border')
-        svg_ids.append('description')
+        svg_ids.append('spell-description')
         svg_ids.append('spell-id')
         svg_ids.extend(['icon-star-{0}'.format(n) for n in [1,2,3]])
         svg_ids.append('icon-vp')
-        svg_ids.append('flavor')
+        svg_ids.append('spell-flavor')
         svg_ids.append('separator')
         svg_ids.extend(['op-{0}'.format(op) for op in valid_ops])
         svg.load_ids(WovenSpellCards.CARD_TEMPLATE, svg_ids)
@@ -332,7 +332,7 @@ class WovenSpellCards():
 
         if attrs['category'] != 'blank':
             # Draw spell title.
-            title = svg.add_loaded_element(svg_group, 'title')
+            title = svg.add_loaded_element(svg_group, 'spell-title')
             SVG.set_text(title, name)
             
             # Draw elements in title bar
@@ -346,7 +346,7 @@ class WovenSpellCards():
             
             # Draw flavor text (if present).
             if 'flavor' in attrs:
-                flavor_text = svg.add_loaded_element(svg_group, 'flavor')
+                flavor_text = svg.add_loaded_element(svg_group, 'spell-flavor')
                 SVG.set_text(flavor_text, attrs['flavor'])
             
             svg.add_loaded_element(svg_group, 'separator')
@@ -364,7 +364,7 @@ class WovenSpellCards():
         self.draw_vp(attrs['vp'], svg, svg_group)
 
     def draw_description(self, id, raw_desc, svg, svg_group):
-        text = svg.add_loaded_element(svg_group, 'description')
+        text = svg.add_loaded_element(svg_group, 'spell-description')
         SVG.set_text(text, self.expand_desc(raw_desc))
 
     def draw_vp(self, vp, svg, svg_group):

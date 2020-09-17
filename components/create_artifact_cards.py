@@ -13,7 +13,7 @@ from data_ops import valid_ops
 
 # Artifact attributes
 artifact_attributes = [
-    'op', 'vp',
+    'op', 'vp', 'description', 'bonus', 'flavor'
 ]
 
 class WovenArtifactCards():
@@ -90,6 +90,10 @@ class WovenArtifactCards():
         svg_ids = []
         svg_ids.append('artifact-title')
         svg_ids.extend(['icon-star-{0}'.format(n) for n in [1,2,3]])
+        svg_ids.append('artifact-description')
+        svg_ids.append('artifact-bonus')
+        svg_ids.append('artifact-bonus-border')
+        svg_ids.append('artifact-flavor')
         svg_ids.append('separator')
         svg_ids.extend(['op-{0}'.format(op) for op in valid_ops])
         svg.load_ids(WovenArtifactCards.CARD_TEMPLATE, svg_ids)
@@ -107,6 +111,10 @@ class WovenArtifactCards():
         # Draw artifact title.
         title = svg.add_loaded_element(svg_group, 'artifact-title')
         SVG.set_text(title, name)
+
+        self.draw_description(attrs, 'description', svg, svg_group)
+        self.draw_bonus(attrs, 'bonus', svg, svg_group)
+        self.draw_flavor(attrs, 'flavor', svg, svg_group)
         
         svg.add_loaded_element(svg_group, 'separator')
 
@@ -115,9 +123,33 @@ class WovenArtifactCards():
 
         self.draw_vp(attrs['vp'], svg, svg_group)
 
-    def draw_description(self, id, raw_desc, svg, svg_group):
-        text = svg.add_loaded_element(svg_group, 'description')
-        SVG.set_text(text, self.expand_desc(raw_desc))
+    def draw_description(self, attrs, attr_name, svg, svg_group):
+        if not attr_name in attrs:
+            return
+        text = attrs[attr_name]
+        if text == '':
+            return
+        desc = svg.add_loaded_element(svg_group, 'artifact-description')
+        SVG.set_text(desc, text)
+
+    def draw_bonus(self, attrs, attr_name, svg, svg_group):
+        if not attr_name in attrs:
+            return
+        text = attrs[attr_name]
+        if text == '':
+            return
+        svg.add_loaded_element(svg_group, 'artifact-bonus-border')
+        bonus = svg.add_loaded_element(svg_group, 'artifact-bonus')
+        SVG.set_text(bonus, text)
+
+    def draw_flavor(self, attrs, attr_name, svg, svg_group):
+        if not attr_name in attrs:
+            return
+        text = attrs[attr_name]
+        if text == '':
+            return
+        flavor = svg.add_loaded_element(svg_group, 'artifact-flavor')
+        SVG.set_text(flavor, text)
 
     def draw_vp(self, vp, svg, svg_group):
         if vp != 0:
