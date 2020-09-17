@@ -67,13 +67,14 @@ as long as you complete a new pattern in your tapestry for each cast.
 
 Place the card in your discard pile to use the Minor Effect
 
-There are 5 Minor Effects:
+There are 4 Minor Effects:
 
 * Draw a new Tapestry card and add it to your Tapestry
 * Create a new Eye by taking Mana from your Pool and placing it on the map at your Mage's location
-* Move an Eye 1 space
 * Move your Mage 2 spaces
 * Recover a Thread from your Tapestry (back into your Mana Pool)
+
+You may play multiple copies of the same Minor Effect on your turn to combine the effect.
 
 ### Re-cast a Spell
 
@@ -124,10 +125,22 @@ Spells that are Active can be cast again.
 Some spells accept a Charge when they are cast. This Charge can either maintain an ongoing effect
 or it can be Spent for a one-time spell effect.
 
+
 ## Mage Combat
 
-While you were taught during your training that it's considered improper to attack other people
-(especially other Mages!), there is no one really enforcing this behavior.
+When you attack a location, you attack everything in that location, and that includes any Mages
+that happen to be there.
+
+While you were at the Acadamie, they of course taught you that it was wildly inappropriate
+for one Mage to attack another. But they also taught a history of Great Mages throughout Time,
+many of whom carried with them a healthy disregard for the safety and well-being of others.
+Attacking another creature (Mage or otherwise) while at the Acadamie would lead to swift punishment.
+
+But you're not at the *Acadamie* anymore.
+
+In the real world, there are no rules other than the ones you bring within you. And it is in this
+real world that you discover the kind of Mage that you really are.
+
 
 ### Attack
 
