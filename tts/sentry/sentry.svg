@@ -1,0 +1,530 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="3750"
+   height="3150"
+   viewBox="0 0 992.1875 833.4375"
+   version="1.1"
+   id="svg1346"
+   inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)"
+   sodipodi:docname="sentry.svg"
+   inkscape:export-filename="/home/garykac/projects/github/woven/tts/sentry/sentry.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96">
+  <defs
+     id="defs1340" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.35"
+     inkscape:cx="2528.8131"
+     inkscape:cy="1495.5262"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer2"
+     showgrid="false"
+     units="px"
+     inkscape:snap-page="true"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:window-width="3112"
+     inkscape:window-height="1322"
+     inkscape:window-x="32"
+     inkscape:window-y="424"
+     inkscape:window-maximized="0" />
+  <metadata
+     id="metadata1343">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(9.1552734e-5,1092.0626)"
+     style="display:none">
+    <image
+       sodipodi:absref="/home/garykac/projects/github/woven/tts/sentry/.././../components/tapestry-cards/png_out/t08-knightr35-fewa-front.png"
+       xlink:href=".././../components/tapestry-cards/png_out/t08-knightr35-fewa-front.png"
+       style="display:inline"
+       y="-817.42499"
+       x="-3.0517578e-05"
+       id="image1439"
+       preserveAspectRatio="none"
+       height="278.60626"
+       width="179.3875" />
+    <image
+       sodipodi:absref="/home/garykac/projects/github/woven/tts/sentry/.././../components/tapestry-cards/png_out/t07-knightr35-ewaf-front.png"
+       xlink:href=".././../components/tapestry-cards/png_out/t07-knightr35-ewaf-front.png"
+       style="display:inline"
+       y="-1096.0312"
+       x="1076.325"
+       id="image1428"
+       preserveAspectRatio="none"
+       height="278.60626"
+       width="179.3875" />
+    <image
+       sodipodi:absref="/home/garykac/projects/github/woven/tts/sentry/.././../components/tapestry-cards/png_out/t06-knightr35-wafe-front.png"
+       xlink:href=".././../components/tapestry-cards/png_out/t06-knightr35-wafe-front.png"
+       style="display:inline"
+       y="-1096.0312"
+       x="896.9375"
+       id="image1417"
+       preserveAspectRatio="none"
+       height="278.60626"
+       width="179.3875" />
+    <image
+       sodipodi:absref="/home/garykac/projects/github/woven/tts/sentry/.././../components/tapestry-cards/png_out/t05-knightr35-afew-front.png"
+       xlink:href=".././../components/tapestry-cards/png_out/t05-knightr35-afew-front.png"
+       style="display:inline"
+       y="-1096.0312"
+       x="717.54999"
+       id="image1406"
+       preserveAspectRatio="none"
+       height="278.60626"
+       width="179.3875" />
+    <image
+       sodipodi:absref="/home/garykac/projects/github/woven/tts/sentry/.././../components/tapestry-cards/png_out/t04-knightl35-fewa-front.png"
+       xlink:href=".././../components/tapestry-cards/png_out/t04-knightl35-fewa-front.png"
+       style="display:inline"
+       y="-1096.0312"
+       x="538.16248"
+       id="image1395"
+       preserveAspectRatio="none"
+       height="278.60626"
+       width="179.3875" />
+    <image
+       sodipodi:absref="/home/garykac/projects/github/woven/tts/sentry/.././../components/tapestry-cards/png_out/t03-knightl35-ewaf-front.png"
+       xlink:href=".././../components/tapestry-cards/png_out/t03-knightl35-ewaf-front.png"
+       style="display:inline"
+       y="-1096.0312"
+       x="358.77496"
+       id="image1384"
+       preserveAspectRatio="none"
+       height="278.60626"
+       width="179.3875" />
+    <image
+       sodipodi:absref="/home/garykac/projects/github/woven/tts/sentry/.././../components/tapestry-cards/png_out/t02-knightl35-wafe-front.png"
+       xlink:href=".././../components/tapestry-cards/png_out/t02-knightl35-wafe-front.png"
+       style="display:inline"
+       y="-1096.0312"
+       x="179.38747"
+       id="image1373"
+       preserveAspectRatio="none"
+       height="278.60626"
+       width="179.3875" />
+    <image
+       sodipodi:absref="/home/garykac/projects/github/woven/tts/sentry/.././../components/tapestry-cards/png_out/t01-knightl35-afew-front.png"
+       xlink:href=".././../components/tapestry-cards/png_out/t01-knightl35-afew-front.png"
+       style="display:inline"
+       y="-1096.0312"
+       x="-3.0517578e-05"
+       id="image1362"
+       preserveAspectRatio="none"
+       height="278.60626"
+       width="179.3875" />
+    <image
+       sodipodi:absref="/home/garykac/projects/github/woven/tts/sentry/../tapestry/blank.png"
+       xlink:href="../tapestry/blank.png"
+       y="18.393768"
+       x="1076.325"
+       id="image1512"
+       preserveAspectRatio="none"
+       height="278.60626"
+       width="179.3875" />
+    <image
+       sodipodi:absref="/home/garykac/projects/github/woven/tts/sentry/.././../components/tapestry-cards/png_out/t09-v35-afew-front.png"
+       xlink:href=".././../components/tapestry-cards/png_out/t09-v35-afew-front.png"
+       y="-817.42499"
+       x="179.38747"
+       id="image1977"
+       preserveAspectRatio="none"
+       height="278.60626"
+       width="179.3875" />
+    <image
+       sodipodi:absref="/home/garykac/projects/github/woven/tts/sentry/.././../components/tapestry-cards/png_out/t10-v35-wafe-front.png"
+       xlink:href=".././../components/tapestry-cards/png_out/t10-v35-wafe-front.png"
+       y="-817.42499"
+       x="358.77496"
+       id="image1988"
+       preserveAspectRatio="none"
+       height="278.60626"
+       width="179.3875" />
+    <image
+       sodipodi:absref="/home/garykac/projects/github/woven/tts/sentry/.././../components/tapestry-cards/png_out/t11-v35-ewaf-front.png"
+       xlink:href=".././../components/tapestry-cards/png_out/t11-v35-ewaf-front.png"
+       y="-817.42499"
+       x="538.16248"
+       id="image1999"
+       preserveAspectRatio="none"
+       height="278.60626"
+       width="179.3875" />
+    <image
+       sodipodi:absref="/home/garykac/projects/github/woven/tts/sentry/.././../components/tapestry-cards/png_out/t12-v35-fewa-front.png"
+       xlink:href=".././../components/tapestry-cards/png_out/t12-v35-fewa-front.png"
+       y="-817.42499"
+       x="717.54993"
+       id="image2010"
+       preserveAspectRatio="none"
+       height="278.60626"
+       width="179.3875" />
+    <image
+       sodipodi:absref="/home/garykac/projects/github/woven/tts/sentry/.././../components/tapestry-cards/png_out/t13-sz4-afwe-front.png"
+       xlink:href=".././../components/tapestry-cards/png_out/t13-sz4-afwe-front.png"
+       y="-817.42499"
+       x="896.93744"
+       id="image2021"
+       preserveAspectRatio="none"
+       height="278.60626"
+       width="179.3875" />
+    <image
+       sodipodi:absref="/home/garykac/projects/github/woven/tts/sentry/.././../components/tapestry-cards/png_out/t14-sz4-aefw-front.png"
+       xlink:href=".././../components/tapestry-cards/png_out/t14-sz4-aefw-front.png"
+       y="-817.42499"
+       x="1076.325"
+       id="image2032"
+       preserveAspectRatio="none"
+       height="278.60626"
+       width="179.3875" />
+    <image
+       sodipodi:absref="/home/garykac/projects/github/woven/tts/sentry/.././../components/tapestry-cards/png_out/t15-sz4-wafe-front.png"
+       xlink:href=".././../components/tapestry-cards/png_out/t15-sz4-wafe-front.png"
+       y="-538.81873"
+       x="-9.1552734e-05"
+       id="image2043"
+       preserveAspectRatio="none"
+       height="278.60626"
+       width="179.3875" />
+    <image
+       sodipodi:absref="/home/garykac/projects/github/woven/tts/sentry/.././../components/tapestry-cards/png_out/t16-sz4-feaw-front.png"
+       xlink:href=".././../components/tapestry-cards/png_out/t16-sz4-feaw-front.png"
+       y="-538.81873"
+       x="179.38741"
+       id="image2054"
+       preserveAspectRatio="none"
+       height="278.60626"
+       width="179.3875" />
+    <image
+       sodipodi:absref="/home/garykac/projects/github/woven/tts/sentry/.././../components/tapestry-cards/png_out/t17-sz4-fwea-front.png"
+       xlink:href=".././../components/tapestry-cards/png_out/t17-sz4-fwea-front.png"
+       y="-538.81873"
+       x="358.7749"
+       id="image2065"
+       preserveAspectRatio="none"
+       height="278.60626"
+       width="179.3875" />
+    <image
+       sodipodi:absref="/home/garykac/projects/github/woven/tts/sentry/.././../components/tapestry-cards/png_out/t18-sz4-ewaf-front.png"
+       xlink:href=".././../components/tapestry-cards/png_out/t18-sz4-ewaf-front.png"
+       y="-538.81873"
+       x="538.16241"
+       id="image2076"
+       preserveAspectRatio="none"
+       height="278.60626"
+       width="179.3875" />
+    <image
+       sodipodi:absref="/home/garykac/projects/github/woven/tts/sentry/.././../components/tapestry-cards/png_out/t19-l4-afwe-front.png"
+       xlink:href=".././../components/tapestry-cards/png_out/t19-l4-afwe-front.png"
+       y="-538.81873"
+       x="717.54993"
+       id="image2087"
+       preserveAspectRatio="none"
+       height="278.60626"
+       width="179.3875" />
+    <image
+       sodipodi:absref="/home/garykac/projects/github/woven/tts/sentry/.././../components/tapestry-cards/png_out/t20-l4-aefw-front.png"
+       xlink:href=".././../components/tapestry-cards/png_out/t20-l4-aefw-front.png"
+       y="-538.81873"
+       x="896.93744"
+       id="image2098"
+       preserveAspectRatio="none"
+       height="278.60626"
+       width="179.3875" />
+    <image
+       sodipodi:absref="/home/garykac/projects/github/woven/tts/sentry/.././../components/tapestry-cards/png_out/t21-l4-wafe-front.png"
+       xlink:href=".././../components/tapestry-cards/png_out/t21-l4-wafe-front.png"
+       y="-538.81873"
+       x="1076.325"
+       id="image2109"
+       preserveAspectRatio="none"
+       height="278.60626"
+       width="179.3875" />
+    <image
+       sodipodi:absref="/home/garykac/projects/github/woven/tts/sentry/.././../components/tapestry-cards/png_out/t22-l4-feaw-front.png"
+       xlink:href=".././../components/tapestry-cards/png_out/t22-l4-feaw-front.png"
+       y="-260.21249"
+       x="-9.1552734e-05"
+       id="image2120"
+       preserveAspectRatio="none"
+       height="278.60626"
+       width="179.3875" />
+    <image
+       sodipodi:absref="/home/garykac/projects/github/woven/tts/sentry/.././../components/tapestry-cards/png_out/t23-l4-fwea-front.png"
+       xlink:href=".././../components/tapestry-cards/png_out/t23-l4-fwea-front.png"
+       y="-260.21249"
+       x="179.38741"
+       id="image2131"
+       preserveAspectRatio="none"
+       height="278.60626"
+       width="179.3875" />
+    <image
+       sodipodi:absref="/home/garykac/projects/github/woven/tts/sentry/.././../components/tapestry-cards/png_out/t24-l4-ewaf-front.png"
+       xlink:href=".././../components/tapestry-cards/png_out/t24-l4-ewaf-front.png"
+       y="-260.21249"
+       x="358.7749"
+       id="image2142"
+       preserveAspectRatio="none"
+       height="278.60626"
+       width="179.3875" />
+    <image
+       sodipodi:absref="/home/garykac/projects/github/woven/tts/sentry/.././../components/tapestry-cards/png_out/t25-ldot4-afwe-front.png"
+       xlink:href=".././../components/tapestry-cards/png_out/t25-ldot4-afwe-front.png"
+       y="-260.21249"
+       x="538.16241"
+       id="image2153"
+       preserveAspectRatio="none"
+       height="278.60626"
+       width="179.3875" />
+    <image
+       sodipodi:absref="/home/garykac/projects/github/woven/tts/sentry/.././../components/tapestry-cards/png_out/t26-ldot4-aefw-front.png"
+       xlink:href=".././../components/tapestry-cards/png_out/t26-ldot4-aefw-front.png"
+       y="-260.21249"
+       x="717.54993"
+       id="image2164"
+       preserveAspectRatio="none"
+       height="278.60626"
+       width="179.3875" />
+    <image
+       sodipodi:absref="/home/garykac/projects/github/woven/tts/sentry/.././../components/tapestry-cards/png_out/t27-ldot4-wafe-front.png"
+       xlink:href=".././../components/tapestry-cards/png_out/t27-ldot4-wafe-front.png"
+       y="-260.21249"
+       x="896.93744"
+       id="image2175"
+       preserveAspectRatio="none"
+       height="278.60626"
+       width="179.3875" />
+    <image
+       sodipodi:absref="/home/garykac/projects/github/woven/tts/sentry/.././../components/tapestry-cards/png_out/t28-ldot4-feaw-front.png"
+       xlink:href=".././../components/tapestry-cards/png_out/t28-ldot4-feaw-front.png"
+       y="-260.21249"
+       x="1076.325"
+       id="image2186"
+       preserveAspectRatio="none"
+       height="278.60626"
+       width="179.3875" />
+    <image
+       sodipodi:absref="/home/garykac/projects/github/woven/tts/sentry/.././../components/tapestry-cards/png_out/t29-ldot4-fwea-front.png"
+       xlink:href=".././../components/tapestry-cards/png_out/t29-ldot4-fwea-front.png"
+       y="18.393768"
+       x="-9.1552734e-05"
+       id="image2197"
+       preserveAspectRatio="none"
+       height="278.60626"
+       width="179.3875" />
+    <image
+       sodipodi:absref="/home/garykac/projects/github/woven/tts/sentry/.././../components/tapestry-cards/png_out/t30-ldot4-ewaf-front.png"
+       xlink:href=".././../components/tapestry-cards/png_out/t30-ldot4-ewaf-front.png"
+       y="18.393768"
+       x="179.38741"
+       id="image2208"
+       preserveAspectRatio="none"
+       height="278.60626"
+       width="179.3875" />
+    <image
+       sodipodi:absref="/home/garykac/projects/github/woven/tts/sentry/.././../components/tapestry-cards/png_out/t31-t4-awfe-front.png"
+       xlink:href=".././../components/tapestry-cards/png_out/t31-t4-awfe-front.png"
+       y="18.393768"
+       x="358.7749"
+       id="image2219"
+       preserveAspectRatio="none"
+       height="278.60626"
+       width="179.3875" />
+    <image
+       sodipodi:absref="/home/garykac/projects/github/woven/tts/sentry/.././../components/tapestry-cards/png_out/t32-t4-efwa-front.png"
+       xlink:href=".././../components/tapestry-cards/png_out/t32-t4-efwa-front.png"
+       y="18.393768"
+       x="538.16241"
+       id="image2230"
+       preserveAspectRatio="none"
+       height="278.60626"
+       width="179.3875" />
+    <image
+       sodipodi:absref="/home/garykac/projects/github/woven/tts/sentry/.././../components/tapestry-cards/png_out/t33-t4-weaf-front.png"
+       xlink:href=".././../components/tapestry-cards/png_out/t33-t4-weaf-front.png"
+       y="18.393768"
+       x="717.54993"
+       id="image2241"
+       preserveAspectRatio="none"
+       height="278.60626"
+       width="179.3875" />
+    <image
+       sodipodi:absref="/home/garykac/projects/github/woven/tts/sentry/../tapestry/blank.png"
+       xlink:href="../tapestry/blank.png"
+       width="179.3875"
+       height="278.60626"
+       preserveAspectRatio="none"
+       id="image1512-3"
+       x="896.93744"
+       y="18.393768"
+       style="display:inline" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="Layer 2"
+     style="display:inline"
+     transform="translate(0,-3.96875)">
+    <image
+       sodipodi:absref="/home/garykac/projects/github/woven/components/sentry-cards/png/out00.png"
+       y="3.96875"
+       x="0"
+       id="image960"
+       xlink:href="file:///home/garykac/projects/github/woven/components/sentry-cards/png/out00.png"
+       preserveAspectRatio="none"
+       height="277.8125"
+       width="198.4375" />
+    <image
+       sodipodi:absref="/home/garykac/projects/github/woven/components/sentry-cards/png/out01.png"
+       y="3.96875"
+       x="198.4375"
+       id="image971"
+       xlink:href="file:///home/garykac/projects/github/woven/components/sentry-cards/png/out01.png"
+       preserveAspectRatio="none"
+       height="277.8125"
+       width="198.4375" />
+    <image
+       sodipodi:absref="/home/garykac/projects/github/woven/components/sentry-cards/png/out02.png"
+       y="3.96875"
+       x="396.875"
+       id="image982"
+       xlink:href="file:///home/garykac/projects/github/woven/components/sentry-cards/png/out02.png"
+       preserveAspectRatio="none"
+       height="277.8125"
+       width="198.4375" />
+    <image
+       sodipodi:absref="/home/garykac/projects/github/woven/components/sentry-cards/png/out03.png"
+       y="3.96875"
+       x="595.3125"
+       id="image993"
+       xlink:href="file:///home/garykac/projects/github/woven/components/sentry-cards/png/out03.png"
+       preserveAspectRatio="none"
+       height="277.8125"
+       width="198.4375" />
+    <image
+       sodipodi:absref="/home/garykac/projects/github/woven/components/sentry-cards/png/out04.png"
+       y="3.96875"
+       x="793.75"
+       id="image1004"
+       xlink:href="file:///home/garykac/projects/github/woven/components/sentry-cards/png/out04.png"
+       preserveAspectRatio="none"
+       height="277.8125"
+       width="198.4375" />
+    <image
+       sodipodi:absref="/home/garykac/projects/github/woven/components/sentry-cards/png/out05.png"
+       y="281.78125"
+       x="0"
+       id="image1015"
+       xlink:href="file:///home/garykac/projects/github/woven/components/sentry-cards/png/out05.png"
+       preserveAspectRatio="none"
+       height="277.8125"
+       width="198.4375" />
+    <image
+       sodipodi:absref="/home/garykac/projects/github/woven/components/sentry-cards/png/out06.png"
+       y="281.78125"
+       x="198.4375"
+       id="image1026"
+       xlink:href="file:///home/garykac/projects/github/woven/components/sentry-cards/png/out06.png"
+       preserveAspectRatio="none"
+       height="277.8125"
+       width="198.4375" />
+    <image
+       sodipodi:absref="/home/garykac/projects/github/woven/components/sentry-cards/png/out07.png"
+       y="281.78125"
+       x="396.875"
+       id="image1037"
+       xlink:href="file:///home/garykac/projects/github/woven/components/sentry-cards/png/out07.png"
+       preserveAspectRatio="none"
+       height="277.8125"
+       width="198.4375" />
+    <image
+       sodipodi:absref="/home/garykac/projects/github/woven/components/sentry-cards/png/out08.png"
+       y="281.78125"
+       x="595.3125"
+       id="image1048"
+       xlink:href="file:///home/garykac/projects/github/woven/components/sentry-cards/png/out08.png"
+       preserveAspectRatio="none"
+       height="277.8125"
+       width="198.4375" />
+    <image
+       sodipodi:absref="/home/garykac/projects/github/woven/components/sentry-cards/png/out09.png"
+       y="281.78125"
+       x="793.75"
+       id="image1059"
+       xlink:href="file:///home/garykac/projects/github/woven/components/sentry-cards/png/out09.png"
+       preserveAspectRatio="none"
+       height="277.8125"
+       width="198.4375" />
+    <image
+       sodipodi:absref="/home/garykac/projects/github/woven/components/sentry-cards/png/out10.png"
+       y="559.59375"
+       x="-2.2737368e-13"
+       id="image1070"
+       xlink:href="file:///home/garykac/projects/github/woven/components/sentry-cards/png/out10.png"
+       preserveAspectRatio="none"
+       height="277.8125"
+       width="198.4375" />
+    <image
+       sodipodi:absref="/home/garykac/projects/github/woven/components/sentry-cards/png/out11.png"
+       y="559.59375"
+       x="198.4375"
+       id="image1081"
+       xlink:href="file:///home/garykac/projects/github/woven/components/sentry-cards/png/out11.png"
+       preserveAspectRatio="none"
+       height="277.8125"
+       width="198.4375" />
+    <image
+       sodipodi:absref="/home/garykac/projects/github/woven/tts/sentry/sentry-hidden.png"
+       xlink:href="sentry-hidden.png"
+       width="198.4375"
+       height="277.8125"
+       preserveAspectRatio="none"
+       id="image1218"
+       x="793.75"
+       y="559.59375" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer19"
+     inkscape:label="Box"
+     transform="translate(9.1552734e-5,330.72915)"
+     style="display:none">
+    <rect
+       style="fill:#dcdcdc;fill-opacity:1;stroke-width:0.26458332"
+       id="rect2258"
+       width="1195.3875"
+       height="1114.4252"
+       x="-3.0517578e-05"
+       y="-56.091759" />
+  </g>
+</svg>
