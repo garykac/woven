@@ -17,9 +17,9 @@
    id="svg963"
    inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)"
    sodipodi:docname="woven-card-template.svg"
-   inkscape:export-filename="/home/garykac/projects/github/woven/components/spell-cards/action-ref.png"
-   inkscape:export-xdpi="39.977699"
-   inkscape:export-ydpi="39.977699">
+   inkscape:export-filename="/home/garykac/projects/github/woven/components/treasure-cards/treasure-unknown.png"
+   inkscape:export-xdpi="300"
+   inkscape:export-ydpi="300">
   <defs
      id="defs957">
     <marker
@@ -144,16 +144,16 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.979899"
-     inkscape:cx="-27.515918"
-     inkscape:cy="231.02311"
+     inkscape:cx="21.772803"
+     inkscape:cy="190.61701"
      inkscape:document-units="mm"
-     inkscape:current-layer="layer5"
+     inkscape:current-layer="g1436"
      showgrid="false"
-     inkscape:snap-global="false"
+     inkscape:snap-global="true"
      inkscape:window-width="2041"
      inkscape:window-height="1142"
-     inkscape:window-x="975"
-     inkscape:window-y="478"
+     inkscape:window-x="685"
+     inkscape:window-y="492"
      inkscape:window-maximized="0"
      inkscape:snap-page="true" />
   <metadata
@@ -172,7 +172,18 @@
      inkscape:groupmode="layer"
      id="layer2"
      inkscape:label="Cut Line"
-     style="display:inline" />
+     style="display:inline"
+     sodipodi:insensitive="true">
+    <rect
+       id="rect1011"
+       x="0"
+       y="0"
+       width="63.5"
+       height="88.900002"
+       rx="3"
+       ry="3"
+       style="fill:#ffffff;stroke:none;stroke-width:0.2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+  </g>
   <g
      inkscape:label="Spell Layout"
      inkscape:groupmode="layer"
@@ -926,10 +937,128 @@
     </g>
   </g>
   <g
+     style="display:inline"
+     inkscape:label="Treasure Layout"
+     id="g1312"
+     inkscape:groupmode="layer">
+    <g
+       style="display:inline"
+       inkscape:label="Unknown Treasure"
+       id="g1436"
+       inkscape:groupmode="layer">
+      <flowRoot
+         xml:space="preserve"
+         id="flowRoot1426"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:18px;line-height:1.25;font-family:Lato;-inkscape-font-specification:Lato;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;display:inline;fill:#000000;fill-opacity:1;stroke:none"
+         transform="matrix(0.26458333,0,0,0.26458333,-0.20615133,-10.634229)"><flowRegion
+           id="flowRegion1422"><rect
+             id="rect1420"
+             width="174.25131"
+             height="48.739853"
+             x="34.092648"
+             y="51.894604" /></flowRegion><flowPara
+           id="flowPara1424"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:18px;font-family:CCTreasureTrove;-inkscape-font-specification:CCTreasureTrove">??? Treasure</flowPara></flowRoot>      <flowRoot
+         transform="scale(0.26458333)"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:Lato;-inkscape-font-specification:Lato;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none"
+         id="flowRoot1434"
+         xml:space="preserve"><flowRegion
+           id="flowRegion1430"><rect
+             y="30.933939"
+             x="-105.56094"
+             height="126.26907"
+             width="153.03812"
+             id="rect1428" /></flowRegion><flowPara
+           id="flowPara1432"></flowPara></flowRoot>    </g>
+    <g
+       inkscape:groupmode="layer"
+       id="layer21"
+       inkscape:label="No Treasure"
+       style="display:none">
+      <flowRoot
+         transform="matrix(0.26458333,0,0,0.26458333,-0.20615133,-10.634229)"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:18px;line-height:1.25;font-family:Lato;-inkscape-font-specification:Lato;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;display:inline;fill:#000000;fill-opacity:1;stroke:none"
+         id="flowRoot1282"
+         xml:space="preserve"><flowRegion
+           id="flowRegion1278"><rect
+             y="51.894604"
+             x="34.092648"
+             height="48.739853"
+             width="174.25131"
+             id="rect1276" /></flowRegion><flowPara
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:18px;font-family:CCTreasureTrove;-inkscape-font-specification:CCTreasureTrove"
+           id="flowPara1280">No Treasure</flowPara></flowRoot>      <flowRoot
+         xml:space="preserve"
+         id="flowRoot1387"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:Lato;-inkscape-font-specification:Lato;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none"
+         transform="scale(0.26458333)"><flowRegion
+           id="flowRegion1389"><rect
+             id="rect1391"
+             width="153.03812"
+             height="126.26907"
+             x="-105.56094"
+             y="30.933939" /></flowRegion><flowPara
+           id="flowPara1393"></flowPara></flowRoot>    </g>
+    <g
+       inkscape:label="Little Treasure"
+       id="g1385"
+       inkscape:groupmode="layer"
+       style="display:none">
+      <flowRoot
+         xml:space="preserve"
+         id="flowRoot1383"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:18px;line-height:1.25;font-family:Lato;-inkscape-font-specification:Lato;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;display:inline;fill:#000000;fill-opacity:1;stroke:none"
+         transform="matrix(0.26458333,0,0,0.26458333,-0.20615133,-10.634229)"><flowRegion
+           id="flowRegion1379"><rect
+             id="rect1377"
+             width="174.25131"
+             height="48.739853"
+             x="34.092648"
+             y="51.894604" /></flowRegion><flowPara
+           id="flowPara1381"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:18px;font-family:CCTreasureTrove;-inkscape-font-specification:CCTreasureTrove">Small Treasure</flowPara></flowRoot>      <path
+         inkscape:connector-curvature="0"
+         id="path1408"
+         d="m 5.4649462,14.111423 -0.743117,1.32116 -1.486234,0.298556 1.026873,1.115105 -0.17532,1.505874 1.377798,-0.632122 1.377796,0.632122 -0.175316,-1.505874 1.026863,-1.115105 -1.486232,-0.298556 z"
+         style="display:inline;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.40801734;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+         sodipodi:nodetypes="ccccccccccc" />
+    </g>
+    <g
+       inkscape:label="Big Treasure"
+       id="g1375"
+       inkscape:groupmode="layer"
+       style="display:none">
+      <flowRoot
+         xml:space="preserve"
+         id="flowRoot1373"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:18px;line-height:1.25;font-family:Lato;-inkscape-font-specification:Lato;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;display:inline;fill:#000000;fill-opacity:1;stroke:none"
+         transform="matrix(0.26458333,0,0,0.26458333,-0.20615133,-10.634229)"><flowRegion
+           id="flowRegion1369"><rect
+             id="rect1367"
+             width="174.25131"
+             height="48.739853"
+             x="34.092648"
+             y="51.894604" /></flowRegion><flowPara
+           id="flowPara1371"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:18px;font-family:CCTreasureTrove;-inkscape-font-specification:CCTreasureTrove">Big Treasure</flowPara></flowRoot>      <path
+         sodipodi:nodetypes="ccccccccccc"
+         style="display:inline;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.40801734;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+         d="m 5.4649462,14.111423 -0.743117,1.32116 -1.486234,0.298556 1.026873,1.115105 -0.17532,1.505874 1.377798,-0.632122 1.377796,0.632122 -0.175316,-1.505874 1.026863,-1.115105 -1.486232,-0.298556 z"
+         id="path1395"
+         inkscape:connector-curvature="0" />
+      <path
+         inkscape:connector-curvature="0"
+         id="path1397"
+         d="m 5.4649468,19.40309 -0.7431167,1.321159 -1.486235,0.298556 1.026873,1.115105 -0.175319,1.505874 1.3777977,-0.632122 1.3777955,0.632122 -0.175317,-1.505874 1.026864,-1.115105 -1.486232,-0.298556 z"
+         style="display:inline;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.40801734;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+         sodipodi:nodetypes="ccccccccccc" />
+    </g>
+  </g>
+  <g
      inkscape:groupmode="layer"
      id="layer18"
      inkscape:label="VP"
-     style="display:inline">
+     style="display:none">
     <path
        inkscape:connector-curvature="0"
        id="icon-star-1"
@@ -1254,7 +1383,7 @@
      inkscape:groupmode="layer"
      id="layer4"
      inkscape:label="Op Master"
-     style="display:inline">
+     style="display:none">
     <g
        inkscape:groupmode="layer"
        id="g1455"
