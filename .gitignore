@@ -13,12 +13,14 @@ archive/maps/v2-voronoi-r1/*.png
 # Component output files
 components/artifact-cards/png/
 components/artifact-cards/svg/
-components/scar-cards/png/
-components/scar-cards/svg/
+components/sentry-cards/png/
+components/sentry-cards/svg/
 components/spell-cards/png/
 components/spell-cards/svg/
 components/tapestry-cards/png_out/
 components/tapestry-cards/svg_out/
+components/watcher-cards/png/
+components/watcher-cards/svg/
 
 # Maps (large files)
 components/spell-cards/card-back-18.png
