@@ -81,46 +81,92 @@
 
 # Spell pattern for Elements
 
-# Air/Earth
+# Air
 # ---------
-# Base: E1-1
-# Doubled: E2-1, E2-2
+# Base: *E1-1 - [ Haste ]
+# Doubled: *E2-1, E2-2 - [ Blur, - ]
 # Extended: E2-5, E2-6, E2-7
-# Long extended: E2-14, E2-15, E2-16
+# Long extended: *E2-14, *E2-15, E2-16 - [ *, *, - ]
 # Weak long extended:  E2-17, E2-18, E2-19, E2-20
 # Neutral extended: E2-8, E2-9, E2-10, E2-11
 
-# Long base: E1-3
-# Base boosted: E2-5, E2-6, E2-7
+# Long base: *E1-3 - [ Dodge ]
+# Base boosted: E2-5, E2-6, *E2-7 - [ -, -, Airwalk ]
 # Doubled: E2-51, E2-52
-# Extended: E2-59, E2-60, E2-61
+# Extended: *E2-59, E2-60, E2-61 - [ Forest Blink, Dense Passage, - ]
 # Weak extended: E2-62, E2-63, E2-64, E2-65
-# Neutral extended: E2-53, E2-54, E2-55, E2-56
+# Neutral extended: *E2-53, E2-54, E2-55, E2-56 - [ Disperse ]
 
-# Long long base: E1-6
-# Base boosted: E2-14, E2-15, E2-16
-# Extension boosted: E2-59, E2-60, E2-61
+# Long long base: *E1-6 - [ Gust ]
+# Base boosted: *E2-14, *E2-15, E2-16 - [ Eyedrop, Seek, - ]
+# Extension boosted: *E2-59, *E2-60, E2-61 - [ *, *, - ]
 # Doubled: E2-121, E2-122
 # Weak extended: E2-123, E2-124, E2-125, E2-126
 # Neutral extended: E2-82, E2-83, E2-84, E2-85
 
-# Fire/Water
+# Earth
+# ---------
+# Base: *E1-1 - [ Endurance ]
+# Doubled: E2-1, *E2-2 - [ -, Plainswalker ]
+# Extended: E2-5, E2-6, E2-7
+# Long extended: E2-14, E2-15, E2-16 - [ -, -, * ]
+# Weak long extended:  E2-17, E2-18, E2-19, E2-20
+# Neutral extended: *E2-8, E2-9, E2-10, *E2-11 - [ Sacrificium, -, -, Switch ]
+
+# Long base: *E1-3 - [ Shield ]
+# Base boosted: *E2-5, E2-6, E2-7 - [ Deflect, -, - ]
+# Doubled: E2-51, E2-52
+# Extended: E2-59, *E2-60, E2-61 - [ -, Ground, - ]
+# Weak extended: E2-62, E2-63, E2-64, E2-65
+# Neutral extended: E2-53, E2-54, E2-55, E2-56
+
+# Long long base: *E1-6 - [ Anchor ]
+# Base boosted: E2-14, *E2-15, *E2-16 - [ -, Remote Anchor, Woodland Target (sub E2-10) ]
+# Extension boosted: E2-59, *E2-60, E2-61 - [ -, *, - ]
+# Doubled: E2-121, E2-122
+# Weak extended: E2-123, E2-124, E2-125, E2-126
+# Neutral extended: E2-82, E2-83, E2-84, E2-85
+
+# Fire
 # ----------
-# Base: E1-2
-# Doubled: E2-27, E2-28
-# Extended: E2-35, E2-36, E2-37
+# Base: *E1-2 - [ Fire Shards ]
+# Doubled: *E2-27, *E2-28 - [ Ignis, Boost ]
+# Extended: E2-35, E2-36, E2-37 - [ *. *. - ]
 # Long extended: E2-48, E2-49, E2-50
 # Weak long extended: E2-44, E2-45, E2-46, E2-47
-# Neutral extended: E2-31, E2-32, E2-33, E2-34
+# Neutral extended: *E2-31, *E2-32, E2-33, E2-34 - [ Lavastone, Redirect, -, - ]
 
-# Long base: E1-5
-# Base boosted: E2-35, E2-36, E2-37
+# Long base: *E1-5 - [ Dispel ]
+# Base boosted: *E2-35, *E2-36, E2-37 - [ Repel, Scorch, - ]
 # Doubled: E2-106, E2-107
 # Extended: E2-118, E2-119, E2-120
 # Weak extended: E2-114, E2-115, E2-116, E2-117
 # Neutral extended: E2-78, E2-79, E2-80, E2-81
 
-# Long long base: E1-9
+# Long long base: *E1-9 - [ Bolt (sub E1-8) ]
+# Base boosted: *E2-48, E2-49, E2-50 - [ Reflect (sub E2-44), -, - ]
+# Extension boosted: E2-118, E2-119, E2-120
+# Doubled: E2-163, E2-164
+# Weak extended: E2-159, E2-160, E2-161, E2-162
+# Neutral extended: E2-102, E1-103, E2-104, E2-105
+
+# Water
+# ----------
+# Base: *E1-2 - [ Extend ]
+# Doubled: E2-27, *E2-28 -  [ -, Duplicate ]
+# Extended: *E2-35, *E2-36, E2-37 - [ *, Traceback, - ] 
+# Long extended: E2-48, E2-49, E2-50
+# Weak long extended: E2-44, E2-45, E2-46, E2-47
+# Neutral extended: *E2-31, E2-32, E2-33, *E2-34 - [ Spread, -, -, Waterwalk ]
+
+# Long base: E1-5 - [ Water Target ]
+# Base boosted: *E2-35, *E2-36, E2-37 - [ Expand, *, - ]
+# Doubled: E2-106, E2-107
+# Extended: E2-118, E2-119, E2-120
+# Weak extended: E2-114, E2-115, E2-116, E2-117
+# Neutral extended: *E2-78, *E2-79, E2-80, E2-81 - [ Control, Control Burst, -, -]
+
+# Long long base: E1-9 - [ Geyser (sub E1-8) ]
 # Base boosted: E2-48, E2-49, E2-50
 # Extension boosted: E2-118, E2-119, E2-120
 # Doubled: E2-163, E2-164
@@ -1259,7 +1305,10 @@ spell_card_patterns = {
     # | . . . X |  Transform 8
     # +---------+
     'E2-44':    {'elements': 'fw',
-                 'pattern': [],
+                 'pattern': [   "@ . . .",
+                                ". X . .",
+                                ". . . X",
+                            ],
                 },
 
     # +---------+  Level 3
@@ -1493,7 +1542,8 @@ spell_card_patterns = {
     # +---------+  Cards 2
     #              Transform 4: 8/5
     'E2-59':    {'elements': 'ae',
-                 'pattern': [],
+                 'pattern': [   "@ . X X",
+                            ],
                 },
 
     # +---------+  Level 3
@@ -1513,7 +1563,8 @@ spell_card_patterns = {
     # +-------------+  Cards 3
     #                  Transform 4: 8/5
     'E2-61':    {'elements': 'ae',
-                 'pattern': [],
+                 'pattern': [   "X . @ . . X",
+                            ],
                 },
 
     #                                                                 #
@@ -1761,7 +1812,10 @@ spell_card_patterns = {
     # | . . X |  Transform
     # +-------+
     'E2-78':    {'elements': 'fw',
-                 'pattern': [],
+                 'pattern': [   "@ . .",
+                                ". . X",
+                                ". . X",
+                            ],
                 },
 
     # +---------+  Level 
