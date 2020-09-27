@@ -144,10 +144,10 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.979899"
-     inkscape:cx="77.03487"
+     inkscape:cx="-27.515918"
      inkscape:cy="231.02311"
      inkscape:document-units="mm"
-     inkscape:current-layer="layer20"
+     inkscape:current-layer="layer5"
      showgrid="false"
      inkscape:snap-global="false"
      inkscape:window-width="2041"
@@ -701,7 +701,7 @@
      inkscape:groupmode="layer"
      id="layer20"
      inkscape:label="Sentry Layout"
-     style="display:inline">
+     style="display:none">
     <g
        id="sentry-image">
       <path
@@ -1254,12 +1254,12 @@
      inkscape:groupmode="layer"
      id="layer4"
      inkscape:label="Op Master"
-     style="display:none">
+     style="display:inline">
     <g
        inkscape:groupmode="layer"
        id="g1455"
        inkscape:label="Op Action + Action"
-       style="display:inline">
+       style="display:none">
       <g
          id="op-action-action">
         <use
@@ -1549,10 +1549,10 @@
        inkscape:groupmode="layer"
        id="layer5"
        inkscape:label="Op MMove / Thread"
-       style="display:none">
+       style="display:inline">
       <g
          style="display:inline"
-         id="op-move-thread">
+         id="op-mmove-thread">
         <path
            sodipodi:nodetypes="cc"
            inkscape:connector-curvature="0"

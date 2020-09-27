@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+import datetime
 import getopt
 import sys
 
@@ -328,8 +329,7 @@ class WovenSpellCards():
         g_masters.set_style("display:none")
         SVG.add_node(svg_group, g_masters)
         for e in [
-                'op-tapestry', 'op-eye', 'op-emove', 'op-mmove', 'op-thread',
-                'op-tmove', 'op-action',
+                'op-tapestry', 'op-eye', 'op-mmove', 'op-thread', 'op-action',
                 'element-air', 'element-earth', 'element-fire', 'element-water',
                 ]:
             svg.add_loaded_element(g_masters, e)
@@ -460,7 +460,8 @@ class WovenSpellCards():
 
                         SVG.add_node(svg_group, dot)
                     else:
-                        raise Exception("Unrecognized pattern symbol: {0}".format(cell))
+                        raise Exception("Unrecognized pattern symbol: {0}"
+                                        .format(cell))
 
     #
     # Summary
@@ -537,8 +538,19 @@ class WovenSpellCards():
             summary.write('\n')
 
         print('Ops')
-        for k,v in self.ops.items():
-            print(' {0:s} ({1:d})'.format(k, len(v)))
+        for op in ['tapestry', 'eye', 'mmove', 'thread']:
+            exact_count = 0
+            extra_count = 0
+            for k,v in self.ops.items():
+                if k == op:
+                    exact_count += len(v)
+                elif k.find(op) != -1:
+                    extra_count += len(v)
+            print(' {0:s} ({1:d}) + {2:d} = {3:d}'
+                  .format(op, exact_count, extra_count, exact_count + extra_count))
+        for k,v in sorted(self.ops.items()):
+            if k.find('-') != -1:
+                print(' {0:s} ({1:d})'.format(k, len(v)))
         
         summary.write('## By Pattern\n\n')
         print('Patterns')
