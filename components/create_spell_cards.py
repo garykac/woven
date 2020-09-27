@@ -346,7 +346,8 @@ class WovenSpellCards():
 
             # Draw spell id.
             id_text = svg.add_loaded_element(svg_group, 'spell-id')
-            SVG.set_text(id_text, "#{0:d}".format(attrs['id']))
+            SVG.set_text(id_text,
+                         "{0:d}/{1:d}".format(spell_card_revision, attrs['id']))
             
             # Draw flavor text (if present).
             if 'flavor' in attrs:
