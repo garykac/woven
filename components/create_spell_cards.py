@@ -54,6 +54,7 @@ class WovenSpellCards():
     CARD_TEMPLATE = 'woven-card-template.svg'
     
     def __init__(self, options):
+        self.next_id = 0
         self.name2id = {}
         self.pattern_elements = {}
         self.elements = {}
@@ -249,9 +250,12 @@ class WovenSpellCards():
     # Returns an iterator that produces an object for each card.
     # callback from SVGCardGen
     def card_data(self):
-        #for card in spell_card_data:
-        #    yield card
-        return spell_card_data
+        for card in spell_card_data:
+            # Auto-assign ids
+            attrs = card[1]
+            self.next_id += 1
+            attrs['id'] = self.next_id
+            yield card
 
     # Params:
     #   |metadata| - card and file index
