@@ -35,12 +35,12 @@ In addition, each location can have the following terrain markers:
 
 Some points of magical interest are marked:
 
-* Ruin locations (stars with a circle). Ruins are also wellsprings
+* Ruin locations (stars with a small circle inside). Ruins are also wellsprings
 * Wellsprings (star)
 
 In the center of the map there are special symbols:
 
-* Citadel (big star)
+* Citadel (big star with outline)
 * Sentry location (x)
 * Watcher Targets (bullseye target circles)
 
