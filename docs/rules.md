@@ -17,7 +17,7 @@ Per-player/color:
 
 ### Things on the Map
 
-<a href="../maps/citadel.png"><img src="../maps/citadel.png" height="200px"></a>
+<a href="../maps/citadel.png"><img src="../maps/citadel.png" height="300px"></a>
 
 There are 3 elevations on the map:
 
@@ -30,6 +30,7 @@ In addition, each location can have the following terrain markers:
 * Forest (single tree)
 * Dense Forest (multiple trees)
 * Rough terrain (mountain bumps)
+* Rivers between locations
 
 Some points of magical interest are marked:
 
