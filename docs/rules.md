@@ -7,13 +7,14 @@ A tabletop game of tactical magecraft.
 Common:
 
 * 1 map with terrain
-* [33 double-sided Tapestry cards](tapestry-cards-2sided.md)
+* 33 double-sided Tapestry cards
 * 36 Spell Fragment cards
 
 Per-player/color:
 
 * 1 Mage token
 * 11 Mana counters
+* 4 Starter spells
 
 ### Things on the Map
 
