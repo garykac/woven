@@ -4,7 +4,7 @@ A tabletop game of tactical magecraft.
 
 ## Object of Game
 
-You are Mages competing for renown and glory for destroying the ancient Citadel where
+You are a Mage competing for renown and glory for destroying the ancient Citadel where
 evil creatures have taken up residence.
 
 Destroy the Citadel in the center of the map. Or, failing that, gather as many treasures as possible.
@@ -12,15 +12,31 @@ Destroy the Citadel in the center of the map. Or, failing that, gather as many t
 ## Contents
 
 * [Components](#components)
+    * [Map](#map) - [Spell Cards](#spell-cards) - [Tapestry Cards](#tapestry-cards)
 * [How to Play](#how-to-play)
+    * [Setup](#setup)
+    * [Each Turn](#each-turn)
+        * [Cast a Spell](#cast-a-spell)
+        * [Mundane Effect](#mundane-effect)
+        * [Re-cast Active Spell](#re-cast-active-spell)
+        * [Recover](#recover)
+* [Magic](#magic)
+    * [Mana](#mana)
+    * [Spells](#spells)
+* [Mundane Effects](#mundane-effects)
 
 ## Components
 
-Common:
+Core:
 
 * 1 set of Map Tiles
 * 33 double-sided Tapestry Cards
 * 36 Spell Cards
+
+* 12 Artifact Cards
+* 12 Watcher Cards
+* 12 Sentry Cards
+* 24 Treasure Cards
 
 Per-player/color:
 
@@ -84,7 +100,7 @@ At the bottom of each card is an alternate Mundane Effect that can be taken if y
 
 ### Tapestry Cards
 
-To cast a spell, you need to build a Tapestry using the double-sided Tapestry Cards.
+Tapestry cards are used to build the patterns required to cast spells.
 
 <img src="../img/placement1a.png" height="200">
 
@@ -101,6 +117,7 @@ To cast a spell, you need to build a Tapestry using the double-sided Tapestry Ca
 ### For each player
 
 * Choose a color
+* Take 4 Mana tokens of your color and place them on your player mat
 * Place Mage on map - on edge of one of the 2 tiles closest to you
 * Take 4 starting spells
 * Draw a random Tapestry card and choose a side to start your Tapestry
@@ -141,7 +158,7 @@ If adding a Thread completes multiple spell patterns, then you must choose only 
 After casting the spell once, you may cast this spell as many times as you wish
 as long as you complete a new pattern in your tapestry for each cast.
 
-### Mundane Effect
+### Mundane Effects
 
 Place the card from your hand into your discard pile to use the Mundane Effect.
 You may play multiple copies of the same Minor Effect on your turn to combine the effect.
@@ -220,42 +237,9 @@ Pull a Thread to reclaim it from your Tapestry back into your Mana Pool.
 
 This can also be used to un-anchor a Thread that is Anchored. (Although perhaps that should be "Picking a Thread")
 
-
-# Special Locations
-
-There are locations on the map that have special events that are triggered if you end your turn there.
-
-## Ruin
-
-If you end your turn on a Ruin, you automatically Explore the Ruin and gain an Artifact and a Treasure.
-
-The Artifact card is placed at the bottom of your Discard pile (so no one else can see it).
-
-The Treasure card is placed face down in your Treasure Pile.
-
-After being explored, the Ruin collapses (remove the token from the map) and becomes a normal Wellspring location.
-
-If you were targeted by a Watcher before entering the Ruin, it sees the Ruin collapse, assumes you are dead,
-and goes back to its normal pattern target.
-
-## Citadel
-
-The Citadel cannot be explored and can only be attacked by magic spells. If you enter the Citadel location,
-it acts like any normal location.
-
-If you are being Targeted by a Watcher, then you cannot hide in the Citadel.
-
-## Sentry
-
-If you end your turn in a location with a Sentry, then they attack you. Good luck with that.
-
-## Watcher
-
-Watchers will only see you if you move, so if it flies over your location you're fine as long as you don't move.
-
 # Magic
 
-## Forms of Mana
+## Mana
 
 Mana is how you perform your magic. Mana starts out in your Mana Pool, but it can be used in 3 forms.
 
