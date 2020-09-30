@@ -2,26 +2,31 @@
 
 A tabletop game of tactical magecraft.
 
+## Object of Game
+
+You are Mages competing for renown and glory for destroying the ancient Citadel where
+evil creatures have taken up residence.
+
+Destroy the Citadel in the center of the map. Or, failing that, gather as many treasures as possible.
+
+## Contents
+
+* [Components](#components)
+* [How to Play](#how-to-play)
+
 ## Components
 
 Common:
 
-* 1 map with terrain
-* 33 double-sided Tapestry cards
-* 36 Spell Fragment cards
+* 1 set of Map Tiles
+* 33 double-sided Tapestry Cards
+* 36 Spell Cards
 
 Per-player/color:
 
 * 1 Mage token
 * 11 Mana counters
 * 4 Starter spells
-
-## Object of Game
-
-You are Mages competing for the right to claim the glory for destroying the ancient Citadel where
-evil creatures have taken up residence.
-
-Destroy the Citadel in the center of the map. Or, failing that, gather as many treasures as possible.
 
 ### The Map
 
@@ -89,7 +94,7 @@ To cast a spell, you need to build a Tapestry using the double-sided Tapestry Ca
 
 ### General
 
-* Map in center of table
+* Arrange the Map Tiles in center of table as shown
 * Tapestry cards: Shuffle and place next to map
 * Spell cards: Shuffle, place next to map
 
@@ -148,30 +153,6 @@ There are 4 Mundane Effects:
 * Move
 * Pull a Thread
 
-##### Draw Tapestry card
-
-Draw a new Tapestry card and add it to your Tapestry.
-
-When adding Tapestry cards, they must be placed so that they overlap at least one space in the existing Tapestry.
-
-See <a href="tapestry-card-placement.md">additional info on Tapestry card placement</a>.
-
-##### Create New Eye
-
-Create a new Eye by taking Mana from your Pool and placing it on the map at your Mage's location.
-
-If there are any Anchored Eyes in this location, then they are un-Anchored (turning them into normal Eyes).
-
-##### Move 2 spaces
-
-Move your Mage 2 MP
-
-##### Pull Thread
-
-Pull a Thread to reclaim it from your Tapestry back into your Mana Pool.
-
-This can also be used to un-anchor a Thread that is Anchored. (Although perhaps that should be "Picking a Thread")
-
 ### Re-cast an Active Spell
 
 Any spell in the Active Spell area may be recast if you add mana
@@ -202,6 +183,43 @@ For each wellspring where you have an Eye:
 * Draw hand back up to 4 cards
 
 Note that you do not discard any remaining cards in your hand
+
+## Mundane Effect
+
+Place the card from your hand into your discard pile to use the Mundane Effect.
+You may play multiple copies of the same Minor Effect on your turn to combine the effect.
+
+There are 4 Mundane Effects:
+
+* Draw Tapestry Card
+* Create New Eye
+* Move
+* Pull a Thread
+
+### Draw Tapestry card
+
+Draw a new Tapestry card and add it to your Tapestry.
+
+When adding Tapestry cards, they must be placed so that they overlap at least one space in the existing Tapestry.
+
+See <a href="tapestry-card-placement.md">additional info on Tapestry card placement</a>.
+
+### Create New Eye
+
+Create a new Eye by taking Mana from your Pool and placing it on the map at your Mage's location.
+
+If there are any Anchored Eyes in this location, then they are un-Anchored (turning them into normal Eyes).
+
+### Move 2 spaces
+
+Move your Mage 2 MP
+
+### Pull Thread
+
+Pull a Thread to reclaim it from your Tapestry back into your Mana Pool.
+
+This can also be used to un-anchor a Thread that is Anchored. (Although perhaps that should be "Picking a Thread")
+
 
 # Special Locations
 
