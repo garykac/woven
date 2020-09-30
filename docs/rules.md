@@ -46,6 +46,10 @@ Per-player/color:
 
 ### The Map
 
+The map is comprised of geomorphic tiles that can be arranged in many different ways.
+
+For the basic game, arrange the tiles as follows:
+
 <a href="../maps/citadel.png"><img src="../maps/citadel.png" height="300"></a>
 
 There are 3 elevations on the map:
@@ -63,28 +67,14 @@ In addition, each location can have the following terrain markers:
 
 Some points of magical interest are marked:
 
-* Ruin locations (stars with a small circle inside). Ruins are also wellsprings
 * Wellsprings (star)
+* Ruin locations (stars with a small circle inside). Note that Ruins are also wellsprings
 
 In the center of the map there are special symbols:
 
 * Citadel (big star with outline)
-* Sentry location (x)
+* Sentry location (cross)
 * Watcher Targets (bullseye target circles)
-
-#### Movement
-
-Move actions and spells will grant a number of Movement Points (MP).
-
-Moving from one location to an adjacent location costs 1 MP, with the following additional costs and restrictions:
-
-* +1 MP - Changing elevation (high to low, or low to high)
-* +1 MP - Moving into a Dense Forest (Note: no additional cost for regular Forest)
-* +1 MP - Moving into Rough Terrain
-
-You may not cross a river unless there is a bridge connecting.
-
-Unused MPs are lost at the end of your turn.
 
 ### Spell Cards
 
@@ -96,7 +86,7 @@ The top part of each Spell Card contains:
 * Spell Pattern
 * Spell Description
 
-At the bottom of each card is an alternate Mundane Effect that can be taken if you don't wish to (or cannot) cast the spell.
+At the bottom of each card is an alternate [Mundane Effect](#mundane-effects) that can be taken if you don't wish to (or cannot) cast the spell.
 
 ### Tapestry Cards
 
@@ -106,7 +96,7 @@ Tapestry cards are used to build the patterns required to cast spells.
 
 # How to Play
 
-## Game Setup
+## Setup
 
 ### General
 
@@ -158,17 +148,17 @@ If adding a Thread completes multiple spell patterns, then you must choose only 
 After casting the spell once, you may cast this spell as many times as you wish
 as long as you complete a new pattern in your tapestry for each cast.
 
-### Mundane Effects
+### Mundane Effect
 
 Place the card from your hand into your discard pile to use the Mundane Effect.
 You may play multiple copies of the same Minor Effect on your turn to combine the effect.
 
 There are 4 Mundane Effects:
 
-* Draw Tapestry Card
-* Create New Eye
-* Move
-* Pull a Thread
+* [Draw a Tapestry Card](#draw=tapestry-card)
+* [Create a new Eye](#create-eye)
+* [Move on map](#move)
+* [Pull Thread from Tapestry](#pull-thread)
 
 ### Re-cast an Active Spell
 
@@ -185,11 +175,11 @@ For each wellspring where you have an Eye:
 
 * You may spend 1 to add an extra Mana (if available) to your pool
 * Any remaining may be used to acquire spells:
-    * Draw N cards (where N equals remaining wellsprings)
+    * Draw N cards (where N equals the number of wellsprings)
     * Choose 1
     * Optionally: Choose a spell from your hand to add to your Treasure
     * Return remaining spells to bottom of spell deck (for TTS add to deck and re-shuffle)
-* If you did not acquire a spell, then Trash to top spell card
+* If you did not acquire a spell, then Trash to top spell card by moving it to the Spell discard pile.
 
 ##### Reset Active Spells
 
@@ -201,19 +191,11 @@ For each wellspring where you have an Eye:
 
 Note that you do not discard any remaining cards in your hand
 
-## Mundane Effect
+## Mundane Effects
 
-Place the card from your hand into your discard pile to use the Mundane Effect.
-You may play multiple copies of the same Minor Effect on your turn to combine the effect.
+<img src="../img/readme/action-tapestry.png">
 
-There are 4 Mundane Effects:
-
-* Draw Tapestry Card
-* Create New Eye
-* Move
-* Pull a Thread
-
-### Draw Tapestry card
+### Draw Tapestry Card
 
 Draw a new Tapestry card and add it to your Tapestry.
 
@@ -221,15 +203,21 @@ When adding Tapestry cards, they must be placed so that they overlap at least on
 
 See <a href="tapestry-card-placement.md">additional info on Tapestry card placement</a>.
 
-### Create New Eye
+<img src="../img/readme/action-eye.png">
+
+### Create Eye
 
 Create a new Eye by taking Mana from your Pool and placing it on the map at your Mage's location.
 
 If there are any Anchored Eyes in this location, then they are un-Anchored (turning them into normal Eyes).
 
-### Move 2 spaces
+<img src="../img/readme/action-move.png">
+
+### Move
 
 Move your Mage 2 MP
+
+<img src="../img/readme/action-thread.png">
 
 ### Pull Thread
 
@@ -275,7 +263,12 @@ The act of casting a spell is a multi-step process.
 First, you must create your Tapestry and ensure that it is arranged so that the spell
 pattern can be created.
 
+<a href="../img/readme/tapestry.png"><img src="../img/readme/tapestry.png" height="300"/></a>
+
 Then you must play the spell card and add Threads to the Tapestry to complete the pattern.
+
+<a href="../img/readme/spell1.png"><img src="../img/readme/spell1.png" height="200" /></a>
+<a href="../img/readme/tapestry-mana1.png"><img src="../img/readme/tapestry-mana1.png" height="300"/></a>
 
 ### Spell Patterns
 
@@ -295,7 +288,20 @@ or it can be Spent for a one-time spell effect.
 
 # Interacting with the World
 
-When you explore 
+## Movement
+
+Move actions and some spells will grant a number of Movement Points (MP).
+
+Moving from one location to an adjacent location costs 1 MP, with the following additional costs and restrictions:
+
+* +1 MP - Changing elevation (high to low, or low to high)
+* +1 MP - Moving into a Dense Forest (Note: no additional cost for regular Forest)
+* +1 MP - Moving into Rough Terrain
+
+You may not cross a river unless there is a bridge connecting.
+
+Unused MPs are lost at the end of your turn.
+
 ## Mage Combat
 
 When you attack a location, you attack everything in that location, and that includes any Mages or creatures
