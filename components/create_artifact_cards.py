@@ -91,20 +91,20 @@ class WovenArtifactCards():
         svg_ids.append('artifact-title')
         svg_ids.extend(['icon-star-{0}'.format(n) for n in [1,2,3]])
         svg_ids.append('artifact-description')
+        svg_ids.append('artifact-extra-action')
         svg_ids.append('artifact-bonus')
         svg_ids.append('artifact-bonus-border')
         svg_ids.append('artifact-flavor')
-        svg_ids.append('separator')
+        #svg_ids.append('separator')
         svg_ids.extend(['op-{0}'.format(op) for op in valid_ops])
         svg.load_ids(WovenArtifactCards.CARD_TEMPLATE, svg_ids)
 
-        # Add Element and Op masters (hidden, used for cloning).
+        # Add Op masters (hidden, used for cloning).
         g_masters = SVG.group('masters')
         g_masters.set_style("display:none")
         SVG.add_node(svg_group, g_masters)
         for e in [
-                'op-tapestry', 'op-eye', 'op-emove', 'op-mmove', 'op-thread',
-                'op-tmove', 'op-action',
+                'op-tapestry', 'op-eye', 'op-mmove', 'op-thread', 'op-action',
                 ]:
             svg.add_loaded_element(g_masters, e)
 
@@ -113,13 +113,14 @@ class WovenArtifactCards():
         SVG.set_text(title, name)
 
         self.draw_description(attrs, 'description', svg, svg_group)
+        svg.add_loaded_element(svg_group, 'artifact-extra-action')
         self.draw_bonus(attrs, 'bonus', svg, svg_group)
         self.draw_flavor(attrs, 'flavor', svg, svg_group)
         
-        svg.add_loaded_element(svg_group, 'separator')
+        #svg.add_loaded_element(svg_group, 'separator')
 
         # Draw alternate action.
-        svg.add_loaded_element(svg_group, 'op-{0}'.format(attrs['op']))
+        #svg.add_loaded_element(svg_group, 'op-{0}'.format(attrs['op']))
 
         self.draw_vp(attrs['vp'], svg, svg_group)
 

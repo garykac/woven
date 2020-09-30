@@ -86,7 +86,7 @@ class SVG(object):
         svg.set('version', "1.1")
         svg.set('id', "svg_root")
 
-        # Explicitly add additional namespaces
+        # Explicitly add additional namespaces.
         svg.set('xmlns:xlink', "http://www.w3.org/1999/xlink")
 
         # Width and height of drawing in absolute units (mm).
