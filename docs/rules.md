@@ -16,9 +16,16 @@ Per-player/color:
 * 11 Mana counters
 * 4 Starter spells
 
-### Things on the Map
+## Object of Game
 
-<a href="../maps/citadel.png"><img src="../maps/citadel.png" height="300px"></a>
+You are Mages competing for the right to claim the glory for destroying the ancient Citadel where
+evil creatures have taken up residence.
+
+Destroy the Citadel in the center of the map. Or, failing that, gather as many treasures as possible.
+
+### The Map
+
+<a href="../maps/citadel.png"><img src="../maps/citadel.png" height="300"></a>
 
 There are 3 elevations on the map:
 
@@ -30,8 +37,8 @@ In addition, each location can have the following terrain markers:
 
 * Forest (single tree)
 * Dense Forest (multiple trees)
-* Rough terrain (mountain bumps)
-* Rivers between locations
+* Rough Terrain (mountain bumps)
+* Rivers and Bridges between locations
 
 Some points of magical interest are marked:
 
@@ -44,12 +51,37 @@ In the center of the map there are special symbols:
 * Sentry location (x)
 * Watcher Targets (bullseye target circles)
 
-## Object of Game
+#### Movement
 
-You are Mages competing for the right to claim the glory for destroying the ancient Citadel where
-evil creatures have taken up residence.
+Move actions and spells will grant a number of Movement Points (MP).
 
-Destroy the Citadel in the center of the map. Or, failing that, gather as many treasures as possible.
+Moving from one location to an adjacent location costs 1 MP, with the following additional costs and restrictions:
+
+* +1 MP - Changing elevation (high to low, or low to high)
+* +1 MP - Moving into a Dense Forest (Note: no additional cost for regular Forest)
+* +1 MP - Moving into Rough Terrain
+
+You may not cross a river unless there is a bridge connecting.
+
+Unused MPs are lost at the end of your turn.
+
+### Spell Cards
+
+<a href="../img/readme/spell1.png"><img src="../img/readme/spell1.png" height="200" /></a> &nbsp; <a href="../img/readme/spell2.png"><img src="../img/readme/spell2.png" height="200" /></a>
+
+The top part of each Spell Card contains:
+
+* Title
+* Spell Pattern
+* Spell Description
+
+At the bottom of each card is an alternate Mundane Effect that can be taken if you don't wish to (or cannot) cast the spell.
+
+### Tapestry Cards
+
+To cast a spell, you need to build a Tapestry using the double-sided Tapestry Cards.
+
+<img src="../img/placement1a.png" height="200">
 
 # How to Play
 
@@ -59,7 +91,7 @@ Destroy the Citadel in the center of the map. Or, failing that, gather as many t
 
 * Map in center of table
 * Tapestry cards: Shuffle and place next to map
-* Spell cards: Remove all starter spells, shuffle, place next to map
+* Spell cards: Shuffle, place next to map
 
 ### For each player
 
@@ -118,17 +150,21 @@ There are 4 Mundane Effects:
 
 ##### Draw Tapestry card
 
-Draw a new Tapestry card and add it to your Tapestry
+Draw a new Tapestry card and add it to your Tapestry.
+
+When adding Tapestry cards, they must be placed so that they overlap at least one space in the existing Tapestry.
+
+See <a href="tapestry-card-placement.md">additional info on Tapestry card placement</a>.
 
 ##### Create New Eye
 
 Create a new Eye by taking Mana from your Pool and placing it on the map at your Mage's location.
 
-If there is an Anchored Eye in this location, then it is un-Anchored.
+If there are any Anchored Eyes in this location, then they are un-Anchored (turning them into normal Eyes).
 
 ##### Move 2 spaces
 
-Move your Mage 2 spaces
+Move your Mage 2 MP
 
 ##### Pull Thread
 
