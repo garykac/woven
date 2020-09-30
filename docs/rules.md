@@ -24,6 +24,7 @@ Destroy the Citadel in the center of the map. Or, failing that, gather as many t
     * [Mana](#mana)
     * [Spells](#spells)
 * [Mundane Effects](#mundane-effects)
+* [Movement](#movement)
 
 ## Components
 
@@ -33,16 +34,20 @@ Core:
 * 33 double-sided Tapestry Cards
 * 36 Spell Cards
 
-* 12 Artifact Cards
-* 12 Watcher Cards
-* 12 Sentry Cards
-* 24 Treasure Cards
-
 Per-player/color:
 
 * 1 Mage token
 * 11 Mana counters
 * 4 Starter spells
+
+Scenario:
+
+* 15 Towers
+* 12 Artifact Cards
+* 2 Watcher tokens, 2 Watcher target tokens, 12 Watcher Cards
+* 6 Sentry tokens, 12 Sentry Cards
+* 24 Treasure Cards
+* 1 Citadel
 
 ### The Map
 
@@ -191,40 +196,6 @@ For each wellspring where you have an Eye:
 
 Note that you do not discard any remaining cards in your hand
 
-## Mundane Effects
-
-<img src="../img/readme/action-tapestry.png">
-
-### Draw Tapestry Card
-
-Draw a new Tapestry card and add it to your Tapestry.
-
-When adding Tapestry cards, they must be placed so that they overlap at least one space in the existing Tapestry.
-
-See <a href="tapestry-card-placement.md">additional info on Tapestry card placement</a>.
-
-<img src="../img/readme/action-eye.png">
-
-### Create Eye
-
-Create a new Eye by taking Mana from your Pool and placing it on the map at your Mage's location.
-
-If there are any Anchored Eyes in this location, then they are un-Anchored (turning them into normal Eyes).
-
-<img src="../img/readme/action-move.png">
-
-### Move
-
-Move your Mage 2 MP
-
-<img src="../img/readme/action-thread.png">
-
-### Pull Thread
-
-Pull a Thread to reclaim it from your Tapestry back into your Mana Pool.
-
-This can also be used to un-anchor a Thread that is Anchored. (Although perhaps that should be "Picking a Thread")
-
 # Magic
 
 ## Mana
@@ -286,9 +257,41 @@ Spells that are Active can be cast again (without playing a card) if you can cre
 Some spells accept a Charge when they are cast. This Charge can either maintain an ongoing effect
 or it can be Spent for a one-time spell effect.
 
-# Interacting with the World
+# Mundane Effects
 
-## Movement
+<img src="../img/readme/action-tapestry.png">
+
+## Draw Tapestry Card
+
+Draw a new Tapestry card and add it to your Tapestry.
+
+When adding Tapestry cards, they must be placed so that they overlap at least one space in the existing Tapestry.
+
+See <a href="tapestry-card-placement.md">additional info on Tapestry card placement</a>.
+
+<img src="../img/readme/action-eye.png">
+
+## Create Eye
+
+Create a new Eye by taking Mana from your Pool and placing it on the map at your Mage's location.
+
+If there are any Anchored Eyes in this location, then they are un-Anchored (turning them into normal Eyes).
+
+<img src="../img/readme/action-move.png">
+
+## Move
+
+Move your Mage 2 MP
+
+<img src="../img/readme/action-thread.png">
+
+## Pull Thread
+
+Pull a Thread to reclaim it from your Tapestry back into your Mana Pool.
+
+This can also be used to un-anchor a Thread that is Anchored. (Although perhaps that should be "Picking a Thread")
+
+# Movement
 
 Move actions and some spells will grant a number of Movement Points (MP).
 
@@ -302,22 +305,26 @@ You may not cross a river unless there is a bridge connecting.
 
 Unused MPs are lost at the end of your turn.
 
-## Mage Combat
+# Combat
 
-When you attack a location, you attack everything in that location, and that includes any Mages or creatures
+When you attack a location with a spell, you attack everything in that location, and that includes any Mages or creatures
 that happen to be there.
 
-### Attack
+## Attack
 
 When attacking, the total attack value is the sum of all attacks you make during a single turn.
 If you don't defeat a monster in a single turn, then the damage is not counted.
 
-### Curses
+## Defense
+
+There are spells that allow you to defend against attacks.
+
+## Curses
 
 There is no in-game support for curses, however you should feel free to hurl curses at other players
 when they perform actions you dislike.
 
-# Citidel Defense
+# Citadel Defense
 
 ## Watchers
 
