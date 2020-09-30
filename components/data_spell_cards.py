@@ -250,44 +250,44 @@ spell_card_data = [
     # Move into location and push others
     
     ["Airwalk",
-        {'element': 'air', 'pattern': 'E2-7', 'op': 'eye-thread', 'vp': 2,
+        {'element': 'air', 'pattern': 'E2-7', 'op': 'eye-thread', 'vp': 1,
          'category': 'terrain,mage-move',
         }, {
             'cast': "If at mid or high-elevation, move 5 spaces over same of lower elevation. You must end at the same elevation as your start.",
         } ],
 
     ["Plainswalker",
-        {'element': 'earth', 'pattern': 'E2-2', 'op': 'tapestry-eye', 'vp': 2,
+        {'element': 'earth', 'pattern': 'E2-2', 'op': 'tapestry-eye', 'vp': 1,
          'category': 'terrain,mage-move',
         }, {
             'cast': "If in low-elevation, move 7 spaces through low-elevation, ignoring terrain cost.",
         } ],
 
     ["Waterwalk",
-        {'element': 'water', 'pattern': 'E2-34', 'op': 'eye-thread', 'vp': 2,
+        {'element': 'water', 'pattern': 'E2-34', 'op': 'eye-thread', 'vp': 1,
          'category': 'terrain,mage-move',
          #'flavor': "Rising columns of mud form a temporary bridge.",
         }, {
-            'cast': "If adjacent to a river, move 5 spaces along that river, switching sides at will. Pay movement cost to enter the last location.",
+            'cast': "If adjacent to a river, move 5 spaces along that river, switching sides at will.",
         } ],
 
     # Pattern is Doubled form of Haste
     ["Blur",
-        {'element': 'air', 'pattern': 'E2-1', 'op': 'tapestry-eye', 'vp': 2,
+        {'element': 'air', 'pattern': 'E2-1', 'op': 'tapestry-eye', 'vp': 1,
          'category': 'mage-move',
         }, {
             'cast': "Move 8",
         } ],
 
     ["Forest Blink",
-        {'element': 'air', 'pattern': 'E2-59', 'op': 'eye-thread', 'vp': 2,
+        {'element': 'air', 'pattern': 'E2-59', 'op': 'eye-thread', 'vp': 1,
          'category': 'terrain,mage-move',
         }, {
             'cast': "If you are in a forest location, you may move to any connected forest location, ignoring any terrain costs and crossing rivers.",
         } ],
 
     ["Dense Passage",
-        {'element': 'air', 'pattern': 'E2-60', 'op': 'eye-thread', 'vp': 2,
+        {'element': 'air', 'pattern': 'E2-60', 'op': 'eye-thread', 'vp': 1,
          'category': 'terrain,mage-move',
         }, {
             'cast': "If in a Dense Forest location, jump to another Dense Forest location no more than 5 spaces away.",
@@ -341,21 +341,21 @@ spell_card_data = [
         } ],
 
     ["Woodland Target",
-        {'element': 'earth', 'pattern': 'E2-10', 'op': 'tapestry-mmove', 'vp': 2,
+        {'element': 'earth', 'pattern': 'E2-10', 'op': 'tapestry-mmove', 'vp': 1,
          'category': 'eye-create',
         }, {
             'cast': "If in a forest, place an Eye in any connected forest location.",
         } ],
 
     ["Duplicate",
-        {'element': 'water', 'pattern': 'E2-27', 'op': 'eye-mmove', 'vp': 2,
+        {'element': 'water', 'pattern': 'E2-27', 'op': 'eye-mmove', 'vp': 1,
          'category': 'eye-create',
         }, {
             'cast': "In a location where you have at least one Eye, split each of your Eyes into two separate Eyes.",
         } ],
 
     ["Traceback",
-        {'element': 'water', 'pattern': 'E2-36', 'op': 'tapestry-thread', 'vp': 2,
+        {'element': 'water', 'pattern': 'E2-36', 'op': 'tapestry-thread', 'vp': 1,
          'category': 'eye-create',
         }, {
             'cast': "If in a location with another mage's Eye, you may place an Eye at that Mage's location.",
@@ -381,14 +381,14 @@ spell_card_data = [
     # Move Eye in plain/water/forest to another within N spaces
     
     ["Eyedrop",
-        {'element': 'air', 'pattern': 'E2-14', 'op': 'mmove-thread', 'vp': 2,
+        {'element': 'air', 'pattern': 'E2-14', 'op': 'mmove-thread', 'vp': 1,
          'category': 'eye-move',
         }, {
             'cast': "Create an Eye and then move it 4.",
         } ],
     
     ["Seek",
-        {'element': 'air', 'pattern': 'E2-15', 'op': 'eye-mmove', 'vp': 2,
+        {'element': 'air', 'pattern': 'E2-15', 'op': 'eye-mmove', 'vp': 1,
          'category': 'eye-move',
         }, {
             'cast': "Move one of your Eyes 4 spaces. If it ends in the same location as another Mage's Eye, then move your Eye to that Mage's location.",
@@ -402,14 +402,14 @@ spell_card_data = [
         } ],
     
     ["Spread",
-        {'element': 'water', 'pattern': 'E2-31', 'op': 'eye-thread', 'vp': 2,
+        {'element': 'water', 'pattern': 'E2-31', 'op': 'eye-thread', 'vp': 1,
          'category': 'eye-move',
         }, {
             'cast': "Move all your Eyes 3 spaces.",
         } ],
 
     ["Expand",
-        {'element': 'water', 'pattern': 'E2-35', 'op': 'mmove-thread', 'vp': 2,
+        {'element': 'water', 'pattern': 'E2-35', 'op': 'mmove-thread', 'vp': 1,
          'category': 'eye-create,eye-move',
          'flavor': "The air crackles as the Eye splits and one half shoots away. ",
         }, {
@@ -436,21 +436,21 @@ spell_card_data = [
     # Move Eye N spaces, for each space entered move all Eyes 1 space
 
     ["Disperse",
-        {'element': 'air', 'pattern': 'E2-53', 'op': 'eye-mmove', 'vp': 2,
+        {'element': 'air', 'pattern': 'E2-53', 'op': 'eye-mmove', 'vp': 1,
          'category': 'eye-move',
         }, {
             'cast': "Move one of your Eyes 3 spaces, pushing any existing Eyes into an adjacent space.",
         } ],
 
     ["Control",
-        {'element': 'water', 'pattern': 'E2-78', 'op': 'eye-mmove', 'vp': 2,
+        {'element': 'water', 'pattern': 'E2-78', 'op': 'eye-mmove', 'vp': 1,
          'category': 'eye-move',
         }, {
             'cast': "If you have an Eye in the same location as another Eye, then you may move that other Eye 4 spaces.",
         } ],
 
     ["Control Burst",
-        {'element': 'water', 'pattern': 'E2-79', 'op': 'mmove-thread', 'vp': 2,
+        {'element': 'water', 'pattern': 'E2-79', 'op': 'mmove-thread', 'vp': 1,
          'category': 'eye-move',
         }, {
             'cast': "If you have an Eye in the same location as other Eyes, then you may move all other Eyes 2 spaces each.",
@@ -474,7 +474,7 @@ spell_card_data = [
         } ],
 
     ["Remote Anchor",
-        {'element': 'earth', 'pattern': 'E2-15', 'op': 'mmove-thread', 'vp': 2,
+        {'element': 'earth', 'pattern': 'E2-15', 'op': 'mmove-thread', 'vp': 1,
          'category': 'eye-defend',
         }, {
             'cast': "Anchor one of your Eyes.",
@@ -504,21 +504,21 @@ spell_card_data = [
         } ],
 
     ["Ground",
-        {'element': 'earth', 'pattern': 'E2-60', 'op': 'tapestry-mmove', 'vp': 2,
+        {'element': 'earth', 'pattern': 'E2-60', 'op': 'tapestry-mmove', 'vp': 1,
          'category': 'eye-other-attack',
         }, {
             'cast': "Remove all Eyes from your location and all adjacent locations.",
         } ],
 
     ["Scorch",
-        {'element': 'fire', 'pattern': 'E2-36', 'op': 'eye-thread', 'vp': 2,
+        {'element': 'fire', 'pattern': 'E2-36', 'op': 'eye-thread', 'vp': 1,
          'category': 'eye-move,eye-other-attack',
         }, {
             'cast': "Move one of your Eyes 3 spaces, removing one opponent Eye from each location it moves into this turn. Consume this Eye.",
         } ],
 
     ["Repel",
-        {'element': 'fire', 'pattern': 'E2-35', 'op': 'tapestry-thread', 'vp': 2,
+        {'element': 'fire', 'pattern': 'E2-35', 'op': 'tapestry-thread', 'vp': 1,
          'category': 'eye-move,eye-other-attack',
         }, {
             'cast': "{{ADD_CHARGE}}",
@@ -540,7 +540,7 @@ spell_card_data = [
     # Charge: all Eyes become anchors
 
     ["Sacrificium",
-        {'element': 'earth', 'pattern': 'E2-8', 'op': 'eye-mmove', 'vp': 2,
+        {'element': 'earth', 'pattern': 'E2-8', 'op': 'eye-mmove', 'vp': 1,
          'category': 'mage-defend',
         }, {
             'cast': "{{ADD_CHARGE}}",
@@ -549,7 +549,7 @@ spell_card_data = [
         } ],
 
     ["Switch",
-        {'element': 'earth', 'pattern': 'E2-11', 'op': 'eye-thread', 'vp': 2,
+        {'element': 'earth', 'pattern': 'E2-11', 'op': 'eye-thread', 'vp': 1,
          'category': 'mage-defend',
         }, {
             'cast': "{{ADD_CHARGE}}",
@@ -576,14 +576,14 @@ spell_card_data = [
     # Extra damage against shield spell
 
     ["Ignis",
-        {'element': 'fire', 'pattern': 'E2-27', 'op': 'eye-thread', 'vp': 2,
+        {'element': 'fire', 'pattern': 'E2-27', 'op': 'eye-thread', 'vp': 1,
          'category': 'mage-other-attack',
         }, {
             'cast': "Consume one of your Eyes to Attack 1 at location adjacent to that Eye.",
         } ],
 
     ["Redirect",
-        {'element': 'fire', 'pattern': 'E2-32', 'op': 'eye-mmove', 'vp': 2,
+        {'element': 'fire', 'pattern': 'E2-32', 'op': 'eye-mmove', 'vp': 1,
          'category': 'mage-other-attack',
         }, {
             'cast': "Attack 1 at one of your Eyes.",
@@ -591,14 +591,14 @@ spell_card_data = [
         } ],
 
     ["Lavastone",
-        {'element': 'fire', 'pattern': 'E2-31', 'op': 'eye-thread', 'vp': 2,
+        {'element': 'fire', 'pattern': 'E2-31', 'op': 'eye-thread', 'vp': 1,
          'category': 'mage-other-attack',
         }, {
             'cast': "Attack 2 at one of your Eyes. Attack 3 if targeting rough terrain or high elevation.",
         } ],
 
     ["Boost",
-        {'element': 'fire', 'pattern': 'E2-28', 'op': 'tapestry-thread', 'vp': 2,
+        {'element': 'fire', 'pattern': 'E2-28', 'op': 'tapestry-thread', 'vp': 1,
          'category': 'mage-other-attack',
         }, {
             'cast': "{{ADD_CHARGE}}",
@@ -634,7 +634,7 @@ spell_card_data = [
         } ],
 
     ["Deflect",
-        {'element': 'earth', 'pattern': 'E2-5', 'op': 'tapestry-eye', 'vp': 2,
+        {'element': 'earth', 'pattern': 'E2-5', 'op': 'tapestry-eye', 'vp': 1,
          'category': 'mage-defend',
         }, {
             'cast': "Deflect an attack of 1",
@@ -642,7 +642,7 @@ spell_card_data = [
         } ],
 
     ["Reflect",
-        {'element': 'fire', 'pattern': 'E2-44', 'op': 'eye-thread', 'vp': 2,
+        {'element': 'fire', 'pattern': 'E2-44', 'op': 'eye-thread', 'vp': 1,
          'category': 'mage-defend',
         }, {
             'cast': "{{ADD_CHARGE}}",
