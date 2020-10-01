@@ -12,19 +12,25 @@ Destroy the Citadel in the center of the map. Or, failing that, gather as many t
 ## Contents
 
 * [Components](#components)
-    * [Map](#map) - [Spell Cards](#spell-cards) - [Tapestry Cards](#tapestry-cards)
+    * [Map](#map)
+    * [Spell Cards](#spell-cards)
+    * [Tapestry Cards](#tapestry-cards)
 * [How to Play](#how-to-play)
     * [Setup](#setup)
-    * [Each Turn](#each-turn)
+    * [Each Turn, choose an Action](#each-turn)
         * [Cast a Spell](#cast-a-spell)
         * [Mundane Effect](#mundane-effect)
         * [Re-cast Active Spell](#re-cast-active-spell)
         * [Recover](#recover)
+    * [End of Turn](#end-of-turn)
 * [Magic](#magic)
     * [Mana](#mana)
     * [Spells](#spells)
 * [Mundane Effects](#mundane-effects)
 * [Movement](#movement)
+* [Combat](#combat)
+* [Team Play](#team-play)
+* [The Citadel](#the-citadel)
 
 ## Components
 
@@ -73,7 +79,7 @@ In addition, each location can have the following terrain markers:
 Some points of magical interest are marked:
 
 * Wellsprings (star)
-* Ruin locations (stars with a small circle inside). Note that Ruins are also wellsprings
+* Tower locations (stars with a small circle inside). Note that Towers are also wellsprings
 
 In the center of the map there are special symbols:
 
@@ -114,12 +120,13 @@ Tapestry cards are used to build the patterns required to cast spells.
 * Choose a color
 * Take 4 Mana tokens of your color and place them on your player mat
 * Place Mage on map - on edge of one of the 2 tiles closest to you
-* Take 4 starting spells
+* Take 4 starting spells as Spell deck
 * Draw a random Tapestry card and choose a side to start your Tapestry
 
 ### To start game
 
 * Choose starting player somehow
+* Draw 4 Spell cards into hand
 
 ## Each turn
 
@@ -134,8 +141,6 @@ Free actions: At any time during your turn, you may
 
 * Abandon an Eye or Charge and immediately add the token back in your Mana Pool.
 * Change one of your Anchored Eyes into a normal Eye
-
-When you've completed your Actions, if you are in a Special Location, then see Special Location section. 
 
 ### Cast a Spell
 
@@ -176,12 +181,13 @@ Recover is your rest and meditation action. It is comprised of multiple steps.
 
 ##### Acquisition
 
-For each wellspring where you have an Eye:
+Each wellspring where you have an Eye (or where your Mage is located) gives you temporary Power you can spend.
+Note that this does not consume your Mana.
 
-* You may spend 1 to add an extra Mana (if available) to your pool
-* Any remaining may be used to acquire spells:
-    * Draw N cards (where N equals the number of wellsprings)
-    * Choose 1
+* You may spend 1 Power to add an extra Mana (if available) to your pool
+* Any remaining Power may be used to acquire spells:
+    * Draw number of cards equal to remaining Power
+    * Choose 1 card and add to discard
     * Optionally: Choose a spell from your hand to add to your Treasure
     * Return remaining spells to bottom of spell deck (for TTS add to deck and re-shuffle)
 * If you did not acquire a spell, then Trash to top spell card by moving it to the Spell discard pile.
@@ -195,6 +201,16 @@ For each wellspring where you have an Eye:
 * Draw hand back up to 4 cards
 
 Note that you do not discard any remaining cards in your hand
+
+## End of Turn
+
+If you are on a Tower location at the end of your turn, then you automatically search that Tower:
+
+* Take an Artifact card and place it at the bottom of your discard pile (so no one else can see it)
+* Take 2 Treasure cards and add them to your Treasure pile.
+* The Tower collapses (but you escape uninjured) - remove the Tower token from the Map
+
+With the Tower removed, the location becomes a regular Wellspring.
 
 # Magic
 
@@ -257,6 +273,8 @@ Spells that are Active can be cast again (without playing a card) if you can cre
 Some spells accept a Charge when they are cast. This Charge can either maintain an ongoing effect
 or it can be Spent for a one-time spell effect.
 
+When a Charge is removed from a Spell, the Spell remains in the Active area until the player Recovers.
+
 # Mundane Effects
 
 <img src="../img/readme/action-tapestry.png">
@@ -310,21 +328,46 @@ Unused MPs are lost at the end of your turn.
 When you attack a location with a spell, you attack everything in that location, and that includes any Mages or creatures
 that happen to be there.
 
-## Attack
+## Attacking Monsters
 
 When attacking, the total attack value is the sum of all attacks you make during a single turn.
 If you don't defeat a monster in a single turn, then the damage is not counted.
 
+## Attacking Other Mages
+
+As a Mage, you are somewhat resistant to magical attacks. However, you will suffer some psychic damage if you cannot 
+defend youself against the attack.
+
+For each point of attack that you cannot defend against, you must add 1 new penalty Thread to your Tapestry.
+These Threads do not cast spells.
+
+If you do not have enough available Mana to create the Threads, and you have available Eyes or Charges, then you
+must abandon enough of them to provide the Mana. You may choose whichever ones you wish. If you don't have enough
+to cover it, then it sounds like you're already in a pretty bad situation and we'll leave it at that.
+
+When adding the new Threads to your Tapestry, you must place each new Thread next to a Thread that is already
+in your Tapestry. If your Tapestry has no Threads, then the first penalty Thread should be places as close to
+the center of your Tapestry as possible.
+
 ## Defense
 
-There are spells that allow you to defend against attacks.
+There are spells that allow you to defend against attacks. Each point of defense cancels out one point of attack
 
 ## Curses
 
 There is no in-game support for curses, however you should feel free to hurl curses at other players
 when they perform actions you dislike.
 
-# Citadel Defense
+# Team Play
+
+In team play, the following additional rules apply:
+
+When creating an Eye, you may create it in your location, or in the location of any of your teammates.
+
+Spells with charges (like defensive shields) can be cast for a teammate. In this case, the mana for the
+Charge must come from the Mage is being cast upon. The Charge is placed on the spell as usual.
+
+# The Citadel
 
 ## Watchers
 
@@ -335,7 +378,7 @@ Watchers detect if you move (on your turn) into a space within 3.
 They will immediately change their target to you and the target will follow you until:
 
 * You are more than 5 spaces away from one of the normal targets
-* You enter a Ruin
+* You enter a Tower location
 
 Watchers are also sensitive to magic and will detect you if you have an Eye in their location.
 You will be targeted if you are within 5 spaces of a Watcher Target.
@@ -357,7 +400,7 @@ Sentries detect if you move into adjacent space
 When defeated, the player takes 1 Treasure card.
 
 # Scoring
-
+f
 Calculate Artifact bonus for each player
 
 Merge the following cards together:
