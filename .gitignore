@@ -11,6 +11,7 @@ archive/maps/v1-hex/map-hex-22x19.png
 archive/maps/v2-voronoi-r1/*.png
 
 # Component output files
+components/__pycache__/
 components/artifact-cards/png/
 components/artifact-cards/svg/
 components/sentry-cards/png/

@@ -16,7 +16,7 @@
    id="svg1213"
    inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)"
    sodipodi:docname="mana.svg"
-   inkscape:export-filename="/home/garykac/projects/github/woven/tts/textures/marker-forest.png"
+   inkscape:export-filename="/home/garykac/projects/github/woven/tts/textures/target-teal.png"
    inkscape:export-xdpi="96.000008"
    inkscape:export-ydpi="96.000008">
   <defs
@@ -266,7 +266,7 @@
     </g>
   </g>
   <g
-     style="display:inline"
+     style="display:none"
      inkscape:label="Orange Team"
      id="g851"
      inkscape:groupmode="layer">
@@ -518,7 +518,7 @@
      inkscape:groupmode="layer"
      id="g1030"
      inkscape:label="Teal Team"
-     style="display:none">
+     style="display:inline">
     <g
        inkscape:groupmode="layer"
        id="g974"

@@ -10,14 +10,14 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="496.23361mm"
-   height="412.43631mm"
-   viewBox="0 0 496.23361 412.43631"
+   width="506.9303mm"
+   height="505.51355mm"
+   viewBox="0 0 506.9303 505.51355"
    version="1.1"
    id="svg931"
    inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)"
    sodipodi:docname="tapestry.svg"
-   inkscape:export-filename="/home/garykac/projects/github/woven/img/readme/tapestry-mana3.png"
+   inkscape:export-filename="/home/garykac/projects/github/woven/img/readme/tapestry2.png"
    inkscape:export-xdpi="39.977718"
    inkscape:export-ydpi="39.977718">
   <defs
@@ -309,10 +309,10 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.35"
-     inkscape:cx="-84.842777"
-     inkscape:cy="744.30015"
+     inkscape:cx="541.08566"
+     inkscape:cy="777.65934"
      inkscape:document-units="mm"
-     inkscape:current-layer="layer1"
+     inkscape:current-layer="g2931"
      showgrid="false"
      inkscape:snap-global="false"
      inkscape:window-width="2336"
@@ -340,36 +340,10 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(183.92702,66.673562)">
-    <g
-       id="g2341"
-       style="filter:url(#filter2701)"
-       transform="translate(-167.06547,-25.399985)"
-       inkscape:export-xdpi="39.977718"
-       inkscape:export-ydpi="39.977718">
-      <image
-         clip-path="url(#clipPath2335)"
-         transform="scale(-1)"
-         width="179.3875"
-         height="278.60626"
-         preserveAspectRatio="none"
-         xlink:href="file:///home/garykac/projects/github/woven/components/tapestry-cards/png_out/t01-knightl35-afew-back.png"
-         id="image1650"
-         x="-446.50299"
-         y="-335.76147"
-         sodipodi:absref="/home/garykac/projects/github/woven/components/tapestry-cards/png_out/t01-knightl35-afew-back.png" />
-      <rect
-         style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers fill stroke"
-         id="rect2333"
-         width="179.3875"
-         height="278.60623"
-         x="267.11584"
-         y="57.155212"
-         ry="15" />
-    </g>
+     transform="translate(103.85272,173.60309)">
     <g
        id="g2753"
-       transform="translate(101.29762,-107.8744)"
+       transform="rotate(90,-195.52707,-183.29433)"
        style="filter:url(#filter2701)"
        inkscape:export-xdpi="39.977718"
        inkscape:export-ydpi="39.977718">
@@ -395,8 +369,35 @@
          transform="rotate(90)" />
     </g>
     <g
+       inkscape:export-ydpi="39.977718"
+       inkscape:export-xdpi="39.977718"
+       style="filter:url(#filter2701)"
+       transform="rotate(90,9.3360238,143.27709)"
+       id="g2409">
+      <image
+         sodipodi:absref="/home/garykac/projects/github/woven/components/tapestry-cards/png_out/t19-ldot4-afwe-back.png"
+         y="-188.44003"
+         x="-238.52708"
+         id="image2405"
+         xlink:href="file:///home/garykac/projects/github/woven/components/tapestry-cards/png_out/t19-ldot4-afwe-back.png"
+         preserveAspectRatio="none"
+         height="278.60626"
+         width="179.3875"
+         transform="rotate(-90)"
+         clip-path="url(#clipPath2747)" />
+      <rect
+         transform="rotate(90)"
+         ry="15"
+         y="-90.166214"
+         x="59.139587"
+         height="278.60623"
+         width="179.3875"
+         id="rect2407"
+         style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers fill stroke" />
+    </g>
+    <g
        id="g2763"
-       transform="translate(106.58929,-108.10119)"
+       transform="rotate(-180,89.203427,277.26995)"
        style="filter:url(#filter2701)"
        inkscape:export-xdpi="39.977718"
        inkscape:export-ydpi="39.977718">
@@ -422,8 +423,61 @@
          style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:3.77952766;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers fill stroke" />
     </g>
     <g
+       id="g2341"
+       style="filter:url(#filter2701)"
+       transform="rotate(-90,-34.206911,613.32829)"
+       inkscape:export-xdpi="39.977718"
+       inkscape:export-ydpi="39.977718">
+      <image
+         clip-path="url(#clipPath2335)"
+         transform="scale(-1)"
+         width="179.3875"
+         height="278.60626"
+         preserveAspectRatio="none"
+         xlink:href="file:///home/garykac/projects/github/woven/components/tapestry-cards/png_out/t01-knightl35-afew-back.png"
+         id="image1650"
+         x="-446.50299"
+         y="-335.76147"
+         sodipodi:absref="/home/garykac/projects/github/woven/components/tapestry-cards/png_out/t01-knightl35-afew-back.png" />
+      <rect
+         style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers fill stroke"
+         id="rect2333"
+         width="179.3875"
+         height="278.60623"
+         x="267.11584"
+         y="57.155212"
+         ry="15" />
+    </g>
+    <g
+       inkscape:export-ydpi="39.977718"
+       inkscape:export-xdpi="39.977718"
+       style="filter:url(#filter2701)"
+       transform="rotate(90,99.899147,142.59672)"
+       id="g1063">
+      <image
+         sodipodi:absref="/home/garykac/projects/github/woven/components/tapestry-cards/png_out/t13-sz4-afwe-front.png"
+         y="-188.44003"
+         x="-238.52708"
+         id="image1059"
+         xlink:href="file:///home/garykac/projects/github/woven/components/tapestry-cards/png_out/t13-sz4-afwe-front.png"
+         preserveAspectRatio="none"
+         height="278.60626"
+         width="179.3875"
+         transform="rotate(-90)"
+         clip-path="url(#clipPath2747)" />
+      <rect
+         transform="rotate(90)"
+         ry="15"
+         y="-90.166214"
+         x="59.139587"
+         height="278.60623"
+         width="179.3875"
+         id="rect1061"
+         style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers fill stroke" />
+    </g>
+    <g
        id="g2743"
-       transform="rotate(180,-133.36891,229.62576)"
+       transform="rotate(90,99.842401,416.72397)"
        style="filter:url(#filter2701)"
        inkscape:export-xdpi="39.977718"
        inkscape:export-ydpi="39.977718">
@@ -447,13 +501,31 @@
          ry="15"
          transform="scale(-1)" />
     </g>
+    <image
+       sodipodi:absref="/home/garykac/projects/github/woven/components/tapestry-cards/png_out/t26-ldot4-aefw-back.png"
+       y="-176.80824"
+       x="-421.78745"
+       id="image2324"
+       xlink:href="file:///home/garykac/projects/github/woven/components/tapestry-cards/png_out/t26-ldot4-aefw-back.png"
+       preserveAspectRatio="none"
+       height="278.60626"
+       width="179.3875" />
+    <image
+       sodipodi:absref="/home/garykac/projects/github/woven/components/tapestry-cards/png_out/t19-ldot4-afwe-back.png"
+       y="176.97748"
+       x="-660.6684"
+       id="image2402"
+       xlink:href="file:///home/garykac/projects/github/woven/components/tapestry-cards/png_out/t19-ldot4-afwe-back.png"
+       preserveAspectRatio="none"
+       height="278.60626"
+       width="179.3875" />
   </g>
   <g
      inkscape:groupmode="layer"
      id="layer2"
      inkscape:label="Mana 1"
      style="display:none"
-     transform="translate(183.92702,66.673562)">
+     transform="translate(103.85272,173.60309)">
     <circle
        style="fill:#0674fa;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers fill stroke;filter:url(#filter2905)"
        id="path2785"
@@ -476,7 +548,7 @@
      id="g2925"
      inkscape:groupmode="layer"
      style="display:none"
-     transform="translate(183.92702,66.673562)">
+     transform="translate(103.85272,173.60309)">
     <circle
        inkscape:export-ydpi="39.977718"
        inkscape:export-xdpi="39.977718"
@@ -499,19 +571,19 @@
      id="g2931"
      inkscape:label="Mana 3"
      style="display:inline"
-     transform="translate(183.92702,66.673562)">
+     transform="translate(103.85272,173.60309)">
     <circle
        style="fill:#0674fa;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers fill stroke;filter:url(#filter2905)"
        id="circle2927"
-       cx="232.45537"
-       cy="84.199409"
+       cx="577.9256"
+       cy="44.889885"
        r="25.324406"
        inkscape:export-xdpi="39.977718"
        inkscape:export-ydpi="39.977718" />
     <circle
        r="25.324406"
-       cy="264.11609"
-       cx="227.91965"
+       cy="265.62799"
+       cx="226.40775"
        id="circle2929"
        style="fill:#0674fa;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers fill stroke;filter:url(#filter2905)"
        inkscape:export-xdpi="39.977718"
@@ -519,16 +591,16 @@
     <circle
        style="fill:#0674fa;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers fill stroke;filter:url(#filter2905-7)"
        id="circle2927-3"
-       cx="135.31548"
-       cy="-3.8690486"
+       cx="624.41669"
+       cy="-56.785717"
        r="25.324406"
        inkscape:export-xdpi="39.977718"
        inkscape:export-ydpi="39.977718" />
     <circle
        style="fill:#0674fa;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers fill stroke;filter:url(#filter2905-6)"
        id="circle2927-5"
-       cx="-34.773811"
-       cy="176.80356"
+       cx="-40.065479"
+       cy="171.51189"
        r="25.324406"
        inkscape:export-xdpi="39.977718"
        inkscape:export-ydpi="39.977718" />
