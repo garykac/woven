@@ -14,10 +14,14 @@ archive/maps/v2-voronoi-r1/*.png
 components/__pycache__/
 components/artifact-cards/png/
 components/artifact-cards/svg/
+components/effect-cards/png/
+components/effect-cards/svg/
+components/effect-cards/pdf/
 components/sentry-cards/png/
 components/sentry-cards/svg/
 components/spell-cards/png/
 components/spell-cards/svg/
+components/spell-cards/pdf/
 components/tapestry-cards/png_out/
 components/tapestry-cards/svg_out/
 components/watcher-cards/png/
