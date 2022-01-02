@@ -19,6 +19,7 @@ Charge (add charge when cast)
 Tendril properties
 * on fire
 * is minion
+* is barrier
 
 ----------------------------
 
@@ -38,6 +39,8 @@ Movement
 	* push mage in adjacent location
 
 Tendril
+	* create tendril
+	* create N tendrils
 	* move all tendrils 1 space
 	* move any 2 tendrils up to 9 spaces total
 	* move tendrils up to 5 spaces total

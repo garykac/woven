@@ -1,0 +1,14 @@
+Spell books
+
+Each player starts game with a spell book that contains:
+* a few basic neutral spells
+* a basic spell for each element
+
+
+Players gain new spells by visiting special locations on map.
+They choose any spell, and then the location moves.
+
+End of game scoring:
+1vp for each jewel
+1vp for each spell that you can cast from your spellbook
+tie-breaker: player with most jewels.
