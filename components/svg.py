@@ -11,8 +11,10 @@ from xml.etree.ElementTree import SubElement
 from xml.etree.ElementTree import XML
 
 class Node(object):
-    def __init__(self, type, id):
+    def __init__(self, type, id=None):
         self.element = Element(type)
+        if id == None:
+            id = 'node{0:d}'.format(SVG.next_id())
         self.id = id
 
         self.element.set('id', id)
@@ -23,8 +25,11 @@ class Node(object):
     def set_style(self, style):
         self.element.set('style', str(style))
 
+    def set_transform(self, t):
+        self.element.set('transform', t)
+
 class Group(Node):
-    def __init__(self, id):
+    def __init__(self, id=None):
         super().__init__('g', id)
         self.children = []
 
@@ -33,16 +38,26 @@ class Group(Node):
         self.element.append(node.element)
         
 class Layer(Group):
-    def __init__(self, id, label):
+    def __init__(self, id=None, label="Layer"):
         super().__init__(id)
         self.element.set('inkscape:label', label)
         self.element.set('inkscape:groupmode', "layer")
+    
+    def hide(self):
+        self.set('style', 'display:none')        
 
 class Style(object):
-    def __init__(self):
+    def __init__(self, fill=None, stroke=None, strokeWidth=None):
+        if fill == None:
+            fill = 'none'
+        if stroke == None:
+            stroke = 'none'
+        if strokeWidth == None:
+            strokeWidth = '0'
         self.props = {
-            'fill': 'none',
-            'stroke': 'none',
+            'fill': fill,
+            'stroke': stroke,
+            'stroke-width': strokeWidth,
         }
 
     def get(self, attr):
@@ -63,7 +78,45 @@ class Style(object):
 
     def __repr__(self):
         return 'Style=' + self.__str__()
+
+class Path(Node):
+    def __init__(self, id=None):
+        if id == None:
+            id = 'path{0}'.format(SVG.next_id())
+        super().__init__('path', id)
+        self.path = []
+        self.currPosition = [0, 0]
     
+    def addXY(self, x, y):
+        if len(self.path) == 0:
+            self.path.append([x, y])
+        else:
+            dx = x - self.currPosition[0]
+            dy = y - self.currPosition[1]
+            self.path.append([dx, dy])
+        self.currPosition = [x, y]
+    
+    def addPoint(self, pt):
+        x, y = pt
+        if len(self.path) == 0:
+            self.path.append([x, y])
+        else:
+            dx = x - self.currPosition[0]
+            dy = y - self.currPosition[1]
+            self.path.append([dx, dy])
+        self.currPosition = [x, y]
+
+    def addPoints(self, pts):
+        for pt in pts:
+            self.addPoint(pt)
+            
+    def end(self):
+        path = "m"
+        for pt in self.path:
+            path += " {0:.6g} {1:.6g}".format(pt[0], pt[1])
+        path += " z"
+        self.set('d', path)
+
 class SVG(object):
     id_base = 1000
     
@@ -85,6 +138,11 @@ class SVG(object):
         svg = self.root
         svg.set('version', "1.1")
         svg.set('id', "svg_root")
+
+        # Manually add registered namespaces.
+        svg.set('xmlns', "http://www.w3.org/2000/svg")
+        svg.set('xmlns:sodipodi', "http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd")
+        svg.set('xmlns:inkscape', "http://www.inkscape.org/namespaces/inkscape")
 
         # Explicitly add additional namespaces.
         svg.set('xmlns:xlink', "http://www.w3.org/1999/xlink")
@@ -126,9 +184,12 @@ class SVG(object):
         filter = XML(filter_str)
         self.defs.append(filter)
         
-    def add_inkscape_layer(self, id, label):
+    def add_inkscape_layer(self, id, label, parent=None):
         layer = Layer(id, label)
-        self.root.append(layer.element)
+        if parent == None:
+            self.root.append(layer.element)
+        else:
+            parent.add_node(layer)
         return layer
 
     def add_loaded_element(self, parent, id):
