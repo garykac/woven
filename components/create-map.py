@@ -8,7 +8,7 @@ import scipy.spatial
 import subprocess
 import sys
 
-from math_utils import (feq, scale, lerp, lerp_pt, lerp_pt_delta, lerperp,
+from math_utils import (feq, fge, fle, scale, lerp, lerp_pt, lerp_pt_delta, lerperp,
                         near, dist, dist_pt_line, ptInHex)
 from svg import SVG, Style, Node, Path
 
@@ -40,8 +40,8 @@ class VoronoiHexTile():
         self.seedAttempts = 20
         
         # Min distance between 2 seed points.        
-        #self.minSeedDistance = 0.22 * self.size  # 2
-        self.minSeedDistance = 0.19 * self.size  # 3
+        self.minSeedDistance = 0.22 * self.size  # 2
+        #self.minSeedDistance = 0.19 * self.size  # 3
         #self.minSeedDistance = 0.18 * self.size  # 4
 
         # The edgeMargin is a set of circles along the edge between the seeds.
@@ -102,6 +102,13 @@ class VoronoiHexTile():
             3: [[1/4, 0],    [2/4, 0],      [3/4, 0]],
             4: [[1/5, 0],    [2/5, 0],      [3/5, 0],      [4/5, 0]],
             }
+        self.edgeWeights = {
+            1: [0.25 * self.size, 0.25 * self.size],
+            2: [0.22 * self.size, 0.22 * self.size],
+            3: [0.19 * self.size, 0.19 * self.size],
+            4: [0.18 * self.size, 0.18 * self.size],
+            }
+        self.centerWeight = 0.22 * self.size
 
         self.rng = np.random.RandomState(self.options['seed'])
 
@@ -170,8 +177,8 @@ class VoronoiHexTile():
             i = self.rng.randint(len(activeSeeds))
             found = False
             numAttempts = self.seedAttempts
+            minSeed = self.calcSeedDistance(activeSeeds[i])
             while not found and numAttempts > 0:
-                minSeed = self.minSeedDistance
                 seed = self.calcRandomSeedBridson(
                     activeSeeds[i], minSeed, 2 * minSeed)
                 if not ptInHex(self.size, seed[0], seed[1]):
@@ -204,6 +211,84 @@ class VoronoiHexTile():
                 newSeeds.append(seed)
         return newSeeds
 
+    # Calc the min seed distance based on the current seed.
+    # Seeds in higher density regions will have a smaller distance than those in low
+    # density regions.
+    # Assumes hexagon is centered at 0,0
+    def calcSeedDistance(self, baseSeed):
+        x, y = baseSeed
+        # Find the triangle (in the hex) where the seed is located and compute the
+        # barycentric coordinates of that point within the triangle. These coordinates
+        # will be used as weights to calculate the min distance.
+        #
+        # Given a point x,y, in barycentric coords:
+        #   x = a * x1 + b * x2 + c * x3
+        #   y = a * y1 + b * y2 + c * y3
+        #   a + b + c = 1
+        # Where (x1,y1), (x2,y2) and (x3,y3) are the points (P1,P2,P3) defining the
+        # triangle and a,b,c are the weights that define the point.
+        #
+        # a,b,c can be calculated:
+        #   a = ((y2 - y3) * (x - x3) + (x3 - x2) * (y - y3))
+        #         / ((y2 - y3) * (x1 - x3) + (x3 - x2) * (y1 - y3))
+        #   b = ((y3 - y1) * (x - x3) + (x1 - x3) * (y - y3))
+        #         / ((y2 - y3) * (x1 - x3) + (x3 - x2) * (y1 - y3))
+        #   c = 1 - a - b
+        #
+        
+        # 
+        #                   0
+        #                  _+_
+        #              _,-' : `-,_
+        #     5    _,-'     :     `-,_    1
+        #        +:      5  :  0      :+
+        #        | `-,_     :     _,-' |
+        #        |     `-,_ : _,-'     |
+        #        |   4     :+:     1   |
+        #        |     _,-' : `-,_     |
+        #        | _,-'     :     `-,_ |
+        #        +:      3  :  2      :+
+        #     4    `-,_     :     _,-'    2
+        #              `-,_ : _,-'
+        #                  `+'
+        #                   3
+        for tri in range(0, self.nSides):
+            tri_next = (tri + 1) % self.nSides
+            x1,y1 = self.vHex[tri]
+            x2,y2 = self.vHex[tri_next]
+
+            # Using P3 = (0,0) for the shared center of the hexagon, this simplifies to:
+            #   denom = ((y2 - y3) * (x1 - x3) + (x3 - x2) * (y1 - y3))
+            #         = ((y2 - 0) * (x1 - 0) + (0 - x2) * (y1 - 0))
+            #         = (y2 * x1) - (x2 * y1)
+            #   a = ((y2 - y3) * (x - x3) + (x3 - x2) * (y - y3)) / denom
+            #     = ((y2 - 0) * (x - 0) + (0 - x2) * (y - 0)) / denom
+            #     = ((y2 * x) - (x2 * y)) / denom
+            #   b = ((y3 - y1) * (x - x3) + (x1 - x3) * (y - y3)) / denom
+            #     = ((0 - y1) * (x - 0) + (x1 - 0) * (y - 0)) / denom
+            #     = ((x1 * y) - (y1 * x)) / denom
+            #   c = 1 - a - b
+            denom = (y2 * x1) - (x2 * y1)
+            a = ((y2 * x) - (x2 * y)) / denom
+            b = ((x1 * y) - (y1 * x)) / denom
+            c = 1 - a - b
+
+            # Normally, we need to confirm that a,b,c are all within [0,1], but because
+            # we know the point is within the hexagon, we can eliminate some checks.
+            # Note that if the seed is along an edge between 2 triangles, it doesn't
+            # matter which triangle we choose since the weighted-distance will be the same
+            # either way. So we just take the first match.
+            if fge(a, 0) and fge(b, 0) and fle(c, 1):
+                # Seed is within current triangle, calculate weight.
+                edgeType = self.nSeedsPerEdge[tri]
+                w1, w2 = self.edgeWeights[edgeType]
+                w3 = self.centerWeight
+                weight = a * w1 + b * w2 + c * w3
+                if not feq(weight, self.minSeedDistance):
+                    print("different weight", weight, self.minSeedDistance)
+                return weight
+        return self.minSeedDistance
+        
     # Generate a random x,y point within the hex and within a ring (defined by
     # |r0| and |r1|) around the given |baseSeed|.
     def calcRandomSeedBridson(self, baseSeed, r0, r1):
@@ -786,21 +871,34 @@ class VoronoiHexTile():
         p.set_style(style)
         SVG.add_node(layer, p)
 
+OPTIONS = {
+    'anim': {'type': 'bool', 'default': False,
+             'desc': "Generate animation plots"},
+    'iter': {'type': 'int', 'default': 25,
+             'desc': "Max iterations"},
+    'pattern': {'type': 'string', 'default': "2-2-2-2-2-2",
+                'desc': "Edge pattern"},
+    'seed': {'type': 'int', 'default': None,
+             'desc': "Random seed"},
+    'size': {'type': 'int', 'default': 80,
+             'desc': "Size of hex side (mm)"},
+}
+
+def usage():
+    print("python create-map.py <options>")
+    for o in OPTIONS:
+        opt = OPTIONS[o]
+        print("  ", o, end=' ')
+        if opt['type'] == 'int':
+            print("<int>", end=' ')
+        elif opt['type'] == 'string':
+            print("<str>", end=' ')
+        print("-", opt['desc'])
+    sys.exit(0)
 
 def parse_options():
     option_defs = {}
-    option_defs.update({
-        'anim': {'type': 'bool', 'default': False,
-                 'desc': "Generate animation plots"},
-        'iter': {'type': 'int', 'default': 25,
-                 'desc': "Max iterations"},
-        'pattern': {'type': 'string', 'default': "2-2-2-2-2-2",
-                    'desc': "Edge pattern"},
-        'seed': {'type': 'int', 'default': None,
-                 'desc': "Random seed"},
-        'size': {'type': 'int', 'default': 80,
-                 'desc': "Size of hex side (mm)"},
-        })
+    option_defs.update(OPTIONS)
     short_opts = ""
     long_opts = []
     for opt,info in option_defs.items():
@@ -816,7 +914,7 @@ def parse_options():
     try:
         opts, args = getopt.getopt(sys.argv[1:], short_opts, long_opts)
     except getopt.GetoptError:
-        usage(option_defs)
+        usage()
 
     options = {}
     for opt,info in option_defs.items():

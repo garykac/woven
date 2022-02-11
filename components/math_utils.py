@@ -1,8 +1,15 @@
 import math
 
 epsilon = 0.00001
+
 def feq(a, b):
     return (a > b - epsilon) and (a < b + epsilon)
+
+def fge(a, b):
+    return (a > b - epsilon)
+
+def fle(a, b):
+    return (a < b + epsilon)
 
 def scale(v, scale):
     x, y = v
