@@ -25,6 +25,10 @@ class VoronoiHexTile():
 
         self.nSides = 6
         self.nSeedsPerEdge = [int(x) for x in self.options['pattern'].split('-')]
+        
+        # This is used to position the exterior seeds around the outside of the tile.
+        # These seed regions constrain the regions in the hex tile and allow us to ignore
+        # the outer edges (that go off to infinity).
         self.outerScale = 1.4
 
         self.seeds = None
@@ -114,10 +118,11 @@ class VoronoiHexTile():
 
     def init(self):
         self.initFixedSeeds()
-        self.initEdgeMargin(self.vHex, self.vEdgeSeeds)
+        self.initEdgeMargin()
         self.initInteriorSeeds()
         self.initExteriorSeeds()
 
+    # Initialize the fixed seeds along the edge of the hex tile.
     def initFixedSeeds(self):
         size = self.size
         xHex = self.xMax
@@ -141,17 +146,19 @@ class VoronoiHexTile():
                                         t, perp_t))
         self.vEdgeSeeds = np.array(vertices)
 
-    # vHex contains the 6 points of the hex tile.
-    # vEdge contains 2 seeds for each edge.
-    def initEdgeMargin(self, vHex, vEdge):
-        seeds = [vHex[0]]
+    # Initialize the margin exclusion zones.
+    # These zone prevent seeds from getting too close to the tile boundary where they
+    # would cause voronoi ridges that are too small, or cause the region to be clipped
+    # by the hex boundary.
+    def initEdgeMargin(self):
+        seeds = [self.vHex[0]]
         for i0 in range(0, self.nSides):
             firstSeed = sum(self.nSeedsPerEdge[:i0])
             nEdgeSeeds = self.nSeedsPerEdge[i0]
             for j in range(firstSeed, firstSeed + nEdgeSeeds):
-                seeds.append(vEdge[j])
+                seeds.append(self.vEdgeSeeds[j])
             i1 = (i0 + 1) % self.nSides
-            seeds.append(vHex[i1])
+            seeds.append(self.vHex[i1])
         
         # Create edge margin points between the seeds.
         marginPoints = []
@@ -162,13 +169,10 @@ class VoronoiHexTile():
                                * self.size / (2 * (nEdgeSeeds + 1)))
         self.edgeMargin = np.array(marginPoints)
 
+    # Generate the interior seed points.
     def initInteriorSeeds(self):
-        # Add interior seed points.
-        newSeeds = self.calcInteriorSeeds(
-            np.concatenate((self.vHex, self.vEdgeSeeds)))
-        self.vInteriorSeeds = np.array(newSeeds)
+        startSeeds = np.concatenate((self.vHex, self.vEdgeSeeds))
 
-    def calcInteriorSeeds(self, startSeeds):
         activeSeeds = startSeeds.tolist()
         allSeeds = startSeeds.tolist()
         newSeeds = []
@@ -209,9 +213,10 @@ class VoronoiHexTile():
                 activeSeeds.append(seed)
                 allSeeds.append(seed)
                 newSeeds.append(seed)
-        return newSeeds
 
-    # Calc the min seed distance based on the current seed.
+        self.vInteriorSeeds = np.array(newSeeds)
+
+    # Calc the min seed distance based on the current seed location in the hex tile.
     # Seeds in higher density regions will have a smaller distance than those in low
     # density regions.
     # Assumes hexagon is centered at 0,0
@@ -234,8 +239,6 @@ class VoronoiHexTile():
         #   b = ((y3 - y1) * (x - x3) + (x1 - x3) * (y - y3))
         #         / ((y2 - y3) * (x1 - x3) + (x3 - x2) * (y1 - y3))
         #   c = 1 - a - b
-        #
-        
         # 
         #                   0
         #                  _+_
@@ -284,13 +287,11 @@ class VoronoiHexTile():
                 w1, w2 = self.edgeWeights[edgeType]
                 w3 = self.centerWeight
                 weight = a * w1 + b * w2 + c * w3
-                if not feq(weight, self.minSeedDistance):
-                    print("different weight", weight, self.minSeedDistance)
                 return weight
         return self.minSeedDistance
         
-    # Generate a random x,y point within the hex and within a ring (defined by
-    # |r0| and |r1|) around the given |baseSeed|.
+    # Generate a random x,y point within a ring (defined by |r0| and |r1|) around the
+    # given |baseSeed|.
     def calcRandomSeedBridson(self, baseSeed, r0, r1):
         x0, y0 = baseSeed
         angle = self.rng.uniform(0, math.tau)
@@ -299,21 +300,10 @@ class VoronoiHexTile():
         y = y0 + r * math.sin(angle)
         return [x, y]
             
-    # Generate a random x,y point within the hex.
-    def calcRandomSeed(self):
-        valid = False
-        while not valid:
-            x = self.rng.uniform(-self.xMax, self.xMax)
-            y = self.rng.uniform(-self.size, self.size)
-            valid = ptInHex(self.size, x, y)
-
-        return [x, y]
-
+    # Calculate boundary seeds around outside of hex.
+    # These seeds constrain the voronoi regions by providing boundaries for the  regions
+    # along the edges, which allows us to ignore unbounded regions.
     def initExteriorSeeds(self):
-        # Calculate boundary seeds around outside of hex.
-        # These seeds constrain the voronoi regions by providing boundaries for
-        # the  regions along the edges, which allows us to ignore unbounded
-        # regions.
         vertices = []
         for i0 in range(0, self.nSides):
             i1 = (i0 + 1) % self.nSides
@@ -326,49 +316,63 @@ class VoronoiHexTile():
                           self.outerScale))
         self.vOutsideSeeds = np.array(vertices)
 
-    def generate(self):
-        self.seeds = np.concatenate((self.vHex, self.vEdgeSeeds))
-        if len(self.vInteriorSeeds) > 0:
-            self.seeds = np.append(self.seeds, self.vInteriorSeeds, 0)
-        self.seeds = np.append(self.seeds, self.vOutsideSeeds, 0)
-
-        self.startCornerSeed = 0
-        self.endCornerSeed = len(self.vHex)
-        self.startEdgeSeed = self.endCornerSeed
-        self.endEdgeSeed = self.endCornerSeed + len(self.vEdgeSeeds)
-        self.startInteriorSeed = self.endEdgeSeed
-        self.endInteriorSeed = self.endEdgeSeed + len(self.vInteriorSeeds)
-
-        # Calc number of seeds on tile, ignoring the outside seeds.
-        self.numActiveSeeds = (len(self.vHex)
-                               + len(self.vEdgeSeeds)
-                               + len(self.vInteriorSeeds))
-
-        self.vor = scipy.spatial.Voronoi(self.seeds)
-
-        # Make a copy of the generated vertices so that we can add new
-        # vertices along the tile boundary.
-        self.vertices = [vid for vid in self.vor.vertices]
-        self.newVertices = {}
-        self.firstNewVertex = len(self.vertices)
-
-        self.analyze()
-        if self.options['anim']:
-            self.plot(self.iteration)
-        
     def calcEdgeId(self, vid0, vid1):
         if vid0 < vid1:
             return "{0:d}-{1:d}".format(vid0, vid1)
         return "{0:d}-{1:d}".format(vid1, vid0)
 
-    def analyze(self):
-        # Create a dict to map from region id to seed id.
-        self.rid2sid = {}
-        for sid in range(0, len(self.vor.point_region)):
-            rid = self.vor.point_region[sid]
-            self.rid2sid[rid] = sid
+    # Add a new vertex to the voronoi graph. This is used when clipping the
+    # regions along the edge of the tile.
+    def addVertex(self, v):
+        # Check to see of we've added this vertex already.
+        key = "{0:.6g}-{1:.6g}".format(v[0], v[1])
+        if key in self.newVertices:
+            return self.newVertices[key]
+        id = len(self.vertices)
+        self.vertices.append(v)
+        self.newVertices[key] = id
+        return id
 
-        # Calculate all regions with clipping.
+    # Calculate the set of regions (seed ids) that surround the given region.
+    def calcNeighboringRegions(self, sid0):
+        if not sid0 in self.sid2region:
+            return []
+        vids = self.sid2region[sid0]
+        sids = []
+        for vid in vids:
+            for sid in self.vid2sids[vid]:
+                if sid != sid0 and not sid in sids:
+                    sids.append(sid)
+        return sids
+
+    # Calculate the 2 regions on either side of each vertex vid0-vid1.
+    # Return array of [vid, sid] for the 2 vertices, ignoring the regions that
+    # are common to both vertices.
+    def calcSideRegions(self, vid0, vid1):
+        sides = []
+        for sid in self.vid2sids[vid0]:
+            if not sid in self.vid2sids[vid1]:
+                sides.append([vid0, sid])
+        for sid in self.vid2sids[vid1]:
+            if not sid in self.vid2sids[vid0]:
+                sides.append([vid1, sid])
+        return sides
+
+    def calcAdjustment(self, sid, vMod, lerp_t):
+        # Calc seed id in the interior seed array.
+        sid -= self.startInteriorSeed
+        if sid < 0:
+            return
+
+        v = self.vInteriorSeeds[sid]
+        if not sid in self.adjustments:
+            self.adjustments[sid] = [0,0]
+        dx, dy = lerp_pt_delta(v, vMod, lerp_t)
+        self.adjustments[sid][0] += dx
+        self.adjustments[sid][1] += dy
+
+    # Calculate all regions with clipping.
+    def calcClippedRegions(self):
         self.sid2region = {}
         for sid in range(0, self.nSides):
             rid = self.vor.point_region[sid]
@@ -398,20 +402,75 @@ class VoronoiHexTile():
             rid = self.vor.point_region[sid]
             self.sid2region[sid] = self.vor.regions[rid]
 
-        # Verify that all voronoi vertices are shared by 3 seed regions.
-        # Note ignoring regions along outer edge which will have some vertices
-        # shared by only 1 or 2 regions.
-        self.vid2sids = {}
-        for sid in range(0, self.numActiveSeeds):
-            for vid in self.sid2region[sid]:
-                if not vid in self.vid2sids:
-                    self.vid2sids[vid] = []
-                self.vid2sids[vid].append(sid)
-        for k,v in self.vid2sids.items():
-            if len(v) > 3:
-                print("Error - vertex shared by more than 3 regions:", k, v)
-        
-        # Identify voronoi edges that are rather small.
+    def calcCornerVertices(self, sid, rid):
+        sid_prev = (sid + self.nSides - 1) % self.nSides
+        sid_next = (sid + 1) % self.nSides
+        edgeDiv_prev = 1 / (2 * (self.nSeedsPerEdge[sid_prev] + 1))
+        edgeDiv_next = 1 / (2 * (self.nSeedsPerEdge[sid] + 1))
+
+        return self.__calcEdgeVertices(rid, sid, sid_prev, sid_next,
+                                       edgeDiv_prev, edgeDiv_next)
+
+    def calcEdgeVertices(self, sid0, sid1, rid, t_ccw, t_cw):
+        return self.__calcEdgeVertices(rid, sid0, sid1, sid1, t_ccw, t_cw)
+
+    def __calcEdgeVertices(self, rid, sid, sid_prev, sid_next, t_ccw, t_cw):
+        r = self.vor.regions[rid]
+        verts = []
+        # True if we need to generate the tile boundary for this region.
+        genTileBounds = True
+        internal = False
+        for rindex in range(0, len(r)):
+            vid = r[rindex]
+            v = self.vertices[vid]
+            if ptInHex(self.size, v[0], v[1]):
+                verts.append(vid)
+                internal = True
+            elif genTileBounds:
+                # Set to false so we don't generate the tile boundary twice.
+                genTileBounds = False
+
+                # Assume we're generating edge vertices in ccw order.
+                # Note that the order of the vertices in the region (as returned by the
+                # voronoi library) is not consistent, so we need to determine which way
+                # we are moving around the polygon.
+                startCcw = True
+                ccw = lerp_pt(self.seeds[sid], self.seeds[sid_prev], t_ccw)
+                cw = lerp_pt(self.seeds[sid], self.seeds[sid_next], t_cw)
+
+                # Find closest internal vertex.
+                if internal:
+                    # i-1 is safe since we saw at least 1 internal vertex at this point.
+                    v2 = self.vertices[r[rindex-1]]
+
+                    # Swap direction if the region vertices are CW.
+                    if dist(v2, cw) < dist(v2, ccw):
+                        startCcw = False
+                else:
+                    # Look ahead to find next internal vertex. There must be at least one
+                    # because we haven't seen any yet.
+                    rindex2 = rindex+1
+                    v2 = self.vertices[r[rindex2]]
+                    while not ptInHex(self.size, v2[0], v2[1]):
+                        rindex2 += 1
+                        v2 = self.vertices[r[rindex2]]
+
+                    # Swap direction if the region vertices are CCW.
+                    if dist(v2, ccw) < dist(v2, cw):
+                        startCcw = False
+
+                if not startCcw:
+                    cw, ccw = ccw, cw
+
+                verts.append(self.addVertex(ccw))
+                # Hex corners have an extra point in the middle.
+                if sid_prev != sid_next:
+                    verts.append(self.addVertex(self.seeds[sid]))
+                verts.append(self.addVertex(cw))
+        return verts
+
+    # Find any voronoi edges that are too small.
+    def findBadEdges(self):
         self.badEdges = {}
         for sid in range(0, self.numActiveSeeds):
             r = self.sid2region[sid]
@@ -435,8 +494,9 @@ class VoronoiHexTile():
                     if not edgeId in self.badEdges:
                         self.badEdges[edgeId] = []
                     self.badEdges[edgeId].append(edgeInfo)
-        
-        # Indentify regions that are too small.
+
+    # Find any regions that are too small.
+    def findSmallRegions(self):
         self.regionCircles = {}
         self.minCircle = None
         self.maxCircle = None
@@ -509,56 +569,62 @@ class VoronoiHexTile():
                 maxCircleRadius = polyRadius
         self.circleRatio = maxCircleRadius / minCircleRadius
 
-    # Add a new vertex to the voronoi graph. This is used when clipping the
-    # regions along the edge of the tile.
-    def addVertex(self, v):
-        # Check to see of we've added this vertex already.
-        key = "{0:.6g}-{1:.6g}".format(v[0], v[1])
-        if key in self.newVertices:
-            return self.newVertices[key]
-        id = len(self.vertices)
-        self.vertices.append(v)
-        self.newVertices[key] = id
-        return id
+    # Calculate and analyze the voronoi graph from the set of seed points.
+    def generate(self):
+        self.seeds = np.concatenate((self.vHex, self.vEdgeSeeds))
+        if len(self.vInteriorSeeds) > 0:
+            self.seeds = np.append(self.seeds, self.vInteriorSeeds, 0)
+        self.seeds = np.append(self.seeds, self.vOutsideSeeds, 0)
 
-    # Calculate the set of regions (seed ids) that surround the given region.
-    def calcNeighboringRegions(self, sid0):
-        if not sid0 in self.sid2region:
-            return []
-        vids = self.sid2region[sid0]
-        sids = []
-        for vid in vids:
-            for sid in self.vid2sids[vid]:
-                if sid != sid0 and not sid in sids:
-                    sids.append(sid)
-        return sids
+        self.startCornerSeed = 0
+        self.endCornerSeed = len(self.vHex)
+        self.startEdgeSeed = self.endCornerSeed
+        self.endEdgeSeed = self.endCornerSeed + len(self.vEdgeSeeds)
+        self.startInteriorSeed = self.endEdgeSeed
+        self.endInteriorSeed = self.endEdgeSeed + len(self.vInteriorSeeds)
 
-    # Calculate the 2 regions on either side of each vertex vid0-vid1.
-    # Return array of [vid, sid] for the 2 vertices, ignoring the regions that
-    # are common to both vertices.
-    def calcSideRegions(self, vid0, vid1):
-        sides = []
-        for sid in self.vid2sids[vid0]:
-            if not sid in self.vid2sids[vid1]:
-                sides.append([vid0, sid])
-        for sid in self.vid2sids[vid1]:
-            if not sid in self.vid2sids[vid0]:
-                sides.append([vid1, sid])
-        return sides
+        # Calc number of seeds on tile, ignoring the outside seeds.
+        self.numActiveSeeds = (len(self.vHex)
+                               + len(self.vEdgeSeeds)
+                               + len(self.vInteriorSeeds))
 
-    def calcAdjustment(self, sid, vMod, lerp_t):
-        # Calc seed id in the interior seed array.
-        sid -= self.startInteriorSeed
-        if sid < 0:
-            return
+        self.vor = scipy.spatial.Voronoi(self.seeds)
 
-        v = self.vInteriorSeeds[sid]
-        if not sid in self.adjustments:
-            self.adjustments[sid] = [0,0]
-        dx, dy = lerp_pt_delta(v, vMod, lerp_t)
-        self.adjustments[sid][0] += dx
-        self.adjustments[sid][1] += dy
+        # Make a copy of the generated vertices so that we can add new
+        # vertices along the tile boundary.
+        self.vertices = [vid for vid in self.vor.vertices]
+        self.newVertices = {}
+        self.firstNewVertex = len(self.vertices)
+
+        self.analyze()
+        if self.options['anim']:
+            self.plot(self.iteration)
         
+    def analyze(self):
+        # Create a dict to map from region id to seed id.
+        self.rid2sid = {}
+        for sid in range(0, len(self.vor.point_region)):
+            rid = self.vor.point_region[sid]
+            self.rid2sid[rid] = sid
+
+        self.calcClippedRegions()
+
+        # Verify that all voronoi vertices are shared by 3 seed regions.
+        # Note ignoring regions along outer edge which will have some vertices
+        # shared by only 1 or 2 regions.
+        self.vid2sids = {}
+        for sid in range(0, self.numActiveSeeds):
+            for vid in self.sid2region[sid]:
+                if not vid in self.vid2sids:
+                    self.vid2sids[vid] = []
+                self.vid2sids[vid].append(sid)
+        for k,v in self.vid2sids.items():
+            if len(v) > 3:
+                print("Error - vertex shared by more than 3 regions:", k, v)
+        
+        self.findBadEdges()
+        self.findSmallRegions()
+
     def update(self):
         if self.iteration >= self.maxIterations:
             return False
@@ -664,6 +730,7 @@ class VoronoiHexTile():
             circle.set_style(fill)
             SVG.add_node(layer_margin_ex, circle)
         
+        # Plot regions and seeds.
         layer_region = self.svg.add_inkscape_layer('region', "Region", layer)
         layer_region.hide()
         layer_seeds = self.svg.add_inkscape_layer('seeds', "Seeds", layer)
@@ -696,6 +763,7 @@ class VoronoiHexTile():
                 self.plotVertex(self.vertices[vid0], layer_bad_edges)
                 self.plotVertex(self.vertices[vid1], layer_bad_edges)
 
+        # Plot inscribed circles for each region.
         layer_circles = self.svg.add_inkscape_layer(
             'circles', "Inscribed Circles", layer)
         layer_circles.hide()
@@ -748,31 +816,6 @@ class VoronoiHexTile():
             plt.savefig(out, bbox_inches='tight')
         plt.close(fig)
 
-    def cleanupAnimation(self):
-        out_dir = os.path.join(self.options['out'], ANIM_SUBDIR)
-        anim_pngs = os.path.join(out_dir, '*.png')
-        for png in glob.glob(anim_pngs):
-            os.remove(png)
-
-    def exportAnimation(self):
-        anim_dir = os.path.join(self.options['out'], ANIM_SUBDIR)
-        cmd = ["convert"]
-        cmd.extend(["-delay", "15"])
-        cmd.extend(["-loop", "0"])
-        cmd.append(os.path.join(anim_dir, "hex-*"))
-
-        base = "hex"
-        if self.options['seed'] != None:
-            base = "hex-{0:d}".format(self.options['seed'])
-        last_file = "{0:s}-{1:03d}.png".format(base, self.iteration-1)
-        cmd.extend(["-delay", "100"])
-        cmd.append(os.path.join(anim_dir, last_file))
-
-        anim_file = os.path.join(self.options['out'], "{0:s}.gif".format(base))
-        cmd.append(anim_file)
-
-        subprocess.run(cmd)
-        
     def plotVertex(self, v, layer):
         circle = plt.Circle(v, 1, color="r")
         plt.gca().add_patch(circle)
@@ -798,72 +841,6 @@ class VoronoiHexTile():
         p.set_style(style)
         SVG.add_node(layer, p)
 
-    def calcCornerVertices(self, sid, rid):
-        sid_prev = (sid + self.nSides - 1) % self.nSides
-        sid_next = (sid + 1) % self.nSides
-        edgeDiv_prev = 1 / (2 * (self.nSeedsPerEdge[sid_prev] + 1))
-        edgeDiv_next = 1 / (2 * (self.nSeedsPerEdge[sid] + 1))
-
-        return self.__calcEdgeVertices(rid, sid, sid_prev, sid_next,
-                                       edgeDiv_prev, edgeDiv_next)
-
-    def calcEdgeVertices(self, sid0, sid1, rid, t_ccw, t_cw):
-        return self.__calcEdgeVertices(rid, sid0, sid1, sid1, t_ccw, t_cw)
-
-    def __calcEdgeVertices(self, rid, sid, sid_prev, sid_next, t_ccw, t_cw):
-        r = self.vor.regions[rid]
-        verts = []
-        # True if we need to generate the tile boundary for this region.
-        genTileBounds = True
-        internal = False
-        for rindex in range(0, len(r)):
-            vid = r[rindex]
-            v = self.vertices[vid]
-            if ptInHex(self.size, v[0], v[1]):
-                verts.append(vid)
-                internal = True
-            elif genTileBounds:
-                # Set to false so we don't generate the tile boundary twice.
-                genTileBounds = False
-
-                # Assume we're generating edge vertices in ccw order.
-                startCcw = True
-                ccw = lerp_pt(self.seeds[sid], self.seeds[sid_prev], t_ccw)
-                cw = lerp_pt(self.seeds[sid], self.seeds[sid_next], t_cw)
-
-                # Find closest internal vertex.
-                if internal:
-                    # i-1 is safe -- the previous vertex is internal.
-                    v2 = self.vertices[r[rindex-1]]
-
-                    # Swap direction if the region vertices are CW.
-                    if dist(v2, cw) < dist(v2, ccw):
-                        startCcw = False
-                else:
-                    # Look ahead to find next internal vertex. There should be
-                    # at least one because we haven't seen any yet.
-                    rindex2 = rindex+1
-                    v2 = self.vertices[r[rindex2]]
-                    while not ptInHex(self.size, v2[0], v2[1]):
-                        rindex2 += 1
-                        v2 = self.vertices[r[rindex2]]
-
-                    # Swap direction if the region vertices are CCW.
-                    if dist(v2, ccw) < dist(v2, cw):
-                        startCcw = False
-
-                if not startCcw:
-                    t = ccw
-                    ccw = cw
-                    cw = t
-
-                verts.append(self.addVertex(ccw))
-                # Hex corners have an extra point in the middle.
-                if sid_prev != sid_next:
-                    verts.append(self.addVertex(self.seeds[sid]))
-                verts.append(self.addVertex(cw))
-        return verts
-
     def plotHexTileBorder(self, layer, style):
         p = Path()
         p.addPoints(self.vHex)
@@ -871,6 +848,31 @@ class VoronoiHexTile():
         p.set_style(style)
         SVG.add_node(layer, p)
 
+    def cleanupAnimation(self):
+        out_dir = os.path.join(self.options['out'], ANIM_SUBDIR)
+        anim_pngs = os.path.join(out_dir, '*.png')
+        for png in glob.glob(anim_pngs):
+            os.remove(png)
+
+    def exportAnimation(self):
+        anim_dir = os.path.join(self.options['out'], ANIM_SUBDIR)
+        cmd = ["convert"]
+        cmd.extend(["-delay", "15"])
+        cmd.extend(["-loop", "0"])
+        cmd.append(os.path.join(anim_dir, "hex-*"))
+
+        base = "hex"
+        if self.options['seed'] != None:
+            base = "hex-{0:d}".format(self.options['seed'])
+        last_file = "{0:s}-{1:03d}.png".format(base, self.iteration-1)
+        cmd.extend(["-delay", "100"])
+        cmd.append(os.path.join(anim_dir, last_file))
+
+        anim_file = os.path.join(self.options['out'], "{0:s}.gif".format(base))
+        cmd.append(anim_file)
+
+        subprocess.run(cmd)
+        
 OPTIONS = {
     'anim': {'type': 'bool', 'default': False,
              'desc': "Generate animation plots"},
@@ -922,14 +924,14 @@ def parse_options():
     options['out'] = "map-out"
 
     for opt,arg in opts:
-        # Build list of short and fullname for this option
+        # Build list of short and fullname for this option.
         for opt_name, opt_info in option_defs.items():
             option_flags = []
             if 'short' in opt_info:
                 option_flags.append('-{0}'.format(opt_info['short']))
             option_flags.append('--{0}'.format(opt_name))
 
-            # If matches this option
+            # If matches this option.
             if opt in option_flags:
                 type = opt_info['type']
                 if type == 'bool':
