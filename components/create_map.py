@@ -581,6 +581,7 @@ class VoronoiHexTile():
         self.circleRatio = 0
         self.minCircle = None
         self.maxCircle = None
+        return
     
         minCircleRadius = 0
         maxCircleRadius = 0
