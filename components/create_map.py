@@ -16,6 +16,8 @@ GENERATE_SVG = True
 GENERATE_PLOT = True
 ANIM_SUBDIR = "anim"
 
+NUM_SIDES = 6
+
 class VoronoiHexTile():
     def __init__(self, options):
         self.options = options
@@ -23,8 +25,7 @@ class VoronoiHexTile():
         self.size = self.options['size']
         self.xMax = (math.sqrt(3) * self.size) / 2
 
-        self.nSides = 6
-        self.nSeedsPerEdge = [int(x) for x in self.options['pattern'].split('-')]
+        self.initEdgePattern(self.options['pattern'])
         
         # This is used to position the exterior seeds around the outside of the tile.
         # These seed regions constrain the regions in the hex tile and allow us to ignore
@@ -96,25 +97,74 @@ class VoronoiHexTile():
         self.adjustmentGrow = -0.005  # -0.006
         self.adjustmentShrink = 0.005
 
-        # Edge patterns
+        self.rng = np.random.RandomState(self.options['seed'])
+
+    def initEdgePattern(self, patternString):
+        # EdgeRegionInfo:
+        # Array of region heights, one per region on this side.
+        self.edgeRegionInfo = {
+            '1': ['l', 'l', 'l'],
+            '2': ['l', 'l', 'l', 'l'],
+            '3': ['l', 'l', 'l', 'l', 'l'],
+            '4': ['l', 'l', 'l', 'l', 'l', 'l'],
+        }
+
+        # Edge seed info.
         # An array of seed positions along the edge.
         # Each seed position is:
         #   [ offset-along-edge, perpendicular-offset ]
-        self.edgePattern = {
-            1: [[1/2, 0]],
-            2: [[1/3, 0.03], [2/3, -0.03]],
-            3: [[1/4, 0],    [2/4, 0],      [3/4, 0]],
-            4: [[1/5, 0],    [2/5, 0],      [3/5, 0],      [4/5, 0]],
-            }
-        self.edgeWeights = {
-            1: [0.25 * self.size, 0.25 * self.size],
-            2: [0.22 * self.size, 0.22 * self.size],
-            3: [0.19 * self.size, 0.19 * self.size],
-            4: [0.18 * self.size, 0.18 * self.size],
-            }
-        self.centerWeight = 0.22 * self.size
+        self.edgeSeedInfo = {
+            '1': [[1/2, 0]],
+            '2': [[1/3, 0.03], [2/3, -0.03]],
+            '3': [[1/4, 0],    [2/4, 0],      [3/4, 0]],
+            '4': [[1/5, 0],    [2/5, 0],      [3/5, 0],      [4/5, 0]],
+        }
 
-        self.rng = np.random.RandomState(self.options['seed'])
+        self.edgeTypes = [x for x in patternString.split('-')]
+        if len(self.edgeTypes) != NUM_SIDES:
+            print("Invalid pattern", patternString)
+        self.nSeedsPerEdge = [len(self.edgeSeedInfo[x]) for x in self.edgeTypes]
+
+        # Verify that each edge pattern is consistent with its neighbors.
+        self.cornerType = []
+        for i in range(0, NUM_SIDES):
+            edge = self.edgeTypes[i]
+            edgeNext = self.edgeTypes[(i+1) % NUM_SIDES]
+            # Make sure last region type of this edge matches the first type of the next.
+            edgeRegionTypes = self.edgeRegionInfo[edge]
+            edgeNextRegionTypes = self.edgeRegionInfo[edgeNext]
+            if edgeRegionTypes[-1] != edgeNextRegionTypes[0]:
+                print("ERROR: Edge patterns don't connect: {0:s} ({1}) and {2:s} ({3})"
+                        .format(edge, '-'.join(edgeRegionTypes),
+                                edgeNext, '-'.join(edgeNextRegionTypes)))
+            self.cornerType.append(edgeRegionTypes[0])
+
+        # Record the terrain type for each region along the edge of the tile.        
+        self.seed2terrain = []
+        # Add the 6 corners.
+        for e in self.edgeTypes:
+            eInfo = self.edgeRegionInfo[e]
+            self.seed2terrain.append(eInfo[0])
+        # Add the seeds for each edge.
+        for e in self.edgeTypes:
+            eInfo = self.edgeRegionInfo[e]
+            # Add info for middle regions (trim off corners at front/back).
+            for ei in eInfo[1:-1]:
+                self.seed2terrain.append(ei)
+
+        self.cornerWeight = {
+            'l': 0.22 * self.size,
+            'm': 0.19 * self.size,
+            'h': 0.18 * self.size,
+        }
+        self.centerWeight = (sum([self.cornerWeight[i] for i in self.cornerType])
+                            / NUM_SIDES)
+        
+        self.regionStyle = {
+            'l': 'efecc6',
+            'm': 'dcc382',
+            'h': 'd69200',
+        }
 
     def init(self):
         self.initFixedSeeds()
@@ -136,12 +186,12 @@ class VoronoiHexTile():
         
         # Calculate seeds along hex edges
         vertices = []
-        for i0 in range(0, self.nSides):
-            i1 = (i0 + 1) % self.nSides
-            nSeeds = self.nSeedsPerEdge[i0]
-            pattern = self.edgePattern[nSeeds]
-            for j in range(0, nSeeds):
-                t, perp_t = pattern[j]
+        for i0 in range(0, NUM_SIDES):
+            i1 = (i0 + 1) % NUM_SIDES
+            edgeType = self.edgeTypes[i0]
+            seedPattern = self.edgeSeedInfo[edgeType]
+            for j in range(0, len(seedPattern)):
+                t, perp_t = seedPattern[j]
                 vertices.append(lerperp(self.vHex[i0], self.vHex[i1],
                                         t, perp_t))
         self.vEdgeSeeds = np.array(vertices)
@@ -152,12 +202,12 @@ class VoronoiHexTile():
     # by the hex boundary.
     def initEdgeMargin(self):
         seeds = [self.vHex[0]]
-        for i0 in range(0, self.nSides):
+        for i0 in range(0, NUM_SIDES):
             firstSeed = sum(self.nSeedsPerEdge[:i0])
             nEdgeSeeds = self.nSeedsPerEdge[i0]
             for j in range(firstSeed, firstSeed + nEdgeSeeds):
                 seeds.append(self.vEdgeSeeds[j])
-            i1 = (i0 + 1) % self.nSides
+            i1 = (i0 + 1) % NUM_SIDES
             seeds.append(self.vHex[i1])
         
         # Create edge margin points between the seeds.
@@ -255,8 +305,8 @@ class VoronoiHexTile():
         #              `-,_ : _,-'
         #                  `+'
         #                   3
-        for tri in range(0, self.nSides):
-            tri_next = (tri + 1) % self.nSides
+        for tri in range(0, NUM_SIDES):
+            tri_next = (tri + 1) % NUM_SIDES
             x1,y1 = self.vHex[tri]
             x2,y2 = self.vHex[tri_next]
 
@@ -284,7 +334,8 @@ class VoronoiHexTile():
             if fge(a, 0) and fge(b, 0) and fle(c, 1):
                 # Seed is within current triangle, calculate weight.
                 edgeType = self.nSeedsPerEdge[tri]
-                w1, w2 = self.edgeWeights[edgeType]
+                w1 = self.cornerWeight[self.cornerType[tri]]
+                w2 = self.cornerWeight[self.cornerType[tri_next]]
                 w3 = self.centerWeight
                 weight = a * w1 + b * w2 + c * w3
                 return weight
@@ -305,8 +356,8 @@ class VoronoiHexTile():
     # along the edges, which allows us to ignore unbounded regions.
     def initExteriorSeeds(self):
         vertices = []
-        for i0 in range(0, self.nSides):
-            i1 = (i0 + 1) % self.nSides
+        for i0 in range(0, NUM_SIDES):
+            i1 = (i0 + 1) % NUM_SIDES
             vertices.append(scale(self.vHex[i0], self.outerScale))
             nBoundarySeeds = self.nSeedsPerEdge[i0] + 1
             for j in range(0, nBoundarySeeds):
@@ -374,24 +425,24 @@ class VoronoiHexTile():
     # Calculate all regions with clipping.
     def calcClippedRegions(self):
         self.sid2region = {}
-        for sid in range(0, self.nSides):
+        for sid in range(0, NUM_SIDES):
             rid = self.vor.point_region[sid]
             vids = self.calcCornerVertices(sid, rid)
             self.sid2region[sid] = vids
-        for i0 in range(0, self.nSides):
-            i1 = (i0 + 1) % self.nSides
-            sid = self.nSides + sum(self.nSeedsPerEdge[:i0])
-            nSeeds = self.nSeedsPerEdge[i0]
+        for i0 in range(0, NUM_SIDES):
+            i1 = (i0 + 1) % NUM_SIDES
+            sid = NUM_SIDES + sum(self.nSeedsPerEdge[:i0])
 
             # Calc array of seed positions for this edge, including the corners:
             # [ 0, seeds..., 1 ]
-            pattern = self.edgePattern[nSeeds]
+            edgeType = self.edgeTypes[i0]
+            seedPattern = self.edgeSeedInfo[edgeType]
             edgeSeeds = [0]
-            for p in pattern:
+            for p in seedPattern:
                 edgeSeeds.append(p[0])
             edgeSeeds.append(1)
 
-            for j in range(0, nSeeds):
+            for j in range(0, len(seedPattern)):
                 rid = self.vor.point_region[sid + j]
                 t0 = lerp(edgeSeeds[j], edgeSeeds[j+1], 0.5)
                 t1 = lerp(edgeSeeds[j+1], edgeSeeds[j+2], 0.5)
@@ -403,8 +454,8 @@ class VoronoiHexTile():
             self.sid2region[sid] = self.vor.regions[rid]
 
     def calcCornerVertices(self, sid, rid):
-        sid_prev = (sid + self.nSides - 1) % self.nSides
-        sid_next = (sid + 1) % self.nSides
+        sid_prev = (sid + NUM_SIDES - 1) % NUM_SIDES
+        sid_next = (sid + 1) % NUM_SIDES
         edgeDiv_prev = 1 / (2 * (self.nSeedsPerEdge[sid_prev] + 1))
         edgeDiv_next = 1 / (2 * (self.nSeedsPerEdge[sid] + 1))
 
@@ -576,6 +627,7 @@ class VoronoiHexTile():
             self.seeds = np.append(self.seeds, self.vInteriorSeeds, 0)
         self.seeds = np.append(self.seeds, self.vOutsideSeeds, 0)
 
+        # Record offsets into the seed array.
         self.startCornerSeed = 0
         self.endCornerSeed = len(self.vHex)
         self.startEdgeSeed = self.endCornerSeed
@@ -697,11 +749,12 @@ class VoronoiHexTile():
         layer = self.svg.add_inkscape_layer('layer', "Layer")
         layer.set_transform("translate(105 148.5) scale(1, -1)")
 
-        stroke = Style()
-        stroke.set_fill("none")
-        stroke.set_stroke("#000000", "1px")
-
+        stroke = Style("none", "#000000", "1px")
         black_fill = Style("#000000", "none", "1px")
+        
+        terrain = {}
+        for type, style in self.regionStyle.items():
+            terrain[type] = Style("#{0:s}".format(style), "#000000", "1px")
 
         # Plot seed exclusion zones.
         layer_seed_ex = self.svg.add_inkscape_layer(
@@ -713,9 +766,7 @@ class VoronoiHexTile():
             center = self.vor.points[sid]
             radius = self.minSeedDistance
             id = "seed-ex-{0:d}".format(sid)
-            circle = SVG.circle(id, center[0], center[1], radius)
-            circle.set_style(fill)
-            SVG.add_node(layer_seed_ex, circle)
+            plotCircle(id, center, radius, fill, layer_seed_ex)
 
         # Plot edge margin exclusion zones.
         layer_margin_ex = self.svg.add_inkscape_layer(
@@ -726,9 +777,7 @@ class VoronoiHexTile():
         for id in range(0, len(self.edgeMargin)):
             center = self.edgeMargin[id]
             radius = self.edgeMarginSize
-            circle = SVG.circle(0, center[0], center[1], radius)
-            circle.set_style(fill)
-            SVG.add_node(layer_margin_ex, circle)
+            plotCircle(0, center, radius, fill, layer_margin_ex)
         
         # Plot regions and seeds.
         layer_region = self.svg.add_inkscape_layer('region', "Region", layer)
@@ -742,9 +791,7 @@ class VoronoiHexTile():
 
             center = self.seeds[sid]
             id = "seed-{0:d}".format(sid)
-            circle = SVG.circle(id, center[0], center[1], '1')
-            circle.set_style(black_fill)
-            SVG.add_node(layer_seeds, circle)
+            plotCircle(id, center, '1', black_fill, layer_seeds)
 
         # Draw clipped regions.
         layer_region_clip = self.svg.add_inkscape_layer(
@@ -752,7 +799,10 @@ class VoronoiHexTile():
         for sid in range(0, self.numActiveSeeds):
             vids = self.sid2region[sid]
             id = "clipregion-{0:d}".format(sid)
-            self.plotRegion(vids, layer_region_clip, stroke, True, id)
+            fill = stroke
+            if sid < len(self.seed2terrain):
+                fill = terrain[self.seed2terrain[sid]]
+            self.plotRegion(vids, layer_region_clip, fill, True, id)
 
         if len(self.badEdges) != 0:
             layer_bad_edges = self.svg.add_inkscape_layer(
@@ -772,14 +822,10 @@ class VoronoiHexTile():
         for sid in self.regionCircles:
             center, radius = self.regionCircles[sid]
             id = "incircle-{0:d}".format(sid)
-            circle = SVG.circle(id, center[0], center[1], radius)
-            circle.set_style(fill)
-            SVG.add_node(layer_circles, circle)
+            plotCircle(id, center, radius, fill, layer_circles)
 
             id = "incircle-ctr-{0:d}".format(sid)
-            circle = SVG.circle(id, center[0], center[1], '0.5')
-            circle.set_style(black_fill)
-            SVG.add_node(layer_circles, circle)
+            plotCircle(id, center, '0.5', black_fill, layer_circles)
         if self.circleRatio > self.circleRatioThreshold:
             for c in [self.minCircle, self.maxCircle]:
                 center, radius = self.regionCircles[c]
@@ -873,6 +919,12 @@ class VoronoiHexTile():
 
         subprocess.run(cmd)
         
+def plotCircle(id, center, radius, fill, layer):
+    circle = SVG.circle(id, center[0], center[1], radius)
+    circle.set_style(fill)
+    SVG.add_node(layer, circle)
+
+
 OPTIONS = {
     'anim': {'type': 'bool', 'default': False,
              'desc': "Generate animation plots"},
