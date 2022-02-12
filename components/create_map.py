@@ -139,7 +139,8 @@ class VoronoiHexTile():
         for i in range(0, NUM_SIDES):
             edge = self.edgeTypes[i]
             edgeNext = self.edgeTypes[(i+1) % NUM_SIDES]
-            # Make sure last region type of this edge matches the first type of the next.
+            # Make sure last region type of this edge matches the first type of
+            # the next.
             edgeRegionTypes = EDGE_REGION_INFO[edge]
             edgeNextRegionTypes = EDGE_REGION_INFO[edgeNext]
             if edgeRegionTypes[-1] != edgeNextRegionTypes[0]:
@@ -477,13 +478,18 @@ class VoronoiHexTile():
             self.sid2region[sid] = self.vor.regions[rid]
 
     def calcCornerVertices(self, sid, rid):
+        # Calc prev and next hex corner.
         sid_prev = (sid + NUM_SIDES - 1) % NUM_SIDES
         sid_next = (sid + 1) % NUM_SIDES
-        edgeDiv_prev = 1 / (2 * (self.nSeedsPerEdge[sid_prev] + 1))
-        edgeDiv_next = 1 / (2 * (self.nSeedsPerEdge[sid] + 1))
+
+        # Calc |t| for each edge lerp, when starting from |sid|. 
+        edgeType_prev = self.edgeTypes[sid_prev]
+        edgeType = self.edgeTypes[sid]
+        edgeDiv_prev = 0.5 * (1.0 - EDGE_SEED_INFO[edgeType_prev][-1][0])
+        edgeDiv = 0.5 * EDGE_SEED_INFO[edgeType][0][0]
 
         return self.__calcEdgeVertices(rid, sid, sid_prev, sid_next,
-                                       edgeDiv_prev, edgeDiv_next)
+                                       edgeDiv_prev, edgeDiv)
 
     def calcEdgeVertices(self, sid0, sid1, rid, t_ccw, t_cw):
         return self.__calcEdgeVertices(rid, sid0, sid1, sid1, t_ccw, t_cw)
@@ -572,8 +578,10 @@ class VoronoiHexTile():
     # Find any regions that are too small.
     def findSmallRegions(self):
         self.regionCircles = {}
+        self.circleRatio = 0
         self.minCircle = None
         self.maxCircle = None
+    
         minCircleRadius = 0
         maxCircleRadius = 0
         for sid in range(0, self.endInteriorSeed):
@@ -672,8 +680,25 @@ class VoronoiHexTile():
         self.firstNewVertex = len(self.vertices)
 
         self.analyze()
+        
+        self.printIteration(self.iteration if self.iteration > 0 else "START")
         if self.options['anim']:
             self.plot(self.iteration)
+        self.iteration += 1
+        
+    def printIteration(self, i):
+        print("Iteration", i, end='')
+        print(" -", len(self.badEdges), "bad edges", end='')
+        min = self.minCircle
+        max = self.maxCircle
+        if min and max:
+            print(" - {0:d} {1:.5g} {2:d} {3:.5g}"
+                  .format(min, self.regionCircles[min][1],
+                          max, self.regionCircles[max][1]), end='')
+            print(" - ratio {0:.5g}".format(self.circleRatio), end='')
+        if self.circleRatio > self.circleRatioThreshold:
+            print(" - adj min/max", end='')
+        print()
         
     def analyze(self):
         # Create a dict to map from region id to seed id.
@@ -706,21 +731,8 @@ class VoronoiHexTile():
         self.findSmallRegions()
 
     def update(self):
-        if self.iteration >= self.maxIterations:
+        if self.iteration > self.maxIterations:
             return False
-
-        print("Iteration", self.iteration, end='')
-        print(" -", len(self.badEdges), "bad edges", end='')
-        min = self.minCircle
-        max = self.maxCircle
-        print(" - {0:d} {1:.5g} {2:d} {3:.5g}"
-              .format(min, self.regionCircles[min][1],
-                      max, self.regionCircles[max][1]), end='')
-        print(" - ratio {0:.5g}".format(self.circleRatio), end='')
-        if self.circleRatio > self.circleRatioThreshold:
-            print(" - adj min/max", end='')
-        print()
-        self.iteration += 1
         hasChanges = False
         self.adjustments = {}
 
@@ -731,6 +743,9 @@ class VoronoiHexTile():
         for bei in self.badEdges:
             badEdge = self.badEdges[bei]
             vid0, vid1, sid0 = badEdge[0]
+            if len(badEdge) < 2:
+                print("Matching edge not found for", sid0, vid0, vid1)
+                continue
             sid1 = badEdge[1][2]
 
             # Calc mid-point of bad edge
