@@ -18,6 +18,35 @@ ANIM_SUBDIR = "anim"
 
 NUM_SIDES = 6
 
+# EdgeRegionInfo:
+# Each dict entry contains an array of region heights, one per region on this side.
+EDGE_REGION_INFO = {
+    '1': ['l', 'l', 'l'],
+    '2': ['l', 'l', 'l', 'l'],
+    '2b': ['l', 'l', 'm', 'm'],
+    '2r': ['m', 'm', 'l', 'l'],
+    '3': ['m', 'm', 'm', 'm', 'm'],
+    '4': ['l', 'l', 'l', 'l', 'l', 'l'],
+}
+
+# Edge seed info.
+# Each dict entry contains an array of seed positions along the edge.
+# Each seed position is:
+#   [ offset-along-edge, perpendicular-offset ]
+EDGE_SEED_INFO = {
+    '1': [[1/2, 0]],
+    '2': [[1/3, 0.03], [2/3, -0.03]],
+    '2b': [[0.35, 0.02], [0.70, -0.03]],
+    '2r': [[0.30, 0.03], [0.65, -0.02]],
+    '3': [[1/4, 0],    [2/4, 0],      [3/4, 0]],
+    '4': [[1/5, 0],    [2/5, 0],      [3/5, 0],      [4/5, 0]],
+}
+
+# Minimum seed distance based on terrain type.
+MIN_DISTANCE_L = 0.22
+MIN_DISTANCE_M = 0.19
+MIN_DISTANCE_H = 0.18
+
 class VoronoiHexTile():
     def __init__(self, options):
         self.options = options
@@ -100,30 +129,10 @@ class VoronoiHexTile():
         self.rng = np.random.RandomState(self.options['seed'])
 
     def initEdgePattern(self, patternString):
-        # EdgeRegionInfo:
-        # Array of region heights, one per region on this side.
-        self.edgeRegionInfo = {
-            '1': ['l', 'l', 'l'],
-            '2': ['l', 'l', 'l', 'l'],
-            '3': ['l', 'l', 'l', 'l', 'l'],
-            '4': ['l', 'l', 'l', 'l', 'l', 'l'],
-        }
-
-        # Edge seed info.
-        # An array of seed positions along the edge.
-        # Each seed position is:
-        #   [ offset-along-edge, perpendicular-offset ]
-        self.edgeSeedInfo = {
-            '1': [[1/2, 0]],
-            '2': [[1/3, 0.03], [2/3, -0.03]],
-            '3': [[1/4, 0],    [2/4, 0],      [3/4, 0]],
-            '4': [[1/5, 0],    [2/5, 0],      [3/5, 0],      [4/5, 0]],
-        }
-
-        self.edgeTypes = [x for x in patternString.split('-')]
+        self.edgeTypes = patternString.split('-')
         if len(self.edgeTypes) != NUM_SIDES:
             print("Invalid pattern", patternString)
-        self.nSeedsPerEdge = [len(self.edgeSeedInfo[x]) for x in self.edgeTypes]
+        self.nSeedsPerEdge = [len(EDGE_SEED_INFO[x]) for x in self.edgeTypes]
 
         # Verify that each edge pattern is consistent with its neighbors.
         self.cornerType = []
@@ -131,10 +140,10 @@ class VoronoiHexTile():
             edge = self.edgeTypes[i]
             edgeNext = self.edgeTypes[(i+1) % NUM_SIDES]
             # Make sure last region type of this edge matches the first type of the next.
-            edgeRegionTypes = self.edgeRegionInfo[edge]
-            edgeNextRegionTypes = self.edgeRegionInfo[edgeNext]
+            edgeRegionTypes = EDGE_REGION_INFO[edge]
+            edgeNextRegionTypes = EDGE_REGION_INFO[edgeNext]
             if edgeRegionTypes[-1] != edgeNextRegionTypes[0]:
-                print("ERROR: Edge patterns don't connect: {0:s} ({1}) and {2:s} ({3})"
+                error("Edge patterns don't connect: {0:s} ({1}) and {2:s} ({3})"
                         .format(edge, '-'.join(edgeRegionTypes),
                                 edgeNext, '-'.join(edgeNextRegionTypes)))
             self.cornerType.append(edgeRegionTypes[0])
@@ -143,22 +152,24 @@ class VoronoiHexTile():
         self.seed2terrain = []
         # Add the 6 corners.
         for e in self.edgeTypes:
-            eInfo = self.edgeRegionInfo[e]
+            eInfo = EDGE_REGION_INFO[e]
             self.seed2terrain.append(eInfo[0])
         # Add the seeds for each edge.
         for e in self.edgeTypes:
-            eInfo = self.edgeRegionInfo[e]
+            eInfo = EDGE_REGION_INFO[e]
             # Add info for middle regions (trim off corners at front/back).
             for ei in eInfo[1:-1]:
                 self.seed2terrain.append(ei)
 
         self.cornerWeight = {
-            'l': 0.22 * self.size,
-            'm': 0.19 * self.size,
-            'h': 0.18 * self.size,
+            'l': MIN_DISTANCE_L * self.size,
+            'm': MIN_DISTANCE_M * self.size,
+            'h': MIN_DISTANCE_H * self.size,
         }
+        
         self.centerWeight = (sum([self.cornerWeight[i] for i in self.cornerType])
                             / NUM_SIDES)
+        print("Center weight;", self.centerWeight)
         
         self.regionStyle = {
             'l': 'efecc6',
@@ -189,7 +200,7 @@ class VoronoiHexTile():
         for i0 in range(0, NUM_SIDES):
             i1 = (i0 + 1) % NUM_SIDES
             edgeType = self.edgeTypes[i0]
-            seedPattern = self.edgeSeedInfo[edgeType]
+            seedPattern = EDGE_SEED_INFO[edgeType]
             for j in range(0, len(seedPattern)):
                 t, perp_t = seedPattern[j]
                 vertices.append(lerperp(self.vHex[i0], self.vHex[i1],
@@ -223,18 +234,24 @@ class VoronoiHexTile():
     def initInteriorSeeds(self):
         startSeeds = np.concatenate((self.vHex, self.vEdgeSeeds))
 
-        activeSeeds = startSeeds.tolist()
+        # Calc mininum seed distance based on seed location.
+        seed2minDistance = []
+        for i in range(0, len(startSeeds)):
+            seed2minDistance.append(self.calcSeedDistance(startSeeds[i]))
+
+        activeSeedIds = [x for x in range(0, len(startSeeds))]
         allSeeds = startSeeds.tolist()
         newSeeds = []
-        while len(activeSeeds) > 0:
+        while len(activeSeedIds) > 0:
             # Choose a random active seed.
-            i = self.rng.randint(len(activeSeeds))
+            i = self.rng.randint(len(activeSeedIds))
+            sid = activeSeedIds[i]
             found = False
             numAttempts = self.seedAttempts
-            minSeed = self.calcSeedDistance(activeSeeds[i])
+            minSeed = seed2minDistance[sid]
             while not found and numAttempts > 0:
                 seed = self.calcRandomSeedBridson(
-                    activeSeeds[i], minSeed, 2 * minSeed)
+                    allSeeds[sid], minSeed, 2 * minSeed)
                 if not ptInHex(self.size, seed[0], seed[1]):
                     seed = None
                     continue
@@ -247,8 +264,9 @@ class VoronoiHexTile():
                     continue
                     
                 # Make sure it's no too close to any existing seeds.
-                for s in allSeeds:
-                    if near(s, seed, self.minSeedDistance):
+                for sid2 in range(0, len(allSeeds)):
+                    s = allSeeds[sid2]
+                    if near(s, seed, seed2minDistance[sid2]):
                         seed = None
                         numAttempts -= 1
                         break
@@ -258,13 +276,15 @@ class VoronoiHexTile():
                 found = True
                 
             if seed == None:
-                activeSeeds.pop(i)
+                activeSeedIds.pop(i)
             else:
-                activeSeeds.append(seed)
+                activeSeedIds.append(len(allSeeds))
                 allSeeds.append(seed)
                 newSeeds.append(seed)
+                seed2minDistance.append(self.calcSeedDistance(seed))
 
         self.vInteriorSeeds = np.array(newSeeds)
+        self.seed2minDistance = seed2minDistance
 
     # Calc the min seed distance based on the current seed location in the hex tile.
     # Seeds in higher density regions will have a smaller distance than those in low
@@ -331,6 +351,8 @@ class VoronoiHexTile():
             # Note that if the seed is along an edge between 2 triangles, it doesn't
             # matter which triangle we choose since the weighted-distance will be the same
             # either way. So we just take the first match.
+            # Note: Some of the edge seeds are actually slightly outside the hexagon (so
+            # that |c| is < 0), but this is OK.
             if fge(a, 0) and fge(b, 0) and fle(c, 1):
                 # Seed is within current triangle, calculate weight.
                 edgeType = self.nSeedsPerEdge[tri]
@@ -339,7 +361,8 @@ class VoronoiHexTile():
                 w3 = self.centerWeight
                 weight = a * w1 + b * w2 + c * w3
                 return weight
-        return self.minSeedDistance
+        error("Unable to calculate seed distance for {0}".format(baseSeed))
+        return 0
         
     # Generate a random x,y point within a ring (defined by |r0| and |r1|) around the
     # given |baseSeed|.
@@ -436,7 +459,7 @@ class VoronoiHexTile():
             # Calc array of seed positions for this edge, including the corners:
             # [ 0, seeds..., 1 ]
             edgeType = self.edgeTypes[i0]
-            seedPattern = self.edgeSeedInfo[edgeType]
+            seedPattern = EDGE_SEED_INFO[edgeType]
             edgeSeeds = [0]
             for p in seedPattern:
                 edgeSeeds.append(p[0])
@@ -659,6 +682,11 @@ class VoronoiHexTile():
             rid = self.vor.point_region[sid]
             self.rid2sid[rid] = sid
 
+        # Recalculate the min seed distance for each seed.
+        self.seed2minDistance = []
+        for i in range(0, self.numActiveSeeds):
+            self.seed2minDistance.append(self.calcSeedDistance(self.seeds[i]))
+
         self.calcClippedRegions()
 
         # Verify that all voronoi vertices are shared by 3 seed regions.
@@ -756,29 +784,17 @@ class VoronoiHexTile():
         for type, style in self.regionStyle.items():
             terrain[type] = Style("#{0:s}".format(style), "#000000", "1px")
 
-        # Plot seed exclusion zones.
-        layer_seed_ex = self.svg.add_inkscape_layer(
-            'seed_exclusion', "Seed Exclusion", layer)
-        layer_seed_ex.hide()
-        fill = Style("#800000", "none", "1px")
-        fill.set('fill-opacity', 0.15)
+        # Draw clipped regions.
+        layer_region_clip = self.svg.add_inkscape_layer(
+            'region-clip', "Region Clipped", layer)
         for sid in range(0, self.numActiveSeeds):
-            center = self.vor.points[sid]
-            radius = self.minSeedDistance
-            id = "seed-ex-{0:d}".format(sid)
-            plotCircle(id, center, radius, fill, layer_seed_ex)
+            vids = self.sid2region[sid]
+            id = "clipregion-{0:d}".format(sid)
+            fill = stroke
+            if sid < len(self.seed2terrain):
+                fill = terrain[self.seed2terrain[sid]]
+            self.plotRegion(vids, layer_region_clip, fill, True, id)
 
-        # Plot edge margin exclusion zones.
-        layer_margin_ex = self.svg.add_inkscape_layer(
-            'margin_exclusion', "Margin Exclusion", layer)
-        layer_margin_ex.hide()
-        fill = Style("#000080", "none", "1px")
-        fill.set('fill-opacity', 0.15)
-        for id in range(0, len(self.edgeMargin)):
-            center = self.edgeMargin[id]
-            radius = self.edgeMarginSize
-            plotCircle(0, center, radius, fill, layer_margin_ex)
-        
         # Plot regions and seeds.
         layer_region = self.svg.add_inkscape_layer('region', "Region", layer)
         layer_region.hide()
@@ -793,17 +809,29 @@ class VoronoiHexTile():
             id = "seed-{0:d}".format(sid)
             plotCircle(id, center, '1', black_fill, layer_seeds)
 
-        # Draw clipped regions.
-        layer_region_clip = self.svg.add_inkscape_layer(
-            'region-clip', "Region Clipped", layer)
+        # Plot seed exclusion zones.
+        layer_seed_ex = self.svg.add_inkscape_layer(
+            'seed_exclusion', "Seed Exclusion", layer)
+        layer_seed_ex.hide()
+        fill = Style("#800000", "none", "1px")
+        fill.set('fill-opacity', 0.15)
         for sid in range(0, self.numActiveSeeds):
-            vids = self.sid2region[sid]
-            id = "clipregion-{0:d}".format(sid)
-            fill = stroke
-            if sid < len(self.seed2terrain):
-                fill = terrain[self.seed2terrain[sid]]
-            self.plotRegion(vids, layer_region_clip, fill, True, id)
+            center = self.vor.points[sid]
+            radius = self.seed2minDistance[sid]
+            id = "seed-ex-{0:d}".format(sid)
+            plotCircle(id, center, radius, fill, layer_seed_ex)
 
+        # Plot edge margin exclusion zones.
+        layer_margin_ex = self.svg.add_inkscape_layer(
+            'margin_exclusion', "Margin Exclusion", layer)
+        layer_margin_ex.hide()
+        fill = Style("#000080", "none", "1px")
+        fill.set('fill-opacity', 0.15)
+        for id in range(0, len(self.edgeMargin)):
+            center = self.edgeMargin[id]
+            radius = self.edgeMarginSize
+            plotCircle(0, center, radius, fill, layer_margin_ex)
+        
         if len(self.badEdges) != 0:
             layer_bad_edges = self.svg.add_inkscape_layer(
                 'bad-edges', "Bad Edges", layer)
@@ -924,6 +952,9 @@ def plotCircle(id, center, radius, fill, layer):
     circle.set_style(fill)
     SVG.add_node(layer, circle)
 
+def error(msg):
+    print("ERROR:", msg)
+    sys.exit(0)
 
 OPTIONS = {
     'anim': {'type': 'bool', 'default': False,
