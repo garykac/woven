@@ -16,6 +16,7 @@ from svg import SVG, Style, Node, Path
 GENERATE_SVG = True
 GENERATE_PLOT = True
 ANIM_SUBDIR = "anim"
+ENABLE_SMALL_REGION_CHECK = False
 
 NUM_SIDES = 6
 
@@ -599,7 +600,6 @@ class VoronoiHexTile():
         self.circleRatio = 0
         self.minCircle = None
         self.maxCircle = None
-        return
     
         minCircleRadius = 0
         maxCircleRadius = 0
@@ -708,15 +708,18 @@ class VoronoiHexTile():
     def printIteration(self, i):
         print("Iteration", i, end='')
         print(" -", len(self.badEdges), "bad edges", end='')
-        min = self.minCircle
-        max = self.maxCircle
-        if min and max:
-            print(" - {0:d} {1:.5g} {2:d} {3:.5g}"
-                  .format(min, self.regionCircles[min][1],
-                          max, self.regionCircles[max][1]), end='')
-            print(" - ratio {0:.5g}".format(self.circleRatio), end='')
-        if self.circleRatio > self.circleRatioThreshold:
-            print(" - adj min/max", end='')
+
+        if ENABLE_SMALL_REGION_CHECK:
+            min = self.minCircle
+            max = self.maxCircle
+            if min and max:
+                print(" - {0:d} {1:.5g} {2:d} {3:.5g}"
+                      .format(min, self.regionCircles[min][1],
+                              max, self.regionCircles[max][1]), end='')
+                print(" - ratio {0:.5g}".format(self.circleRatio), end='')
+            if self.circleRatio > self.circleRatioThreshold:
+                print(" - adj min/max", end='')
+
         print()
         
     def analyze(self):
@@ -747,7 +750,8 @@ class VoronoiHexTile():
                 print("Error - vertex shared by more than 3 regions:", k, v)
         
         self.findBadEdges()
-        self.findSmallRegions()
+        if ENABLE_SMALL_REGION_CHECK:
+            self.findSmallRegions()
 
     def update(self):
         if self.iteration > self.maxIterations:
@@ -876,23 +880,24 @@ class VoronoiHexTile():
                 self.plotVertex(self.vertices[vid1], layer_bad_edges)
 
         # Plot inscribed circles for each region.
-        layer_circles = self.svg.add_inkscape_layer(
-            'circles', "Inscribed Circles", layer)
-        layer_circles.hide()
-        fill = Style("#008000", "none", "1px")
-        fill.set('fill-opacity', 0.15)
-        for sid in self.regionCircles:
-            center, radius = self.regionCircles[sid]
-            id = "incircle-{0:d}".format(sid)
-            plotCircle(id, center, radius, fill, layer_circles)
+        if ENABLE_SMALL_REGION_CHECK:
+            layer_circles = self.svg.add_inkscape_layer(
+                'circles', "Inscribed Circles", layer)
+            layer_circles.hide()
+            fill = Style("#008000", "none", "1px")
+            fill.set('fill-opacity', 0.15)
+            for sid in self.regionCircles:
+                center, radius = self.regionCircles[sid]
+                id = "incircle-{0:d}".format(sid)
+                plotCircle(id, center, radius, fill, layer_circles)
 
-            id = "incircle-ctr-{0:d}".format(sid)
-            plotCircle(id, center, '0.5', black_fill, layer_circles)
-        if self.circleRatio > self.circleRatioThreshold:
-            for c in [self.minCircle, self.maxCircle]:
-                center, radius = self.regionCircles[c]
-                circle = plt.Circle(center, radius, color="#80000080")
-                plt.gca().add_patch(circle)
+                id = "incircle-ctr-{0:d}".format(sid)
+                plotCircle(id, center, '0.5', black_fill, layer_circles)
+            if self.circleRatio > self.circleRatioThreshold:
+                for c in [self.minCircle, self.maxCircle]:
+                    center, radius = self.regionCircles[c]
+                    circle = plt.Circle(center, radius, color="#80000080")
+                    plt.gca().add_patch(circle)
             
         self.plotHexTileBorder(layer, stroke)
         
