@@ -902,7 +902,8 @@ class VoronoiHexTile():
                     circle = plt.Circle(center, radius, color="#80000080")
                     plt.gca().add_patch(circle)
             
-        self.plotHexTileBorder(layer, stroke)
+        layer_border = self.svg.add_inkscape_layer('border', "Border", layer)
+        self.plotHexTileBorder(stroke, layer_border)
         
         out_dir = self.options['out']
         if self.options['seed'] == None:
@@ -959,7 +960,7 @@ class VoronoiHexTile():
         p.set_style(Style(color, "#000000", "1px"))
         SVG.add_node(layer, p)
 
-    def plotHexTileBorder(self, layer, style):
+    def plotHexTileBorder(self, style, layer):
         p = Path()
         p.addPoints(self.vHex)
         p.end()
