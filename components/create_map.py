@@ -59,6 +59,14 @@ REGION_STYLE = {
     'h': '#d69200',
 }
 
+# NOTE: Default units for SVG is mm.
+
+STROKE_COLOR = "#000000"
+STROKE_WIDTH = 0.3
+
+RIVER_COLOR = "#a2c6ff"
+RIVER_WIDTH = 2.0
+
 class VoronoiHexTile():
     def __init__(self, options):
         self.options = options
@@ -821,8 +829,8 @@ class VoronoiHexTile():
         layer = self.svg.add_inkscape_layer('layer', "Layer")
         layer.set_transform("translate(105 148.5) scale(1, -1)")
 
-        stroke = Style("none", "#000000", "1px")
-        black_fill = Style("#000000", "none", "1px")
+        stroke = Style("none", "#000000", STROKE_WIDTH)
+        black_fill = Style(fill="#000000")
         
         # Draw clipped regions.
         layer_region_clip = self.svg.add_inkscape_layer(
@@ -849,29 +857,29 @@ class VoronoiHexTile():
 
             center = self.seeds[sid]
             id = "seed-{0:d}".format(sid)
-            plotCircle(id, center, '1', black_fill, layer_seeds)
+            drawCircle(id, center, 1.0, black_fill, layer_seeds)
 
         # Plot seed exclusion zones.
         layer_seed_ex = self.svg.add_inkscape_layer(
             'seed_exclusion', "Seed Exclusion", layer)
         layer_seed_ex.hide()
-        fill = Style("#800000", "none", "1px")
+        fill = Style(fill="#800000")
         fill.set('fill-opacity', 0.15)
         for sid in range(0, self.numActiveSeeds):
             center = self.vor.points[sid]
             radius = self.seed2minDistance[sid]
             id = "seed-ex-{0:d}".format(sid)
-            plotCircle(id, center, radius, fill, layer_seed_ex)
+            drawCircle(id, center, radius, fill, layer_seed_ex)
 
         # Plot edge margin exclusion zones.
         layer_margin_ex = self.svg.add_inkscape_layer(
             'margin_exclusion', "Margin Exclusion", layer)
         layer_margin_ex.hide()
-        fill = Style("#000080", "none", "1px")
+        fill = Style(fill="#000080")
         fill.set('fill-opacity', 0.15)
         for mz in self.edgeMarginZone:
             center, radius = mz
-            plotCircle(0, center, radius, fill, layer_margin_ex)
+            drawCircle(0, center, radius, fill, layer_margin_ex)
         
         if len(self.badEdges) != 0:
             layer_bad_edges = self.svg.add_inkscape_layer(
@@ -887,23 +895,24 @@ class VoronoiHexTile():
             layer_circles = self.svg.add_inkscape_layer(
                 'circles', "Inscribed Circles", layer)
             layer_circles.hide()
-            fill = Style("#008000", "none", "1px")
+            fill = Style(fill="#008000")
             fill.set('fill-opacity', 0.15)
             for sid in self.regionCircles:
                 center, radius = self.regionCircles[sid]
                 id = "incircle-{0:d}".format(sid)
-                plotCircle(id, center, radius, fill, layer_circles)
+                drawCircle(id, center, radius, fill, layer_circles)
 
                 id = "incircle-ctr-{0:d}".format(sid)
-                plotCircle(id, center, '0.5', black_fill, layer_circles)
+                drawCircle(id, center, '0.5', black_fill, layer_circles)
             if self.circleRatio > self.circleRatioThreshold:
                 for c in [self.minCircle, self.maxCircle]:
                     center, radius = self.regionCircles[c]
                     circle = plt.Circle(center, radius, color="#80000080")
                     plt.gca().add_patch(circle)
-            
-        layer_border = self.svg.add_inkscape_layer('border', "Border", layer)
-        self.plotHexTileBorder(stroke, layer_border)
+
+        self.drawRiverSegments(layer)
+
+        self.drawHexTileBorder(stroke, layer)
         
         out_dir = self.options['out']
         if self.options['seed'] == None:
@@ -933,12 +942,46 @@ class VoronoiHexTile():
             plt.savefig(out, bbox_inches='tight')
         plt.close(fig)
 
+    # Draw river segments on all internal edges.
+    def drawRiverSegments(self, layer):
+        layer_river_border = self.svg.add_inkscape_layer(
+            'river-border', "River Border", layer)
+        layer_river_border.hide()
+        style_river_border = Style(None, STROKE_COLOR,
+                                   RIVER_WIDTH + 2 * STROKE_WIDTH)
+        style_river_border.set("stroke-linecap", "round")
+        style_river_border.set("stroke-linejoin", "round")
+        for rv in self.vor.ridge_vertices:
+            if rv[0] == -1 or rv[1] == -1:
+                continue
+            p = Path()
+            for i in [0,1]:
+                p.addPoint(self.vertices[rv[i]])
+            p.end()
+            p.set_style(style_river_border)
+            SVG.add_node(layer_river_border, p)
+
+        layer_river = self.svg.add_inkscape_layer('river', "River", layer)
+        layer_river.hide()
+        style_river = Style(None, RIVER_COLOR, RIVER_WIDTH)
+        style_river.set("stroke-linecap", "round")
+        style_river.set("stroke-linejoin", "round")
+        for rv in self.vor.ridge_vertices:
+            if rv[0] == -1 or rv[1] == -1:
+                continue
+            p = Path()
+            for i in [0,1]:
+                p.addPoint(self.vertices[rv[i]])
+            p.end()
+            p.set_style(style_river)
+            SVG.add_node(layer_river, p)
+        
     def plotVertex(self, v, layer):
         circle = plt.Circle(v, 1, color="r")
         plt.gca().add_patch(circle)
 
         circle = SVG.circle(0, v[0], v[1], '2')
-        circle.set_style(Style("#800000", "none", "1px"))
+        circle.set_style(Style(fill="#800000"))
         SVG.add_node(layer, circle)
 
     # Plot voronoi region given a list of vertex ids.
@@ -957,15 +1000,16 @@ class VoronoiHexTile():
         p = Path() if id == None else Path(id)
         p.addPoints(vertices)
         p.end()
-        p.set_style(Style(color, "#000000", "1px"))
+        p.set_style(Style(color, STROKE_COLOR, STROKE_WIDTH))
         SVG.add_node(layer, p)
 
-    def plotHexTileBorder(self, style, layer):
+    def drawHexTileBorder(self, style, layer):
+        layer_border = self.svg.add_inkscape_layer('border', "Border", layer)
         p = Path()
         p.addPoints(self.vHex)
         p.end()
         p.set_style(style)
-        SVG.add_node(layer, p)
+        SVG.add_node(layer_border, p)
 
     def cleanupAnimation(self):
         out_dir = os.path.join(self.options['out'], ANIM_SUBDIR)
@@ -992,7 +1036,7 @@ class VoronoiHexTile():
 
         subprocess.run(cmd)
         
-def plotCircle(id, center, radius, fill, layer):
+def drawCircle(id, center, radius, fill, layer):
     circle = SVG.circle(id, center[0], center[1], radius)
     circle.set_style(fill)
     SVG.add_node(layer, circle)

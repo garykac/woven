@@ -57,7 +57,7 @@ class Style(object):
         self.props = {
             'fill': fill,
             'stroke': stroke,
-            'stroke-width': strokeWidth,
+            'stroke-width': str(strokeWidth),
         }
 
     def get(self, attr):
