@@ -82,14 +82,13 @@ class VoronoiHexTile():
         #self.minSeedDistance = 0.19 * self.size  # 3
         #self.minSeedDistance = 0.18 * self.size  # 4
 
-        # The edgeMargin is a set of circles along the edge between the seeds.
-        # They define an exclusion zone between the seeds so that the voronoi
-        # vertex does not fall outside the hex tile boundary.
-        self.edgeMargin = None
-        self.edgeMarginSize = 0
-        # Margin scale of 1.0 means that voronoi lines can end exactly at the
-        # hex tile edge (which we don't want). Use value > 1.0 to enforce min
-        # line width.
+        # The edgeMarginZone is a set of circles along the edge between the
+        # seeds. They define an exclusion zone between the seeds so that the
+        # voronoi vertex does not fall outside the hex tile boundary.
+        self.edgeMarginZone = None
+        # Margin scale of 1.0 means that voronoi ridges that cross the hex tile
+        # edge can end exactly at the tile edge (which we don't want). Use a
+        # value > 1.0 to enforce min length for these ridge segments.
         self.edgeMarginScale = 1.1
 
         # Min distance between 2 voronoi vertices along a ridge.
@@ -195,7 +194,7 @@ class VoronoiHexTile():
 
     def init(self):
         self.initFixedSeeds()
-        self.initEdgeMargin()
+        self.initEdgeMarginZone()
         self.initInteriorSeeds()
         self.initExteriorSeeds()
 
@@ -227,7 +226,7 @@ class VoronoiHexTile():
     # These zone prevent seeds from getting too close to the tile boundary where
     # they would cause voronoi ridges that are too small, or cause the region to
     # be clipped by the hex boundary.
-    def initEdgeMargin(self):
+    def initEdgeMarginZone(self):
         seeds = [self.vHex[0]]
         for i0 in range(0, NUM_SIDES):
             firstSeed = sum(self.nSeedsPerEdge[:i0])
@@ -240,11 +239,11 @@ class VoronoiHexTile():
         # Create edge margin points between the seeds.
         marginPoints = []
         for i in range(0, len(seeds)-1):
-            marginPoints.append(lerp_pt(seeds[i], seeds[i+1], 0.5))
+            pt = lerp_pt(seeds[i], seeds[i+1], 0.5)
+            size = self.edgeMarginScale * 0.5 * dist(seeds[i], seeds[i+1])
+            marginPoints.append([pt, size])
 
-        self.edgeMarginSize = (self.edgeMarginScale
-                               * self.size / (2 * (nEdgeSeeds + 1)))
-        self.edgeMargin = np.array(marginPoints)
+        self.edgeMarginZone = marginPoints
 
     # Generate the interior seed points.
     def initInteriorSeeds(self):
@@ -272,8 +271,9 @@ class VoronoiHexTile():
                     seed = None
                     continue
                 # Also not too close the the edge margin region.
-                for m in self.edgeMargin:
-                    if near(m, seed, self.edgeMarginSize):
+                for mz in self.edgeMarginZone:
+                    pt, radius = mz
+                    if near(pt, seed, radius):
                         seed = None
                         break
                 if not seed:
@@ -862,9 +862,8 @@ class VoronoiHexTile():
         layer_margin_ex.hide()
         fill = Style("#000080", "none", "1px")
         fill.set('fill-opacity', 0.15)
-        for id in range(0, len(self.edgeMargin)):
-            center = self.edgeMargin[id]
-            radius = self.edgeMarginSize
+        for mz in self.edgeMarginZone:
+            center, radius = mz
             plotCircle(0, center, radius, fill, layer_margin_ex)
         
         if len(self.badEdges) != 0:
