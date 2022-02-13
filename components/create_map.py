@@ -189,9 +189,13 @@ class VoronoiHexTile():
             'm': MIN_DISTANCE_M * self.size,
             'h': MIN_DISTANCE_H * self.size,
         }
-        
-        self.centerWeight = (sum([self.cornerWeight[i] for i in self.cornerType])
-                            / NUM_SIDES)
+
+        if self.options['center'] == None:
+            # Calculate center as average of all corner weights.
+            self.centerWeight = (
+                sum([self.cornerWeight[i] for i in self.cornerType]) / NUM_SIDES)
+        else:
+            self.centerWeight = self.cornerWeight[self.options['center']]
         print("Center weight;", self.centerWeight)
 
     def init(self):
@@ -998,6 +1002,8 @@ def error(msg):
 OPTIONS = {
     'anim': {'type': 'bool', 'default': False,
              'desc': "Generate animation plots"},
+    'center': {'type': 'string', 'default': None,
+               'desc': "Terrain type for center of tile: l, m, h"},
     'iter': {'type': 'int', 'default': 25,
              'desc': "Max iterations"},
     'pattern': {'type': 'string', 'default': "2-2-2-2-2-2",
