@@ -791,18 +791,19 @@ class VoronoiHexTile():
                                     self.adjustmentNeighbor)
             hasChanges = True
 
-        # If there's too much difference between the largest and smallest circle,
-        # adjust the regions that surround the min and max regions.
-        if self.circleRatio > self.circleRatioThreshold:
-            # Move neighboring regions slightly away from the small region.
-            for sid in self.calcNeighboringRegions(self.minCircle):
-                self.calcAdjustment(sid, self.seeds[self.minCircle],
-                                    self.adjustmentGrow)
-            # Move neighboring regions slightly away from the small region.
-            for sid in self.calcNeighboringRegions(self.maxCircle):
-                self.calcAdjustment(sid, self.seeds[self.maxCircle],
-                                    self.adjustmentShrink)
-            hasChanges = True
+        if ENABLE_SMALL_REGION_CHECK:
+            # If there's too much difference between the largest and smallest
+            # circle, adjust the regions that surround the min and max regions.
+            if self.circleRatio > self.circleRatioThreshold:
+                # Move neighboring regions slightly away from the small region.
+                for sid in self.calcNeighboringRegions(self.minCircle):
+                    self.calcAdjustment(sid, self.seeds[self.minCircle],
+                                        self.adjustmentGrow)
+                # Move neighboring regions slightly away from the small region.
+                for sid in self.calcNeighboringRegions(self.maxCircle):
+                    self.calcAdjustment(sid, self.seeds[self.maxCircle],
+                                        self.adjustmentShrink)
+                hasChanges = True
         
         newInterior = self.vInteriorSeeds.copy()
         for sid in range(0, len(self.vInteriorSeeds)):
