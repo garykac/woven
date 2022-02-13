@@ -18,15 +18,17 @@ ANIM_SUBDIR = "anim"
 
 NUM_SIDES = 6
 
+EDGE_TYPES = ['1s', '2s', '2f', '3s', '3f', '4s']
+
 # EdgeRegionInfo:
 # Each dict entry contains an array of region heights, one per region on this side.
 EDGE_REGION_INFO = {
-    '1': ['l', 'l', 'l'],
-    '2': ['l', 'l', 'l', 'l'],
-    '2b': ['l', 'l', 'm', 'm'],
-    '2r': ['m', 'm', 'l', 'l'],
-    '3': ['m', 'm', 'm', 'm', 'm'],
-    '4': ['l', 'l', 'l', 'l', 'l', 'l'],
+    '1s': ['l', 'l', 'l'],
+    '2s': ['l', 'l', 'l', 'l'],
+    '2f': ['l', 'l', 'm', 'm'],  # +reversed
+    '3s': ['m', 'm', 'm', 'm', 'm'],
+    '3f': ['m', 'm', 'h', 'h', 'h'],  # +reversed
+    '4s': ['h', 'h', 'm', 'm', 'h', 'h'],
 }
 
 # Edge seed info.
@@ -34,18 +36,18 @@ EDGE_REGION_INFO = {
 # Each seed position is:
 #   [ offset-along-edge, perpendicular-offset ]
 EDGE_SEED_INFO = {
-    '1': [[1/2, 0]],
-    '2': [[1/3, 0.03], [2/3, -0.03]],
-    '2b': [[0.35, 0.02], [0.70, -0.03]],
-    '2r': [[0.30, 0.03], [0.65, -0.02]],
-    '3': [[1/4, 0],    [2/4, 0],      [3/4, 0]],
-    '4': [[1/5, 0],    [2/5, 0],      [3/5, 0],      [4/5, 0]],
+    '1s': [[1/2, 0]],
+    '2s': [[1/3, 0.03],   [2/3, -0.03]],
+    '2f': [[0.35, 0.02],  [0.70, -0.03]],  # +reversed
+    '3s': [[1/4, -0.03],  [2/4, 0],      [3/4, 0.03]],
+    '3f': [[0.30, 0.02],  [0.55, 0],     [0.75, -0.03]],  # +reversed
+    '4s': [[0.24, -0.02], [0.44, 0.02],  [0.56, -0.02],    [0.76, 0.02]],
 }
 
 # Minimum seed distance based on terrain type.
 MIN_DISTANCE_L = 0.22
 MIN_DISTANCE_M = 0.19
-MIN_DISTANCE_H = 0.18
+MIN_DISTANCE_H = 0.16
 
 class VoronoiHexTile():
     def __init__(self, options):
@@ -125,6 +127,17 @@ class VoronoiHexTile():
         self.adjustmentNeighbor = -0.009
         self.adjustmentGrow = -0.005  # -0.006
         self.adjustmentShrink = 0.005
+
+        # Calculate data for reversed edges ('r') from the forward ('f') edges.
+        for type in EDGE_TYPES:
+            if type[-1] == 'f':
+                newType = type[:-1] + 'r'
+                EDGE_REGION_INFO[newType] = EDGE_REGION_INFO[type][::-1]
+                newSeedInfo = []
+                for si in reversed(EDGE_SEED_INFO[type]):
+                    offset, perp_offset = si
+                    newSeedInfo.append([1.0-offset, -perp_offset])
+                EDGE_SEED_INFO[newType] = newSeedInfo
 
         self.rng = np.random.RandomState(self.options['seed'])
 
