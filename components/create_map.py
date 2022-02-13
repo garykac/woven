@@ -8,7 +8,8 @@ import scipy.spatial
 import subprocess
 import sys
 
-from math_utils import (feq, fge, fle, scale, lerp, lerp_pt, lerp_pt_delta, lerperp,
+from math_utils import (feq, fge, fle, scale,
+                        lerp, lerp_pt, lerp_pt_delta, lerperp,
                         near, dist, dist_pt_line, ptInHex)
 from svg import SVG, Style, Node, Path
 
@@ -21,7 +22,8 @@ NUM_SIDES = 6
 EDGE_TYPES = ['1s', '2s', '2f', '3s', '3f', '4s']
 
 # EdgeRegionInfo:
-# Each dict entry contains an array of region heights, one per region on this side.
+# Each dict entry contains an array of region heights, one per region on this
+# side.
 EDGE_REGION_INFO = {
     '1s': ['l', 'l', 'l'],
     '2s': ['l', 'l', 'l', 'l'],
@@ -58,9 +60,9 @@ class VoronoiHexTile():
 
         self.initEdgePattern(self.options['pattern'])
         
-        # This is used to position the exterior seeds around the outside of the tile.
-        # These seed regions constrain the regions in the hex tile and allow us to ignore
-        # the outer edges (that go off to infinity).
+        # This is used to position the exterior seeds around the outside of the
+        # tile. These seed regions constrain the regions in the hex tile and
+        # allow us to ignore the outer edges (that go off to infinity).
         self.outerScale = 1.4
 
         self.seeds = None
@@ -120,9 +122,9 @@ class VoronoiHexTile():
         self.maxIterations = self.options['iter']
 
         # Adjustments to apply when we need to move a seed.
-        # Each type of adjustment has a slightly different value so that if a seed
-        # is being adjusted in multiple ways, it will still make progress toward
-        # a goal.
+        # Each type of adjustment has a slightly different value so that if a
+        # seed is being adjusted in multiple ways, it will still make progress
+        # toward a goal.
         self.adjustmentSide = 0.011
         self.adjustmentNeighbor = -0.009
         self.adjustmentGrow = -0.005  # -0.006
@@ -162,7 +164,7 @@ class VoronoiHexTile():
                                 edgeNext, '-'.join(edgeNextRegionTypes)))
             self.cornerType.append(edgeRegionTypes[0])
 
-        # Record the terrain type for each region along the edge of the tile.        
+        # Record the terrain type for each region along the edge of the tile.
         self.seed2terrain = []
         # Add the 6 corners.
         for e in self.edgeTypes:
@@ -222,9 +224,9 @@ class VoronoiHexTile():
         self.vEdgeSeeds = np.array(vertices)
 
     # Initialize the margin exclusion zones.
-    # These zone prevent seeds from getting too close to the tile boundary where they
-    # would cause voronoi ridges that are too small, or cause the region to be clipped
-    # by the hex boundary.
+    # These zone prevent seeds from getting too close to the tile boundary where
+    # they would cause voronoi ridges that are too small, or cause the region to
+    # be clipped by the hex boundary.
     def initEdgeMargin(self):
         seeds = [self.vHex[0]]
         for i0 in range(0, NUM_SIDES):
@@ -300,22 +302,22 @@ class VoronoiHexTile():
         self.vInteriorSeeds = np.array(newSeeds)
         self.seed2minDistance = seed2minDistance
 
-    # Calc the min seed distance based on the current seed location in the hex tile.
-    # Seeds in higher density regions will have a smaller distance than those in low
-    # density regions.
+    # Calc the min seed distance based on the current seed location in the hex
+    # tile. Seeds in higher density regions will have a smaller distance than
+    # those in low density regions.
     # Assumes hexagon is centered at 0,0
     def calcSeedDistance(self, baseSeed):
         x, y = baseSeed
-        # Find the triangle (in the hex) where the seed is located and compute the
-        # barycentric coordinates of that point within the triangle. These coordinates
-        # will be used as weights to calculate the min distance.
+        # Find the triangle (in the hex) where the seed is located and compute
+        # the barycentric coordinates of that point within the triangle. These
+        # coordinates will be used as weights to calculate the min distance.
         #
         # Given a point x,y, in barycentric coords:
         #   x = a * x1 + b * x2 + c * x3
         #   y = a * y1 + b * y2 + c * y3
         #   a + b + c = 1
-        # Where (x1,y1), (x2,y2) and (x3,y3) are the points (P1,P2,P3) defining the
-        # triangle and a,b,c are the weights that define the point.
+        # Where (x1,y1), (x2,y2) and (x3,y3) are the points (P1,P2,P3) defining
+        # the triangle and a,b,c are the weights that define the point.
         #
         # a,b,c can be calculated:
         #   a = ((y2 - y3) * (x - x3) + (x3 - x2) * (y - y3))
@@ -344,7 +346,8 @@ class VoronoiHexTile():
             x1,y1 = self.vHex[tri]
             x2,y2 = self.vHex[tri_next]
 
-            # Using P3 = (0,0) for the shared center of the hexagon, this simplifies to:
+            # Using P3 = (0,0) for the shared center of the hexagon, this
+            # simplifies to:
             #   denom = ((y2 - y3) * (x1 - x3) + (x3 - x2) * (y1 - y3))
             #         = ((y2 - 0) * (x1 - 0) + (0 - x2) * (y1 - 0))
             #         = (y2 * x1) - (x2 * y1)
@@ -360,13 +363,14 @@ class VoronoiHexTile():
             b = ((x1 * y) - (y1 * x)) / denom
             c = 1 - a - b
 
-            # Normally, we need to confirm that a,b,c are all within [0,1], but because
-            # we know the point is within the hexagon, we can eliminate some checks.
-            # Note that if the seed is along an edge between 2 triangles, it doesn't
-            # matter which triangle we choose since the weighted-distance will be the same
-            # either way. So we just take the first match.
-            # Note: Some of the edge seeds are actually slightly outside the hexagon (so
-            # that |c| is < 0), but this is OK.
+            # Normally, we need to confirm that a,b,c are all within [0,1], but
+            # because we know the point is within the hexagon, we can eliminate
+            # some checks. Note that if the seed is along an edge between 2
+            # triangles, it doesn't matter which triangle we choose since the
+            # weighted-distance will be the same either way. So we just take the
+            # first match.
+            # Note: Some of the edge seeds are actually slightly outside the
+            # hexagon (so that |c| is < 0), but this is OK.
             if fge(a, 0) and fge(b, 0) and fle(c, 1):
                 # Seed is within current triangle, calculate weight.
                 edgeType = self.nSeedsPerEdge[tri]
@@ -378,8 +382,8 @@ class VoronoiHexTile():
         error("Unable to calculate seed distance for {0}".format(baseSeed))
         return 0
         
-    # Generate a random x,y point within a ring (defined by |r0| and |r1|) around the
-    # given |baseSeed|.
+    # Generate a random x,y point within a ring (defined by |r0| and |r1|) around
+    # the given |baseSeed|.
     def calcRandomSeedBridson(self, baseSeed, r0, r1):
         x0, y0 = baseSeed
         angle = self.rng.uniform(0, math.tau)
@@ -389,8 +393,8 @@ class VoronoiHexTile():
         return [x, y]
             
     # Calculate boundary seeds around outside of hex.
-    # These seeds constrain the voronoi regions by providing boundaries for the  regions
-    # along the edges, which allows us to ignore unbounded regions.
+    # These seeds constrain the voronoi regions by providing boundaries for the
+    # regions along the edges, which allows us to ignore unbounded regions.
     def initExteriorSeeds(self):
         vertices = []
         for i0 in range(0, NUM_SIDES):
@@ -524,24 +528,25 @@ class VoronoiHexTile():
                 genTileBounds = False
 
                 # Assume we're generating edge vertices in ccw order.
-                # Note that the order of the vertices in the region (as returned by the
-                # voronoi library) is not consistent, so we need to determine which way
-                # we are moving around the polygon.
+                # Note that the order of the vertices in the region (as returned
+                # by the voronoi library) is not consistent, so we need to
+                # determine which way we are moving around the polygon.
                 startCcw = True
                 ccw = lerp_pt(self.seeds[sid], self.seeds[sid_prev], t_ccw)
                 cw = lerp_pt(self.seeds[sid], self.seeds[sid_next], t_cw)
 
                 # Find closest internal vertex.
                 if internal:
-                    # i-1 is safe since we saw at least 1 internal vertex at this point.
+                    # i-1 is safe since we saw at least 1 internal vertex at this
+                    # point.
                     v2 = self.vertices[r[rindex-1]]
 
                     # Swap direction if the region vertices are CW.
                     if dist(v2, cw) < dist(v2, ccw):
                         startCcw = False
                 else:
-                    # Look ahead to find next internal vertex. There must be at least one
-                    # because we haven't seen any yet.
+                    # Look ahead to find next internal vertex. There must be at
+                    # least one because we haven't seen any yet.
                     rindex2 = rindex+1
                     v2 = self.vertices[r[rindex2]]
                     while not ptInHex(self.size, v2[0], v2[1]):
@@ -573,8 +578,8 @@ class VoronoiHexTile():
                 v0 = self.vertices[vid0]
                 v1 = self.vertices[vid1]
 
-                # If this is one of the edges that is clipped by the hex boundary,
-                # then enforce a smaller min edge
+                # If this is one of the edges that is clipped by the hex
+                # boundary, then enforce a smaller min edge
                 minDistance = self.minRidgeLength
                 if vid0 >= self.firstNewVertex and vid1 >= self.firstNewVertex:
                     continue
@@ -832,7 +837,8 @@ class VoronoiHexTile():
         for sid in range(0, self.numActiveSeeds):
             rid = self.vor.point_region[sid]
             id = "region-{0:d}".format(sid)
-            self.plotRegion(self.vor.regions[rid], layer_region, stroke, False, id)
+            self.plotRegion(self.vor.regions[rid], layer_region, stroke,
+                            False, id)
 
             center = self.seeds[sid]
             id = "seed-{0:d}".format(sid)
