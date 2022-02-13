@@ -52,6 +52,13 @@ MIN_DISTANCE_L = 0.22
 MIN_DISTANCE_M = 0.19
 MIN_DISTANCE_H = 0.16
 
+# Fill colors for regions based on terrain height.
+REGION_STYLE = {
+    'l': '#efecc6',
+    'm': '#dcc382',
+    'h': '#d69200',
+}
+
 class VoronoiHexTile():
     def __init__(self, options):
         self.options = options
@@ -186,12 +193,6 @@ class VoronoiHexTile():
         self.centerWeight = (sum([self.cornerWeight[i] for i in self.cornerType])
                             / NUM_SIDES)
         print("Center weight;", self.centerWeight)
-        
-        self.regionStyle = {
-            'l': 'efecc6',
-            'm': 'dcc382',
-            'h': 'd69200',
-        }
 
     def init(self):
         self.initFixedSeeds()
@@ -818,20 +819,18 @@ class VoronoiHexTile():
         stroke = Style("none", "#000000", "1px")
         black_fill = Style("#000000", "none", "1px")
         
-        terrain = {}
-        for type, style in self.regionStyle.items():
-            terrain[type] = Style("#{0:s}".format(style), "#000000", "1px")
-
         # Draw clipped regions.
         layer_region_clip = self.svg.add_inkscape_layer(
             'region-clip', "Region Clipped", layer)
         for sid in range(0, self.numActiveSeeds):
             vids = self.sid2region[sid]
             id = "clipregion-{0:d}".format(sid)
-            fill = stroke
+            color = "#ffffff"
             if sid < len(self.seed2terrain):
-                fill = terrain[self.seed2terrain[sid]]
-            self.plotRegion(vids, layer_region_clip, fill, True, id)
+                terrain_type = self.seed2terrain[sid]
+                color = REGION_STYLE[terrain_type]
+            self.plotRegion(vids, color)
+            self.drawRegion(id, vids, color, layer_region_clip)
 
         # Plot regions and seeds.
         layer_region = self.svg.add_inkscape_layer('region', "Region", layer)
@@ -841,8 +840,7 @@ class VoronoiHexTile():
         for sid in range(0, self.numActiveSeeds):
             rid = self.vor.point_region[sid]
             id = "region-{0:d}".format(sid)
-            self.plotRegion(self.vor.regions[rid], layer_region, stroke,
-                            False, id)
+            self.drawRegion(id, self.vor.regions[rid], "#ffffff", layer_region)
 
             center = self.seeds[sid]
             id = "seed-{0:d}".format(sid)
@@ -938,20 +936,22 @@ class VoronoiHexTile():
         SVG.add_node(layer, circle)
 
     # Plot voronoi region given a list of vertex ids.
-    def plotRegion(self, vids, layer, style, plot=True, id=None):
+    def plotRegion(self, vids, color):
         if len(vids) == 0:
             return
+        vertices = [self.vertices[i] for i in vids]
+        plt.fill(*zip(*vertices), facecolor=color, edgecolor="black")
 
+    # Draw voronoi region in the SVG file, given a list of vertex ids.
+    def drawRegion(self, id, vids, color, layer):
+        if len(vids) == 0:
+            return
         vertices = [self.vertices[i] for i in vids]
         
-        if plot:
-            plt.fill(*zip(*vertices), facecolor="white", edgecolor="black")
-
-        # svg
         p = Path() if id == None else Path(id)
         p.addPoints(vertices)
         p.end()
-        p.set_style(style)
+        p.set_style(Style(color, "#000000", "1px"))
         SVG.add_node(layer, p)
 
     def plotHexTileBorder(self, layer, style):
