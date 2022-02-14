@@ -117,6 +117,21 @@ class Path(Node):
         path += " z"
         self.set('d', path)
 
+class Text(Node):
+    def __init__(self, id, x, y, text):
+        if id == None:
+            id = 'text{0}'.format(SVG.next_id())
+        super().__init__('text', id)
+        self.set('x', str(x))
+        self.set('y', str(y))
+        self.set_style("font-style:normal;font-weight:normal;font-size:4px;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none")
+
+        tspan = Element('tspan')
+        tspan.set('x', str(x))
+        tspan.set('y', str(y))
+        tspan.text = text
+        self.element.append(tspan)
+
 class SVG(object):
     id_base = 1000
     
@@ -312,5 +327,3 @@ class SVG(object):
         n.set('cy', str(cy))
         n.set('r', str(r))
         return n
-        
-    

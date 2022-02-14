@@ -11,7 +11,7 @@ import sys
 from math_utils import (feq, fge, fle, scale,
                         lerp, lerp_pt, lerp_pt_delta, lerperp,
                         near, dist, dist_pt_line, ptInHex)
-from svg import SVG, Style, Node, Path
+from svg import SVG, Style, Node, Path, Text
 
 GENERATE_SVG = True
 GENERATE_PLOT = True
@@ -20,7 +20,7 @@ ENABLE_SMALL_REGION_CHECK = False
 
 NUM_SIDES = 6
 
-EDGE_TYPES = ['1s', '2s', '2f', '3s', '3f', '4s']
+EDGE_TYPES = ['1s', '2s', '2f', '3s', '3f', '4s', '5s']
 
 # EdgeRegionInfo:
 # Each dict entry contains an array of region heights, one per region on this
@@ -32,6 +32,7 @@ EDGE_REGION_INFO = {
     '3s': ['m', 'm', 'm', 'm', 'm'],
     '3f': ['m', 'm', 'h', 'h', 'h'],  # +reversed
     '4s': ['h', 'h', 'm', 'm', 'h', 'h'],
+    '5s': ['h', 'h', 'h', 'm', 'h', 'h', 'h'],
 }
 
 # Edge seed info.
@@ -44,7 +45,8 @@ EDGE_SEED_INFO = {
     '2f': [[0.35, 0.02],  [0.70, -0.03]],  # +reversed
     '3s': [[1/4, -0.03],  [2/4, 0],      [3/4, 0.03]],
     '3f': [[0.30, 0.02],  [0.55, 0],     [0.75, -0.03]],  # +reversed
-    '4s': [[0.24, -0.02], [0.44, 0.02],  [0.56, -0.02],    [0.76, 0.02]],
+    '4s': [[0.24, -0.02], [0.42, 0.01],  [0.58, -0.01],  [0.76, 0.02]],
+    '5s': [[0.16, -0.01], [0.33, 0.02], [0.50, 0], [0.67, -0.02], [0.84, 0.01]],
 }
 
 # Minimum seed distance based on terrain type.
@@ -52,11 +54,15 @@ MIN_DISTANCE_L = 0.22
 MIN_DISTANCE_M = 0.19
 MIN_DISTANCE_H = 0.16
 
+MIN_RIDGE_LEN = 0.07
+MIN_RIDGE_LEN_EDGE = 0.04
+
 # Fill colors for regions based on terrain height.
 REGION_STYLE = {
-    'l': '#efecc6',
-    'm': '#dcc382',
-    'h': '#d69200',
+    'l': "#c5e8a8",  #"#d9f3b9",  #'#efecc6',  # low
+    'm': "#f0ce76",  #'#dcc382',  # medium
+    'h': "#e7a311",  #'#d69200',  # high
+    'r': "#a2c6ff",  # river/water
 }
 
 # NOTE: Default units for SVG is mm.
@@ -64,7 +70,6 @@ REGION_STYLE = {
 STROKE_COLOR = "#000000"
 STROKE_WIDTH = 0.3
 
-RIVER_COLOR = "#a2c6ff"
 RIVER_WIDTH = 2.0
 
 class VoronoiHexTile():
@@ -74,8 +79,6 @@ class VoronoiHexTile():
         self.size = self.options['size']
         self.xMax = (math.sqrt(3) * self.size) / 2
 
-        self.initEdgePattern(self.options['pattern'])
-        
         # This is used to position the exterior seeds around the outside of the
         # tile. These seed regions constrain the regions in the hex tile and
         # allow us to ignore the outer edges (that go off to infinity).
@@ -93,11 +96,6 @@ class VoronoiHexTile():
         # giving up and marking the seed as complete.
         self.seedAttempts = 20
         
-        # Min distance between 2 seed points.        
-        self.minSeedDistance = 0.22 * self.size  # 2
-        #self.minSeedDistance = 0.19 * self.size  # 3
-        #self.minSeedDistance = 0.18 * self.size  # 4
-
         # The edgeMarginZone is a set of circles along the edge between the
         # seeds. They define an exclusion zone between the seeds so that the
         # voronoi vertex does not fall outside the hex tile boundary.
@@ -108,9 +106,9 @@ class VoronoiHexTile():
         self.edgeMarginScale = 1.1
 
         # Min distance between 2 voronoi vertices along a ridge.
-        self.minRidgeLength = 0.07 * self.size
+        self.minRidgeLength = MIN_RIDGE_LEN * self.size
         # Min ridge length along tile edge.
-        self.minRidgeLengthEdge = 0.04 * self.size
+        self.minRidgeLengthEdge = MIN_RIDGE_LEN_EDGE * self.size
 
         # Circle ratio threshold.
         # Maximum allowed ratio between largest and smallest inscribed circles.
@@ -149,13 +147,16 @@ class VoronoiHexTile():
         for type in EDGE_TYPES:
             if type[-1] == 'f':
                 newType = type[:-1] + 'r'
+                print("creating", newType, "from", type)
                 EDGE_REGION_INFO[newType] = EDGE_REGION_INFO[type][::-1]
                 newSeedInfo = []
                 for si in reversed(EDGE_SEED_INFO[type]):
                     offset, perp_offset = si
                     newSeedInfo.append([1.0-offset, -perp_offset])
                 EDGE_SEED_INFO[newType] = newSeedInfo
-
+        
+        self.initEdgePattern(self.options['pattern'])
+        
         self.rng = np.random.RandomState(self.options['seed'])
 
     def initEdgePattern(self, patternString):
@@ -710,6 +711,8 @@ class VoronoiHexTile():
         self.vertices = [vid for vid in self.vor.vertices]
         self.newVertices = {}
         self.firstNewVertex = len(self.vertices)
+        # Reset number of annotation lines.
+        self.numLines = 0
 
         self.analyze()
         
@@ -828,6 +831,7 @@ class VoronoiHexTile():
 
         layer = self.svg.add_inkscape_layer('layer', "Layer")
         layer.set_transform("translate(105 148.5) scale(1, -1)")
+        self.layer = layer
 
         stroke = Style("none", "#000000", STROKE_WIDTH)
         black_fill = Style(fill="#000000")
@@ -887,8 +891,8 @@ class VoronoiHexTile():
             for bei in self.badEdges:
                 badEdge = self.badEdges[bei]
                 vid0, vid1, rid = badEdge[0]
-                self.plotVertex(self.vertices[vid0], layer_bad_edges)
-                self.plotVertex(self.vertices[vid1], layer_bad_edges)
+                self.plotBadVertex(self.vertices[vid0], layer_bad_edges)
+                self.plotBadVertex(self.vertices[vid1], layer_bad_edges)
 
         # Plot inscribed circles for each region.
         if ENABLE_SMALL_REGION_CHECK:
@@ -910,9 +914,11 @@ class VoronoiHexTile():
                     circle = plt.Circle(center, radius, color="#80000080")
                     plt.gca().add_patch(circle)
 
-        self.drawRiverSegments(layer)
+        self.drawRiverSegments()
 
-        self.drawHexTileBorder(stroke, layer)
+        self.drawHexTileBorder(stroke)
+
+        self.drawAnnotations()
         
         out_dir = self.options['out']
         if self.options['seed'] == None:
@@ -942,10 +948,59 @@ class VoronoiHexTile():
             plt.savefig(out, bbox_inches='tight')
         plt.close(fig)
 
+    def drawAnnotations(self):
+        self.layer_text = self.svg.add_inkscape_layer(
+            'annotations', "Annotations", self.layer)
+        self.layer_text.set_transform("scale(1,-1)")
+
+        self.addText("size: {0:g}".format(self.size))
+        if self.options['seed']:
+            self.addText("rng seed {0:d}".format(self.options['seed']))
+        else:
+            self.addText("rng seed RANDOM")
+        self.addText("pattern {0:s}".format(self.options['pattern']))
+        self.addText("seed attempts: {0:d}".format(self.seedAttempts))
+        self.addText("seed distance: l {0:.02g}; m {1:.02g}; h {2:.02g}"
+                     .format(MIN_DISTANCE_L, MIN_DISTANCE_M, MIN_DISTANCE_H))
+
+        center = "AVG"
+        if self.options['center']:
+            center = self.options['center']
+        self.addText("center: ({0:s}) {1:.03g}"
+                     .format(center, self.centerWeight / self.size))
+
+        self.addText("min ridge length: {0:.02g}; at edge: {1:.02g}"
+                     .format(MIN_RIDGE_LEN, MIN_RIDGE_LEN_EDGE))
+        self.addText("edge margin exclusion zone scale: {0:.02g}"
+                     .format(self.edgeMarginScale))
+        self.addText("iterations: {0:d}".format(self.iteration-1))
+        self.addText("adjustments: side {0:.03g}%, neighbor {1:.03g}%"
+                     .format(self.adjustmentSide, self.adjustmentNeighbor))
+
+        if False:
+            pattern = []
+            for type in self.edgeTypes:
+                pattern.append("({0})".format(EDGE_REGION_INFO[type][0]))
+                pattern.append('-'.join(EDGE_REGION_INFO[type][1:-1]))
+            self.addText('-'.join(pattern))
+
+        y_start = 80
+        for type in ['h', 'm', 'l', 'r']:
+            color = REGION_STYLE[type]
+            r = SVG.rect(0, 75, y_start, 15, 6)
+            r.set_style(Style(color, STROKE_COLOR, STROKE_WIDTH))
+            SVG.add_node(self.layer_text, r)
+            y_start += 10
+        
+    def addText(self, text):
+        t = Text(None, -92, 85 + 5.5 * self.numLines, text)
+        SVG.add_node(self.layer_text, t)
+        self.numLines += 1
+    
     # Draw river segments on all internal edges.
-    def drawRiverSegments(self, layer):
+    def drawRiverSegments(self):
         layer_river_border = self.svg.add_inkscape_layer(
-            'river-border', "River Border", layer)
+            'river-border', "River Border", self.layer)
         layer_river_border.hide()
         style_river_border = Style(None, STROKE_COLOR,
                                    RIVER_WIDTH + 2 * STROKE_WIDTH)
@@ -961,9 +1016,9 @@ class VoronoiHexTile():
             p.set_style(style_river_border)
             SVG.add_node(layer_river_border, p)
 
-        layer_river = self.svg.add_inkscape_layer('river', "River", layer)
+        layer_river = self.svg.add_inkscape_layer('river', "River", self.layer)
         layer_river.hide()
-        style_river = Style(None, RIVER_COLOR, RIVER_WIDTH)
+        style_river = Style(None, REGION_STYLE['r'], RIVER_WIDTH)
         style_river.set("stroke-linecap", "round")
         style_river.set("stroke-linejoin", "round")
         for rv in self.vor.ridge_vertices:
@@ -976,11 +1031,11 @@ class VoronoiHexTile():
             p.set_style(style_river)
             SVG.add_node(layer_river, p)
         
-    def plotVertex(self, v, layer):
+    def plotBadVertex(self, v, layer):
         circle = plt.Circle(v, 1, color="r")
         plt.gca().add_patch(circle)
 
-        circle = SVG.circle(0, v[0], v[1], '2')
+        circle = SVG.circle(0, v[0], v[1], '1')
         circle.set_style(Style(fill="#800000"))
         SVG.add_node(layer, circle)
 
@@ -1003,8 +1058,9 @@ class VoronoiHexTile():
         p.set_style(Style(color, STROKE_COLOR, STROKE_WIDTH))
         SVG.add_node(layer, p)
 
-    def drawHexTileBorder(self, style, layer):
-        layer_border = self.svg.add_inkscape_layer('border', "Border", layer)
+    def drawHexTileBorder(self, style):
+        layer_border = self.svg.add_inkscape_layer('border', "Border",
+                                                   self.layer)
         p = Path()
         p.addPoints(self.vHex)
         p.end()
@@ -1056,7 +1112,7 @@ OPTIONS = {
                 'desc': "Edge pattern"},
     'seed': {'type': 'int', 'default': None,
              'desc': "Random seed"},
-    'size': {'type': 'int', 'default': 80,
+    'size': {'type': 'int', 'default': 100,
              'desc': "Size of hex side (mm)"},
 }
 
