@@ -20,13 +20,12 @@ ENABLE_SMALL_REGION_CHECK = False
 
 NUM_SIDES = 6
 
-EDGE_TYPES = ['1s', '2s', '2f', '3s', '3f', '4s', '5s']
+EDGE_TYPES = ['2s', '2f', '3s', '3f', '4s', '5s']
 
 # EdgeRegionInfo:
 # Each dict entry contains an array of region heights, one per region on this
 # side.
 EDGE_REGION_INFO = {
-    '1s': ['l', 'l', 'l'],
     '2s': ['l', 'l', 'l', 'l'],
     '2f': ['l', 'l', 'm', 'm'],  # +reversed
     '3s': ['m', 'm', 'm', 'm', 'm'],
@@ -40,13 +39,12 @@ EDGE_REGION_INFO = {
 # Each seed position is:
 #   [ offset-along-edge, perpendicular-offset ]
 EDGE_SEED_INFO = {
-    '1s': [[1/2, 0]],
     '2s': [[1/3, 0.03],   [2/3, -0.03]],
     '2f': [[0.35, 0.02],  [0.70, -0.03]],  # +reversed
     '3s': [[1/4, -0.03],  [2/4, 0],      [3/4, 0.03]],
     '3f': [[0.30, 0.02],  [0.55, 0],     [0.75, -0.03]],  # +reversed
     '4s': [[0.24, -0.02], [0.42, 0.01],  [0.58, -0.01],  [0.76, 0.02]],
-    '5s': [[0.16, -0.01], [0.33, 0.02], [0.50, 0], [0.67, -0.02], [0.84, 0.01]],
+    '5s': [[0.18, -0.04], [0.32, 0.03], [0.50, 0], [0.68, -0.03], [0.82, 0.04]],
 }
 
 # Minimum seed distance based on terrain type.
@@ -154,7 +152,12 @@ class VoronoiHexTile():
                     offset, perp_offset = si
                     newSeedInfo.append([1.0-offset, -perp_offset])
                 EDGE_SEED_INFO[newType] = newSeedInfo
-        
+
+        # Load region data
+        h = "h"
+        m = "m"
+        self.rData = [h,h,h,h,h,h,h,h,m,h,h,h,h,m,h,h,h,h,m,h,h,h,h,m,h,h,h,h,m,h,h,h,h,m,h,h,h,h,h,h,m,m,m,h,m,m,m,m,m,h,h,m,m,m,m,m,m,h,h,h,h,m,h,m,h,h,h,m,m,m,h,m,m,h,h,m,h,h,h,m,h,m,m,h,m,m,h]
+
         self.initEdgePattern(self.options['pattern'])
         
         self.rng = np.random.RandomState(self.options['seed'])
@@ -845,7 +848,9 @@ class VoronoiHexTile():
             color = "#ffffff"
             if sid < len(self.seed2terrain):
                 terrain_type = self.seed2terrain[sid]
-                color = REGION_STYLE[terrain_type]
+            else:
+                terrain_type = self.rData[sid]
+            color = REGION_STYLE[terrain_type]
             self.plotRegion(vids, color)
             self.drawRegion(id, vids, color, layer_region_clip)
 
