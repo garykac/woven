@@ -10,7 +10,8 @@ import sys
 
 from math_utils import (feq, fge, fle, scale,
                         lerp, lerp_pt, lerp_pt_delta, lerperp,
-                        near, dist, dist_pt_line, ptInHex)
+                        near, dist, dist_pt_line, line_intersection_t,
+                        ptInHex)
 from svg import SVG, Style, Node, Path, Text
 
 GENERATE_SVG = True
@@ -20,18 +21,17 @@ ENABLE_SMALL_REGION_CHECK = False
 
 NUM_SIDES = 6
 
-EDGE_TYPES = ['2s', '2f', '3s', '3f', '4s', '5s']
+EDGE_TYPES = ['2s', '3f', '3s', '4f', '5s']
 
 # EdgeRegionInfo:
 # Each dict entry contains an array of region heights, one per region on this
 # side.
 EDGE_REGION_INFO = {
-    '2s': ['l', 'l', 'l', 'l'],
-    '2f': ['l', 'l', 'm', 'm'],  # +reversed
-    '3s': ['m', 'm', 'm', 'm', 'm'],
-    '3f': ['m', 'm', 'h', 'h', 'h'],  # +reversed
-    '4s': ['h', 'h', 'm', 'm', 'h', 'h'],
-    '5s': ['h', 'h', 'h', 'm', 'h', 'h', 'h'],
+    '2s': ['l', 'l', 'l', 'l'],                # l - l
+    '3f': ['l', 'l', 'l', 'm', 'm'],           # l - m, m - h
+    '3s': ['m', 'm', 'm', 'm', 'm'],           # m - m
+    '4f': ['m', 'm', 'h', 'm', 'h', 'h'],      # m - h, h - m
+    '5s': ['h', 'h', 'h', 'm', 'h', 'h', 'h'], # h - h
 }
 
 # Edge seed info.
@@ -40,11 +40,10 @@ EDGE_REGION_INFO = {
 #   [ offset-along-edge, perpendicular-offset ]
 EDGE_SEED_INFO = {
     '2s': [[1/3, 0.03],   [2/3, -0.03]],
-    '2f': [[0.35, 0.02],  [0.70, -0.03]],  # +reversed
-    '3s': [[1/4, -0.03],  [2/4, 0],      [3/4, 0.03]],
-    '3f': [[0.30, 0.02],  [0.55, 0],     [0.75, -0.03]],  # +reversed
-    '4s': [[0.24, -0.02], [0.42, 0.01],  [0.58, -0.01],  [0.76, 0.02]],
-    '5s': [[0.18, -0.04], [0.32, 0.03], [0.50, 0], [0.68, -0.03], [0.82, 0.04]],
+    '3f': [[0.30, 0.02],  [0.55, 0],    [0.75, -0.03]],
+    '3s': [[0.25, 0.04],  [0.50, 0],    [0.75, -0.04]],
+    '4f': [[0.24, -0.03], [0.42, 0.01], [0.58, -0.01],  [0.76, 0.03]],
+    '5s': [[0.20, -0.05], [0.31, 0.05], [0.50, 0], [0.69, -0.05], [0.80, 0.05]],
 }
 
 # Minimum seed distance based on terrain type.
@@ -52,12 +51,12 @@ MIN_DISTANCE_L = 0.22
 MIN_DISTANCE_M = 0.19
 MIN_DISTANCE_H = 0.16
 
-MIN_RIDGE_LEN = 0.07
-MIN_RIDGE_LEN_EDGE = 0.04
+MIN_RIDGE_LEN = 0.06
+MIN_RIDGE_LEN_EDGE = 0.035
 
 # Fill colors for regions based on terrain height.
 REGION_STYLE = {
-    'l': "#c5e8a8",  #"#d9f3b9",  #'#efecc6',  # low
+    'l': "#f0eaac",  #"#d9f3b9",  #'#efecc6',  # low
     'm': "#f0ce76",  #'#dcc382',  # medium
     'h': "#e7a311",  #'#d69200',  # high
     'r': "#a2c6ff",  # river/water
@@ -73,7 +72,8 @@ RIVER_WIDTH = 2.0
 class VoronoiHexTile():
     def __init__(self, options):
         self.options = options
-        
+        self.debug = options['debug']
+
         self.size = self.options['size']
         self.xMax = (math.sqrt(3) * self.size) / 2
 
@@ -136,16 +136,21 @@ class VoronoiHexTile():
         # Each type of adjustment has a slightly different value so that if a
         # seed is being adjusted in multiple ways, it will still make progress
         # toward a goal.
-        self.adjustmentSide = 0.011
-        self.adjustmentNeighbor = -0.009
+        # Move seeds toward or away from an edge to make it longer.
+        self.adjustmentSide = 0.009
+        self.adjustmentNeighbor = -0.011
+        # Move neighboring seeds closer or further to make inscribed circle
+        # smaller or larger.
         self.adjustmentGrow = -0.005  # -0.006
         self.adjustmentShrink = 0.005
-
+        # Move seeds away when they are too close.
+        self.closeThreshold = 0.90
+        self.adjustmentTooClose = -0.013
+        
         # Calculate data for reversed edges ('r') from the forward ('f') edges.
         for type in EDGE_TYPES:
             if type[-1] == 'f':
                 newType = type[:-1] + 'r'
-                print("creating", newType, "from", type)
                 EDGE_REGION_INFO[newType] = EDGE_REGION_INFO[type][::-1]
                 newSeedInfo = []
                 for si in reversed(EDGE_SEED_INFO[type]):
@@ -162,10 +167,24 @@ class VoronoiHexTile():
         
         self.rng = np.random.RandomState(self.options['seed'])
 
-    def initEdgePattern(self, patternString):
-        self.edgeTypes = patternString.split('-')
-        if len(self.edgeTypes) != NUM_SIDES:
-            print("Invalid pattern", patternString)
+    def initEdgePattern(self, pattern):
+        if len(pattern) != NUM_SIDES:
+            error("Invalid patternL {0}".format(pattern))
+
+        # Build mapping from corner to edge pattern.
+        self.corner2edge = {}
+        for eri in EDGE_REGION_INFO:
+            info = EDGE_REGION_INFO[eri]
+            edge = info[0] + info[-1]
+            self.corner2edge[edge] = eri
+
+        # Convert corner pattern ("llllll") -> edge pattern (2s-2s-2s-2s-2s-2s).
+        self.edgeTypes = []
+        for i in range(0, NUM_SIDES):
+            i2 = (i + 1) % NUM_SIDES
+            corners = pattern[i] + pattern[i2]
+            self.edgeTypes.append(self.corner2edge[corners])
+
         self.nSeedsPerEdge = [len(EDGE_SEED_INFO[x]) for x in self.edgeTypes]
 
         # Verify that each edge pattern is consistent with its neighbors.
@@ -227,17 +246,43 @@ class VoronoiHexTile():
             [0, size], [xHex, yHex], [xHex, -yHex],
             [0, -size], [-xHex, -yHex], [-xHex, yHex],
             ])
-        
+        dbg_id = self.debug
+        if dbg_id >= 0 and dbg_id < NUM_SIDES:
+            print("Initializing corner seed {0}: {1}"
+                  .format(dbg_id, self.vHex[dbg_id]))
+
+        # Construct a list of adjacent edge regions for convenience later.
+        # Each entry is a pair of seed ids identifying the 2 adjacent regions
+        # for this seed: [ ccw, cw ]
+        self.edgeAdjacent = {
+            0: [],  # Init first seed so that we can append easily.
+        }
+
         # Calculate seeds along hex edges
         vertices = []
         for i0 in range(0, NUM_SIDES):
             i1 = (i0 + 1) % NUM_SIDES
             edgeType = self.edgeTypes[i0]
             seedPattern = EDGE_SEED_INFO[edgeType]
+            prev_sid = i0
             for j in range(0, len(seedPattern)):
                 t, perp_t = seedPattern[j]
                 vertices.append(lerperp(self.vHex[i0], self.vHex[i1],
                                         t, perp_t))
+                sid = NUM_SIDES-1 + len(vertices)
+                self.edgeAdjacent[prev_sid].append(sid)
+                self.edgeAdjacent[sid] = [prev_sid]
+                prev_sid = sid
+
+                if dbg_id == sid:
+                    print("Initializing edge seed {0}: {1}"
+                          .format(dbg_id, vertices[-1]))
+
+            self.edgeAdjacent[prev_sid].append(i1)
+            if i1 == 0:
+                self.edgeAdjacent[i1].insert(0, prev_sid)
+            else:
+                self.edgeAdjacent[i1] = [prev_sid]
         self.vEdgeSeeds = np.array(vertices)
 
     # Initialize the margin exclusion zones.
@@ -285,7 +330,7 @@ class VoronoiHexTile():
             while not found and numAttempts > 0:
                 seed = self.calcRandomSeedBridson(
                     allSeeds[sid], minSeed, 2 * minSeed)
-                if not ptInHex(self.size, seed[0], seed[1]):
+                if not ptInHex(self.size, seed):
                     seed = None
                     continue
                 # Also not too close the the edge margin region.
@@ -469,10 +514,13 @@ class VoronoiHexTile():
         return sides
 
     def calcAdjustment(self, sid, vMod, lerp_t):
+        # Don't adjust the fixed seeds along the edge.
+        if sid < self.startInteriorSeed:
+            return
+        sid_orig = sid
+
         # Calc seed id in the interior seed array.
         sid -= self.startInteriorSeed
-        if sid < 0:
-            return
 
         v = self.vInteriorSeeds[sid]
         if not sid in self.adjustments:
@@ -480,18 +528,22 @@ class VoronoiHexTile():
         dx, dy = lerp_pt_delta(v, vMod, lerp_t)
         self.adjustments[sid][0] += dx
         self.adjustments[sid][1] += dy
+        if self.debug == sid_orig:
+            print("Adjusting {0} by ({1}, {2})".format(sid_orig, dx, dy))
 
     # Calculate all regions with clipping.
     def calcClippedRegions(self):
         self.sid2region = {}
         for sid in range(0, NUM_SIDES):
             rid = self.vor.point_region[sid]
+            if self.debug == sid:
+                print("Calc clip region for corner {0}".format(sid))
             vids = self.calcCornerVertices(sid, rid)
             self.sid2region[sid] = vids
         for i0 in range(0, NUM_SIDES):
             i1 = (i0 + 1) % NUM_SIDES
-            sid = NUM_SIDES + sum(self.nSeedsPerEdge[:i0])
-
+            sid0 = NUM_SIDES + sum(self.nSeedsPerEdge[:i0])
+            
             # Calc array of seed positions for this edge, including the corners:
             # [ 0, seeds..., 1 ]
             edgeType = self.edgeTypes[i0]
@@ -502,87 +554,207 @@ class VoronoiHexTile():
             edgeSeeds.append(1)
 
             for j in range(0, len(seedPattern)):
-                rid = self.vor.point_region[sid + j]
-                t0 = lerp(edgeSeeds[j], edgeSeeds[j+1], 0.5)
-                t1 = lerp(edgeSeeds[j+1], edgeSeeds[j+2], 0.5)
-                vids = self.calcEdgeVertices(i0, i1, rid, t0, t1)
-                self.sid2region[sid+j] = vids
+                sid = sid0 + j
+                rid = self.vor.point_region[sid]
+                if self.debug == sid:
+                    print("Calc clip region for edge {0}".format(sid))
+
+                adjSeeds = self.edgeAdjacent[sid]
+
+                t0 = self.calcEdgeRidgeIntersection(
+                    i0, i1, sid, adjSeeds[0])
+                t1 = self.calcEdgeRidgeIntersection(
+                    i0, i1, sid, adjSeeds[1])
+
+                #t0 = lerp(edgeSeeds[j], edgeSeeds[j+1], 0.5)
+                #t1 = lerp(edgeSeeds[j+1], edgeSeeds[j+2], 0.5)
+                vids = self.calcEdgeVertices(sid, rid, i0, i1, t0, t1)
+                self.sid2region[sid] = vids
 
         for sid in range(self.startInteriorSeed, self.endInteriorSeed):
             rid = self.vor.point_region[sid]
             self.sid2region[sid] = self.vor.regions[rid]
 
+    # sid_c0 - seed id of start corner
+    # sid_c1 - seed id of end corner
+    # sid_e0 - seed id of first edge seed
+    # sid_e1 - seed id of second edge seed
+    def calcEdgeRidgeIntersection(self, sid_c0, sid_c1, sid_e0, sid_e1):
+        c0 = self.seeds[sid_c0]
+        c1 = self.seeds[sid_c1]
+        # Seeds for the prev/next region along the edge.
+        pt_e0 = self.seeds[sid_e0]
+        pt_e1 = self.seeds[sid_e1]
+
+        # Calc points along perpendicular bisector (= voronoi ridge between
+        # these 2 seeds).
+        dx,dy = lerp_pt_delta(pt_e0, pt_e1, 0.5)
+        # First pt is midpoint between seeds.
+        mid = [pt_e0[0] + dx, pt_e0[1] + dy]
+        # Arbitrary second pt on perpendicular bisector.
+        pb = [mid[0] - dy, mid[1] + dx]
+
+        # Calc intersection |t| along edge (from corner to corner).
+        t1, t2 = line_intersection_t([c0, c1], [mid, pb])
+        return t1
+
+    # sid - seed id of corner vertex
+    # rid - region id
     def calcCornerVertices(self, sid, rid):
-        # Calc prev and next hex corner.
-        sid_prev = (sid + NUM_SIDES - 1) % NUM_SIDES
-        sid_next = (sid + 1) % NUM_SIDES
+        # Calc prev and next hex corner seed ids.
+        sid_cprev = (sid + NUM_SIDES - 1) % NUM_SIDES
+        sid_cnext = (sid + 1) % NUM_SIDES
 
         # Calc |t| for each edge lerp, when starting from |sid|. 
-        edgeType_prev = self.edgeTypes[sid_prev]
+        edgeType_prev = self.edgeTypes[sid_cprev]
         edgeType = self.edgeTypes[sid]
-        edgeDiv_prev = 0.5 * (1.0 - EDGE_SEED_INFO[edgeType_prev][-1][0])
-        edgeDiv = 0.5 * EDGE_SEED_INFO[edgeType][0][0]
 
-        return self.__calcEdgeVertices(rid, sid, sid_prev, sid_next,
-                                       edgeDiv_prev, edgeDiv)
+        # If the edge seeds are all exactly on the edge, then we can calculate
+        # the edge-ridge intersection as the midpoint between the seeds.
+        # However, because we're adding a perpendicular offset to the edge
+        # seeds, we can't take this shortcut and we need to calculate the
+        # intersection between the voronoi ridge and the tile edge.
+        #edgeT_prev = 0.5 * (1.0 - EDGE_SEED_INFO[edgeType_prev][-1][0])
+        #edgeT = 0.5 * EDGE_SEED_INFO[edgeType][0][0]
 
-    def calcEdgeVertices(self, sid0, sid1, rid, t_ccw, t_cw):
-        return self.__calcEdgeVertices(rid, sid0, sid1, sid1, t_ccw, t_cw)
+        adjSeeds = self.edgeAdjacent[sid]
 
-    def __calcEdgeVertices(self, rid, sid, sid_prev, sid_next, t_ccw, t_cw):
-        r = self.vor.regions[rid]
+        edgeT_prev = self.calcEdgeRidgeIntersection(
+            sid, sid_cprev, sid, adjSeeds[0])
+        edgeT = self.calcEdgeRidgeIntersection(
+            sid, sid_cnext, sid, adjSeeds[1])
+
+        return self.__calcEdgeVertices(sid, rid, sid, sid_cprev, sid_cnext,
+                                       edgeT_prev, edgeT)
+
+    # sid - seed if for this region
+    # sid0 - first corner sid for the edge containing this region
+    # sid1 - second corner sid for the edge containing this region
+    def calcEdgeVertices(self, sid, rid, sid0, sid1, t_ccw, t_cw):
+        return self.__calcEdgeVertices(sid, rid, sid0, sid1, sid1, t_ccw, t_cw)
+
+    # sid - seed id for the region being calculated
+    # rid - region id
+    # sid0 - seed id of start corner
+    # sid_cprev - seed id of end corner for prev (ccw) dir
+    # sid_cnext - seed id of end corner for next (cw) dir
+    # t_ccw - percentage from start to end corner for ccw
+    # t_cw - percentage from start to end corner for cw
+    #
+    # sid0, _prev and _next are the seeds that are used as reference points to
+    # calculate the vertices. t_ccw and t_cw are used to determine how far along
+    # the vertex lines between the start (sid0) and end (_prev or _next).
+    #
+    # For corners, sid0 is the same as sid.
+    #                   sid
+    #                  sid0
+    #        t_ccw      _+_     t_cw
+    #              \_,-'   `-,_/
+    # sid_prev  _,-'           `-,_  sid_next
+    #         +'                   `+
+    #         |                     |
+    #
+    # For edges, the vertices are always between start and the same end, so
+    # sid_prev and sid_next are the same.
+    #
+    #              t_ccw    t_cw     sid_prev 
+    #     sid0       |       |       sid_next
+    #         +----------+----------+
+    #        /          sid          \
+    #       /                         \
+    def __calcEdgeVertices(self, sid, rid, sid0, sid_cprev, sid_cnext,
+                           t_ccw, t_cw):
+        debug = False
+        if self.debug == sid:
+            debug = True
+
+        regions = self.vor.regions[rid]
+        r = regions[:]
+        if debug: print("  original vertex order", r)
+
+        # Rotate the region vertices so that all the internal vertices are at
+        # the beginning of the array.
+        # Rotate left until we have an internal vertex at the front.
+        done = False
+        while not done:
+            v = self.vertices[r[0]]
+            if ptInHex(self.size, v):
+                done = True
+            else:
+                r = r[1:] + r[0:1]
+        # Rotate right until there isn't an internal vertex at the end.
+        done = False
+        while not done:
+            v = self.vertices[r[-1]]
+            if not ptInHex(self.size, v):
+                done = True
+            else:
+                r = r[-1:] + r[:-1]
+        if debug: print("  rotated vertex order", r)
+
+        # Count number of internal vertices.
+        numInternal = sum([1 if ptInHex(self.size, self.vertices[vid]) else 0
+                           for vid in r])
+        if debug: print("  # of internal vertices", numInternal)
+        
         verts = []
-        # True if we need to generate the tile boundary for this region.
-        genTileBounds = True
-        internal = False
-        for rindex in range(0, len(r)):
+        # Write out internal vertices.
+        for rindex in range(0, numInternal):
             vid = r[rindex]
             v = self.vertices[vid]
-            if ptInHex(self.size, v[0], v[1]):
-                verts.append(vid)
-                internal = True
-            elif genTileBounds:
-                # Set to false so we don't generate the tile boundary twice.
-                genTileBounds = False
+            if debug: print("  vertex {0} : {1}".format(vid, v))
+            verts.append(vid)
+            if debug: print("    appending internal: {0}".format(vid))
 
-                # Assume we're generating edge vertices in ccw order.
-                # Note that the order of the vertices in the region (as returned
-                # by the voronoi library) is not consistent, so we need to
-                # determine which way we are moving around the polygon.
-                startCcw = True
-                ccw = lerp_pt(self.seeds[sid], self.seeds[sid_prev], t_ccw)
-                cw = lerp_pt(self.seeds[sid], self.seeds[sid_next], t_cw)
+        # Write tile boundary.
+        # Assume we're generating edge vertices in ccw order.
+        # Note that the order of the vertices in the region (as returned
+        # by the voronoi library) is not consistent, so we need to
+        # determine which way we are moving around the polygon.
+        startCcw = True
+        ccw = lerp_pt(self.seeds[sid0], self.seeds[sid_cprev], t_ccw)
+        cw = lerp_pt(self.seeds[sid0], self.seeds[sid_cnext], t_cw)
+        if debug:
+            print("     assume ccw")
+            print("     ccw {0} from {1} and {2} @ {3:.03g}%"
+                  .format(ccw, sid0, sid_cprev, t_ccw))
+            print("      cw {0} from {1} and {2} @ {3:.03g}%"
+                  .format(cw, sid0, sid_cnext, t_cw))
 
-                # Find closest internal vertex.
-                if internal:
-                    # i-1 is safe since we saw at least 1 internal vertex at this
-                    # point.
-                    v2 = self.vertices[r[rindex-1]]
+        # Determine which tile boundary point is closest to the last internal
+        # vertex.
+        vFirstIn = self.vertices[r[0]]
+        vLastIn = self.vertices[r[numInternal-1]]
+        if debug:
+            print("     check dist to first/last internal {0} {1}"
+                  .format(vFirstIn, vLastIn))
+            print("       dist to cw: {0}".format(dist(vLastIn, cw)))
+            print("       dist to ccw: {0}".format(dist(vLastIn, ccw)))
 
-                    # Swap direction if the region vertices are CW.
-                    if dist(v2, cw) < dist(v2, ccw):
-                        startCcw = False
-                else:
-                    # Look ahead to find next internal vertex. There must be at
-                    # least one because we haven't seen any yet.
-                    rindex2 = rindex+1
-                    v2 = self.vertices[r[rindex2]]
-                    while not ptInHex(self.size, v2[0], v2[1]):
-                        rindex2 += 1
-                        v2 = self.vertices[r[rindex2]]
+        # Swap direction if the region vertices are CW.
+        if dist(vFirstIn, ccw) < dist(vLastIn, ccw):
+            startCcw = False
+            if debug: print("    swap direction to cw")
 
-                    # Swap direction if the region vertices are CCW.
-                    if dist(v2, ccw) < dist(v2, cw):
-                        startCcw = False
+        # Double-check direction by checking the cw point.
+        startCcwCheck = dist(vFirstIn, cw) < dist(vLastIn, cw)
+        if startCcw != startCcwCheck:
+            error("Error calculating clipped region for {0}".format(sid))
 
-                if not startCcw:
-                    cw, ccw = ccw, cw
+        if not startCcw:
+            cw, ccw = ccw, cw
 
-                verts.append(self.addVertex(ccw))
-                # Hex corners have an extra point in the middle.
-                if sid_prev != sid_next:
-                    verts.append(self.addVertex(self.seeds[sid]))
-                verts.append(self.addVertex(cw))
+        verts.append(self.addVertex(ccw))
+        if debug: print("    adding new vertex {0}".format(ccw))
+
+        # Hex corners have an extra point in the middle.
+        if sid_cprev != sid_cnext:
+            verts.append(self.addVertex(self.seeds[sid0]))
+            if debug: print("    adding new vertex (corner) {0}"
+                            .format(self.seeds[sid0]))
+
+        verts.append(self.addVertex(cw))
+        if debug: print("    adding new vertex {0}".format(cw))
         return verts
 
     # Find any voronoi edges that are too small.
@@ -610,6 +782,19 @@ class VoronoiHexTile():
                     if not edgeId in self.badEdges:
                         self.badEdges[edgeId] = []
                     self.badEdges[edgeId].append(edgeInfo)
+
+    # Find seeds that have drifted too close to neighboring seeds.
+    def findTooClose(self):
+        self.tooClose = []
+        for sid in range(0, self.numActiveSeeds):
+            minDist = self.closeThreshold * self.seed2minDistance[sid]
+            for n_sid in self.calcNeighboringRegions(sid):
+                s0 = self.seeds[sid]
+                s1 = self.seeds[n_sid]
+                if near(s0, s1, minDist):
+                    self.tooClose.append([sid, n_sid])
+                    if self.debug == sid or self.debug == n_sid:
+                        print("Seeds", sid, n_sid, "are close")
 
     # Find any regions that are too small.
     def findSmallRegions(self):
@@ -728,6 +913,10 @@ class VoronoiHexTile():
         print("Iteration", i, end='')
         print(" -", len(self.badEdges), "bad edges", end='')
 
+        nTooClose = int(len(self.tooClose) / 2)
+        if nTooClose > 0:
+            print(" -", nTooClose, "seed pairs are too close", end='')
+            
         if ENABLE_SMALL_REGION_CHECK:
             min = self.minCircle
             max = self.maxCircle
@@ -769,8 +958,8 @@ class VoronoiHexTile():
                 print("Error - vertex shared by more than 3 regions:", k, v)
         
         self.findBadEdges()
-        if ENABLE_SMALL_REGION_CHECK:
-            self.findSmallRegions()
+        self.findSmallRegions()
+        self.findTooClose()
 
     def update(self):
         if self.iteration > self.maxIterations:
@@ -782,6 +971,17 @@ class VoronoiHexTile():
         # |badEdges| is an array of bad edges:
         #   Each bad edge is an array identifying the 2 regions:
         #     [vertex-id0, vertex-id1, seed1-id], [vid0, vid1, seed2-id]
+        #
+        # For a bad (too short) edge:
+        # 
+        #            \       side        /
+        #             \       v         /
+        #  <-neighbor  +---------------+  neighbor->
+        #             /       ^         \ 
+        #            /       side        \ 
+        #
+        # Seeds for the side regions are moved closer.
+        # Seeds for the neighboring regions are moved away.
         for bei in self.badEdges:
             badEdge = self.badEdges[bei]
             vid0, vid1, sid0 = badEdge[0]
@@ -805,6 +1005,15 @@ class VoronoiHexTile():
                                     self.adjustmentNeighbor)
             hasChanges = True
 
+        # Adjust seeds that are too close.
+        for seed_pair in self.tooClose:
+            s0, s1 = seed_pair
+            # s1 is too close to s0 and should be moved away slightly.
+            self.calcAdjustment(s1, self.seeds[s0], self.adjustmentTooClose)
+            if self.debug == s0 or self.debug == s1:
+                print("Seed {0} is being pushed away from {1}".format(s1, s0))
+            hasChanges = True
+            
         if ENABLE_SMALL_REGION_CHECK:
             # If there's too much difference between the largest and smallest
             # circle, adjust the regions that surround the min and max regions.
@@ -818,10 +1027,14 @@ class VoronoiHexTile():
                     self.calcAdjustment(sid, self.seeds[self.maxCircle],
                                         self.adjustmentShrink)
                 hasChanges = True
-        
+
+        # Apply the adjustments.
         newInterior = self.vInteriorSeeds.copy()
         for sid in range(0, len(self.vInteriorSeeds)):
             if sid in self.adjustments:
+                if self.debug == sid:
+                    print("Adjusting {0} by {1}"
+                          .format(sid, self.adjustments[sid]))
                 newInterior[sid][0] += self.adjustments[sid][0]
                 newInterior[sid][1] += self.adjustments[sid][1]
         self.vInteriorSeeds = np.array(newInterior)
@@ -842,6 +1055,8 @@ class VoronoiHexTile():
         # Draw clipped regions.
         layer_region_clip = self.svg.add_inkscape_layer(
             'region-clip', "Region Clipped", layer)
+        g = SVG.group('clip')
+        SVG.add_node(layer_region_clip, g)
         for sid in range(0, self.numActiveSeeds):
             vids = self.sid2region[sid]
             id = "clipregion-{0:d}".format(sid)
@@ -852,7 +1067,7 @@ class VoronoiHexTile():
                 terrain_type = self.rData[sid]
             color = REGION_STYLE[terrain_type]
             self.plotRegion(vids, color)
-            self.drawRegion(id, vids, color, layer_region_clip)
+            self.drawRegion(id, vids, color, g)
 
         # Plot regions and seeds.
         layer_region = self.svg.add_inkscape_layer('region', "Region", layer)
@@ -899,8 +1114,21 @@ class VoronoiHexTile():
                 self.plotBadVertex(self.vertices[vid0], layer_bad_edges)
                 self.plotBadVertex(self.vertices[vid1], layer_bad_edges)
 
+        if len(self.tooClose) != 0:
+            layer_too_close = self.svg.add_inkscape_layer(
+                'too-close', "Too Close Seeds", layer)
+            for spair in self.tooClose:
+                s0, s1 = spair
+                p = Path()
+                p.setPoints([self.seeds[s] for s in [s0,s1]])
+                p.set_style(Style(None, "#800000", "0.5px"))
+                SVG.add_node(layer_too_close, p)
+                
+                self.plotBadVertex(self.seeds[s0], layer_too_close)
+                self.plotBadVertex(self.seeds[s1], layer_too_close)
+            
         # Plot inscribed circles for each region.
-        if ENABLE_SMALL_REGION_CHECK:
+        if True:  #ENABLE_SMALL_REGION_CHECK:
             layer_circles = self.svg.add_inkscape_layer(
                 'circles', "Inscribed Circles", layer)
             layer_circles.hide()
@@ -913,11 +1141,12 @@ class VoronoiHexTile():
 
                 id = "incircle-ctr-{0:d}".format(sid)
                 drawCircle(id, center, '0.5', black_fill, layer_circles)
-            if self.circleRatio > self.circleRatioThreshold:
-                for c in [self.minCircle, self.maxCircle]:
-                    center, radius = self.regionCircles[c]
-                    circle = plt.Circle(center, radius, color="#80000080")
-                    plt.gca().add_patch(circle)
+            if ENABLE_SMALL_REGION_CHECK:
+                if self.circleRatio > self.circleRatioThreshold:
+                    for c in [self.minCircle, self.maxCircle]:
+                        center, radius = self.regionCircles[c]
+                        circle = plt.Circle(center, radius, color="#80000080")
+                        plt.gca().add_patch(circle)
 
         self.drawRiverSegments()
 
@@ -965,7 +1194,7 @@ class VoronoiHexTile():
             self.addText("rng seed RANDOM")
         self.addText("pattern {0:s}".format(self.options['pattern']))
         self.addText("seed attempts: {0:d}".format(self.seedAttempts))
-        self.addText("seed distance: l {0:.02g}; m {1:.02g}; h {2:.02g}"
+        self.addText("seed distance: l {0:.03g}; m {1:.03g}; h {2:.03g}"
                      .format(MIN_DISTANCE_L, MIN_DISTANCE_M, MIN_DISTANCE_H))
 
         center = "AVG"
@@ -979,8 +1208,10 @@ class VoronoiHexTile():
         self.addText("edge margin exclusion zone scale: {0:.02g}"
                      .format(self.edgeMarginScale))
         self.addText("iterations: {0:d}".format(self.iteration-1))
-        self.addText("adjustments: side {0:.03g}%, neighbor {1:.03g}%"
+        self.addText("adjustments: side {0:.03g}, neighbor {1:.03g}"
                      .format(self.adjustmentSide, self.adjustmentNeighbor))
+        self.addText("closeness: {0:.03g}, adjust {1:.03g}"
+                     .format(self.closeThreshold, self.adjustmentTooClose))
 
         if False:
             pattern = []
@@ -989,6 +1220,11 @@ class VoronoiHexTile():
                 pattern.append('-'.join(EDGE_REGION_INFO[type][1:-1]))
             self.addText('-'.join(pattern))
 
+        # Add 15mm circle (for mana size).
+        drawCircle('mana', [50,110], '7.5',
+                   Style(fill="#000000"), self.layer_text)
+        
+        # Add terrain swatches.
         y_start = 80
         for type in ['h', 'm', 'l', 'r']:
             color = REGION_STYLE[type]
@@ -998,7 +1234,7 @@ class VoronoiHexTile():
             y_start += 10
         
     def addText(self, text):
-        t = Text(None, -92, 85 + 5.5 * self.numLines, text)
+        t = Text(None, -92, 80 + 5.5 * self.numLines, text)
         SVG.add_node(self.layer_text, t)
         self.numLines += 1
     
@@ -1096,7 +1332,7 @@ class VoronoiHexTile():
         cmd.append(anim_file)
 
         subprocess.run(cmd)
-        
+
 def drawCircle(id, center, radius, fill, layer):
     circle = SVG.circle(id, center[0], center[1], radius)
     circle.set_style(fill)
@@ -1111,13 +1347,15 @@ OPTIONS = {
              'desc': "Generate animation plots"},
     'center': {'type': 'string', 'default': None,
                'desc': "Terrain type for center of tile: l, m, h"},
+    'debug': {'type': 'int', 'default': -1,
+              'desc': "Log debug info for given region id"},
     'iter': {'type': 'int', 'default': 25,
              'desc': "Max iterations"},
-    'pattern': {'type': 'string', 'default': "2-2-2-2-2-2",
-                'desc': "Edge pattern"},
+    'pattern': {'type': 'string', 'default': "llllll",
+                'desc': "Edge pattern ([lmh] x6)"},
     'seed': {'type': 'int', 'default': None,
              'desc': "Random seed"},
-    'size': {'type': 'int', 'default': 100,
+    'size': {'type': 'int', 'default': 80,
              'desc': "Size of hex side (mm)"},
 }
 
@@ -1192,8 +1430,8 @@ def main():
         v.generate()
     v.plot()
 
-    if options['anim']:
-        v.exportAnimation()
+    #if options['anim']:
+    #    v.exportAnimation()
 
 if __name__ == '__main__':
     main()

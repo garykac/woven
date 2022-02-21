@@ -34,10 +34,13 @@ def lerp_pt_delta(v0, v1, t):
 def lerperp(v0, v1, t, perp_t):
     x0, y0 = v0
     x1, y1 = v1
-    lerp_x = x0 + (x1-x0)*t
-    lerp_y = y0 + (y1-y0)*t
-    x = lerp_x - (y1-y0)*perp_t
-    y = lerp_y + (x1-x0)*perp_t
+    dx = x1 - x0
+    dy = y1 - y0
+    lerp_x = x0 + dx * t
+    lerp_y = y0 + dy * t
+    # Use (x,y) + (-dy,dx) for perpendicular line.
+    x = lerp_x - dy * perp_t
+    y = lerp_y + dx * perp_t
     #print("lerperp:", v0, v1, t, perp_t, "->", x,y)
     return [x, y]
 
@@ -56,9 +59,9 @@ def dist(v0, v1):
     return math.sqrt(dx*dx + dy*dy)
 
 def dist_pt_line(pt, line):
-    line0, line1 = line
-    x0, y0 = line0
-    x1, y1 = line1
+    pt0, pt1 = line
+    x0, y0 = pt0
+    x1, y1 = pt1
     x,y = pt
     # Handle special case of vertical lines.
     if feq(x0, x1):
@@ -79,9 +82,90 @@ def dist_pt_line(pt, line):
     dist = abs(A*x + B*y + C) / math.sqrt(A*A + B*B)
     return dist
 
+# Return the 2 t values for the intersection between the 2 lines.
+def line_intersection_t(line1, line2):
+    pt1a, pt1b = line1
+    pt2a, pt2b = line2
+
+    pt1ax, pt1ay = pt1a
+    pt1bx, pt1by = pt1b
+    pt2ax, pt2ay = pt2a
+    pt2bx, pt2by = pt2b
+
+    # Intersection point for line1:
+    #   x = (1 - t1) * pt1ax + t1 * pt1bx
+    #   y = (1 - t1) * pt1ay + t1 * pt1by
+    # Intersection point for line2:
+    #   x = (1 - t2) * pt2ax + t2 * pt2bx
+    #   y = (1 - t2) * pt2ay + t2 * pt2by
+    #
+    # x = x
+    # (1 - t1) * pt1ax + t1 * pt1bx = (1 - t2) * pt2ax + t2 * pt2bx
+    # pt1ax - t1 * pt1ax + t1 * pt1bx = (1 - t2) * pt2ax + t2 * pt2bx
+    # t1 * (pt1bx - pt1ax) = (1 - t2) * pt2ax + t2 * pt2bx - pt1ax
+    # t1 = ((1 - t2) * pt2ax + t2 * pt2bx - pt1ax) / (pt1bx - pt1ax)
+    # t1 = (pt2ax - t2 * pt2ax + t2 * pt2bx - pt1ax) / (pt1bx - pt1ax)
+    # t1 = (t2 * (pt2bx - pt2ax) + pt2ax - pt1ax) / (pt1bx - pt1ax)
+    #
+    # y = y
+    # t1 = (t2 * (pt2by - pt2ay) + pt2ay - pt1ay) / (pt1by - pt1ay)
+
+    # x = x
+    # (1 - t1) * pt1ax + t1 * pt1bx = (1 - t2) * pt2ax + t2 * pt2bx
+    # (1 - t1) * pt1ax + t1 * pt1bx = pt2ax - t2 * pt2ax + t2 * pt2bx
+    # (1 - t1) * pt1ax + t1 * pt1bx - pt2ax = t2 * (pt2bx - pt2ax) 
+    # t2 = ((1 - t1) * pt1ax + t1 * pt1bx - pt2ax) / (pt2bx - pt2ax)
+    # t2 = (pt1ax - t1 * pt1ax + t1 * pt1bx - pt2ax) / (pt2bx - pt2ax)
+    # t2 = (t1 * (pt1bx - pt1ax) + pt1ax - pt2ax) / (pt2bx - pt2ax)
+    #
+    # y = y
+    # t2 = (t1 * (pt1by - pt1ay) + pt1ay - pt2ay) / (pt2by - pt2ay)
+
+    pt1dx = pt1bx - pt1ax
+    pt1dy = pt1by - pt1ay
+    pt2dx = pt2bx - pt2ax
+    pt2dy = pt2by - pt2ay
+    pt21adx = pt2ax - pt1ax
+    pt21ady = pt2ay - pt1ay
+    pt12adx = pt1ax - pt2ax
+    pt12ady = pt1ay - pt2ay
+
+    # t1 = t1
+    # (t2 * (pt2bx - pt2ax) + pt2ax - pt1ax) / (pt1bx - pt1ax)
+    #    = (t2 * (pt2by - pt2ay) + pt2ay - pt1ay) / (pt1by - pt1ay)
+    # (t2 * pt2dx + pt21adx) / pt1dx = (t2 * pt2dy + pt21ady) / pt1dy
+    # (t2 * pt2dx + pt21adx) * pt1dy = (t2 * pt2dy + pt21ady) * pt1dx
+    # t2 * pt2dx * pt1dy + pt21adx * pt1dy
+    #    = t2 * pt2dy * pt1dx + pt21ady * pt1dx
+    # t2 * pt2dx * pt1dy - t2 * pt2dy * pt1dx
+    #    = pt21ady * pt1dx - pt21adx * pt1dy
+    # t2 * (pt2dx * pt1dy - pt2dy * pt1dx) = pt21ady * pt1dx - pt21adx * pt1dy
+    # t2 = (pt21ady * pt1dx - pt21adx * pt1dy) / (pt2dx * pt1dy - pt2dy * pt1dx)
+    t2 = (pt21ady * pt1dx - pt21adx * pt1dy) / (pt2dx * pt1dy - pt2dy * pt1dx)
+
+    # t2 = t2
+    # (t1 * (pt1bx - pt1ax) + pt1ax - pt2ax) / (pt2bx - pt2ax)
+    #    = (t1 * (pt1by - pt1ay) + pt1ay - pt2ay) / (pt2by - pt2ay)
+    # (t1 * pt1dx + pt12adx) / pt2dx = (t1 * pt1dy + pt12ady) / pt2dy
+    # (t1 * pt1dx + pt12adx) * pt2dy = (t1 * pt1dy + pt12ady) * pt2dx
+    # t1 * pt1dx * pt2dy + pt12adx * pt2dy
+    #    = t1 * pt1dy * pt2dx + pt12ady * pt2dx
+    # t1 * pt1dx * pt2dy - t1 * pt1dy * pt2dx
+    #    = pt12ady * pt2dx - pt12adx * pt2dy
+    # t1 * (pt1dx * pt2dy - pt1dy * pt2dx) = pt12ady * pt2dx - pt12adx * pt2dy
+    # t1 = (pt12ady * pt2dx - pt12adx * pt2dy) / (pt1dx * pt2dy - pt1dy * pt2dx)
+    t1 = (pt12ady * pt2dx - pt12adx * pt2dy) / (pt1dx * pt2dy - pt1dy * pt2dx)
+
+    # Alternate way to calculate t1.
+    #t1 = (t2 * pt2dx + pt21adx) / pt1dx
+    #print(t1, lerp_pt(pt1a, pt1b, t1))
+    #print(t2, lerp_pt(pt2a, pt2b, t2))
+    return (t1, t2)
+
 __hexXMax = math.sqrt(3) / 2
 
-def ptInHex(size, x, y):
+def ptInHex(size, pt):
+    x, y = pt
     # Check if point is within hexagon.
     # Assumes hexagon is centered at origin.
     # Note: scale = 1.0 in diagram.
