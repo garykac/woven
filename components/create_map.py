@@ -4,11 +4,12 @@ import math
 import matplotlib.pyplot as plt
 import numpy as np
 import os
+import random  # Only used to seed numpy random
 import scipy.spatial
 import subprocess
 import sys
 
-from math_utils import (feq, fge, fle, scale,
+from math_utils import (feq, fge, fle, scale, clamp,
                         lerp, lerp_pt, lerp_pt_delta, lerperp,
                         near, dist, dist_pt_line, line_intersection_t,
                         ptInHex)
@@ -47,6 +48,7 @@ EDGE_SEED_INFO = {
 }
 
 # Minimum seed distance based on terrain type.
+# These are also used as weights for each type.
 MIN_DISTANCE_L = 0.22
 MIN_DISTANCE_M = 0.19
 MIN_DISTANCE_H = 0.16
@@ -60,6 +62,23 @@ REGION_STYLE = {
     'm': "#f0ce76",  #'#dcc382',  # medium
     'h': "#e7a311",  #'#d69200',  # high
     'r': "#a2c6ff",  # river/water
+}
+
+# Random dist of terrain types based on the corner terrain.
+# Exact probs for each cell are interpolated from corners (and center).
+TERRAIN_DIST = {
+    # hhhhhh:        27 m + 24 h  :   0%  53%  47%
+    # mmmhhh:  4 l + 24 m +  9 h  :  11%  65%  24%
+    # llmmhm: 10 l + 15 m +  8 h  :  30%  46%  24%
+    # llmhhm:  8 l + 13 m + 11 h  :  25%  54%  21%
+    # llmhhm: 10 l + 22 m +  5 h  :  27%  59%  14%
+    # lllmlm: 23 l +  5 m         :  82%  18%
+    # llllll: 16 l +  6 m         :  73%  27%
+
+    # hhhhhh:  6 l + 19 m + 13 h (l center)
+    # llllll: 16 l + 12 m +  2 h (h center)
+    'l': [ 0.80, 0.20, 0.00 ],
+    'h': [ 0.00, 0.50, 0.50 ],
 }
 
 # NOTE: Default units for SVG is mm.
@@ -159,12 +178,14 @@ class VoronoiHexTile():
                 EDGE_SEED_INFO[newType] = newSeedInfo
 
         # Load region data
-        h = "h"
-        m = "m"
-        self.rData = [h,h,h,h,h,h,h,h,m,h,h,h,h,m,h,h,h,h,m,h,h,h,h,m,h,h,h,h,m,h,h,h,h,m,h,h,h,h,h,h,m,m,m,h,m,m,m,m,m,h,h,m,m,m,m,m,m,h,h,h,h,m,h,m,h,h,h,m,m,m,h,m,m,h,h,m,h,h,h,m,h,m,m,h,m,m,h]
+        self.terrainData = None
+        if self.options['load']:
+            self.loadTileData()
 
         self.initEdgePattern(self.options['pattern'])
-        
+
+        if self.options['seed'] == None:
+            self.options['seed'] = random.randint(0,5000)
         self.rng = np.random.RandomState(self.options['seed'])
 
     def initEdgePattern(self, pattern):
@@ -315,7 +336,7 @@ class VoronoiHexTile():
         # Calc mininum seed distance based on seed location.
         seed2minDistance = []
         for i in range(0, len(startSeeds)):
-            seed2minDistance.append(self.calcSeedDistance(startSeeds[i]))
+            seed2minDistance.append(self.calcSeedWeight(startSeeds[i]))
 
         activeSeedIds = [x for x in range(0, len(startSeeds))]
         allSeeds = startSeeds.tolist()
@@ -360,20 +381,62 @@ class VoronoiHexTile():
                 activeSeedIds.append(len(allSeeds))
                 allSeeds.append(seed)
                 newSeeds.append(seed)
-                seed2minDistance.append(self.calcSeedDistance(seed))
+                seed2minDistance.append(self.calcSeedWeight(seed))
 
         self.vInteriorSeeds = np.array(newSeeds)
         self.seed2minDistance = seed2minDistance
 
+    def calcTerrainType(self, sid):
+        # Record terrain type for this seed so that we don't regenerate new
+        # terrain for each iteration.
+        if len(self.seed2terrain) != sid:
+            error("Terrain for seeds generated out of order: {0}".format(sid))
+
+        # If we have terrain data loaded from a file, use that.
+        if self.terrainData:
+            type = self.terrainData[sid]
+            self.seed2terrain.append(type)
+            return type
+        
+        w = self.calcSeedWeight(self.seeds[sid])
+        w /= self.size
+        
+        # Convert weight to a range from 0 ('l') to 1 ('h').
+        t = 1 - ((w - MIN_DISTANCE_H) / (MIN_DISTANCE_L - MIN_DISTANCE_H))
+
+        # Interpolate the probs for each type based on the cell's weight.
+        l_terrain = TERRAIN_DIST['l']
+        h_terrain = TERRAIN_DIST['h']
+        l_prob = clamp(lerp(l_terrain[0], h_terrain[0], t), 0, 1)
+        m_prob = clamp(lerp(l_terrain[1], h_terrain[1], t), 0, 1)
+        h_prob = clamp(lerp(l_terrain[2], h_terrain[2], t), 0, 1)
+
+        probs = [l_prob, m_prob, h_prob]
+        type = self.rng.choice(['l', 'm', 'h'], p = probs)
+
+        self.seed2terrain.append(type)
+
+        return type
+        
     # Calc the min seed distance based on the current seed location in the hex
     # tile. Seeds in higher density regions will have a smaller distance than
     # those in low density regions.
-    # Assumes hexagon is centered at 0,0
-    def calcSeedDistance(self, baseSeed):
+    def calcSeedWeight(self, baseSeed):
         x, y = baseSeed
-        # Find the triangle (in the hex) where the seed is located and compute
+        a, b, c, sid0, sid1 = self.calcHexTriWeights(x, y)
+        
+        # Seed is within current triangle, calculate weight.
+        w1 = self.cornerWeight[self.cornerType[sid0]]
+        w2 = self.cornerWeight[self.cornerType[sid1]]
+        w3 = self.centerWeight
+        weight = a * w1 + b * w2 + c * w3
+        return weight
+
+    # Assumes hexagon is centered at 0,0
+    def calcHexTriWeights(self, x, y):
+        # Find the triangle (in the hex) where the point is located and compute
         # the barycentric coordinates of that point within the triangle. These
-        # coordinates will be used as weights to calculate the min distance.
+        # coordinates will be used as weights for that point.
         #
         # Given a point x,y, in barycentric coords:
         #   x = a * x1 + b * x2 + c * x3
@@ -435,15 +498,9 @@ class VoronoiHexTile():
             # Note: Some of the edge seeds are actually slightly outside the
             # hexagon (so that |c| is < 0), but this is OK.
             if fge(a, 0) and fge(b, 0) and fle(c, 1):
-                # Seed is within current triangle, calculate weight.
-                edgeType = self.nSeedsPerEdge[tri]
-                w1 = self.cornerWeight[self.cornerType[tri]]
-                w2 = self.cornerWeight[self.cornerType[tri_next]]
-                w3 = self.centerWeight
-                weight = a * w1 + b * w2 + c * w3
-                return weight
-        error("Unable to calculate seed distance for {0}".format(baseSeed))
-        return 0
+                return (a, b, c, tri, tri_next)
+        error("Unable to calculate seed distance for {0},{1}".format(x,y))
+        return None
         
     # Generate a random x,y point within a ring (defined by |r0| and |r1|) around
     # the given |baseSeed|.
@@ -738,8 +795,8 @@ class VoronoiHexTile():
 
         # Double-check direction by checking the cw point.
         startCcwCheck = dist(vFirstIn, cw) < dist(vLastIn, cw)
-        if startCcw != startCcwCheck:
-            error("Error calculating clipped region for {0}".format(sid))
+        if numInternal != 1 and startCcw != startCcwCheck:
+            error("calculating clipped region for {0}".format(sid))
 
         if not startCcw:
             cw, ccw = ccw, cw
@@ -913,7 +970,7 @@ class VoronoiHexTile():
         print("Iteration", i, end='')
         print(" -", len(self.badEdges), "bad edges", end='')
 
-        nTooClose = int(len(self.tooClose) / 2)
+        nTooClose = len(self.tooClose)
         if nTooClose > 0:
             print(" -", nTooClose, "seed pairs are too close", end='')
             
@@ -940,7 +997,7 @@ class VoronoiHexTile():
         # Recalculate the min seed distance for each seed.
         self.seed2minDistance = []
         for i in range(0, self.numActiveSeeds):
-            self.seed2minDistance.append(self.calcSeedDistance(self.seeds[i]))
+            self.seed2minDistance.append(self.calcSeedWeight(self.seeds[i]))
 
         self.calcClippedRegions()
 
@@ -1010,6 +1067,8 @@ class VoronoiHexTile():
             s0, s1 = seed_pair
             # s1 is too close to s0 and should be moved away slightly.
             self.calcAdjustment(s1, self.seeds[s0], self.adjustmentTooClose)
+            # Adjust both seeds to handle case where s1 is fixed.
+            self.calcAdjustment(s0, self.seeds[s1], self.adjustmentTooClose)
             if self.debug == s0 or self.debug == s1:
                 print("Seed {0} is being pushed away from {1}".format(s1, s0))
             hasChanges = True
@@ -1064,7 +1123,7 @@ class VoronoiHexTile():
             if sid < len(self.seed2terrain):
                 terrain_type = self.seed2terrain[sid]
             else:
-                terrain_type = self.rData[sid]
+                terrain_type = self.calcTerrainType(sid)
             color = REGION_STYLE[terrain_type]
             self.plotRegion(vids, color)
             self.drawRegion(id, vids, color, g)
@@ -1155,13 +1214,10 @@ class VoronoiHexTile():
         self.drawAnnotations()
         
         out_dir = self.options['out']
-        if self.options['seed'] == None:
-            name = "hex"
-        else:
-            name = "hex-{0:d}".format(self.options['seed'])
         if not os.path.isdir(out_dir):
             os.makedirs(out_dir);
 
+        name = self.calcBaseFilename()
         if plotId == None:
             out = os.path.join(out_dir, '%s.svg' % name)
             if GENERATE_SVG:
@@ -1181,6 +1237,13 @@ class VoronoiHexTile():
         if GENERATE_PLOT:
             plt.savefig(out, bbox_inches='tight')
         plt.close(fig)
+
+    def calcBaseFilename(self):
+        name = "hex"
+        if self.options['seed'] != None:
+            name = ("hex-{0:s}-{1:d}"
+                    .format(self.options['pattern'], self.options['seed']))
+        return name
 
     def drawAnnotations(self):
         self.layer_text = self.svg.add_inkscape_layer(
@@ -1321,9 +1384,7 @@ class VoronoiHexTile():
         cmd.extend(["-loop", "0"])
         cmd.append(os.path.join(anim_dir, "hex-*"))
 
-        base = "hex"
-        if self.options['seed'] != None:
-            base = "hex-{0:d}".format(self.options['seed'])
+        base = self.calcBaseFilename()
         last_file = "{0:s}-{1:03d}.png".format(base, self.iteration-1)
         cmd.extend(["-delay", "100"])
         cmd.append(os.path.join(anim_dir, last_file))
@@ -1332,6 +1393,38 @@ class VoronoiHexTile():
         cmd.append(anim_file)
 
         subprocess.run(cmd)
+
+    def loadTileData(self):
+        file = self.options['load']
+        header = True
+        with open(file) as f:
+            for line in f:
+                if header:
+                    header = False
+                    continue
+                data = line.rstrip().split(',')
+                pattern = data.pop(0)
+                seed = int(data.pop(0))
+                center = data.pop(0)
+                if center == "AVG": center = None
+                self.options['pattern'] = pattern
+                self.options['seed'] = seed
+                self.options['center'] = center
+                self.terrainData = data
+
+    def writeTileData(self):
+        center = self.options['center']
+        if center == None:
+            center = "AVG"
+        print("{0},{1},{2},".format(
+            self.options['pattern'],
+            self.options['seed'],
+            center), end='')
+
+        while len(self.seed2terrain) <= 100:
+            self.seed2terrain.append('')
+        terrain = ','.join(self.seed2terrain)
+        print(terrain)
 
 def drawCircle(id, center, radius, fill, layer):
     circle = SVG.circle(id, center[0], center[1], radius)
@@ -1351,6 +1444,8 @@ OPTIONS = {
               'desc': "Log debug info for given region id"},
     'iter': {'type': 'int', 'default': 25,
              'desc': "Max iterations"},
+    'load': {'type': 'string', 'default': None,
+             'desc': "Load data from file"},
     'pattern': {'type': 'string', 'default': "llllll",
                 'desc': "Edge pattern ([lmh] x6)"},
     'seed': {'type': 'int', 'default': None,
@@ -1429,6 +1524,8 @@ def main():
     while v.update():
         v.generate()
     v.plot()
+
+    v.writeTileData()
 
     #if options['anim']:
     #    v.exportAnimation()
