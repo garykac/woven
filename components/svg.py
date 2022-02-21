@@ -117,6 +117,10 @@ class Path(Node):
         path += " z"
         self.set('d', path)
 
+    def setPoints(self, pts):
+        self.addPoints(pts)
+        self.end()
+        
 class Text(Node):
     def __init__(self, id, x, y, text):
         if id == None:
