@@ -15,6 +15,11 @@ def scale(v, scale):
     x, y = v
     return [x * scale, y * scale]
 
+def clamp(a, min, max):
+    if a < min: return min
+    if a > max: return max
+    return a
+
 def lerp(a0, a1, t):
     return a0 + (a1-a0)*t
     
