@@ -146,6 +146,8 @@ def line_intersection_t(line1, line2):
     #    = pt21ady * pt1dx - pt21adx * pt1dy
     # t2 * (pt2dx * pt1dy - pt2dy * pt1dx) = pt21ady * pt1dx - pt21adx * pt1dy
     # t2 = (pt21ady * pt1dx - pt21adx * pt1dy) / (pt2dx * pt1dy - pt2dy * pt1dx)
+    if feq((pt2dx * pt1dy - pt2dy * pt1dx), 0):
+        print("uh oh", line1, line2)
     t2 = (pt21ady * pt1dx - pt21adx * pt1dy) / (pt2dx * pt1dy - pt2dy * pt1dx)
 
     # t2 = t2
@@ -159,6 +161,8 @@ def line_intersection_t(line1, line2):
     #    = pt12ady * pt2dx - pt12adx * pt2dy
     # t1 * (pt1dx * pt2dy - pt1dy * pt2dx) = pt12ady * pt2dx - pt12adx * pt2dy
     # t1 = (pt12ady * pt2dx - pt12adx * pt2dy) / (pt1dx * pt2dy - pt1dy * pt2dx)
+    if feq((pt1dx * pt2dy - pt1dy * pt2dx), 0):
+        print("uh oh", line1, line2)
     t1 = (pt12ady * pt2dx - pt12adx * pt2dy) / (pt1dx * pt2dy - pt1dy * pt2dx)
 
     # Alternate way to calculate t1.
