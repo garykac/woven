@@ -43,7 +43,7 @@ EDGE_SEED_INFO = {
     '2s': [[1/3, 0.03],   [2/3, -0.03]],
     '3f': [[0.30, 0.02],  [0.55, 0],    [0.75, -0.03]],
     '3s': [[0.25, 0.04],  [0.50, 0],    [0.75, -0.04]],
-    '4f': [[0.24, -0.03], [0.42, 0.01], [0.58, -0.01],  [0.76, 0.03]],
+    '4f': [[0.24, -0.04], [0.42, 0.02], [0.58, -0.03],  [0.77, 0.03]],
     '5s': [[0.20, -0.05], [0.31, 0.05], [0.50, 0], [0.69, -0.05], [0.80, 0.05]],
 }
 
@@ -62,6 +62,7 @@ REGION_STYLE = {
     'm': "#f0ce76",  #'#dcc382',  # medium
     'h': "#e7a311",  #'#d69200',  # high
     'r': "#a2c6ff",  # river/water
+    'v': "#be850a",  # very high mountain
 }
 
 # Random dist of terrain types based on the corner terrain.
@@ -306,27 +307,52 @@ class VoronoiHexTile():
                 self.edgeAdjacent[i1] = [prev_sid]
         self.vEdgeSeeds = np.array(vertices)
 
+        # Build temp seeds so that it can be used for the rest of the seed
+        # initialization.
+        self.seeds = np.concatenate((self.vHex, self.vEdgeSeeds))
+
     # Initialize the margin exclusion zones.
     # These zone prevent seeds from getting too close to the tile boundary where
     # they would cause voronoi ridges that are too small, or cause the region to
     # be clipped by the hex boundary.
     def initEdgeMarginZone(self):
-        seeds = [self.vHex[0]]
+        marginPoints = []
         for i0 in range(0, NUM_SIDES):
+            sids = [i0]
             firstSeed = sum(self.nSeedsPerEdge[:i0])
             nEdgeSeeds = self.nSeedsPerEdge[i0]
             for j in range(firstSeed, firstSeed + nEdgeSeeds):
-                seeds.append(self.vEdgeSeeds[j])
+                sids.append(NUM_SIDES + j)
             i1 = (i0 + 1) % NUM_SIDES
-            seeds.append(self.vHex[i1])
-        
-        # Create edge margin points between the seeds.
-        marginPoints = []
-        for i in range(0, len(seeds)-1):
-            pt = lerp_pt(seeds[i], seeds[i+1], 0.5)
-            size = self.edgeMarginScale * 0.5 * dist(seeds[i], seeds[i+1])
-            marginPoints.append([pt, size])
+            sids.append(i1)
 
+            for i in range(0, len(sids)-1):
+                # For the center of the margin exclusion zone, we can't just use
+                # the midpoint between the two edge seeds; we have to calculate
+                # the circle (based on the distance between the two seeds) and
+                # then slide the circle along the voronoi ridge to place the
+                # center on the tile edge.
+                #
+                #                   ridge line
+                #       seed0 +       /
+                #                    /
+                #                   + <- midpoint between seeds 
+                #                  /
+                #   tile edge ----a-------+ seed1
+                #                /         \
+                #
+                # Center of circle for margin zone must be at 'a'.
+                #
+                # This is important when the edge seeds lie outside the hex
+                # because otherwise the margin zone will be too small (too far
+                # outside the hex) and it will allow internal seeds to be placed
+                # too close to the edge.
+                t = self.calcEdgeRidgeIntersection(i0, i1, sids[i], sids[i+1])
+                pt = lerp_pt(self.seeds[i0], self.seeds[i1], t)
+                size = (self.edgeMarginScale * 0.5
+                        * dist(self.seeds[sids[i]], self.seeds[sids[i+1]]))
+                marginPoints.append([pt, size])
+        
         self.edgeMarginZone = marginPoints
 
     # Generate the interior seed points.
@@ -535,6 +561,7 @@ class VoronoiHexTile():
 
     # Add a new vertex to the voronoi graph. This is used when clipping the
     # regions along the edge of the tile.
+    # Return the index of the new vertex.
     def addVertex(self, v):
         # Check to see of we've added this vertex already.
         key = "{0:.6g}-{1:.6g}".format(v[0], v[1])
@@ -636,6 +663,8 @@ class VoronoiHexTile():
     # sid_c1 - seed id of end corner
     # sid_e0 - seed id of first edge seed
     # sid_e1 - seed id of second edge seed
+    # Returns t, the position of the intersection between the two corner seeds
+    #   (sid_c0 and sid_c1).
     def calcEdgeRidgeIntersection(self, sid_c0, sid_c1, sid_e0, sid_e1):
         c0 = self.seeds[sid_c0]
         c1 = self.seeds[sid_c1]
@@ -657,6 +686,7 @@ class VoronoiHexTile():
 
     # sid - seed id of corner vertex
     # rid - region id
+    # Returns an array of vertex indices for the corner region.
     def calcCornerVertices(self, sid, rid):
         # Calc prev and next hex corner seed ids.
         sid_cprev = (sid + NUM_SIDES - 1) % NUM_SIDES
@@ -687,6 +717,7 @@ class VoronoiHexTile():
     # sid - seed if for this region
     # sid0 - first corner sid for the edge containing this region
     # sid1 - second corner sid for the edge containing this region
+    # Returns an array of vertex indices for the edge region.
     def calcEdgeVertices(self, sid, rid, sid0, sid1, t_ccw, t_cw):
         return self.__calcEdgeVertices(sid, rid, sid0, sid1, sid1, t_ccw, t_cw)
 
@@ -1288,8 +1319,8 @@ class VoronoiHexTile():
                    Style(fill="#000000"), self.layer_text)
         
         # Add terrain swatches.
-        y_start = 80
-        for type in ['h', 'm', 'l', 'r']:
+        y_start = 70
+        for type in ['v', 'h', 'm', 'l', 'r']:
             color = REGION_STYLE[type]
             r = SVG.rect(0, 75, y_start, 15, 6)
             r.set_style(Style(color, STROKE_COLOR, STROKE_WIDTH))
@@ -1442,7 +1473,7 @@ OPTIONS = {
                'desc': "Terrain type for center of tile: l, m, h"},
     'debug': {'type': 'int', 'default': -1,
               'desc': "Log debug info for given region id"},
-    'iter': {'type': 'int', 'default': 25,
+    'iter': {'type': 'int', 'default': 250,
              'desc': "Max iterations"},
     'load': {'type': 'string', 'default': None,
              'desc': "Load data from file"},
