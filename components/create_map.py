@@ -13,6 +13,7 @@ from math_utils import (feq, fge, fle, scale, clamp,
                         lerp, lerp_pt, lerp_pt_delta, lerperp,
                         near, dist, dist_pt_line, line_intersection_t,
                         ptInHex)
+from object3d import Object3d
 from svg import SVG, Style, Node, Path, Text
 
 GENERATE_SVG = True
@@ -1457,6 +1458,26 @@ class VoronoiHexTile():
         terrain = ','.join(self.seed2terrain)
         print(terrain)
 
+    def calcRegion3d(self, obj, sid):
+        r = self.sid2region[sid]
+        nVertices = len(r)
+        for vid in r:
+            v = self.vertices[vid]
+            obj.addVertex([v[0], v[1], 0])
+            obj.addVertex([v[0], v[1], 10])
+        obj.addFace([(2 * x) + 1 for x in range(0, nVertices)])
+        obj.addFace([(2 * x) + 2 for x in range(0, nVertices)])
+        for f in range(0, nVertices-1):
+            obj.addFace([(2 * f) + x for x in [1, 2, 4, 3]])
+        obj.addFace([2*nVertices, 2*nVertices-1, 1, 2])
+        obj.writeGroup("s0")
+
+    def writeObject3d(self):
+        obj = Object3d()
+        obj.open()
+        self.calcRegion3d(obj, 0)
+        obj.close()
+
 def drawCircle(id, center, radius, fill, layer):
     circle = SVG.circle(id, center[0], center[1], radius)
     circle.set_style(fill)
@@ -1557,7 +1578,8 @@ def main():
     v.plot()
 
     v.writeTileData()
-
+    v.writeObject3d()
+    
     #if options['anim']:
     #    v.exportAnimation()
 
