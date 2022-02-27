@@ -90,6 +90,57 @@ STROKE_WIDTH = 0.3
 
 RIVER_WIDTH = 2.0
 
+class VoronoiHexTileLoader():
+    def __init__(self, options):
+        self.options = options
+
+    def process(self):
+        # Load data from file.
+        if self.options['load']:
+            self.processTileData(self.options['load'])
+            return
+
+        self.processTile(None)
+
+    def processTile(self, terrainData):
+        options = self.options.copy()
+        v = VoronoiHexTile(options)
+        v.init()
+        v.setTerrainData(terrainData)
+
+        if options['anim']:
+            v.cleanupAnimation()
+
+        v.generate()
+        while v.update():
+            v.generate()
+        v.plot()
+
+        v.writeTileData()
+
+        v.writeObject3d()
+    
+        #if options['anim']:
+        #    v.exportAnimation()
+
+    def processTileData(self, file):
+        header = True
+        with open(file) as f:
+            for line in f:
+                if header:
+                    header = False
+                    continue
+                data = line.rstrip().split(',')
+                pattern = data.pop(0)
+                seed = int(data.pop(0))
+                center = data.pop(0)
+                if center == "AVG": center = None
+                self.options['pattern'] = pattern
+                self.options['seed'] = seed
+                self.options['center'] = center
+                self.processTile(data)
+
+
 class VoronoiHexTile():
     def __init__(self, options):
         self.options = options
@@ -167,6 +218,9 @@ class VoronoiHexTile():
         # Move seeds away when they are too close.
         self.closeThreshold = 0.90
         self.adjustmentTooClose = -0.013
+
+        # Override terrain data (loaded from file).
+        self.terrainData = None
         
         # Calculate data for reversed edges ('r') from the forward ('f') edges.
         for type in EDGE_TYPES:
@@ -179,16 +233,21 @@ class VoronoiHexTile():
                     newSeedInfo.append([1.0-offset, -perp_offset])
                 EDGE_SEED_INFO[newType] = newSeedInfo
 
-        # Load region data
-        self.terrainData = None
-        if self.options['load']:
-            self.loadTileData()
-
+    def setTerrainData(self, data):
+        self.terrainData = data
+        
+    def init(self):
         self.initEdgePattern(self.options['pattern'])
 
         if self.options['seed'] == None:
             self.options['seed'] = random.randint(0,5000)
+        print("Seed:", self.options['seed'])
         self.rng = np.random.RandomState(self.options['seed'])
+
+        self.initFixedSeeds()
+        self.initEdgeMarginZone()
+        self.initInteriorSeeds()
+        self.initExteriorSeeds()
 
     def initEdgePattern(self, pattern):
         if len(pattern) != NUM_SIDES:
@@ -251,12 +310,6 @@ class VoronoiHexTile():
         else:
             self.centerWeight = self.cornerWeight[self.options['center']]
         print("Center weight;", self.centerWeight)
-
-    def init(self):
-        self.initFixedSeeds()
-        self.initEdgeMarginZone()
-        self.initInteriorSeeds()
-        self.initExteriorSeeds()
 
     # Initialize the fixed seeds along the edge of the hex tile.
     def initFixedSeeds(self):
@@ -422,8 +475,9 @@ class VoronoiHexTile():
         # If we have terrain data loaded from a file, use that.
         if self.terrainData:
             type = self.terrainData[sid]
-            self.seed2terrain.append(type)
-            return type
+            if type != '':
+                self.seed2terrain.append(type)
+                return type
         
         w = self.calcSeedWeight(self.seeds[sid])
         w /= self.size
@@ -659,6 +713,8 @@ class VoronoiHexTile():
         for sid in range(self.startInteriorSeed, self.endInteriorSeed):
             rid = self.vor.point_region[sid]
             self.sid2region[sid] = self.vor.regions[rid]
+            if not self.isClockwise(sid):
+                self.sid2region[sid] = self.vor.regions[rid][::-1]
 
     # sid_c0 - seed id of start corner
     # sid_c1 - seed id of end corner
@@ -722,6 +778,59 @@ class VoronoiHexTile():
     def calcEdgeVertices(self, sid, rid, sid0, sid1, t_ccw, t_cw):
         return self.__calcEdgeVertices(sid, rid, sid0, sid1, sid1, t_ccw, t_cw)
 
+    # Calculate 2x signed area of the region.
+    def __signedArea2(self, sid):
+        rid = self.vor.point_region[sid]
+        pts = self.vor.regions[rid]
+
+        # Algorithm:
+        #   Calculate the signed area.
+        #   Sum (x2 - x1)(y2 + y1) for each segment.
+        # Positive = clockwise, Negative = counter-clockwise.
+        #   Divide by 2 to get area.
+        # Example:
+        #  5 +
+        #    |
+        #  4 +              ,C,
+        #    |            ,'   `,
+        #  3 +          ,'       `,
+        #    |        ,'           `,
+        #  2 +       A - - - - - - - B
+        #    |
+        #  1 +
+        #    |
+        #  0 +---+---+---+---+---+---+---+---+
+        #    0   1   2   3   4   5   6   7   8
+        #  A = (2,2)  B = (6,2)  C = (4,4)
+        # For [A, B, C]:
+        #   Calc A->B, B->C and C->A
+        #   = (6-2)(2+2) + (4-6)(4+2) + (2-4)(2+4)
+        #   = 16 + -12 + -12
+        #   = -8 (counter-clockwise)
+        # For [A, C, B]:
+        #   Calc A->C, C->B and B->A
+        #   = (4-2)(4+2) + (6-4)(2+4) + (2-6)(2+2)
+        #   = 12 + 12 + -16
+        #   = 8 (clockwise)
+        # Area = 8 / 2 = 4
+        area2 = 0.0
+        for i in range(0, len(pts)):
+            pt1 = self.vertices[pts[i]]
+            pt2 = self.vertices[pts[(i+1) % len(pts)]]
+            area2 += (pt2[0] - pt1[0]) * (pt2[1] + pt1[1])
+        # The sign of area2 indicates the direction of the points.
+        # The actual area can be obtained by dividing |area2| by 2.
+        return area2
+
+    # Return true if the points are in clockwise order.
+    def isClockwise(self, sid):
+        # No need to divide by 2 since we don't need the area, just the sign.
+        return fge(self.__signedArea2(sid), 0.0)
+
+    def area(self, sid):
+        # Divide the absolute value by 2 to get the area.
+        return abs(self.__signedArea2(sid)) / 2;
+
     # sid - seed id for the region being calculated
     # rid - region id
     # sid0 - seed id of start corner
@@ -758,8 +867,12 @@ class VoronoiHexTile():
             debug = True
 
         regions = self.vor.regions[rid]
-        r = regions[:]
-        if debug: print("  original vertex order", r)
+        if debug: print("  original vertex order", regions)
+        if self.isClockwise(sid):
+            r = regions[:]
+        else:
+            r = regions[::-1]
+        if debug: print("  clockwise vertex order", r)
 
         # Rotate the region vertices so that all the internal vertices are at
         # the beginning of the array.
@@ -999,25 +1112,26 @@ class VoronoiHexTile():
         self.iteration += 1
         
     def printIteration(self, i):
-        print("Iteration", i, end='')
-        print(" -", len(self.badEdges), "bad edges", end='')
+        if self.options['verbose_iteration']:
+            print("Iteration", i, end='')
+            print(" -", len(self.badEdges), "bad edges", end='')
 
-        nTooClose = len(self.tooClose)
-        if nTooClose > 0:
-            print(" -", nTooClose, "seed pairs are too close", end='')
+            nTooClose = len(self.tooClose)
+            if nTooClose > 0:
+                print(" -", nTooClose, "seed pairs are too close", end='')
             
-        if ENABLE_SMALL_REGION_CHECK:
-            min = self.minCircle
-            max = self.maxCircle
-            if min and max:
-                print(" - {0:d} {1:.5g} {2:d} {3:.5g}"
-                      .format(min, self.regionCircles[min][1],
-                              max, self.regionCircles[max][1]), end='')
-                print(" - ratio {0:.5g}".format(self.circleRatio), end='')
-            if self.circleRatio > self.circleRatioThreshold:
-                print(" - adj min/max", end='')
+            if ENABLE_SMALL_REGION_CHECK:
+                min = self.minCircle
+                max = self.maxCircle
+                if min and max:
+                    print(" - {0:d} {1:.5g} {2:d} {3:.5g}"
+                          .format(min, self.regionCircles[min][1],
+                                  max, self.regionCircles[max][1]), end='')
+                    print(" - ratio {0:.5g}".format(self.circleRatio), end='')
+                if self.circleRatio > self.circleRatioThreshold:
+                    print(" - adj min/max", end='')
 
-        print()
+            print()
         
     def analyze(self):
         # Create a dict to map from region id to seed id.
@@ -1032,6 +1146,10 @@ class VoronoiHexTile():
             self.seed2minDistance.append(self.calcSeedWeight(self.seeds[i]))
 
         self.calcClippedRegions()
+
+        # Ensure each region has a terrain type.
+        for sid in range(len(self.seed2terrain), self.numActiveSeeds):
+            self.calcTerrainType(sid)
 
         # Verify that all voronoi vertices are shared by 3 seed regions.
         # Note ignoring regions along outer edge which will have some vertices
@@ -1152,10 +1270,7 @@ class VoronoiHexTile():
             vids = self.sid2region[sid]
             id = "clipregion-{0:d}".format(sid)
             color = "#ffffff"
-            if sid < len(self.seed2terrain):
-                terrain_type = self.seed2terrain[sid]
-            else:
-                terrain_type = self.calcTerrainType(sid)
+            terrain_type = self.seed2terrain[sid]
             color = REGION_STYLE[terrain_type]
             self.plotRegion(vids, color)
             self.drawRegion(id, vids, color, g)
@@ -1244,32 +1359,36 @@ class VoronoiHexTile():
         self.drawHexTileBorder(stroke)
 
         self.drawAnnotations()
-        
+
+        if self.options['write_output']:
+            out_dir = self.getOutputDir()
+            name = self.calcBaseFilename()
+            if plotId == None:
+                out = os.path.join(out_dir, '%s.svg' % name)
+                if GENERATE_SVG:
+                    self.svg.write(out)
+
+                out = os.path.join(out_dir, '%s.png' % name)
+            else:
+                out_dir = os.path.join(out_dir, ANIM_SUBDIR)
+                if not os.path.isdir(out_dir):
+                    os.makedirs(out_dir);
+                out = os.path.join(out_dir, '{0:s}-{1:03d}'.format(name, plotId))
+                plt.text(-self.size, -self.size, plotId)
+
+            plt.axis("off")
+            plt.xlim([x * self.size for x in [-1, 1]])
+            plt.ylim([y * self.size for y in [-1, 1]])
+            if GENERATE_PLOT:
+                plt.savefig(out, bbox_inches='tight')
+            plt.close(fig)
+
+    def getOutputDir(self):
         out_dir = self.options['out']
         if not os.path.isdir(out_dir):
             os.makedirs(out_dir);
-
-        name = self.calcBaseFilename()
-        if plotId == None:
-            out = os.path.join(out_dir, '%s.svg' % name)
-            if GENERATE_SVG:
-                self.svg.write(out)
-
-            out = os.path.join(out_dir, '%s.png' % name)
-        else:
-            out_dir = os.path.join(out_dir, ANIM_SUBDIR)
-            if not os.path.isdir(out_dir):
-                os.makedirs(out_dir);
-            out = os.path.join(out_dir, '{0:s}-{1:03d}'.format(name, plotId))
-            plt.text(-self.size, -self.size, plotId)
-
-        plt.axis("off")
-        plt.xlim([x * self.size for x in [-1, 1]])
-        plt.ylim([y * self.size for y in [-1, 1]])
-        if GENERATE_PLOT:
-            plt.savefig(out, bbox_inches='tight')
-        plt.close(fig)
-
+        return out_dir
+    
     def calcBaseFilename(self):
         name = "hex"
         if self.options['seed'] != None:
@@ -1426,24 +1545,6 @@ class VoronoiHexTile():
 
         subprocess.run(cmd)
 
-    def loadTileData(self):
-        file = self.options['load']
-        header = True
-        with open(file) as f:
-            for line in f:
-                if header:
-                    header = False
-                    continue
-                data = line.rstrip().split(',')
-                pattern = data.pop(0)
-                seed = int(data.pop(0))
-                center = data.pop(0)
-                if center == "AVG": center = None
-                self.options['pattern'] = pattern
-                self.options['seed'] = seed
-                self.options['center'] = center
-                self.terrainData = data
-
     def writeTileData(self):
         center = self.options['center']
         if center == None:
@@ -1461,22 +1562,133 @@ class VoronoiHexTile():
     def calcRegion3d(self, obj, sid):
         r = self.sid2region[sid]
         nVertices = len(r)
+        SCALE = 1
+        heights = {
+            'l': 10,
+            'm': 15,
+            'h': 20,
+        }
+        x0, y0 = self.options['origin']
         for vid in r:
             v = self.vertices[vid]
-            obj.addVertex([v[0], v[1], 0])
-            obj.addVertex([v[0], v[1], 10])
+            obj.addVertex([x0 + v[0] * SCALE, y0 + v[1] * SCALE, 0])
+
+            height = heights[self.seed2terrain[sid]]
+            obj.addVertex([x0 + v[0] * SCALE, y0 + v[1] * SCALE, height * SCALE])
         obj.addFace([(2 * x) + 1 for x in range(0, nVertices)])
-        obj.addFace([(2 * x) + 2 for x in range(0, nVertices)])
+        obj.addFace(reversed([(2 * x) + 2 for x in range(0, nVertices)]))
         for f in range(0, nVertices-1):
             obj.addFace([(2 * f) + x for x in [1, 2, 4, 3]])
-        obj.addFace([2*nVertices, 2*nVertices-1, 1, 2])
-        obj.writeGroup("s0")
+        obj.addFace([2, 1, 2*nVertices-1, 2*nVertices])
+        obj.writeGroup("s{0}".format(sid))
 
+    # Import generated obj file into Blender X-Forward, Z-Up
     def writeObject3d(self):
         obj = Object3d()
-        obj.open()
-        self.calcRegion3d(obj, 0)
+
+        out_dir = self.getOutputDir()
+        name = self.calcBaseFilename()
+        outfile = os.path.join(out_dir, '%s.obj' % name)
+        obj.open(outfile)
+        
+        self.__writeObject3d(obj)
+
+        if self.options['calc_neighbor_edges']:
+            self.writeNeighborEdges(obj)
+
         obj.close()
+
+    def writeNeighborEdges(self, obj):
+        # Generate neighboring edges for 3d output.
+        hexGap = 1.002  # Include a small gap between the hex tiles.
+        dx = self.xMax * hexGap
+        dy = 1.5 * self.size * hexGap
+        # 6 neighbors, going clockwise from top-right
+        neighbors = [[dx, dy], [2*dx, 0], [dx, -dy], [-dx, -dy], [-2*dx, 0], [-dx, dy]]
+        neighborEdge = [3, 4, 5, 0, 1, 2]
+        seedOrig = self.options['seed']
+        patternOrig = self.options['pattern']
+        
+        # The main tile (T0) needs a neighboring tile that matches each edge.
+        #
+        # The edges that extend out from each corner of the main tile (e.g., AG) must
+        # match between adjacent neighbors (T1 and T6 in this case), or else the region in
+        # that corner won't match along that edge.
+        #
+        #                _+_           _+_
+        #            _,-'   `-,_ G _,-' M `-,_
+        #          +'           `+'           `+
+        #          |             |           N |
+        #          |     T6      |     T1      |
+        #        L |             |             | H
+        #         _+_           _+_           _+_
+        #     _,-'   `-,_   _,-' A `-,_   _,-'   `-,_
+        #   +'           `+'           `+'           `+
+        #   |             | F         B |             |
+        #   |     T5      |     T0      |     T2      |
+        #   |             | E         C |             |
+        #   +,           ,+,           ,+,           ,+
+        #     `-,_   _,-'   `-,_ D _,-'   `-,_   _,-'
+        #         `+'           `+'           `+'
+        #        K |             |             | I
+        #          |     T4      |     T3      |
+        #          |             |             |
+        #          +,           ,+,           ,+
+        #            `-,_   _,-' J `-,_   _,-'
+        #                `+'           `+'
+        #
+        # For neighboring tile T1, which needs to match AB in the main tile, we choose
+        # G = M = A and H = N = B.
+        # The value for G must be shared with T6, and H shared with T2.
+        # The values for M and N aren't relevant, but they must be consistent with
+        # G and H (for example, you can't have 'h' and 'l' corners next to each other).
+        # So, for simplicity, we choose M and N to mirror the opposite edge since those
+        # are guaranteed to be appropriate choices. Hence, M = A and N = B.
+        for i in range(0, len(neighbors)):
+            n = neighbors[i]
+            options = self.options.copy()
+            options['origin'] = n
+            options['neighbor_tile'] = True
+            options['load'] = None
+            options['write_output'] = False
+            options['verbose_iteration'] = False
+            # Only export the opposite edge on the neighboring tile.
+            options['export_3d_edge'] = (i + 3) % NUM_SIDES
+            # Give each neighbor a different seed to ensure that there is no repetition.
+            options['seed'] = seedOrig + i
+
+            # Calculate edge pattern for this edge's neighboring tile.
+            edgeStart = patternOrig[i]
+            edgeEnd = patternOrig[(i+1) % NUM_SIDES]
+            pattern = edgeStart + edgeEnd * 3 + edgeStart * 2
+            if i != 0:
+                pattern = pattern[-i:] + pattern[0:NUM_SIDES-i]
+            options['pattern'] = pattern
+            
+            edgeTile = VoronoiHexTile(options)
+            edgeTile.init()
+            edgeTile.generate()
+            while edgeTile.update():
+                edgeTile.generate()
+            edgeTile.__writeObject3d(obj)
+
+    def __writeObject3d(self, obj):
+        if self.options['export_3d_edge'] == None:
+            for sid in range(0, self.numActiveSeeds):
+                self.calcRegion3d(obj, sid)
+            return
+
+        # Export just the specified edge regions.
+        sid = self.options['export_3d_edge']
+        # First corner.
+        self.calcRegion3d(obj, sid)
+        # Middle regions.
+        firstSeed = sum(self.nSeedsPerEdge[:sid])
+        nEdgeSeeds = self.nSeedsPerEdge[sid]
+        for j in range(firstSeed, firstSeed + nEdgeSeeds):
+            self.calcRegion3d(obj, NUM_SIDES + j)
+        # End corner.
+        self.calcRegion3d(obj, (sid+1) % NUM_SIDES)
 
 def drawCircle(id, center, radius, fill, layer):
     circle = SVG.circle(id, center[0], center[1], radius)
@@ -1541,7 +1753,6 @@ def parse_options():
     options = {}
     for opt,info in option_defs.items():
         options[opt] = info['default']
-    options['out'] = "map-out"
 
     for opt,arg in opts:
         # Build list of short and fullname for this option.
@@ -1561,27 +1772,26 @@ def parse_options():
                 else:
                     options[opt_name] = str(arg)
 
+    # Initialize non-public options.
+    options['out'] = "map-out"
+    options['origin'] = [0, 0]
+    options['write_output'] = True
+    options['verbose_iteration'] = True
+
+    # Calc the neighbor edges for 3d output.
+    options['calc_neighbor_edges'] = False
+    # True if we're processing one of the neighbor tiles.
+    options['neighbor_tile'] = False
+    # Current edge to export (if exporting 3d).
+    options['export_3d_edge'] = None
+
     return options
 
 def main():
     options = parse_options()
-    
-    v = VoronoiHexTile(options)
-    v.init()
 
-    if options['anim']:
-        v.cleanupAnimation()
-
-    v.generate()
-    while v.update():
-        v.generate()
-    v.plot()
-
-    v.writeTileData()
-    v.writeObject3d()
-    
-    #if options['anim']:
-    #    v.exportAnimation()
+    loader = VoronoiHexTileLoader(options)
+    loader.process()
 
 if __name__ == '__main__':
     main()
