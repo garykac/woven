@@ -10,8 +10,8 @@ class Object3d():
         self.faces = []
         self.numFaces = 0
 
-    def open(self):
-        self.fout = open("output.obj", "w")
+    def open(self, outfile):
+        self.fout = open(outfile, "w")
 
     def close(self):
         self.fout.close()
@@ -27,7 +27,7 @@ class Object3d():
         return self.numFaces
 
     def writeGroup(self, name):
-        self.fout.write("g {0}\n".format(name))
+        self.fout.write("o {0}\n".format(name))
     
         for v in self.vertices:
             self.fout.write("v {0:.05g} {1:.05g} {2:.05g}\n".format(v[0], v[1], v[2]))

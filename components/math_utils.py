@@ -179,27 +179,30 @@ def ptInHex(size, pt):
     # Assumes hexagon is centered at origin.
     # Note: scale = 1.0 in diagram.
     #
-    #  1.0            _,+,_
-    #           _, -'   :   `- ,_
+    #  1.0             _+_
+    #              _,-' : `-,_
+    #          _,-'     :     `-,_
     #  0.5   +'         :         `+
     #        |          :          |
     #        |          :          |
     #  0.0   |          + . . . . .|
     #        |                     |
     #        |                     |
-    #        +,_                 _,+
-    #            `- ,_     _, -'
+    #        +,                   ,+
+    #          `-,_           _,-'
+    # -1.0         `-,_   _,-'
     # -1.0             `+'
     #    
     # Upper quadrant:
     #
-    #   1.0   +,_
-    #         :   `- ,_
+    #   1.0   +_
+    #         : `-,_
+    #         :     `-,_
     #         :         `+  0.5
     #         :          |
     #         :          |
-    #   0.0   + - - - - -+
-    #          0       sqrt(3)/2
+    #   0.0   + . . . . .|
+    #         0       sqrt(3)/2
     #
     # Transform point to upper quadrant.
     tx = abs(x)
