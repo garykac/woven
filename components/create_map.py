@@ -59,6 +59,7 @@ MIN_RIDGE_LEN_EDGE = 0.035
 
 # Fill colors for regions based on terrain height.
 REGION_STYLE = {
+    '_': "#ffffff",  # blank
     'l': "#f0eaac",  #"#d9f3b9",  #'#efecc6',  # low
     'm': "#f0ce76",  #'#dcc382',  # medium
     'h': "#e7a311",  #'#d69200',  # high
@@ -209,8 +210,8 @@ class VoronoiHexTile():
         # seed is being adjusted in multiple ways, it will still make progress
         # toward a goal.
         # Move seeds toward or away from an edge to make it longer.
-        self.adjustmentSide = 0.009
-        self.adjustmentNeighbor = -0.011
+        self.adjustmentSide = 0.011
+        self.adjustmentNeighbor = -0.009
         # Move neighboring seeds closer or further to make inscribed circle
         # smaller or larger.
         self.adjustmentGrow = -0.005  # -0.006
@@ -472,6 +473,10 @@ class VoronoiHexTile():
         if len(self.seed2terrain) != sid:
             error("Terrain for seeds generated out of order: {0}".format(sid))
 
+        if not self.options['random-terrain-fill']:
+            self.seed2terrain.append('_')
+            return '_'
+            
         # If we have terrain data loaded from a file, use that.
         if self.terrainData:
             type = self.terrainData[sid]
@@ -930,8 +935,10 @@ class VoronoiHexTile():
         if debug:
             print("     check dist to first/last internal {0} {1}"
                   .format(vFirstIn, vLastIn))
-            print("       dist to cw: {0}".format(dist(vLastIn, cw)))
-            print("       dist to ccw: {0}".format(dist(vLastIn, ccw)))
+            print("       first dist to cw: {0}".format(dist(vFirstIn, cw)))
+            print("       first dist to ccw: {0}".format(dist(vFirstIn, ccw)))
+            print("       last dist to cw: {0}".format(dist(vLastIn, cw)))
+            print("       last dist to ccw: {0}".format(dist(vLastIn, ccw)))
 
         # Swap direction if the region vertices are CW.
         if dist(vFirstIn, ccw) < dist(vLastIn, ccw):
@@ -941,7 +948,7 @@ class VoronoiHexTile():
         # Double-check direction by checking the cw point.
         startCcwCheck = dist(vFirstIn, cw) < dist(vLastIn, cw)
         if numInternal != 1 and startCcw != startCcwCheck:
-            error("calculating clipped region for {0}".format(sid))
+            warning("calculating clipped region for {0}".format(sid))
 
         if not startCcw:
             cw, ccw = ccw, cw
@@ -1564,6 +1571,7 @@ class VoronoiHexTile():
         nVertices = len(r)
         SCALE = 1
         heights = {
+            '_': 10,
             'l': 10,
             'm': 15,
             'h': 20,
@@ -1598,13 +1606,42 @@ class VoronoiHexTile():
 
         obj.close()
 
-    def writeNeighborEdges(self, obj):
-        # Generate neighboring edges for 3d output.
+    def calcNeighborOffset(self, colrow):
+        col, row = colrow
         hexGap = 1.002  # Include a small gap between the hex tiles.
         dx = self.xMax * hexGap
         dy = 1.5 * self.size * hexGap
+
+        # Odd rows are shifted over to the right:
+        #    ,+,   ,+,   ,+,   ,+,   ,+,
+        #  +'   `+'   `+'   `+'   `+'   `+
+        #  |     |     | 0,2 | 1,2 | 2,2 |     = Row 2
+        #  +,   ,+,   ,+,   ,+,   ,+,   ,+,
+        #    `+'   `+'   `+'   `+'   `+'   `+
+        #     |     |     | 0,1 | 1,1 | 2,1 |  = Row 1
+        #    ,+,   ,+,   ,*,   ,+,   ,+,   ,+
+        #  +'   `+'   `*'   `+'   `+'   `+
+        #  |-2,0 |-1,0 | 0,0 | 1,0 | 2,0 |     = Row 0
+        #  +,   ,+,   ,*,   ,*,   ,+,   ,+
+        #    `+'   `+'   `*'   `+'   `+'   `+
+        #     |     |     | 0,-1| 1,-1| 2,-1|  = Row -1
+        #    ,+,   ,+,   ,+,   ,+,   ,+,   ,+
+        #  +'   `+'   `+'   `+'   `+'   `+'
+        #  |     |     | 0,-2| 1,-2| 2,-2|     = Row -2
+        #  +,    +,   ,+,   ,+,   ,+,   ,+
+        #    `+'   `+'   `+'   `+'   `+'
+        #    -2    -1     0     1     2
+        x0 = col * 2 * dx
+        y0 = row * dy
+        if row % 2 == 1:
+            x0 += dx
+        return [x0, y0]
+        
+    def writeNeighborEdges(self, obj):
+        # Generate neighboring edges for 3d output.
         # 6 neighbors, going clockwise from top-right
-        neighbors = [[dx, dy], [2*dx, 0], [dx, -dy], [-dx, -dy], [-2*dx, 0], [-dx, dy]]
+        n_coord = [[0,1], [1,0], [0,-1], [-1,-1], [-1,0], [-1,1]]
+        neighbors = [self.calcNeighborOffset(rc) for rc in n_coord]
         neighborEdge = [3, 4, 5, 0, 1, 2]
         seedOrig = self.options['seed']
         patternOrig = self.options['pattern']
@@ -1620,19 +1657,19 @@ class VoronoiHexTile():
         #          +'           `+'           `+
         #          |             |           N |
         #          |     T6      |     T1      |
-        #        L |             |             | H
+        #        L |   (-1,1)    |    (0,1)    | H
         #         _+_           _+_           _+_
         #     _,-'   `-,_   _,-' A `-,_   _,-'   `-,_
         #   +'           `+'           `+'           `+
         #   |             | F         B |             |
         #   |     T5      |     T0      |     T2      |
-        #   |             | E         C |             |
+        #   |   (-1,0)    | E  (0,0)  C |    (1,0)    |
         #   +,           ,+,           ,+,           ,+
         #     `-,_   _,-'   `-,_ D _,-'   `-,_   _,-'
         #         `+'           `+'           `+'
         #        K |             |             | I
         #          |     T4      |     T3      |
-        #          |             |             |
+        #          |   (-1,-1)   |    (0,-1)   |
         #          +,           ,+,           ,+
         #            `-,_   _,-' J `-,_   _,-'
         #                `+'           `+'
@@ -1648,14 +1685,14 @@ class VoronoiHexTile():
             n = neighbors[i]
             options = self.options.copy()
             options['origin'] = n
-            options['neighbor_tile'] = True
+            options['_neighbor_tile'] = True
             options['load'] = None
             options['write_output'] = False
             options['verbose_iteration'] = False
             # Only export the opposite edge on the neighboring tile.
-            options['export_3d_edge'] = (i + 3) % NUM_SIDES
+            options['_export_3d_edge'] = (i + 3) % NUM_SIDES
             # Give each neighbor a different seed to ensure that there is no repetition.
-            options['seed'] = seedOrig + i
+            options['seed'] = seedOrig + (i+1)
 
             # Calculate edge pattern for this edge's neighboring tile.
             edgeStart = patternOrig[i]
@@ -1673,13 +1710,13 @@ class VoronoiHexTile():
             edgeTile.__writeObject3d(obj)
 
     def __writeObject3d(self, obj):
-        if self.options['export_3d_edge'] == None:
+        sid = self.options['_export_3d_edge']
+        if sid == None:
             for sid in range(0, self.numActiveSeeds):
                 self.calcRegion3d(obj, sid)
             return
 
         # Export just the specified edge regions.
-        sid = self.options['export_3d_edge']
         # First corner.
         self.calcRegion3d(obj, sid)
         # Middle regions.
@@ -1695,6 +1732,9 @@ def drawCircle(id, center, radius, fill, layer):
     circle.set_style(fill)
     SVG.add_node(layer, circle)
 
+def warning(msg):
+    print("WARNING:", msg)
+
 def error(msg):
     print("ERROR:", msg)
     sys.exit(0)
@@ -1706,12 +1746,14 @@ OPTIONS = {
                'desc': "Terrain type for center of tile: l, m, h"},
     'debug': {'type': 'int', 'default': -1,
               'desc': "Log debug info for given region id"},
-    'iter': {'type': 'int', 'default': 250,
+    'iter': {'type': 'int', 'default': 500,
              'desc': "Max iterations"},
     'load': {'type': 'string', 'default': None,
              'desc': "Load data from file"},
     'pattern': {'type': 'string', 'default': "llllll",
                 'desc': "Edge pattern ([lmh] x6)"},
+    'random-terrain-fill': {'type': 'bool', 'default': True,
+                            'desc': "True to fill interior cells with random terrain"},
     'seed': {'type': 'int', 'default': None,
              'desc': "Random seed"},
     'size': {'type': 'int', 'default': 80,
@@ -1772,18 +1814,21 @@ def parse_options():
                 else:
                     options[opt_name] = str(arg)
 
-    # Initialize non-public options.
+    # Non-public options.
     options['out'] = "map-out"
     options['origin'] = [0, 0]
     options['write_output'] = True
     options['verbose_iteration'] = True
+    # Auto fill inner regions with random terrain.
 
     # Calc the neighbor edges for 3d output.
     options['calc_neighbor_edges'] = False
+
+    # Internal options (don't edit manually).
     # True if we're processing one of the neighbor tiles.
-    options['neighbor_tile'] = False
+    options['_neighbor_tile'] = False
     # Current edge to export (if exporting 3d).
-    options['export_3d_edge'] = None
+    options['_export_3d_edge'] = None
 
     return options
 
