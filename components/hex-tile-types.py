@@ -32,8 +32,8 @@ class HexTile():
 
     def validPattern(self, pattern):
         p = pattern + pattern[0]
-        #if "hl" in p or "lh" in p:
-        #    return False
+        if "hl" in p or "lh" in p:
+            return False
         if not self.isNormalized(pattern):
             return False
         return True
