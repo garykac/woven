@@ -1397,10 +1397,18 @@ class VoronoiHexTile():
         return out_dir
     
     def calcBaseFilename(self):
+        altPattern = {
+            'l': '1',
+            'm': '2',
+            'h': '3',
+        }
+    
         name = "hex"
         if self.options['seed'] != None:
+            pattern = self.options['pattern']
+            pNum = ''.join([altPattern[i] for i in pattern])
             name = ("hex-{0:s}-{1:d}"
-                    .format(self.options['pattern'], self.options['seed']))
+                    .format(pNum, self.options['seed']))
         return name
 
     def drawAnnotations(self):
@@ -1752,7 +1760,7 @@ OPTIONS = {
              'desc': "Load data from file"},
     'pattern': {'type': 'string', 'default': "llllll",
                 'desc': "Edge pattern ([lmh] x6)"},
-    'random-terrain-fill': {'type': 'bool', 'default': True,
+    'random-terrain-fill': {'type': 'bool', 'default': False,
                             'desc': "True to fill interior cells with random terrain"},
     'seed': {'type': 'int', 'default': None,
              'desc': "Random seed"},
