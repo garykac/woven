@@ -13,6 +13,8 @@ from data_spell_cards import spell_card_data
 from data_spell_cards import spell_card_revision
 from data_spell_cards import spell_card_categories
 
+from data_spell_cards_blank import spell_card_blank_data
+
 from data_spell_patterns import spell_card_patterns
 
 from data_ops import valid_ops
@@ -251,7 +253,7 @@ class WovenSpellCards():
     # Returns an iterator that produces an object for each card.
     # callback from SVGCardGen
     def card_data(self):
-        for card in spell_card_data:
+        for card in spell_card_data:  #spell_card_blank_data:
             # Auto-assign ids
             attrs = card[1]
             self.next_id += 1
@@ -356,8 +358,8 @@ class WovenSpellCards():
             
             svg.add_loaded_element(svg_group, 'separator')
 
-            # Draw alternate action.
-            svg.add_loaded_element(svg_group, 'op-{0}'.format(attrs['op']))
+        # Draw alternate action.
+        svg.add_loaded_element(svg_group, 'op-{0}'.format(attrs['op']))
 
         # Add spell pattern.
         self.draw_pattern(pattern_id, pattern, element, svg_group)
