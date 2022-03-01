@@ -14,7 +14,7 @@ from math_utils import (feq, fge, fle, scale, clamp,
                         near, dist, dist_pt_line, line_intersection_t,
                         ptInHex)
 from object3d import Object3d
-from svg import SVG, Style, Node, Path, Text
+from svg import SVG, Group, Style, Node, Path, Text
 
 GENERATE_SVG = True
 GENERATE_PLOT = True
@@ -34,6 +34,12 @@ EDGE_REGION_INFO = {
     '3s': ['m', 'm', 'm', 'm', 'm'],           # m - m
     '4f': ['m', 'm', 'h', 'm', 'h', 'h'],      # m - h, h - m
     '5s': ['h', 'h', 'h', 'm', 'h', 'h', 'h'], # h - h
+}
+
+# Mark where rivers are located on edges using an '*' to note the regions that
+# the river flows between.
+EDGE_RIVER_INFO = {
+    '3f': ['l', 'l', '*', 'l', 'm', 'm'],           # l - m, m - h
 }
 
 # Edge seed info.
@@ -234,6 +240,9 @@ class VoronoiHexTile():
                     newSeedInfo.append([1.0-offset, -perp_offset])
                 EDGE_SEED_INFO[newType] = newSeedInfo
 
+                if type in EDGE_RIVER_INFO:
+                    EDGE_RIVER_INFO[newType] = EDGE_RIVER_INFO[type][::-1]
+        
     def setTerrainData(self, data):
         self.terrainData = data
         
@@ -1257,6 +1266,11 @@ class VoronoiHexTile():
 
         return hasChanges
 
+    def getTerrainStyle(self, type):
+        if self.options['bw']:
+            return REGION_STYLE['_']
+        return REGION_STYLE[type]
+
     def plot(self, plotId=None):
         self.svg = SVG([210, 297])
         fig = plt.figure(figsize=(8,8))
@@ -1278,7 +1292,7 @@ class VoronoiHexTile():
             id = "clipregion-{0:d}".format(sid)
             color = "#ffffff"
             terrain_type = self.seed2terrain[sid]
-            color = REGION_STYLE[terrain_type]
+            color = self.getTerrainStyle(terrain_type)
             self.plotRegion(vids, color)
             self.drawRegion(id, vids, color, g)
 
@@ -1366,6 +1380,7 @@ class VoronoiHexTile():
         self.drawHexTileBorder(stroke)
 
         self.drawAnnotations()
+        self.drawTerrainLabels()
 
         if self.options['write_output']:
             out_dir = self.getOutputDir()
@@ -1395,18 +1410,21 @@ class VoronoiHexTile():
         if not os.path.isdir(out_dir):
             os.makedirs(out_dir);
         return out_dir
-    
-    def calcBaseFilename(self):
+
+    def calcNumericPattern(self):
         altPattern = {
             'l': '1',
             'm': '2',
             'h': '3',
         }
     
+        pattern = self.options['pattern']
+        return ''.join([altPattern[i] for i in pattern])
+        
+    def calcBaseFilename(self):
         name = "hex"
         if self.options['seed'] != None:
-            pattern = self.options['pattern']
-            pNum = ''.join([altPattern[i] for i in pattern])
+            pNum = self.calcNumericPattern()
             name = ("hex-{0:s}-{1:d}"
                     .format(pNum, self.options['seed']))
         return name
@@ -1421,7 +1439,10 @@ class VoronoiHexTile():
             self.addText("rng seed {0:d}".format(self.options['seed']))
         else:
             self.addText("rng seed RANDOM")
-        self.addText("pattern {0:s}".format(self.options['pattern']))
+
+        pattern = self.options['pattern']
+        pNum = self.calcNumericPattern()
+        self.addText("pattern {0:s} / {1:s}".format(pNum, pattern))
         self.addText("seed attempts: {0:d}".format(self.seedAttempts))
         self.addText("seed distance: l {0:.03g}; m {1:.03g}; h {2:.03g}"
                      .format(MIN_DISTANCE_L, MIN_DISTANCE_M, MIN_DISTANCE_H))
@@ -1442,12 +1463,51 @@ class VoronoiHexTile():
         self.addText("closeness: {0:.03g}, adjust {1:.03g}"
                      .format(self.closeThreshold, self.adjustmentTooClose))
 
-        if False:
-            pattern = []
-            for type in self.edgeTypes:
-                pattern.append("({0})".format(EDGE_REGION_INFO[type][0]))
-                pattern.append('-'.join(EDGE_REGION_INFO[type][1:-1]))
-            self.addText('-'.join(pattern))
+    def drawTerrainLabels(self):
+        # Add corner terrain labels.
+        for i in range(0, NUM_SIDES):
+            t = self.options['pattern'][i]
+            label = Text(None, -1.5, -(self.size + 2), t.upper())
+            if i != 0:
+                label.set_transform("rotate({0:d})".format(60 * i))
+            SVG.add_node(self.layer_text, label)
+
+        # Add edge terrain labels.
+        for i in range(0, NUM_SIDES):
+            g = Group(None)
+            g.set_transform("rotate({0:d})".format(30 + i * 60))
+            SVG.add_node(self.layer_text, g)
+            edgeType = self.edgeTypes[i]
+            seedPattern = EDGE_SEED_INFO[edgeType]
+            for j in range(0, len(seedPattern)):
+                t, perp_t = seedPattern[j]
+                x = lerp(-self.size/2, self.size/2, t)
+
+                type = EDGE_REGION_INFO[edgeType][j+1]
+                label = Text(None, x - 1.5, -(self.xMax + 3), type.upper())
+                SVG.add_node(g, label)
+
+        # Add river info.
+        for i in range(0, NUM_SIDES):
+            edgeType = self.edgeTypes[i]
+            if edgeType in EDGE_RIVER_INFO:
+                g = Group(None)
+                g.set_transform("rotate({0:d})".format(30 + i * 60))
+                SVG.add_node(self.layer_text, g)
+
+                rIndex = EDGE_RIVER_INFO[edgeType].index('*')
+                seedPattern = EDGE_SEED_INFO[edgeType]
+                # River is located between the 2 regions.
+                t = (seedPattern[rIndex-2][0] + seedPattern[rIndex-1][0]) / 2
+                x = lerp(-self.size/2, self.size/2, t)
+
+                color = self.getTerrainStyle('r')
+                r = SVG.rect(0, x-1.5, -self.xMax -8, 3, 8)
+                r.set_style(Style(color, STROKE_COLOR, STROKE_WIDTH))
+                SVG.add_node(g, r)
+
+                label = Text(None, x - 1.5, -(self.xMax + 10), "R")
+                SVG.add_node(g, label)
 
         # Add 15mm circle (for mana size).
         drawCircle('mana', [50,110], '7.5',
@@ -1456,10 +1516,13 @@ class VoronoiHexTile():
         # Add terrain swatches.
         y_start = 70
         for type in ['v', 'h', 'm', 'l', 'r']:
-            color = REGION_STYLE[type]
+            color = self.getTerrainStyle(type)
             r = SVG.rect(0, 75, y_start, 15, 6)
             r.set_style(Style(color, STROKE_COLOR, STROKE_WIDTH))
             SVG.add_node(self.layer_text, r)
+
+            label = Text(None, 70, y_start + 4.5, type.upper())
+            SVG.add_node(self.layer_text, label)
             y_start += 10
         
     def addText(self, text):
@@ -1750,6 +1813,8 @@ def error(msg):
 OPTIONS = {
     'anim': {'type': 'bool', 'default': False,
              'desc': "Generate animation plots"},
+    'bw': {'type': 'bool', 'default': False,
+           'desc': "Black & white SVG output"},
     'center': {'type': 'string', 'default': None,
                'desc': "Terrain type for center of tile: l, m, h"},
     'debug': {'type': 'int', 'default': -1,
