@@ -2,9 +2,9 @@
 type = ['l', 'm', 'h' ]
 
 alt = {
-    'l': '0',
-    'm': '1',
-    'h': '2',
+    'l': '1',
+    'm': '2',
+    'h': '3',
 }
 
 def rotateString(s, n):
@@ -18,7 +18,7 @@ class HexTile():
 
     def isNormalized(self, pattern):
         # Check all rotated versions of the pattern
-        lowVal = 300000 # Must be gt 222222
+        lowVal = 400000 # Must be gt 333333
         lowIndex = -1
         for i in range(0, 6):
             pRot = rotateString(pattern, i)
