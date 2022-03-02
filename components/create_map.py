@@ -1272,11 +1272,11 @@ class VoronoiHexTile():
         return REGION_STYLE[type]
 
     def plot(self, plotId=None):
-        self.svg = SVG([210, 297])
+        self.svg = SVG([215.9, 279.4])  #SVG([210, 297])
         fig = plt.figure(figsize=(8,8))
 
         layer = self.svg.add_inkscape_layer('layer', "Layer")
-        layer.set_transform("translate(105 148.5) scale(1, -1)")
+        layer.set_transform("translate(107.95 120) scale(1, -1)")
         self.layer = layer
 
         stroke = Style("none", "#000000", STROKE_WIDTH)
@@ -1514,7 +1514,7 @@ class VoronoiHexTile():
                    Style(fill="#000000"), self.layer_text)
         
         # Add terrain swatches.
-        y_start = 70
+        y_start = 90
         for type in ['v', 'h', 'm', 'l', 'r']:
             color = self.getTerrainStyle(type)
             r = SVG.rect(0, 75, y_start, 15, 6)
@@ -1526,7 +1526,7 @@ class VoronoiHexTile():
             y_start += 10
         
     def addText(self, text):
-        t = Text(None, -92, 80 + 5.5 * self.numLines, text)
+        t = Text(None, -92, 90 + 5.5 * self.numLines, text)
         SVG.add_node(self.layer_text, t)
         self.numLines += 1
     
