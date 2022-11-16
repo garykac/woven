@@ -23,12 +23,24 @@ ENABLE_SMALL_REGION_CHECK = False
 
 NUM_SIDES = 6
 
-EDGE_TYPES = ['2s', '3f', '3s', '4f', '5s']
+EDGE_TYPES = ['1s', '2f', '2s', '3f', '3s']
+EDGE_TYPES_xxx = ['2s', '3f', '3s', '4f', '5s']
 
 # EdgeRegionInfo:
 # Each dict entry contains an array of region heights, one per region on this
 # side.
+# # = number of seeds between the corners
+# 's' = self symmetric
+# 'f' = forward edge, mirror pairs
+# 'r' = reverse edge, auto-calculated from 'f' edge
 EDGE_REGION_INFO = {
+    '1s': ['l', 'l', 'l'],                     # l - l
+    '2f': ['l', 'l', 'm', 'm'],                # l - m, m - h
+    '2s': ['m', 'm', 'm', 'm'],                # m - m
+    '3f': ['m', 'm', 'h', 'm', 'h'],           # m - h, h - m
+    '3s': ['h', 'h', 'm', 'h', 'h'],           # h - h
+}
+EDGE_REGION_INFO_xxx = {
     '2s': ['l', 'l', 'l', 'l'],                # l - l
     '3f': ['l', 'l', 'l', 'm', 'm'],           # l - m, m - h
     '3s': ['m', 'm', 'm', 'm', 'm'],           # m - m
@@ -39,7 +51,10 @@ EDGE_REGION_INFO = {
 # Mark where rivers are located on edges using an '*' to note the regions that
 # the river flows between.
 EDGE_RIVER_INFO = {
-    '3f': ['l', 'l', '*', 'l', 'm', 'm'],           # l - m, m - h
+    '2f': ['l', 'l', '*', 'l', 'm'],           # l - m, m - h
+}
+EDGE_RIVER_INFO_xxx = {
+    '3f': ['l', 'l', '*', 'l', 'm', 'm'],      # l - m, m - h
 }
 
 # Edge seed info.
@@ -47,6 +62,13 @@ EDGE_RIVER_INFO = {
 # Each seed position is:
 #   [ offset-along-edge, perpendicular-offset ]
 EDGE_SEED_INFO = {
+    '1s': [[0.50, 0]],
+    '2f': [[0.38, 0.04],  [0.76, -0.03]],
+    '2s': [[1/3, 0.04],   [2/3, -0.04]],
+    '3f': [[0.26, -0.04], [0.55, 0],      [0.77, 0.03]],
+    '3s': [[0.28, -0.05], [0.50, 0],      [0.72, 0.05]],
+}
+EDGE_SEED_INFO_xxx = {
     '2s': [[1/3, 0.03],   [2/3, -0.03]],
     '3f': [[0.30, 0.02],  [0.55, 0],    [0.75, -0.03]],
     '3s': [[0.25, 0.04],  [0.50, 0],    [0.75, -0.04]],
@@ -56,9 +78,9 @@ EDGE_SEED_INFO = {
 
 # Minimum seed distance based on terrain type.
 # These are also used as weights for each type.
-MIN_DISTANCE_L = 0.22
-MIN_DISTANCE_M = 0.19
-MIN_DISTANCE_H = 0.16
+MIN_DISTANCE_L = 0.30 #0.22
+MIN_DISTANCE_M = 0.24 #0.19
+MIN_DISTANCE_H = 0.20 #0.16
 
 MIN_RIDGE_LEN = 0.06
 MIN_RIDGE_LEN_EDGE = 0.035
@@ -125,7 +147,8 @@ class VoronoiHexTileLoader():
 
         v.writeTileData()
 
-        v.writeObject3d()
+        if options['export-3d']:
+	        v.writeObject3d()
     
         #if options['anim']:
         #    v.exportAnimation()
@@ -161,6 +184,7 @@ class VoronoiHexTile():
         # allow us to ignore the outer edges (that go off to infinity).
         self.outerScale = 1.4
 
+        # np.array of x,y coords.
         self.seeds = None
 
         self.startCornerSeed = 0
@@ -1310,6 +1334,17 @@ class VoronoiHexTile():
             id = "seed-{0:d}".format(sid)
             drawCircle(id, center, 1.0, black_fill, layer_seeds)
 
+        layer_region_ids = self.svg.add_inkscape_layer(
+            'region_ids', "Region Ids", layer)
+        layer_region_ids.hide()
+        layer_region_ids.set_transform("scale(1,-1)")
+
+        for sid in range(0, self.numActiveSeeds):
+            center = self.seeds[sid]
+            text = "{0:d}".format(sid)
+            t = Text(None, center[0], -center[1], text)
+            SVG.add_node(layer_region_ids, t)
+
         # Plot seed exclusion zones.
         layer_seed_ex = self.svg.add_inkscape_layer(
             'seed_exclusion', "Seed Exclusion", layer)
@@ -1819,6 +1854,8 @@ OPTIONS = {
                'desc': "Terrain type for center of tile: l, m, h"},
     'debug': {'type': 'int', 'default': -1,
               'desc': "Log debug info for given region id"},
+    'export-3d': {'type': 'bool', 'default': False,
+                 'desc': "Export .obj"},
     'iter': {'type': 'int', 'default': 500,
              'desc': "Max iterations"},
     'load': {'type': 'string', 'default': None,
