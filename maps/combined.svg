@@ -2,24 +2,24 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:xlink="http://www.w3.org/1999/xlink"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="210mm"
    height="297mm"
    viewBox="0 0 210 297"
    version="1.1"
    id="svg1914"
-   inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)"
+   inkscape:version="1.2 (dc2aeda, 2022-05-15)"
    sodipodi:docname="combined.svg"
    inkscape:export-filename="/home/garykac/projects/github/woven/maps/combined.png"
    inkscape:export-xdpi="72.005653"
-   inkscape:export-ydpi="72.005653">
+   inkscape:export-ydpi="72.005653"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
   <defs
      id="defs1908" />
   <sodipodi:namedview
@@ -29,17 +29,20 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.12374369"
-     inkscape:cx="152.43617"
-     inkscape:cy="2745.209"
+     inkscape:zoom="0.07036643"
+     inkscape:cx="2074.853"
+     inkscape:cy="-1065.8491"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="3440"
-     inkscape:window-height="1406"
+     inkscape:window-width="1478"
+     inkscape:window-height="962"
      inkscape:window-x="0"
-     inkscape:window-y="417"
-     inkscape:window-maximized="1" />
+     inkscape:window-y="38"
+     inkscape:window-maximized="0"
+     inkscape:showpageshadow="2"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1" />
   <metadata
      id="metadata1911">
     <rdf:RDF>
@@ -58,7 +61,6 @@
      id="layer1"
      style="display:inline">
     <image
-       sodipodi:absref="/home/garykac/projects/github/woven/maps/map-00.png"
        xlink:href="map-00.png"
        inkscape:export-ydpi="72.005653"
        inkscape:export-xdpi="72.005653"
@@ -70,7 +72,6 @@
        y="166.30429"
        transform="scale(-1)" />
     <image
-       sodipodi:absref="/home/garykac/projects/github/woven/maps/map-01.png"
        xlink:href="map-01.png"
        inkscape:export-ydpi="72.005653"
        inkscape:export-xdpi="72.005653"
@@ -82,7 +83,6 @@
        x="166.30429"
        y="-130.77975" />
     <image
-       sodipodi:absref="/home/garykac/projects/github/woven/maps/map-1a.png"
        xlink:href="map-1a.png"
        inkscape:export-ydpi="72.005653"
        inkscape:export-xdpi="72.005653"
@@ -93,7 +93,6 @@
        x="243.60568"
        y="-915.07507" />
     <image
-       sodipodi:absref="/home/garykac/projects/github/woven/maps/map-05.png"
        xlink:href="map-05.png"
        width="374.38541"
        height="374.38541"
@@ -103,30 +102,28 @@
        y="-1978.8944"
        transform="rotate(90)" />
     <image
-       sodipodi:absref="/home/garykac/projects/github/woven/maps/map-w02a.png"
        xlink:href="map-w02a.png"
        inkscape:export-ydpi="72.005653"
        inkscape:export-xdpi="72.005653"
-       width="748.77081"
-       height="374.38541"
+       width="374.38541"
+       height="748.77081"
        preserveAspectRatio="none"
        id="image2661"
-       x="130.77972"
-       y="-208.08112"
-       transform="scale(-1)" />
+       x="-166.30429"
+       y="130.77975"
+       transform="rotate(90)" />
     <image
-       sodipodi:absref="/home/garykac/projects/github/woven/maps/map-w41a.png"
        xlink:href="map-w41a.png"
        inkscape:export-ydpi="72.005653"
        inkscape:export-xdpi="72.005653"
-       width="748.77081"
-       height="374.38541"
+       width="374.38541"
+       height="748.77081"
        preserveAspectRatio="none"
        id="image2672"
-       x="-505.16513"
-       y="-915.07507" />
+       x="540.68964"
+       y="-505.16513"
+       transform="rotate(-90)" />
     <image
-       sodipodi:absref="/home/garykac/projects/github/woven/maps/map-02.png"
        xlink:href="map-02.png"
        inkscape:export-ydpi="72.005653"
        inkscape:export-xdpi="72.005653"
@@ -138,7 +135,6 @@
        width="374.38541"
        transform="rotate(90)" />
     <image
-       sodipodi:absref="/home/garykac/projects/github/woven/maps/map-06.png"
        xlink:href="map-06.png"
        inkscape:export-ydpi="72.005653"
        inkscape:export-xdpi="72.005653"
@@ -150,7 +146,6 @@
        width="374.38541"
        transform="scale(-1)" />
     <image
-       sodipodi:absref="/home/garykac/projects/github/woven/maps/map-11.png"
        xlink:href="map-11.png"
        inkscape:export-ydpi="72.005653"
        inkscape:export-xdpi="72.005653"
@@ -161,7 +156,6 @@
        height="374.38541"
        width="374.38541" />
     <image
-       sodipodi:absref="/home/garykac/projects/github/woven/maps/map-29.png"
        xlink:href="map-29.png"
        inkscape:export-ydpi="72.005653"
        inkscape:export-xdpi="72.005653"
@@ -173,7 +167,6 @@
        width="374.38541"
        transform="rotate(90)" />
     <image
-       sodipodi:absref="/home/garykac/projects/github/woven/maps/map-aa.png"
        xlink:href="map-aa.png"
        y="-934.72986"
        x="1601.6741"
@@ -182,7 +175,6 @@
        height="374.38541"
        width="374.38541" />
     <image
-       sodipodi:absref="/home/garykac/projects/github/woven/maps/map-26.png"
        xlink:href="map-26.png"
        inkscape:export-ydpi="72.005653"
        inkscape:export-xdpi="72.005653"
@@ -194,7 +186,6 @@
        width="374.38541"
        transform="scale(-1)" />
     <image
-       sodipodi:absref="/home/garykac/projects/github/woven/maps/map-2a.png"
        xlink:href="map-2a.png"
        inkscape:export-ydpi="72.005653"
        inkscape:export-xdpi="72.005653"
@@ -206,29 +197,27 @@
        width="374.38541"
        transform="rotate(-90)" />
     <image
-       sodipodi:absref="/home/garykac/projects/github/woven/maps/map-w290.png"
        xlink:href="map-w290.png"
        inkscape:export-ydpi="72.005653"
        inkscape:export-xdpi="72.005653"
-       y="-879.55054"
-       x="166.30426"
+       y="166.30423"
+       x="505.16516"
        id="image1433"
        preserveAspectRatio="none"
-       height="374.38541"
-       width="748.77081"
-       transform="rotate(-90)" />
+       height="748.77081"
+       width="374.38541"
+       transform="scale(-1)" />
     <image
-       sodipodi:absref="/home/garykac/projects/github/woven/maps/map-w864.png"
        xlink:href="map-w864.png"
        style="display:inline"
-       y="-493.15277"
-       x="1381.0408"
+       y="1265.8037"
+       x="0"
        id="image1054"
        preserveAspectRatio="none"
-       height="374.38541"
-       width="748.77081" />
+       height="748.77081"
+       width="374.38541"
+       transform="rotate(-90)" />
     <image
-       sodipodi:absref="/home/garykac/projects/github/woven/maps/map-09.png"
        xlink:href="map-09.png"
        width="374.38541"
        height="374.38541"
@@ -237,7 +226,6 @@
        x="1206.8851"
        y="-1470.2902" />
     <image
-       sodipodi:absref="/home/garykac/projects/github/woven/maps/map-22.png"
        xlink:href="map-22.png"
        width="374.38541"
        height="374.38541"
