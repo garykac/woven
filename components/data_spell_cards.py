@@ -115,6 +115,7 @@ spell_card_categories = [
 #   * Create eye (in current location)
 # * Tapestry
 #   * Recover thread (= mental rest to recover)
+#   * Move thread (within Tapestry without casting)
 #   * Gain Tapestry card (= focus on spell casting - new patterns)
 # * Spell deck
 #   * Trash spell card (= focus spell deck - reduce spells)

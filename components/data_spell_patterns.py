@@ -71,7 +71,7 @@
 # Summary:
 # +---------------+   A = Air/Earth
 # | F f a A a f F |   a = weak Air/Earth
-# | f F * a * F f |
+# | f F * A * F f |
 # | a * F A F * a |   F = Fire/Water
 # | A A A @ A A A |   f = weak Fire/Water
 # | a * F A F * a |
