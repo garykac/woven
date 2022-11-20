@@ -145,9 +145,9 @@ class SVG(object):
         
         self.idmap = {}
 
-        ET.register_namespace('', "http://www.w3.org/2000/svg")
-        ET.register_namespace('sodipodi', "http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd")
-        ET.register_namespace('inkscape', "http://www.inkscape.org/namespaces/inkscape")
+        #ET.register_namespace('', "http://www.w3.org/2000/svg")
+        #ET.register_namespace('sodipodi', "http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd")
+        #ET.register_namespace('inkscape', "http://www.inkscape.org/namespaces/inkscape")
         #ET.register_namespace('xlink', "http://www.w3.org/1999/xlink")
         #ET.register_namespace('dc', "http://purl.org/dc/elements/1.1/")
         #ET.register_namespace('cc', "http://creativecommons.org/ns#")

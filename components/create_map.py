@@ -1,3 +1,4 @@
+import copy
 import getopt
 import glob
 import math
@@ -9,6 +10,7 @@ import scipy.spatial
 import subprocess
 import sys
 
+from inkscape import Inkscape
 from math_utils import (feq, fge, fle, scale, clamp,
                         lerp, lerp_pt, lerp_pt_delta, lerperp,
                         near, dist, dist_pt_line, line_intersection_t,
@@ -17,8 +19,8 @@ from object3d import Object3d
 from svg import SVG, Group, Style, Node, Path, Text
 
 GENERATE_SVG = True
-GENERATE_PLOT = True
-ANIM_SUBDIR = "anim"
+GENERATE_PLOT = False   # As PNG file.
+ANIM_SUBDIR = "anim"    # Subdirectory of png output dir
 ENABLE_SMALL_REGION_CHECK = False
 
 NUM_SIDES = 6
@@ -35,7 +37,7 @@ EDGE_TYPES_xxx = ['2s', '3f', '3s', '4f', '5s']
 # 'r' = reverse edge, auto-calculated from 'f' edge
 EDGE_REGION_INFO = {
     '1s': ['l', 'l', 'l'],                     # l - l
-    '2f': ['l', 'l', 'm', 'm'],                # l - m, m - h
+    '2f': ['l', 'l', 'l', 'm'],                # l - m, m - h
     '2s': ['m', 'm', 'm', 'm'],                # m - m
     '3f': ['m', 'm', 'h', 'm', 'h'],           # m - h, h - m
     '3s': ['h', 'h', 'm', 'h', 'h'],           # h - h
@@ -63,7 +65,7 @@ EDGE_RIVER_INFO_xxx = {
 #   [ offset-along-edge, perpendicular-offset ]
 EDGE_SEED_INFO = {
     '1s': [[0.50, 0]],
-    '2f': [[0.38, 0.04],  [0.76, -0.03]],
+    '2f': [[0.33, 0.04],  [0.71, -0.03]],
     '2s': [[1/3, 0.04],   [2/3, -0.04]],
     '3f': [[0.26, -0.04], [0.55, 0],      [0.77, 0.03]],
     '3s': [[0.28, -0.05], [0.50, 0],      [0.72, 0.05]],
@@ -82,8 +84,8 @@ MIN_DISTANCE_L = 0.30 #0.22
 MIN_DISTANCE_M = 0.24 #0.19
 MIN_DISTANCE_H = 0.20 #0.16
 
-MIN_RIDGE_LEN = 0.06
-MIN_RIDGE_LEN_EDGE = 0.035
+MIN_RIDGE_LEN = 0.08
+MIN_RIDGE_LEN_EDGE = 0.04
 
 # Fill colors for regions based on terrain height.
 REGION_STYLE = {
@@ -129,13 +131,14 @@ class VoronoiHexTileLoader():
             self.processTileData(self.options['load'])
             return
 
-        self.processTile(None)
+        self.processTile(None, None)
 
-    def processTile(self, terrainData):
+    def processTile(self, terrainData, riverData):
         options = self.options.copy()
         v = VoronoiHexTile(options)
         v.init()
         v.setTerrainData(terrainData)
+        v.setRiverData(riverData)
 
         if options['anim']:
             v.cleanupAnimation()
@@ -156,19 +159,45 @@ class VoronoiHexTileLoader():
     def processTileData(self, file):
         header = True
         with open(file) as f:
+            center = None
+            terrain_data = None
+            river_data = None
+
+            last_pattern = None
+            last_seed = None
             for line in f:
                 if header:
                     header = False
                     continue
+                # Pattern, Seed, RowType
                 data = line.rstrip().split(',')
                 pattern = data.pop(0)
                 seed = int(data.pop(0))
-                center = data.pop(0)
-                if center == "AVG": center = None
-                self.options['pattern'] = pattern
-                self.options['seed'] = seed
-                self.options['center'] = center
-                self.processTile(data)
+                if last_pattern and last_seed and (pattern != last_pattern or seed != last_seed):
+                    # Write out previous tile.
+                    self.options['pattern'] = last_pattern
+                    self.options['seed'] = last_seed
+                    self.options['center'] = center
+                    self.processTile(terrain_data, river_data)
+                    center = None
+                    terrain_data = None
+                    river_data = None
+                rowType = data.pop(0)
+                if rowType == "TERRAIN":
+                    center = data.pop(0)
+                    if center == "AVG":
+                        center = None
+                    terrain_data = data
+                elif rowType == "RIVER":
+                    river_data = data
+                last_pattern = pattern
+                last_seed = seed
+
+            # Write out final tile.
+            self.options['pattern'] = pattern
+            self.options['seed'] = seed
+            self.options['center'] = center
+            self.processTile(terrain_data, river_data)
 
 
 class VoronoiHexTile():
@@ -250,9 +279,10 @@ class VoronoiHexTile():
         self.closeThreshold = 0.90
         self.adjustmentTooClose = -0.013
 
-        # Override terrain data (loaded from file).
+        # Explicit terrain/river data (loaded from file).
         self.terrainData = None
-        
+        self.riverData = None
+
         # Calculate data for reversed edges ('r') from the forward ('f') edges.
         for type in EDGE_TYPES:
             if type[-1] == 'f':
@@ -269,6 +299,9 @@ class VoronoiHexTile():
         
     def setTerrainData(self, data):
         self.terrainData = data
+        
+    def setRiverData(self, data):
+        self.riverData = data
         
     def init(self):
         self.initEdgePattern(self.options['pattern'])
@@ -506,10 +539,6 @@ class VoronoiHexTile():
         if len(self.seed2terrain) != sid:
             error("Terrain for seeds generated out of order: {0}".format(sid))
 
-        if not self.options['random-terrain-fill']:
-            self.seed2terrain.append('_')
-            return '_'
-            
         # If we have terrain data loaded from a file, use that.
         if self.terrainData:
             type = self.terrainData[sid]
@@ -517,6 +546,10 @@ class VoronoiHexTile():
                 self.seed2terrain.append(type)
                 return type
         
+        if not self.options['random-terrain-fill']:
+            self.seed2terrain.append('_')
+            return '_'
+            
         w = self.calcSeedWeight(self.seeds[sid])
         w /= self.size
         
@@ -1334,6 +1367,7 @@ class VoronoiHexTile():
             id = "seed-{0:d}".format(sid)
             drawCircle(id, center, 1.0, black_fill, layer_seeds)
 
+        # Plot layer with region ids.
         layer_region_ids = self.svg.add_inkscape_layer(
             'region_ids', "Region Ids", layer)
         layer_region_ids.hide()
@@ -1342,7 +1376,7 @@ class VoronoiHexTile():
         for sid in range(0, self.numActiveSeeds):
             center = self.seeds[sid]
             text = "{0:d}".format(sid)
-            t = Text(None, center[0], -center[1], text)
+            t = Text(None, center[0]-1.5, -center[1], text)
             SVG.add_node(layer_region_ids, t)
 
         # Plot seed exclusion zones.
@@ -1410,41 +1444,60 @@ class VoronoiHexTile():
                         circle = plt.Circle(center, radius, color="#80000080")
                         plt.gca().add_patch(circle)
 
+        self.drawAnnotations()
+        self.drawTerrainLabels()
+
         self.drawRiverSegments()
 
         self.drawHexTileBorder(stroke)
 
-        self.drawAnnotations()
-        self.drawTerrainLabels()
-
         if self.options['write_output']:
-            out_dir = self.getOutputDir()
+            outdir_png = self.getPngOutputDir()
             name = self.calcBaseFilename()
             if plotId == None:
-                out = os.path.join(out_dir, '%s.svg' % name)
                 if GENERATE_SVG:
-                    self.svg.write(out)
+                    outdir_svg = self.getSvgOutputDir()
+                    out_svg = os.path.join(outdir_svg, '%s.svg' % name)
+                    self.svg.write(out_svg)
 
-                out = os.path.join(out_dir, '%s.png' % name)
+                    outdir_pdf = self.getPdfOutputDir()
+                    out_pdf = os.path.join(outdir_pdf, '%s.pdf' % name)
+                    Inkscape.export_pdf(
+                        os.path.abspath(out_svg),
+                        os.path.abspath(out_pdf),
+                        300)
+
+                out_png = os.path.join(outdir_png, '%s.png' % name)
             else:
-                out_dir = os.path.join(out_dir, ANIM_SUBDIR)
-                if not os.path.isdir(out_dir):
-                    os.makedirs(out_dir);
-                out = os.path.join(out_dir, '{0:s}-{1:03d}'.format(name, plotId))
+                outdir_png = os.path.join(outdir_png, ANIM_SUBDIR)
+                if not os.path.isdir(outdir_png):
+                    os.makedirs(outdir_png);
+                out_png = os.path.join(outdir_png, '{0:s}-{1:03d}'.format(name, plotId))
                 plt.text(-self.size, -self.size, plotId)
 
             plt.axis("off")
             plt.xlim([x * self.size for x in [-1, 1]])
             plt.ylim([y * self.size for y in [-1, 1]])
             if GENERATE_PLOT:
-                plt.savefig(out, bbox_inches='tight')
+                plt.savefig(out_png, bbox_inches='tight')
             plt.close(fig)
 
-    def getOutputDir(self):
-        out_dir = self.options['out']
-        if not os.path.isdir(out_dir):
-            os.makedirs(out_dir);
-        return out_dir
+    def getPngOutputDir(self):
+        out_dir = self.options['outdir_png']
+        return self.makeDir(out_dir)
+
+    def getSvgOutputDir(self):
+        out_dir = self.options['outdir_svg']
+        return self.makeDir(out_dir)
+
+    def getPdfOutputDir(self):
+        out_dir = self.options['outdir_pdf']
+        return self.makeDir(out_dir)
+
+    def makeDir(self, directory):
+        if not os.path.isdir(directory):
+            os.makedirs(directory);
+        return directory
 
     def calcNumericPattern(self):
         altPattern = {
@@ -1567,38 +1620,55 @@ class VoronoiHexTile():
     
     # Draw river segments on all internal edges.
     def drawRiverSegments(self):
-        layer_river_border = self.svg.add_inkscape_layer(
+        self.layer_river_border = self.svg.add_inkscape_layer(
             'river-border', "River Border", self.layer)
-        layer_river_border.hide()
-        style_river_border = Style(None, STROKE_COLOR,
+        self.style_river_border = Style(None, STROKE_COLOR,
                                    RIVER_WIDTH + 2 * STROKE_WIDTH)
-        style_river_border.set("stroke-linecap", "round")
-        style_river_border.set("stroke-linejoin", "round")
-        for rv in self.vor.ridge_vertices:
-            if rv[0] == -1 or rv[1] == -1:
-                continue
-            p = Path()
-            for i in [0,1]:
-                p.addPoint(self.vertices[rv[i]])
-            p.end()
-            p.set_style(style_river_border)
-            SVG.add_node(layer_river_border, p)
+        self.style_river_border.set("stroke-linecap", "round")
+        self.style_river_border.set("stroke-linejoin", "round")
 
-        layer_river = self.svg.add_inkscape_layer('river', "River", self.layer)
-        layer_river.hide()
-        style_river = Style(None, REGION_STYLE['r'], RIVER_WIDTH)
-        style_river.set("stroke-linecap", "round")
-        style_river.set("stroke-linejoin", "round")
-        for rv in self.vor.ridge_vertices:
-            if rv[0] == -1 or rv[1] == -1:
-                continue
-            p = Path()
-            for i in [0,1]:
-                p.addPoint(self.vertices[rv[i]])
-            p.end()
-            p.set_style(style_river)
-            SVG.add_node(layer_river, p)
-        
+        self.layer_river = self.svg.add_inkscape_layer('river', "River", self.layer)
+        self.style_river = Style(None, REGION_STYLE['r'], RIVER_WIDTH)
+        self.style_river.set("stroke-linecap", "round")
+        self.style_river.set("stroke-linejoin", "round")
+
+        if self.riverData:
+            # Build dict of ridge segments that should be rivers.
+            river = {}
+            for r in self.riverData:
+                if r:
+                    river[r] = 1
+
+            n_ridges = len(self.vor.ridge_points)
+            for i in range(0, n_ridges):
+                (s0, s1) = self.vor.ridge_points[i]
+                if s1 < s0:
+                    s0,s1 = s1,s0
+                key = f"{s0}-{s1}"
+                if key in river:
+                    self.drawRiverSegment(self.vor.ridge_vertices[i])
+        else:
+            # Add all river segments on a hidden layer.
+            for rv in self.vor.ridge_vertices:
+                self.drawRiverSegment(rv)
+            self.layer_river_border.hide()
+            self.layer_river.hide()
+
+    def drawRiverSegment(self, v):
+        if v[0] == -1 or v[1] == -1:
+            return
+        p = Path()
+        for i in [0,1]:
+            p.addPoint(self.vertices[v[i]])
+        p.end()
+        p2 = copy.deepcopy(p)
+
+        p.set_style(self.style_river_border)
+        SVG.add_node(self.layer_river_border, p)
+
+        p2.set_style(self.style_river)
+        SVG.add_node(self.layer_river, p2)
+            
     def plotBadVertex(self, v, layer):
         circle = plt.Circle(v, 1, color="r")
         plt.gca().add_patch(circle)
@@ -1636,13 +1706,13 @@ class VoronoiHexTile():
         SVG.add_node(layer_border, p)
 
     def cleanupAnimation(self):
-        out_dir = os.path.join(self.options['out'], ANIM_SUBDIR)
+        out_dir = os.path.join(self.options['outdir_png'], ANIM_SUBDIR)
         anim_pngs = os.path.join(out_dir, '*.png')
         for png in glob.glob(anim_pngs):
             os.remove(png)
 
     def exportAnimation(self):
-        anim_dir = os.path.join(self.options['out'], ANIM_SUBDIR)
+        anim_dir = os.path.join(self.options['outdir_png'], ANIM_SUBDIR)
         cmd = ["convert"]
         cmd.extend(["-delay", "15"])
         cmd.extend(["-loop", "0"])
@@ -1653,7 +1723,7 @@ class VoronoiHexTile():
         cmd.extend(["-delay", "100"])
         cmd.append(os.path.join(anim_dir, last_file))
 
-        anim_file = os.path.join(self.options['out'], "{0:s}.gif".format(base))
+        anim_file = os.path.join(self.options['outdir_png'], "{0:s}.gif".format(base))
         cmd.append(anim_file)
 
         subprocess.run(cmd)
@@ -1662,7 +1732,7 @@ class VoronoiHexTile():
         center = self.options['center']
         if center == None:
             center = "AVG"
-        print("{0},{1},{2},".format(
+        print("{0},{1},TERRAIN,{2},".format(
             self.options['pattern'],
             self.options['seed'],
             center), end='')
@@ -1700,7 +1770,7 @@ class VoronoiHexTile():
     def writeObject3d(self):
         obj = Object3d()
 
-        out_dir = self.getOutputDir()
+        out_dir = self.getObjOutputDir()
         name = self.calcBaseFilename()
         outfile = os.path.join(out_dir, '%s.obj' % name)
         obj.open(outfile)
@@ -1925,7 +1995,9 @@ def parse_options():
                     options[opt_name] = str(arg)
 
     # Non-public options.
-    options['out'] = "map-out"
+    options['outdir_svg'] = "map-svg"
+    options['outdir_png'] = "map-png"
+    options['outdir_pdf'] = "map-pdf"
     options['origin'] = [0, 0]
     options['write_output'] = True
     options['verbose_iteration'] = True
