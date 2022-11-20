@@ -27,7 +27,7 @@ class Parser():
         self.pattern = pattern
         self.elements = elements
 
-        self.cards_dir = 'tapestry-cards'
+        self.cards_dir = '../tapestry-cards'
         self.svg_out_dir = 'svg_out'
         self.png_out_dir = 'png_out'
 
@@ -174,12 +174,12 @@ class Parser():
                 "--export-dpi=300",
                 "--export-text-to-path",
                 #"--export-area-page",
-                                "--export-id=%s" % 'cut-line',
+                "--export-id=%s" % 'cut-line',
                 "--without-gui"
                 ])
 
 def process_card(basename, pattern, elements, gen_png):
-    parser = Parser('template-mpc.svg', basename, pattern, elements, gen_png)
+    parser = Parser('template/tapestry-template.svg', basename, pattern, elements, gen_png)
     parser.process()
 
 def usage():

@@ -53,8 +53,8 @@ spell_desc_keys = {
 
 
 class WovenSpellCards():
-    OUTPUT_DIR = 'spell-cards'
-    CARD_TEMPLATE = 'woven-card-template.svg'
+    OUTPUT_DIR = '../spell-cards'
+    CARD_TEMPLATE = f'{OUTPUT_DIR}/spell-template.svg'
     
     def __init__(self, options):
         self.next_id = 0

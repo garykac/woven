@@ -19,8 +19,11 @@ from object3d import Object3d
 from svg import SVG, Group, Style, Node, Path, Text
 
 GENERATE_SVG = True
-GENERATE_PLOT = False   # As PNG file.
+GENERATE_PLOT = True   # As PNG file.
+
+MAP_OUTPUT_DIR = "../maps"
 ANIM_SUBDIR = "anim"    # Subdirectory of png output dir
+
 ENABLE_SMALL_REGION_CHECK = False
 
 NUM_SIDES = 6
@@ -1995,9 +1998,9 @@ def parse_options():
                     options[opt_name] = str(arg)
 
     # Non-public options.
-    options['outdir_svg'] = "map-svg"
-    options['outdir_png'] = "map-png"
-    options['outdir_pdf'] = "map-pdf"
+    options['outdir_svg'] = os.path.join(MAP_OUTPUT_DIR, "map-svg")
+    options['outdir_png'] = os.path.join(MAP_OUTPUT_DIR, "map-png")
+    options['outdir_pdf'] = os.path.join(MAP_OUTPUT_DIR, "map-pdf")
     options['origin'] = [0, 0]
     options['write_output'] = True
     options['verbose_iteration'] = True
