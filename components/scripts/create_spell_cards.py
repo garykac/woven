@@ -3,6 +3,7 @@
 
 import datetime
 import getopt
+import os
 import sys
 
 from svg_card_gen import SVGCardGen
@@ -28,7 +29,7 @@ elem_map = {
 
 # Spell attributes
 spell_attributes = [
-    'element', 'pattern', 'op', 'vp', 'id', 'category', 'flavor'
+    'element', 'pattern', 'op', 'vp', 'id', 'category', 'flavor', 'DISABLE'
 ]
 
 # Spell description keys
@@ -51,10 +52,11 @@ spell_desc_keys = {
     },
 }
 
+OUTPUT_DIR = os.path.join('..', 'spell-cards')
+CARD_TEMPLATE = os.path.join(OUTPUT_DIR, 'spell-template.svg')
+SPELL_SUMMARY = os.path.join('..', '..', 'docs', 'spell-list.md')
 
 class WovenSpellCards():
-    OUTPUT_DIR = '../spell-cards'
-    CARD_TEMPLATE = f'{OUTPUT_DIR}/spell-template.svg'
     
     def __init__(self, options):
         self.next_id = 0
@@ -254,8 +256,11 @@ class WovenSpellCards():
     # callback from SVGCardGen
     def card_data(self):
         for card in spell_card_data:  #spell_card_blank_data:
-            # Auto-assign ids
             attrs = card[1]
+            if 'DISABLE' in attrs:
+                continue
+        
+            # Auto-assign ids
             self.next_id += 1
             attrs['id'] = self.next_id
             yield card
@@ -324,7 +329,7 @@ class WovenSpellCards():
         svg_ids.append('spell-flavor')
         svg_ids.append('separator')
         svg_ids.extend(['op-{0}'.format(op) for op in valid_ops])
-        svg.load_ids(WovenSpellCards.CARD_TEMPLATE, svg_ids)
+        svg.load_ids(CARD_TEMPLATE, svg_ids)
 
         # Add Element and Op masters (hidden, used for cloning).
         g_masters = SVG.group('masters')
@@ -491,7 +496,7 @@ class WovenSpellCards():
         return catstr
 
     def gen_spell_summary(self):
-        summary = open('../docs/spell-list.md', "w")
+        summary = open(SPELL_SUMMARY, "w")
 
         summary.write('# List of Spell Fragments\n\n')
 
@@ -634,7 +639,7 @@ def parse_options():
     options = {}
     for opt,info in option_defs.items():
         options[opt] = info['default']
-    options['out'] = WovenSpellCards.OUTPUT_DIR
+    options['out'] = OUTPUT_DIR
 
     for opt,arg in opts:
         # Build list of short and fullname for this option
