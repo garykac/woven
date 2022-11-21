@@ -11,13 +11,3 @@ archive/maps/v1-hex/map-hex-22x19.jpg
 archive/maps/v1-hex/map-hex-22x19.png
 archive/maps/v2-voronoi-r1/*.png
 
-# Component output files
-components/__pycache__/
-components/effect-cards/png/
-components/effect-cards/svg/
-components/effect-cards/pdf/
-components/spell-cards/png/
-components/spell-cards/svg/
-components/spell-cards/pdf/
-components/tapestry-cards/png_out/
-components/tapestry-cards/svg_out/
