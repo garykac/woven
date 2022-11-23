@@ -94,7 +94,7 @@ class SVGCardGen(object):
         
         if self.curr_filename == '':
             self.curr_file += 1
-            self.curr_filename = 'out{0:02d}'.format(self.curr_file)
+            self.curr_filename = 'out{0:02d}'.format(self.curr_file+1)
             self.__create_svg_file()
             self.curr_card += 1
 
