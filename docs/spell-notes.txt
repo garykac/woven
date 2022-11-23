@@ -1,0 +1,144 @@
+woven cards
+2022 Nov 3
+
+Common
+Fire Shards - attack 1
+Haste - move 4
+Extend - move an eye 2
+Endurance - ignore movement penalty
+
+==========
+
+Warrior, Fighter - close attacks, direct combat, defense
+Ranger - long distance attacks, fast, archer, sniper, low defense
+White Mage, Healer/Defender, Priest, Cleric, aid teammates
+Rogue, Thief, Ninja, hit and run, speed, stealth
+Tank, high defense, slow movement
+Black Mage - vs large number of weak enemies, big blast
+Beastmaster
+
+=======
+
+Types:
+Duplicate - split each eye into 2
+Deflect - (immediate) deflect attack 1
+
+Dispel - remove all eyes from location
+Eyedrop - create eye and move 4
+
+Scorch - move an eye 3, removing an eye from each space visited
+Ground - remove eye from mage location and neighboring
+
+Geyser - attack 1 at 2 eyes
+Disperse - move eye 3, pushing eyes into adjacent spaces
+
+=======
+
+Basic actions:
+
+Move 1 space
+Create Eye
+Recover Thread -> Mana
+Draw new Tapestry card
+
+=======
+Traceback
+Dense Passage
+Gust
+Spread
+Blur
+Shield
+Dodge
+Control
+Lavastone
+Airwalk
+Waterwalk
+Reflect
+Plainswalker
+Expand
+Control Burst
+Remote Anchor
+Bolt
+Boost
+Redirect
+Switch
+Forest Blink
+Seek
+Ignis
+Woodland Target
+Repel
+Sacrificium
+Water Target
+Anchor
+
+
+
+
+==========================
+
+
+
+
+There are 3 levels of magic actions:
+
+
+Core Actions:
+These are low-level requirements for casting or for the game mechanics to work.
+These actions are available on the bottom of the spell cards, so they are easily available as an alternate to casting the spell.
+
+* Place Eye on Map (from Mana pool)
+* Recover Thread from Tapestry (to Mana pool)
+* Add card to Tapestry
+* Move mage a single space
+* Take an additional action
+* Move a thread to a new location on the Tapestry (without casting)
+
+Maybe:
+* Draw additional spell cards into hand
+
+Basic Spells:
+The spells perform basic actions or allow the mage to set up preconditions for more advanced spells.
+These should also demonstrate all the basic mechanics of the game (all transitions in the mana lifecycle).
+Also includes some spells that might be too powerful for a single player to have exclusively.
+
+* Move mage magically (more quickly than normal)
+* Move Eyes on the map
+* Trigger effect at one or your Eyes
+* Anchor Eye
+* Dispel Eye
+* Attack mage
+* Defend mage
+* Split Eyes on map
+
+
+Other Spells:
+These are spells that you (might) gain during the course of the game.
+Mostly specialized variants or combinations of the above that are either more powerful or easier to cast.
+
+
+
+Handling Damage:
+There are 4 parts of the game that could be used to encode damage:
+* Mage - physical damage: mage has a single HP so it doesn't need to be tracked
+* Tapestry - severe mental damage or psychic attacks: block spaces or cover elements
+* Spells - light mental damage: add "confusion" cards to the your spell deck
+* Mana - mental exhaustion: having fewer available
+
+More details:
+
+Mage damage:
+Simple insta-death since mages are weak. Some variants may have re-spawn points.
+
+Tapestry:
+This is a safe area for the base game, but expansions could:
+Fill spots with dark mana that cannot be removed
+Cover element symbols so they can no longer be used to cast spells
+Once Dark mana has taken root, it can expand, so you need to fight it off
+
+Spells:
+Draw a random Confusion card after a mental attack.
+Each Confusion card has a Mana cost (from 2-4).
+To Trash a Confusion card (when you reset), you need to pay the mana cost into your Tapestry (anywhere, but it doesn't cast a spell)
+
+Mana:
+Respawn after physical death with 1 fewer Mana token.
