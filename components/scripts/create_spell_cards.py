@@ -336,7 +336,7 @@ class WovenSpellCards():
         g_masters.set_style("display:none")
         SVG.add_node(svg_group, g_masters)
         for e in [
-                'op-tapestry', 'op-eye', 'op-mmove', 'op-thread', 'op-action',
+                'op-tapestry', 'op-eye', 'op-mmove', 'op-thread', 'op-tmove', 'op-action',
                 'element-air', 'element-earth', 'element-fire', 'element-water',
                 ]:
             svg.add_loaded_element(g_masters, e)
@@ -510,10 +510,8 @@ class WovenSpellCards():
         for c in sorted(self.valid_categories):
             if not c in self.categories:
                 continue
-            summary.write('{0:s} ({1:d})\n\n'
-                          .format(self.category_list(c), len(self.categories[c])))
-            print('  {0:s} ({1:d})'
-                  .format(self.category_list(c), len(self.categories[c])))
+            summary.write(f'{self.category_list(c)} ({len(self.categories[c])})\n\n')
+            print(f'  {self.category_list(c)} ({len(self.categories[c])})')
 
             names = [self.id2name[id] for id in self.categories[c]]
             for name in sorted(names):
@@ -532,41 +530,36 @@ class WovenSpellCards():
             if not e in self.elements:
                 continue
                 
-            summary.write('{0:s} ({1:d})\n\n'.format(eName, len(self.elements[e])))
-            print('  {0:s} ({1:d})'.format(eName, len(self.elements[e])))
+            summary.write(f'{eName} ({len(self.elements[e])})\n\n')
+            print(f'  {eName} ({len(self.elements[e])})')
 
             names = [self.id2name[id] for id in self.elements[e]]
             for name in sorted(names):
                 sid = self.name2id[name]
-                summary.write('* {0:s} - _{1:s}_\n'
-                              .format(self.spell_link(sid),
-                                      self.category_list(self.id2attrs[sid]['category'])))
+                categories = self.category_list(self.id2attrs[sid]['category'])
+                summary.write(f'* {self.spell_link(sid)} - _{categories}_\n')
 
             summary.write('\n')
 
         print('Ops')
-        for op in ['tapestry', 'eye', 'mmove', 'thread']:
-            exact_count = 0
-            extra_count = 0
+        for op in ['tapestry', 'eye', 'mmove', 'thread', 'tmove', 'action']:
+            count = 0
             for k,v in self.ops.items():
-                if k == op:
-                    exact_count += len(v)
-                elif k.find(op) != -1:
-                    extra_count += len(v)
-            print(' {0:s} ({1:d}) + {2:d} = {3:d}'
-                  .format(op, exact_count, extra_count, exact_count + extra_count))
+                if k.find(op) != -1:
+                    count += len(v)
+            print(f'  {op} ({count})')
+        print('Ops combos')
         for k,v in sorted(self.ops.items()):
-            if k.find('-') != -1:
-                print(' {0:s} ({1:d})'.format(k, len(v)))
+            if k.find('-') != -1 or k.find('+') != -1:
+                print(f'  {k} ({len(v)})')
         
         summary.write('## By Pattern\n\n')
         print('Patterns')
-        for pattern_key,sid in sorted(self.pattern2id.items()):
+        for pattern_key,sid in sorted(self.pattern2id.items(), key=_pattern_sort_):
             print(' ', pattern_key, '-', self.id2name[sid])
             (pattern, element) = pattern_key.split(':')
             sid = self.pattern2id[pattern_key]
-            summary.write('* {0:s} {1:s} ({2:s})\n'
-                          .format(pattern, self.spell_link(sid), element))
+            summary.write(f'* {pattern} {self.spell_link(sid)} ({element})\n')
         summary.write('\n')
         
         summary.write('## By Name\n\n')
@@ -574,13 +567,12 @@ class WovenSpellCards():
 
         for name,sid in sorted(self.name2id.items()):
             count += 1
-            summary.write('### {0:s}\n'.format(self.id2name[sid]))
+            summary.write(f'### {self.id2name[sid]}\n')
             summary.write('```\n')
             for prow in self.id2pattern[sid]:
                 summary.write(prow + '\n')
             summary.write('```\n')
-            summary.write('Element: {0:s}\n\n'
-                          .format(self.element_name(self.id2attrs[sid]['element'])))
+            summary.write(f"Element: {self.element_name(self.id2attrs[sid]['element'])}\n\n'")
 
             summary.write('Category: ')
             summary.write(self.category_list(self.id2attrs[sid]['category']))
@@ -595,14 +587,20 @@ class WovenSpellCards():
         print('Starters')
         for s in self.starters:
             attr = self.id2attrs[s]
-            print(' {0} - {1} - {2}'
-                  .format(self.id2name[s], attr['element'], attr['op']))
+            print(f"  {self.id2name[s]} - {attr['element']} - {attr['op']}")
 
         summary.close()
-        print('Total spell count = {0:d}'.format(count))
+        print(f'Total spell count = {count}')
         if self.blank_count != 0:
-            print('*** BLANK SPELLS *** = {0:d}'.format(self.blank_count))
-        
+            print(f'*** BLANK SPELLS *** = {self.blank_count}')
+
+# Comparator to zero-pad the spell index so that they sort correctly.
+def _pattern_sort_(x):
+    (key, count) = x
+    (info, element) = key.split(':')
+    (eleCount, index) = info.split('-')
+    return f"{eleCount}-{index.zfill(3)}:{element}"
+
 def usage(options):
     print("Usage: %s <options>" % sys.argv[0])
     print("where <options> are:")
