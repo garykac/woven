@@ -1,6 +1,6 @@
 # List of Spell Fragments
 
-Generated on 2022/11/22 @ 20:59
+Generated on 2022/11/23 @ 07:19
 
 ## By Category
 
@@ -169,7 +169,7 @@ Element: Air
 
 'Category: Terrain, Mage Move
 
-If at mid or high-elevation, move 6 spaces over same or lower elevation. You must end at the same elevation as your start.
+Move 5 spaces over same or lower elevation, passing over rivers and water. You must end at the same elevation as your start.
 
 ### Anchor
 ```
@@ -179,7 +179,9 @@ Element: Earth
 
 'Category: Starter, Eye Defend
 
-Anchor one of your Eyes. Push away all eyes within 1 space. No eyes may move within 1 space of an Anchor.
+Anchor one of your Eyes. Remove all other Eyes from that space and push away all eyes within 1 space.
+
+No Eyes may move within 1 space of this Eye while it is Anchored.
 
 ### Blur
 ```
@@ -241,7 +243,11 @@ Element: Fire
 
 'Category: Starter, Eye Other Attack
 
-Consume one of your Eyes to remove all Eyes at that location --OR-- remove all eyes (anchored or not) from all locations adjacent to you.
+Consume one of your Eyes to remove all Eyes it that space.
+
+OR
+
+Remove all eyes (anchored or not) from your location and all spaces adjacent to you.
 
 ### Disperse
 ```
@@ -252,7 +258,7 @@ Element: Air
 
 'Category: Starter, Eye Move
 
-Move one of your Eyes 3 spaces, pushing any existing Eyes into an adjacent space.
+Move one of your Eyes 3 spaces. When moving this Eye into a space, push any Eyes already in that space into an adjacent space.
 
 ### Dodge
 ```
@@ -380,7 +386,7 @@ Element: Air
 
 'Category: Starter, Mage Move
 
-Move 4 along the same elevation.
+Move 3 along the same elevation.
 
 ### Introspect
 ```
