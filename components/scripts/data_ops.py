@@ -11,17 +11,21 @@ valid_ops = [
     'eye-mmove',      # Create eye OR Move mage
     'eye-thread',     # Create eye OR Recover thread
     #'eye-tmove',      # Create eye OR Move thread
+    'eye+action',     # Create eye AND take another action
     #'emove',          # Move eye
     #'emove-mmove',    # Move eye OR Move mage
     #'emove-thread',   # Move eye OR Recover thread
     #'emove-tmove',    # Move eye OR Move thread
+    'emove+action',   # Move eye AND take another action
     'mmove',          # Move mage
     'mmove-thread',   # Move mage OR Recover thread
     #'mmove-tmove',    # Move mage OR Move thread
+    'mmove+action',   # Move mage AND take another action
     'thread',         # Recover thread
+    'thread+action',  # Recover thread AND take another action
     #'thread-tmove',   # Recover thread OR Move thread
-    #'tmove',          # Move thread
-    #'tmove-action',   # Move thread AND take another action
+    'tmove',          # Move thread
+    'tmove+action',   # Move thread AND take another action
     'action',         # Take another action
-    'action-action',  # Take another 2 actions
+    'action+action',  # Take another 2 actions
 ]

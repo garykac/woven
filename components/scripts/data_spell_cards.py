@@ -207,24 +207,24 @@ spell_card_data = [
     # Representative spells for each element.
 
     ["Haste",
-        {'element': 'air', 'pattern': 'E2-2', 'op': 'eye', 'vp': 0,
+        {'element': 'air', 'pattern': 'E2-2', 'op': 'mmove-thread', 'vp': 0,
          'category': 'starter,mage-move',
         }, {
             'cast': "Move 4 along the same elevation.",
         } ],
 
     ["Anchor",
-        {'element': 'earth', 'pattern': 'E2-2', 'op': 'mmove-thread', 'vp': 0,
-         'category': 'eye-defend',
+        {'element': 'earth', 'pattern': 'E2-2', 'op': 'eye+action', 'vp': 0,
+         'category': 'starter,eye-defend',
         }, {
             'cast': "Anchor one of your Eyes. Push away all eyes within 1 space. No eyes may move within 1 space of an Anchor.",
         } ],
 
     ["Dispel",
-        {'element': 'fire', 'pattern': 'E2-28', 'op': 'tapestry-eye', 'vp': 0,
-         'category': 'eye-other-attack',
+        {'element': 'fire', 'pattern': 'E2-28', 'op': 'tapestry-thread', 'vp': 0,
+         'category': 'starter,eye-other-attack',
         }, {
-            'cast': "Consume one of your Eyes to remove all Eyes at that location OR remove all eyes (anchored or not) from your current location.",
+            'cast': "Consume one of your Eyes to remove all Eyes at that location --OR-- remove all eyes (anchored or not) from all locations adjacent to you.",
         } ],
 
     ["Extend",
@@ -233,6 +233,38 @@ spell_card_data = [
         }, {
             'cast': "Move one of your Eyes 3 spaces.",
         } ],
+
+
+    ["Disperse",
+        {'element': 'air', 'pattern': 'E2-53', 'op': 'eye-thread', 'vp': 0,
+         'category': 'starter,eye-move',
+        }, {
+            'cast': "Move one of your Eyes 3 spaces, pushing any existing Eyes into an adjacent space.",
+        } ],
+
+    ["Shield",
+        {'element': 'earth', 'pattern': 'E2-15', 'op': 'eye-mmove', 'vp': 0,
+         'category': 'starter,mage-defend',
+        }, {
+            'cast': "{{ADD_CHARGE}}",
+            'react': "When attacked, you may immediately cast this spell.",
+            'sacrifice': "Remove a charge to cancel an attack of 1 damage.",
+        } ],
+
+    ["Fire Shards",
+        {'element': 'fire', 'pattern': 'E2-27', 'op': 'mmove+action', 'vp': 0,
+         'category': 'starter,mage-other-attack',
+        }, {
+            'cast': "Consume one of your Eyes to Attack 1 at that location.",
+        } ],
+
+    ["Duplicate",
+        {'element': 'water', 'pattern': 'E2-27', 'op': 'tmove+action', 'vp': 0,
+         'category': 'starter,eye-create',
+        }, {
+            'cast': "In a location where you have at least one Eye, split each of your Eyes into two separate Eyes.",
+        } ],
+
 
     #     _____                _____     _ ___ 
     #    |     |___ _ _ ___   |   __|___| |  _|
@@ -284,10 +316,10 @@ spell_card_data = [
         } ],
 
     ["Blur",
-        {'element': 'air', 'pattern': 'E2-1', 'op': 'tapestry-eye', 'vp': 1, 'DISABLE': True,
+        {'element': 'air', 'pattern': 'E2-1', 'op': 'tapestry-eye', 'vp': 1,
          'category': 'mage-move',
         }, {
-            'cast': "Move 8",
+            'cast': "Move 5",
         } ],
 
     ["Forest Blink",
@@ -358,13 +390,6 @@ spell_card_data = [
             'cast': "If in a forest, place an Eye in any connected forest location.",
         } ],
 
-    ["Duplicate",
-        {'element': 'water', 'pattern': 'E2-27', 'op': 'eye-mmove', 'vp': 1, 'DISABLE': True,
-         'category': 'eye-create',
-        }, {
-            'cast': "In a location where you have at least one Eye, split each of your Eyes into two separate Eyes.",
-        } ],
-
     ["Traceback",
         {'element': 'water', 'pattern': 'E2-36', 'op': 'tapestry-thread', 'vp': 1, 'DISABLE': True,
          'category': 'eye-create',
@@ -428,10 +453,10 @@ spell_card_data = [
         } ],
 
     ["Bolt",
-        {'element': 'fire', 'pattern': 'E1-8', 'op': 'eye-mmove', 'vp': 1, 'DISABLE': True,
+        {'element': 'fire', 'pattern': 'E1-8', 'op': 'eye-mmove', 'vp': 1,
          'category': 'eye-move',
         }, {
-            'cast': "Move a single Eye 8 spaces.",
+            'cast': "Move a single Eye 2 spaces and then consume it to Attack 1.",
         } ],
 
     #     _____                _____ _   _              _____         
@@ -445,13 +470,6 @@ spell_card_data = [
     # Move all eyes from adjacent spaces
     # Move self N spaces, for each space entered move all Eyes 1 space
     # Move Eye N spaces, for each space entered move all Eyes 1 space
-
-    ["Disperse",
-        {'element': 'air', 'pattern': 'E2-53', 'op': 'eye-mmove', 'vp': 1,
-         'category': 'eye-move',
-        }, {
-            'cast': "Move one of your Eyes 3 spaces, pushing any existing Eyes into an adjacent space.",
-        } ],
 
     ["Control",
         {'element': 'water', 'pattern': 'E2-78', 'op': 'eye-mmove', 'vp': 1,
@@ -546,12 +564,12 @@ spell_card_data = [
         } ],
 
     ["Switch",
-        {'element': 'earth', 'pattern': 'E2-11', 'op': 'eye-thread', 'vp': 1, 'DISABLE': True,
+        {'element': 'earth', 'pattern': 'E2-11', 'op': 'eye-thread', 'vp': 1,
          'category': 'mage-defend',
         }, {
             'cast': "{{ADD_CHARGE}}",
+            'charged': "When you need to remove an Eye, you may instead remove one of your other Eyes.",
             'react': "You may cast this when one of your Eyes is attacked.",
-            'sacrifice': "When you need to remove an Eye, you may instead remove one of your other Eyes.",
         } ],
 
     #     _____ _   _           _        _____ _____ 
@@ -572,13 +590,6 @@ spell_card_data = [
     # Groups of 3 Eyes are Wall of Flame. Charge lost if group broken
     # Extra damage against shield spell
 
-    ["Fire Shards",
-        {'element': 'fire', 'pattern': 'E2-27', 'op': 'eye-mmove', 'vp': 1,
-         'category': 'starter,mage-other-attack',
-        }, {
-            'cast': "Consume one of your Eyes to Attack 1 at that location.",
-        } ],
-
     ["Turbo Ignis",
         {'element': 'fire', 'pattern': 'E2-29', 'op': 'eye-thread', 'vp': 1,
          'category': 'mage-other-attack',
@@ -590,7 +601,7 @@ spell_card_data = [
         {'element': 'fire', 'pattern': 'E2-32', 'op': 'eye-mmove', 'vp': 1,
          'category': 'mage-other-attack',
         }, {
-            'cast': "Attack 1 at one of your Eyes.",
+            'cast': "Attack 1 at one of your Eyes, consuming it.",
             'react': "When attacked, cast to redirect the attack to one of your Eyes.",
         } ],
 
@@ -613,7 +624,7 @@ spell_card_data = [
         {'element': 'water', 'pattern': 'E1-8', 'op': 'eye-thread', 'vp': 1,
          'category': 'mage-other-attack',
         }, {
-            'cast': "Attack 1 at two of your Eyes.",
+            'cast': "Attack 1 at two of your Eyes, consuming them.",
         } ],
 
     #     ____      ___           _      _____ _____ 
@@ -628,15 +639,6 @@ spell_card_data = [
     # Charge: If in same location as Eye, that Eye acts as shield 2
     # Charge: Deflect attack into adjacent location
     # Charge: Boost defense power by 1
-
-    ["Shield",
-        {'element': 'earth', 'pattern': 'E2-15', 'op': 'thread', 'vp': 1,
-         'category': 'starter,mage-defend',
-        }, {
-            'cast': "{{ADD_CHARGE}}",
-            'react': "When attacked, you may immediately cast this spell.",
-            'sacrifice': "Remove a charge to cancel an attack of 1 damage.",
-        } ],
 
     ["Deflect",
         {'element': 'earth', 'pattern': 'E2-6', 'op': 'tapestry-eye', 'vp': 1,
@@ -669,7 +671,7 @@ spell_card_data = [
 
     ["Introspect",
         {'element': 'water', 'pattern': 'E1-2', 'op': 'eye-mmove', 'vp': 1,
-         'category': 'starter,eye-move',
+         'category': 'eye-move',
         }, {
             'cast': "Move a Thread in your Tapestry to another square. If this completes a spell, you may cast it.",
         } ],
