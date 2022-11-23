@@ -186,24 +186,35 @@ class WovenSpellCards():
         # Ensure charged spells have a charge effect.
         if desc['cast'] == '{{ADD_CHARGE}}':
             if not 'charged' in desc and not 'sacrifice' in desc:
-                raise Exception("{0:s}: Charged spell with no effect".format(name))            
+                raise Exception(f"{name}: Charged spell with no effect")
 
     def expand_desc(self, raw_desc):
         desc = []
         for key in spell_desc_keys:
             if not key in raw_desc:
                 continue
-            d = raw_desc[key]
-            d = d.replace('{{ADD_CHARGE}}', 'Place a Charge on this spell.')
-            d = d.replace('{{ADD_ACTION}}', 'Take another action.')
+            rdesc = raw_desc[key]
+            if not isinstance(rdesc, list):
+                rdesc = [rdesc]
+
+            # Add space between each paragraph group.
             if len(desc) != 0:
                 desc.append('-')
-                
-            if 'prefix' in spell_desc_keys[key]:
-                prefix = spell_desc_keys[key]['prefix']
-                desc.append("{0}: {1}".format(prefix, d))
-            else:
-                desc.append(d)
+
+            first = True
+            for d in rdesc:
+                if not first:
+                    desc.append('-')
+                first = False
+
+                d = d.replace('{{ADD_CHARGE}}', 'Place a Charge on this spell.')
+                d = d.replace('{{ADD_ACTION}}', 'Take another action.')
+
+                if 'prefix' in spell_desc_keys[key]:
+                    prefix = spell_desc_keys[key]['prefix']
+                    desc.append(f"{prefix}: {d}")
+                else:
+                    desc.append(d)
         return desc
 
     def record_spell_info(self, name, pattern, attrs, desc):
@@ -221,7 +232,7 @@ class WovenSpellCards():
         if pattern_id == 'blank':
             self.blank_count += 1
         else:
-            pattern_key = '{0:s}:{1:s}'.format(pattern_id, attrs['element'])
+            pattern_key = f"{pattern_id}:{attrs['element']}"
             if pattern_key in self.pattern2id:
                 dup_id = self.pattern2id[pattern_key]
                 raise Exception("{0:s}: Pattern {1:s} already assigned to {2:d} ({3:s})"
@@ -336,7 +347,7 @@ class WovenSpellCards():
         g_masters.set_style("display:none")
         SVG.add_node(svg_group, g_masters)
         for e in [
-                'op-tapestry', 'op-eye', 'op-mmove', 'op-thread', 'op-tmove', 'op-action',
+                'op-tapestry', 'op-eye', 'op-emove2', 'op-mmove', 'op-thread', 'op-tmove', 'op-action',
                 'element-air', 'element-earth', 'element-fire', 'element-water',
                 ]:
             svg.add_loaded_element(g_masters, e)
@@ -542,7 +553,7 @@ class WovenSpellCards():
             summary.write('\n')
 
         print('Ops')
-        for op in ['tapestry', 'eye', 'mmove', 'thread', 'tmove', 'action']:
+        for op in ['tapestry', 'eye', 'emove', 'mmove', 'thread', 'tmove', 'action']:
             count = 0
             for k,v in self.ops.items():
                 if k.find(op) != -1:

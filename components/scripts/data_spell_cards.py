@@ -207,24 +207,24 @@ spell_card_data = [
     # Representative spells for each element.
 
     ["Haste",
-        {'element': 'air', 'pattern': 'E2-2', 'op': 'mmove-thread', 'vp': 0,
+        {'element': 'air', 'pattern': 'E2-2', 'op': 'tmove+action', 'vp': 0,
          'category': 'starter,mage-move',
         }, {
-            'cast': "Move 4 along the same elevation.",
+            'cast': "Move 3 along the same elevation.",
         } ],
 
     ["Anchor",
         {'element': 'earth', 'pattern': 'E2-2', 'op': 'eye+action', 'vp': 0,
          'category': 'starter,eye-defend',
         }, {
-            'cast': "Anchor one of your Eyes. Push away all eyes within 1 space. No eyes may move within 1 space of an Anchor.",
+            'cast': ["Anchor one of your Eyes. Remove all other Eyes from that space and push away all eyes within 1 space.", "No Eyes may move within 1 space of this Eye while it is Anchored."],
         } ],
 
     ["Dispel",
         {'element': 'fire', 'pattern': 'E2-28', 'op': 'tapestry-thread', 'vp': 0,
          'category': 'starter,eye-other-attack',
         }, {
-            'cast': "Consume one of your Eyes to remove all Eyes at that location --OR-- remove all eyes (anchored or not) from all locations adjacent to you.",
+            'cast': ["Consume one of your Eyes to remove all Eyes in that space.", "OR", "Remove all eyes (anchored or not) from your location and all spaces adjacent to you."],
         } ],
 
     ["Extend",
@@ -239,7 +239,7 @@ spell_card_data = [
         {'element': 'air', 'pattern': 'E2-53', 'op': 'eye-thread', 'vp': 0,
          'category': 'starter,eye-move',
         }, {
-            'cast': "Move one of your Eyes 3 spaces, pushing any existing Eyes into an adjacent space.",
+            'cast': "Move one of your Eyes 3 spaces. When moving this Eye into a space, push any Eyes already in that space into an adjacent space.",
         } ],
 
     ["Shield",
@@ -259,7 +259,7 @@ spell_card_data = [
         } ],
 
     ["Duplicate",
-        {'element': 'water', 'pattern': 'E2-27', 'op': 'tmove+action', 'vp': 0,
+        {'element': 'water', 'pattern': 'E2-27', 'op': 'mmove-thread', 'vp': 0,
          'category': 'starter,eye-create',
         }, {
             'cast': "In a location where you have at least one Eye, split each of your Eyes into two separate Eyes.",
@@ -288,7 +288,7 @@ spell_card_data = [
         {'element': 'air', 'pattern': 'E2-7', 'op': 'eye-thread', 'vp': 1,
          'category': 'terrain,mage-move',
         }, {
-            'cast': "If at mid or high-elevation, move 6 spaces over same or lower elevation. You must end at the same elevation as your start.",
+            'cast': "Move 5 spaces over same or lower elevation, passing over rivers and water. You must end at the same elevation as your start.",
         } ],
 
     ["Endurance",
