@@ -1467,8 +1467,7 @@ class VoronoiHexTile():
                     out_pdf = os.path.join(outdir_pdf, '%s.pdf' % name)
                     Inkscape.export_pdf(
                         os.path.abspath(out_svg),
-                        os.path.abspath(out_pdf),
-                        300)
+                        os.path.abspath(out_pdf))
 
                 out_png = os.path.join(outdir_png, '%s.png' % name)
             else:

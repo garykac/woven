@@ -59,8 +59,7 @@ class SVGCardGen(object):
         print("Exporting {0:s}.png".format(name))
         Inkscape.export_png(
             os.path.abspath(os.path.join(self.svg_out_dir, '{0:s}.svg'.format(name))),
-            os.path.abspath(os.path.join(self.png_out_dir, '{0:s}.png'.format(name))),
-            300)
+            os.path.abspath(os.path.join(self.png_out_dir, '{0:s}.png'.format(name))))
 
     #
     # PUBLIC METHODS

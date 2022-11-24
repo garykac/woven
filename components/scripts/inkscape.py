@@ -14,25 +14,23 @@ class Inkscape(object):
     # |png_path| - Full path to PNG output file
     # |dpi| - DPI for PNG output file
     @staticmethod
-    def export_png(svg_path, png_path, dpi):
+    def export_png(svg_path, png_path, *, id=None, dpi=300):
         cmd = [INKSCAPE_APP]
-        if False:   # deprecated arguments
-            cmd.append("--file={0:s}".format(svg_path))
-            cmd.append("--export-png={0:s}".format(png_path))
-            cmd.append("--without-gui")
-        else:
-            cmd.append("--export-filename={0:s}".format(png_path))
-        cmd.append("--export-dpi={0:d}".format(dpi))
+        cmd.append(f"--export-filename={png_path}")
+        cmd.append(f"--export-dpi={dpi}")
         cmd.append("--export-text-to-path")
-        cmd.append("--export-area-page")
+        if id:
+            cmd.append(f"--export-id={id}")
+        else:
+            cmd.append("--export-area-page")
         cmd.append(svg_path)
         subprocess.run(cmd, stdout = subprocess.DEVNULL)
 
     @staticmethod
-    def export_pdf(svg_path, pdf_path, dpi):
+    def export_pdf(svg_path, pdf_path, *, dpi=300):
         cmd = [INKSCAPE_APP]
-        cmd.append("--export-filename={0:s}".format(pdf_path))
-        cmd.append("--export-dpi={0:d}".format(dpi))
+        cmd.append(f"--export-filename={pdf_path}")
+        cmd.append(f"--export-dpi={dpi}")
         cmd.append("--export-text-to-path")
         cmd.append("--export-area-page")
         cmd.append(svg_path)

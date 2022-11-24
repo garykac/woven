@@ -9,10 +9,7 @@ import subprocess
 import sys
 
 from data_tapestry_cards import tapestry_card_data
-
-inkscape_app = 'inkscape'
-if platform.system() != 'Linux':
-        inkscape_app = "/Applications/Inkscape.app/Contents/Resources/bin/inkscape"
+from inkscape import Inkscape
 
 def error(msg):
     print('Error: %s' % (msg))
@@ -167,16 +164,9 @@ class Parser():
                 os.makedirs(png_dir)
             png_path = os.path.join(png_dir, png_name)
 
-            subprocess.call([
-                inkscape_app,
-                "--file=%s" % os.path.abspath(svg_relpath),
-                "--export-png=%s" % os.path.abspath(png_path),
-                "--export-dpi=300",
-                "--export-text-to-path",
-                #"--export-area-page",
-                "--export-id=%s" % 'cut-line',
-                "--without-gui"
-                ])
+            svg_abs_path = os.path.abspath(svg_relpath)
+            png_abs_path = os.path.abspath(png_path)
+            Inkscape.export_png(svg_abs_path, png_abs_path, id='cut-line')
 
 def process_card(basename, pattern, elements, gen_png):
     parser = Parser('template/tapestry-template.svg', basename, pattern, elements, gen_png)
