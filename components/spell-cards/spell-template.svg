@@ -144,8 +144,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="4.4014036"
-     inkscape:cx="115.75853"
-     inkscape:cy="273.2083"
+     inkscape:cx="54.18726"
+     inkscape:cy="277.97951"
      inkscape:document-units="mm"
      inkscape:current-layer="layer2"
      showgrid="false"
@@ -2279,7 +2279,7 @@
        inkscape:groupmode="layer"
        id="layer5"
        inkscape:label="Op MMove / Thread"
-       style="display:none">
+       style="display:inline">
       <g
          style="display:inline"
          id="op-mmove-thread"
@@ -2709,11 +2709,12 @@
     </g>
     <g
        style="display:none"
-       inkscape:label="Op Eye / EMove"
+       inkscape:label="Op Eye / EMove2"
        id="g1036"
        inkscape:groupmode="layer">
       <g
-         id="op-eye-emove">
+         id="op-eye-emove2"
+         transform="translate(-2.6962893)">
         <use
            height="100%"
            width="100%"
@@ -2733,7 +2734,7 @@
            width="100%"
            transform="translate(13.007417)"
            id="use1032"
-           xlink:href="#op-emove"
+           xlink:href="#op-emove2"
            y="0"
            x="0" />
       </g>
@@ -2898,11 +2899,12 @@
     </g>
     <g
        style="display:none"
-       inkscape:label="Op Tapestry / EMove"
+       inkscape:label="Op Tapestry / EMove2"
        id="g1026"
        inkscape:groupmode="layer">
       <g
-         id="op-tapestry-emove">
+         id="op-tapestry-emove2"
+         transform="translate(-2.6962891)">
         <path
            style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#898989;stroke-width:0.352778;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
            d="m 31.439274,79.935744 -1.601519,6.096529"
@@ -2922,7 +2924,7 @@
            width="100%"
            transform="translate(10.816873)"
            id="use1022"
-           xlink:href="#op-emove"
+           xlink:href="#op-emove2"
            y="0"
            x="0" />
       </g>
