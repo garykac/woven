@@ -1,6 +1,6 @@
 # List of Spell Fragments
 
-Generated on 2022/11/23 @ 07:19
+Generated on 2022/11/24 @ 07:02
 
 ## By Category
 
@@ -179,7 +179,7 @@ Element: Earth
 
 'Category: Starter, Eye Defend
 
-Anchor one of your Eyes. Remove all other Eyes from that space and push away all eyes within 1 space.
+Anchor one of your Eyes. Remove all other Eyes from that space and then push away all Eyes in neighboring spaces.
 
 No Eyes may move within 1 space of this Eye while it is Anchored.
 
@@ -243,11 +243,11 @@ Element: Fire
 
 'Category: Starter, Eye Other Attack
 
-Consume one of your Eyes to remove all Eyes it that space.
+Consume one of your Eyes to remove all Eyes in that space.
 
 OR
 
-Remove all eyes (anchored or not) from your location and all spaces adjacent to you.
+Remove all Eyes (anchored or not) from your location and all spaces adjacent to you.
 
 ### Disperse
 ```
@@ -321,7 +321,7 @@ Element: Water
 
 'Category: Starter, Eye Move
 
-Move one of your Eyes 3 spaces.
+Move one of your Eyes 5 spaces.
 
 ### Eyedrop
 ```
