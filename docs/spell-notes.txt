@@ -139,6 +139,12 @@ Spells:
 Draw a random Confusion card after a mental attack.
 Each Confusion card has a Mana cost (from 2-4).
 To Trash a Confusion card (when you reset), you need to pay the mana cost into your Tapestry (anywhere, but it doesn't cast a spell)
+Temporarily forget a spell:
+	Select one at random
+	Place facedown in front of you
+	Continue playing
+	How do you get this spell back?
+	At end of each turn, you may place a mana on the spell. When you place the 4th, you may add it to your discard.
 
 Mana:
 Respawn after physical death with 1 fewer Mana token.

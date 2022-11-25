@@ -1,0 +1,161 @@
+Woven playtest
+24 Nov 2022
+
+CharlieO, AdrianK, SophiaB
+
+# Setup
+
+3-player arena with hex tiles arranged in Y configuration
+
+Capture the Frog.
+
+Each player has 8 starter spells + 2 random
+
+The toad can only be moved using Eyes, and they move at 1/2 speed (round down) when moving the toad.
+You cannot move your own toad. It can only be moved toward the tower.
+
+If you move to the center tower, you can get new spells. Draw 2 choose 1.
+
+# Rules being tested
+
+Setup:
+    Shuffle initial deck
+    Draw 5 cards into hand
+
+PlayGame:
+    Repeat until goal achieved:
+        PlayerTurn
+        NextPlayerClockwise
+
+PlayerTurn:
+    TakeAction
+    Optionally, Reset
+    ! If you have 0 cards in hand, you must Reset
+
+TakeAction:
+    Play a card:
+        * Add it to the Available area to prepare to cast
+        * Discard it to gain its alternate Effect (at bottom of card)
+    Optionally, add mana to Tapestry to cast one or more Available spells and trigger their effects
+
+Reset:
+    Discard all spells from the Available area (unless they have mana charges on them)
+    Optionally, choose card(s) from hand to Forget (remove from game)
+    Discard some or all of your Hand
+    Draw Hand up to 5 cards 
+
+# Notes
+
+Looking at spell cards before creating Tapestry.
+	Too much info all at once trying to match all spells.
+	Take a long time to arrange Tapestry at start
+
+Players wanted to Reset each turn to draw new cards
+	Maybe should only save 1 card when resetting?
+
+The Bridge across the river is closer to one side so player felt it was easier to move
+toward their location.
+
+Spread spell moves each Eye 3 spaces
+
+Air Walk - don't need to move entire distance. "up to" n spaces
+
+Do you have to move the toad when you move your Eye away from that spot?
+	eg: 2 eyes on same spot with toad. want to move one away
+	not required.
+
+Need to mark 1 side of each mana to identify when it's being used as a anchor
+
+Can players create an Anchor by the tower to block toads from arriving?
+
+Duplicate. Anchors are no longer Eyes and cannot be duplicated.
+
+The Draw Tapestry ability on the Shield card. If you have a Shield in force, then you
+have a reduced ability to do the Draw Tapestry action.
+
+Not much incentive to move.
+Consider forcing players to move to center tower before they can move toads.
+
+# Teaching notes
+
+Call out difference between '/' = OR and '.' = AND during teach
+
+Rules:
+	Play a card for (a) spell, or (b) mundane ability
+	If for (b) the discard immediately
+
+When visiting the central tower for new spells
+New cards are drawn into discard pile
+
+# Comments
+
+C:
+
+Shield feels weak
+
+In this game, it's better to move the toad
+
+Move feels slow. the char is not really vulnerable.
+
+Air Walk would be a good basic spell. Or another movement spell. Needs more mage movement.
+
+Liked spell casting. Tricky to learn, but good when figured out.
+
+The Tapestry felt a bit like scrabble.
+	Set up words on board with high-value spaces, making combos
+
+Shield (starter) vs Reflect (extra spell)
+	Reflect is strictly better than Shield.
+	Shield mostly useful for it's mundane abilities
+
+Fire & Water better than Air & Earth
+
+Fun to set up spells. to plan for certain spells
+
+Strategies for which mana to take off the tapestry
+
+A:
+
+Had cards that couldn't be played. Sorted cards into 2 categories: can use vs need to discard
+Could only use certain spells because of how the Tapestry was built
+
+Would you do better next game? Hard to master
+
+C:
+
+Reset to get cards / get mana
+
+S:
+
+Reset a lot to try to get the same card again
+
+Set up Tapestry so that only 1 mana was needed to cast 2 different spells when needed
+
+Liked moving Eyes. Liked duplicate
+
+A:
+
+Time seemed to flow differently for different parts of game.  Eyes move.
+
+Felt like he had to keep resetting.
+
+C:
+
+Perhaps 2 copies of each spell.
+
+Actions depend on lot on timing (when you get cards), so multiple copies might help.
+
+Favorite part
+
+* S: duplicate, spread, guard
+* C: exciting dramatic moments during play - avoiding attack, big moves
+* A: move around map, duplicate eye, push an eye around
+
+C:
+
+Notes on teaching:
+
+Anchors - be careful with terminology. Anchors are separate from Eyes. Not "anchored eye"
+
+Difference between discarding and playing a card and immediately discarding.
+
