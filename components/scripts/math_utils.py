@@ -27,7 +27,7 @@ def lerp(a0, a1, t):
 def lerp_pt(v0, v1, t):
     x0, y0 = v0
     x1, y1 = v1
-    return [x0 + (x1-x0)*t, y0 + (y1-y0)*t]
+    return [lerp(x0, x1, t), lerp(y0, y1, t)]
 
 # Calc offset to add to v0 to linear interpolate from v0 to v1 by t.
 def lerp_pt_delta(v0, v1, t):
@@ -36,6 +36,7 @@ def lerp_pt_delta(v0, v1, t):
     return [(x1-x0)*t, (y1-y0)*t]
 
 # Linear interpolation (lerp) with a perpendicular (perp) offset.
+# AKA: lerpendicular, lerpinperp
 def lerperp(v0, v1, t, perp_t):
     x0, y0 = v0
     x1, y1 = v1
@@ -48,6 +49,11 @@ def lerperp(v0, v1, t, perp_t):
     y = lerp_y + dx * perp_t
     #print("lerperp:", v0, v1, t, perp_t, "->", x,y)
     return [x, y]
+
+# Calc point which is distance |d| along the segment from |v0| to |v1|.
+def pt_along_line(v0, v1, d):
+    t = d / dist(v0, v1)
+    return lerp_pt(v0, v1, t)
 
 def near(v0, v1, dist):
     x0, y0 = v0

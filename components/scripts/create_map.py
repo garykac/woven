@@ -13,6 +13,7 @@ import sys
 from inkscape import Inkscape
 from math_utils import (feq, fge, fle, scale, clamp,
                         lerp, lerp_pt, lerp_pt_delta, lerperp,
+                        pt_along_line,
                         near, dist, dist_pt_line, line_intersection_t,
                         ptInHex)
 from object3d import Object3d
@@ -1338,11 +1339,18 @@ class VoronoiHexTile():
         stroke = Style("none", "#000000", STROKE_WIDTH)
         black_fill = Style(fill="#000000")
         
-        # Draw clipped regions.
+        # Draw clipped and and rounded regions.
         layer_region_clip = self.svg.add_inkscape_layer(
             'region-clip', "Region Clipped", layer)
-        g = SVG.group('clip')
-        SVG.add_node(layer_region_clip, g)
+        gClip = SVG.group('clip')
+        SVG.add_node(layer_region_clip, gClip)
+        layer_region_clip.hide()
+
+        layer_region_rounded = self.svg.add_inkscape_layer(
+            'region-rounded', "Region Rounded", layer)
+        gRounded = SVG.group('rounded')
+        SVG.add_node(layer_region_rounded, gRounded)
+
         for sid in range(0, self.numActiveSeeds):
             vids = self.sid2region[sid]
             id = "clipregion-{0:d}".format(sid)
@@ -1350,7 +1358,10 @@ class VoronoiHexTile():
             terrain_type = self.seed2terrain[sid]
             color = self.getTerrainStyle(terrain_type)
             self.plotRegion(vids, color)
-            self.drawRegion(id, vids, color, g)
+            self.drawRegion(id, vids, color, gClip)
+
+            id = "roundedregion-{0:d}".format(sid)
+            self.drawRoundedRegion(id, vids, color, gRounded)
 
         # Plot regions and seeds.
         layer_region = self.svg.add_inkscape_layer('region', "Region", layer)
@@ -1423,7 +1434,7 @@ class VoronoiHexTile():
                 self.plotBadVertex(self.seeds[s1], layer_too_close)
             
         # Plot inscribed circles for each region.
-        if True:  #ENABLE_SMALL_REGION_CHECK:
+        if True:
             layer_circles = self.svg.add_inkscape_layer(
                 'circles', "Inscribed Circles", layer)
             layer_circles.hide()
@@ -1690,6 +1701,38 @@ class VoronoiHexTile():
         
         p = Path() if id == None else Path(id)
         p.addPoints(vertices)
+        p.end()
+        p.set_style(Style(color, STROKE_COLOR, STROKE_WIDTH))
+        SVG.add_node(layer, p)
+
+    # Draw voronoi region with rounded points in the SVG file, given a list of vertex ids.
+    def drawRoundedRegion(self, id, vids, color, layer):
+        if len(vids) == 0:
+            return
+        num_verts = len(vids)
+        
+        p = Path() if id == None else Path(id)
+        for i in range(0, num_verts):
+            vid = vids[i]
+            v = self.vertices[vid]
+
+            # We don't want to round the vertices along the edge of the tile. We can
+            # identify these edge vertices easily because they are the ones that we
+            # added to the end of the vertex list during clipping.
+            if vid >= self.firstNewVertex:
+                p.addPoint(v)
+            else:
+                # Add a small curve for this vertex.
+                prev = (i + num_verts - 1) % num_verts
+                next = (i + num_verts + 1) % num_verts
+
+                prev_pt = pt_along_line(v, self.vertices[vids[prev]], 1.0)
+                p.addPoint(prev_pt)
+
+                curve0_pt = pt_along_line(v, self.vertices[vids[prev]], 0.3)
+                curve1_pt = pt_along_line(v, self.vertices[vids[next]], 0.3)
+                next_pt = pt_along_line(v, self.vertices[vids[next]], 1.0)
+                p.addCurvePoint(curve0_pt, curve1_pt, next_pt)
         p.end()
         p.set_style(Style(color, STROKE_COLOR, STROKE_WIDTH))
         SVG.add_node(layer, p)
