@@ -14,7 +14,7 @@ class Node(object):
     def __init__(self, type, id=None):
         self.element = Element(type)
         if id == None:
-            id = 'node{0:d}'.format(SVG.next_id())
+            id = f'node{SVG.next_id()}'
         self.id = id
 
         self.element.set('id', id)
@@ -82,29 +82,23 @@ class Style(object):
 class Path(Node):
     def __init__(self, id=None):
         if id == None:
-            id = 'path{0}'.format(SVG.next_id())
+            id = f'path{SVG.next_id()}'
         super().__init__('path', id)
         self.path = []
         self.currPosition = [0, 0]
     
     def addXY(self, x, y):
         if len(self.path) == 0:
-            self.path.append([x, y])
+            self.path.append(['m', x, y])
         else:
             dx = x - self.currPosition[0]
             dy = y - self.currPosition[1]
-            self.path.append([dx, dy])
+            self.path.append(['m', dx, dy])
         self.currPosition = [x, y]
     
     def addPoint(self, pt):
         x, y = pt
-        if len(self.path) == 0:
-            self.path.append([x, y])
-        else:
-            dx = x - self.currPosition[0]
-            dy = y - self.currPosition[1]
-            self.path.append([dx, dy])
-        self.currPosition = [x, y]
+        self.addXY(x, y)
 
     def addPoints(self, pts):
         for pt in pts:
@@ -113,7 +107,9 @@ class Path(Node):
     def end(self):
         path = "m"
         for pt in self.path:
-            path += " {0:.6g} {1:.6g}".format(pt[0], pt[1])
+            type = pt[0]
+            (x, y) = pt[1:]
+            path += f" {x:.6g} {y:.6g}"
         path += " z"
         self.set('d', path)
 
@@ -124,7 +120,7 @@ class Path(Node):
 class Text(Node):
     def __init__(self, id, x, y, text):
         if id == None:
-            id = 'text{0}'.format(SVG.next_id())
+            id = f'text{SVG.next_id()}'
         super().__init__('text', id)
         self.set('x', str(x))
         self.set('y', str(y))
@@ -167,13 +163,13 @@ class SVG(object):
         svg.set('xmlns:xlink', "http://www.w3.org/1999/xlink")
 
         # Width and height of drawing in absolute units (mm).
-        svg.set('width', "{0}mm".format(self.width))
-        svg.set('height', "{0}mm".format(self.height))
+        svg.set('width', f"{self.width}mm")
+        svg.set('height', f"{self.height}mm")
 
         # The viewbox defines the "user units" for the file.
         # Set the viewbox to be the same as the width,height in mm so that
         # each user unit = 1mm.
-        svg.set('viewBox', "0 0 {0} {1}".format(self.width, self.height))
+        svg.set('viewBox', f"0 0 {self.width} {self.height}")
 
         self.defs = SubElement(svg, 'defs')
 
@@ -245,7 +241,7 @@ class SVG(object):
                 text = [text]
             SVG.__set_flow_text(elem, text)
         else:
-            raise Exception("Unable to set_text for {0} node".format(tag))
+            raise Exception(f"Unable to set_text for {tag} node")
 
     # Set the text within an SVG text span:
     #   <text>
@@ -293,7 +289,7 @@ class SVG(object):
     @staticmethod
     def clone(id, xlink, x, y):
         if id == 0:
-            id = 'use{0}'.format(SVG.next_id())
+            id = f'use{SVG.next_id()}'
         n = Node('use', id)
         n.set('xlink:href', str(xlink))
         n.set('width', "100%")
@@ -305,7 +301,7 @@ class SVG(object):
     @staticmethod
     def rect(id, x, y, width, height):
         if id == 0:
-            id = 'rect{0}'.format(SVG.next_id())
+            id = f'rect{SVG.next_id()}'
         n = Node('rect', id)
         n.set('x', str(x))
         n.set('y', str(y))
@@ -325,7 +321,7 @@ class SVG(object):
     @staticmethod
     def circle(id, cx, cy, r):
         if id == 0:
-            id = 'circle{0}'.format(SVG.next_id())
+            id = f'circle{SVG.next_id()}'
         n = Node('circle', id)
         n.set('cx', str(cx))
         n.set('cy', str(cy))
