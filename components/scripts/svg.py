@@ -89,11 +89,13 @@ class Path(Node):
     
     def addXY(self, x, y):
         if len(self.path) == 0:
+            # First point must be "move" to location.
             self.path.append(['m', x, y])
         else:
+            # Subsequent points draw lines from the previous point.
             dx = x - self.currPosition[0]
             dy = y - self.currPosition[1]
-            self.path.append(['m', dx, dy])
+            self.path.append(['l', dx, dy])
         self.currPosition = [x, y]
     
     def addPoint(self, pt):
@@ -103,13 +105,41 @@ class Path(Node):
     def addPoints(self, pts):
         for pt in pts:
             self.addPoint(pt)
-            
+    
+    def addCurvePoint(self, c0, c1, pt):
+        if len(self.path) == 0:
+            raise Exception(f"Must add fixed point before adding curve points")
+        (currx, curry) = self.currPosition
+        (x, y) = pt
+        c0dx = c0[0] - currx
+        c0dy = c0[1] - curry
+        c1dx = c1[0] - currx
+        c1dy = c1[1] - curry
+        dx = x - currx
+        dy = y - curry
+        self.path.append(['c', c0dx, c0dy, c1dx, c1dy, dx, dy])
+        self.currPosition = [x, y]
+
     def end(self):
         path = "m"
+        current_type = "l"
+        first_point = True
         for pt in self.path:
             type = pt[0]
-            (x, y) = pt[1:]
-            path += f" {x:.6g} {y:.6g}"
+            if (not first_point) and type != current_type:
+                path += f" {type}"
+                current_type = type
+            first_point = False
+            
+            if type in ['l', 'm']:
+                (x, y) = pt[1:]
+                path += f" {x:.6g} {y:.6g}"
+            elif type == "c":
+                (c0dx, c0dy, c1dx, c1dy, dx, dy) = pt[1:]
+                path += f" {c0dx:.6g} {c0dy:.6g} {c1dx:.6g} {c1dy:.6g} {dx:.6g} {dy:.6g}"
+            else:
+                raise Exception(f"Unsupport path type: {type}")
+            
         path += " z"
         self.set('d', path)
 
