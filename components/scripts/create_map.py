@@ -143,6 +143,15 @@ class VoronoiHexTileLoader():
 
     def processTileData(self, file):
         header = True
+        
+        # If |pattern| and |seed| are set on the command line, then only generate that
+        # map tile from the data file.
+        select_pattern = None
+        select_seed = None
+        if self.options['seed']:
+            select_pattern = self.options['pattern']
+            select_seed = self.options['seed']
+
         with open(file) as f:
             center = None
             terrain_data = None
@@ -158,6 +167,11 @@ class VoronoiHexTileLoader():
                 data = line.rstrip().split(',')
                 pattern = data.pop(0)
                 seed = int(data.pop(0))
+                
+                # Skip over non-matching pattern/seed if we're only processing one.
+                if select_seed and (pattern != select_pattern or seed != select_seed):
+                    continue
+                
                 if last_pattern and last_seed and (pattern != last_pattern or seed != last_seed):
                     # Write out previous tile.
                     self.options['pattern'] = last_pattern
@@ -179,8 +193,8 @@ class VoronoiHexTileLoader():
                 last_seed = seed
 
             # Write out final tile.
-            self.options['pattern'] = pattern
-            self.options['seed'] = seed
+            self.options['pattern'] = last_pattern
+            self.options['seed'] = last_seed
             self.options['center'] = center
             self.processTile(terrain_data, river_data)
 
