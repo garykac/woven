@@ -1338,7 +1338,9 @@ class VoronoiHexTile():
 
         stroke = Style("none", "#000000", STROKE_WIDTH)
         black_fill = Style(fill="#000000")
-        
+
+        self.drawHexTileBorder("background", "Tile Background", black_fill)
+
         # Draw clipped and and rounded regions.
         layer_region_clip = self.svg.add_inkscape_layer(
             'region-clip', "Region Clipped", layer)
@@ -1459,7 +1461,7 @@ class VoronoiHexTile():
 
         self.drawRiverSegments()
 
-        self.drawHexTileBorder(stroke)
+        self.drawHexTileBorder("border", "Border", stroke)
 
         if self.options['write_output']:
             outdir_png = self.getPngOutputDir()
@@ -1737,9 +1739,8 @@ class VoronoiHexTile():
         p.set_style(Style(color, STROKE_COLOR, STROKE_WIDTH))
         SVG.add_node(layer, p)
 
-    def drawHexTileBorder(self, style):
-        layer_border = self.svg.add_inkscape_layer('border', "Border",
-                                                   self.layer)
+    def drawHexTileBorder(self, id, layer_name, style):
+        layer_border = self.svg.add_inkscape_layer(id, layer_name, self.layer)
         p = Path()
         p.addPoints(self.vHex)
         p.end()
