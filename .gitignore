@@ -6,6 +6,9 @@
 # Temp data files
 _tmp/
 
+# Map pdfs (since the binary file changes whenever they are regenerated)
+components/maps/map-pdf/*
+
 # Archive
 archive/maps/v1-hex/map-hex-22x19.jpg
 archive/maps/v1-hex/map-hex-22x19.png
