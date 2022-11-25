@@ -29,7 +29,6 @@ ENABLE_SMALL_REGION_CHECK = False
 NUM_SIDES = 6
 
 EDGE_TYPES = ['1s', '2f', '2s', '3f', '3s']
-EDGE_TYPES_xxx = ['2s', '3f', '3s', '4f', '5s']
 
 # EdgeRegionInfo:
 # Each dict entry contains an array of region heights, one per region on this
@@ -45,21 +44,11 @@ EDGE_REGION_INFO = {
     '3f': ['m', 'm', 'h', 'm', 'h'],           # m - h, h - m
     '3s': ['h', 'h', 'm', 'h', 'h'],           # h - h
 }
-EDGE_REGION_INFO_xxx = {
-    '2s': ['l', 'l', 'l', 'l'],                # l - l
-    '3f': ['l', 'l', 'l', 'm', 'm'],           # l - m, m - h
-    '3s': ['m', 'm', 'm', 'm', 'm'],           # m - m
-    '4f': ['m', 'm', 'h', 'm', 'h', 'h'],      # m - h, h - m
-    '5s': ['h', 'h', 'h', 'm', 'h', 'h', 'h'], # h - h
-}
 
 # Mark where rivers are located on edges using an '*' to note the regions that
 # the river flows between.
 EDGE_RIVER_INFO = {
     '2f': ['l', 'l', '*', 'l', 'm'],           # l - m, m - h
-}
-EDGE_RIVER_INFO_xxx = {
-    '3f': ['l', 'l', '*', 'l', 'm', 'm'],      # l - m, m - h
 }
 
 # Edge seed info.
@@ -72,13 +61,6 @@ EDGE_SEED_INFO = {
     '2s': [[1/3, 0.04],   [2/3, -0.04]],
     '3f': [[0.26, -0.04], [0.55, 0],      [0.77, 0.03]],
     '3s': [[0.28, -0.05], [0.50, 0],      [0.72, 0.05]],
-}
-EDGE_SEED_INFO_xxx = {
-    '2s': [[1/3, 0.03],   [2/3, -0.03]],
-    '3f': [[0.30, 0.02],  [0.55, 0],    [0.75, -0.03]],
-    '3s': [[0.25, 0.04],  [0.50, 0],    [0.75, -0.04]],
-    '4f': [[0.24, -0.04], [0.42, 0.02], [0.58, -0.03],  [0.77, 0.03]],
-    '5s': [[0.20, -0.05], [0.31, 0.05], [0.50, 0], [0.69, -0.05], [0.80, 0.05]],
 }
 
 # Minimum seed distance based on terrain type.
