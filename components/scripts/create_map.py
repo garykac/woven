@@ -169,7 +169,7 @@ class VoronoiHexTileLoader():
                 if header:
                     header = False
                     continue
-                # Pattern, Seed, RowType
+                # Id, RowType
                 data = line.rstrip().split(',')
                 id = int(data.pop(0))
                 rowType = data.pop(0)
@@ -180,6 +180,7 @@ class VoronoiHexTileLoader():
                 
                 if last_id and id != last_id:
                     # Write out previous tile.
+                    self.options['id'] = last_id
                     self.options['pattern'] = pattern
                     self.options['seed'] = seed
                     self.options['center'] = center
@@ -224,6 +225,7 @@ class VoronoiHexTileLoader():
                 last_id = id
 
             # Write out final tile.
+            self.options['id'] = last_id
             self.options['pattern'] = pattern
             self.options['seed'] = seed
             self.options['center'] = center
@@ -1361,6 +1363,7 @@ class VoronoiHexTile():
         svg_ids = []
         for obj in ['bridge', 'star', 'tree', 'tower']:
             svg_ids.append(f"obj-{obj}")
+        svg_ids.append("tile-id")
         self.svg.load_ids(MAP_OBJ_TEMPLATE, svg_ids)
 
         layer = self.svg.add_inkscape_layer('layer', "Layer")
@@ -1626,8 +1629,12 @@ class VoronoiHexTile():
         self.layer_text.set_transform("scale(1,-1)")
 
         if self.options['id']:
+            id = self.options['id']
             self.numLines -= 1
-            self.addText(f"id: {self.options['id']}")
+            self.addText(f"id: {id}")
+            id_text = self.svg.add_loaded_element(self.layer_text, 'tile-id')
+            id_text.set('transform', f"translate(0 {-self.size+8})")
+            SVG.set_text(id_text, f"{id:03d}")
 
         self.addText(f"size: {self.size:g}")
         if self.options['seed']:

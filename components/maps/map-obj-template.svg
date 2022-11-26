@@ -25,21 +25,37 @@
      inkscape:document-units="mm"
      showgrid="false"
      inkscape:zoom="4.8148941"
-     inkscape:cx="-20.976578"
-     inkscape:cy="8.2037111"
+     inkscape:cx="10.903667"
+     inkscape:cy="11.734422"
      inkscape:window-width="1006"
      inkscape:window-height="723"
      inkscape:window-x="573"
-     inkscape:window-y="180"
+     inkscape:window-y="152"
      inkscape:window-maximized="0"
-     inkscape:current-layer="layer8" />
+     inkscape:current-layer="layer9" />
   <defs
      id="defs2" />
   <g
      inkscape:groupmode="layer"
+     id="layer9"
+     inkscape:label="Tile Id">
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:1.25;font-family:sans-serif;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="-1.7974526e-07"
+       y="0"
+       id="tile-id"><tspan
+         sodipodi:role="line"
+         id="tspan439"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.23333px;font-family:'Arial Black';-inkscape-font-specification:'Arial Black,  Bold';text-align:center;text-anchor:middle;fill:#808080;fill-opacity:1;stroke-width:0.264583"
+         x="-1.4621764e-07"
+         y="0">403</tspan></text>
+  </g>
+  <g
+     inkscape:groupmode="layer"
      id="layer8"
      inkscape:label="Pennant"
-     style="display:inline">
+     style="display:none">
     <g
        id="obj-pennant">
       <path
