@@ -28,6 +28,12 @@ class Node(object):
     def set_transform(self, t):
         self.element.set('transform', t)
 
+    def set_scale_transform(self, x, y):
+        self.element.set('transform', f"scale({x},{y})")
+
+    def set_translate_transform(self, x, y):
+        self.element.set('transform', f"translate({x} {y})")
+
 class Group(Node):
     def __init__(self, id=None):
         super().__init__('g', id)

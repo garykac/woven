@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import os
 import random  # Only used to seed numpy random
+import re
 import scipy.spatial
 import subprocess
 import sys
@@ -24,6 +25,8 @@ GENERATE_PLOT = True   # As PNG file.
 
 MAP_OUTPUT_DIR = "../maps"
 ANIM_SUBDIR = "anim"    # Subdirectory of png output dir
+
+MAP_OBJ_TEMPLATE = os.path.join(MAP_OUTPUT_DIR, 'map-obj-template.svg')
 
 ENABLE_SMALL_REGION_CHECK = False
 
@@ -119,12 +122,13 @@ class VoronoiHexTileLoader():
 
         self.processTile(None, None)
 
-    def processTile(self, terrainData, riverData):
+    def processTile(self, terrainData, riverData, overlayData):
         options = self.options.copy()
         v = VoronoiHexTile(options)
         v.init()
         v.setTerrainData(terrainData)
         v.setRiverData(riverData)
+        v.setOverlayData(overlayData)
 
         if options['anim']:
             v.cleanupAnimation()
@@ -157,6 +161,7 @@ class VoronoiHexTileLoader():
             center = None
             terrain_data = None
             river_data = None
+            overlay_data = None
 
             last_pattern = None
             last_seed = None
@@ -178,18 +183,39 @@ class VoronoiHexTileLoader():
                     self.options['pattern'] = last_pattern
                     self.options['seed'] = last_seed
                     self.options['center'] = center
-                    self.processTile(terrain_data, river_data)
+                    self.processTile(terrain_data, river_data, overlay_data)
                     center = None
                     terrain_data = None
                     river_data = None
+                    overlay_data = None
                 rowType = data.pop(0)
                 if rowType == "TERRAIN":
                     center = data.pop(0)
                     if center == "AVG":
                         center = None
+                    # |terrain_data| is an array of 'l', 'm', 'h'.
                     terrain_data = data
                 elif rowType == "RIVER":
+                    # |river_data| is an array of river segments identified as
+                    # "<c1>-<c2>" pairs where <c1> and <c2> identify the 2 cells on
+                    # either side of the river segment.
                     river_data = data
+                elif rowType == "BRIDGE":
+                    if not overlay_data:
+                        overlay_data = {}
+                    # Bridge |overlay_data| is an array of edges that should have a bridge.
+                    # Each bridge is a set of "<c1>-<c2>" pairs with an optional
+                    # "(<x> <y>)" offset to shift the location along the edge.
+                    overlay_data['bridge'] = data
+                elif rowType == "MARK":
+                    if not overlay_data:
+                        overlay_data = {}
+                    # Star |overlay_data| is an array of cells that should be marked with
+                    # an icon. Each cell index may have an optional "(<x> <y>)" offset to
+                    # shift the icon from the cell's seed location.
+                    overlay_data['mark'] = data
+                else:
+                    raise Exception(f"Unrecognized row type: {rowType}")
                 last_pattern = pattern
                 last_seed = seed
 
@@ -197,7 +223,7 @@ class VoronoiHexTileLoader():
             self.options['pattern'] = last_pattern
             self.options['seed'] = last_seed
             self.options['center'] = center
-            self.processTile(terrain_data, river_data)
+            self.processTile(terrain_data, river_data, overlay_data)
 
 
 class VoronoiHexTile():
@@ -282,6 +308,7 @@ class VoronoiHexTile():
         # Explicit terrain/river data (loaded from file).
         self.terrainData = None
         self.riverData = None
+        self.overlayData = None
 
         # Calculate data for reversed edges ('r') from the forward ('f') edges.
         for type in EDGE_TYPES:
@@ -302,6 +329,9 @@ class VoronoiHexTile():
         
     def setRiverData(self, data):
         self.riverData = data
+        
+    def setOverlayData(self, data):
+        self.overlayData = data
         
     def init(self):
         self.initEdgePattern(self.options['pattern'])
@@ -1332,6 +1362,12 @@ class VoronoiHexTile():
         self.svg = SVG([215.9, 279.4])  #SVG([210, 297])
         fig = plt.figure(figsize=(8,8))
 
+        # Build list of template ids and then load from svg file.
+        svg_ids = []
+        for obj in ['bridge', 'star', 'tree', 'tower']:
+            svg_ids.append(f"obj-{obj}")
+        self.svg.load_ids(MAP_OBJ_TEMPLATE, svg_ids)
+
         layer = self.svg.add_inkscape_layer('layer', "Layer")
         layer.set_transform("translate(107.95 120) scale(1, -1)")
         self.layer = layer
@@ -1388,7 +1424,8 @@ class VoronoiHexTile():
         for sid in range(0, self.numActiveSeeds):
             center = self.seeds[sid]
             text = "{0:d}".format(sid)
-            t = Text(None, center[0]-1.5, -center[1], text)
+            plt.text(center[0]-1.4, center[1]-1.5, text)
+            t = Text(None, center[0]-1.4, -center[1], text)
             SVG.add_node(layer_region_ids, t)
 
         # Plot seed exclusion zones.
@@ -1460,6 +1497,8 @@ class VoronoiHexTile():
         self.drawTerrainLabels()
 
         self.drawRiverSegments()
+        
+        self.drawOverlay()
 
         self.drawHexTileBorder("border", "Border", stroke)
 
@@ -1527,6 +1566,62 @@ class VoronoiHexTile():
             name = ("hex-{0:s}-{1:d}"
                     .format(pNum, self.options['seed']))
         return name
+
+    def drawOverlay(self):
+        self.layer_overlay = self.svg.add_inkscape_layer(
+            'overlay', "Overlay", self.layer)
+        self.layer_overlay.set_scale_transform(1, -1)
+
+        if not self.overlayData:
+            return
+
+        if "bridge" in self.overlayData:
+            for bridge in self.overlayData['bridge']:
+                if bridge:
+                    m = re.match(r"(\d+\-\d+)(\(([\d.-]+ [\d.-]+)\))?", bridge)
+                    if m:
+                        cells = m.group(1)
+                        offset = None
+                        if m.group(2):
+                            offset = m.group(3)
+                    else:
+                        raise Exception(f"Unrecognized bridge data: {bridge}")
+
+                    (start, end) = cells.split('-')
+                    ptStart = self.seeds[int(start)]
+                    ptEnd = self.seeds[int(end)]
+                    rTheta = math.atan2(-(ptEnd[1] - ptStart[1]), ptEnd[0] - ptStart[0])
+                    degTheta = 90 + (rTheta * 180 / math.pi);
+                    center = lerp(ptStart, ptEnd, 0.5)
+                    icon = self.svg.add_loaded_element(self.layer_overlay, 'obj-bridge')
+                    
+                    transform = f"translate({center[0]} {-center[1]}) rotate({degTheta})"
+                    if offset:
+                        transform += f" translate({offset})"
+                    icon.set('transform', transform)
+
+        if "mark" in self.overlayData:
+            for mark in self.overlayData['mark']:
+                if mark:
+                    # <type> '-' <cell-id> '(' <x-offset> <y-offset> ')'
+                    m = re.match(r"([a-z-]+)\-(\d+)(\(([\d.-]+ [\d.-]+)\))?", mark)
+                    if m:
+                        type = m.group(1)
+                        cell = m.group(2)
+                        offset = None
+                        if m.group(3):
+                            offset = m.group(4).split(' ')
+                    else:
+                        raise Exception(f"Unrecognized star data: {mark}")
+
+                    center = self.seeds[int(cell)]
+                    icon = self.svg.add_loaded_element(self.layer_overlay, f"obj-{type}")
+                    x = center[0]
+                    y = -center[1]
+                    if offset:
+                        x += float(offset[0])
+                        y -= float(offset[1])
+                    icon.set('transform', f"translate({x} {y})")
 
     def drawAnnotations(self):
         self.layer_text = self.svg.add_inkscape_layer(
