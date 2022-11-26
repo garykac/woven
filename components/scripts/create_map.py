@@ -121,7 +121,7 @@ class VoronoiHexTileLoader():
             self.processTileData(self.options['load'])
             return
 
-        self.processTile(None, None)
+        self.processTile(None, None, None)
 
     def processTile(self, terrainData, riverData, overlayData):
         options = self.options.copy()
@@ -1557,7 +1557,9 @@ class VoronoiHexTile():
         
     def calcBaseFilename(self):
         name = "hex"
-        if self.options['seed'] != None:
+        if self.options['id'] != None:
+            name = f"hex-{self.options['id']:03d}"
+        elif self.options['seed'] != None:
             pNum = self.calcNumericPattern()
             name = f"hex-{pNum}-{self.options['seed']}"
         return name
@@ -1622,6 +1624,10 @@ class VoronoiHexTile():
         self.layer_text = self.svg.add_inkscape_layer(
             'annotations', "Annotations", self.layer)
         self.layer_text.set_transform("scale(1,-1)")
+
+        if self.options['id']:
+            self.numLines -= 1
+            self.addText(f"id: {self.options['id']}")
 
         self.addText(f"size: {self.size:g}")
         if self.options['seed']:
@@ -1858,7 +1864,7 @@ class VoronoiHexTile():
         center = self.options['center']
         if center == None:
             center = "AVG"
-        print("TERRAIN,{self.options['pattern']},{self.options['seed']},{center},", end='')
+        print(f"TERRAIN,{self.options['pattern']},{self.options['seed']},{center},", end='')
 
         while len(self.seed2terrain) <= 100:
             self.seed2terrain.append('')
