@@ -1375,18 +1375,12 @@ class VoronoiHexTile():
 
         self.drawHexTileBorder("background", "Tile Background", black_fill)
 
-        # Draw clipped and and rounded regions.
+        # Draw clipped regions.
         layer_region_clip = self.svg.add_inkscape_layer(
             'region-clip', "Region Clipped", layer)
         gClip = SVG.group('clip')
         SVG.add_node(layer_region_clip, gClip)
         layer_region_clip.hide()
-
-        layer_region_rounded = self.svg.add_inkscape_layer(
-            'region-rounded', "Region Rounded", layer)
-        gRounded = SVG.group('rounded')
-        SVG.add_node(layer_region_rounded, gRounded)
-
         for sid in range(0, self.numActiveSeeds):
             vids = self.sid2region[sid]
             id = f"clipregion-{sid}"
@@ -1396,19 +1390,31 @@ class VoronoiHexTile():
             self.plotRegion(vids, color)
             self.drawRegion(id, vids, color, gClip)
 
+        # Draw rounded regions.
+        layer_region_rounded = self.svg.add_inkscape_layer(
+            'region-rounded', "Region Rounded", layer)
+        gRounded = SVG.group('rounded')
+        SVG.add_node(layer_region_rounded, gRounded)
+        for sid in range(0, self.numActiveSeeds):
+            vids = self.sid2region[sid]
             id = f"roundedregion-{sid}"
+            color = "#ffffff"
+            terrain_type = self.seed2terrain[sid]
+            color = self.getTerrainStyle(terrain_type)
             self.drawRoundedRegion(id, vids, color, gRounded)
 
-        # Plot regions and seeds.
+        # Plot regions.
         layer_region = self.svg.add_inkscape_layer('region', "Region", layer)
         layer_region.hide()
-        layer_seeds = self.svg.add_inkscape_layer('seeds', "Seeds", layer)
-        layer_seeds.hide()
         for sid in range(0, self.numActiveSeeds):
             rid = self.vor.point_region[sid]
             id = f"region-{sid}"
             self.drawRegion(id, self.vor.regions[rid], "#ffffff", layer_region)
 
+        # Plot seeds.
+        layer_seeds = self.svg.add_inkscape_layer('seeds', "Seeds", layer)
+        layer_seeds.hide()
+        for sid in range(0, self.numActiveSeeds):
             center = self.seeds[sid]
             id = f"seed-{sid}"
             drawCircle(id, center, 1.0, black_fill, layer_seeds)
@@ -1419,7 +1425,6 @@ class VoronoiHexTile():
         if not self.options['show-seed-ids']:
             layer_region_ids.hide()
         layer_region_ids.set_transform("scale(1,-1)")
-
         for sid in range(0, self.numActiveSeeds):
             center = self.seeds[sid]
             text = f"{sid}"
@@ -1449,7 +1454,8 @@ class VoronoiHexTile():
         for mz in self.edgeMarginZone:
             center, radius = mz
             drawCircle(0, center, radius, fill, layer_margin_ex)
-        
+
+        # If there are bad edges, add a layer for them.
         if len(self.badEdges) != 0:
             layer_bad_edges = self.svg.add_inkscape_layer(
                 'bad-edges', "Bad Edges", layer)
@@ -1459,6 +1465,7 @@ class VoronoiHexTile():
                 self.plotBadVertex(self.vertices[vid0], layer_bad_edges)
                 self.plotBadVertex(self.vertices[vid1], layer_bad_edges)
 
+        # If there are seeds that are too close, add a layer for them.
         if len(self.tooClose) != 0:
             layer_too_close = self.svg.add_inkscape_layer(
                 'too-close', "Too Close Seeds", layer)
@@ -1473,25 +1480,24 @@ class VoronoiHexTile():
                 self.plotBadVertex(self.seeds[s1], layer_too_close)
             
         # Plot inscribed circles for each region.
-        if True:
-            layer_circles = self.svg.add_inkscape_layer(
-                'circles', "Inscribed Circles", layer)
-            layer_circles.hide()
-            fill = Style(fill="#008000")
-            fill.set('fill-opacity', 0.15)
-            for sid in self.regionCircles:
-                center, radius = self.regionCircles[sid]
-                id = f"incircle-{sid}"
-                drawCircle(id, center, radius, fill, layer_circles)
+        layer_circles = self.svg.add_inkscape_layer(
+            'circles', "Inscribed Circles", layer)
+        layer_circles.hide()
+        fill = Style(fill="#008000")
+        fill.set('fill-opacity', 0.15)
+        for sid in self.regionCircles:
+            center, radius = self.regionCircles[sid]
+            id = f"incircle-{sid}"
+            drawCircle(id, center, radius, fill, layer_circles)
 
-                id = f"incircle-ctr-{sid}"
-                drawCircle(id, center, '0.5', black_fill, layer_circles)
-            if ENABLE_SMALL_REGION_CHECK:
-                if self.circleRatio > self.circleRatioThreshold:
-                    for c in [self.minCircle, self.maxCircle]:
-                        center, radius = self.regionCircles[c]
-                        circle = plt.Circle(center, radius, color="#80000080")
-                        plt.gca().add_patch(circle)
+            id = f"incircle-ctr-{sid}"
+            drawCircle(id, center, '0.5', black_fill, layer_circles)
+        if ENABLE_SMALL_REGION_CHECK:
+            if self.circleRatio > self.circleRatioThreshold:
+                for c in [self.minCircle, self.maxCircle]:
+                    center, radius = self.regionCircles[c]
+                    circle = plt.Circle(center, radius, color="#80000080")
+                    plt.gca().add_patch(circle)
 
         self.drawAnnotations()
         self.drawTerrainLabels()
