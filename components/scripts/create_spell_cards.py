@@ -333,7 +333,9 @@ class WovenSpellCards():
         svg_ids.extend(['element-{0}'.format(elem_map[e]) for e in elem_map])
         svg_ids.append('spell-title')
         svg_ids.append('spell-pattern-border')
+        svg_ids.append('spell-pattern-border-4')
         svg_ids.append('spell-description')
+        svg_ids.append('spell-description-4')
         svg_ids.append('spell-id')
         svg_ids.extend(['icon-star-{0}'.format(n) for n in [1,2,3]])
         svg_ids.append('icon-vp')
@@ -377,18 +379,21 @@ class WovenSpellCards():
         # Draw alternate action.
         svg.add_loaded_element(svg_group, 'op-{0}'.format(attrs['op']))
 
-        # Add spell pattern.
-        self.draw_pattern(pattern_id, pattern, element, svg_group)
-        svg.add_loaded_element(svg_group, 'spell-pattern-border')
+        # Add spell pattern/description based on spell pattern height.
+        if len(pattern) == 4:
+            svg.add_loaded_element(svg_group, 'spell-pattern-border-4')
+            text = svg.add_loaded_element(svg_group, 'spell-description-4')
+        else:
+            svg.add_loaded_element(svg_group, 'spell-pattern-border')
+            text = svg.add_loaded_element(svg_group, 'spell-description')
 
+        self.draw_pattern(pattern_id, pattern, element, svg_group)
+
+        # Draw description.
         if attrs['category'] != 'blank':
-            self.draw_description(attrs['id'], desc, svg, svg_group)
+            SVG.set_text(text, self.expand_desc(desc))
 
         self.draw_vp(attrs['vp'], svg, svg_group)
-
-    def draw_description(self, id, raw_desc, svg, svg_group):
-        text = svg.add_loaded_element(svg_group, 'spell-description')
-        SVG.set_text(text, self.expand_desc(raw_desc))
 
     def draw_vp(self, vp, svg, svg_group):
         if vp != 0:
@@ -403,37 +408,32 @@ class WovenSpellCards():
         pheight = len(pattern)
         if pheight == 0:
             raise Exception("Missing pattern for {0}".format(id))
-        if pheight > 3:
+        if pheight > 4:
             raise Exception("Tall pattern for {0}".format(id))
         pwidth = len(pattern[0])
-
-        # Max pattern size that fits on the card.
-        max_width = 7
-        max_height = 3
-
-        # Center of pattern area.
-        pcenter_x = self.width / 2
-        pcenter_y = 22.4
 
         # Size and spacing for each box in pattern.
         box_size = 5.5
         box_spacing = 7
 
+        # Max pattern width that fits on the card.
+        max_width = 7
+        # Center of pattern area.
+        pcenter_x = self.width / 2
         # Upper left corner of pattern area
         px0 = pcenter_x - (((max_width-1) * box_spacing) + box_size) / 2
-        py0 = pcenter_y - (((max_height-1) * box_spacing) + box_size) / 2
-
-        # Calc offsets to center the patterns that are less than max size.
+        # Adjust offsets to center the patterns horizontally.
         if pwidth % 2 == 0:
             px0 += box_spacing / 2
             max_width = 6
+
+        # Tall spells need to use larger pattern area.
+        max_height = pheight
+        if pheight == 4:
+            pcenter_y = 25.4
         else:
-            max_width = 7
-        if pheight % 2 == 0:
-            py0 += box_spacing / 2
-            max_height = 2
-        else:
-            max_height = 3
+            pcenter_y = 22.4
+        py0 = pcenter_y - (((max_height-1) * box_spacing) + box_size) / 2
 
         dot_x0 = px0 + (box_size / 2)
         dot_y0 = py0 + (box_size / 2)
