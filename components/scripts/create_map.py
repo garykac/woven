@@ -1416,7 +1416,8 @@ class VoronoiHexTile():
         # Plot layer with region ids.
         layer_region_ids = self.svg.add_inkscape_layer(
             'region_ids', "Region Ids", layer)
-        layer_region_ids.hide()
+        if not self.options['show-seed-ids']:
+            layer_region_ids.hide()
         layer_region_ids.set_transform("scale(1,-1)")
 
         for sid in range(0, self.numActiveSeeds):
@@ -1578,7 +1579,7 @@ class VoronoiHexTile():
         if "bridge" in self.overlayData:
             for bridge in self.overlayData['bridge']:
                 if bridge:
-                    m = re.match(r"(\d+\-\d+)(\(([\d.-]+ [\d.-]+)\))?", bridge)
+                    m = re.match(r"^(\d+\-\d+)(\(([\d.-]+ [\d.-]+)\))?$", bridge)
                     if m:
                         cells = m.group(1)
                         offset = None
@@ -1604,7 +1605,7 @@ class VoronoiHexTile():
             for mark in self.overlayData['mark']:
                 if mark:
                     # <type> '-' <cell-id> '(' <x-offset> <y-offset> ')'
-                    m = re.match(r"([a-z-]+)\-(\d+)(\(([\d.-]+ [\d.-]+)\))?", mark)
+                    m = re.match(r"^([a-z-]+)\-(\d+)(\(([\d.-]+ [\d.-]+)\))?$", mark)
                     if m:
                         type = m.group(1)
                         cell = m.group(2)
@@ -2063,7 +2064,7 @@ OPTIONS = {
     'export-3d': {'type': 'bool', 'default': False,
                  'desc': "Export .obj"},
     'id': {'type': 'int', 'default': None,
-           'desc': "Process only this id (used with --load)"},
+           'desc': "Process only this tile id (used with --load)"},
     'iter': {'type': 'int', 'default': 500,
              'desc': "Max iterations"},
     'load': {'type': 'string', 'default': None,
@@ -2074,6 +2075,8 @@ OPTIONS = {
                             'desc': "True to fill interior cells with random terrain"},
     'seed': {'type': 'int', 'default': None,
              'desc': "Random seed"},
+    'show-seed-ids': {'type': 'bool', 'default': False,
+                      'desc': "Show the seed id layer"},
     'size': {'type': 'int', 'default': 80,
              'desc': "Size of hex side (mm)"},
 }
