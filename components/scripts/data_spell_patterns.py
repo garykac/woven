@@ -1180,7 +1180,11 @@ spell_card_patterns = {
     # | . . . X |
     # +---------+
     'E2-37':    {'elements': 'fw',
-                 'pattern': [],
+                 'pattern': [   "X . . .",
+                                ". @ . .",
+                                ". . . .",
+                                ". . . X",
+                            ],
                 },
 
     #                                                                 #
@@ -1318,7 +1322,11 @@ spell_card_patterns = {
     # | . . . X |
     # +---------+
     'E2-45':    {'elements': 'fw',
-                 'pattern': [],
+                 'pattern': [   ". X . .",
+                                "@ . . .",
+                                ". . . .",
+                                ". . . X",
+                            ],
                 },
 
     # +-----------+  Level 3
@@ -1587,7 +1595,9 @@ spell_card_patterns = {
     # | . . . X |  Cards 2
     # +---------+  Transform 8: 12/8
     'E2-62':    {'elements': 'ae',
-                 'pattern': [],
+                 'pattern': [   "@ . X .",
+                                ". . . X",
+                            ],
                 },
 
     # +---------+  Level 
@@ -1597,7 +1607,11 @@ spell_card_patterns = {
     # | . . . X |
     # +---------+
     'E2-63':    {'elements': 'ae',
-                 'pattern': [],
+                 'pattern': [   "X . @ .",
+                                ". . . .",
+                                ". . . .",
+                                ". . . X",
+                            ],
                 },
 
     # +-------------+  Level 
@@ -1605,7 +1619,9 @@ spell_card_patterns = {
     # | . . . . . X |  Cards 
     # +-------------+  Transform 
     'E2-64':    {'elements': 'ae',
-                 'pattern': [],
+                 'pattern': [   "X . @ . . .",
+                                ". . . . . X",
+                            ],
                 },
 
     # +---------+  Level 
@@ -1614,7 +1630,10 @@ spell_card_patterns = {
     # | X . . . |  Transform
     # +---------+
     'E2-65':    {'elements': 'ae',
-                 'pattern': [],
+                 'pattern': [   "@ . . .",
+                                ". . . X",
+                                "X . . .",
+                            ],
                 },
 
     #                                                                 #
@@ -1639,7 +1658,10 @@ spell_card_patterns = {
     # | . . . X |  Transform
     # +---------+
     'E2-66':    {'elements': 'ae',
-                 'pattern': [],
+                 'pattern': [   "@ . X .",
+                                ". . . .",
+                                ". . . X",
+                            ],
                 },
 
     # +-----------+  Level 
@@ -1649,7 +1671,11 @@ spell_card_patterns = {
     # | . . . . X |
     # +-----------+
     'E2-67':    {'elements': 'ae',
-                 'pattern': [],
+                 'pattern': [   "X . @ . .",
+                                ". . . . .",
+                                ". . . . .",
+                                ". . . . X",
+                            ],
                 },
 
     # +-------------+  Level 
@@ -1658,7 +1684,11 @@ spell_card_patterns = {
     # | . . . . . X |  Transform
     # +-------------+
     'E2-68':    {'elements': 'ae',
-                 'pattern': [],
+                 'pattern': [   "X . @ . . .",
+                                ". . . . . .",
+                                ". . . . . .",
+                                ". . . . . X",
+                            ],
                 },
 
     # +---------+  Level 
@@ -1667,7 +1697,10 @@ spell_card_patterns = {
     # | X . . X |  Transform
     # +---------+
     'E2-69':    {'elements': 'ae',
-                 'pattern': [],
+                 'pattern': [   "@ . . .",
+                                ". . . .",
+                                "X . . X",
+                            ],
                 },
 
     #                                                                 #
@@ -1943,7 +1976,11 @@ spell_card_patterns = {
     # | . . . X |
     # +---------+
     'E2-88':    {'elements': 'ae',
-                 'pattern': [],
+                 'pattern': [   ". X . .",
+                                ". . . .",
+                                "@ . . .",
+                                ". . . X",
+                            ],
                 },
 
     # +-----------+  Level 
@@ -2739,7 +2776,11 @@ spell_card_patterns = {
     # | . X . . |                                                        . . 1 . .
     # +---------+
     'E3-10':    {'elements': 'ae',
-                 'pattern': [],
+                 'pattern': [   "X . . . .",
+                                ". . @ . X",
+                                ". . . . .",
+                                ". . X . .",
+                            ],
                 },
 
     # +---------+  Level 4 - Built on +-----+     +-------+  Transforms  . . 3 . .
@@ -2928,7 +2969,12 @@ spell_card_patterns = {
     # | . . . . X |
     # +-----------+
     'E3-27':    {'elements': 'ae',
-                 'pattern': [],
+                 'pattern': [   ". . X . .",
+                                ". . . . .",
+                                "X . @ . .",
+                                ". . . . .",
+                                ". . . . X",
+                            ],
                 },
 
     # +-----------+
@@ -3148,6 +3194,47 @@ spell_card_patterns = {
                  'pattern': [   "X . . .",
                                 ". @ @ .",
                                 ". . . X",
+                            ],
+                },
+
+    #  _____ _                   _       _    ___      _      ___ 
+    # |   __| |___ _____ ___ ___| |_ ___| |  |_  |   _| |_   |_  |
+    # |   __| | -_|     | -_|   |  _| .'| |  |  _|  |_   _|  |_  |
+    # |_____|_|___|_|_|_|___|_|_|_| |__,|_|  |___|    |_|    |___|
+    #
+
+    # +-------+  Level 4 - Built on +-----+
+    # | X . . |  Threads 2          | @ X |
+    # | @ . . |  Cards 2            +-----+
+    # | X @ X |  Transform 2; 4/
+    # +-------+
+    'EE3-1':    {'elements': 'ae',
+                 'pattern': [],
+                },
+
+    # +---------+  Level 4 - Built on +-----+     +-------+
+    # | . X . . |  Threads 2          | @ X | and | @ . X |
+    # | @ @ . X |  Cards 3            +-----+     +-------+
+    # | X . . . |  Transform 2:
+    # +---------+
+    'EE3-2':    {'elements': 'ae',
+                 'pattern': [   ". X . .",
+                                "@ @ . X",
+                                "X . . .",
+                            ],
+                },
+
+    # +-----------+  Level 4 - Built on +-----+     +-------+
+    # | . @ . X . |  Threads 2          | @ X | and | @ . X |
+    # | X . @ . . |  Cards 3            +-----+     +-------+
+    # | . . . . . |  Transform 2:
+    # | . . . . X |
+    # +-----------+
+    'EE3-3':    {'elements': 'fw',
+                 'pattern': [   ". @ . X .",
+                                "X . @ . .",
+                                ". . . . .",
+                                ". . . . X",
                             ],
                 },
 
