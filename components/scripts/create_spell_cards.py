@@ -306,11 +306,13 @@ class WovenSpellCards():
         if attrs['category'] != 'blank':
             self.record_spell_info(name, pattern, attrs, desc)
         
+        # Make sure pattern is not being re-used.
         if attrs['category'] != 'blank' and pattern_id != 'blank':
-            pe_tag = self.pattern_key(pattern) + '-' + attrs['element']
+            pe_tag = self.pattern_key(pattern)
+            if False:  # If we want to allow different elements to share the same pattern.
+                pe_tag += '-' + attrs['element']
             if pe_tag in self.pattern_elements:
-                raise Exception('Pattern for "{0:s}" already used for "{1:s}"'
-                      .format(name, self.pattern_elements[pe_tag]))
+                raise Exception(f"Pattern {pattern_id} for '{name}' already used for '{self.pattern_elements[pe_tag]}'")
             self.pattern_elements[pe_tag] = name
 
         # Validate desc
@@ -553,7 +555,7 @@ class WovenSpellCards():
             summary.write('\n')
 
         print('Ops')
-        for op in ['tapestry', 'eye', 'emove', 'mmove', 'thread', 'tmove', 'action']:
+        for op in ['tapestry', 'eye', 'emove2', 'mmove', 'thread', 'tmove', 'action']:
             count = 0
             for k,v in self.ops.items():
                 if k.find(op) != -1:
