@@ -352,7 +352,7 @@ class VoronoiHexTile():
 
     def initEdgePattern(self, pattern):
         if len(pattern) != NUM_SIDES:
-            error("Invalid patternL {0}".format(pattern))
+            error(f"Invalid pattern: {pattern}")
 
         # Build mapping from corner to edge pattern.
         self.corner2edge = {}
@@ -380,9 +380,9 @@ class VoronoiHexTile():
             edgeRegionTypes = EDGE_REGION_INFO[edge]
             edgeNextRegionTypes = EDGE_REGION_INFO[edgeNext]
             if edgeRegionTypes[-1] != edgeNextRegionTypes[0]:
-                error("Edge patterns don't connect: {0:s} ({1}) and {2:s} ({3})"
-                        .format(edge, '-'.join(edgeRegionTypes),
-                                edgeNext, '-'.join(edgeNextRegionTypes)))
+                edgeTypes = '-'.join(edgeRegionTypes)
+                edgeNextTypes = '-'.join(edgeNextRegionTypes)
+                error(f"Edge patterns don't connect: {edge} ({edgeTypes}) and {edgeNext} ({edgeNextTypes})")
             self.cornerType.append(edgeRegionTypes[0])
 
         # Record the terrain type for each region along the edge of the tile.
@@ -425,8 +425,7 @@ class VoronoiHexTile():
             ])
         dbg_id = self.debug
         if dbg_id >= 0 and dbg_id < NUM_SIDES:
-            print("Initializing corner seed {0}: {1}"
-                  .format(dbg_id, self.vHex[dbg_id]))
+            print(f"Initializing corner seed {dbg_id}: {self.vHex[dbg_id]}")
 
         # Construct a list of adjacent edge regions for convenience later.
         # Each entry is a pair of seed ids identifying the 2 adjacent regions
@@ -452,8 +451,7 @@ class VoronoiHexTile():
                 prev_sid = sid
 
                 if dbg_id == sid:
-                    print("Initializing edge seed {0}: {1}"
-                          .format(dbg_id, vertices[-1]))
+                    print(f"Initializing edge seed {dbg_id}: {vertices[-1]}")
 
             self.edgeAdjacent[prev_sid].append(i1)
             if i1 == 0:
@@ -571,7 +569,7 @@ class VoronoiHexTile():
         # Record terrain type for this seed so that we don't regenerate new
         # terrain for each iteration.
         if len(self.seed2terrain) != sid:
-            error("Terrain for seeds generated out of order: {0}".format(sid))
+            error(f"Terrain for seeds generated out of order: {sid}")
 
         # If we have terrain data loaded from a file, use that.
         if self.terrainData:
@@ -685,7 +683,7 @@ class VoronoiHexTile():
             # hexagon (so that |c| is < 0), but this is OK.
             if fge(a, 0) and fge(b, 0) and fle(c, 1):
                 return (a, b, c, tri, tri_next)
-        error("Unable to calculate seed distance for {0},{1}".format(x,y))
+        error(f"Unable to calculate seed distance for {x},{y}")
         return None
         
     # Generate a random x,y point within a ring (defined by |r0| and |r1|) around
@@ -716,15 +714,15 @@ class VoronoiHexTile():
 
     def calcEdgeId(self, vid0, vid1):
         if vid0 < vid1:
-            return "{0:d}-{1:d}".format(vid0, vid1)
-        return "{0:d}-{1:d}".format(vid1, vid0)
+            return f"{vid0}-{vid1}"
+        return f"{vid1}-{vid0}"
 
     # Add a new vertex to the voronoi graph. This is used when clipping the
     # regions along the edge of the tile.
     # Return the index of the new vertex.
     def addVertex(self, v):
         # Check to see of we've added this vertex already.
-        key = "{0:.6g}-{1:.6g}".format(v[0], v[1])
+        key = f"{v[0]:.6g}-{v[1]:.6g}"
         if key in self.newVertices:
             return self.newVertices[key]
         id = len(self.vertices)
@@ -773,7 +771,7 @@ class VoronoiHexTile():
         self.adjustments[sid][0] += dx
         self.adjustments[sid][1] += dy
         if self.debug == sid_orig:
-            print("Adjusting {0} by ({1}, {2})".format(sid_orig, dx, dy))
+            print(f"Adjusting {sid_orig} by ({dx}, {dy})")
 
     # Calculate all regions with clipping.
     def calcClippedRegions(self):
@@ -781,7 +779,7 @@ class VoronoiHexTile():
         for sid in range(0, NUM_SIDES):
             rid = self.vor.point_region[sid]
             if self.debug == sid:
-                print("Calc clip region for corner {0}".format(sid))
+                print(f"Calc clip region for corner {sid}")
             vids = self.calcCornerVertices(sid, rid)
             self.sid2region[sid] = vids
         for i0 in range(0, NUM_SIDES):
@@ -801,7 +799,7 @@ class VoronoiHexTile():
                 sid = sid0 + j
                 rid = self.vor.point_region[sid]
                 if self.debug == sid:
-                    print("Calc clip region for edge {0}".format(sid))
+                    print(f"Calc clip region for edge {sid}")
 
                 adjSeeds = self.edgeAdjacent[sid]
 
@@ -1009,9 +1007,9 @@ class VoronoiHexTile():
         for rindex in range(0, numInternal):
             vid = r[rindex]
             v = self.vertices[vid]
-            if debug: print("  vertex {0} : {1}".format(vid, v))
+            if debug: print(f"  vertex {vid} : {v}")
             verts.append(vid)
-            if debug: print("    appending internal: {0}".format(vid))
+            if debug: print(f"    appending internal: {vid}")
 
         # Write tile boundary.
         # Assume we're generating edge vertices in ccw order.
@@ -1023,22 +1021,19 @@ class VoronoiHexTile():
         cw = lerp_pt(self.seeds[sid0], self.seeds[sid_cnext], t_cw)
         if debug:
             print("     assume ccw")
-            print("     ccw {0} from {1} and {2} @ {3:.03g}%"
-                  .format(ccw, sid0, sid_cprev, t_ccw))
-            print("      cw {0} from {1} and {2} @ {3:.03g}%"
-                  .format(cw, sid0, sid_cnext, t_cw))
+            print(f"     ccw {ccw} from {sid0} and {sid_cprev} @ {t_ccw:.03g}%")
+            print(f"      cw {cw} from {sid0} and {sid_cnext} @ {t_cw:.03g}%")
 
         # Determine which tile boundary point is closest to the last internal
         # vertex.
         vFirstIn = self.vertices[r[0]]
         vLastIn = self.vertices[r[numInternal-1]]
         if debug:
-            print("     check dist to first/last internal {0} {1}"
-                  .format(vFirstIn, vLastIn))
-            print("       first dist to cw: {0}".format(dist(vFirstIn, cw)))
-            print("       first dist to ccw: {0}".format(dist(vFirstIn, ccw)))
-            print("       last dist to cw: {0}".format(dist(vLastIn, cw)))
-            print("       last dist to ccw: {0}".format(dist(vLastIn, ccw)))
+            print(f"     check dist to first/last internal {vFirstIn} {vLastIn}")
+            print(f"       first dist to cw: {dist(vFirstIn, cw)}")
+            print(f"       first dist to ccw: {dist(vFirstIn, ccw)}")
+            print(f"       last dist to cw: {dist(vLastIn, cw)}")
+            print(f"       last dist to ccw: {dist(vLastIn, ccw)}")
 
         # Swap direction if the region vertices are CW.
         if dist(vFirstIn, ccw) < dist(vLastIn, ccw):
@@ -1048,22 +1043,21 @@ class VoronoiHexTile():
         # Double-check direction by checking the cw point.
         startCcwCheck = dist(vFirstIn, cw) < dist(vLastIn, cw)
         if numInternal != 1 and startCcw != startCcwCheck:
-            warning("calculating clipped region for {0}".format(sid))
+            warning(f"calculating clipped region for {sid}")
 
         if not startCcw:
             cw, ccw = ccw, cw
 
         verts.append(self.addVertex(ccw))
-        if debug: print("    adding new vertex {0}".format(ccw))
+        if debug: print(f"    adding new vertex {ccw}")
 
         # Hex corners have an extra point in the middle.
         if sid_cprev != sid_cnext:
             verts.append(self.addVertex(self.seeds[sid0]))
-            if debug: print("    adding new vertex (corner) {0}"
-                            .format(self.seeds[sid0]))
+            if debug: print(f"    adding new vertex (corner) {self.seeds[sid0]}")
 
         verts.append(self.addVertex(cw))
-        if debug: print("    adding new vertex {0}".format(cw))
+        if debug: print(f"    adding new vertex {cw}")
         return verts
 
     # Find any voronoi edges that are too small.
@@ -1231,10 +1225,8 @@ class VoronoiHexTile():
                 min = self.minCircle
                 max = self.maxCircle
                 if min and max:
-                    print(" - {0:d} {1:.5g} {2:d} {3:.5g}"
-                          .format(min, self.regionCircles[min][1],
-                                  max, self.regionCircles[max][1]), end='')
-                    print(" - ratio {0:.5g}".format(self.circleRatio), end='')
+                    print(f" - {min} {self.regionCircles[min][1]:.5g} {max} {self.regionCircles[max][1]:.5g}", end='')
+                    print(f" - ratio {self.circleRatio:.5g}", end='')
                 if self.circleRatio > self.circleRatioThreshold:
                     print(" - adj min/max", end='')
 
@@ -1327,7 +1319,7 @@ class VoronoiHexTile():
             # Adjust both seeds to handle case where s1 is fixed.
             self.calcAdjustment(s0, self.seeds[s1], self.adjustmentTooClose)
             if self.debug == s0 or self.debug == s1:
-                print("Seed {0} is being pushed away from {1}".format(s1, s0))
+                print(f"Seed {s1} is being pushed away from {s0}")
             hasChanges = True
             
         if ENABLE_SMALL_REGION_CHECK:
@@ -1349,8 +1341,7 @@ class VoronoiHexTile():
         for sid in range(0, len(self.vInteriorSeeds)):
             if sid in self.adjustments:
                 if self.debug == sid:
-                    print("Adjusting {0} by {1}"
-                          .format(sid, self.adjustments[sid]))
+                    print(f"Adjusting {sid} by {self.adjustments[sid]}")
                 newInterior[sid][0] += self.adjustments[sid][0]
                 newInterior[sid][1] += self.adjustments[sid][1]
         self.vInteriorSeeds = np.array(newInterior)
@@ -1395,14 +1386,14 @@ class VoronoiHexTile():
 
         for sid in range(0, self.numActiveSeeds):
             vids = self.sid2region[sid]
-            id = "clipregion-{0:d}".format(sid)
+            id = f"clipregion-{sid}"
             color = "#ffffff"
             terrain_type = self.seed2terrain[sid]
             color = self.getTerrainStyle(terrain_type)
             self.plotRegion(vids, color)
             self.drawRegion(id, vids, color, gClip)
 
-            id = "roundedregion-{0:d}".format(sid)
+            id = f"roundedregion-{sid}"
             self.drawRoundedRegion(id, vids, color, gRounded)
 
         # Plot regions and seeds.
@@ -1412,11 +1403,11 @@ class VoronoiHexTile():
         layer_seeds.hide()
         for sid in range(0, self.numActiveSeeds):
             rid = self.vor.point_region[sid]
-            id = "region-{0:d}".format(sid)
+            id = f"region-{sid}"
             self.drawRegion(id, self.vor.regions[rid], "#ffffff", layer_region)
 
             center = self.seeds[sid]
-            id = "seed-{0:d}".format(sid)
+            id = f"seed-{sid}"
             drawCircle(id, center, 1.0, black_fill, layer_seeds)
 
         # Plot layer with region ids.
@@ -1427,7 +1418,7 @@ class VoronoiHexTile():
 
         for sid in range(0, self.numActiveSeeds):
             center = self.seeds[sid]
-            text = "{0:d}".format(sid)
+            text = f"{sid}"
             if PLOT_CELL_IDS:
                 plt.text(center[0]-1.4, center[1]-1.5, text)
             t = Text(None, center[0]-1.4, -center[1], text)
@@ -1442,7 +1433,7 @@ class VoronoiHexTile():
         for sid in range(0, self.numActiveSeeds):
             center = self.vor.points[sid]
             radius = self.seed2minDistance[sid]
-            id = "seed-ex-{0:d}".format(sid)
+            id = f"seed-ex-{sid}"
             drawCircle(id, center, radius, fill, layer_seed_ex)
 
         # Plot edge margin exclusion zones.
@@ -1486,10 +1477,10 @@ class VoronoiHexTile():
             fill.set('fill-opacity', 0.15)
             for sid in self.regionCircles:
                 center, radius = self.regionCircles[sid]
-                id = "incircle-{0:d}".format(sid)
+                id = f"incircle-{sid}"
                 drawCircle(id, center, radius, fill, layer_circles)
 
-                id = "incircle-ctr-{0:d}".format(sid)
+                id = f"incircle-ctr-{sid}"
                 drawCircle(id, center, '0.5', black_fill, layer_circles)
             if ENABLE_SMALL_REGION_CHECK:
                 if self.circleRatio > self.circleRatioThreshold:
@@ -1527,7 +1518,7 @@ class VoronoiHexTile():
                 outdir_png = os.path.join(outdir_png, ANIM_SUBDIR)
                 if not os.path.isdir(outdir_png):
                     os.makedirs(outdir_png);
-                out_png = os.path.join(outdir_png, '{0:s}-{1:03d}'.format(name, plotId))
+                out_png = os.path.join(outdir_png, f"{name}-{plotId:03d}")
                 plt.text(-self.size, -self.size, plotId)
 
             plt.axis("off")
@@ -1568,8 +1559,7 @@ class VoronoiHexTile():
         name = "hex"
         if self.options['seed'] != None:
             pNum = self.calcNumericPattern()
-            name = ("hex-{0:s}-{1:d}"
-                    .format(pNum, self.options['seed']))
+            name = f"hex-{pNum}-{self.options['seed']}"
         return name
 
     def drawOverlay(self):
@@ -1633,34 +1623,28 @@ class VoronoiHexTile():
             'annotations', "Annotations", self.layer)
         self.layer_text.set_transform("scale(1,-1)")
 
-        self.addText("size: {0:g}".format(self.size))
+        self.addText(f"size: {self.size:g}")
         if self.options['seed']:
-            self.addText("rng seed {0:d}".format(self.options['seed']))
+            self.addText(f"rng seed {self.options['seed']}")
         else:
             self.addText("rng seed RANDOM")
 
         pattern = self.options['pattern']
         pNum = self.calcNumericPattern()
-        self.addText("pattern {0:s} / {1:s}".format(pNum, pattern))
-        self.addText("seed attempts: {0:d}".format(self.seedAttempts))
-        self.addText("seed distance: l {0:.03g}; m {1:.03g}; h {2:.03g}"
-                     .format(MIN_DISTANCE_L, MIN_DISTANCE_M, MIN_DISTANCE_H))
+        self.addText(f"pattern {pNum} / {pattern}")
+        self.addText(f"seed attempts: {self.seedAttempts}")
+        self.addText(f"seed distance: l {MIN_DISTANCE_L:.03g}; m {MIN_DISTANCE_M:.03g}; h {MIN_DISTANCE_H:.03g}")
 
         center = "AVG"
         if self.options['center']:
             center = self.options['center']
-        self.addText("center: ({0:s}) {1:.03g}"
-                     .format(center, self.centerWeight / self.size))
+        self.addText(f"center: ({center}) {self.centerWeight / self.size:.03g}")
 
-        self.addText("min ridge length: {0:.02g}; at edge: {1:.02g}"
-                     .format(MIN_RIDGE_LEN, MIN_RIDGE_LEN_EDGE))
-        self.addText("edge margin exclusion zone scale: {0:.02g}"
-                     .format(self.edgeMarginScale))
-        self.addText("iterations: {0:d}".format(self.iteration-1))
-        self.addText("adjustments: side {0:.03g}, neighbor {1:.03g}"
-                     .format(self.adjustmentSide, self.adjustmentNeighbor))
-        self.addText("closeness: {0:.03g}, adjust {1:.03g}"
-                     .format(self.closeThreshold, self.adjustmentTooClose))
+        self.addText(f"min ridge length: {MIN_RIDGE_LEN:.02g}; at edge: {MIN_RIDGE_LEN_EDGE:.02g}")
+        self.addText(f"edge margin exclusion zone scale: {self.edgeMarginScale:.02g}")
+        self.addText(f"iterations: {self.iteration-1}")
+        self.addText(f"adjustments: side {self.adjustmentSide:.03g}, neighbor {self.adjustmentNeighbor:.03g}")
+        self.addText(f"closeness: {self.closeThreshold:.03g}, adjust {self.adjustmentTooClose:.03g}")
 
     def drawTerrainLabels(self):
         # Add corner terrain labels.
@@ -1668,13 +1652,13 @@ class VoronoiHexTile():
             t = self.options['pattern'][i]
             label = Text(None, -1.5, -(self.size + 2), t.upper())
             if i != 0:
-                label.set_transform("rotate({0:d})".format(60 * i))
+                label.set_transform(f"rotate({60 * i})")
             SVG.add_node(self.layer_text, label)
 
         # Add edge terrain labels.
         for i in range(0, NUM_SIDES):
             g = Group(None)
-            g.set_transform("rotate({0:d})".format(30 + i * 60))
+            g.set_transform(f"rotate({30 + i * 60})")
             SVG.add_node(self.layer_text, g)
             edgeType = self.edgeTypes[i]
             seedPattern = EDGE_SEED_INFO[edgeType]
@@ -1691,7 +1675,7 @@ class VoronoiHexTile():
             edgeType = self.edgeTypes[i]
             if edgeType in EDGE_RIVER_INFO:
                 g = Group(None)
-                g.set_transform("rotate({0:d})".format(30 + i * 60))
+                g.set_transform(f"rotate({30 + i * 60})")
                 SVG.add_node(self.layer_text, g)
 
                 rIndex = EDGE_RIVER_INFO[edgeType].index('*')
@@ -1861,11 +1845,11 @@ class VoronoiHexTile():
         cmd.append(os.path.join(anim_dir, "hex-*"))
 
         base = self.calcBaseFilename()
-        last_file = "{0:s}-{1:03d}.png".format(base, self.iteration-1)
+        last_file = f"{base}-{self.iteration-1:03d}.png"
         cmd.extend(["-delay", "100"])
         cmd.append(os.path.join(anim_dir, last_file))
 
-        anim_file = os.path.join(self.options['outdir_png'], "{0:s}.gif".format(base))
+        anim_file = os.path.join(self.options['outdir_png'], f"{base}.gif")
         cmd.append(anim_file)
 
         subprocess.run(cmd)
@@ -1874,10 +1858,7 @@ class VoronoiHexTile():
         center = self.options['center']
         if center == None:
             center = "AVG"
-        print("{0},{1},TERRAIN,{2},".format(
-            self.options['pattern'],
-            self.options['seed'],
-            center), end='')
+        print("TERRAIN,{self.options['pattern']},{self.options['seed']},{center},", end='')
 
         while len(self.seed2terrain) <= 100:
             self.seed2terrain.append('')
@@ -1906,7 +1887,7 @@ class VoronoiHexTile():
         for f in range(0, nVertices-1):
             obj.addFace([(2 * f) + x for x in [1, 2, 4, 3]])
         obj.addFace([2, 1, 2*nVertices-1, 2*nVertices])
-        obj.writeGroup("s{0}".format(sid))
+        obj.writeGroup(f"s{sid}")
 
     # Import generated obj file into Blender X-Forward, Z-Up
     def writeObject3d(self):
@@ -2125,8 +2106,8 @@ def parse_options():
         for opt_name, opt_info in option_defs.items():
             option_flags = []
             if 'short' in opt_info:
-                option_flags.append('-{0}'.format(opt_info['short']))
-            option_flags.append('--{0}'.format(opt_name))
+                option_flags.append(f"-{opt_info['short']}")
+            option_flags.append(f"--{opt_name}")
 
             # If matches this option.
             if opt in option_flags:
