@@ -22,6 +22,7 @@ from svg import SVG, Group, Style, Node, Path, Text
 
 GENERATE_SVG = True
 GENERATE_PLOT = True   # As PNG file.
+PLOT_CELL_IDS = True   # Add cell ids to png output file.
 
 MAP_OUTPUT_DIR = "../maps"
 ANIM_SUBDIR = "anim"    # Subdirectory of png output dir
@@ -1424,7 +1425,8 @@ class VoronoiHexTile():
         for sid in range(0, self.numActiveSeeds):
             center = self.seeds[sid]
             text = "{0:d}".format(sid)
-            plt.text(center[0]-1.4, center[1]-1.5, text)
+            if PLOT_CELL_IDS:
+                plt.text(center[0]-1.4, center[1]-1.5, text)
             t = Text(None, center[0]-1.4, -center[1], text)
             SVG.add_node(layer_region_ids, t)
 
