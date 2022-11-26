@@ -150,47 +150,51 @@ class VoronoiHexTileLoader():
     def processTileData(self, file):
         header = True
         
-        # If |pattern| and |seed| are set on the command line, then only generate that
-        # map tile from the data file.
-        select_pattern = None
-        select_seed = None
-        if self.options['seed']:
-            select_pattern = self.options['pattern']
-            select_seed = self.options['seed']
+        # If |id| is set on the command line, then only generate that map tile from
+        # the data file.
+        select_id = None
+        if self.options['id']:
+            select_id = self.options['id']
 
         with open(file) as f:
+            pattern = None
+            seed = None
             center = None
             terrain_data = None
             river_data = None
             overlay_data = None
 
-            last_pattern = None
-            last_seed = None
+            last_id = None
             for line in f:
                 if header:
                     header = False
                     continue
                 # Pattern, Seed, RowType
                 data = line.rstrip().split(',')
-                pattern = data.pop(0)
-                seed = int(data.pop(0))
+                id = int(data.pop(0))
+                rowType = data.pop(0)
                 
-                # Skip over non-matching pattern/seed if we're only processing one.
-                if select_seed and (pattern != select_pattern or seed != select_seed):
+                # Skip over non-matching id if we're only processing a specific one.
+                if select_id and id != select_id:
                     continue
                 
-                if last_pattern and last_seed and (pattern != last_pattern or seed != last_seed):
+                if last_id and id != last_id:
                     # Write out previous tile.
-                    self.options['pattern'] = last_pattern
-                    self.options['seed'] = last_seed
+                    self.options['pattern'] = pattern
+                    self.options['seed'] = seed
                     self.options['center'] = center
                     self.processTile(terrain_data, river_data, overlay_data)
+
+                    pattern = None
+                    seed = None
                     center = None
                     terrain_data = None
                     river_data = None
                     overlay_data = None
-                rowType = data.pop(0)
+
                 if rowType == "TERRAIN":
+                    pattern = data.pop(0)
+                    seed = int(data.pop(0))
                     center = data.pop(0)
                     if center == "AVG":
                         center = None
@@ -217,12 +221,11 @@ class VoronoiHexTileLoader():
                     overlay_data['mark'] = data
                 else:
                     raise Exception(f"Unrecognized row type: {rowType}")
-                last_pattern = pattern
-                last_seed = seed
+                last_id = id
 
             # Write out final tile.
-            self.options['pattern'] = last_pattern
-            self.options['seed'] = last_seed
+            self.options['pattern'] = pattern
+            self.options['seed'] = seed
             self.options['center'] = center
             self.processTile(terrain_data, river_data, overlay_data)
 
@@ -2065,6 +2068,8 @@ OPTIONS = {
               'desc': "Log debug info for given region id"},
     'export-3d': {'type': 'bool', 'default': False,
                  'desc': "Export .obj"},
+    'id': {'type': 'int', 'default': None,
+           'desc': "Process only this id (used with --load)"},
     'iter': {'type': 'int', 'default': 500,
              'desc': "Max iterations"},
     'load': {'type': 'string', 'default': None,
