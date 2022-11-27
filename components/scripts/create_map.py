@@ -219,6 +219,11 @@ class VoronoiHexTileLoader():
                     # Each bridge is a set of "<c1>-<c2>" pairs with an optional
                     # "(<x> <y>)" offset to shift the location along the edge.
                     overlay_data['bridge'] = data
+                elif rowType == "LAKE":
+                    if not overlay_data:
+                        overlay_data = {}
+                    # Lake |overlay_data| is an array of region ids that are lakes.
+                    overlay_data['lake'] = data
                 elif rowType == "MARK":
                     if not overlay_data:
                         overlay_data = {}
@@ -1648,6 +1653,16 @@ class VoronoiHexTile():
                         x += float(offset[0])
                         y -= float(offset[1])
                     icon.set('transform', f"translate({x} {y})")
+
+        if "lake" in self.overlayData:
+            self.layer_lakes = self.svg.add_inkscape_layer(
+                'lakes', "Lakes", self.layer)
+            #self.layer_lakes.set_scale_transform(1, -1)
+            for lake_seed_id in self.overlayData['lake']:
+                if lake_seed_id:
+                    rid = self.vor.point_region[int(lake_seed_id)]
+                    id = f"lake-{lake_seed_id}"
+                    self.drawRegion(id, self.vor.regions[rid], REGION_STYLE['r'], self.layer_lakes)
 
     def drawTileId(self):
         self.layer_text = self.svg.add_inkscape_layer(
