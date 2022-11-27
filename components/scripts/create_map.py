@@ -1361,7 +1361,7 @@ class VoronoiHexTile():
 
         # Build list of template ids and then load from svg file.
         svg_ids = []
-        for obj in ['bridge', 'star', 'tree', 'tower']:
+        for obj in ['bridge', 'star', 'tree1', 'tree2', 'tree3', 'tree4', 'tower']:
             svg_ids.append(f"obj-{obj}")
         svg_ids.append("tile-id")
         self.svg.load_ids(MAP_OBJ_TEMPLATE, svg_ids)
@@ -1611,7 +1611,7 @@ class VoronoiHexTile():
             for mark in self.overlayData['mark']:
                 if mark:
                     # <type> '-' <cell-id> '(' <x-offset> <y-offset> ')'
-                    m = re.match(r"^([a-z-]+)\-(\d+)(\(([\d.-]+ [\d.-]+)\))?$", mark)
+                    m = re.match(r"^([a-z0-9-]+)\-(\d+)(\(([\d.-]+ [\d.-]+)\))?$", mark)
                     if m:
                         type = m.group(1)
                         cell = m.group(2)
