@@ -125,6 +125,9 @@ class VoronoiHexTileLoader():
 
     def processTile(self, terrainData, riverData, overlayData):
         options = self.options.copy()
+
+        print(f"Tile {options['id']} - pattern {options['pattern']} - seed {options['seed']}")
+
         v = VoronoiHexTile(options)
         v.init()
         v.setTerrainData(terrainData)
@@ -139,7 +142,8 @@ class VoronoiHexTileLoader():
             v.generate()
         v.plot()
 
-        v.writeTileData()
+        if self.options['verbose']:
+            v.writeTileData()
 
         if options['export-3d']:
 	        v.writeObject3d()
@@ -344,7 +348,8 @@ class VoronoiHexTile():
 
         if self.options['seed'] == None:
             self.options['seed'] = random.randint(0,5000)
-        print("Seed:", self.options['seed'])
+        if self.options['verbose']:
+            print("Seed:", self.options['seed'])
         self.rng = np.random.RandomState(self.options['seed'])
 
         self.initFixedSeeds()
@@ -412,7 +417,8 @@ class VoronoiHexTile():
                 sum([self.cornerWeight[i] for i in self.cornerType]) / NUM_SIDES)
         else:
             self.centerWeight = self.cornerWeight[self.options['center']]
-        print("Center weight;", self.centerWeight)
+        if self.options['verbose']:
+            print("Center weight;", self.centerWeight)
 
     # Initialize the fixed seeds along the edge of the hex tile.
     def initFixedSeeds(self):
@@ -2085,6 +2091,8 @@ OPTIONS = {
                       'desc': "Show the seed id layer"},
     'size': {'type': 'int', 'default': 80,
              'desc': "Size of hex side (mm)"},
+    'verbose': {'type': 'bool', 'short': 'v', 'default': False,
+                'desc': "Display progress during processing"},
 }
 
 def usage():
@@ -2147,7 +2155,7 @@ def parse_options():
     options['outdir_pdf'] = os.path.join(MAP_OUTPUT_DIR, "map-pdf")
     options['origin'] = [0, 0]
     options['write_output'] = True
-    options['verbose_iteration'] = True
+    options['verbose_iteration'] = options['verbose']
     # Auto fill inner regions with random terrain.
 
     # Calc the neighbor edges for 3d output.
