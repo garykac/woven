@@ -53,11 +53,13 @@ EDGE_REGION_INFO = {
 # Mark where rivers are located on edges using an '*' to note the regions that
 # the river flows between.
 EDGE_RIVER_INFO = {
-    '2f': ['l', 'l', '*', 'l', 'm'],           # l - m, m - h
+    '2f': ['l', '*', 'l', 'l', 'm'],           # l - m, m - h
+    '2s': ['m', 'm', '*', 'm', 'm'],           # m - m
 }
 
 # Edge seed info.
 # Each dict entry contains an array of seed positions along the edge.
+# There are implicit seeds at the 2 ends of the edge.
 # Each seed position is:
 #   [ offset-along-edge, perpendicular-offset ]
 EDGE_SEED_INFO = {
@@ -1715,8 +1717,21 @@ class VoronoiHexTile():
 
                 rIndex = EDGE_RIVER_INFO[edgeType].index('*')
                 seedPattern = EDGE_SEED_INFO[edgeType]
+
+                # EDGE_RIVER_INFO: [ 'l' '*' 'l' 'l' 'm' ]
+                #  EDGE_SEED_INFO:    -       x   x   -
+                # For the seed info, the first/last are implicit: (0.0 1.0) and these's no
+                # entry for the river.
+                beforeIndex = rIndex - 2
+                before = 0
+                if beforeIndex != -1:
+                    before = seedPattern[rIndex-2][0]
+                afterIndex = rIndex - 1
+                after = 1
+                if afterIndex < len(seedPattern):
+                    after = seedPattern[rIndex-1][0]
                 # River is located between the 2 regions.
-                t = (seedPattern[rIndex-2][0] + seedPattern[rIndex-1][0]) / 2
+                t = (before + after) / 2
                 x = lerp(-self.size/2, self.size/2, t)
 
                 color = self.getTerrainStyle('r')
