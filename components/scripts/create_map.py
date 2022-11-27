@@ -1419,20 +1419,6 @@ class VoronoiHexTile():
             id = f"seed-{sid}"
             drawCircle(id, center, 1.0, black_fill, layer_seeds)
 
-        # Plot layer with region ids.
-        layer_region_ids = self.svg.add_inkscape_layer(
-            'region_ids', "Region Ids", layer)
-        if not self.options['show-seed-ids']:
-            layer_region_ids.hide()
-        layer_region_ids.set_transform("scale(1,-1)")
-        for sid in range(0, self.numActiveSeeds):
-            center = self.seeds[sid]
-            text = f"{sid}"
-            if PLOT_CELL_IDS:
-                plt.text(center[0]-1.4, center[1]-1.5, text)
-            t = Text(None, center[0]-1.4, -center[1], text)
-            SVG.add_node(layer_region_ids, t)
-
         # Plot seed exclusion zones.
         layer_seed_ex = self.svg.add_inkscape_layer(
             'seed_exclusion', "Seed Exclusion", layer)
@@ -1505,6 +1491,20 @@ class VoronoiHexTile():
         self.drawRiverSegments()
         
         self.drawOverlay()
+
+        # Plot layer with region ids.
+        layer_region_ids = self.svg.add_inkscape_layer(
+            'region_ids', "Region Ids", layer)
+        if not self.options['show-seed-ids']:
+            layer_region_ids.hide()
+        layer_region_ids.set_transform("scale(1,-1)")
+        for sid in range(0, self.numActiveSeeds):
+            center = self.seeds[sid]
+            text = f"{sid}"
+            if PLOT_CELL_IDS:
+                plt.text(center[0]-1.4, center[1]-1.5, text)
+            t = Text(None, center[0]-1.4, -center[1], text)
+            SVG.add_node(layer_region_ids, t)
 
         self.drawHexTileBorder("border", "Border", stroke)
 
