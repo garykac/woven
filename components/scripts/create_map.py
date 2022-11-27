@@ -1491,6 +1491,8 @@ class VoronoiHexTile():
                     circle = plt.Circle(center, radius, color="#80000080")
                     plt.gca().add_patch(circle)
 
+        if self.options['id']:
+            self.drawTileId()
         self.drawAnnotations()
         self.drawTerrainLabels()
 
@@ -1636,6 +1638,16 @@ class VoronoiHexTile():
                         y -= float(offset[1])
                     icon.set('transform', f"translate({x} {y})")
 
+    def drawTileId(self):
+        self.layer_text = self.svg.add_inkscape_layer(
+            'tile-id', "Tile Id", self.layer)
+        self.layer_text.set_transform("scale(1,-1)")
+
+        id = self.options['id']
+        id_text = self.svg.add_loaded_element(self.layer_text, 'tile-id')
+        id_text.set('transform', f"translate(0 {-self.size+8})")
+        SVG.set_text(id_text, f"{id:03d}")
+
     def drawAnnotations(self):
         self.layer_text = self.svg.add_inkscape_layer(
             'annotations', "Annotations", self.layer)
@@ -1645,9 +1657,6 @@ class VoronoiHexTile():
             id = self.options['id']
             self.numLines -= 1
             self.addText(f"id: {id}")
-            id_text = self.svg.add_loaded_element(self.layer_text, 'tile-id')
-            id_text.set('transform', f"translate(0 {-self.size+8})")
-            SVG.set_text(id_text, f"{id:03d}")
 
         self.addText(f"size: {self.size:g}")
         if self.options['seed']:
