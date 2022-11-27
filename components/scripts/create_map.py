@@ -1752,12 +1752,20 @@ class VoronoiHexTile():
     def drawRiverSegments(self):
         self.layer_river_border = self.svg.add_inkscape_layer(
             'river-border', "River Border", self.layer)
+        self.group_river_border = SVG.group('river-border-group')
+        SVG.add_node(self.layer_river_border, self.group_river_border)
+        clippath_id = self.addHexTileClipPath()
+        self.group_river_border.set("clip-path", f"url(#{clippath_id})")
         self.style_river_border = Style(None, STROKE_COLOR,
                                    RIVER_WIDTH + 2 * STROKE_WIDTH)
         self.style_river_border.set("stroke-linecap", "round")
         self.style_river_border.set("stroke-linejoin", "round")
 
         self.layer_river = self.svg.add_inkscape_layer('river', "River", self.layer)
+        self.group_river = SVG.group('river-group')
+        SVG.add_node(self.layer_river, self.group_river)
+        clippath_id = self.addHexTileClipPath()
+        self.group_river.set("clip-path", f"url(#{clippath_id})")
         self.style_river = Style(None, REGION_STYLE['r'], RIVER_WIDTH)
         self.style_river.set("stroke-linecap", "round")
         self.style_river.set("stroke-linejoin", "round")
@@ -1794,10 +1802,10 @@ class VoronoiHexTile():
         p2 = copy.deepcopy(p)
 
         p.set_style(self.style_river_border)
-        SVG.add_node(self.layer_river_border, p)
+        SVG.add_node(self.group_river_border, p)
 
         p2.set_style(self.style_river)
-        SVG.add_node(self.layer_river, p2)
+        SVG.add_node(self.group_river, p2)
             
     def plotBadVertex(self, v, layer):
         circle = plt.Circle(v, 1, color="r")
@@ -1865,6 +1873,12 @@ class VoronoiHexTile():
         p.end()
         p.set_style(style)
         SVG.add_node(layer_border, p)
+
+    def addHexTileClipPath(self):
+        p = Path()
+        p.addPoints(self.vHex)
+        p.end()
+        return self.svg.add_clip_path(p)
 
     def cleanupAnimation(self):
         out_dir = os.path.join(self.options['outdir_png'], ANIM_SUBDIR)

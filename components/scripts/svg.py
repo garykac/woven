@@ -235,6 +235,15 @@ class SVG(object):
         filter = XML(filter_str)
         self.defs.append(filter)
         
+    # |path| a Path class
+    def add_clip_path(self, path):
+        clip = Element("clipPath")
+        clippath_id = f"clippath-{SVG.next_id()}"
+        clip.set("id", clippath_id)
+        clip.append(path.element)
+        self.defs.append(clip)
+        return clippath_id
+        
     def add_inkscape_layer(self, id, label, parent=None):
         layer = Layer(id, label)
         if parent == None:
