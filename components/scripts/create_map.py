@@ -752,7 +752,7 @@ class VoronoiHexTile():
                     sids.append(sid)
         return sids
 
-    # Calculate the 2 regions on either side of each vertex vid0-vid1.
+    # Calculate the 2 regions on either side of the edge defined by vertices vid0-vid1.
     # Return array of [vid, sid] for the 2 vertices, ignoring the regions that
     # are common to both vertices.
     def calcSideRegions(self, vid0, vid1):
@@ -764,6 +764,19 @@ class VoronoiHexTile():
             if not sid in self.vid2sids[vid0]:
                 sides.append([vid1, sid])
         return sides
+
+    # Given an edge defined by the 2 seeds, return the 2 ridge vertices of the edge.
+    def getEdgeRidgeVertices(self, sid0, sid1):
+        edgeToFind = f"{sid0}-{sid1}"
+        n_ridges = len(self.vor.ridge_points)
+        for i in range(0, n_ridges):
+            (s0, s1) = self.vor.ridge_points[i]
+            if s1 < s0:
+                s0,s1 = s1,s0
+            key = f"{s0}-{s1}"
+            if key == edgeToFind:
+                return [self.vertices[i] for i in self.vor.ridge_vertices[i]]
+        return None
 
     def calcAdjustment(self, sid, vMod, lerp_t):
         # Don't adjust the fixed seeds along the edge.
@@ -1595,12 +1608,9 @@ class VoronoiHexTile():
         if "bridge" in self.overlayData:
             for bridge in self.overlayData['bridge']:
                 if bridge:
-                    m = re.match(r"^(\d+\-\d+)(\(([\d.-]+ [\d.-]+)\))?$", bridge)
+                    m = re.match(r"^(\d+\-\d+)$", bridge)
                     if m:
                         cells = m.group(1)
-                        offset = None
-                        if m.group(2):
-                            offset = m.group(3)
                     else:
                         raise Exception(f"Unrecognized bridge data: {bridge}")
 
@@ -1609,12 +1619,11 @@ class VoronoiHexTile():
                     ptEnd = self.seeds[int(end)]
                     rTheta = math.atan2(-(ptEnd[1] - ptStart[1]), ptEnd[0] - ptStart[0])
                     degTheta = 90 + (rTheta * 180 / math.pi);
-                    center = lerp(ptStart, ptEnd, 0.5)
+                    edge_vertices = self.getEdgeRidgeVertices(start, end)
+                    center = lerp(edge_vertices[0], edge_vertices[1], 0.5)
                     icon = self.svg.add_loaded_element(self.layer_overlay, 'obj-bridge')
                     
                     transform = f"translate({center[0]} {-center[1]}) rotate({degTheta})"
-                    if offset:
-                        transform += f" translate({offset})"
                     icon.set('transform', transform)
 
         if "mark" in self.overlayData:
