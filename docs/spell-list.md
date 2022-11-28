@@ -1,6 +1,6 @@
 # List of Spell Fragments
 
-Generated on 2022/11/26 @ 10:36
+Generated on 2022/11/27 @ 16:50
 
 ## By Category
 
@@ -363,7 +363,7 @@ Element: Air
 
 If in a Forest location, jump to another Forest location no more than 4 spaces away.
 
-Reaction: If attacked while in a Forest, you may cast this to move into a neighboring Forest location.
+Reaction: If attacked while in a Forest, you may cast this to move into a neighboring location within the same Forest.
 
 ### Forest Passage
 ```
