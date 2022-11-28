@@ -143,11 +143,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="16.53044"
-     inkscape:cx="124.67908"
-     inkscape:cy="49.33323"
+     inkscape:zoom="1.7725364"
+     inkscape:cx="57.826739"
+     inkscape:cy="193.22593"
      inkscape:document-units="mm"
-     inkscape:current-layer="layer1"
+     inkscape:current-layer="layer26"
      showgrid="false"
      inkscape:snap-global="true"
      inkscape:window-width="1728"
@@ -242,20 +242,20 @@
          style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.11667px;font-family:Georgia;text-align:end;text-anchor:end;fill:#000000;fill-opacity:1;stroke-width:0.264583"
          id="tspan71">id</tspan></text>
     <flowRoot
-       style="font-style:normal;font-weight:normal;font-size:10px;line-height:125%;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="font-style:normal;font-weight:normal;font-size:10px;line-height:100%;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        id="spell-flavor"
        xml:space="preserve"
-       transform="matrix(0.26458333,0,0,0.26458333,2.1270023,32.515713)"><flowRegion
+       transform="matrix(0.26458333,0,0,0.26458333,3.5227827,32.814248)"><flowRegion
          id="flowRegion904"
          style="text-align:center;text-anchor:middle"><rect
            id="rect902"
-           height="25.598965"
-           width="165.45445"
+           height="31.240601"
+           width="154.73535"
            y="146"
            x="28.799999"
            style="text-align:center;text-anchor:middle" /></flowRegion><flowPara
-         id="flowPara906"
-         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8px;font-family:'Arial Narrow';-inkscape-font-specification:'Arial Narrow Italic';text-align:center;text-anchor:middle">Spell Flavor</flowPara></flowRoot>
+         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8px;font-family:'Arial Narrow';-inkscape-font-specification:'Arial Narrow Italic';text-align:center;text-anchor:middle"
+         id="flowPara1367">Spell Flavor with multiple lines of text so that it fits on the card correctly.</flowPara></flowRoot>
     <flowRoot
        transform="matrix(0.26458333,0,0,0.26458333,0.40268899,4.9990446)"
        xml:space="preserve"
@@ -1935,6 +1935,42 @@
   </g>
   <g
      inkscape:groupmode="layer"
+     id="layer25"
+     inkscape:label="Companion">
+    <g
+       id="icon-companion"
+       inkscape:label="icon-companion"
+       transform="translate(1.0583333,0.14926821)">
+      <path
+         style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.352778;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+         d="m 56.837727,72.115892 c -0.346026,0.01235 -0.51718,0.267674 -0.553008,0.438694 -0.03629,0.173178 0.04941,0.506652 0.04941,0.506652 0,0 -0.481506,0.177751 -0.685863,0.327498 -0.174258,0.127691 -0.420977,0.314784 -0.451069,0.549952 -0.01872,0.146255 0.117405,0.263554 0.259539,0.302782 0.186288,0.05143 0.539806,-0.174018 0.642606,-0.01854 0.10119,0.1213 -0.09392,0.461137 -0.222455,0.661155 -0.201852,0.314121 -0.4855,0.953961 -0.315115,0.957729 0.17648,0.0039 0.640002,-0.0032 0.920693,-0.01233 0.107838,-0.0035 0.219322,-0.543786 0.355262,-0.543786 0.135939,0 0.247466,0.5403 0.355303,0.543786 0.280692,0.0091 0.744213,0.01623 0.920694,0.01233 0.170392,-0.0037 -0.113305,-0.643608 -0.315165,-0.957729 -0.128531,-0.200018 -0.323596,-0.539855 -0.222405,-0.661155 0.1028,-0.155476 0.456318,0.06997 0.642613,0.01854 0.142134,-0.03923 0.278208,-0.156527 0.259489,-0.302782 -0.03009,-0.235168 -0.276817,-0.422261 -0.451075,-0.549952 -0.204357,-0.149747 -0.685864,-0.327498 -0.685864,-0.327498 0,0 0.08575,-0.333474 0.04947,-0.506652 -0.03584,-0.17102 -0.207032,-0.426339 -0.553057,-0.438694 z"
+         id="path1788-1-9"
+         inkscape:connector-curvature="0" />
+      <path
+         style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.352778;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+         d="m 54.048141,72.115892 c -0.346026,0.01235 -0.51718,0.267674 -0.553008,0.438694 -0.03629,0.173178 0.04941,0.506652 0.04941,0.506652 0,0 -0.481506,0.177751 -0.685863,0.327498 -0.174258,0.127691 -0.420977,0.314784 -0.451069,0.549952 -0.01872,0.146255 0.117405,0.263554 0.259539,0.302782 0.186288,0.05143 0.539806,-0.174018 0.642606,-0.01854 0.10119,0.1213 -0.09392,0.461137 -0.222455,0.661155 -0.201852,0.314121 -0.4855,0.953961 -0.315115,0.957729 0.17648,0.0039 0.640002,-0.0032 0.920693,-0.01233 0.107838,-0.0035 0.219322,-0.543786 0.355262,-0.543786 0.135939,0 0.247466,0.5403 0.355303,0.543786 0.280692,0.0091 0.744213,0.01623 0.920694,0.01233 0.170392,-0.0037 -0.113305,-0.643608 -0.315165,-0.957729 -0.128531,-0.200018 -0.323596,-0.539855 -0.222405,-0.661155 0.1028,-0.155476 0.456318,0.06997 0.642613,0.01854 0.142134,-0.03923 0.278208,-0.156527 0.259489,-0.302782 -0.03009,-0.235168 -0.276817,-0.422261 -0.451075,-0.549952 -0.204357,-0.149747 -0.685864,-0.327498 -0.685864,-0.327498 0,0 0.08575,-0.333474 0.04947,-0.506652 -0.03584,-0.17102 -0.207032,-0.426339 -0.553057,-0.438694 z"
+         id="path1253"
+         inkscape:connector-curvature="0" />
+    </g>
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer26"
+     inkscape:label="Starter">
+    <text
+       id="icon-starter"
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:8.46667px;line-height:125%;font-family:'Arial Narrow';text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="6.0250845"
+       y="76.278084"
+       inkscape:label="icon-starter"><tspan
+         x="6.0250845"
+         y="76.278084"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:8.46667px;font-family:Arial;-inkscape-font-specification:'Arial Bold';fill:#000000;fill-opacity:1;stroke-width:0.264583"
+         id="tspan64-5-2">⍟</tspan></text>
+  </g>
+  <g
+     inkscape:groupmode="layer"
      id="layer4"
      inkscape:label="Op Master"
      style="display:inline">
@@ -2299,7 +2335,7 @@
        inkscape:groupmode="layer"
        id="layer5"
        inkscape:label="Op MMove / Thread"
-       style="display:inline">
+       style="display:none">
       <g
          style="display:inline"
          id="op-mmove-thread"
@@ -2332,7 +2368,7 @@
        inkscape:groupmode="layer"
        id="layer12"
        inkscape:label="Op MMove"
-       style="display:none">
+       style="display:inline">
       <g
          style="display:inline"
          id="op-mmove"

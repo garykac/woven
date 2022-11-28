@@ -29,7 +29,7 @@ elem_map = {
 
 # Spell attributes
 spell_attributes = [
-    'element', 'pattern', 'op', 'vp', 'id', 'category', 'flavor', 'DISABLE'
+    'element', 'pattern', 'op', 'vp', 'companion', 'id', 'category', 'flavor', 'DISABLE'
 ]
 
 # Spell description keys
@@ -343,6 +343,8 @@ class WovenSpellCards():
         svg_ids.append('icon-vp')
         svg_ids.append('spell-flavor')
         svg_ids.append('separator')
+        svg_ids.append('icon-companion')
+        svg_ids.append('icon-starter')
         svg_ids.extend(['op-{0}'.format(op) for op in valid_ops])
         svg.load_ids(CARD_TEMPLATE, svg_ids)
 
@@ -395,7 +397,15 @@ class WovenSpellCards():
         if attrs['category'] != 'blank':
             SVG.set_text(text, self.expand_desc(desc))
 
-        self.draw_vp(attrs['vp'], svg, svg_group)
+        if 'companion' in attrs:
+            svg.add_loaded_element(svg_group, 'icon-companion')
+
+        # Add icon for starter cards
+        for cat in attrs['category'].split(','):
+            if cat == 'starter':
+                svg.add_loaded_element(svg_group, 'icon-starter')
+
+        #self.draw_vp(attrs['vp'], svg, svg_group)
 
     def draw_vp(self, vp, svg, svg_group):
         if vp != 0:
