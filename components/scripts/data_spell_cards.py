@@ -2,7 +2,7 @@
 
 # Text -> ASCII Art: http://patorjk.com/software/taag/#p=display&f=Rectangles&t=Monster
 
-spell_card_revision = 10
+spell_card_revision = 11
 
 spell_card_categories = [
     'blank',
@@ -208,7 +208,7 @@ spell_card_data = [
     # Representative spells for each element.
 
     ["Haste",
-        {'element': 'air', 'pattern': 'E2-2', 'op': 'emove2-thread', 'companion': True,
+        {'element': 'air', 'pattern': 'E2-2', 'op': 'emove2-mmove', 'companion': True,
          'category': 'starter,mage-move',
         }, {
             'cast': "Move 3 along the same elevation.",
@@ -236,22 +236,23 @@ spell_card_data = [
         } ],
 
     ["Airwalk",
-        {'element': 'air', 'pattern': 'E2-7', 'op': 'tapestry-thread', 'companion': True,
+        {'element': 'air', 'pattern': 'E2-7', 'op': 'tapestry-eye', 'companion': True,
          'category': 'starter,terrain,mage-move',
         }, {
             'cast': "Move 5 spaces over same or lower elevation, passing over rivers and water. You must end at the same elevation as your start location.",
         } ],
 
     ["Shield",
-        {'element': 'earth', 'pattern': 'E2-15', 'op': 'mmove-thread', 'companion': True,
+        {'element': 'earth', 'pattern': 'E2-15', 'op': 'eye-mmove', 'companion': True,
          'category': 'starter,mage-defend',
         }, {
             'cast': "{{ADD_CHARGE}}",
+            'react': "When attacked, you may immediately cast this spell.",
             'sacrifice': "Remove a charge to cancel an attack of 1 damage.",
         } ],
 
     ["Fire Shards",
-        {'element': 'fire', 'pattern': 'E2-36', 'op': 'tmove+action',
+        {'element': 'fire', 'pattern': 'E2-36', 'op': 'eye-mmove',
          'category': 'starter,mage-other-attack',
         }, {
             'cast': "Consume one of your Eyes to Attack 1 at that location.",
@@ -301,7 +302,7 @@ spell_card_data = [
         } ],
 
     ["Waterwalk",
-        {'element': 'water', 'pattern': 'E2-34', 'op': 'emove2-tmove', 'companion': True,
+        {'element': 'water', 'pattern': 'E2-34', 'op': 'emove2-mmove', 'companion': True,
          'category': 'terrain,mage-move',
          #'flavor': "Rising columns of mud form a temporary bridge.",
         }, {
@@ -309,21 +310,21 @@ spell_card_data = [
         } ],
 
     ["Blur",
-        {'element': 'air', 'pattern': 'E2-1', 'op': 'eye', 'DISABLE': True,
+        {'element': 'air', 'pattern': 'E2-1', 'op': '', 'DISABLE': True,
          'category': 'mage-move',
         }, {
             'cast': "Move 5 through any terrain.",
         } ],
 
     ["Forest Passage",
-        {'element': 'air', 'pattern': 'E2-59', 'op': 'mmove-thread', 'companion': True,
+        {'element': 'air', 'pattern': 'E2-59', 'op': 'tapestry-eye', 'companion': True,
          'category': 'terrain,mage-move',
         }, {
             'cast': "If you are in a Forest location, you may move to any connected Forest location up to 6 spaces away, ignoring any terrain costs and crossing rivers.",
         } ],
 
     ["Forest Home",
-        {'element': 'air', 'pattern': 'E2-60', 'op': 'eye-thread', 'companion': True,
+        {'element': 'air', 'pattern': 'E2-60', 'op': 'eye-emove2', 'companion': True,
          'category': 'terrain,mage-move',
         }, {
             'cast': "If in a Forest location, jump to another Forest location no more than 4 spaces away.",
@@ -331,7 +332,7 @@ spell_card_data = [
         } ],
 
     ["Dodge",
-        {'element': 'air', 'pattern': 'E1-3', 'op': 'emove2-tmove', 'companion': True,
+        {'element': 'air', 'pattern': 'E1-3', 'op': 'emove2-mmove', 'companion': True,
          'category': 'mage-move',
         }, {
             'cast': "Move 4 through any terrain.",
@@ -370,21 +371,21 @@ spell_card_data = [
     # When in forest/water, create Eye in same terrain within N spaces
 
     ["Water Target",
-        {'element': 'water', 'pattern': 'E1-5', 'op': 'emove2-thread',
+        {'element': 'water', 'pattern': 'E1-5', 'op': 'tapestry-emove2',
          'category': 'eye-create',
         }, {
             'cast': "If next to a river, place an Eye in any location along that river within 5 spaces.",
         } ],
 
     ["Woodland Target",
-        {'element': 'earth', 'pattern': 'E2-10', 'op': 'emove2-mmove', 'DISABLE': True,
+        {'element': 'earth', 'pattern': 'E2-10', 'op': '', 'DISABLE': True,
          'category': 'eye-create',
         }, {
             'cast': "If in a forest, place an Eye in any connected forest location.",
         } ],
 
     ["Traceback",
-        {'element': 'water', 'pattern': 'E2-36', 'op': 'tapestry-thread', 'DISABLE': True,
+        {'element': 'water', 'pattern': 'E2-36', 'op': '', 'DISABLE': True,
          'category': 'eye-create',
         }, {
             'cast': "If in a location with another mage's Eye, you may place an Eye at that Mage's location.",
@@ -410,21 +411,21 @@ spell_card_data = [
     # Move Eye in plain/water/forest to another within N spaces
     
     ["Eyedrop",
-        {'element': 'air', 'pattern': 'E2-14', 'op': 'eye-mmove',
+        {'element': 'air', 'pattern': 'E2-14', 'op': 'tapestry-eye',
          'category': 'eye-move',
         }, {
             'cast': "Create an Eye and then move it 4.",
         } ],
     
     ["Seek",
-        {'element': 'air', 'pattern': 'E2-16', 'op': 'eye-thread',
+        {'element': 'air', 'pattern': 'E2-16', 'op': 'eye-mmove',
          'category': 'eye-move',
         }, {
             'cast': "Move one of your Eyes 2 spaces. If it ends in the same location as another Mage's Eye, then move your Eye to that Mage's location.",
         } ],
     
     ["Gust",
-        {'element': 'air', 'pattern': 'E2-69', 'op': 'mmove+action',
+        {'element': 'air', 'pattern': 'E2-69', 'op': 'eye-mmove',
          'category': 'eye-move',
         }, {
             'cast': "Move your Eyes 6 spaces, split among any number of Eyes.",
@@ -434,11 +435,11 @@ spell_card_data = [
         {'element': 'water', 'pattern': 'E2-32', 'op': 'eye-emove2',
          'category': 'eye-move',
         }, {
-            'cast': "Move all your Eyes 3 spaces.",
+            'cast': "Move all your Eyes 3 spaces each.",
         } ],
 
     ["Expand",
-        {'element': 'water', 'pattern': 'E2-35', 'op': 'mmove-thread',
+        {'element': 'water', 'pattern': 'E2-35', 'op': 'eye-mmove',
          'category': 'eye-create,eye-move',
          'flavor': "The air crackles as the Eye splits in two and one half shoots away. ",
         }, {
@@ -446,7 +447,7 @@ spell_card_data = [
         } ],
 
     ["Bolt",
-        {'element': 'fire', 'pattern': 'E1-8', 'op': 'eye-tmove',
+        {'element': 'fire', 'pattern': 'E1-8', 'op': 'eye-emove2',
          'category': 'eye-move',
         }, {
             'cast': "Move a single Eye 2 spaces and then consume it to Attack 1.",
@@ -465,21 +466,22 @@ spell_card_data = [
     # Move Eye N spaces, for each space entered move all Eyes 1 space
 
     ["Disperse",
-        {'element': 'air', 'pattern': 'E2-53', 'op': 'mmove-thread',
+        {'element': 'air', 'pattern': 'E2-53', 'op': 'emove2-mmove',
          'category': 'eye-move',
         }, {
             'cast': "Move one of your Eyes 3 spaces. When moving this Eye into a space, push any Eyes already in that space into an adjacent space.",
         } ],
 
     ["Control",
-        {'element': 'water', 'pattern': 'E2-78', 'op': 'emove2-mmove',
+        {'element': 'water', 'pattern': 'E2-78', 'op': 'tapestry-emove2',
          'category': 'eye-move',
         }, {
             'cast': "If you have an Eye in the same location as another Eye (yours or someone else's), then you may move that other Eye 4 spaces.",
+            'react': "When another Eye moves into the same space as one of your Eyes, you may immediately cast this spell.",
         } ],
 
     ["Control Burst",
-        {'element': 'water', 'pattern': 'E2-79', 'op': 'mmove-thread', 'DISABLE': True,
+        {'element': 'water', 'pattern': 'E2-79', 'op': '', 'DISABLE': True,
          'category': 'eye-move',
         }, {
             'cast': "If you have an Eye in the same location as other Eyes, then you may move all other Eyes 2 spaces each.",
@@ -496,7 +498,7 @@ spell_card_data = [
     # Anchor remote eye
     
     ["New Anchor",
-        {'element': 'earth', 'pattern': 'E1-6', 'op': 'tapestry-thread', 'DISABLE': True,
+        {'element': 'earth', 'pattern': 'E1-6', 'op': '', 'DISABLE': True,
          'category': 'eye-defend',
         }, {
             'cast': "Create a new Eye and then Anchor it.",
@@ -526,14 +528,14 @@ spell_card_data = [
         } ],
 
     ["Scorch",
-        {'element': 'fire', 'pattern': 'E2-44', 'op': 'emove2-thread',
+        {'element': 'fire', 'pattern': 'E2-44', 'op': 'eye-emove2',
          'category': 'eye-move,eye-other-attack',
         }, {
             'cast': "Move one of your Eyes 4 spaces, removing one opponent Eye from each location it moves into this turn. Consume this Eye.",
         } ],
 
     ["Repel",
-        {'element': 'fire', 'pattern': 'E2-37', 'op': 'emove2-tmove', 'companion': True,
+        {'element': 'fire', 'pattern': 'E2-37', 'op': 'emove2-mmove', 'companion': True,
          'category': 'eye-move,eye-other-attack',
         }, {
             'cast': "{{ADD_CHARGE}}",
@@ -555,7 +557,7 @@ spell_card_data = [
     # Charge: all Eyes become anchors
 
     ["Sacrificium",
-        {'element': 'earth', 'pattern': 'E2-8', 'op': 'eye-tmove', 'companion': True,
+        {'element': 'earth', 'pattern': 'E2-8', 'op': 'eye-emove2', 'companion': True,
          'category': 'mage-defend',
         }, {
             'cast': "{{ADD_CHARGE}}",
@@ -564,7 +566,7 @@ spell_card_data = [
         } ],
 
     ["Switch",
-        {'element': 'earth', 'pattern': 'E2-11', 'op': 'eye-thread', 'companion': True,
+        {'element': 'earth', 'pattern': 'E2-11', 'op': 'tapestry-mmove', 'companion': True,
          'category': 'mage-defend',
         }, {
             'cast': "{{ADD_CHARGE}}",
@@ -580,7 +582,7 @@ spell_card_data = [
     # Move Anchor
 
     ["Move Anchor",
-        {'element': 'earth', 'pattern': 'EE3-2', 'op': 'eye-thread',
+        {'element': 'earth', 'pattern': 'EE3-2', 'op': 'eye-emove2',
          'category': 'mage-defend',
         }, {
             'cast': ["Move one of your Anchors one space.", "You may not move your Anchor adjacent to any existing Anchor."],
@@ -612,7 +614,7 @@ spell_card_data = [
         } ],
 
     ["Redirect",
-        {'element': 'fire', 'pattern': 'E2-33', 'op': 'mmove-tmove',
+        {'element': 'fire', 'pattern': 'E2-33', 'op': 'tapestry-mmove',
          'category': 'mage-other-attack',
         }, {
             'cast': "Attack 1 at one of your Eyes, consuming it.",
@@ -627,14 +629,14 @@ spell_card_data = [
         } ],
 
     ["Lavastone",
-        {'element': 'fire', 'pattern': 'E2-31', 'op': 'eye-thread', 'DISABLE': True,
+        {'element': 'fire', 'pattern': 'E2-31', 'op': '', 'DISABLE': True,
          'category': 'mage-other-attack',
         }, {
             'cast': "Attack 2 at one of your Eyes. Attack 3 if targeting rough terrain or high elevation.",
         } ],
 
     ["Boost",
-        {'element': 'fire', 'pattern': 'E2-28', 'op': 'tapestry-thread', 'DISABLE': True,
+        {'element': 'fire', 'pattern': 'E2-28', 'op': '', 'DISABLE': True,
          'category': 'mage-other-attack',
         }, {
             'cast': "{{ADD_CHARGE}}",
@@ -642,7 +644,7 @@ spell_card_data = [
         } ],
 
     ["Geyser",
-        {'element': 'water', 'pattern': 'E2-45', 'op': 'tapestry-tmove',
+        {'element': 'water', 'pattern': 'E2-45', 'op': 'tapestry-emove2',
          'category': 'mage-other-attack',
         }, {
             'cast': "Attack 1 at two of your Eyes, consuming one of them.",
@@ -671,7 +673,7 @@ spell_card_data = [
         } ],
 
     ["Reflect",
-        {'element': 'fire', 'pattern': 'E2-79', 'op': 'emove2-thread',
+        {'element': 'fire', 'pattern': 'E2-79', 'op': 'emove2-mmove',
          'category': 'mage-defend',
         }, {
             'cast': "Reflect an attack of 1 back at the attacker.",
@@ -691,7 +693,7 @@ spell_card_data = [
     #     If attacked, recover 2 threads
 
     ["Introspect",
-        {'element': 'water', 'pattern': 'E1-2', 'op': 'mmove-tmove',
+        {'element': 'water', 'pattern': 'E1-2', 'op': 'tapestry-mmove',
          'category': 'eye-move',
         }, {
             'cast': "Move a Thread in your Tapestry to another square. If this completes a spell, you may cast it.",

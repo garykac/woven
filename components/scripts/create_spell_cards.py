@@ -353,7 +353,7 @@ class WovenSpellCards():
         g_masters.set_style("display:none")
         SVG.add_node(svg_group, g_masters)
         for e in [
-                'op-tapestry', 'op-eye', 'op-emove2', 'op-mmove', 'op-thread', 'op-tmove', 'op-action',
+                'op-tapestry', 'op-eye', 'op-emove2', 'op-mmove',
                 'element-air', 'element-earth', 'element-fire', 'element-water',
                 ]:
             svg.add_loaded_element(g_masters, e)
@@ -565,7 +565,7 @@ class WovenSpellCards():
             summary.write('\n')
 
         print('Ops')
-        for op in ['tapestry', 'eye', 'emove2', 'mmove', 'thread', 'tmove', 'action']:
+        for op in ['tapestry', 'eye', 'emove2', 'mmove']:
             count = 0
             for k,v in self.ops.items():
                 if k.find(op) != -1:
