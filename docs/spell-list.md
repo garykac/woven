@@ -1,6 +1,6 @@
 # List of Spell Fragments
 
-Generated on 2022/11/27 @ 16:50
+Generated on 2022/11/30 @ 08:40
 
 ## By Category
 
@@ -223,6 +223,8 @@ Element: Water
 'Category: Eye Move
 
 If you have an Eye in the same location as another Eye (yours or someone else's), then you may move that other Eye 4 spaces.
+
+Reaction: When another Eye moves into the same space as one of your Eyes, you may immediately cast this spell.
 
 ### Deflect
 ```
@@ -550,6 +552,8 @@ Element: Earth
 
 Place a Charge on this spell.
 
+Reaction: When attacked, you may immediately cast this spell.
+
 Sacrifice charge: Remove a charge to cancel an attack of 1 damage.
 
 ### Spread
@@ -562,7 +566,7 @@ Element: Water
 
 'Category: Eye Move
 
-Move all your Eyes 3 spaces.
+Move all your Eyes 3 spaces each.
 
 ### Switch
 ```
