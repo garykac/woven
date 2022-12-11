@@ -32,6 +32,13 @@ spell_attributes = [
     'element', 'pattern', 'op', 'vp', 'companion', 'id', 'category', 'flavor', 'DISABLE'
 ]
 
+spell_categories = [
+    "eye-create", "eye-move", "eye-defend", "eye-other-move", "eye-other-attack",
+    "mage-move", "mage-defend", "mage-other-move", "mage-other-attack",
+    "thread-move",
+    "anchor-create", "anchor-attack", "anchor-move",
+]
+
 # Spell description keys
 spell_desc_keys = {
     'cast': {
@@ -346,6 +353,7 @@ class WovenSpellCards():
         svg_ids.append('icon-companion')
         svg_ids.append('icon-starter')
         svg_ids.extend(['op-{0}'.format(op) for op in valid_ops])
+        svg_ids.extend(['cat-{0}'.format(cat) for cat in spell_categories])
         svg.load_ids(CARD_TEMPLATE, svg_ids)
 
         # Add Element and Op masters (hidden, used for cloning).
@@ -357,6 +365,8 @@ class WovenSpellCards():
                 'element-air', 'element-earth', 'element-fire', 'element-water',
                 ]:
             svg.add_loaded_element(g_masters, e)
+        for cat in spell_categories:
+            svg.add_loaded_element(g_masters, f"cat-{cat}")
 
         if attrs['category'] != 'blank':
             # Draw spell title.
@@ -365,8 +375,8 @@ class WovenSpellCards():
             
             # Draw elements in title bar
             elemaster = '#element-{0}'.format(element)
-            SVG.add_node(svg_group, SVG.clone(0, elemaster, 4, 4))
-            SVG.add_node(svg_group, SVG.clone(0, elemaster, 54, 4))
+            SVG.add_node(svg_group, SVG.clone(0, elemaster, 3, 3))
+            SVG.add_node(svg_group, SVG.clone(0, elemaster, 55, 3))
 
             # Draw spell id.
             id_text = svg.add_loaded_element(svg_group, 'spell-id')
@@ -392,6 +402,15 @@ class WovenSpellCards():
             text = svg.add_loaded_element(svg_group, 'spell-description')
 
         self.draw_pattern(pattern_id, pattern, element, svg_group)
+
+        # Add spell category icons.
+        cat_count = 0
+        for cat in attrs['category'].split(','):
+            if cat in spell_categories:
+                cat_master = f"#cat-{cat}"
+                cat_clone = SVG.clone(0, cat_master, 0, cat_count*5)
+                SVG.add_node(svg_group, cat_clone)
+                cat_count += 1
 
         # Draw description.
         if attrs['category'] != 'blank':
