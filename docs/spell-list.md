@@ -1,30 +1,41 @@
 # List of Spell Fragments
 
-Generated on 2022/11/30 @ 08:40
+Generated on 2022/12/11 @ 07:50
 
 ## By Category
 
-Eye Create (3)
+Anchor Attack (1)
 
-* [Duplicate](#duplicate) - _Water_
-* [Expand](#expand) - _Water_
-* [Water Target](#water-target) - _Water_
+* [Dispel](#dispel) - _Fire_
 
-Eye Defend (1)
+Anchor Create (1)
 
 * [Anchor](#anchor) - _Earth_
 
-Eye Move (12)
+Anchor Move (1)
+
+* [Move Anchor](#move-anchor) - _Earth_
+
+Eye Create (4)
+
+* [Duplicate](#duplicate) - _Water_
+* [Expand](#expand) - _Water_
+* [Eyedrop](#eyedrop) - _Air_
+* [Water Target](#water-target) - _Water_
+
+Eye Defend (2)
+
+* [Sacrificium](#sacrificium) - _Earth_
+* [Switch](#switch) - _Earth_
+
+Eye Move (9)
 
 * [Bolt](#bolt) - _Fire_
-* [Control](#control) - _Water_
 * [Disperse](#disperse) - _Air_
 * [Expand](#expand) - _Water_
 * [Extend](#extend) - _Water_
 * [Eyedrop](#eyedrop) - _Air_
 * [Gust](#gust) - _Air_
-* [Introspect](#introspect) - _Water_
-* [Repel](#repel) - _Fire_
 * [Scorch](#scorch) - _Fire_
 * [Seek](#seek) - _Air_
 * [Spread](#spread) - _Water_
@@ -36,14 +47,19 @@ Eye Other Attack (4)
 * [Repel](#repel) - _Fire_
 * [Scorch](#scorch) - _Fire_
 
+Eye Other Move (2)
+
+* [Control](#control) - _Water_
+* [Disperse](#disperse) - _Air_
+
 Mage Defend (6)
 
 * [Deflect](#deflect) - _Earth_
-* [Move Anchor](#move-anchor) - _Earth_
+* [Dodge](#dodge) - _Air_
+* [Forest Home](#forest-home) - _Air_
+* [Redirect](#redirect) - _Fire_
 * [Reflect](#reflect) - _Fire_
-* [Sacrificium](#sacrificium) - _Earth_
 * [Shield](#shield) - _Earth_
-* [Switch](#switch) - _Earth_
 
 Mage Move (8)
 
@@ -56,11 +72,14 @@ Mage Move (8)
 * [Plainswalker](#plainswalker) - _Earth_
 * [Waterwalk](#waterwalk) - _Water_
 
-Mage Other Attack (5)
+Mage Other Attack (8)
 
+* [Bolt](#bolt) - _Fire_
+* [Deflect](#deflect) - _Earth_
 * [Fire Shards](#fire-shards) - _Fire_
 * [Geyser](#geyser) - _Water_
 * [Redirect](#redirect) - _Fire_
+* [Reflect](#reflect) - _Fire_
 * [Turbo Ignis](#turbo-ignis) - _Fire_
 * [Wall of Flame](#wall-of-flame) - _Fire_
 
@@ -84,15 +103,19 @@ Terrain (6)
 * [Plainswalker](#plainswalker) - _Earth_
 * [Waterwalk](#waterwalk) - _Water_
 
+Thread Move (1)
+
+* [Introspect](#introspect) - _Water_
+
 ## By Element
 
 Air (9)
 
 * [Airwalk](#airwalk) - _Starter, Terrain, Mage Move_
-* [Disperse](#disperse) - _Eye Move_
-* [Dodge](#dodge) - _Mage Move_
-* [Eyedrop](#eyedrop) - _Eye Move_
-* [Forest Home](#forest-home) - _Terrain, Mage Move_
+* [Disperse](#disperse) - _Eye Move, Eye Other Move_
+* [Dodge](#dodge) - _Mage Move, Mage Defend_
+* [Eyedrop](#eyedrop) - _Eye Create, Eye Move_
+* [Forest Home](#forest-home) - _Terrain, Mage Move, Mage Defend_
 * [Forest Passage](#forest-passage) - _Terrain, Mage Move_
 * [Gust](#gust) - _Eye Move_
 * [Haste](#haste) - _Starter, Mage Move_
@@ -100,36 +123,36 @@ Air (9)
 
 Fire (9)
 
-* [Bolt](#bolt) - _Eye Move_
-* [Dispel](#dispel) - _Starter, Eye Other Attack_
+* [Bolt](#bolt) - _Eye Move, Mage Other Attack_
+* [Dispel](#dispel) - _Starter, Eye Other Attack, Anchor Attack_
 * [Fire Shards](#fire-shards) - _Starter, Mage Other Attack_
-* [Redirect](#redirect) - _Mage Other Attack_
-* [Reflect](#reflect) - _Mage Defend_
-* [Repel](#repel) - _Eye Move, Eye Other Attack_
+* [Redirect](#redirect) - _Mage Other Attack, Mage Defend_
+* [Reflect](#reflect) - _Mage Defend, Mage Other Attack_
+* [Repel](#repel) - _Eye Other Attack_
 * [Scorch](#scorch) - _Eye Move, Eye Other Attack_
 * [Turbo Ignis](#turbo-ignis) - _Mage Other Attack_
 * [Wall of Flame](#wall-of-flame) - _Mage Other Attack_
 
 Earth (9)
 
-* [Anchor](#anchor) - _Starter, Eye Defend_
-* [Deflect](#deflect) - _Mage Defend_
+* [Anchor](#anchor) - _Starter, Anchor Create_
+* [Deflect](#deflect) - _Mage Defend, Mage Other Attack_
 * [Endurance](#endurance) - _Terrain, Mage Move_
 * [Ground](#ground) - _Eye Other Attack_
-* [Move Anchor](#move-anchor) - _Mage Defend_
+* [Move Anchor](#move-anchor) - _Anchor Move_
 * [Plainswalker](#plainswalker) - _Terrain, Mage Move_
-* [Sacrificium](#sacrificium) - _Mage Defend_
+* [Sacrificium](#sacrificium) - _Eye Defend_
 * [Shield](#shield) - _Starter, Mage Defend_
-* [Switch](#switch) - _Mage Defend_
+* [Switch](#switch) - _Eye Defend_
 
 Water (9)
 
-* [Control](#control) - _Eye Move_
+* [Control](#control) - _Eye Other Move_
 * [Duplicate](#duplicate) - _Starter, Eye Create_
 * [Expand](#expand) - _Eye Create, Eye Move_
 * [Extend](#extend) - _Starter, Eye Move_
 * [Geyser](#geyser) - _Mage Other Attack_
-* [Introspect](#introspect) - _Eye Move_
+* [Introspect](#introspect) - _Thread Move_
 * [Spread](#spread) - _Eye Move_
 * [Water Target](#water-target) - _Eye Create_
 * [Waterwalk](#waterwalk) - _Terrain, Mage Move_
@@ -151,6 +174,7 @@ Water (9)
 * E2-14 [Eyedrop](#eyedrop) (air)
 * E2-15 [Shield](#shield) (earth)
 * E2-16 [Seek](#seek) (air)
+* E2-27 [Duplicate](#duplicate) (water)
 * E2-28 [Dispel](#dispel) (fire)
 * E2-29 [Turbo Ignis](#turbo-ignis) (fire)
 * E2-31 [Extend](#extend) (water)
@@ -169,9 +193,8 @@ Water (9)
 * E2-69 [Gust](#gust) (air)
 * E2-78 [Control](#control) (water)
 * E2-79 [Reflect](#reflect) (fire)
-* E2-106 [Duplicate](#duplicate) (water)
-* EE3-2 [Move Anchor](#move-anchor) (earth)
-* EE3-3 [Wall of Flame](#wall-of-flame) (fire)
+* E3-33 [Move Anchor](#move-anchor) (earth)
+* E3-34 [Wall of Flame](#wall-of-flame) (fire)
 
 ## By Name
 
@@ -192,7 +215,7 @@ X .
 ```
 Element: Earth
 
-'Category: Starter, Eye Defend
+'Category: Starter, Anchor Create
 
 Place a Charge on this spell.
 
@@ -208,7 +231,7 @@ No Eyes may move within 1 space of this Anchor. This Anchor remains in effect as
 ```
 Element: Fire
 
-'Category: Eye Move
+'Category: Eye Move, Mage Other Attack
 
 Move a single Eye 2 spaces and then consume it to Attack 1.
 
@@ -220,7 +243,7 @@ Move a single Eye 2 spaces and then consume it to Attack 1.
 ```
 Element: Water
 
-'Category: Eye Move
+'Category: Eye Other Move
 
 If you have an Eye in the same location as another Eye (yours or someone else's), then you may move that other Eye 4 spaces.
 
@@ -233,7 +256,7 @@ X . .
 ```
 Element: Earth
 
-'Category: Mage Defend
+'Category: Mage Defend, Mage Other Attack
 
 Place a Charge on this spell.
 
@@ -249,7 +272,7 @@ X . .
 ```
 Element: Fire
 
-'Category: Starter, Eye Other Attack
+'Category: Starter, Eye Other Attack, Anchor Attack
 
 Consume one of your Eyes to remove all Eyes in that space.
 
@@ -264,7 +287,7 @@ Remove all Eyes and Anchors from your location.
 ```
 Element: Air
 
-'Category: Eye Move
+'Category: Eye Move, Eye Other Move
 
 Move one of your Eyes 3 spaces. When moving this Eye into a space, push any Eyes already in that space into an adjacent space.
 
@@ -274,7 +297,7 @@ Move one of your Eyes 3 spaces. When moving this Eye into a space, push any Eyes
 ```
 Element: Air
 
-'Category: Mage Move
+'Category: Mage Move, Mage Defend
 
 Move 4 through any terrain.
 
@@ -282,9 +305,8 @@ Reaction: When attacked, cast to move into any valid adjacent location.
 
 ### Duplicate
 ```
-. . @ . .
-. . . . .
-X . . . X
+. @ .
+X . X
 ```
 Element: Water
 
@@ -304,9 +326,7 @@ Element: Earth
 
 Place a Charge on this spell.
 
-Reaction: You may cast this when an Eye moves into your location.
-
-While charged: You may move 2 additional spaces whenever you cast a spell that moves yourself.
+While charged: Your max movement range is increased by 2 whenever you cast a spell that moves yourself.
 
 ### Expand
 ```
@@ -318,7 +338,7 @@ Element: Water
 
 'Category: Eye Create, Eye Move
 
-Duplicate an existing Eye and then move it 6 spaces.
+Duplicate an existing Eye and then move it 4 spaces.
 
 ### Extend
 ```
@@ -337,7 +357,7 @@ Move one of your Eyes 5 spaces.
 ```
 Element: Air
 
-'Category: Eye Move
+'Category: Eye Create, Eye Move
 
 Create an Eye and then move it 4.
 
@@ -361,7 +381,7 @@ X . . .
 ```
 Element: Air
 
-'Category: Terrain, Mage Move
+'Category: Terrain, Mage Move, Mage Defend
 
 If in a Forest location, jump to another Forest location no more than 4 spaces away.
 
@@ -431,19 +451,19 @@ Move 3 along the same elevation.
 ```
 Element: Water
 
-'Category: Eye Move
+'Category: Thread Move
 
 Move a Thread in your Tapestry to another square. If this completes a spell, you may cast it.
 
 ### Move Anchor
 ```
 . X . .
-@ @ . X
+. @ . X
 X . . .
 ```
 Element: Earth
 
-'Category: Mage Defend
+'Category: Anchor Move
 
 Move one of your Anchors one space.
 
@@ -467,7 +487,7 @@ X . . .
 ```
 Element: Fire
 
-'Category: Mage Other Attack
+'Category: Mage Other Attack, Mage Defend
 
 Attack 1 at one of your Eyes, consuming it.
 
@@ -481,7 +501,7 @@ X . . X
 ```
 Element: Fire
 
-'Category: Mage Defend
+'Category: Mage Defend, Mage Other Attack
 
 Reflect an attack of 1 back at the attacker.
 
@@ -496,7 +516,7 @@ X . . .
 ```
 Element: Fire
 
-'Category: Eye Move, Eye Other Attack
+'Category: Eye Other Attack
 
 Place a Charge on this spell.
 
@@ -511,7 +531,7 @@ Sacrifice charge: When an Eye moves into your location, you may spend a Charge t
 ```
 Element: Earth
 
-'Category: Mage Defend
+'Category: Eye Defend
 
 Place a Charge on this spell.
 
@@ -575,7 +595,7 @@ X . X
 ```
 Element: Earth
 
-'Category: Mage Defend
+'Category: Eye Defend
 
 Place a Charge on this spell.
 
@@ -596,7 +616,7 @@ Consume one of your Eyes to Attack 1 at location adjacent to that Eye.
 
 ### Wall of Flame
 ```
-. @ . X .
+. . . X .
 X . @ . .
 . . . . .
 . . . . X
