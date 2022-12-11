@@ -32,12 +32,22 @@ spell_attributes = [
     'element', 'pattern', 'op', 'vp', 'companion', 'id', 'category', 'flavor', 'DISABLE'
 ]
 
+# General spell categories
 spell_categories = [
     "eye-create", "eye-move", "eye-defend", "eye-other-move", "eye-other-attack",
     "mage-move", "mage-defend", "mage-other-move", "mage-other-attack",
     "thread-move",
     "anchor-create", "anchor-attack", "anchor-move",
 ]
+
+SPELL_OPS = ['eye', 'emove2', 'mmove']
+
+# Mapping from minor/mundane op to category
+op2cat = {
+    'eye': 'eye-create',
+    'emove2': 'eye-move',
+    'mmove': 'mage-move'
+}
 
 # Spell description keys
 spell_desc_keys = {
@@ -360,11 +370,10 @@ class WovenSpellCards():
         g_masters = SVG.group('masters')
         g_masters.set_style("display:none")
         SVG.add_node(svg_group, g_masters)
-        for e in [
-                'op-tapestry', 'op-eye', 'op-emove2', 'op-mmove',
-                'element-air', 'element-earth', 'element-fire', 'element-water',
-                ]:
-            svg.add_loaded_element(g_masters, e)
+        for op in SPELL_OPS:
+            svg.add_loaded_element(g_masters, f"op-{op}")
+        for (e,elem) in elem_map.items():
+            svg.add_loaded_element(g_masters, f"element-{elem}")
         for cat in spell_categories:
             svg.add_loaded_element(g_masters, f"cat-{cat}")
 
@@ -391,7 +400,11 @@ class WovenSpellCards():
             svg.add_loaded_element(svg_group, 'separator')
 
         # Draw alternate action.
-        svg.add_loaded_element(svg_group, 'op-{0}'.format(attrs['op']))
+        op = attrs['op']
+        svg.add_loaded_element(svg_group, f'op-{op}')
+        # Category icon for alternate action.
+        cat_clone = SVG.clone(0, f"#cat-{op2cat[op]}", 0, 68.5)
+        SVG.add_node(svg_group, cat_clone)
 
         # Add spell pattern/description based on spell pattern height.
         if len(pattern) == 4:
@@ -584,16 +597,16 @@ class WovenSpellCards():
             summary.write('\n')
 
         print('Ops')
-        for op in ['tapestry', 'eye', 'emove2', 'mmove']:
+        for op in SPELL_OPS:
             count = 0
             for k,v in self.ops.items():
                 if k.find(op) != -1:
                     count += len(v)
             print(f'  {op} ({count})')
-        print('Ops combos')
-        for k,v in sorted(self.ops.items()):
-            if k.find('-') != -1 or k.find('+') != -1:
-                print(f'  {k} ({len(v)})')
+        #print('Ops combos')
+        #for k,v in sorted(self.ops.items()):
+        #    if k.find('-') != -1 or k.find('+') != -1:
+        #        print(f'  {k} ({len(v)})')
         
         summary.write('## By Pattern\n\n')
         print('Patterns')
