@@ -263,7 +263,7 @@ spell_card_data = [
         } ],
 
     ["Duplicate",
-        {'element': 'water', 'pattern': 'E2-106', 'op': 'eye-mmove',
+        {'element': 'water', 'pattern': 'E2-27', 'op': 'eye-mmove',
          'category': 'starter,eye-create',
         }, {
             'cast': "In a location where you have at least one Eye, split each of your Eyes into two separate Eyes.",
@@ -585,7 +585,7 @@ spell_card_data = [
     # Move Anchor
 
     ["Move Anchor",
-        {'element': 'earth', 'pattern': 'EE3-2', 'op': 'eye-emove2',
+        {'element': 'earth', 'pattern': 'E3-33', 'op': 'eye-emove2',
          'category': 'anchor-move',
         }, {
             'cast': ["Move one of your Anchors one space.", "You may not move your Anchor adjacent to any existing Anchor."],
@@ -625,7 +625,7 @@ spell_card_data = [
         } ],
 
     ["Wall of Flame",
-        {'element': 'fire', 'pattern': 'EE3-3', 'op': 'emove2-mmove',
+        {'element': 'fire', 'pattern': 'E3-34', 'op': 'emove2-mmove',
          'category': 'mage-other-attack',
         }, {
             'cast': ["{{ADD_CHARGE}} Choose a single group of 3 connected Eyes that you control.", "Those Eyes cause 1 Damage to any creature as long as this spell is charged and the Eyes are connected. These Eyes move at half speed (rounded down) while they are aflame."],
