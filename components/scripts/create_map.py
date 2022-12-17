@@ -86,7 +86,7 @@ MIN_RIDGE_LEN = 0.08
 MIN_RIDGE_LEN_EDGE = 0.04
 
 # Fill colors for regions based on terrain height.
-REGION_STYLE = {
+REGION_COLOR = {
     '_': "#ffffff",  # blank
     'l': "#f0eaac",  #"#d9f3b9",  #'#efecc6',  # low
     'm': "#f0ce76",  #'#dcc382',  # medium
@@ -1387,8 +1387,8 @@ class VoronoiHexTile():
 
     def getTerrainStyle(self, type):
         if self.options['bw']:
-            return REGION_STYLE['_']
-        return REGION_STYLE[type]
+            return REGION_COLOR['_']
+        return REGION_COLOR[type]
 
     def plot(self, plotId=None):
         self.svg = SVG([215.9, 279.4])  #SVG([210, 297])
@@ -1414,7 +1414,10 @@ class VoronoiHexTile():
 
         self.drawClippedRegionLayer()
 
-        self.drawRoundedRegionLayer()
+        self.drawRoundedRegionLayer("fill", "Fill")
+        self.drawLakeOverlayLayer()
+
+        self.drawRoundedRegionLayer("stroke", "Stroke")
         
         self.drawRegionLayer()
 
@@ -1465,25 +1468,40 @@ class VoronoiHexTile():
             self.plotRegion(vids, color)
             self.drawRegion(id, vids, color, gClip)
 
-    def drawRoundedRegionLayer(self):
-        layer_region_rounded_fill = self.svg.add_inkscape_layer(
-            'region-rounded-fill', "Region Rounded Fill", self.layer)
-        #gRounded = SVG.group('rounded')
-        #SVG.add_node(layer_region_rounded, gRounded)
-        layer_region_rounded_stroke = self.svg.add_inkscape_layer(
-            'region-rounded-stroke', "Region Rounded Stroke", self.layer)
+    def drawRoundedRegionLayer(self, idSuffix, desc):
+        layer_region_rounded = self.svg.add_inkscape_layer(
+            f"region-rounded-{idSuffix}", f"Region Rounded {desc}", self.layer)
 
         for sid in range(0, self.numActiveSeeds):
             vids = self.sid2region[sid]
-            id = f"roundedregionfill-{sid}"
-            terrain_type = self.seed2terrain[sid]
-            color = self.getTerrainStyle(terrain_type)
-            style = Style(color, None)
-            self.drawRoundedRegion(id, vids, style, layer_region_rounded_fill)
+            id = f"roundedregion{idSuffix}-{sid}"
+            
+            if idSuffix == "fill":
+                terrain_type = self.seed2terrain[sid]
+                color = self.getTerrainStyle(terrain_type)
+                style = Style(color, None)
+                stroke = False
+            else:
+                style = Style(None, STROKE_COLOR, THICK_STROKE_WIDTH)
+                stroke = True
+            self.drawRoundedRegion(id, vids, style, layer_region_rounded, isStroke=stroke)
 
-            id = f"roundedregionstroke-{sid}"
-            style = Style(None, STROKE_COLOR, THICK_STROKE_WIDTH)
-            self.drawRoundedRegion(id, vids, style, layer_region_rounded_stroke, isStroke=True)
+    def drawLakeOverlayLayer(self):
+        if not self.overlayData:
+            return
+        if not "lake" in self.overlayData:
+            return
+
+        self.layer_lakes = self.svg.add_inkscape_layer(
+            'lakes', "Lakes", self.layer)
+        #self.layer_lakes.set_scale_transform(1, -1)
+
+        for lake_seed_id in self.overlayData['lake']:
+            if lake_seed_id:
+                rid = self.vor.point_region[int(lake_seed_id)]
+                id = f"lake-{lake_seed_id}"
+                style = Style(REGION_COLOR['r'], None)
+                self.drawRoundedRegion(id, self.vor.regions[rid], style, self.layer_lakes)
 
     def drawRegionLayer(self):
         layer_region = self.svg.add_inkscape_layer('region', "Region", self.layer)
@@ -1748,7 +1766,7 @@ class VoronoiHexTile():
         SVG.add_node(self.layer_river, self.group_river)
         clippath_id = self.addHexTileClipPath()
         self.group_river.set("clip-path", f"url(#{clippath_id})")
-        self.style_river = Style(None, REGION_STYLE['r'], RIVER_WIDTH)
+        self.style_river = Style(None, REGION_COLOR['r'], RIVER_WIDTH)
         self.style_river.set("stroke-linecap", "round")
         self.style_river.set("stroke-linejoin", "round")
 
@@ -1840,16 +1858,6 @@ class VoronoiHexTile():
                         x += float(offset[0])
                         y -= float(offset[1])
                     icon.set('transform', f"translate({x} {y})")
-
-        if "lake" in self.overlayData:
-            self.layer_lakes = self.svg.add_inkscape_layer(
-                'lakes', "Lakes", self.layer)
-            #self.layer_lakes.set_scale_transform(1, -1)
-            for lake_seed_id in self.overlayData['lake']:
-                if lake_seed_id:
-                    rid = self.vor.point_region[int(lake_seed_id)]
-                    id = f"lake-{lake_seed_id}"
-                    self.drawRegion(id, self.vor.regions[rid], REGION_STYLE['r'], self.layer_lakes)
 
     def drawRegionIdLayer(self):
         layer_region_ids = self.svg.add_inkscape_layer(
@@ -2047,7 +2055,7 @@ class VoronoiHexTile():
                 # Note: The points for the curve are calculated using an absolute distance
                 # from the current vertex along the line to the neighboring vertices.
                 PT_OFFSET = 1.5  # (mm)
-                CURVE_PT_OFFSET = 0.75  # (mm)
+                CURVE_PT_OFFSET = 0.5  # (mm)
 
                 prev_pt = pt_along_line(v, self.vertices[vids[prev]], PT_OFFSET)
                 p.addPoint(prev_pt)
