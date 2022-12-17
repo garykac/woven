@@ -57,6 +57,12 @@ EDGE_RIVER_INFO = {
     '2s': ['m', 'm', '*', 'm', 'm'],           # m - m
 }
 
+# Mark where cliffs are located on edges using an '*' to note the regions that
+# are separated by a cliff.
+EDGE_CLIFF_INFO = {
+    '3f': ['m', 'm', 'h', '*', 'm', 'h'],      # m - h, h - m
+}
+
 # Edge seed info.
 # Each dict entry contains an array of seed positions along the edge.
 # There are implicit seeds at the 2 ends of the edge.
@@ -340,6 +346,8 @@ class VoronoiHexTile():
 
                 if type in EDGE_RIVER_INFO:
                     EDGE_RIVER_INFO[newType] = EDGE_RIVER_INFO[type][::-1]
+                if type in EDGE_CLIFF_INFO:
+                    EDGE_CLIFF_INFO[newType] = EDGE_CLIFF_INFO[type][::-1]
         
     def setTerrainData(self, data):
         self.terrainData = data
@@ -1741,22 +1749,7 @@ class VoronoiHexTile():
 
                 rIndex = EDGE_RIVER_INFO[edgeType].index('*')
                 seedPattern = EDGE_SEED_INFO[edgeType]
-
-                # EDGE_RIVER_INFO: [ 'l' '*' 'l' 'l' 'm' ]
-                #  EDGE_SEED_INFO:    -       x   x   -
-                # For the seed info, the first/last are implicit: (0.0 1.0) and these's no
-                # entry for the river.
-                beforeIndex = rIndex - 2
-                before = 0
-                if beforeIndex != -1:
-                    before = seedPattern[rIndex-2][0]
-                afterIndex = rIndex - 1
-                after = 1
-                if afterIndex < len(seedPattern):
-                    after = seedPattern[rIndex-1][0]
-                # River is located between the 2 regions.
-                t = (before + after) / 2
-                x = lerp(-self.size/2, self.size/2, t)
+                x = self._calcEdgeFeatureOffset(rIndex, seedPattern)
 
                 color = self.getTerrainStyle('r')
                 r = SVG.rect(0, x-1.5, -self.xMax -8, 3, 8)
@@ -1764,6 +1757,26 @@ class VoronoiHexTile():
                 SVG.add_node(g, r)
 
                 label = Text(None, x - 1.5, -(self.xMax + 10), "R")
+                SVG.add_node(g, label)
+
+        # Add cliff info.
+        for i in range(0, NUM_SIDES):
+            edgeType = self.edgeTypes[i]
+            if edgeType in EDGE_CLIFF_INFO:
+                g = Group(None)
+                g.set_transform(f"rotate({30 + i * 60})")
+                SVG.add_node(self.layer_text, g)
+
+                rIndex = EDGE_CLIFF_INFO[edgeType].index('*')
+                seedPattern = EDGE_SEED_INFO[edgeType]
+                x = self._calcEdgeFeatureOffset(rIndex, seedPattern)
+
+                color = self.getTerrainStyle('r')
+                r = SVG.rect(0, x-1.5, -self.xMax -8, 3, 8)
+                r.set_style(Style(color, STROKE_COLOR, STROKE_WIDTH))
+                SVG.add_node(g, r)
+
+                label = Text(None, x - 1.5, -(self.xMax + 10), "X")
                 SVG.add_node(g, label)
 
         # Add 15mm circle (for mana size).
@@ -1781,7 +1794,26 @@ class VoronoiHexTile():
             label = Text(None, 70, y_start + 4.5, type.upper())
             SVG.add_node(self.layer_text, label)
             y_start += 10
-        
+      
+    def _calcEdgeFeatureOffset(self, rIndex, seedPattern):
+        # EDGE_RIVER_INFO: [ 'l' '*' 'l' 'l' 'm' ]
+        #  EDGE_SEED_INFO:    -       x   x   -
+        # For the seed info, the first/last are implicit: (0.0 1.0) and these's no
+        # entry for the river.
+        beforeIndex = rIndex - 2
+        before = 0
+        if beforeIndex != -1:
+            before = seedPattern[rIndex-2][0]
+
+        afterIndex = rIndex - 1
+        after = 1
+        if afterIndex < len(seedPattern):
+            after = seedPattern[rIndex-1][0]
+
+        # The edge feature is located between the 2 regions.
+        t = (before + after) / 2
+        return lerp(-self.size/2, self.size/2, t)
+      
     def addText(self, text):
         t = Text(None, -92, 90 + 5.5 * self.numLines, text)
         SVG.add_node(self.layer_text, t)
