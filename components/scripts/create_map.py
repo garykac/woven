@@ -1407,14 +1407,46 @@ class VoronoiHexTile():
         stroke = Style("none", "#000000", STROKE_WIDTH)
         black_fill = Style(fill="#000000")
 
+        # Draw layers back to front.
+        
         self.drawHexTileBorder("background", "Tile Background", black_fill)
 
-        # Draw clipped regions.
+        self.drawClippedRegionLayer()
+
+        self.drawRoundedRegionLayer()
+        
+        self.drawRegionLayer()
+
+        self.drawSeedLayer()
+        self.drawSeedExclusionZoneLayer()
+        self.drawMarginExclusionZoneLayer()
+        self.drawBadEdgeLayer()
+        self.drawTooCloseSeedsLayer()
+        self.drawInscribedCirclesLayer()
+
+        self.drawTileId()
+
+        self.drawAnnotations()
+
+        self.drawTerrainLabels()
+
+        self.drawRiverSegments()
+        
+        self.drawOverlay()
+
+        self.drawRegionIdLayer()
+
+        self.drawHexTileBorder("border", "Border", stroke)
+        
+        self.writeOutput(fig, plotId)
+
+    def drawClippedRegionLayer(self):
         layer_region_clip = self.svg.add_inkscape_layer(
-            'region-clip', "Region Clipped", layer)
+            'region-clip', "Region Clipped", self.layer)
         gClip = SVG.group('clip')
         SVG.add_node(layer_region_clip, gClip)
         layer_region_clip.hide()
+
         for sid in range(0, self.numActiveSeeds):
             vids = self.sid2region[sid]
             id = f"clipregion-{sid}"
@@ -1424,11 +1456,12 @@ class VoronoiHexTile():
             self.plotRegion(vids, color)
             self.drawRegion(id, vids, color, gClip)
 
-        # Draw rounded regions.
+    def drawRoundedRegionLayer(self):
         layer_region_rounded = self.svg.add_inkscape_layer(
-            'region-rounded', "Region Rounded", layer)
+            'region-rounded', "Region Rounded", self.layer)
         gRounded = SVG.group('rounded')
         SVG.add_node(layer_region_rounded, gRounded)
+
         for sid in range(0, self.numActiveSeeds):
             vids = self.sid2region[sid]
             id = f"roundedregion-{sid}"
@@ -1437,74 +1470,88 @@ class VoronoiHexTile():
             color = self.getTerrainStyle(terrain_type)
             self.drawRoundedRegion(id, vids, color, gRounded)
 
-        # Plot regions.
-        layer_region = self.svg.add_inkscape_layer('region', "Region", layer)
+    def drawRegionLayer(self):
+        layer_region = self.svg.add_inkscape_layer('region', "Region", self.layer)
         layer_region.hide()
+
         for sid in range(0, self.numActiveSeeds):
             rid = self.vor.point_region[sid]
             id = f"region-{sid}"
             self.drawRegion(id, self.vor.regions[rid], "#ffffff", layer_region)
 
-        # Plot seeds.
-        layer_seeds = self.svg.add_inkscape_layer('seeds', "Seeds", layer)
+    def drawSeedLayer(self):
+        layer_seeds = self.svg.add_inkscape_layer('seeds', "Seeds", self.layer)
         layer_seeds.hide()
+
+        black_fill = Style(fill="#000000")
         for sid in range(0, self.numActiveSeeds):
             center = self.seeds[sid]
             id = f"seed-{sid}"
             drawCircle(id, center, 1.0, black_fill, layer_seeds)
 
-        # Plot seed exclusion zones.
+    def drawSeedExclusionZoneLayer(self):
         layer_seed_ex = self.svg.add_inkscape_layer(
-            'seed_exclusion', "Seed Exclusion", layer)
+            'seed_exclusion', "Seed Exclusion", self.layer)
         layer_seed_ex.hide()
+
         fill = Style(fill="#800000")
         fill.set('fill-opacity', 0.15)
+
         for sid in range(0, self.numActiveSeeds):
             center = self.vor.points[sid]
             radius = self.seed2minDistance[sid]
             id = f"seed-ex-{sid}"
             drawCircle(id, center, radius, fill, layer_seed_ex)
 
-        # Plot edge margin exclusion zones.
+    def drawMarginExclusionZoneLayer(self):
         layer_margin_ex = self.svg.add_inkscape_layer(
-            'margin_exclusion', "Margin Exclusion", layer)
+            'margin_exclusion', "Margin Exclusion", self.layer)
         layer_margin_ex.hide()
+
         fill = Style(fill="#000080")
         fill.set('fill-opacity', 0.15)
+
         for mz in self.edgeMarginZone:
             center, radius = mz
             drawCircle(0, center, radius, fill, layer_margin_ex)
 
-        # If there are bad edges, add a layer for them.
-        if len(self.badEdges) != 0:
-            layer_bad_edges = self.svg.add_inkscape_layer(
-                'bad-edges', "Bad Edges", layer)
-            for bei in self.badEdges:
-                badEdge = self.badEdges[bei]
-                vid0, vid1, rid = badEdge[0]
-                self.plotBadVertex(self.vertices[vid0], layer_bad_edges)
-                self.plotBadVertex(self.vertices[vid1], layer_bad_edges)
+    def drawBadEdgeLayer(self):
+        if len(self.badEdges) == 0:
+            return
+        
+        layer_bad_edges = self.svg.add_inkscape_layer(
+            'bad-edges', "Bad Edges", self.layer)
+        for bei in self.badEdges:
+            badEdge = self.badEdges[bei]
+            vid0, vid1, rid = badEdge[0]
+            self.plotBadVertex(self.vertices[vid0], layer_bad_edges)
+            self.plotBadVertex(self.vertices[vid1], layer_bad_edges)
 
-        # If there are seeds that are too close, add a layer for them.
-        if len(self.tooClose) != 0:
-            layer_too_close = self.svg.add_inkscape_layer(
-                'too-close', "Too Close Seeds", layer)
-            for spair in self.tooClose:
-                s0, s1 = spair
-                p = Path()
-                p.setPoints([self.seeds[s] for s in [s0,s1]])
-                p.set_style(Style(None, "#800000", "0.5px"))
-                SVG.add_node(layer_too_close, p)
-                
-                self.plotBadVertex(self.seeds[s0], layer_too_close)
-                self.plotBadVertex(self.seeds[s1], layer_too_close)
+    def drawTooCloseSeedsLayer(self):
+        if len(self.tooClose) == 0:
+            return
+
+        layer_too_close = self.svg.add_inkscape_layer(
+            'too-close', "Too Close Seeds", self.layer)
+        for spair in self.tooClose:
+            s0, s1 = spair
+            p = Path()
+            p.setPoints([self.seeds[s] for s in [s0,s1]])
+            p.set_style(Style(None, "#800000", "0.5px"))
+            SVG.add_node(layer_too_close, p)
             
-        # Plot inscribed circles for each region.
+            self.plotBadVertex(self.seeds[s0], layer_too_close)
+            self.plotBadVertex(self.seeds[s1], layer_too_close)
+    
+    def drawInscribedCirclesLayer(self):
         layer_circles = self.svg.add_inkscape_layer(
-            'circles', "Inscribed Circles", layer)
+            'circles', "Inscribed Circles", self.layer)
         layer_circles.hide()
+        
         fill = Style(fill="#008000")
         fill.set('fill-opacity', 0.15)
+        black_fill = Style(fill="#000000")
+
         for sid in self.regionCircles:
             center, radius = self.regionCircles[sid]
             id = f"incircle-{sid}"
@@ -1518,169 +1565,17 @@ class VoronoiHexTile():
                     center, radius = self.regionCircles[c]
                     circle = plt.Circle(center, radius, color="#80000080")
                     plt.gca().add_patch(circle)
-
-        if self.options['id']:
-            self.drawTileId()
-        self.drawAnnotations()
-        self.drawTerrainLabels()
-
-        self.drawRiverSegments()
-        
-        self.drawOverlay()
-
-        # Plot layer with region ids.
-        layer_region_ids = self.svg.add_inkscape_layer(
-            'region_ids', "Region Ids", layer)
-        if not self.options['show-seed-ids']:
-            layer_region_ids.hide()
-        layer_region_ids.set_transform("scale(1,-1)")
-        for sid in range(0, self.numActiveSeeds):
-            center = self.seeds[sid]
-            text = f"{sid}"
-            if PLOT_CELL_IDS:
-                plt.text(center[0]-1.4, center[1]-1.5, text)
-            t = Text(None, center[0]-1.4, -center[1], text)
-            SVG.add_node(layer_region_ids, t)
-
-        self.drawHexTileBorder("border", "Border", stroke)
-
-        if self.options['write_output']:
-            outdir_png = self.getPngOutputDir()
-            name = self.calcBaseFilename()
-            if plotId == None:
-                if GENERATE_SVG:
-                    outdir_svg = self.getSvgOutputDir()
-                    out_svg = os.path.join(outdir_svg, '%s.svg' % name)
-                    self.svg.write(out_svg)
-
-                    outdir_pdf = self.getPdfOutputDir()
-                    out_pdf = os.path.join(outdir_pdf, '%s.pdf' % name)
-                    Inkscape.export_pdf(
-                        os.path.abspath(out_svg),
-                        os.path.abspath(out_pdf))
-
-                out_png = os.path.join(outdir_png, '%s.png' % name)
-            else:
-                outdir_png = os.path.join(outdir_png, ANIM_SUBDIR)
-                if not os.path.isdir(outdir_png):
-                    os.makedirs(outdir_png);
-                out_png = os.path.join(outdir_png, f"{name}-{plotId:03d}")
-                plt.text(-self.size, -self.size, plotId)
-
-            plt.axis("off")
-            plt.xlim([x * self.size for x in [-1, 1]])
-            plt.ylim([y * self.size for y in [-1, 1]])
-            if GENERATE_PLOT:
-                plt.savefig(out_png, bbox_inches='tight')
-            plt.close(fig)
-
-    def getPngOutputDir(self):
-        out_dir = self.options['outdir_png']
-        return self.makeDir(out_dir)
-
-    def getSvgOutputDir(self):
-        out_dir = self.options['outdir_svg']
-        return self.makeDir(out_dir)
-
-    def getPdfOutputDir(self):
-        out_dir = self.options['outdir_pdf']
-        return self.makeDir(out_dir)
-
-    def makeDir(self, directory):
-        if not os.path.isdir(directory):
-            os.makedirs(directory);
-        return directory
-
-    def calcNumericPattern(self):
-        altPattern = {
-            'l': '1',
-            'm': '2',
-            'h': '3',
-        }
     
-        pattern = self.options['pattern']
-        return ''.join([altPattern[i] for i in pattern])
-        
-    def calcBaseFilename(self):
-        name = "hex"
-        if self.options['id'] != None:
-            name = f"hex-{self.options['id']:03d}"
-        elif self.options['seed'] != None:
-            pNum = self.calcNumericPattern()
-            name = f"hex-{pNum}-{self.options['seed']}"
-        return name
-
-    def drawOverlay(self):
-        self.layer_overlay = self.svg.add_inkscape_layer(
-            'overlay', "Overlay", self.layer)
-        self.layer_overlay.set_scale_transform(1, -1)
-
-        if not self.overlayData:
-            return
-
-        if "bridge" in self.overlayData:
-            for bridge in self.overlayData['bridge']:
-                if bridge:
-                    m = re.match(r"^(\d+\-\d+)$", bridge)
-                    if m:
-                        cells = m.group(1)
-                    else:
-                        raise Exception(f"Unrecognized bridge data: {bridge}")
-
-                    (start, end) = cells.split('-')
-                    ptStart = self.seeds[int(start)]
-                    ptEnd = self.seeds[int(end)]
-                    rTheta = math.atan2(-(ptEnd[1] - ptStart[1]), ptEnd[0] - ptStart[0])
-                    degTheta = 90 + (rTheta * 180 / math.pi);
-                    edge_vertices = self.getEdgeRidgeVertices(start, end)
-                    center = lerp(edge_vertices[0], edge_vertices[1], 0.5)
-                    icon = self.svg.add_loaded_element(self.layer_overlay, 'obj-bridge')
-                    
-                    transform = f"translate({center[0]} {-center[1]}) rotate({degTheta})"
-                    icon.set('transform', transform)
-
-        if "mark" in self.overlayData:
-            for mark in self.overlayData['mark']:
-                if mark:
-                    # <type> '-' <cell-id> '(' <x-offset> <y-offset> ')'
-                    m = re.match(r"^([a-z0-9-]+)\-(\d+)(\(([\d.-]+ [\d.-]+)\))?$", mark)
-                    if m:
-                        type = m.group(1)
-                        cell = m.group(2)
-                        offset = None
-                        if m.group(3):
-                            offset = m.group(4).split(' ')
-                    else:
-                        raise Exception(f"Unrecognized star data: {mark}")
-
-                    center = self.seeds[int(cell)]
-                    icon = self.svg.add_loaded_element(self.layer_overlay, f"obj-{type}")
-                    x = center[0]
-                    y = -center[1]
-                    if offset:
-                        x += float(offset[0])
-                        y -= float(offset[1])
-                    icon.set('transform', f"translate({x} {y})")
-
-        if "lake" in self.overlayData:
-            self.layer_lakes = self.svg.add_inkscape_layer(
-                'lakes', "Lakes", self.layer)
-            #self.layer_lakes.set_scale_transform(1, -1)
-            for lake_seed_id in self.overlayData['lake']:
-                if lake_seed_id:
-                    rid = self.vor.point_region[int(lake_seed_id)]
-                    id = f"lake-{lake_seed_id}"
-                    self.drawRegion(id, self.vor.regions[rid], REGION_STYLE['r'], self.layer_lakes)
-
     def drawTileId(self):
-        self.layer_text = self.svg.add_inkscape_layer(
-            'tile-id', "Tile Id", self.layer)
-        self.layer_text.set_transform("scale(1,-1)")
+        if self.options['id']:
+            self.layer_text = self.svg.add_inkscape_layer(
+                'tile-id', "Tile Id", self.layer)
+            self.layer_text.set_transform("scale(1,-1)")
 
-        id = self.options['id']
-        id_text = self.svg.add_loaded_element(self.layer_text, 'tile-id')
-        id_text.set('transform', f"translate(0 {-self.size+8})")
-        SVG.set_text(id_text, f"{id:03d}")
+            id = self.options['id']
+            id_text = self.svg.add_loaded_element(self.layer_text, 'tile-id')
+            id_text.set('transform', f"translate(0 {-self.size+8})")
+            SVG.set_text(id_text, f"{id:03d}")
 
     def drawAnnotations(self):
         self.layer_text = self.svg.add_inkscape_layer(
@@ -1690,31 +1585,36 @@ class VoronoiHexTile():
         if self.options['id']:
             id = self.options['id']
             self.numLines -= 1
-            self.addText(f"id: {id}")
+            self._addAnnotationText(f"id: {id}")
 
-        self.addText(f"size: {self.size:g}")
+        self._addAnnotationText(f"size: {self.size:g}")
         if self.options['seed']:
-            self.addText(f"rng seed {self.options['seed']}")
+            self._addAnnotationText(f"rng seed {self.options['seed']}")
         else:
-            self.addText("rng seed RANDOM")
+            self._addAnnotationText("rng seed RANDOM")
 
         pattern = self.options['pattern']
         pNum = self.calcNumericPattern()
-        self.addText(f"pattern {pNum} / {pattern}")
-        self.addText(f"seed attempts: {self.seedAttempts}")
-        self.addText(f"seed distance: l {MIN_DISTANCE_L:.03g}; m {MIN_DISTANCE_M:.03g}; h {MIN_DISTANCE_H:.03g}")
+        self._addAnnotationText(f"pattern {pNum} / {pattern}")
+        self._addAnnotationText(f"seed attempts: {self.seedAttempts}")
+        self._addAnnotationText(f"seed distance: l {MIN_DISTANCE_L:.03g}; m {MIN_DISTANCE_M:.03g}; h {MIN_DISTANCE_H:.03g}")
 
         center = "AVG"
         if self.options['center']:
             center = self.options['center']
-        self.addText(f"center: ({center}) {self.centerWeight / self.size:.03g}")
+        self._addAnnotationText(f"center: ({center}) {self.centerWeight / self.size:.03g}")
 
-        self.addText(f"min ridge length: {MIN_RIDGE_LEN:.02g}; at edge: {MIN_RIDGE_LEN_EDGE:.02g}")
-        self.addText(f"edge margin exclusion zone scale: {self.edgeMarginScale:.02g}")
-        self.addText(f"iterations: {self.iteration-1}")
-        self.addText(f"adjustments: side {self.adjustmentSide:.03g}, neighbor {self.adjustmentNeighbor:.03g}")
-        self.addText(f"closeness: {self.closeThreshold:.03g}, adjust {self.adjustmentTooClose:.03g}")
+        self._addAnnotationText(f"min ridge length: {MIN_RIDGE_LEN:.02g}; at edge: {MIN_RIDGE_LEN_EDGE:.02g}")
+        self._addAnnotationText(f"edge margin exclusion zone scale: {self.edgeMarginScale:.02g}")
+        self._addAnnotationText(f"iterations: {self.iteration-1}")
+        self._addAnnotationText(f"adjustments: side {self.adjustmentSide:.03g}, neighbor {self.adjustmentNeighbor:.03g}")
+        self._addAnnotationText(f"closeness: {self.closeThreshold:.03g}, adjust {self.adjustmentTooClose:.03g}")
 
+    def _addAnnotationText(self, text):
+        t = Text(None, -92, 90 + 5.5 * self.numLines, text)
+        SVG.add_node(self.layer_text, t)
+        self.numLines += 1
+    
     def drawTerrainLabels(self):
         # Add corner terrain labels.
         for i in range(0, NUM_SIDES):
@@ -1814,12 +1714,6 @@ class VoronoiHexTile():
         t = (before + after) / 2
         return lerp(-self.size/2, self.size/2, t)
       
-    def addText(self, text):
-        t = Text(None, -92, 90 + 5.5 * self.numLines, text)
-        SVG.add_node(self.layer_text, t)
-        self.numLines += 1
-    
-    # Draw river segments on all internal edges.
     def drawRiverSegments(self):
         self.layer_river_border = self.svg.add_inkscape_layer(
             'river-border', "River Border", self.layer)
@@ -1878,6 +1772,157 @@ class VoronoiHexTile():
         p2.set_style(self.style_river)
         SVG.add_node(self.group_river, p2)
             
+    def drawOverlay(self):
+        self.layer_overlay = self.svg.add_inkscape_layer(
+            'overlay', "Overlay", self.layer)
+        self.layer_overlay.set_scale_transform(1, -1)
+
+        if not self.overlayData:
+            return
+
+        if "bridge" in self.overlayData:
+            for bridge in self.overlayData['bridge']:
+                if bridge:
+                    m = re.match(r"^(\d+\-\d+)$", bridge)
+                    if m:
+                        cells = m.group(1)
+                    else:
+                        raise Exception(f"Unrecognized bridge data: {bridge}")
+
+                    (start, end) = cells.split('-')
+                    ptStart = self.seeds[int(start)]
+                    ptEnd = self.seeds[int(end)]
+                    rTheta = math.atan2(-(ptEnd[1] - ptStart[1]), ptEnd[0] - ptStart[0])
+                    degTheta = 90 + (rTheta * 180 / math.pi);
+                    edge_vertices = self.getEdgeRidgeVertices(start, end)
+                    center = lerp(edge_vertices[0], edge_vertices[1], 0.5)
+                    icon = self.svg.add_loaded_element(self.layer_overlay, 'obj-bridge')
+                    
+                    transform = f"translate({center[0]} {-center[1]}) rotate({degTheta})"
+                    icon.set('transform', transform)
+
+        if "mark" in self.overlayData:
+            for mark in self.overlayData['mark']:
+                if mark:
+                    # <type> '-' <cell-id> '(' <x-offset> <y-offset> ')'
+                    m = re.match(r"^([a-z0-9-]+)\-(\d+)(\(([\d.-]+ [\d.-]+)\))?$", mark)
+                    if m:
+                        type = m.group(1)
+                        cell = m.group(2)
+                        offset = None
+                        if m.group(3):
+                            offset = m.group(4).split(' ')
+                    else:
+                        raise Exception(f"Unrecognized star data: {mark}")
+
+                    center = self.seeds[int(cell)]
+                    icon = self.svg.add_loaded_element(self.layer_overlay, f"obj-{type}")
+                    x = center[0]
+                    y = -center[1]
+                    if offset:
+                        x += float(offset[0])
+                        y -= float(offset[1])
+                    icon.set('transform', f"translate({x} {y})")
+
+        if "lake" in self.overlayData:
+            self.layer_lakes = self.svg.add_inkscape_layer(
+                'lakes', "Lakes", self.layer)
+            #self.layer_lakes.set_scale_transform(1, -1)
+            for lake_seed_id in self.overlayData['lake']:
+                if lake_seed_id:
+                    rid = self.vor.point_region[int(lake_seed_id)]
+                    id = f"lake-{lake_seed_id}"
+                    self.drawRegion(id, self.vor.regions[rid], REGION_STYLE['r'], self.layer_lakes)
+
+    def drawRegionIdLayer(self):
+        layer_region_ids = self.svg.add_inkscape_layer(
+            'region_ids', "Region Ids", self.layer)
+        if not self.options['show-seed-ids']:
+            layer_region_ids.hide()
+        layer_region_ids.set_transform("scale(1,-1)")
+        for sid in range(0, self.numActiveSeeds):
+            center = self.seeds[sid]
+            text = f"{sid}"
+            if PLOT_CELL_IDS:
+                plt.text(center[0]-1.4, center[1]-1.5, text)
+            t = Text(None, center[0]-1.4, -center[1], text)
+            SVG.add_node(layer_region_ids, t)
+
+    def drawHexTileBorder(self, id, layer_name, style):
+        layer_border = self.svg.add_inkscape_layer(id, layer_name, self.layer)
+        p = Path()
+        p.addPoints(self.vHex)
+        p.end()
+        p.set_style(style)
+        SVG.add_node(layer_border, p)
+
+    def writeOutput(self, fig, plotId):
+        if self.options['write_output']:
+            outdir_png = self.getPngOutputDir()
+            name = self.calcBaseFilename()
+            if plotId == None:
+                if GENERATE_SVG:
+                    outdir_svg = self.getSvgOutputDir()
+                    out_svg = os.path.join(outdir_svg, '%s.svg' % name)
+                    self.svg.write(out_svg)
+
+                    outdir_pdf = self.getPdfOutputDir()
+                    out_pdf = os.path.join(outdir_pdf, '%s.pdf' % name)
+                    Inkscape.export_pdf(
+                        os.path.abspath(out_svg),
+                        os.path.abspath(out_pdf))
+
+                out_png = os.path.join(outdir_png, '%s.png' % name)
+            else:
+                outdir_png = os.path.join(outdir_png, ANIM_SUBDIR)
+                if not os.path.isdir(outdir_png):
+                    os.makedirs(outdir_png);
+                out_png = os.path.join(outdir_png, f"{name}-{plotId:03d}")
+                plt.text(-self.size, -self.size, plotId)
+
+            plt.axis("off")
+            plt.xlim([x * self.size for x in [-1, 1]])
+            plt.ylim([y * self.size for y in [-1, 1]])
+            if GENERATE_PLOT:
+                plt.savefig(out_png, bbox_inches='tight')
+            plt.close(fig)
+
+    def getPngOutputDir(self):
+        out_dir = self.options['outdir_png']
+        return self.makeDir(out_dir)
+
+    def getSvgOutputDir(self):
+        out_dir = self.options['outdir_svg']
+        return self.makeDir(out_dir)
+
+    def getPdfOutputDir(self):
+        out_dir = self.options['outdir_pdf']
+        return self.makeDir(out_dir)
+
+    def makeDir(self, directory):
+        if not os.path.isdir(directory):
+            os.makedirs(directory);
+        return directory
+
+    def calcNumericPattern(self):
+        altPattern = {
+            'l': '1',
+            'm': '2',
+            'h': '3',
+        }
+    
+        pattern = self.options['pattern']
+        return ''.join([altPattern[i] for i in pattern])
+        
+    def calcBaseFilename(self):
+        name = "hex"
+        if self.options['id'] != None:
+            name = f"hex-{self.options['id']:03d}"
+        elif self.options['seed'] != None:
+            pNum = self.calcNumericPattern()
+            name = f"hex-{pNum}-{self.options['seed']}"
+        return name
+
     def plotBadVertex(self, v, layer):
         circle = plt.Circle(v, 1, color="r")
         plt.gca().add_patch(circle)
@@ -1936,14 +1981,6 @@ class VoronoiHexTile():
         p.end()
         p.set_style(Style(color, STROKE_COLOR, STROKE_WIDTH))
         SVG.add_node(layer, p)
-
-    def drawHexTileBorder(self, id, layer_name, style):
-        layer_border = self.svg.add_inkscape_layer(id, layer_name, self.layer)
-        p = Path()
-        p.addPoints(self.vHex)
-        p.end()
-        p.set_style(style)
-        SVG.add_node(layer_border, p)
 
     def addHexTileClipPath(self):
         p = Path()
@@ -2018,7 +2055,7 @@ class VoronoiHexTile():
         outfile = os.path.join(out_dir, '%s.obj' % name)
         obj.open(outfile)
         
-        self.__writeObject3d(obj)
+        self._writeObject3d(obj)
 
         if self.options['calc_neighbor_edges']:
             self.writeNeighborEdges(obj)
@@ -2128,7 +2165,7 @@ class VoronoiHexTile():
                 edgeTile.generate()
             edgeTile.__writeObject3d(obj)
 
-    def __writeObject3d(self, obj):
+    def _writeObject3d(self, obj):
         sid = self.options['_export_3d_edge']
         if sid == None:
             for sid in range(0, self.numActiveSeeds):
