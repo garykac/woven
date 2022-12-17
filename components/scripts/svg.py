@@ -126,7 +126,7 @@ class Path(Node):
         self.path.append(['c', c0dx, c0dy, c1dx, c1dy, dx, dy])
         self.currPosition = [x, y]
 
-    def end(self):
+    def end(self, closePath = True):
         path = "m"
         current_type = "l"
         first_point = True
@@ -145,8 +145,9 @@ class Path(Node):
                 path += f" {c0dx:.6g} {c0dy:.6g} {c1dx:.6g} {c1dy:.6g} {dx:.6g} {dy:.6g}"
             else:
                 raise Exception(f"Unsupport path type: {type}")
-            
-        path += " z"
+
+        if closePath:
+            path += " z"
         self.set('d', path)
 
     def setPoints(self, pts):

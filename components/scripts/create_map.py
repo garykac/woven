@@ -116,6 +116,7 @@ TERRAIN_DIST = {
 
 STROKE_COLOR = "#000000"
 STROKE_WIDTH = 0.3
+THICK_STROKE_WIDTH = 0.9
 
 RIVER_WIDTH = 2.0
 
@@ -1465,18 +1466,24 @@ class VoronoiHexTile():
             self.drawRegion(id, vids, color, gClip)
 
     def drawRoundedRegionLayer(self):
-        layer_region_rounded = self.svg.add_inkscape_layer(
-            'region-rounded', "Region Rounded", self.layer)
-        gRounded = SVG.group('rounded')
-        SVG.add_node(layer_region_rounded, gRounded)
+        layer_region_rounded_fill = self.svg.add_inkscape_layer(
+            'region-rounded-fill', "Region Rounded Fill", self.layer)
+        #gRounded = SVG.group('rounded')
+        #SVG.add_node(layer_region_rounded, gRounded)
+        layer_region_rounded_stroke = self.svg.add_inkscape_layer(
+            'region-rounded-stroke', "Region Rounded Stroke", self.layer)
 
         for sid in range(0, self.numActiveSeeds):
             vids = self.sid2region[sid]
-            id = f"roundedregion-{sid}"
-            color = "#ffffff"
+            id = f"roundedregionfill-{sid}"
             terrain_type = self.seed2terrain[sid]
             color = self.getTerrainStyle(terrain_type)
-            self.drawRoundedRegion(id, vids, color, gRounded)
+            style = Style(color, None)
+            self.drawRoundedRegion(id, vids, style, layer_region_rounded_fill)
+
+            id = f"roundedregionstroke-{sid}"
+            style = Style(None, STROKE_COLOR, THICK_STROKE_WIDTH)
+            self.drawRoundedRegion(id, vids, style, layer_region_rounded_stroke, isStroke=True)
 
     def drawRegionLayer(self):
         layer_region = self.svg.add_inkscape_layer('region', "Region", self.layer)
@@ -1723,6 +1730,8 @@ class VoronoiHexTile():
         return lerp(-self.size/2, self.size/2, t)
       
     def drawRiverSegments(self):
+        # There are 2 layers for the rivers: the black border and the blue river fill.
+        # This is so that all the borders are behind all of the river fills.
         self.layer_river_border = self.svg.add_inkscape_layer(
             'river-border', "River Border", self.layer)
         self.group_river_border = SVG.group('river-border-group')
@@ -1951,13 +1960,61 @@ class VoronoiHexTile():
         SVG.add_node(layer, p)
 
     # Draw voronoi region with rounded points in the SVG file, given a list of vertex ids.
-    def drawRoundedRegion(self, id, vids, color, layer):
+    def drawRoundedRegion(self, id, vids, style, layer, isStroke = False):
         if len(vids) == 0:
             return
         num_verts = len(vids)
         
-        p = Path() if id == None else Path(id)
+        iv = list(range(0, num_verts))
+
+        # The first vertex of the region to draw.
+        firstVertex = 0
+        # The number of vertices at the end to skip (only for strokes).
+        numSkipVertices = 0
+        # True if we should automatically connect the last vertex to the first.
+        closePath = True
+        
+        # If this is an edge region, then we:
+        # * Don't want to round off the vertices along the edge.
+        # * Don't want to close off the segment corresponding to the edge
+        #   (Because we don't want a fat stroke along that edge).
+        # We can identify edge regions because they have vertices that were added to the
+        # vertex list during clipping, so we can compare the index with |firstNewVertex|.
+        isEdgeRegion = False
+        numEdgeVertices = 0
         for i in range(0, num_verts):
+            if vids[i] >= self.firstNewVertex:
+                isEdgeRegion = True
+                numEdgeVertices += 1
+
+        if isEdgeRegion and isStroke:
+            closePath = False
+            print(f"region {id} ev: {numEdgeVertices}")
+            # Rotate vertex indices until the last edge vertex is in the first position.
+            # Scenarios (edge vertices in parentheses)
+            #    2 edge vertex:
+            #      (0) -  1  -  2  -  3  - (4)   : -
+            #      (0) - (1) -  2  -  3  -  4    : rotate 1
+            #       0  - (1) - (2) -  3  -  4    : rotate 2
+            #       0  -  1  - (2) - (3) -  4    : rotate 3
+            #       0  -  1  -  2  - (3) - (4)   : rotate 4
+            #    3 edge vertex:
+            #      (0) -  1  -  2  - (3) - (4)   : -
+            #      (0) - (1) -  2  -  3  - (4)   : rotate 1
+            #      (0) - (1) - (2) -  3  -  4    : rotate 2
+            #       0  - (1) - (2) - (3) -  4    : rotate 3
+            #       0  -  1  - (2) - (3) - (4)   : rotate 4
+            while not (vids[iv[0]] >=  self.firstNewVertex and vids[iv[1]] < self.firstNewVertex):
+                print("  rotating: " + ','.join([str(vids[x]) for x in iv]))
+                iv = iv[1:] + iv[:1]
+            print("iv: " + ','.join([str(vids[x]) for x in iv]))
+            
+            # Remove the last vertex from the stroke if we have 3 edge vertices.
+            if numEdgeVertices == 3:
+                iv.pop()
+                
+        p = Path() if id == None else Path(id)
+        for i in iv:
             vid = vids[i]
             v = self.vertices[vid]
 
@@ -1984,12 +2041,13 @@ class VoronoiHexTile():
                 #                v[i]                  v[next]
                 #
                 # * = actual vertices of the region: v[prev], v[i], v[next]
+                #     Note: v[prev] is shorthand for self.vertices[vids[prev]]
                 # + = calculated vertices of the curved corner:
                 #     prev_pt, next_pt and the 2 off-curve control points: c0, c1
                 # Note: The points for the curve are calculated using an absolute distance
                 # from the current vertex along the line to the neighboring vertices.
-                PT_OFFSET = 1.0  # (mm)
-                CURVE_PT_OFFSET = 0.3  # (mm)
+                PT_OFFSET = 1.5  # (mm)
+                CURVE_PT_OFFSET = 0.75  # (mm)
 
                 prev_pt = pt_along_line(v, self.vertices[vids[prev]], PT_OFFSET)
                 p.addPoint(prev_pt)
@@ -1998,8 +2056,9 @@ class VoronoiHexTile():
                 curve1_pt = pt_along_line(v, self.vertices[vids[next]], CURVE_PT_OFFSET)
                 next_pt = pt_along_line(v, self.vertices[vids[next]], PT_OFFSET)
                 p.addCurvePoint(curve0_pt, curve1_pt, next_pt)
-        p.end()
-        p.set_style(Style(color, STROKE_COLOR, STROKE_WIDTH))
+
+        p.end(closePath)
+        p.set_style(style)
         SVG.add_node(layer, p)
 
     def addHexTileClipPath(self):
