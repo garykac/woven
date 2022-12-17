@@ -1440,6 +1440,14 @@ class VoronoiHexTile():
         
         self.writeOutput(fig, plotId)
 
+    def drawHexTileBorder(self, id, layer_name, style):
+        layer_border = self.svg.add_inkscape_layer(id, layer_name, self.layer)
+        p = Path()
+        p.addPoints(self.vHex)
+        p.end()
+        p.set_style(style)
+        SVG.add_node(layer_border, p)
+
     def drawClippedRegionLayer(self):
         layer_region_clip = self.svg.add_inkscape_layer(
             'region-clip', "Region Clipped", self.layer)
@@ -1847,14 +1855,6 @@ class VoronoiHexTile():
                 plt.text(center[0]-1.4, center[1]-1.5, text)
             t = Text(None, center[0]-1.4, -center[1], text)
             SVG.add_node(layer_region_ids, t)
-
-    def drawHexTileBorder(self, id, layer_name, style):
-        layer_border = self.svg.add_inkscape_layer(id, layer_name, self.layer)
-        p = Path()
-        p.addPoints(self.vHex)
-        p.end()
-        p.set_style(style)
-        SVG.add_node(layer_border, p)
 
     def writeOutput(self, fig, plotId):
         if self.options['write_output']:
