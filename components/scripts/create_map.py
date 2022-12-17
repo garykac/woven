@@ -1997,7 +1997,7 @@ class VoronoiHexTile():
 
         if isEdgeRegion and isStroke:
             closePath = False
-            print(f"region {id} ev: {numEdgeVertices}")
+
             # Rotate vertex indices until the last edge vertex is in the first position.
             # Scenarios (edge vertices in parentheses)
             #    2 edge vertex:
@@ -2013,9 +2013,7 @@ class VoronoiHexTile():
             #       0  - (1) - (2) - (3) -  4    : rotate 3
             #       0  -  1  - (2) - (3) - (4)   : rotate 4
             while not (vids[iv[0]] >=  self.firstNewVertex and vids[iv[1]] < self.firstNewVertex):
-                print("  rotating: " + ','.join([str(vids[x]) for x in iv]))
                 iv = iv[1:] + iv[:1]
-            print("iv: " + ','.join([str(vids[x]) for x in iv]))
             
             # Remove the last vertex from the stroke if we have 3 edge vertices.
             if numEdgeVertices == 3:
