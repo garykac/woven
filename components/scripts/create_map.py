@@ -1971,12 +1971,32 @@ class VoronoiHexTile():
                 prev = (i + num_verts - 1) % num_verts
                 next = (i + num_verts + 1) % num_verts
 
-                prev_pt = pt_along_line(v, self.vertices[vids[prev]], 1.0)
+                # v[prev] *
+                #          \
+                #           \
+                #            \
+                #             \
+                #      prev_pt +
+                #               \
+                #             c0 +
+                #                 \    c1  next_pt
+                #                  *----+----+-----------*
+                #                v[i]                  v[next]
+                #
+                # * = actual vertices of the region: v[prev], v[i], v[next]
+                # + = calculated vertices of the curved corner:
+                #     prev_pt, next_pt and the 2 off-curve control points: c0, c1
+                # Note: The points for the curve are calculated using an absolute distance
+                # from the current vertex along the line to the neighboring vertices.
+                PT_OFFSET = 1.0  # (mm)
+                CURVE_PT_OFFSET = 0.3  # (mm)
+
+                prev_pt = pt_along_line(v, self.vertices[vids[prev]], PT_OFFSET)
                 p.addPoint(prev_pt)
 
-                curve0_pt = pt_along_line(v, self.vertices[vids[prev]], 0.3)
-                curve1_pt = pt_along_line(v, self.vertices[vids[next]], 0.3)
-                next_pt = pt_along_line(v, self.vertices[vids[next]], 1.0)
+                curve0_pt = pt_along_line(v, self.vertices[vids[prev]], CURVE_PT_OFFSET)
+                curve1_pt = pt_along_line(v, self.vertices[vids[next]], CURVE_PT_OFFSET)
+                next_pt = pt_along_line(v, self.vertices[vids[next]], PT_OFFSET)
                 p.addCurvePoint(curve0_pt, curve1_pt, next_pt)
         p.end()
         p.set_style(Style(color, STROKE_COLOR, STROKE_WIDTH))
