@@ -266,11 +266,14 @@ class VoronoiHexTile():
         # np.array of x,y coords.
         self.seeds = None
 
-        self.startCornerSeed = 0
-        self.endCornerSeed = 0
-        self.startEdgeSeed = 0
+        # Useful indices into |self.seeds|.
+        self.startCornerSeed = 0      # First corner seed (always 0)
+        self.endCornerSeed = 0        # Last corner seed +1 (always 6 for hex)
+        self.startEdgeSeed = 0        # First edge seed (always 6 for hex)
         self.endEdgeSeed = 0
-        self.numActiveSeeds = 0
+        self.startInteriorSeed = 0    # First interior seed
+        self.endInteriorSeed = 0
+        self.numActiveSeeds = 0       # Total number of active seeds (ignore external seeds)
 
         # Number of candidates to generate and check around a seed before
         # giving up and marking the seed as complete.
@@ -302,14 +305,23 @@ class VoronoiHexTile():
         #     indices
         # Ridges are the line segments that comprise the Voronoi diagram:
         # .ridge_points : array of seed index pairs associated with each ridge
-        #     [ [ s0, s1], [s2, s3], ... ]
+        #     [ [s0, s1], [s2, s3], ... ]
         # .ridge_vertices : array of vertex index pairs associated with each
         #     ridge
-        #     [ [ v0, v1], [v2, v3], ... ]
+        #     [ [v0, v1], [v2, v3], ... ]
         self.vor = None
 
         # Calculated voronoi vertices.
         self.vertices = None
+
+        # Used to track new vertices that are added to the voronoi regions, for example,
+        # to clip regions along the edge.
+        # |newVertices| is a dictionary of vertices that we've already added so we don't
+        # add the same vertex multiple times.
+        self.newVertices = None
+        # Index into |vertices| of the first edge vertex that we added.
+        self.firstEdgeVertex = 0
+        self.lastEdgeVertex = 0
         
         self.iteration = 0
         self.maxIterations = self.options['iter']
@@ -417,10 +429,31 @@ class VoronoiHexTile():
         # Add the seeds for each edge.
         for e in self.edgeTypes:
             eInfo = EDGE_REGION_INFO[e]
-            # Add info for middle regions (trim off corners at front/back).
+            # Add info for middle regions (trim off first/last values since we've already
+            # added the corners).
             for ei in eInfo[1:-1]:
                 self.seed2terrain.append(ei)
 
+        # Pre-calc river edge ids.
+        self.riverInfo = {}
+        seedIdCorner = 0
+        seedIdEdge = 6
+        for e in self.edgeTypes:
+            eInfo = EDGE_REGION_INFO[e]
+            numEdgeRegions = len(eInfo) - 2  # Ignore first/last since those are corners.
+            
+            if e in EDGE_RIVER_INFO:
+                rInfo = EDGE_RIVER_INFO[e]
+                regions = [seedIdCorner]
+                regions += list(range(seedIdEdge, seedIdEdge + numEdgeRegions))
+                regions += [(seedIdCorner + 1) % 6]
+                riverIndex = rInfo.index('*')
+                r0 = regions[riverIndex-1]
+                r1 = regions[riverIndex]
+                self.riverInfo[self.calcSortedId(r0,r1)] = []
+            seedIdCorner += 1
+            seedIdEdge += numEdgeRegions
+        
         self.cornerWeight = {
             'l': MIN_DISTANCE_L * self.size,
             'm': MIN_DISTANCE_M * self.size,
@@ -434,7 +467,7 @@ class VoronoiHexTile():
         else:
             self.centerWeight = self.cornerWeight[self.options['center']]
         if self.options['verbose']:
-            print("Center weight;", self.centerWeight)
+            print("Center weight:", self.centerWeight)
 
     # Initialize the fixed seeds along the edge of the hex tile.
     def initFixedSeeds(self):
@@ -736,19 +769,34 @@ class VoronoiHexTile():
                           self.outerScale))
         self.vOutsideSeeds = np.array(vertices)
 
-    def calcEdgeId(self, vid0, vid1):
-        if vid0 < vid1:
-            return f"{vid0}-{vid1}"
-        return f"{vid1}-{vid0}"
+    def calcSortedId(self, id0, id1):
+        if id0 < id1:
+            return f"{id0}-{id1}"
+        return f"{id1}-{id0}"
 
     # Add a new vertex to the voronoi graph. This is used when clipping the
     # regions along the edge of the tile.
     # Return the index of the new vertex.
-    def addVertex(self, v):
+    def addEdgeVertex(self, v):
         # Check to see of we've added this vertex already.
-        key = f"{v[0]:.6g}-{v[1]:.6g}"
+        key = self._calcVertexKey(v)
         if key in self.newVertices:
             return self.newVertices[key]
+        id = self._addNewVertex(v, key)
+        self.lastEdgeVertex = id + 1
+        return id
+
+    def add3dVertex(self, v):
+        # Check to see of we've added this vertex already.
+        key = self._calcVertexKey(v)
+        if key in self.newVertices:
+            return self.newVertices[key]
+        return self._addNewVertex(v, key)
+
+    def _calcVertexKey(self, v):
+        return f"{v[0]:.6g}-{v[1]:.6g}"
+
+    def _addNewVertex(self, v, key):
         id = len(self.vertices)
         self.vertices.append(v)
         self.newVertices[key] = id
@@ -1085,15 +1133,15 @@ class VoronoiHexTile():
         if not startCcw:
             cw, ccw = ccw, cw
 
-        verts.append(self.addVertex(ccw))
+        verts.append(self.addEdgeVertex(ccw))
         if debug: print(f"    adding new vertex {ccw}")
 
         # Hex corners have an extra point in the middle.
         if sid_cprev != sid_cnext:
-            verts.append(self.addVertex(self.seeds[sid0]))
+            verts.append(self.addEdgeVertex(self.seeds[sid0]))
             if debug: print(f"    adding new vertex (corner) {self.seeds[sid0]}")
 
-        verts.append(self.addVertex(cw))
+        verts.append(self.addEdgeVertex(cw))
         if debug: print(f"    adding new vertex {cw}")
         return verts
 
@@ -1111,14 +1159,14 @@ class VoronoiHexTile():
                 # If this is one of the edges that is clipped by the hex
                 # boundary, then enforce a smaller min edge
                 minDistance = self.minRidgeLength
-                if vid0 >= self.firstNewVertex and vid1 >= self.firstNewVertex:
+                if self.isEdgeVertex(vid0) and self.isEdgeVertex(vid1):
                     continue
-                if vid0 >= self.firstNewVertex or vid1 >= self.firstNewVertex:
+                if self.isEdgeVertex(vid0) or self.isEdgeVertex(vid1):
                     minDistance = self.minRidgeLengthEdge
 
                 if near(v0, v1, minDistance):
                     edgeInfo = [vid0, vid1, sid]
-                    edgeId = self.calcEdgeId(vid0, vid1)
+                    edgeId = self.calcSortedId(vid0, vid1)
                     if not edgeId in self.badEdges:
                         self.badEdges[edgeId] = []
                     self.badEdges[edgeId].append(edgeInfo)
@@ -1160,7 +1208,7 @@ class VoronoiHexTile():
                     # will be the outer edge.
                     v = []
                     for vid in r:
-                        if vid >= self.firstNewVertex:
+                        if self.isEdgeVertex(vid):
                             v.append(vid)
                     # Midpoint of outer edge is center.
                     polyCenter = lerp_pt(self.vertices[v[0]],
@@ -1238,7 +1286,9 @@ class VoronoiHexTile():
         # vertices along the tile boundary.
         self.vertices = [vid for vid in self.vor.vertices]
         self.newVertices = {}
-        self.firstNewVertex = len(self.vertices)
+        self.firstEdgeVertex = len(self.vertices)
+        self.lastEdgeVertex = self.firstEdgeVertex + 1
+
         # Reset number of annotation lines.
         self.numLines = 0
 
@@ -1390,6 +1440,9 @@ class VoronoiHexTile():
             return REGION_COLOR['_']
         return REGION_COLOR[type]
 
+    def isEdgeVertex(self, vid):
+        return vid >= self.firstEdgeVertex and vid < self.lastEdgeVertex
+
     def plot(self, plotId=None):
         self.svg = SVG([215.9, 279.4])  #SVG([210, 297])
         fig = plt.figure(figsize=(8,8))
@@ -1407,6 +1460,8 @@ class VoronoiHexTile():
 
         stroke = Style("none", "#000000", STROKE_WIDTH)
         black_fill = Style(fill="#000000")
+
+        self.calcUpdatedRegions()
 
         # Draw layers back to front.
         
@@ -1443,6 +1498,10 @@ class VoronoiHexTile():
         self.drawHexTileBorder("border", "Border", stroke)
         
         self.writeOutput(fig, plotId)
+
+    # Calc updated regions that have been adjusted by rivers.
+    def calcUpdatedRegions(self):
+        self.sid2updatedRegion = copy.deepcopy(self.sid2region)
 
     def drawHexTileBorder(self, id, layer_name, style):
         layer_border = self.svg.add_inkscape_layer(id, layer_name, self.layer)
@@ -1784,7 +1843,7 @@ class VoronoiHexTile():
                     s0,s1 = s1,s0
                 key = f"{s0}-{s1}"
                 if key in river:
-                    self.drawRiverSegment(self.vor.ridge_vertices[i])
+                    self._drawRiverSegment(self.vor.ridge_vertices[i])
         else:
             # Add all river segments on a hidden layer.
             for rv in self.vor.ridge_vertices:
@@ -1792,7 +1851,7 @@ class VoronoiHexTile():
             self.layer_river_border.hide()
             self.layer_river.hide()
 
-    def drawRiverSegment(self, v):
+    def _drawRiverSegment(self, v):
         if v[0] == -1 or v[1] == -1:
             return
         p = Path()
@@ -1987,11 +2046,11 @@ class VoronoiHexTile():
         # * Don't want to close off the segment corresponding to the edge
         #   (Because we don't want a fat stroke along that edge).
         # We can identify edge regions because they have vertices that were added to the
-        # vertex list during clipping, so we can compare the index with |firstNewVertex|.
+        # vertex list during clipping, so we can compare the index with |firstEdgeVertex|.
         isEdgeRegion = False
         numEdgeVertices = 0
         for i in range(0, num_verts):
-            if vids[i] >= self.firstNewVertex:
+            if self.isEdgeVertex(vids[i]):
                 isEdgeRegion = True
                 numEdgeVertices += 1
 
@@ -2012,7 +2071,7 @@ class VoronoiHexTile():
             #      (0) - (1) - (2) -  3  -  4    : rotate 2
             #       0  - (1) - (2) - (3) -  4    : rotate 3
             #       0  -  1  - (2) - (3) - (4)   : rotate 4
-            while not (vids[iv[0]] >=  self.firstNewVertex and vids[iv[1]] < self.firstNewVertex):
+            while not (self.isEdgeVertex(vids[iv[0]]) and not self.isEdgeVertex(vids[iv[1]])):
                 iv = iv[1:] + iv[:1]
             
             # Remove the last vertex from the stroke if we have 3 edge vertices.
@@ -2027,7 +2086,7 @@ class VoronoiHexTile():
             # We don't want to round the vertices along the edge of the tile. We can
             # identify these edge vertices easily because they are the ones that we
             # added to the end of the vertex list during clipping.
-            if vid >= self.firstNewVertex:
+            if self.isEdgeVertex(vid):
                 p.addPoint(v)
             else:
                 # Add a small curve for this vertex.
@@ -2120,10 +2179,10 @@ class VoronoiHexTile():
         x0, y0 = self.options['origin']
         for vid in r:
             v = self.vertices[vid]
-            obj.addVertex([x0 + v[0] * SCALE, y0 + v[1] * SCALE, 0])
+            obj.add3dVertex([x0 + v[0] * SCALE, y0 + v[1] * SCALE, 0])
 
             height = heights[self.seed2terrain[sid]]
-            obj.addVertex([x0 + v[0] * SCALE, y0 + v[1] * SCALE, height * SCALE])
+            obj.add3dVertex([x0 + v[0] * SCALE, y0 + v[1] * SCALE, height * SCALE])
         obj.addFace([(2 * x) + 1 for x in range(0, nVertices)])
         obj.addFace(reversed([(2 * x) + 2 for x in range(0, nVertices)]))
         for f in range(0, nVertices-1):

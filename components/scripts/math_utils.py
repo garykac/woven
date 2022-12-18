@@ -23,13 +23,13 @@ def clamp(a, min, max):
 def lerp(a0, a1, t):
     return a0 + (a1-a0)*t
     
-# Calc point by linear interpolating from v0 to v1 by t.
+# Calc point by linear interpolating from |v0| to |v1| by |t|.
 def lerp_pt(v0, v1, t):
     x0, y0 = v0
     x1, y1 = v1
     return [lerp(x0, x1, t), lerp(y0, y1, t)]
 
-# Calc offset to add to v0 to linear interpolate from v0 to v1 by t.
+# Calc offset to add to v0 to linear interpolate from |v0| to |v1| by |t|.
 def lerp_pt_delta(v0, v1, t):
     x0, y0 = v0
     x1, y1 = v1
@@ -51,6 +51,7 @@ def lerperp(v0, v1, t, perp_t):
     return [x, y]
 
 # Calc point which is distance |d| along the segment from |v0| to |v1|.
+# Note that |d| is an absolute distance rather than a percentage.
 def pt_along_line(v0, v1, d):
     t = d / dist(v0, v1)
     return lerp_pt(v0, v1, t)
@@ -62,6 +63,7 @@ def near(v0, v1, dist):
     dy = y1 - y0
     return dx*dx + dy*dy < dist * dist
 
+# Calc distance from |v0| to |v1| (always positive).
 def dist(v0, v1):
     x0, y0 = v0
     x1, y1 = v1
@@ -69,6 +71,7 @@ def dist(v0, v1):
     dy = y1 - y0
     return math.sqrt(dx*dx + dy*dy)
 
+# Return distance from |pt| to |line|.
 def dist_pt_line(pt, line):
     pt0, pt1 = line
     x0, y0 = pt0
@@ -194,9 +197,9 @@ def ptInHex(size, pt):
     #  0.0   |          + . . . . .|
     #        |                     |
     #        |                     |
-    #        +,                   ,+
+    # -0.5   +,                   ,+
     #          `-,_           _,-'
-    # -1.0         `-,_   _,-'
+    #              `-,_   _,-'
     # -1.0             `+'
     #    
     # Upper quadrant:
