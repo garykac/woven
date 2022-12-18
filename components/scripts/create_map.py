@@ -1847,7 +1847,7 @@ class VoronoiHexTile():
         else:
             # Add all river segments on a hidden layer.
             for rv in self.vor.ridge_vertices:
-                self.drawRiverSegment(rv)
+                self._drawRiverSegment(rv)
             self.layer_river_border.hide()
             self.layer_river.hide()
 
