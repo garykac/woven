@@ -249,7 +249,133 @@ class VoronoiHexTileLoader():
             self.options['center'] = center
             self.processTile(terrain_data, river_data, overlay_data)
 
+class RiverBuilder():
+    def __init__(self, riverEdges, riverRidges):
+        # The set of river ridges that extend off the tile, so only 1 vertex links up with
+        # other ridges.
+        self.riverEdges = riverEdges
+        
+        # The set of all ridges that comprise the rivers on this tile.
+        self.riverRidges = riverRidges
 
+        # Build dict of ridge segments that should be rivers.
+        self.riverSegments = {}
+        for r in riverRidges:
+            self.riverSegments[r] = 1
+
+        # Make sure river edges are defined where the tile needs them.
+        for redge in riverEdges:
+            (s0, s1) = redge.split('-')
+            key = calcSortedId(s0, s1)
+            if not key in self.riverSegments:
+                raise Exception(f"Missing river edge segment {key}")
+    
+    def buildRidgeInfo(self, vor):
+        # Build dict of ridge keys ("#-#") -> id, seeds, vertices.
+        self.ridgeInfo = {}
+        self.v2ridges = {}  # Vertex id -> list of ridges with that vertex.
+        n_ridges = len(vor.ridge_points)
+        for i in range(0, n_ridges):
+            (s0, s1) = vor.ridge_points[i]
+            key = calcSortedId(s0, s1)
+            if key in self.riverSegments:
+                (v0, v1) = vor.ridge_vertices[i]
+                self._appendToDictEntry(self.v2ridges, v0, key)
+                self._appendToDictEntry(self.v2ridges, v1, key)
+                self.ridgeInfo[key] = {
+                    'ridge-id': i,
+                    'seeds': [s0, s1],
+                    'verts': [v0, v1],
+                    }
+
+    def _appendToDictEntry(self, d, key, value):
+        if not key in d:
+            d[key] = []
+        d[key].append(value)
+
+    def buildTransitions(self):
+        # Start from one of the river edges and build the vertex connections.
+        self.riverStarts = []
+        self.riverEnds = []
+        # Dictionary of <vertex> -> list-of-vertices
+        self.riverTransitions = {}
+
+        while len(self.riverRidges) != 0:
+            # Find a river edge to start.
+            currEdge = self.findNextRiverEdge()
+            if currEdge == None:
+                break
+
+            rInfo = self.ridgeInfo[currEdge]
+            self.riverEdges.remove(currEdge)
+            self.riverRidges.remove(currEdge)
+            
+            startV = self.findUnmatchedRidgeVertex(currEdge)
+            self.riverStarts.append(startV)
+            
+            newCandidates = self.findNextCandidates(currEdge, startV)
+            self.riverTransitions[startV] = copy.copy(newCandidates)
+            vCandidates = newCandidates
+
+            while len(vCandidates) != 0:
+                v = vCandidates.pop(0)
+                ridges = self.v2ridges[v]
+                for r in ridges:
+                    newCandidates = self.findNextCandidates(r, v)
+                    if len(newCandidates) == 0:
+                        if r in self.riverEdges:
+                            verts = copy.copy(self.ridgeInfo[r]['verts'])
+                            verts.remove(v)
+                            self.riverEnds.append(verts[0])
+                            self.riverEdges.remove(r)
+                            self.riverTransitions[v] = copy.copy(verts)
+                    else:
+                        self.riverTransitions[v] = copy.copy(newCandidates)
+                        vCandidates.extend(copy.copy(newCandidates))
+                    self.riverRidges.remove(r)
+
+    def findNextCandidates(self, ridge, v):
+        rInfo = self.ridgeInfo[ridge]
+        nextVertCandidates = []
+        for v in rInfo['verts']:
+            self.v2ridges[v].remove(ridge)
+            if len(self.v2ridges[v]) != 0:
+                nextVertCandidates.append(v)
+        return nextVertCandidates
+
+    def findNextRiverEdge(self):
+        # Get next available river edge from the |rRidges|.
+        # We scan |rRidges| from start each time so that we process the ridges in the
+        # order that we specified them in the data file.
+        for r in self.riverRidges:
+            if r in self.riverEdges:
+                return r
+        return None
+    
+    # Given a ridge, find the vertex that is not shared with another ridge.
+    # This is typically used for river edges.
+    def findUnmatchedRidgeVertex(self, ridge):
+        rInfo = self.ridgeInfo[ridge]
+        for v in rInfo['verts']:
+            if len(self.v2ridges[v]) == 1:
+                return v
+        return None
+    
+    def getRiverVertices(self):
+        rivers = []
+        for start in self.riverStarts:
+            r = []
+            v = start
+            while not v in self.riverEnds:
+                r.append(v)
+                # TODO: Add support for tiles with 1 edge river (eg. with a lake)
+                if len(self.riverTransitions[v]) == 0:
+                    return []
+                v = self.riverTransitions[v][0]
+            r.append(v)
+            rivers.append(r)
+        return rivers
+        
 class VoronoiHexTile():
     def __init__(self, options):
         self.options = options
@@ -434,26 +560,6 @@ class VoronoiHexTile():
             for ei in eInfo[1:-1]:
                 self.seed2terrain.append(ei)
 
-        # Pre-calc river edge ids.
-        self.riverInfo = {}
-        seedIdCorner = 0
-        seedIdEdge = 6
-        for e in self.edgeTypes:
-            eInfo = EDGE_REGION_INFO[e]
-            numEdgeRegions = len(eInfo) - 2  # Ignore first/last since those are corners.
-            
-            if e in EDGE_RIVER_INFO:
-                rInfo = EDGE_RIVER_INFO[e]
-                regions = [seedIdCorner]
-                regions += list(range(seedIdEdge, seedIdEdge + numEdgeRegions))
-                regions += [(seedIdCorner + 1) % 6]
-                riverIndex = rInfo.index('*')
-                r0 = regions[riverIndex-1]
-                r1 = regions[riverIndex]
-                self.riverInfo[self.calcSortedId(r0,r1)] = []
-            seedIdCorner += 1
-            seedIdEdge += numEdgeRegions
-        
         self.cornerWeight = {
             'l': MIN_DISTANCE_L * self.size,
             'm': MIN_DISTANCE_M * self.size,
@@ -768,11 +874,6 @@ class VoronoiHexTile():
                                   (j+1) / (nBoundarySeeds + 1)),
                           self.outerScale))
         self.vOutsideSeeds = np.array(vertices)
-
-    def calcSortedId(self, id0, id1):
-        if id0 < id1:
-            return f"{id0}-{id1}"
-        return f"{id1}-{id0}"
 
     # Add a new vertex to the voronoi graph. This is used when clipping the
     # regions along the edge of the tile.
@@ -1166,7 +1267,7 @@ class VoronoiHexTile():
 
                 if near(v0, v1, minDistance):
                     edgeInfo = [vid0, vid1, sid]
-                    edgeId = self.calcSortedId(vid0, vid1)
+                    edgeId = calcSortedId(vid0, vid1)
                     if not edgeId in self.badEdges:
                         self.badEdges[edgeId] = []
                     self.badEdges[edgeId].append(edgeInfo)
@@ -1489,7 +1590,7 @@ class VoronoiHexTile():
 
         self.drawTerrainLabels()
 
-        self.drawRiverSegments()
+        self.drawRivers()
         
         self.drawOverlay()
 
@@ -1806,7 +1907,7 @@ class VoronoiHexTile():
         t = (before + after) / 2
         return lerp(-self.size/2, self.size/2, t)
       
-    def drawRiverSegments(self):
+    def drawRivers(self):
         # There are 2 layers for the rivers: the black border and the blue river fill.
         # This is so that all the borders are behind all of the river fills.
         self.layer_river_border = self.svg.add_inkscape_layer(
@@ -1829,43 +1930,57 @@ class VoronoiHexTile():
         self.style_river.set("stroke-linecap", "round")
         self.style_river.set("stroke-linejoin", "round")
 
-        if self.riverData:
-            # Build dict of ridge segments that should be rivers.
-            river = {}
-            for r in self.riverData:
-                if r:
-                    river[r] = 1
+        rivers = self._calcRiverVertices()
+        for r in rivers:
+            p = Path()
+            for vid in r:
+                p.addPoint(self.vertices[vid])
+            p.end(False)
+            p2 = copy.deepcopy(p)
 
-            n_ridges = len(self.vor.ridge_points)
-            for i in range(0, n_ridges):
-                (s0, s1) = self.vor.ridge_points[i]
-                if s1 < s0:
-                    s0,s1 = s1,s0
-                key = f"{s0}-{s1}"
-                if key in river:
-                    self._drawRiverSegment(self.vor.ridge_vertices[i])
-        else:
-            # Add all river segments on a hidden layer.
-            for rv in self.vor.ridge_vertices:
-                self._drawRiverSegment(rv)
-            self.layer_river_border.hide()
-            self.layer_river.hide()
+            p.set_style(self.style_river_border)
+            SVG.add_node(self.group_river_border, p)
 
-    def _drawRiverSegment(self, v):
-        if v[0] == -1 or v[1] == -1:
-            return
-        p = Path()
-        for i in [0,1]:
-            p.addPoint(self.vertices[v[i]])
-        p.end()
-        p2 = copy.deepcopy(p)
-
-        p.set_style(self.style_river_border)
-        SVG.add_node(self.group_river_border, p)
-
-        p2.set_style(self.style_river)
-        SVG.add_node(self.group_river, p2)
+            p2.set_style(self.style_river)
+            SVG.add_node(self.group_river, p2)
+        
+    def _calcRiverVertices(self):
+        # Scan the tile edges to determine if a river is required.
+        # Build a list of tile edges that have a river exit: |riverEdges|.
+        riverEdges = []
+        seedIdCorner = 0
+        seedIdEdge = 6
+        for e in self.edgeTypes:
+            eInfo = EDGE_REGION_INFO[e]
+            numEdgeRegions = len(eInfo) - 2  # Ignore first/last since those are corners.
             
+            if e in EDGE_RIVER_INFO:
+                rInfo = EDGE_RIVER_INFO[e]
+                regions = [seedIdCorner]
+                regions += list(range(seedIdEdge, seedIdEdge + numEdgeRegions))
+                regions += [(seedIdCorner + 1) % 6]
+                riverIndex = rInfo.index('*')
+                r0 = regions[riverIndex-1]
+                r1 = regions[riverIndex]
+                riverEdges.append(calcSortedId(r0,r1))
+            seedIdCorner += 1
+            seedIdEdge += numEdgeRegions
+
+        # Exit if this tile has no tile edges with rivers.
+        if len(riverEdges) == 0:
+            return []
+
+        if self.riverData:
+            # Build a clean list of ridge segments that should be rivers.
+            rRidges = [r for r in self.riverData if r]
+
+            r = RiverBuilder(riverEdges, rRidges)
+            r.buildRidgeInfo(self.vor)
+            r.buildTransitions()
+            
+            return r.getRiverVertices()
+        return []
+
     def drawOverlay(self):
         self.layer_overlay = self.svg.add_inkscape_layer(
             'overlay', "Overlay", self.layer)
@@ -2331,6 +2446,11 @@ def drawCircle(id, center, radius, fill, layer):
     circle = SVG.circle(id, center[0], center[1], radius)
     circle.set_style(fill)
     SVG.add_node(layer, circle)
+
+def calcSortedId(id0, id1):
+    if int(id0) < int(id1):
+        return f"{id0}-{id1}"
+    return f"{id1}-{id0}"
 
 def warning(msg):
     print("WARNING:", msg)
