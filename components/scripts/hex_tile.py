@@ -122,10 +122,6 @@ def calcSortedId(id0, id1):
 def warning(msg):
     print("WARNING:", msg)
 
-def error(msg):
-    print("ERROR:", msg)
-    sys.exit(0)
-
 class VoronoiHexTile():
     def __init__(self, options):
         self.options = options
@@ -263,7 +259,7 @@ class VoronoiHexTile():
 
     def initEdgePattern(self, pattern):
         if len(pattern) != NUM_SIDES:
-            error(f"Invalid pattern: {pattern}")
+            raise Exception(f"Invalid pattern: {pattern}")
 
         # Build mapping from corner to edge pattern.
         self.corner2edge = {}
@@ -293,7 +289,7 @@ class VoronoiHexTile():
             if edgeRegionTypes[-1] != edgeNextRegionTypes[0]:
                 edgeTypes = '-'.join(edgeRegionTypes)
                 edgeNextTypes = '-'.join(edgeNextRegionTypes)
-                error(f"Edge patterns don't connect: {edge} ({edgeTypes}) and {edgeNext} ({edgeNextTypes})")
+                raise Exception(f"Edge patterns don't connect: {edge} ({edgeTypes}) and {edgeNext} ({edgeNextTypes})")
             self.cornerType.append(edgeRegionTypes[0])
 
         # Record the terrain type for each region along the edge of the tile.
@@ -482,7 +478,7 @@ class VoronoiHexTile():
         # Record terrain type for this seed so that we don't regenerate new
         # terrain for each iteration.
         if len(self.seed2terrain) != sid:
-            error(f"Terrain for seeds generated out of order: {sid}")
+            raise Exception(f"Terrain for seeds generated out of order: {sid}")
 
         # If we have terrain data loaded from a file, use that.
         if self.terrainData:
@@ -596,7 +592,7 @@ class VoronoiHexTile():
             # hexagon (so that |c| is < 0), but this is OK.
             if fge(a, 0) and fge(b, 0) and fle(c, 1):
                 return (a, b, c, tri, tri_next)
-        error(f"Unable to calculate seed distance for {x},{y}")
+        raise Exception(f"Unable to calculate seed distance for {x},{y}")
         return None
         
     # Generate a random x,y point within a ring (defined by |r0| and |r1|) around
@@ -1199,7 +1195,7 @@ class VoronoiHexTile():
                 self.vid2sids[vid].append(sid)
         for k,v in self.vid2sids.items():
             if len(v) > 3:
-                print("Error - vertex shared by more than 3 regions:", k, v)
+                raise Exception("Vertex shared by more than 3 regions:", k, v)
         
         self.findBadEdges()
         self.findSmallRegions()
