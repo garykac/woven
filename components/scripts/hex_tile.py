@@ -119,11 +119,6 @@ def calcSortedId(id0, id1):
         return f"{id0}-{id1}"
     return f"{id1}-{id0}"
 
-def drawCircle(id, center, radius, fill, layer):
-    circle = SVG.circle(id, center[0], center[1], radius)
-    circle.set_style(fill)
-    SVG.add_node(layer, circle)
-
 def warning(msg):
     print("WARNING:", msg)
 
@@ -1435,7 +1430,7 @@ class VoronoiHexTile():
         for sid in range(0, self.numActiveSeeds):
             center = self.seeds[sid]
             id = f"seed-{sid}"
-            drawCircle(id, center, 1.0, black_fill, layer_seeds)
+            self._drawCircle(id, center, 1.0, black_fill, layer_seeds)
 
     def drawSeedExclusionZoneLayer(self):
         layer_seed_ex = self.svg.add_inkscape_layer(
@@ -1449,7 +1444,7 @@ class VoronoiHexTile():
             center = self.vor.points[sid]
             radius = self.seed2minDistance[sid]
             id = f"seed-ex-{sid}"
-            drawCircle(id, center, radius, fill, layer_seed_ex)
+            self._drawCircle(id, center, radius, fill, layer_seed_ex)
 
     def drawMarginExclusionZoneLayer(self):
         layer_margin_ex = self.svg.add_inkscape_layer(
@@ -1461,7 +1456,7 @@ class VoronoiHexTile():
 
         for mz in self.edgeMarginZone:
             center, radius = mz
-            drawCircle(0, center, radius, fill, layer_margin_ex)
+            self._drawCircle(0, center, radius, fill, layer_margin_ex)
 
     def drawBadEdgeLayer(self):
         if len(self.badEdges) == 0:
@@ -1503,10 +1498,10 @@ class VoronoiHexTile():
         for sid in self.regionCircles:
             center, radius = self.regionCircles[sid]
             id = f"incircle-{sid}"
-            drawCircle(id, center, radius, fill, layer_circles)
+            self._drawCircle(id, center, radius, fill, layer_circles)
 
             id = f"incircle-ctr-{sid}"
-            drawCircle(id, center, '0.5', black_fill, layer_circles)
+            self._drawCircle(id, center, '0.5', black_fill, layer_circles)
         if ENABLE_SMALL_REGION_CHECK:
             if self.circleRatio > self.circleRatioThreshold:
                 for c in [self.minCircle, self.maxCircle]:
@@ -1628,8 +1623,8 @@ class VoronoiHexTile():
                 SVG.add_node(g, label)
 
         # Add 15mm circle (for mana size).
-        drawCircle('mana', [50,110], '7.5',
-                   Style(fill="#000000"), self.layer_text)
+        self._drawCircle('mana', [50,110], '7.5',
+                         Style(fill="#000000"), self.layer_text)
         
         # Add terrain swatches.
         y_start = 90
@@ -1802,6 +1797,11 @@ class VoronoiHexTile():
             t = Text(None, center[0]-1.4, -center[1], text)
             SVG.add_node(layer_region_ids, t)
 
+    def _drawCircle(self, id, center, radius, fill, layer):
+        circle = SVG.circle(id, center[0], center[1], radius)
+        circle.set_style(fill)
+        SVG.add_node(layer, circle)
+
     def writeOutput(self, fig, plotId):
         if self.options['write_output']:
             outdir_png = self.getPngOutputDir()
@@ -1915,8 +1915,6 @@ class VoronoiHexTile():
         # * Don't want to round off the vertices along the edge.
         # * Don't want to close off the segment corresponding to the edge
         #   (Because we don't want a fat stroke along that edge).
-        # We can identify edge regions because they have vertices that were added to the
-        # vertex list during clipping, so we can compare the index with |firstEdgeVertex|.
         isEdgeRegion = False
         numEdgeVertices = 0
         for i in range(0, num_verts):
@@ -2036,6 +2034,10 @@ class VoronoiHexTile():
         terrain = ','.join(self.seed2terrain)
         print(terrain)
 
+    #
+    # 3D tile generation (for rendering in Blender)
+    #
+    
     def calcRegion3d(self, obj, sid):
         r = self.sid2region[sid]
         nVertices = len(r)
