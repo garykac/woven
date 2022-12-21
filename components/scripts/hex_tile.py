@@ -119,9 +119,6 @@ def calcSortedId(id0, id1):
         return f"{id0}-{id1}"
     return f"{id1}-{id0}"
 
-def warning(msg):
-    print("WARNING:", msg)
-
 class VoronoiHexTile():
     def __init__(self, options):
         self.options = options
@@ -975,7 +972,7 @@ class VoronoiHexTile():
         # Double-check direction by checking the cw point.
         startCcwCheck = dist(vFirstIn, cw) < dist(vLastIn, cw)
         if numInternal != 1 and startCcw != startCcwCheck:
-            warning(f"calculating clipped region for {sid}")
+            raise Exception(f"calculating clipped region for {sid}")
 
         if not startCcw:
             cw, ccw = ccw, cw
