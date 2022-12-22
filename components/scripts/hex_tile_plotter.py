@@ -363,9 +363,9 @@ class VoronoiHexTilePlotter():
         self._addAnnotationText(f"pattern {pNum} / {pattern}")
         self._addAnnotationText(f"seed attempts: {self.tile.seedAttempts}")
         self._addAnnotationText(f"seed distance: "
-                "l {self.tile.minDistanceL:.03g}; "
-                "m {self.tile.minDistanceM:.03g}; "
-                "h {self.tile.minDistanceH:.03g}")
+                f"l {self.tile.minDistanceL:.03g}; "
+                f"m {self.tile.minDistanceM:.03g}; "
+                f"h {self.tile.minDistanceH:.03g}")
 
         center = "AVG"
         if self.options['center']:
@@ -492,7 +492,7 @@ class VoronoiHexTilePlotter():
         clippath_id = self.addHexTileClipPath()
         self.group_river_border.set("clip-path", f"url(#{clippath_id})")
         self.style_river_border = Style(None, STROKE_COLOR,
-                                   RIVER_WIDTH + 2 * STROKE_WIDTH)
+                                   RIVER_WIDTH + 6 * STROKE_WIDTH)
         self.style_river_border.set("stroke-linecap", "round")
         self.style_river_border.set("stroke-linejoin", "round")
 
