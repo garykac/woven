@@ -133,9 +133,11 @@ class VoronoiHexTile():
         # Voronoi object has following attributes:
         # .points : array of seed values used to create the Voronoi
         # .point_region : mapping from seed index to region index
+        #     -1 for seeds that don't have a corresponding region.
         # .vertices : array of Voronoi vertices
         # .regions : array of regions, where each region is an array of Voronoi
-        #     indices
+        #     indices. The Voronoi index will be -1 for vertices outside the Voronoi
+        #     diagram (out to infinity).
         # Ridges are the line segments that comprise the Voronoi diagram:
         # .ridge_points : array of seed index pairs associated with each ridge
         #     [ [s0, s1], [s2, s3], ... ]

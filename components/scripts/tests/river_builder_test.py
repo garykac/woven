@@ -2,65 +2,59 @@ import pytest
 
 from river_builder import RiverBuilder
 
-#  0      10   15   20   25   30   35   40
+#      0    5   10   15   20   25   30   35   40   45   50
 # 
-# 10            a         b         c
-#               |         |         |
-#           1   |    2    |    3    |   4
-#            . .|. . . . .|. . . . .|. .
-#            .  |         |         |  .
-# 20   ----d====e====f----g----h----i----j----
-#          | .       #         |       . |
-#        5 | .  6    #    7    |    8  . | 9
-#          | .       #         |       . |
-#          | .       #         |       . |
-# 30   ----k----l----m====n====o====p====q----
-#            .  |         |         |  .
-#            . .|. . . . .|. . . . .|. .
-#          10   |   11    |   12    |   13
-#               |         |         |
-# 40            r         s         t
+# 10   ax - - - - - - a - - - - b - - - - c - - - - - - cx
+#       :             |         |         |             :
+#       :         1   |    2    |    3    |   4         :
+#       :          . .|. . . . .|. . . . .|. .          :
+#       :          .  |         |         |  .          :
+# 20   dx - - - -d====e====f----g----h----i----j- - - - jx
+#       :        | .       #         |       . |        :
+#       :   5    | .  6    #    7    |    8  . |    9   :
+#       :        | .       #         |       . |        :
+#       :        | .       #         |       . |        :
+# 30   kx - - - -k----l----m====n====o====p====q- - - - qx
+#       :          .  |         |         |  .          :
+#       :          . .|. . . . .|. . . . .|. .          :
+#       :        10   |   11    |   12    |   13        :
+#       :             |         |         |             :
+# 40   rx - - - - - - r - - - - s - - - - t - - - - - - tx
 #
-# a-t are the vertices of the voronoi ridges
-# 1-12 are the voronoi regions (seed ids)
+# a-t are the vertices of the voronoi ridges.
+# ax-tx are extra vertices that are used only to complete the outer regions.
+# 1-12 are the voronoi seed ids.
+#
 # Each ridge of the voronoi is specified by identifying the regions on either
-# side of the ridge.
-# The dotted square border is the tile boundary (NOT part of the voronoi).
+# side of the ridge (using seed ids). So the ridge a-e is specified as 1-2
+# since 1 and 2 are the regions on either side of the ridge. The lowest
+# numbered region is always given first.
+#
+# The dotted (.) square border is the tile boundary (NOT part of the voronoi).
+# It acts as a clipping region for the voronoi. "River edges" are ridges where
+# the river passes through this clipping boundary.
+#
 # = and # show the path of a sample river through the tile (from d fo q).
+# The relevant (tile intersecting) voronoi ridges are - and |.
+# Other (outer) voronoi edges are indicated with '- -' and :
 
 # Vertex indices.
-a = 101  # [15,10]
-b = 102  # [25,10]
-c = 103  # [35,10]
-
-d = 104  # [10,20]
-e = 105  # [15,20]
-f = 106  # [20,20]
-g = 107  # [25,20]
-h = 108  # [30,20]
-i = 109  # [35,20]
-j = 110  # [40,20]
-
-k = 111  # [10,30]
-l = 112  # [15,30]
-m = 113  # [20,30]
-n = 114  # [25,30]
-o = 115  # [30,30]
-p = 116  # [35,30]
-q = 117  # [40,30]
-
-r = 118  # [15,40]
-s = 119  # [25,40]
-t = 120  # [35,40]
+(a,b,c) = (1,2,3)
+(d,e,f,g,h,i,j) = (4,5,6,7,8,9,10)
+(k,l,m,n,o,p,q) = (11,12,13,14,15,16,17)
+(r,s,t) = (18,19,20)
+# Outside vertex indices.
+(ax,cx,dx,jx,kx,qx,rx,tx) = (21,22,23,24,25,26,27,28)
 
 @pytest.fixture
 def single_river():
     edges = ["1-6", "8-13"]
     ridges = ["1-6", "2-6", "6-7", "7-11", "7-12", "8-12", "8-13"]
+    lakes = []
     expect = [
         [d, e, f, m, n, o, p, q],
     ]
-    return (edges, ridges, expect)
+    return (edges, ridges, lakes, expect)
 
 @pytest.fixture
 def two_rivers():
@@ -72,21 +66,97 @@ def two_rivers():
         "1-6", "2-6", "2-7", "3-7", "3-8", "4-8",
         "6-10", "6-11", "7-11", "7-12", "8-12", "8-13",
     ]
+    lakes = []
     expect = [
         [d, e, f, g, h, i, j],
         [k, l, m, n, o, p, q],
     ]
-    return (edges, ridges, expect)
+    return (edges, ridges, lakes, expect)
+
+@pytest.fixture
+def with_lake():
+    edges = [
+        "1-6",
+    ]
+    ridges = [
+        "1-6", "2-6",
+    ]
+    lakes = [ 7 ]
+    expect = [
+        [d, e, f],
+    ]
+    return (edges, ridges, lakes, expect)
+
+@pytest.fixture
+def direct_into_lake():
+    edges = [
+        "2-3",
+    ]
+    ridges = [
+        "2-3",
+    ]
+    lakes = [ 7 ]
+    expect = [
+        [b, g],
+    ]
+    return (edges, ridges, lakes, expect)
 
 class FakeVoronoi:
     def __init__(self):
+        # Vertices.
+        (vA,vB,vC) = ([15,10],[25,10],[35,10])
+        (vD,vE,vF,vG,vH,vI,vJ) = ([10,20],[15,20],[20,20],[25,20],[30,20],[35,20],[40,20])
+        (vK,vL,vM,vN,vO,vP,vQ) = ([10,30],[15,30],[20,30],[25,30],[30,30],[35,30],[40,30])
+        (vR,vS,vT) = ([15,40],[25,40],[35,40])
+
+        # Seed indices.
+        (s1,s2,s3,s4) = (1,2,3,4)
+        (s5,s6,s7,s8,s9) = (5,6,7,8,9)
+        (s10,s11,s12,s13) = (10,11,12,13)
+
+        # Region indices.
+        (r1,r2,r3,r4) = (1,2,3,4)
+        (r5,r6,r7,r8,r9) = (5,6,7,8,9)
+        (r10,r11,r12,r13) = (10,11,12,13)
+        
+        # Seed points (not used).
+        self.points = []
+        
+        # Mapping from seed ids to region ids.
+        self.point_region = list(range(0,14))
+
+        self.vertices = [
+            [0,0],  # Index 0 unused
+            vA,vB,vC,
+            vD,vE,vF,vG,vH,vI,vJ,
+            vK,vL,vM,vN,vO,vP,vQ,
+            vR,vS,vT,
+        ]
+
+        self.regions = [
+            [],             # Index 0 unused
+            [a,e,d,dx,ax],  # r1
+            [a,b,g,f,e],    # r2
+            [b,c,i,h,g],    # r3
+            [c,cx,jx,j,i],  # r4
+            [d,k,kx,dx],    # r5
+            [d,e,f,m,l,k],  # r6
+            [f,g,h,o,n,m],  # r7
+            [h,i,j,q,p,o],  # r8
+            [j,jx,qx,q],    # r9
+            [k,l,r,rx,kx],  # r10
+            [l,m,n,s,r],    # r11
+            [n,o,p,t,s],    # r12
+            [p,q,qx,tx,t],  # r13
+        ]
+
         # Array of seed index pairs for each ridge.
         self.ridge_points = [
-            [1,2], [2,3], [3,4],
-            [1,6], [2,6], [2,7], [3,7], [3,8], [4,8],
-            [5,6], [6,7], [7,8], [8,9],
-            [6,10], [6,11], [7,11], [7,12], [8,12], [8,13],
-            [10,11], [11,12], [12,13],
+            [s1,s2], [s2,s3], [s3,s4],
+            [s1,s6], [s2,s6], [s2,s7], [s3,s7], [s3,s8], [s4,s8],
+            [s5,s6], [s6,s7], [s7,s8], [s8,s9],
+            [s6,s10], [s6,s11], [s7,s11], [s7,s12], [s8,s12], [s8,s13],
+            [s10,s11], [s11,s12], [s12,s13],
         ]
         
         # Array of vertex pairs for each ridge.
@@ -98,9 +168,30 @@ class FakeVoronoi:
             [l,r], [n,s], [p,t], 
         ]
 
+class FakeHexTile():
+    def __init__(self):
+        self.sid2region = [
+            [],             # Index 0 unused
+            [a,e,d,dx,ax],  # s1
+            [a,b,g,f,e],    # s2
+            [b,c,i,h,g],    # s3
+            [c,cx,jx,j,i],  # s4
+            [d,k,kx,dx],    # s5
+            [d,e,f,m,l,k],  # s6
+            [f,g,h,o,n,m],  # s7
+            [h,i,j,q,p,o],  # s8
+            [j,jx,qx,q],    # s9
+            [k,l,r,rx,kx],  # s10
+            [l,m,n,s,r],    # s11
+            [n,o,p,t,s],    # s12
+            [p,q,qx,tx,t],  # s13
+        ]
+
 def checkRiver(river_info):
-    (edges, ridges, expect) = river_info
-    rb = RiverBuilder(edges, ridges)
+    (edges, ridges, lakes, expect) = river_info
+    tile = FakeHexTile()
+    rb = RiverBuilder(edges, ridges, lakes)
+    rb.setTileInfo(tile.sid2region)
     rb.buildRidgeInfo(FakeVoronoi())
     rb.buildTransitions()
     verts = rb.getRiverVertices()
@@ -117,3 +208,10 @@ def test_singleRiver(single_river):
 
 def test_twoRivers(two_rivers):
     checkRiver(two_rivers)
+
+def test_lake(with_lake):
+    checkRiver(with_lake)
+
+def test_direct_into_lake(direct_into_lake):
+    checkRiver(direct_into_lake)
+

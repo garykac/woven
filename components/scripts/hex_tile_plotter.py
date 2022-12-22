@@ -56,20 +56,46 @@ class VoronoiHexTilePlotter():
     def __init__(self, tile):
         self.tile = tile
         self.options = tile.options
+        
         self.size = tile.size
         self.vHex = tile.vHex
         self.xMax = tile.xMax
-        self.sid2region = tile.sid2region
-        self.numActiveSeeds = tile.numActiveSeeds
-        self.seed2terrain = tile.seed2terrain
-        self.vertices = tile.vertices
-        self.overlayData = tile.overlayData
+
+        # Voronoi object has following attributes:
+        # .points : array of seed values used to create the Voronoi
+        # .point_region : mapping from seed index to region index
+        # .vertices : array of Voronoi vertices
+        # .regions : array of regions, where each region is an array of Voronoi
+        #     indices
+        # Ridges are the line segments that comprise the Voronoi diagram:
+        # .ridge_points : array of seed index pairs associated with each ridge
+        #     [ [s0, s1], [s2, s3], ... ]
+        # .ridge_vertices : array of vertex index pairs associated with each
+        #     ridge
+        #     [ [v0, v1], [v2, v3], ... ]
         self.vor = tile.vor
+
+        # Calculated voronoi vertices.
+        self.vertices = tile.vertices
+
+        # np.array of x,y coords.
         self.seeds = tile.seeds
+        # Total number of active seeds (ignore external seeds)
+        self.numActiveSeeds = tile.numActiveSeeds
+        # Mapping seed id -> region (array of vertex ids)
+        self.sid2region = tile.sid2region
+        # Mapping seed id -> terrain type.
+        self.seed2terrain = tile.seed2terrain
+
+        # Edge pattern for tile.
         self.edgeTypes = tile.edgeTypes
+
+        # Mapping edge type -> seed location along the edge
         self.edgeSeedInfo = tile.edgeSeedInfo
+        # Mapping edge type -> terrain for each region along the edge
         self.edgeRegionInfo = tile.edgeRegionInfo
 
+        # Explicit terrain/river data (loaded from file).
         self.riverData = tile.riverData
         self.overlayData = tile.overlayData
         
@@ -522,12 +548,16 @@ class VoronoiHexTilePlotter():
         if self.riverData:
             # Build a clean list of ridge segments that should be rivers.
             rRidges = [r for r in self.riverData if r]
-
-            r = RiverBuilder(riverEdges, rRidges)
-            r.buildRidgeInfo(self.vor)
-            r.buildTransitions()
+            lakes = []
+            if "lake" in self.overlayData:
+                lakes = [int(lake) for lake in self.overlayData['lake'] if lake]
             
-            return r.getRiverVertices()
+            rb = RiverBuilder(riverEdges, rRidges, lakes)
+            rb.setTileInfo(self.tile.sid2region)
+            rb.buildRidgeInfo(self.vor)
+            rb.buildTransitions()
+            
+            return rb.getRiverVertices()
         return []
 
     def drawOverlay(self):
