@@ -12,7 +12,6 @@ from svg import SVG, Group, Style, Node, Path, Text
 from object3d import Object3d
 from river_builder import RiverBuilder
 
-GENERATE_SVG = True
 GENERATE_PLOT = True   # As PNG file.
 PLOT_CELL_IDS = True   # Add cell ids to png output file.
 
@@ -223,13 +222,36 @@ class VoronoiHexTilePlotter():
             vids = self.sid2region[sid]
             id = f"roundedregionfill-{sid}"
 
-            path = self.calcRoundedRegionPath(id, vids, False)
-
             terrain_type = self.seed2terrain[sid]
-            color = self.getTerrainStyle(terrain_type)
-            style = Style(color, None)
-            path.set_style(style)
-            SVG.add_node(layer_region_rounded, path)
+            if self.options['texture-fill'] and terrain_type == 'h':
+                # Use groups to isolate the clip region from the image transforms
+                # +-gOuter with clip region
+                #    +-gInner with translate transform
+                #       +-clone of image texture with rotate transform
+                node = SVG.clone(id, "#tex-h00", 0, 0)
+                angle = 45
+                node.set_transform(f"rotate({angle})")
+
+                gInner = Group(f"gin-rregion-{sid}")
+                (cx, cy) = self.vor.points[sid]
+                gInner.set_translate_transform(cx, cy)
+                SVG.add_node(gInner, node)
+
+                gOuter = Group(f"gout-rregion-{sid}")
+                SVG.add_node(gOuter, gInner)
+
+                path = self.calcRoundedRegionPath(f"rregion-{sid}", vids, False)
+                clipid = self.svg.add_clip_path(f"rregion-{sid}", path)
+                gOuter.set("clip-path", f"url(#{clipid})")
+                SVG.add_node(layer_region_rounded, gOuter)
+            else:
+                path = self.calcRoundedRegionPath(id, vids, False)
+
+                terrain_type = self.seed2terrain[sid]
+                color = self.getTerrainStyle(terrain_type)
+                style = Style(color, None)
+                path.set_style(style)
+                SVG.add_node(layer_region_rounded, path)
 
     def drawRoundedRegionStrokeLayer(self):
         layer_region_rounded = self.svg.add_inkscape_layer(
@@ -681,11 +703,11 @@ class VoronoiHexTilePlotter():
             outdir_png = self.getPngOutputDir()
             name = self.calcBaseFilename()
             if plotId == None:
-                if GENERATE_SVG:
-                    outdir_svg = self.getSvgOutputDir()
-                    out_svg = os.path.join(outdir_svg, '%s.svg' % name)
-                    self.svg.write(out_svg)
+                outdir_svg = self.getSvgOutputDir()
+                out_svg = os.path.join(outdir_svg, '%s.svg' % name)
+                self.svg.write(out_svg)
 
+                if self.options['export-pdf']:
                     outdir_pdf = self.getPdfOutputDir()
                     out_pdf = os.path.join(outdir_pdf, '%s.pdf' % name)
                     Inkscape.export_pdf(
@@ -871,7 +893,7 @@ class VoronoiHexTilePlotter():
         p = Path()
         p.addPoints(self.vHex)
         p.end()
-        return self.svg.add_clip_path(p)
+        return self.svg.add_clip_path(None, p)
 
     def cleanupAnimation(self):
         out_dir = os.path.join(self.options['outdir_png'], self.options['anim_subdir'])

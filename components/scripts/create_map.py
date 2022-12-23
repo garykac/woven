@@ -17,6 +17,8 @@ OPTIONS = {
               'desc': "Log debug info for given region id"},
     'export-3d': {'type': 'bool', 'default': False,
                  'desc': "Export .obj"},
+    'export-pdf': {'type': 'bool', 'default': False,
+                   'desc': "Export .pdf from .svg"},
     'id': {'type': 'int', 'default': None,
            'desc': "Process only this tile id (used with --load)"},
     'iter': {'type': 'int', 'default': 500,
@@ -33,6 +35,8 @@ OPTIONS = {
                       'desc': "Show the seed id layer"},
     'size': {'type': 'int', 'default': 80,
              'desc': "Size of hex side (mm)"},
+    'texture-fill': {'type': 'bool', 'default': False,
+                     'desc': "True to fill regions with texture"},
     'verbose': {'type': 'bool', 'short': 'v', 'default': False,
                 'desc': "Display progress during processing"},
 }

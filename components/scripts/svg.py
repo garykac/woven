@@ -237,9 +237,9 @@ class SVG(object):
         self.defs.append(filter)
         
     # |path| a Path class
-    def add_clip_path(self, path):
+    def add_clip_path(self, id, path):
         clip = Element("clipPath")
-        clippath_id = f"clippath-{SVG.next_id()}"
+        clippath_id = f"clippath-{id}" if id else f"clippath-{SVG.next_id()}"
         clip.set("id", clippath_id)
         clip.append(path.element)
         self.defs.append(clip)
