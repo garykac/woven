@@ -8,7 +8,7 @@ import subprocess
 
 from inkscape import Inkscape
 from math_utils import (lerp, pt_along_line)
-from svg import SVG, Group, Style, Node, Path, Text
+from svg import SVG, Filter, Group, Style, Node, Path, Text
 from object3d import Object3d
 from river_builder import RiverBuilder
 
@@ -125,6 +125,14 @@ class VoronoiHexTilePlotter():
             svg_ids.append(f"obj-{obj}")
         svg_ids.append("tile-id")
         self.svg.load_ids(self.options['map_obj_template'], svg_ids)
+
+        filter = Filter("filterInnerGlow", 0.41051782, 0.41554717, 0.16543989, 0.17009096)
+        filter.add_op("feFlood", {'flood-opacity':"1", 'flood-color':"rgb(170,102,19)", 'result':"flood"})
+        filter.add_op("feComposite", {'in':"flood", 'in2':"SourceGraphic", 'operator':"out", 'result':"composite1"})
+        filter.add_op("feGaussianBlur", {'in':"composite1", 'stdDeviation':"2.5", 'result':"blur"})
+        filter.add_op("feOffset", {'dx':"0", 'dy':"0", 'result':"offset"})
+        filter.add_op("feComposite", {'in':"offset", 'in2':"SourceGraphic", 'operator':"atop", 'result':"composite2"})
+        self.svg.add_filter(filter)
 
         layer = self.svg.add_inkscape_layer('layer', "Layer")
         layer.set_transform("translate(107.95 120) scale(1, -1)")
@@ -244,6 +252,12 @@ class VoronoiHexTilePlotter():
                 clipid = self.svg.add_clip_path(f"rregion-{sid}", path)
                 gOuter.set("clip-path", f"url(#{clipid})")
                 SVG.add_node(layer_region_rounded, gOuter)
+
+                gGlow = Group(f"gglow-rregion-{sid}")
+                gGlow.set_style("filter:url(#filterInnerGlow)")
+                SVG.add_node(gGlow, gOuter)
+
+                SVG.add_node(layer_region_rounded, gGlow)
             else:
                 path = self.calcRoundedRegionPath(id, vids, False)
 

@@ -169,6 +169,24 @@ class Text(Node):
         tspan.text = text
         self.element.append(tspan)
 
+class Filter(Node):
+    def __init__(self, id, x, y, width, height):
+        if id == None:
+            id = f'filter{SVG.next_id()}'
+        super().__init__('filter', id)
+        self.set_style("color-interpolation-filters:sRGB;")
+        self.set("inkscape:label", id)
+        self.set("x", x)
+        self.set("y", x)
+        self.set("width", width)
+        self.set("height", height)
+
+    def add_op(self, type, args):
+        op = Node(type)
+        for k,v in args.items():
+            op.set(k,v)
+        SVG.add_node(self, op)
+
 class SVG(object):
     id_base = 1000
     
@@ -232,9 +250,8 @@ class SVG(object):
         tree = ElementTree(self.root)
         tree.write(outfile, encoding="UTF-8", xml_declaration=True)
 
-    def add_filter_string(self, filter_str):
-        filter = XML(filter_str)
-        self.defs.append(filter)
+    def add_filter(self, filter):
+        self.defs.append(filter.element)
         
     # |path| a Path class
     def add_clip_path(self, id, path):
