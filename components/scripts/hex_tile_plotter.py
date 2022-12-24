@@ -3,6 +3,7 @@ import glob
 import math
 import matplotlib.pyplot as plt
 import os
+import random
 import re
 import subprocess
 
@@ -11,6 +12,8 @@ from math_utils import (lerp, pt_along_line)
 from svg import SVG, Filter, Group, Style, Node, Path, Text
 from object3d import Object3d
 from river_builder import RiverBuilder
+
+from texture_data import H_TEXTURE_OFFSETS
 
 GENERATE_PLOT = True   # As PNG file.
 PLOT_CELL_IDS = True   # Add cell ids to png output file.
@@ -196,6 +199,7 @@ class VoronoiHexTilePlotter():
         node.set("width", "200")
         node.set("height", "200")
         node.set_style("display:inline")
+        node.set_scale_transform(1, -1)
         SVG.add_node(layer_textures, node)
         
     def drawHexTileBorder(self, id, layer_name, style):
@@ -232,30 +236,36 @@ class VoronoiHexTilePlotter():
 
             terrain_type = self.seed2terrain[sid]
             if self.options['texture-fill'] and terrain_type == 'h':
-                # Use groups to isolate the clip region from the image transforms
-                # +-gOuter with clip region
-                #    +-gInner with translate transform
-                #       +-clone of image texture with rotate transform
-                node = SVG.clone(id, "#tex-h00", 0, 0)
-                angle = 45
-                node.set_transform(f"rotate({angle})")
+                # Use groups to isolate the clip region from the image transforms/filters.
+                # +-gGlow with inner glow filter
+                #    +-gClip with clip region
+                #       +-gTranslate with translate to move to region center
+                #          +-gRotate with rotate
+                #             +-clone of image texture with translate to move offset to center
+                texture = SVG.clone(id, "#tex-h00", 0, 0)
+                sample = random.randint(1, 20)
+                (dx, dy) = H_TEXTURE_OFFSETS[sample]
+                texture.set_translate_transform(-dx, -dy)
 
-                gInner = Group(f"gin-rregion-{sid}")
+                gRotate = Group(f"grotate-rregion-{sid}")
+                angle = random.randint(0,360)
+                gRotate.set_transform(f"rotate({angle})")
+                SVG.add_node(gRotate, texture)
+
+                gTrans = Group(f"gtrans-rregion-{sid}")
                 (cx, cy) = self.vor.points[sid]
-                gInner.set_translate_transform(cx, cy)
-                SVG.add_node(gInner, node)
+                gTrans.set_translate_transform(cx, cy)
+                SVG.add_node(gTrans, gRotate)
 
-                gOuter = Group(f"gout-rregion-{sid}")
-                SVG.add_node(gOuter, gInner)
-
+                gClip = Group(f"gclip-rregion-{sid}")
                 path = self.calcRoundedRegionPath(f"rregion-{sid}", vids, False)
                 clipid = self.svg.add_clip_path(f"rregion-{sid}", path)
-                gOuter.set("clip-path", f"url(#{clipid})")
-                SVG.add_node(layer_region_rounded, gOuter)
+                gClip.set("clip-path", f"url(#{clipid})")
+                SVG.add_node(gClip, gTrans)
 
                 gGlow = Group(f"gglow-rregion-{sid}")
                 gGlow.set_style("filter:url(#filterInnerGlow)")
-                SVG.add_node(gGlow, gOuter)
+                SVG.add_node(gGlow, gClip)
 
                 SVG.add_node(layer_region_rounded, gGlow)
             else:
