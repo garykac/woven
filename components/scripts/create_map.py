@@ -5,6 +5,7 @@ import sys
 from hex_tile_loader import VoronoiHexTileLoader
 
 MAP_OUTPUT_DIR = "../maps"
+MAP_TEMPLATE_DIR = os.path.join(MAP_OUTPUT_DIR, 'templates')
 
 OPTIONS = {
     'anim': {'type': 'bool', 'default': False,
@@ -99,7 +100,7 @@ def parse_options():
     options['outdir_svg'] = os.path.join(MAP_OUTPUT_DIR, "map-svg")
     options['outdir_png'] = os.path.join(MAP_OUTPUT_DIR, "map-png")
     options['outdir_pdf'] = os.path.join(MAP_OUTPUT_DIR, "map-pdf")
-    options['map_obj_template'] = os.path.join(MAP_OUTPUT_DIR, 'map-obj-template.svg')
+    options['map_obj_template'] = os.path.join(MAP_TEMPLATE_DIR, 'map-obj-template.svg')
     options['anim_subdir'] = "anim"  # Subdirectory of png output dir
 
     options['origin'] = [0, 0]
