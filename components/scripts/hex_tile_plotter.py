@@ -13,7 +13,7 @@ from svg import SVG, Filter, Group, Style, Node, Path, Text
 from object3d import Object3d
 from river_builder import RiverBuilder
 
-from texture_data import H_TEXTURE_OFFSETS
+from texture_data import TEXTURES, TEXTURE_INFO
 
 GENERATE_PLOT = True   # As PNG file.
 PLOT_CELL_IDS = True   # Add cell ids to png output file.
@@ -129,13 +129,9 @@ class VoronoiHexTilePlotter():
         svg_ids.append("tile-id")
         self.svg.load_ids(self.options['map_obj_template'], svg_ids)
 
-        filter = Filter("filterInnerGlow", 0.41051782, 0.41554717, 0.16543989, 0.17009096)
-        filter.add_op("feFlood", {'flood-opacity':"1", 'flood-color':"rgb(170,102,19)", 'result':"flood"})
-        filter.add_op("feComposite", {'in':"flood", 'in2':"SourceGraphic", 'operator':"out", 'result':"composite1"})
-        filter.add_op("feGaussianBlur", {'in':"composite1", 'stdDeviation':"2.5", 'result':"blur"})
-        filter.add_op("feOffset", {'dx':"0", 'dy':"0", 'result':"offset"})
-        filter.add_op("feComposite", {'in':"offset", 'in2':"SourceGraphic", 'operator':"atop", 'result':"composite2"})
-        self.svg.add_filter(filter)
+        self.addInnerGlowFilter("filterInnerGlowH", "rgb(217,104,14)")
+        self.addInnerGlowFilter("filterInnerGlowM", "rgb(220,174,16)")
+        self.addInnerGlowFilter("filterInnerGlowL", "rgb(203,201,43)")
 
         layer = self.svg.add_inkscape_layer('layer', "Layer")
         layer.set_transform("translate(107.95 120) scale(1, -1)")
@@ -184,6 +180,15 @@ class VoronoiHexTilePlotter():
         
         self.writeOutput(fig, plotId)
 
+    def addInnerGlowFilter(self, name, rgb):
+        filter = Filter(name, 0.41051782, 0.41554717, 0.16543989, 0.17009096)
+        filter.add_op("feFlood", {'flood-opacity':"1", 'flood-color':rgb, 'result':"flood"})
+        filter.add_op("feComposite", {'in':"flood", 'in2':"SourceGraphic", 'operator':"out", 'result':"composite1"})
+        filter.add_op("feGaussianBlur", {'in':"composite1", 'stdDeviation':"2.5", 'result':"blur"})
+        filter.add_op("feOffset", {'dx':"0", 'dy':"0", 'result':"offset"})
+        filter.add_op("feComposite", {'in':"offset", 'in2':"SourceGraphic", 'operator':"atop", 'result':"composite2"})
+        self.svg.add_filter(filter)
+
     # Calc updated regions that have been adjusted by rivers.
     def calcUpdatedRegions(self):
         self.sid2updatedRegion = copy.deepcopy(self.sid2region)
@@ -192,15 +197,18 @@ class VoronoiHexTilePlotter():
         layer_textures = self.svg.add_inkscape_layer('textures', "Region Textures", self.layer)
         layer_textures.hide()
 
-        node = Node("image", "tex-h00")
-        node.set("xlink:href", "../../../third_party/h/h00.png")
-        node.set("x", "-100")
-        node.set("y", "-100")
-        node.set("width", "200")
-        node.set("height", "200")
-        node.set_style("display:inline")
-        node.set_scale_transform(1, -1)
-        SVG.add_node(layer_textures, node)
+        for (ttype, texIds) in TEXTURES.items():
+            for texId in texIds:
+                (sizeOrig, sizeScaled, texOffsets) = TEXTURE_INFO[texId]
+                node = Node("image", f"tex-{texId}")
+                node.set("xlink:href", f"../../../third_party/{ttype}/{texId}.png")
+                node.set("x", -sizeScaled[0] / 2)
+                node.set("y", -sizeScaled[1] / 2)
+                node.set("width", sizeScaled[0])
+                node.set("height", sizeScaled[1])
+                node.set_style("display:inline")
+                node.set_scale_transform(1, -1)
+                SVG.add_node(layer_textures, node)
         
     def drawHexTileBorder(self, id, layer_name, style):
         layer_border = self.svg.add_inkscape_layer(id, layer_name, self.layer)
@@ -235,36 +243,44 @@ class VoronoiHexTilePlotter():
             id = f"roundedregionfill-{sid}"
 
             terrain_type = self.seed2terrain[sid]
-            if self.options['texture-fill'] and terrain_type == 'h':
+            if self.options['texture-fill'] and terrain_type in ['l', 'm', 'h']:
                 # Use groups to isolate the clip region from the image transforms/filters.
                 # +-gGlow with inner glow filter
                 #    +-gClip with clip region
                 #       +-gTranslate with translate to move to region center
                 #          +-gRotate with rotate
                 #             +-clone of image texture with translate to move offset to center
-                texture = SVG.clone(id, "#tex-h00", 0, 0)
-                sample = random.randint(1, 20)
-                (dx, dy) = H_TEXTURE_OFFSETS[sample]
-                texture.set_translate_transform(-dx, -dy)
+                
+                # Choose a random sample point from the texture.
+                texId = TEXTURES[terrain_type][0]
+                (sizeOrig, sizeScaled, texOffsets) = TEXTURE_INFO[texId]
+                numOffsets = len(texOffsets)
+                sample = random.randint(1, numOffsets) - 1
+                (dx, dy) = texOffsets[sample]
+                texture = SVG.clone(id, f"#tex-{texId}", -dx, -dy)
 
+                # Choose random rotation.
                 gRotate = Group(f"grotate-rregion-{sid}")
                 angle = random.randint(0,360)
                 gRotate.set_transform(f"rotate({angle})")
                 SVG.add_node(gRotate, texture)
 
+                # Move texture sample to the current voronoi region.
                 gTrans = Group(f"gtrans-rregion-{sid}")
                 (cx, cy) = self.vor.points[sid]
                 gTrans.set_translate_transform(cx, cy)
                 SVG.add_node(gTrans, gRotate)
 
+                # Clip the texture to the region.
                 gClip = Group(f"gclip-rregion-{sid}")
                 path = self.calcRoundedRegionPath(f"rregion-{sid}", vids, False)
                 clipid = self.svg.add_clip_path(f"rregion-{sid}", path)
                 gClip.set("clip-path", f"url(#{clipid})")
                 SVG.add_node(gClip, gTrans)
 
+                # Add inner glow to enhance border.
                 gGlow = Group(f"gglow-rregion-{sid}")
-                gGlow.set_style("filter:url(#filterInnerGlow)")
+                gGlow.set_style(f"filter:url(#filterInnerGlow{terrain_type.upper()})")
                 SVG.add_node(gGlow, gClip)
 
                 SVG.add_node(layer_region_rounded, gGlow)

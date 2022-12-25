@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+import getopt
 import os
 import re
 import sys
@@ -13,12 +14,13 @@ MAP_OUTPUT_DIR = "../maps"
 MAP_TEMPLATE_DIR = os.path.join(MAP_OUTPUT_DIR, 'templates')
 
 def scanTextureSvg(templateId):
-    file = os.path.join(MAP_TEMPLATE_DIR, f"texture-{templateId}.svg")
+    terrainType = templateId[0]
+    file = os.path.join(MAP_TEMPLATE_DIR, f"texture-{terrainType}.svg")
 
     tree = ElementTree()
     tree.parse(file)
     circles = findId(tree.getroot(), f"{templateId}-circles")
-    extractCircleInfo(circles)
+    extractCircleInfo(templateId, circles)
 
 def findId(node, id):
     nId = node.attrib.get("id")
@@ -30,13 +32,15 @@ def findId(node, id):
             return r
     return None
 
-def extractCircleInfo(root):
+def extractCircleInfo(id, root):
+    print(f"{id.upper()}_TEXTURE_OFFSETS = [")
     for c in root:
         (ns, tag) = split_tag(c.tag)
         if tag == "ellipse":
-            cx = c.attrib.get("cx")
-            cy = c.attrib.get("cy")
-            print(f"[{cx}, {cy}],")
+            cx = (float)(c.attrib.get("cx"))
+            cy = (float)(c.attrib.get("cy"))
+            print(f"    [{cx}, {-cy}],")
+    print(f"]")
 
 def split_tag(tag):
     namespace = ''
@@ -47,7 +51,12 @@ def split_tag(tag):
     return [namespace, tag]
 
 def main():
-    scanTextureSvg("h01")
+    args = sys.argv[1:]
+    if len(args) != 1:
+        print("Missing arg: <texture-id>")
+        sys.exit(0)
+    id = args.pop(0)
+    scanTextureSvg(id)
 
 if __name__ == '__main__':
     main()
