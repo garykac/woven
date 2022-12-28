@@ -15,6 +15,8 @@ from river_builder import RiverBuilder
 
 from texture_data import TEXTURES, TEXTURE_INFO
 
+TEXTURES_DIR = "../../../third_party/textures"
+
 GENERATE_PLOT = True   # As PNG file.
 PLOT_CELL_IDS = True   # Add cell ids to png output file.
 
@@ -202,7 +204,7 @@ class VoronoiHexTilePlotter():
             for texId in texIds:
                 (sizeOrig, sizeScaled, texOffsets) = TEXTURE_INFO[texId]
                 node = Node("image", f"tex-{texId}")
-                node.set("xlink:href", f"../../../third_party/{ttype}/{texId}.png")
+                node.set("xlink:href", os.path.join(TEXTURES_DIR, f"{ttype}/{texId}.png"))
                 node.set("x", -sizeScaled[0] / 2)
                 node.set("y", -sizeScaled[1] / 2)
                 node.set("width", sizeScaled[0])

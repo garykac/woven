@@ -16,7 +16,7 @@ from xml.etree.ElementTree import ElementTree
 MAP_OUTPUT_DIR = "../maps"
 MAP_TEMPLATE_DIR = os.path.join(MAP_OUTPUT_DIR, 'templates')
 
-TEXTURE_DIR = "../../third_party"
+TEXTURE_DIR = "../../third_party/textures"
 
 TEXTURES = {
     "h02": ["h/h02.png"]
