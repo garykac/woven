@@ -62,15 +62,22 @@ H02_TEXTURE_OFFSETS = [
 
 # Texture info.
 TEXTURE_INFO = {
-    # id: size-orig, size-scaled, offsets
+    # <id>: <size-orig>, <size-scaled>, <offsets>
+    # offsets are based on size-scaled, assuming that the texture is centered at 0,0.
+    # Each offset assumes a 35mm diam circle of good texture surrounding it.
     "l01": [[2000,2000], [200,200], H01_TEXTURE_OFFSETS],
     "m01": [[2000,2000], [200,200], H01_TEXTURE_OFFSETS],
     #"h01": [[2000,2000], [200,200], H01_TEXTURE_OFFSETS],
     "h02": [[4000,2626], [400,262.6], H02_TEXTURE_OFFSETS],
+
+    # A single sample at 0,0 is used for water because the river can extend across the
+    # entire tile.
+    "r01": [[2000,2000], [200,200], [[0,0]]],
 }
 
 TEXTURES = {
     'l': ["l01"],
     'm': ["m01"],
     'h': ["h02"],
+    'r': ["r01"],
 }

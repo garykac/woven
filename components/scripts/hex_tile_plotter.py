@@ -129,9 +129,10 @@ class VoronoiHexTilePlotter():
         svg_ids.append("tile-id")
         self.svg.load_ids(self.options['map_obj_template'], svg_ids)
 
-        self.addInnerGlowFilter("filterInnerGlowH", "rgb(217,104,14)")
-        self.addInnerGlowFilter("filterInnerGlowM", "rgb(220,174,16)")
-        self.addInnerGlowFilter("filterInnerGlowL", "rgb(203,201,43)")
+        self.addInnerGlowFilter("filterInnerGlowH", 2.5, "rgb(217,104,14)")
+        self.addInnerGlowFilter("filterInnerGlowM", 2.5, "rgb(220,174,16)")
+        self.addInnerGlowFilter("filterInnerGlowL", 2.5, "rgb(203,201,43)")
+        self.addInnerGlowFilter("filterInnerGlowR", 2.0, "rgb(111,161,232)")
 
         layer = self.svg.add_inkscape_layer('layer', "Layer")
         layer.set_transform("translate(107.95 120) scale(1, -1)")
@@ -180,11 +181,11 @@ class VoronoiHexTilePlotter():
         
         self.writeOutput(fig, plotId)
 
-    def addInnerGlowFilter(self, name, rgb):
+    def addInnerGlowFilter(self, name, blur, rgb):
         filter = Filter(name, 0.41051782, 0.41554717, 0.16543989, 0.17009096)
         filter.add_op("feFlood", {'flood-opacity':"1", 'flood-color':rgb, 'result':"flood"})
         filter.add_op("feComposite", {'in':"flood", 'in2':"SourceGraphic", 'operator':"out", 'result':"composite1"})
-        filter.add_op("feGaussianBlur", {'in':"composite1", 'stdDeviation':"2.5", 'result':"blur"})
+        filter.add_op("feGaussianBlur", {'in':"composite1", 'stdDeviation':blur, 'result':"blur"})
         filter.add_op("feOffset", {'dx':"0", 'dy':"0", 'result':"offset"})
         filter.add_op("feComposite", {'in':"offset", 'in2':"SourceGraphic", 'operator':"atop", 'result':"composite2"})
         self.svg.add_filter(filter)
@@ -239,59 +240,73 @@ class VoronoiHexTilePlotter():
             f"region-rounded-fill", f"Region Rounded Fill", self.layer)
 
         for sid in range(0, self.numActiveSeeds):
-            vids = self.sid2region[sid]
-            id = f"roundedregionfill-{sid}"
+            terrainType = self.seed2terrain[sid]
+            if self.options['texture-fill']:
+                # Choose a random texture for this terrain.
+                texId = TEXTURES[terrainType][0]
 
-            terrain_type = self.seed2terrain[sid]
-            if self.options['texture-fill'] and terrain_type in ['l', 'm', 'h']:
-                # Use groups to isolate the clip region from the image transforms/filters.
-                # +-gGlow with inner glow filter
-                #    +-gClip with clip region
-                #       +-gTranslate with translate to move to region center
-                #          +-gRotate with rotate
-                #             +-clone of image texture with translate to move offset to center
-                
                 # Choose a random sample point from the texture.
-                texId = TEXTURES[terrain_type][0]
                 (sizeOrig, sizeScaled, texOffsets) = TEXTURE_INFO[texId]
                 numOffsets = len(texOffsets)
                 sample = random.randint(1, numOffsets) - 1
-                (dx, dy) = texOffsets[sample]
-                texture = SVG.clone(id, f"#tex-{texId}", -dx, -dy)
-
-                # Choose random rotation.
-                gRotate = Group(f"grotate-rregion-{sid}")
+                offset = texOffsets[sample]
+                
+                # Random texture rotation angle.
                 angle = random.randint(0,360)
-                gRotate.set_transform(f"rotate({angle})")
-                SVG.add_node(gRotate, texture)
 
-                # Move texture sample to the current voronoi region.
-                gTrans = Group(f"gtrans-rregion-{sid}")
-                (cx, cy) = self.vor.points[sid]
-                gTrans.set_translate_transform(cx, cy)
-                SVG.add_node(gTrans, gRotate)
-
-                # Clip the texture to the region.
-                gClip = Group(f"gclip-rregion-{sid}")
-                path = self.calcRoundedRegionPath(f"rregion-{sid}", vids, False)
-                clipid = self.svg.add_clip_path(f"rregion-{sid}", path)
-                gClip.set("clip-path", f"url(#{clipid})")
-                SVG.add_node(gClip, gTrans)
-
-                # Add inner glow to enhance border.
-                gGlow = Group(f"gglow-rregion-{sid}")
-                gGlow.set_style(f"filter:url(#filterInnerGlow{terrain_type.upper()})")
-                SVG.add_node(gGlow, gClip)
-
-                SVG.add_node(layer_region_rounded, gGlow)
+                region = self.calcTexturedRegion(sid, terrainType, texId, offset, angle)
             else:
-                path = self.calcRoundedRegionPath(id, vids, False)
+                id = f"roundedregionfill-{sid}"
+                vids = self.sid2region[sid]
+                region = self.calcRoundedRegionPath(id, vids, False)
 
-                terrain_type = self.seed2terrain[sid]
-                color = self.getTerrainStyle(terrain_type)
+                color = self.getTerrainStyle(terrainType)
                 style = Style(color, None)
-                path.set_style(style)
-                SVG.add_node(layer_region_rounded, path)
+                region.set_style(style)
+
+            SVG.add_node(layer_region_rounded, region)
+
+    def calcTexturedRegion(self, sid, terrainType, texId, offset, rotateAngle):
+        if not terrainType in ['l', 'm', 'h', 'r']:
+            raise Exception(f"Unexpected terrain type {terrainType}")
+
+        # Use groups to isolate the clip region from the image transforms/filters.
+        # +-gGlow with inner glow filter
+        #    +-gClip with clip region
+        #       +-gTranslate with translate to move to region center
+        #          +-gRotate with rotate
+        #             +-clone of image texture with translate to move offset to center
+        
+        # Choose a random sample point from the texture.
+        (sizeOrig, sizeScaled, texOffsets) = TEXTURE_INFO[texId]
+        (dx, dy) = offset
+        texture = SVG.clone(f"tex-clone-{sid}", f"#tex-{texId}", -dx, -dy)
+
+        # Choose random rotation.
+        gRotate = Group(f"grotate-rregion-{sid}")
+        gRotate.set_transform(f"rotate({rotateAngle})")
+        SVG.add_node(gRotate, texture)
+
+        # Move texture sample to the current voronoi region.
+        gTrans = Group(f"gtrans-rregion-{sid}")
+        (cx, cy) = self.vor.points[sid]
+        gTrans.set_translate_transform(cx, cy)
+        SVG.add_node(gTrans, gRotate)
+
+        # Clip the texture to the region.
+        gClip = Group(f"gclip-rregion-{sid}")
+        vids = self.sid2region[sid]
+        path = self.calcRoundedRegionPath(f"rregion-{sid}", vids, False)
+        clipid = self.svg.add_clip_path(f"rregion-{sid}", path)
+        gClip.set("clip-path", f"url(#{clipid})")
+        SVG.add_node(gClip, gTrans)
+
+        # Add inner glow to enhance border.
+        gGlow = Group(f"gglow-rregion-{sid}")
+        gGlow.set_style(f"filter:url(#filterInnerGlow{terrainType.upper()})")
+        SVG.add_node(gGlow, gClip)
+        
+        return gGlow
 
     def drawRoundedRegionStrokeLayer(self):
         layer_region_rounded = self.svg.add_inkscape_layer(
@@ -317,17 +332,32 @@ class VoronoiHexTilePlotter():
             'lakes', "Lakes", self.layer)
         #self.layer_lakes.set_scale_transform(1, -1)
 
-        for lake_seed_id in self.overlayData['lake']:
-            if lake_seed_id:
-                rid = self.vor.point_region[int(lake_seed_id)]
-                vids = self.vor.regions[rid]
-                id = f"lake-{lake_seed_id}"
+        for lake_sid in self.overlayData['lake']:
+            if not lake_sid:
+                continue
 
-                path = self.calcRoundedRegionPath(id, vids, False)
+            sid = int(lake_sid)
+            terrainType = 'r'
+            if self.options['texture-fill']:
+                # Choose a random texture for this terrain.
+                texId = TEXTURES[terrainType][0]
 
-                style = Style(REGION_COLOR['r'], None)
-                path.set_style(style)
-                SVG.add_node(self.layer_lakes, path)
+                # Offset is always 0,0 for water.
+                offset = [0, 0]
+            
+                # Random texture rotation angle.
+                angle = random.randint(0,360)
+
+                region = self.calcTexturedRegion(sid, terrainType, texId, offset, angle)
+            else:
+                id = f"lake-{sid}"
+                vids = self.sid2region[sid]
+                region = self.calcRoundedRegionPath(id, vids, False)
+
+                style = Style(REGION_COLOR[terrainType], None)
+                region.set_style(style)
+
+            SVG.add_node(self.layer_lakes, region)
 
     def drawRegionLayer(self):
         layer_region = self.svg.add_inkscape_layer('region', "Region", self.layer)
