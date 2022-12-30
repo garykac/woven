@@ -13,7 +13,7 @@ from svg import SVG, Filter, Group, Style, Node, Path, Text
 from object3d import Object3d
 from river_builder import RiverBuilder
 
-from texture_data import TEXTURES, TEXTURE_INFO
+from data_texture import TEXTURES, TEXTURE_INFO
 
 TEXTURES_DIR = "../../../third_party/textures"
 
