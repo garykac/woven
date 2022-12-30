@@ -3,6 +3,8 @@
 
 # Note: Requires the `identify` and `convert` command line tools from ImageMagick.
 
+# TODO: Autogenerate data_texture.py file when building swatches.
+
 import getopt
 import os
 import re
