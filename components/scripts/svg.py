@@ -169,6 +169,19 @@ class Text(Node):
         tspan.text = text
         self.element.append(tspan)
 
+class Image(Node):
+    def __init__(self, id, path, x, y, width, height):
+        if id == None:
+            id = f'image{SVG.next_id()}'
+        super().__init__('image', id)
+
+        self.set("xlink:href", path)
+        self.set("x", x)
+        self.set("y", y)
+        self.set("width", width)
+        self.set("height", height)
+        self.set_style("display:inline")
+
 class Filter(Node):
     def __init__(self, id, x, y, width, height):
         if id == None:

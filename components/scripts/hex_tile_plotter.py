@@ -3,13 +3,12 @@ import glob
 import math
 import matplotlib.pyplot as plt
 import os
-import random
 import re
 import subprocess
 
 from inkscape import Inkscape
 from math_utils import (lerp, pt_along_line)
-from svg import SVG, Filter, Group, Style, Node, Path, Text
+from svg import SVG, Filter, Group, Image, Style, Node, Path, Text
 from object3d import Object3d
 from river_builder import RiverBuilder
 
@@ -60,6 +59,9 @@ class VoronoiHexTilePlotter():
     def __init__(self, tile):
         self.tile = tile
         self.options = tile.options
+        
+        # Random number generator state
+        self.rng = tile.rng
         
         self.size = tile.size
         self.vHex = tile.vHex
@@ -147,8 +149,6 @@ class VoronoiHexTilePlotter():
 
         # Draw layers back to front.
         
-        self.drawRegionImageMasters()
-
         self.drawHexTileBorder("background", "Tile Background", black_fill)
 
         self.drawClippedRegionLayer()
@@ -195,23 +195,6 @@ class VoronoiHexTilePlotter():
     # Calc updated regions that have been adjusted by rivers.
     def calcUpdatedRegions(self):
         self.sid2updatedRegion = copy.deepcopy(self.sid2region)
-
-    def drawRegionImageMasters(self):
-        layer_textures = self.svg.add_inkscape_layer('textures', "Region Textures", self.layer)
-        layer_textures.hide()
-
-        for (ttype, texIds) in TEXTURES.items():
-            for texId in texIds:
-                (sizeOrig, sizeScaled, texOffsets) = TEXTURE_INFO[texId]
-                node = Node("image", f"tex-{texId}")
-                node.set("xlink:href", os.path.join(TEXTURES_DIR, f"{ttype}/{texId}.png"))
-                node.set("x", -sizeScaled[0] / 2)
-                node.set("y", -sizeScaled[1] / 2)
-                node.set("width", sizeScaled[0])
-                node.set("height", sizeScaled[1])
-                node.set_style("display:inline")
-                node.set_scale_transform(1, -1)
-                SVG.add_node(layer_textures, node)
         
     def drawHexTileBorder(self, id, layer_name, style):
         layer_border = self.svg.add_inkscape_layer(id, layer_name, self.layer)
@@ -247,16 +230,14 @@ class VoronoiHexTilePlotter():
                 # Choose a random texture for this terrain.
                 texId = TEXTURES[terrainType][0]
 
-                # Choose a random sample point from the texture.
-                (sizeOrig, sizeScaled, texOffsets) = TEXTURE_INFO[texId]
-                numOffsets = len(texOffsets)
-                sample = random.randint(1, numOffsets) - 1
-                offset = texOffsets[sample]
+                # Choose a random swatch from the texture.
+                (swatchSize, numSwatches) = TEXTURE_INFO[texId]
+                swatchId = self.rng.randint(numSwatches) + 1
                 
                 # Random texture rotation angle.
-                angle = random.randint(0,360)
+                angle = self.rng.randint(360)
 
-                region = self.calcTexturedRegion(sid, terrainType, texId, offset, angle)
+                region = self.calcTexturedRegion(sid, terrainType, texId, swatchId, angle)
             else:
                 id = f"roundedregionfill-{sid}"
                 vids = self.sid2region[sid]
@@ -268,8 +249,8 @@ class VoronoiHexTilePlotter():
 
             SVG.add_node(layer_region_rounded, region)
 
-    def calcTexturedRegion(self, sid, terrainType, texId, offset, rotateAngle):
-        if not terrainType in ['l', 'm', 'h', 'r']:
+    def calcTexturedRegion(self, sid, terrainType, texId, swatchId, rotateAngle):
+        if not terrainType in ['l', 'm', 'h']:
             raise Exception(f"Unexpected terrain type {terrainType}")
 
         # Use groups to isolate the clip region from the image transforms/filters.
@@ -277,12 +258,14 @@ class VoronoiHexTilePlotter():
         #    +-gClip with clip region
         #       +-gTranslate with translate to move to region center
         #          +-gRotate with rotate
-        #             +-clone of image texture with translate to move offset to center
-        
-        # Choose a random sample point from the texture.
-        (sizeOrig, sizeScaled, texOffsets) = TEXTURE_INFO[texId]
-        (dx, dy) = offset
-        texture = SVG.clone(f"tex-clone-{sid}", f"#tex-{texId}", -dx, -dy)
+        #             +-texture swatch
+                
+        # Add a new copy of the texture swatch.
+        path = os.path.join(TEXTURES_DIR, f"{terrainType}/{texId}/{texId}-{swatchId:02}.png")
+        (swatchSize, numSwatches) = TEXTURE_INFO[texId]
+        s = swatchSize
+        texture = Image(f"tex-{sid}-{texId}-{swatchId:02}", path, -s/2, -s/2, s, s)
+        texture.set_scale_transform(1, -1)
 
         # Choose random rotation.
         gRotate = Group(f"grotate-rregion-{sid}")
@@ -340,17 +323,14 @@ class VoronoiHexTilePlotter():
 
             sid = int(lake_sid)
             terrainType = 'r'
-            if self.options['texture-fill']:
+            if False:  # self.options['texture-fill']:
                 # Choose a random texture for this terrain.
                 texId = TEXTURES[terrainType][0]
 
-                # Offset is always 0,0 for water.
-                offset = [0, 0]
-            
                 # Random texture rotation angle.
-                angle = random.randint(0,360)
+                angle = self.rng.randint(360)
 
-                region = self.calcTexturedRegion(sid, terrainType, texId, offset, angle)
+                region = self.calcTexturedRegion(sid, terrainType, texId, 0, angle)
             else:
                 id = f"lake-{sid}"
                 vids = self.sid2region[sid]

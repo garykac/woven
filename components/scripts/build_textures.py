@@ -19,7 +19,10 @@ MAP_TEMPLATE_DIR = os.path.join(MAP_OUTPUT_DIR, 'templates')
 TEXTURE_DIR = "../../third_party/textures"
 
 TEXTURES = {
-    "h02": ["h/h02.png"]
+    # <id>: [ <swatch-size> ]
+    "l01": [50],
+    "m01": [40],
+    "h02": [40],
 }
 
 class TextureBuilder():
@@ -28,7 +31,10 @@ class TextureBuilder():
         self.id = id
         self.terrainType = id[0]
         
-    def scanTextureSvg(self):
+        self.getImageSize(os.path.join(TEXTURE_DIR, f"{self.terrainType}/{id}.png"))
+
+        
+    def genTextureSwatches(self):
         file = os.path.join(MAP_TEMPLATE_DIR, f"texture-{self.terrainType}.svg")
 
         tree = ElementTree()
@@ -51,16 +57,17 @@ class TextureBuilder():
                 self.scaledHeight = (float)(c.attrib.get("height"))
 
     def extractCircleInfo(self, root):
-        tIndex = 0
+        swatchId = 0
         for c in root:
             (ns, tag) = splitTag(c.tag)
-            if tag == "ellipse":
-                tIndex += 1
+            if tag in ["ellipse", "circle"]:
+                swatchId += 1
+                print(f"Processing {self.id} - {swatchId}")
                 cx = (float)(c.attrib.get("cx"))
                 cy = (float)(c.attrib.get("cy"))
-                self.genTexture(tIndex, cx, -cy)
+                self.genTexture(swatchId, cx, -cy)
 
-    def genTexture(self, tIndex, cx, cy):
+    def genTexture(self, swatchId, cx, cy):
         #print(f"size: {self.width} x {self.height}")
         #print(f"Scaled size: {self.scaledWidth} x {self.scaledHeight}")
         scale = self.width / self.scaledWidth
@@ -79,17 +86,21 @@ class TextureBuilder():
         x = cx - self.x
         y = -cy - self.y
 
-        SAMPLE_SIZE = 40
-        sWidth = (int)(SAMPLE_SIZE * scale)
-        sHeight = (int)(SAMPLE_SIZE * scale)
-        sOriginX = (int)((x - SAMPLE_SIZE/2) * scale)
-        xOriginY = (int)((y - SAMPLE_SIZE/2) * scale)
+        swatchSize = TEXTURES[self.id][0]
+        width = (int)(swatchSize * scale)
+        height = (int)(swatchSize * scale)
+        originX = (int)((x - swatchSize/2) * scale)
+        originY = (int)((y - swatchSize/2) * scale)
 
+        if originX + width > self.width:
+            error(f"Swatch {swatchId} off right edge of texture: {originX} + {width} > {self.width}")
+        if originY + height > self.height:
+            error(f"Swatch {swatchId} off bottom edge of texture: {originY} + {height} > {self.height}")
         id = self.id
         cmd = ["convert"]
         cmd.append(os.path.join(TEXTURE_DIR, f"{self.terrainType}/{id}.png"))
-        cmd.extend(["-crop", f"{sWidth}x{sHeight}+{sOriginX}+{xOriginY}"])
-        cmd.append(os.path.join(TEXTURE_DIR, f"{self.terrainType}/{id}/{id}-{tIndex:02d}.png"))
+        cmd.extend(["-crop", f"{width}x{height}+{originX}+{originY}"])
+        cmd.append(os.path.join(TEXTURE_DIR, f"{self.terrainType}/{id}/{id}-{swatchId:02d}.png"))
         result = subprocess.run(cmd, stdout=subprocess.PIPE)
 
     def getImageSize(self, path):
@@ -123,16 +134,20 @@ def splitTag(tag):
         tag = m.group("tag")
     return [namespace, tag]
 
+def error(msg):
+    print(f"ERROR: {msg}")
+    sys.exit(0)
+
 def main():
     args = sys.argv[1:]
     if len(args) != 1:
-        print("Missing arg: <texture-id>")
-        sys.exit(0)
+        error("Missing arg: <texture-id>")
     id = args.pop(0)
+    if not id in TEXTURES:
+        error("Unknown texture id: <texture-id>")
     
     tb = TextureBuilder(id)
-    tb.getImageSize(os.path.join(TEXTURE_DIR, TEXTURES[id][0]))
-    tb.scanTextureSvg()
+    tb.genTextureSwatches()
 
 if __name__ == '__main__':
     main()
