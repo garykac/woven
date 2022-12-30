@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-# Note: Requires ImageMagick.
+# Note: Requires the `identify` and `convert` command line tools from ImageMagick.
 
 import getopt
 import os
@@ -96,6 +96,7 @@ class TextureBuilder():
             error(f"Swatch {swatchId} off right edge of texture: {originX} + {width} > {self.width}")
         if originY + height > self.height:
             error(f"Swatch {swatchId} off bottom edge of texture: {originY} + {height} > {self.height}")
+
         id = self.id
         cmd = ["convert"]
         cmd.append(os.path.join(TEXTURE_DIR, f"{self.terrainType}/{id}.png"))
