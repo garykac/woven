@@ -654,13 +654,13 @@ class VoronoiHexTile():
 
     # Calculate all regions with clipping.
     def calcClippedRegions(self):
-        self.sid2region = {}
+        self.sid2clippedRegion = {}
         for sid in range(0, NUM_SIDES):
             rid = self.vor.point_region[sid]
             if self.debug == sid:
                 print(f"Calc clip region for corner {sid}")
             vids = self.calcCornerVertices(sid, rid)
-            self.sid2region[sid] = vids
+            self.sid2clippedRegion[sid] = vids
         for i0 in range(0, NUM_SIDES):
             i1 = (i0 + 1) % NUM_SIDES
             sid0 = NUM_SIDES + sum(self.nSeedsPerEdge[:i0])
@@ -690,13 +690,13 @@ class VoronoiHexTile():
                 #t0 = lerp(edgeSeeds[j], edgeSeeds[j+1], 0.5)
                 #t1 = lerp(edgeSeeds[j+1], edgeSeeds[j+2], 0.5)
                 vids = self.calcEdgeVertices(sid, rid, i0, i1, t0, t1)
-                self.sid2region[sid] = vids
+                self.sid2clippedRegion[sid] = vids
 
         for sid in range(self.startInteriorSeed, self.endInteriorSeed):
             rid = self.vor.point_region[sid]
-            self.sid2region[sid] = self.vor.regions[rid]
+            self.sid2clippedRegion[sid] = self.vor.regions[rid]
             if not self.isClockwise(sid):
-                self.sid2region[sid] = self.vor.regions[rid][::-1]
+                self.sid2clippedRegion[sid] = self.vor.regions[rid][::-1]
 
     # sid_c0 - seed id of start corner
     # sid_c1 - seed id of end corner
@@ -943,7 +943,7 @@ class VoronoiHexTile():
     def findBadEdges(self):
         self.badEdges = {}
         for sid in range(0, self.numActiveSeeds):
-            r = self.sid2region[sid]
+            r = self.sid2clippedRegion[sid]
             for rindex in range(0, len(r)):
                 vid0 = r[rindex]
                 vid1 = r[(rindex + 1) % len(r)]
@@ -988,7 +988,7 @@ class VoronoiHexTile():
         minCircleRadius = 0
         maxCircleRadius = 0
         for sid in range(0, self.endInteriorSeed):
-            r = self.sid2region[sid]
+            r = self.sid2clippedRegion[sid]
             polyCenter = []
             polyRadius = 0
 
@@ -1133,7 +1133,7 @@ class VoronoiHexTile():
         # shared by only 1 or 2 regions.
         self.vid2sids = {}
         for sid in range(0, self.numActiveSeeds):
-            for vid in self.sid2region[sid]:
+            for vid in self.sid2clippedRegion[sid]:
                 if not vid in self.vid2sids:
                     self.vid2sids[vid] = []
                 self.vid2sids[vid].append(sid)
