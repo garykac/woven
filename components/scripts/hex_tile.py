@@ -611,9 +611,9 @@ class VoronoiHexTile():
 
     # Calculate the set of regions (seed ids) that surround the given region.
     def calcNeighboringRegions(self, sid0):
-        if not sid0 in self.sid2region:
+        if not sid0 in self.sid2clippedRegion:
             return []
-        vids = self.sid2region[sid0]
+        vids = self.sid2clippedRegion[sid0]
         sids = []
         for vid in vids:
             for sid in self.vid2sids[vid]:
@@ -652,8 +652,17 @@ class VoronoiHexTile():
         if self.debug == sid_orig:
             print(f"Adjusting {sid_orig} by ({dx}, {dy})")
 
-    # Calculate all regions with clipping.
-    def calcClippedRegions(self):
+    # Calculate mapping from seed-id to array of vertices (ordered clockwise).
+    def calcSid2Region(self):
+        self.sid2region = {}
+        for sid in range(0, self.endInteriorSeed):
+            rid = self.vor.point_region[sid]
+            self.sid2region[sid] = self.vor.regions[rid]
+            if not self.isClockwise(sid):
+                self.sid2region[sid] = self.vor.regions[rid][::-1]
+
+    # Calculate mapping from seed-id to array of (clockwise) vertices with clipping.
+    def calcSid2ClippedRegion(self):
         self.sid2clippedRegion = {}
         for sid in range(0, NUM_SIDES):
             rid = self.vor.point_region[sid]
@@ -1122,7 +1131,8 @@ class VoronoiHexTile():
         for i in range(0, self.numActiveSeeds):
             self.seed2minDistance.append(self.calcSeedWeight(self.seeds[i]))
 
-        self.calcClippedRegions()
+        self.calcSid2Region()
+        self.calcSid2ClippedRegion()
 
         # Ensure each region has a terrain type.
         for sid in range(len(self.seed2terrain), self.numActiveSeeds):

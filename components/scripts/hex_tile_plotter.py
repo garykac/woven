@@ -89,6 +89,7 @@ class VoronoiHexTilePlotter():
         # Total number of active seeds (ignore external seeds)
         self.numActiveSeeds = tile.numActiveSeeds
         # Mapping seed id -> region (array of vertex ids)
+        self.sid2region = tile.sid2region
         self.sid2clippedRegion = tile.sid2clippedRegion
         # Mapping seed id -> terrain type.
         self.seed2terrain = tile.seed2terrain
@@ -194,7 +195,7 @@ class VoronoiHexTilePlotter():
 
     # Calc updated regions that have been adjusted by rivers.
     def calcUpdatedRegions(self):
-        self.sid2updatedRegion = copy.deepcopy(self.sid2clippedRegion)
+        self.sid2updatedRegion = copy.deepcopy(self.sid2region)
         
     def drawHexTileBorder(self, id, layer_name, style):
         layer_border = self.svg.add_inkscape_layer(id, layer_name, self.layer)
@@ -207,7 +208,7 @@ class VoronoiHexTilePlotter():
     def drawClippedRegionLayer(self):
         layer_region_clip = self.svg.add_inkscape_layer(
             'region-clip', "Region Clipped", self.layer)
-        gClip = SVG.group('clip')
+        gClip = SVG.group('clipped-regions')
         SVG.add_node(layer_region_clip, gClip)
         layer_region_clip.hide()
 
@@ -223,6 +224,10 @@ class VoronoiHexTilePlotter():
     def drawRoundedRegionFillLayer(self):
         layer_region_rounded = self.svg.add_inkscape_layer(
             f"region-rounded-fill", f"Region Rounded Fill", self.layer)
+        group_region_rounded = SVG.group('region-rounded-fill-group')
+        SVG.add_node(layer_region_rounded, group_region_rounded)
+        clippath_id = self.addHexTileClipPath()
+        group_region_rounded.set("clip-path", f"url(#{clippath_id})")
 
         for sid in range(0, self.numActiveSeeds):
             terrainType = self.seed2terrain[sid]
@@ -240,14 +245,14 @@ class VoronoiHexTilePlotter():
                 region = self.calcTexturedRegion(sid, terrainType, texId, swatchId, angle)
             else:
                 id = f"roundedregionfill-{sid}"
-                vids = self.sid2clippedRegion[sid]
+                vids = self.sid2region[sid]
                 region = self.calcRoundedRegionPath(id, vids, False)
 
                 color = self.getTerrainStyle(terrainType)
                 style = Style(color, None)
                 region.set_style(style)
 
-            SVG.add_node(layer_region_rounded, region)
+            SVG.add_node(group_region_rounded, region)
 
     def calcTexturedRegion(self, sid, terrainType, texId, swatchId, rotateAngle):
         if not terrainType in ['l', 'm', 'h']:
@@ -280,7 +285,7 @@ class VoronoiHexTilePlotter():
 
         # Clip the texture to the region.
         gClip = Group(f"gclip-rregion-{sid}")
-        vids = self.sid2clippedRegion[sid]
+        vids = self.sid2region[sid]
         path = self.calcRoundedRegionPath(f"rregion-{sid}", vids, False)
         clipid = self.svg.add_clip_path(f"rregion-{sid}", path)
         gClip.set("clip-path", f"url(#{clipid})")
@@ -296,16 +301,20 @@ class VoronoiHexTilePlotter():
     def drawRoundedRegionStrokeLayer(self):
         layer_region_rounded = self.svg.add_inkscape_layer(
             f"region-rounded-stroke", f"Region Rounded Stroke", self.layer)
+        group_region_rounded = SVG.group('region-rounded-stroke-group')
+        SVG.add_node(layer_region_rounded, group_region_rounded)
+        clippath_id = self.addHexTileClipPath()
+        group_region_rounded.set("clip-path", f"url(#{clippath_id})")
 
         for sid in range(0, self.numActiveSeeds):
-            vids = self.sid2clippedRegion[sid]
+            vids = self.sid2region[sid]
             id = f"roundedregionstroke-{sid}"
 
             path = self.calcRoundedRegionPath(id, vids, True)
 
             style = Style(None, STROKE_COLOR, THICK_STROKE_WIDTH)
             path.set_style(style)
-            SVG.add_node(layer_region_rounded, path)
+            SVG.add_node(group_region_rounded, path)
 
     def drawLakeOverlayLayer(self):
         if not self.overlayData:
@@ -333,7 +342,7 @@ class VoronoiHexTilePlotter():
                 region = self.calcTexturedRegion(sid, terrainType, texId, 0, angle)
             else:
                 id = f"lake-{sid}"
-                vids = self.sid2clippedRegion[sid]
+                vids = self.sid2region[sid]
                 region = self.calcRoundedRegionPath(id, vids, False)
 
                 style = Style(REGION_COLOR[terrainType], None)
@@ -659,7 +668,7 @@ class VoronoiHexTilePlotter():
                 lakes = [int(lake) for lake in self.overlayData['lake'] if lake]
             
             rb = RiverBuilder(riverEdges, rRidges, lakes)
-            rb.setTileInfo(self.tile.sid2clippedRegion)
+            rb.setTileInfo(self.tile.sid2region)
             rb.buildRidgeInfo(self.vor)
             rb.buildTransitions()
             
