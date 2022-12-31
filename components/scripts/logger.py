@@ -10,6 +10,9 @@ class Logger():
         if self.verbose:
             print(f"{'  ' * self.log_indent}{msg}")
 
-    def logIndent(self, n):
+    def indent(self, n=1):
         self.log_indent += n
+    
+    def outdent(self, n=1):
+        self.log_indent -= n
     

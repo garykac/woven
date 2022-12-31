@@ -74,10 +74,10 @@ class RiverBuilder():
                     }
 
         self.logger.log(f"ridgeInfo:")
-        self.logger.logIndent(1)
+        self.logger.indent()
         for key in self.ridgeInfo.keys():
             self.logger.log(f"  {key}: {self.ridgeInfo[key]}")
-        self.logger.logIndent(-1)
+        self.logger.outdent()
 
 	# Build struct to track river bank regions.
     def _buildBankInfo(self):
@@ -92,10 +92,10 @@ class RiverBuilder():
             self.bankInfo[s1].append(s0)
 
         self.logger.log(f"bankInfo:")
-        self.logger.logIndent(1)
+        self.logger.indent()
         for key in self.bankInfo.keys():
             self.logger.log(f"  {key}: {self.bankInfo[key]}")
-        self.logger.logIndent(-1)
+        self.logger.outdent()
 
     def _buildRegionNeighbors(self):
         self.sid2neighbors = {}    
@@ -109,10 +109,10 @@ class RiverBuilder():
             self.sid2neighbors[seedId] = sids
 
         self.logger.log(f"sid2neighbors:")
-        self.logger.logIndent(1)
+        self.logger.indent()
         for key in self.sid2neighbors.keys():
             self.logger.log(f"  {key}: {self.sid2neighbors[key]}")
-        self.logger.logIndent(-1)
+        self.logger.outdent()
 
     def _appendToDictEntry(self, d, key, value):
         if not key in d:
@@ -130,9 +130,10 @@ class RiverBuilder():
         # Save original river edges/ridges so they can be restored.
         origRiverEdges = copy.deepcopy(self.riverEdges)
         origRiverRidges = copy.deepcopy(self.riverRidges)
+        origV2Ridges = copy.deepcopy(self.v2ridges)
 
         self.logger.log(f"buildTransitions:")
-        self.logger.logIndent(1)
+        self.logger.indent()
 
         while len(self.riverRidges) != 0:
             # Find a river edge to start.
@@ -167,7 +168,7 @@ class RiverBuilder():
                 v = vCandidates.pop(0)
                 ridges = self.v2ridges[v]
                 self.logger.log(f"candidate from v: {v}, ridges: {ridges}")
-                self.logger.logIndent(1)
+                self.logger.indent()
                 for r in ridges:
                     lakeCand = self.hasLakeConnection(r, v)
                     if lakeCand:
@@ -195,12 +196,13 @@ class RiverBuilder():
                             self.logger.log(f"add transitions: {v} -> {newCandidates}")
                     self.riverRidges.remove(r)
 
-                self.logger.logIndent(-1)
-        self.logger.logIndent(-1)
+                self.logger.outdent()
+        self.logger.outdent()
         
         # Restore river edges/ridges.
         self.riverEdges = origRiverEdges
         self.riverRidges = origRiverRidges
+        self.v2ridges = origV2Ridges
 
     def findNextRiverEdge(self):
         # Get next available river edge from the |rRidges|.
@@ -226,7 +228,7 @@ class RiverBuilder():
         self.logger.log(f"find ridge candidates from {ridge}, starting from {vStart}")
         rInfo = self.ridgeInfo[ridge]
         nextVertCandidates = []
-        self.logger.logIndent(1)
+        self.logger.indent()
         for v in rInfo['verts']:
             if v == vStart:
                 continue
@@ -234,7 +236,7 @@ class RiverBuilder():
             if len(self.v2ridges[v]) != 0:
                 nextVertCandidates.append(v)
             self.logger.log(f"removing ridge {ridge} and appending vertex {v}")
-        self.logger.logIndent(-1)
+        self.logger.outdent()
         return nextVertCandidates
 
     # Given a |ridge| and a vertex |vStart| on that ridge, return the lake index of a
@@ -299,7 +301,7 @@ class RiverBuilder():
     # Get the loop of regions that define the outer boundary of the rivers.
     def calcRegionLoop(self):
         self.logger.log(f"calcRegionLoops:")
-        self.logger.logIndent(1)
+        self.logger.indent()
         loops = []
         while True:
             # Find a river edge to start.
@@ -327,7 +329,7 @@ class RiverBuilder():
             done = False
             while not done:
                 self.logger.log(f"curr seed: {currSeed}; vertex: {currV}")
-                self.logger.logIndent(1)
+                self.logger.indent()
 
                 self.logger.log(f"adding {currSeed} ({oppositeSeed}) to loop")             
                 seedList.append([currSeed, oppositeSeed])
@@ -392,7 +394,7 @@ class RiverBuilder():
                             # Switch the vertex back since we swapped it above.
                             currV = self._getRidgeOtherVert(ridgeKey, currV)
 
-                        self.logger.logIndent(-1)
+                        self.logger.outdent()
                         break
 
                 if not found:
@@ -400,6 +402,6 @@ class RiverBuilder():
 
             loops.append(seedList)
 
-        self.logger.logIndent(-1)
+        self.logger.outdent()
 
         return loops
