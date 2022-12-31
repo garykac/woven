@@ -2,18 +2,23 @@ import math
 
 epsilon = 0.00001
 
+# Floating-point equal.
 def feq(a, b):
     return (a > b - epsilon) and (a < b + epsilon)
 
+# Floating-point greater-than or equal.
 def fge(a, b):
     return (a > b - epsilon)
 
+# Floating-point less-than or equal.
 def fle(a, b):
     return (a < b + epsilon)
 
+# Floating-point equal for points.
 def feq_pt(p0, p1):
     return feq(p0[0], p1[0]) and feq(p0[1], p1[1])
 
+# Floating-point equal for lines.
 def feq_line(l0, l1):
     return feq_pt(l0[0], l1[0]) and feq_pt(l0[1], l1[1])
 
@@ -26,6 +31,7 @@ def clamp(a, min, max):
     if a > max: return max
     return a
 
+# Linear interpolate from |v0| to |v1| by |t|.
 def lerp(a0, a1, t):
     return a0 + (a1-a0)*t
     
@@ -35,7 +41,7 @@ def lerp_pt(v0, v1, t):
     x1, y1 = v1
     return [lerp(x0, x1, t), lerp(y0, y1, t)]
 
-# Calc offset to add to v0 to linear interpolate from |v0| to |v1| by |t|.
+# Calc offset to add to |v0| to linear interpolate from |v0| to |v1| by |t|.
 def lerp_pt_delta(v0, v1, t):
     x0, y0 = v0
     x1, y1 = v1
@@ -56,6 +62,29 @@ def lerperp(v0, v1, t, perp_t):
     #print("lerperp:", v0, v1, t, perp_t, "->", x,y)
     return [x, y]
 
+# Calc point which is distance |d| along the segment from |v0| to |v1|.
+# Note that |d| is an absolute distance rather than a percentage.
+def pt_along_line(v0, v1, d):
+    t = d / dist(v0, v1)
+    return lerp_pt(v0, v1, t)
+
+# Return True if the two points are closer than |maxDist| to each other.
+# This avoids the sqrt() call, so it is more efficient than dist(v0,v1) < maxDist
+def near(v0, v1, maxDist):
+    x0, y0 = v0
+    x1, y1 = v1
+    dx = x1 - x0
+    dy = y1 - y0
+    return dx*dx + dy*dy < maxDist * maxDist
+
+# Calc distance from |v0| to |v1| (always positive).
+def dist(v0, v1):
+    x0, y0 = v0
+    x1, y1 = v1
+    dx = x1 - x0
+    dy = y1 - y0
+    return math.sqrt(dx*dx + dy*dy)
+
 # Calc a point on either side of the given line that is distance |d| from the line.
 def perp_offset(line, d):
     v0, v1 = line
@@ -69,27 +98,7 @@ def perp_offset(line, d):
     y = y0 + dx
     return [pt_along_line(v0, [x,y], d), pt_along_line(v0, [x,y], -d)]
 
-# Calc point which is distance |d| along the segment from |v0| to |v1|.
-# Note that |d| is an absolute distance rather than a percentage.
-def pt_along_line(v0, v1, d):
-    t = d / dist(v0, v1)
-    return lerp_pt(v0, v1, t)
-
-def near(v0, v1, dist):
-    x0, y0 = v0
-    x1, y1 = v1
-    dx = x1 - x0
-    dy = y1 - y0
-    return dx*dx + dy*dy < dist * dist
-
-# Calc distance from |v0| to |v1| (always positive).
-def dist(v0, v1):
-    x0, y0 = v0
-    x1, y1 = v1
-    dx = x1 - x0
-    dy = y1 - y0
-    return math.sqrt(dx*dx + dy*dy)
-
+# Return 2 parallel lines, distance |d| on either side of the given line.
 def parallel_lines(line, d):
     # Points distance |d| on either side of the line.
     pt0, pt1 = perp_offset(line, d)
@@ -211,6 +220,9 @@ def line_intersection_t(line1, line2):
 
 __hexXMax = math.sqrt(3) / 2
 
+# Return True if |pt| is within a hexagon of size |size|, centered at the origin.
+# size - size of hexagon (from center to vertex)
+# pt - point to check
 def ptInHex(size, pt):
     x, y = pt
     # Check if point is within hexagon.
@@ -246,6 +258,7 @@ def ptInHex(size, pt):
     tx = abs(x)
     ty = abs(y)
 
+    # Check if |pt| is outside the hexagon's right edge.
     if tx > (size * __hexXMax):
         return False
             

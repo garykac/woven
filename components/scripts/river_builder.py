@@ -389,7 +389,7 @@ class RiverBuilder():
                             (currSeed, oppositeSeed) = (oppositeSeed, currSeed)
                             self.logger.log(f"new curr {currSeed}; opposite {oppositeSeed}; vertex: {currV}; {ridgeKey}")
                             seedList.append([currSeed, oppositeSeed])
-                            # Switch the vertex back since we switched directions.
+                            # Switch the vertex back since we swapped it above.
                             currV = self._getRidgeOtherVert(ridgeKey, currV)
 
                         self.logger.logIndent(-1)
@@ -402,5 +402,4 @@ class RiverBuilder():
 
         self.logger.logIndent(-1)
 
-        print(loops)                
         return loops
