@@ -281,12 +281,12 @@ class RiverBuilder():
                 return v
         return None
 
-    def _isRiverAtTileEdge(self, ridge, v):
+    def _isRiverAtTileEdge(self, ridge):
         # Rivers can end when they exit a tile edge.
-        if ridge in self.riverEdges and len(self.v2ridges[v]) == 1:
+        if ridge in self.riverEdges:
             return True
         # The start edge is removed from |riverEdges|, so we need to check it separately.
-        if ridge == self.startEdge and len(self.v2ridges[v]) == 1:
+        if ridge == self.startEdge:
             return True
         return False
 
@@ -346,7 +346,7 @@ class RiverBuilder():
 
                     # Check if we hit the edge of a tile.
                     foundEdge = False
-                    if self._isRiverAtTileEdge(ridgeKey, currV):
+                    if self._isRiverAtTileEdge(ridgeKey):
                         foundEdge = True
 
                     # Does this neighbor have a river ridge shared with the currSeed or
@@ -363,7 +363,7 @@ class RiverBuilder():
                         ridgeKey = calcSortedId(oppositeSeed, n)
                         self.logger.log(f"checking {oppositeSeed} neighbor {n} with {ridgeKey}")
                         # Check ridges that cross the tile edge.
-                        if self._isRiverAtTileEdge(ridgeKey, currV):
+                        if self._isRiverAtTileEdge(ridgeKey):
                             foundEdge = True
                         if ridgeKey in self.riverRidges:
                             self.logger.log(f"found same-side riverbank neighbor with {n} via {ridgeKey}")
