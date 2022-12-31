@@ -11,6 +11,12 @@ def fge(a, b):
 def fle(a, b):
     return (a < b + epsilon)
 
+def feq_pt(p0, p1):
+    return feq(p0[0], p1[0]) and feq(p0[1], p1[1])
+
+def feq_line(l0, l1):
+    return feq_pt(l0[0], l1[0]) and feq_pt(l0[1], l1[1])
+
 def scale(v, scale):
     x, y = v
     return [x * scale, y * scale]
@@ -50,6 +56,19 @@ def lerperp(v0, v1, t, perp_t):
     #print("lerperp:", v0, v1, t, perp_t, "->", x,y)
     return [x, y]
 
+# Calc a point on either side of the given line that is distance |d| from the line.
+def perp_offset(line, d):
+    v0, v1 = line
+    x0, y0 = v0
+    x1, y1 = v1
+    dx = x1 - x0
+    dy = y1 - y0
+    t = d / dist(v0, v1)
+    # Use (x,y) + (-dy,dx) for perpendicular line.
+    x = x0 - dy
+    y = y0 + dx
+    return [pt_along_line(v0, [x,y], d), pt_along_line(v0, [x,y], -d)]
+
 # Calc point which is distance |d| along the segment from |v0| to |v1|.
 # Note that |d| is an absolute distance rather than a percentage.
 def pt_along_line(v0, v1, d):
@@ -70,6 +89,16 @@ def dist(v0, v1):
     dx = x1 - x0
     dy = y1 - y0
     return math.sqrt(dx*dx + dy*dy)
+
+def parallel_lines(line, d):
+    # Points distance |d| on either side of the line.
+    pt0, pt1 = perp_offset(line, d)
+    v0, v1 = line
+    dx = v1[0] - v0[0]
+    dy = v1[1] - v0[1]
+    line0 = [pt0, [pt0[0] + dx, pt0[1] + dy]]
+    line1 = [pt1, [pt1[0] + dx, pt1[1] + dy]]
+    return [line0, line1]
 
 # Return distance from |pt| to |line|.
 def dist_pt_line(pt, line):
