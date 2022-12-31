@@ -10,10 +10,10 @@ from river_builder import RiverBuilder
 #       :          . .|. . . . .|. . . . .|. .          :
 #       :          .  |         |         |  .          :
 # 20   dx - - - -d====e====f----g----h----i----j- - - - jx
-#       :        | .       #         |       . |        :
-#       :   5    | .  6    #    7    |    8  . |    9   :
-#       :        | .       #         |       . |        :
-#       :        | .       #         |       . |        :
+#       :        : .       #         |       . :        :
+#       :   5    : .  6    #    7    |    8  . :    9   :
+#       :        : .       #         |       . :        :
+#       :        : .       #         |       . :        :
 # 30   kx - - - -k----l----m====n====o====p====q- - - - qx
 #       :          .  |         |         |  .          :
 #       :          . .|. . . . .|. . . . .|. .          :
@@ -51,6 +51,22 @@ from river_builder import RiverBuilder
 
 @pytest.fixture
 def single_river():
+    #                 a         b         c
+    #                 |         |         |
+    #             1   |    2    |    3    |   4
+    #              . .|. . . . .|. . . . .|. .
+    #              .  |         |         |  .
+    #     - - - -d====e====f----g----h----i----j- - - -
+    #            : .       #         |       . :
+    #       5    : .  6    #    7    |    8  . :    9
+    #            : .       #         |       . :
+    #            : .       #         |       . :
+    #     - - - -k----l----m====n====o====p====q- - - -
+    #              .  |         |         |  .
+    #              . .|. . . . .|. . . . .|. .
+    #            10   |   11    |   12    |   13
+    #                 |         |         |
+    #                 r         s         t
     edges = ["1-6", "8-13"]
     ridges = ["1-6", "2-6", "6-7", "7-11", "7-12", "8-12", "8-13"]
     lakes = []
@@ -66,7 +82,55 @@ def single_river():
     return (edges, ridges, lakes, vertex_expect, loop_expect)
 
 @pytest.fixture
+def single_river2():
+    #                 a         b         c
+    #                 |         #         |
+    #             1   |    2    #    3    |   4
+    #              . .|. . . . .#. . . . .|. .
+    #              .  |         #         |  .
+    #     - - - -d====e====f----g====h----i----j- - - -
+    #            : .       #         #       . :
+    #       5    : .  6    #    7    #    8  . :    9
+    #            : .       #         #       . :
+    #            : .       #         #       . :
+    #     - - - -k----l----m====n====o----p----q- - - -
+    #              .  |         |         |  .
+    #              . .|. . . . .|. . . . .|. .
+    #            10   |   11    |   12    |   13
+    #                 |         |         |
+    #                 r         s         t
+    edges = ["1-6", "2-3"]
+    ridges = ["1-6", "2-6", "6-7", "7-11", "7-12", "7-8", "3-7", "2-3"]
+    lakes = []
+    vertex_expect = [
+        [d, e, f, m, n, o, h, g, b],
+    ]
+    loop_expect = [
+        [
+            [1, 6], [2, 6], [7, 6], [7, 11], [7, 12], [7, 8], [7, 3], [2, 3],
+            [3, 2], [3, 7], [8, 7], [12, 7], [11, 7], [6, 7], [6, 2], [6, 1]
+        ],
+    ]
+    return (edges, ridges, lakes, vertex_expect, loop_expect)
+
+@pytest.fixture
 def two_rivers():
+    #                 a         b         c
+    #                 |         |         |
+    #             1   |    2    |    3    |   4
+    #              . .|. . . . .|. . . . .|. .
+    #              .  |         |         |  .
+    #     - - - -d====e====f====g====h====i====j- - - -
+    #            : .       |         |       . :
+    #       5    : .  6    |    7    |    8  . :    9
+    #            : .       |         |       . :
+    #            : .       |         |       . :
+    #     - - - -k====l====m====n====o====p====q- - - -
+    #              .  |         |         |  .
+    #              . .|. . . . .|. . . . .|. .
+    #            10   |   11    |   12    |   13
+    #                 |         |         |
+    #                 r         s         t
     edges = [
         "1-6", "4-8",
         "6-10", "8-13"
@@ -93,6 +157,22 @@ def two_rivers():
 
 @pytest.fixture
 def with_lake():
+    #                 a         b         c
+    #                 |         |         |
+    #             1   |    2    |    3    |   4
+    #              . .|. . . . .|. . . . .|. .
+    #              .  |         |         |  .
+    #     - - - -d====e====f----g----h----i----j- - - -
+    #            : .       | ~ ~ ~ ~ |       . :
+    #       5    : .  6    |~ ~ 7 ~ ~|    8  . :    9
+    #            : .       | ~ ~ ~ ~ |       . :
+    #            : .       |~ ~ ~ ~ ~|       . :
+    #     - - - -k----l----m----n----o----p----q- - - -
+    #              .  |         |         |  .
+    #              . .|. . . . .|. . . . .|. .
+    #            10   |   11    |   12    |   13
+    #                 |         |         |
+    #                 r         s         t
     edges = [
         "1-6",
     ]
@@ -112,6 +192,22 @@ def with_lake():
 
 @pytest.fixture
 def direct_into_lake():
+    #                 a         b         c
+    #                 |         #         |
+    #             1   |    2    #    3    |   4
+    #              . .|. . . . .#. . . . .|. .
+    #              .  |         #         |  .
+    #     - - - -d----e----f----g----h----i----j- - - -
+    #            : .       | ~ ~ ~ ~ |       . :
+    #       5    : .  6    |~ ~ 7 ~ ~|    8  . :    9
+    #            : .       | ~ ~ ~ ~ |       . :
+    #            : .       |~ ~ ~ ~ ~|       . :
+    #     - - - -k----l----m----n----o----p----q- - - -
+    #              .  |         |         |  .
+    #              . .|. . . . .|. . . . .|. .
+    #            10   |   11    |   12    |   13
+    #                 |         |         |
+    #                 r         s         t
     edges = [
         "2-3",
     ]
@@ -235,6 +331,9 @@ def checkVertices(verts, vertex_expect):
 def test_riverVertices_singleRiver(single_river):
     checkRiverVertices(single_river)
 
+def test_riverVertices_singleRiver2(single_river2):
+    checkRiverVertices(single_river2)
+
 def test_riverVertices_twoRivers(two_rivers):
     checkRiverVertices(two_rivers)
 
@@ -267,6 +366,9 @@ def checkRegions(regions, region_expect):
 
 def test_riverBankRegions_singleRiver(single_river):
     checkRiverBanks(single_river)
+
+def test_riverBankRegions_singleRiver2(single_river2):
+    checkRiverBanks(single_river2)
 
 def test_riverBankRegions_twoRivers(two_rivers):
     checkRiverBanks(two_rivers)
