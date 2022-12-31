@@ -669,7 +669,7 @@ class VoronoiHexTilePlotter():
             
             rb = RiverBuilder(riverEdges, rRidges, lakes)
             rb.setTileInfo(self.tile.sid2region)
-            rb.buildRidgeInfo(self.vor)
+            rb.buildRiverInfo(self.vor)
             rb.buildTransitions()
             
             return rb.getRiverVertices()

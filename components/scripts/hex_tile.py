@@ -1141,6 +1141,7 @@ class VoronoiHexTile():
         # Verify that all voronoi vertices are shared by 3 seed regions.
         # Note ignoring regions along outer edge which will have some vertices
         # shared by only 1 or 2 regions.
+        # Note that this uses the vertices from the clipped regions.
         self.vid2sids = {}
         for sid in range(0, self.numActiveSeeds):
             for vid in self.sid2clippedRegion[sid]:

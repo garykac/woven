@@ -1,5 +1,7 @@
 import copy
 
+from logger import Logger
+
 def calcSortedId(id0, id1):
     if int(id0) < int(id1):
         return f"{id0}-{id1}"
@@ -17,8 +19,7 @@ class RiverBuilder():
         # Regions that are lakes.
         self.lakes = lakes
         
-        self.verbose = False
-        self.log_indent = 0
+        self.logger = Logger()
         
         # Build dict of ridge segments that should be rivers.
         self.riverSegments = {}
@@ -32,22 +33,29 @@ class RiverBuilder():
             if not key in self.riverSegments:
                 raise Exception(f"Missing river edge segment {key}")
         
-        if self.verbose:
-            self.log(f"riverEdges: {riverEdges}")
-            self.log(f"riverRidges: {riverRidges}")
-            self.log(f"lakes: {lakes}")
+        self.logger.log(f"riverEdges: {riverEdges}")
+        self.logger.log(f"riverRidges: {riverRidges}")
+        self.logger.log(f"lakes: {lakes}")
     
     def setTileInfo(self, sid2region):
         self.sid2region = sid2region
- 
-    def log(self, msg):
-        if self.verbose:
-            print(f"{'  ' * self.log_indent}{msg}")
 
-    def logindent(self, n):
-        self.log_indent += n
+        self.vid2sids = {}
+        for sid in range(1, len(sid2region)):
+            for vid in sid2region[sid]:
+                if not vid in self.vid2sids:
+                    self.vid2sids[vid] = []
+                self.vid2sids[vid].append(sid)
+ 
+    def setVerbose(self, v):
+        self.logger.setVerbose(v)
     
-    def buildRidgeInfo(self, vor):
+    def buildRiverInfo(self, vor):
+        self._buildRidgeInfo(vor)
+        self._buildBankInfo()
+        self._buildRegionNeighbors()
+    
+    def _buildRidgeInfo(self, vor):
         # Build dict of ridge keys ("#-#") -> id, seeds, vertices.
         self.ridgeInfo = {}
         self.v2ridges = {}  # Vertex id -> list of ridges with that vertex.
@@ -64,12 +72,47 @@ class RiverBuilder():
                     'seeds': [s0, s1],
                     'verts': [v0, v1],
                     }
-        if self.verbose:
-            self.log(f"ridgeInfo:")
-            self.logindent(1)
-            for key in self.ridgeInfo.keys():
-                self.log(f"  {key}: {self.ridgeInfo[key]}")
-            self.logindent(-1)
+
+        self.logger.log(f"ridgeInfo:")
+        self.logger.logIndent(1)
+        for key in self.ridgeInfo.keys():
+            self.logger.log(f"  {key}: {self.ridgeInfo[key]}")
+        self.logger.logIndent(-1)
+
+	# Build struct to track river bank regions.
+    def _buildBankInfo(self):
+        self.bankInfo = {}
+        for ridge in self.riverRidges:
+            (s0, s1) = [int(x) for x in ridge.split('-')]
+            if not s0 in self.bankInfo:
+                self.bankInfo[s0] = []
+            self.bankInfo[s0].append(s1)
+            if not s1 in self.bankInfo:
+                self.bankInfo[s1] = []
+            self.bankInfo[s1].append(s0)
+
+        self.logger.log(f"bankInfo:")
+        self.logger.logIndent(1)
+        for key in self.bankInfo.keys():
+            self.logger.log(f"  {key}: {self.bankInfo[key]}")
+        self.logger.logIndent(-1)
+
+    def _buildRegionNeighbors(self):
+        self.sid2neighbors = {}    
+        for seedId in range(1, len(self.sid2region)):
+            vids = self.sid2region[seedId]
+            sids = []
+            for vid in vids:
+                for sid in self.vid2sids[vid]:
+                    if sid != seedId and not sid in sids:
+                        sids.append(sid)
+            self.sid2neighbors[seedId] = sids
+
+        self.logger.log(f"sid2neighbors:")
+        self.logger.logIndent(1)
+        for key in self.sid2neighbors.keys():
+            self.logger.log(f"  {key}: {self.sid2neighbors[key]}")
+        self.logger.logIndent(-1)
 
     def _appendToDictEntry(self, d, key, value):
         if not key in d:
@@ -84,8 +127,12 @@ class RiverBuilder():
         # Dictionary of <vertex> -> list-of-vertices
         self.riverTransitions = {}
 
-        self.log(f"buildTransitions:")
-        self.logindent(1)
+        # Save original river edges/ridges so they can be restored.
+        origRiverEdges = copy.deepcopy(self.riverEdges)
+        origRiverRidges = copy.deepcopy(self.riverRidges)
+
+        self.logger.log(f"buildTransitions:")
+        self.logger.logIndent(1)
 
         while len(self.riverRidges) != 0:
             # Find a river edge to start.
@@ -99,39 +146,39 @@ class RiverBuilder():
             
             vStart = self.findUnmatchedRidgeVertex(currEdge)
             self.riverStarts.append(vStart)
-            self.log(f"start edge: {currEdge}, off-tile vertex: {vStart}")
+            self.logger.log(f"start edge: {currEdge}, off-tile vertex: {vStart}")
             
             lakeCand = self.hasLakeConnection(currEdge, vStart)
             if lakeCand:
                 (lakeId, vLake) = lakeCand
-                self.log(f"found direct lake match: {lakeId} @ {vLake}")
+                self.logger.log(f"found direct lake match: {lakeId} @ {vLake}")
                 self.riverTransitions[vStart] = [vLake]
                 self.lakeEnds.append(vLake)
-                self.log(f"add transitions: {vStart} -> {vLake}")
+                self.logger.log(f"add transitions: {vStart} -> {vLake}")
                 break
 
             newCandidates = self.findNextCandidates(currEdge, vStart)
             self.riverTransitions[vStart] = copy.copy(newCandidates)
             vCandidates = newCandidates
 
-            self.log(f"add start transitions: {vStart} -> {newCandidates}")
+            self.logger.log(f"add start transitions: {vStart} -> {newCandidates}")
 
             while len(vCandidates) != 0:
                 v = vCandidates.pop(0)
                 ridges = self.v2ridges[v]
-                self.log(f"candidate from v: {v}, ridges: {ridges}")
-                self.logindent(1)
+                self.logger.log(f"candidate from v: {v}, ridges: {ridges}")
+                self.logger.logIndent(1)
                 for r in ridges:
                     lakeCand = self.hasLakeConnection(r, v)
                     if lakeCand:
                         (lakeId, vLake) = lakeCand
-                        self.log(f"found lake match: {lakeId} @ {vLake}")
+                        self.logger.log(f"found lake match: {lakeId} @ {vLake}")
                         self.riverTransitions[v] = [vLake]
                         self.lakeEnds.append(vLake)
-                        self.log(f"add lake transitions: {v} -> {vLake}")
+                        self.logger.log(f"add lake transitions: {v} -> {vLake}")
                     else:
                         newCandidates = self.findNextCandidates(r, v)
-                        self.log(f"ridge: {r}, new v candidates: {newCandidates}")
+                        self.logger.log(f"ridge: {r}, new v candidates: {newCandidates}")
                         # If there aren't any vertex candidates.
                         if len(newCandidates) == 0:
                             # Check if the current ridge exits the tile.
@@ -141,15 +188,19 @@ class RiverBuilder():
                                 self.riverEnds.append(verts[0])
                                 self.riverEdges.remove(r)
                                 self.riverTransitions[v] = copy.copy(verts)
-                                self.log(f"end river transition: {v} -> (off-tile){verts}")
+                                self.logger.log(f"end river transition: {v} -> (off-tile){verts}")
                         else:
                             self.riverTransitions[v] = copy.copy(newCandidates)
                             vCandidates.extend(copy.copy(newCandidates))
-                            self.log(f"add transitions: {v} -> {newCandidates}")
-                        self.riverRidges.remove(r)
+                            self.logger.log(f"add transitions: {v} -> {newCandidates}")
+                    self.riverRidges.remove(r)
 
-                self.logindent(-1)
-        self.logindent(-1)
+                self.logger.logIndent(-1)
+        self.logger.logIndent(-1)
+        
+        # Restore river edges/ridges.
+        self.riverEdges = origRiverEdges
+        self.riverRidges = origRiverRidges
 
     def findNextRiverEdge(self):
         # Get next available river edge from the |rRidges|.
@@ -172,24 +223,24 @@ class RiverBuilder():
     # Given a |ridge| and a vertex |vStart| on that ridge, return the set of vertices that
     # have river ridges starting from |vStart|.
     def findNextCandidates(self, ridge, vStart):
-        self.log(f"find ridge candidates from {ridge}, starting from {vStart}")
+        self.logger.log(f"find ridge candidates from {ridge}, starting from {vStart}")
         rInfo = self.ridgeInfo[ridge]
         nextVertCandidates = []
-        self.logindent(1)
+        self.logger.logIndent(1)
         for v in rInfo['verts']:
             if v == vStart:
                 continue
             self.v2ridges[v].remove(ridge)
             if len(self.v2ridges[v]) != 0:
                 nextVertCandidates.append(v)
-            self.log(f"removing ridge {ridge} and appending vertex {v}")
-        self.logindent(-1)
+            self.logger.log(f"removing ridge {ridge} and appending vertex {v}")
+        self.logger.logIndent(-1)
         return nextVertCandidates
 
     # Given a |ridge| and a vertex |vStart| on that ridge, return the lake index of a
     # lake (if any) that the ridge connects to.
     def hasLakeConnection(self, ridge, vStart):
-        self.log(f"checking lakes from {ridge} starting from {vStart}")
+        self.logger.log(f"checking lakes from {ridge} starting from {vStart}")
         rInfo = self.ridgeInfo[ridge]
         for v in rInfo['verts']:
             if v == vStart:
@@ -208,17 +259,148 @@ class RiverBuilder():
         return False
 
     def getRiverVertices(self):
-        self.log(f"transitions: {self.riverTransitions}")
+        self.logger.log(f"transitions: {self.riverTransitions}")
         rivers = []
         for start in self.riverStarts:
             r = []
             v = start
             while not self.isRiverEndPoint(v):
                 r.append(v)
-                # TODO: Add support for tiles with 1 edge river (eg. with a lake)
-                if len(self.riverTransitions[v]) == 0:
-                    return []
                 v = self.riverTransitions[v][0]
             r.append(v)
             rivers.append(r)
         return rivers
+
+    # Each ridge has 2 vertices. Given a ridge and one vertex, return the other vertex.
+    def _getRidgeOtherVert(self, ridge, vCurr):
+        verts = self.ridgeInfo[ridge]['verts']
+        for v in verts:
+            if v != vCurr:
+                return v
+        return None
+
+    def _isRiverAtTileEdge(self, ridge, v):
+        # Rivers can end when they exit a tile edge.
+        if ridge in self.riverEdges and len(self.v2ridges[v]) == 1:
+            return True
+        # The start edge is removed from |riverEdges|, so we need to check it separately.
+        if ridge == self.startEdge and len(self.v2ridges[v]) == 1:
+            return True
+        return False
+
+    def _isRiverAtLake(self, v):
+        # Rivers can also end when they reach a lake.
+        for lake in self.lakes:
+            if v in self.sid2region[lake]:
+                self.logger.log(f"found lake {lake} at vertex {v}")
+                return True
+        return False
+
+    # Get the loop of regions that define the outer boundary of the rivers.
+    def calcRegionLoop(self):
+        self.logger.log(f"calcRegionLoops:")
+        self.logger.logIndent(1)
+        loops = []
+        while True:
+            # Find a river edge to start.
+            self.startEdge = self.findNextRiverEdge()
+            if self.startEdge == None:
+                break
+            vStart = self.findUnmatchedRidgeVertex(self.startEdge)
+            self.logger.log(f"start edge: {self.startEdge}, off-tile vertex: {vStart}")
+
+            self.riverEdges.remove(self.startEdge)
+            
+            # Pick one of the seeds as a stating point.
+            (currSeed, oppositeSeed) = self.ridgeInfo[self.startEdge]['seeds']
+            currV = self._getRidgeOtherVert(self.startEdge, vStart)
+
+            # Special case - directly from tile edge into a lake.
+            if self._isRiverAtLake(currV):
+                seedList = [[currSeed, oppositeSeed], [oppositeSeed, currSeed]]
+                loops.append(seedList)
+                continue
+
+            # Keep of list of seeds that have already been added.
+            seedList = []
+            
+            done = False
+            while not done:
+                self.logger.log(f"curr seed: {currSeed}; vertex: {currV}")
+                self.logger.logIndent(1)
+
+                self.logger.log(f"adding {currSeed} ({oppositeSeed}) to loop")             
+                seedList.append([currSeed, oppositeSeed])
+                
+                # Check the neighbors of the current vertex for a region that shares the
+                # riverbank.
+                found = False
+                for n in self.vid2sids[currV]:
+                    if n == oppositeSeed or n == currSeed:
+                        continue
+
+                    ridgeKey = calcSortedId(currSeed, n)
+                    self.logger.log(f"checking {currSeed} neighbor {n} with {ridgeKey}")
+
+                    # Check if we hit the edge of a tile.
+                    foundEdge = False
+                    if self._isRiverAtTileEdge(ridgeKey, currV):
+                        foundEdge = True
+
+                    # Does this neighbor have a river ridge shared with the currSeed or
+                    # oppositeSeed?
+                    # Check |currSeed| first.
+                    if ridgeKey in self.riverRidges:
+                        if n in self.sid2neighbors[oppositeSeed]:
+                            self.logger.log(f"found opposite-side riverbank neighbor with {n} via {ridgeKey}")
+                            oppositeSeed = n
+                            found = True
+
+                    # Check |oppositeSeed| if we didn't find a match with |currSeed|.
+                    if not found:
+                        ridgeKey = calcSortedId(oppositeSeed, n)
+                        self.logger.log(f"checking {oppositeSeed} neighbor {n} with {ridgeKey}")
+                        # Check ridges that cross the tile edge.
+                        if self._isRiverAtTileEdge(ridgeKey, currV):
+                            foundEdge = True
+                        if ridgeKey in self.riverRidges:
+                            self.logger.log(f"found same-side riverbank neighbor with {n} via {ridgeKey}")
+                            currSeed = n
+                            found = True
+
+                    if found:
+                        self.logger.log(f"found {ridgeKey} {currV}")
+                        if foundEdge:
+                            # Switch to the other side of the river.
+                            self.logger.log(f"Edge of tile - switching to other side")
+                            self.logger.log(f"adding {currSeed} ({oppositeSeed}) to loop")             
+                            seedList.append([currSeed, oppositeSeed])
+                            (currSeed, oppositeSeed) = (oppositeSeed, currSeed)
+                            # Note: |currV| stays the same since we switched direction.
+                            if ridgeKey == self.startEdge:
+                                done = True
+                            else:
+                                self.riverEdges.remove(ridgeKey)
+                        else:
+                            currV = self._getRidgeOtherVert(ridgeKey, currV)
+
+                        if self._isRiverAtLake(currV):
+                            self.logger.log(f"River enters lake - switching to other side")
+                            (currSeed, oppositeSeed) = (oppositeSeed, currSeed)
+                            self.logger.log(f"new curr {currSeed}; opposite {oppositeSeed}; vertex: {currV}; {ridgeKey}")
+                            seedList.append([currSeed, oppositeSeed])
+                            # Switch the vertex back since we switched directions.
+                            currV = self._getRidgeOtherVert(ridgeKey, currV)
+
+                        self.logger.logIndent(-1)
+                        break
+
+                if not found:
+                    raise Exception(f"Unable to find match for seed {currSeed} from vertex {currV}")
+
+            loops.append(seedList)
+
+        self.logger.logIndent(-1)
+
+        print(loops)                
+        return loops

@@ -27,16 +27,19 @@ from river_builder import RiverBuilder
 #
 # Each ridge of the voronoi is specified by identifying the regions on either
 # side of the ridge (using seed ids). So the ridge a-e is specified as 1-2
-# since 1 and 2 are the regions on either side of the ridge. The lowest
-# numbered region is always given first.
+# since 1 and 2 are the seed ids of the regions on either side of the ridge.
+# The lowest numbered region is always given first.
 #
 # The dotted (.) square border is the tile boundary (NOT part of the voronoi).
 # It acts as a clipping region for the voronoi. "River edges" are ridges where
 # the river passes through this clipping boundary.
 #
 # = and # show the path of a sample river through the tile (from d fo q).
-# The relevant (tile intersecting) voronoi ridges are - and |.
-# Other (outer) voronoi edges are indicated with '- -' and :
+#
+# The relevant (tile intersecting) voronoi ridges are '-' and '|'.
+#
+# Other (outer) voronoi edges are indicated with '- -' and ':'.
+# Note that these are clipped by the tile boundary ('. . .').
 
 # Vertex indices.
 (a,b,c) = (1,2,3)
@@ -51,10 +54,16 @@ def single_river():
     edges = ["1-6", "8-13"]
     ridges = ["1-6", "2-6", "6-7", "7-11", "7-12", "8-12", "8-13"]
     lakes = []
-    expect = [
+    vertex_expect = [
         [d, e, f, m, n, o, p, q],
     ]
-    return (edges, ridges, lakes, expect)
+    loop_expect = [
+        [
+            [1, 6], [2, 6], [7, 6], [7, 11], [7, 12], [8, 12], [8, 13],
+            [13, 8], [12, 8], [12, 7], [11, 7], [6, 7], [6, 2], [6, 1]
+        ],
+    ]
+    return (edges, ridges, lakes, vertex_expect, loop_expect)
 
 @pytest.fixture
 def two_rivers():
@@ -67,11 +76,20 @@ def two_rivers():
         "6-10", "6-11", "7-11", "7-12", "8-12", "8-13",
     ]
     lakes = []
-    expect = [
+    vertex_expect = [
         [d, e, f, g, h, i, j],
         [k, l, m, n, o, p, q],
     ]
-    return (edges, ridges, lakes, expect)
+    loop_expect = [
+        [
+            [1, 6], [2, 6], [2, 7], [3, 7], [3, 8], [4, 8],
+            [8, 4], [8, 3], [7, 3], [7, 2], [6, 2], [6, 1]
+        ], [
+            [6, 10], [6, 11], [7, 11], [7, 12], [8, 12], [8, 13],
+            [13, 8], [12, 8], [12, 7], [11, 7], [11, 6], [10, 6]
+        ]
+    ]
+    return (edges, ridges, lakes, vertex_expect, loop_expect)
 
 @pytest.fixture
 def with_lake():
@@ -82,10 +100,15 @@ def with_lake():
         "1-6", "2-6",
     ]
     lakes = [ 7 ]
-    expect = [
+    vertex_expect = [
         [d, e, f],
     ]
-    return (edges, ridges, lakes, expect)
+    loop_expect = [
+        [
+            [1, 6], [6, 2], [6, 2], [6, 1]
+        ]
+    ]
+    return (edges, ridges, lakes, vertex_expect, loop_expect)
 
 @pytest.fixture
 def direct_into_lake():
@@ -96,10 +119,15 @@ def direct_into_lake():
         "2-3",
     ]
     lakes = [ 7 ]
-    expect = [
+    vertex_expect = [
         [b, g],
     ]
-    return (edges, ridges, lakes, expect)
+    loop_expect = [
+        [
+            [2, 3], [3, 2]
+        ]
+    ]
+    return (edges, ridges, lakes, vertex_expect, loop_expect)
 
 class FakeVoronoi:
     def __init__(self):
@@ -187,31 +215,65 @@ class FakeHexTile():
             [p,q,qx,tx,t],  # s13
         ]
 
-def checkRiver(river_info):
-    (edges, ridges, lakes, expect) = river_info
+def checkRiverVertices(river_info):
+    (edges, ridges, lakes, vertex_expect, loop_expect) = river_info
     tile = FakeHexTile()
     rb = RiverBuilder(edges, ridges, lakes)
+    rb.setVerbose(True)
     rb.setTileInfo(tile.sid2region)
-    rb.buildRidgeInfo(FakeVoronoi())
+    rb.buildRiverInfo(FakeVoronoi())
     rb.buildTransitions()
     verts = rb.getRiverVertices()
-    assert len(verts) == len(expect)
-    for ix in range(len(expect)):
-        checkVertices(verts[ix], expect[ix])
+    assert len(verts) == len(vertex_expect)
+    for ix in range(len(vertex_expect)):
+        checkVertices(verts[ix], vertex_expect[ix])
 
-def checkVertices(verts, expect):
-    for ix in range(len(expect)):
-        assert verts[ix] == expect[ix]
+def checkVertices(verts, vertex_expect):
+    for ix in range(len(vertex_expect)):
+        assert verts[ix] == vertex_expect[ix]
 
-def test_singleRiver(single_river):
-    checkRiver(single_river)
+def test_riverVertices_singleRiver(single_river):
+    checkRiverVertices(single_river)
 
-def test_twoRivers(two_rivers):
-    checkRiver(two_rivers)
+def test_riverVertices_twoRivers(two_rivers):
+    checkRiverVertices(two_rivers)
 
-def test_lake(with_lake):
-    checkRiver(with_lake)
+def test_riverVertices_lake(with_lake):
+    checkRiverVertices(with_lake)
 
-def test_direct_into_lake(direct_into_lake):
-    checkRiver(direct_into_lake)
+def test_riverVertices_direct_into_lake(direct_into_lake):
+    checkRiverVertices(direct_into_lake)
+
+def checkRiverBanks(river_info):
+    (edges, ridges, lakes, vertex_expect, loop_expect) = river_info
+    tile = FakeHexTile()
+    rb = RiverBuilder(edges, ridges, lakes)
+    rb.setVerbose(True)
+    rb.setTileInfo(tile.sid2region)
+    rb.buildRiverInfo(FakeVoronoi())
+
+    rb.setVerbose(False)
+    rb.buildTransitions()
+    rb.setVerbose(True)
+
+    loops = rb.calcRegionLoop()
+    assert len(loops) == len(loop_expect)
+    for ix in range(len(loop_expect)):
+        checkRegions(loops[ix], loop_expect[ix])
+
+def checkRegions(regions, region_expect):
+    for ix in range(len(region_expect)):
+        assert regions[ix] == region_expect[ix]
+
+def test_riverBankRegions_singleRiver(single_river):
+    checkRiverBanks(single_river)
+
+def test_riverBankRegions_twoRivers(two_rivers):
+    checkRiverBanks(two_rivers)
+
+def test_riverBankRegions_lake(with_lake):
+    checkRiverBanks(with_lake)
+
+def test_riverBankRegions_direct_into_lake(direct_into_lake):
+    checkRiverBanks(direct_into_lake)
 
