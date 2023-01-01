@@ -26,14 +26,14 @@
      inkscape:document-units="mm"
      showgrid="false"
      inkscape:zoom="0.49932443"
-     inkscape:cx="-44.059531"
-     inkscape:cy="54.07306"
+     inkscape:cx="15.020295"
+     inkscape:cy="122.16506"
      inkscape:window-width="1204"
      inkscape:window-height="978"
      inkscape:window-x="521"
-     inkscape:window-y="111"
+     inkscape:window-y="83"
      inkscape:window-maximized="0"
-     inkscape:current-layer="h01" /><defs
+     inkscape:current-layer="h01-circles" /><defs
      id="defs2" /><g
      inkscape:label="h01"
      inkscape:groupmode="layer"
@@ -49,7 +49,7 @@
      inkscape:groupmode="layer"
      id="h01-circles"
      inkscape:label="h01-circles"
-     style="display:none"><ellipse
+     style="display:inline"><ellipse
        style="fill:none;stroke:#c6ff2b;stroke-width:1.43532;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
        id="path1781"
        cx="-24.909765"
@@ -136,7 +136,7 @@
        inkscape:label="h01-c12" /><ellipse
        style="fill:none;stroke:#c6ff2b;stroke-width:1.43532;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
        id="ellipse2385"
-       cx="80.394402"
+       cx="77.748566"
        cy="-77.10865"
        rx="16.782339"
        ry="16.782337"
