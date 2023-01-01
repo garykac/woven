@@ -41,6 +41,13 @@ def lerp_pt(v0, v1, t):
     x1, y1 = v1
     return [lerp(x0, x1, t), lerp(y0, y1, t)]
 
+# Calc point on line by linear interpolating along |line| by |t|.
+def lerp_line(line, t):
+    (v0, v1) = line
+    x0, y0 = v0
+    x1, y1 = v1
+    return [lerp(x0, x1, t), lerp(y0, y1, t)]
+
 # Calc offset to add to |v0| to linear interpolate from |v0| to |v1| by |t|.
 def lerp_pt_delta(v0, v1, t):
     x0, y0 = v0
@@ -135,7 +142,11 @@ def dist_pt_line(pt, line):
     return dist
 
 # Return the 2 t values for the intersection between the 2 lines.
-def line_intersection_t(line1, line2):
+# Setting |allowColinear| to True will return t1 = 1 and t2 = 0 if the two lines are
+# colinear. This can be useful when the lines are defined by line segments that are
+# adjacent pieces of a sequence of line segments. For example, when calculating the
+# vertices of a thick stroke for these line segments. (See use in RiverBuilder)
+def line_intersection_t(line1, line2, allowColinear=False):
     pt1a, pt1b = line1
     pt2a, pt2b = line2
 
@@ -194,8 +205,13 @@ def line_intersection_t(line1, line2):
     # t2 * (pt2dx * pt1dy - pt2dy * pt1dx) = pt21ady * pt1dx - pt21adx * pt1dy
     # t2 = (pt21ady * pt1dx - pt21adx * pt1dy) / (pt2dx * pt1dy - pt2dy * pt1dx)
     if feq((pt2dx * pt1dy - pt2dy * pt1dx), 0):
-        print("uh oh", line1, line2)
-    t2 = (pt21ady * pt1dx - pt21adx * pt1dy) / (pt2dx * pt1dy - pt2dy * pt1dx)
+        if allowColinear:
+            # Lines are co-linear, arbitrarily choose t2 = 0.0
+            t2 = 0
+        else:
+            raise Exception(f"Unable to calculate intersection: {line1} {line2}")
+    else:
+        t2 = (pt21ady * pt1dx - pt21adx * pt1dy) / (pt2dx * pt1dy - pt2dy * pt1dx)
 
     # t2 = t2
     # (t1 * (pt1bx - pt1ax) + pt1ax - pt2ax) / (pt2bx - pt2ax)
@@ -209,8 +225,13 @@ def line_intersection_t(line1, line2):
     # t1 * (pt1dx * pt2dy - pt1dy * pt2dx) = pt12ady * pt2dx - pt12adx * pt2dy
     # t1 = (pt12ady * pt2dx - pt12adx * pt2dy) / (pt1dx * pt2dy - pt1dy * pt2dx)
     if feq((pt1dx * pt2dy - pt1dy * pt2dx), 0):
-        print("uh oh", line1, line2)
-    t1 = (pt12ady * pt2dx - pt12adx * pt2dy) / (pt1dx * pt2dy - pt1dy * pt2dx)
+        if allowColinear:
+            # Lines are co-linear, arbitrarily choose t1 = 1.0
+            t1 = 1
+        else:
+            raise Exception(f"Unable to calculate intersection: {line1} {line2}")        
+    else:
+        t1 = (pt12ady * pt2dx - pt12adx * pt2dy) / (pt1dx * pt2dy - pt1dy * pt2dx)
 
     # Alternate way to calculate t1.
     #t1 = (t2 * pt2dx + pt21adx) / pt1dx

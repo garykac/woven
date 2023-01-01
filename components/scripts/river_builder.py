@@ -1,7 +1,7 @@
 import copy
 
 from logger import Logger
-from math_utils import dist_pt_line, parallel_lines, isClockwise
+from math_utils import lerp_line, dist_pt_line, line_intersection_t, parallel_lines, isClockwise
 
 def calcSortedId(id0, id1):
     if int(id0) < int(id1):
@@ -334,6 +334,10 @@ class RiverBuilder():
         (v0, v1) = self.ridgeInfo[ridgeKey]['vertex-ids']
         return [v0, v1]  # Return a copy
 
+    def _getInsetRidgeVerts(self, seedPair):
+        (seedId, seedOpposite) = seedPair
+        return self._findInsetRidgeVertices(seedId, seedOpposite, self.riverWidth / 2)
+
     def _calcInsetRidgeSegments(self, loopRegions):
         self.logger.log("_calcInsetRidgeSegments:")
         self.logger.indent()
@@ -343,7 +347,7 @@ class RiverBuilder():
             (seedId, seedOpposite) = loopRegions[rIndex]
             self.logger.log(f"Seeds: {seedId} ({seedOpposite})")
             self.logger.indent()
-            insetRidgeVerts = self._findInsetRidgeVertices(seedId, seedOpposite, self.riverWidth / 2)
+            insetRidgeVerts = self._getInsetRidgeVerts(loopRegions[rIndex])
             self.logger.log(f"inset ridge: {insetRidgeVerts}")
 
             rIndexNext = (rIndex + 1) % numRegions
@@ -395,12 +399,31 @@ class RiverBuilder():
                 insetRidgeVerts = insetRidgeVerts[::-1]
                 self.logger.log(f"swapping vertex order: {insetRidgeVerts}")
             
-            self._addVertexOverride(firstVertId, seedId, insetRidgeVerts[0])
-            self._addVertexOverride(lastVertId, seedId, insetRidgeVerts[1])
+            ridgeKey = calcSortedIdFromPair(loopRegions[rIndex])
+
+            # Calc intersection point with the previous ridge (unless coming from edge).
+            prevRidgeKey = calcSortedIdFromPair(loopRegions[rIndexPrev])
+            if prevRidgeKey != ridgeKey:
+                prevRidgeVerts = self._getInsetRidgeVerts(loopRegions[rIndexPrev])
+                (t, tPrev) = line_intersection_t(insetRidgeVerts, prevRidgeVerts, True)
+                pt = lerp_line(insetRidgeVerts, t)
+                self._addVertexOverride(firstVertId, seedId, pt)
+            else:
+                self._addVertexOverride(firstVertId, seedId, insetRidgeVerts[0])
+
+            # Calc intersection point with the next ridge (unless going into edge).
+            nextRidgeKey = calcSortedIdFromPair(loopRegions[rIndexNext])
+            if nextRidgeKey != ridgeKey:
+                nextRidgeVerts = self._getInsetRidgeVerts(loopRegions[rIndexNext])
+                (t, tPrev) = line_intersection_t(insetRidgeVerts, nextRidgeVerts, True)
+                pt = lerp_line(insetRidgeVerts, t)
+                self._addVertexOverride(lastVertId, seedId, pt)
+            else:
+                self._addVertexOverride(lastVertId, seedId, insetRidgeVerts[1])
 
             self.logger.outdent()
 
-            ridgeSegments.append([seedId, seedOpposite, [firstVertId, lastVertId]])
+            ridgeSegments.append([[seedId, seedOpposite], [firstVertId, lastVertId]])
         self.logger.outdent()
         return ridgeSegments
 
@@ -438,8 +461,18 @@ class RiverBuilder():
             for iSeg in range(numSegments):
                 seg = ridgeSegments[iSeg]
                 self.logger.log(f"{seg}")
-                (seedId, seedOpposite, insetRidge) = seg
-                river.append([seedId, insetRidge[0]])
+                (seeds, insetRidge) = seg
+                (seedId, seedOpposite) = seeds
+
+                iSegPrev = (iSeg + numSegments - 1) % numSegments
+                segPrev = ridgeSegments[iSegPrev]
+                (seedsPrev, insetRidgePrev) = segPrev
+
+                # If we match the previous ridge, then we need to emit both vertices.
+                if calcSortedIdFromPair(seeds) == calcSortedIdFromPair(seedsPrev):
+                    river.append([seedId, insetRidge[0]])
+                
+                # Emit the 2nd vertex.
                 river.append([seedId, insetRidge[1]])
             rivers.append(river)
         self.logger.outdent()

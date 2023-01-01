@@ -25,7 +25,7 @@ STROKE_COLOR = "#000000"
 STROKE_WIDTH = 0.3
 THICK_STROKE_WIDTH = 0.9
 
-RIVER_WIDTH = 2.0
+RIVER_WIDTH = 2.5
 
 # Fill colors for regions based on terrain height.
 REGION_COLOR = {
@@ -107,6 +107,7 @@ class VoronoiHexTilePlotter():
         self.overlayData = tile.overlayData
 
         self.riverBuilder = None
+        self.vertexOverride = {}
                 
         # Reset number of annotation lines.
         self.numLines = 0
@@ -638,19 +639,6 @@ class VoronoiHexTilePlotter():
         if not self.riverBuilder:
             return
 
-        # There are 2 layers for the rivers: the black border and the blue river fill.
-        # This is so that all the borders are behind all of the river fills.
-        self.layer_river_border = self.svg.add_inkscape_layer(
-            'river-border', "River Border", self.layer)
-        self.group_river_border = SVG.group('river-border-group')
-        SVG.add_node(self.layer_river_border, self.group_river_border)
-        clippath_id = self.addHexTileClipPath()
-        self.group_river_border.set("clip-path", f"url(#{clippath_id})")
-        self.style_river_border = Style(None, STROKE_COLOR,
-                                   THICK_STROKE_WIDTH * 2)
-        self.style_river_border.set("stroke-linecap", "round")
-        self.style_river_border.set("stroke-linejoin", "round")
-
         self.layer_river = self.svg.add_inkscape_layer('river', "River", self.layer)
         self.group_river = SVG.group('river-group')
         SVG.add_node(self.layer_river, self.group_river)
@@ -660,12 +648,34 @@ class VoronoiHexTilePlotter():
         self.style_river.set("stroke-linecap", "round")
         self.style_river.set("stroke-linejoin", "round")
 
+        self.layer_river_border = self.svg.add_inkscape_layer(
+            'river-border', "River Border", self.layer)
+        self.group_river_border = SVG.group('river-border-group')
+        SVG.add_node(self.layer_river_border, self.group_river_border)
+        clippath_id = self.addHexTileClipPath()
+        self.group_river_border.set("clip-path", f"url(#{clippath_id})")
+        self.style_river_border = Style(None, STROKE_COLOR, THICK_STROKE_WIDTH)
+        self.style_river_border.set("stroke-linecap", "round")
+        self.style_river_border.set("stroke-linejoin", "round")
+
         rivers = self.riverBuilder.getRiverVertices()
         for r in rivers:
             p = Path()
-            for vInfo in r:
+            numVerts = len(r)
+            for i in range(numVerts):
+                vInfo = r[i]
                 (sid, vid) = vInfo
-                p.addPoint(self.getVertexForRegion(vid, sid))
+                v = self.getVertexForRegion(vid, sid)
+
+                # Add a small curve for this vertex.
+                prev = (i + numVerts - 1) % numVerts
+                next = (i + 1) % numVerts
+                vPrevInfo = r[prev]
+                vNextInfo = r[next]
+                vPrev = self.getVertexForRegion(vPrevInfo[1], vPrevInfo[0])
+                vNext = self.getVertexForRegion(vNextInfo[1], vNextInfo[0])
+                self.addCurvePoints(p, vPrev, v, vNext)
+
             p.end(False)
             p2 = copy.deepcopy(p)
 
@@ -925,37 +935,41 @@ class VoronoiHexTilePlotter():
                 prev = (i + num_verts - 1) % num_verts
                 next = (i + num_verts + 1) % num_verts
 
-                # v[prev] *
-                #          \
-                #           \
-                #            \
-                #             \
-                #      prev_pt +
-                #               \
-                #             c0 +
-                #                 \    c1  next_pt
-                #                  *----+----+-----------*
-                #                v[i]                  v[next]
-                #
-                # * = actual vertices of the region: v[prev], v[i], v[next]
-                #     Note: v[prev] is shorthand for self.vertices[vids[prev]]
-                # + = calculated vertices of the curved corner:
-                #     prev_pt, next_pt and the 2 off-curve control points: c0, c1
-                # Note: The points for the curve are calculated using an absolute distance
-                # from the current vertex along the line to the neighboring vertices.
-                PT_OFFSET = 1.5  # (mm)
-                CURVE_PT_OFFSET = 0.5  # (mm)
-
-                prev_pt = pt_along_line(v, self.vertices[vids[prev]], PT_OFFSET)
-                p.addPoint(prev_pt)
-
-                curve0_pt = pt_along_line(v, self.vertices[vids[prev]], CURVE_PT_OFFSET)
-                curve1_pt = pt_along_line(v, self.vertices[vids[next]], CURVE_PT_OFFSET)
-                next_pt = pt_along_line(v, self.vertices[vids[next]], PT_OFFSET)
-                p.addCurvePoint(curve0_pt, curve1_pt, next_pt)
+                vPrev = self.getVertexForRegion(vids[prev], sid)
+                vNext = self.getVertexForRegion(vids[next], sid)
+                self.addCurvePoints(p, vPrev, v, vNext)
 
         p.end(closePath)
         return p
+
+    def addCurvePoints(self, path, vPrev, v, vNext):
+        #   vPrev *
+        #          \
+        #           \
+        #            \
+        #             \
+        #      prev_pt +
+        #               \
+        #             c0 +
+        #                 \    c1  next_pt
+        #                  *----+----+-----------*
+        #                v                      vNext
+        #
+        # * = actual vertices of the region: vPrev, v, vNext
+        # + = calculated vertices of the curved corner:
+        #     prev_pt, next_pt and the 2 off-curve control points: c0, c1
+        # Note: The points for the curve are calculated using an absolute distance
+        # from the current vertex along the line to the neighboring vertices.
+        PT_OFFSET = 1.5  # (mm)
+        CURVE_PT_OFFSET = 0.5  # (mm)
+
+        prev_pt = pt_along_line(v, vPrev, PT_OFFSET)
+        path.addPoint(prev_pt)
+
+        curve0_pt = pt_along_line(v, vPrev, CURVE_PT_OFFSET)
+        curve1_pt = pt_along_line(v, vNext, CURVE_PT_OFFSET)
+        next_pt = pt_along_line(v, vNext, PT_OFFSET)
+        path.addCurvePoint(curve0_pt, curve1_pt, next_pt)
 
     def addHexTileClipPath(self):
         p = Path()
