@@ -105,7 +105,9 @@ class VoronoiHexTilePlotter():
         # Explicit terrain/river data (loaded from file).
         self.riverData = tile.riverData
         self.overlayData = tile.overlayData
-        
+
+        self.riverBuilder = None
+                
         # Reset number of annotation lines.
         self.numLines = 0
 
@@ -146,7 +148,7 @@ class VoronoiHexTilePlotter():
         stroke = Style("none", "#000000", STROKE_WIDTH)
         black_fill = Style(fill="#000000")
 
-        self.calcUpdatedRegions()
+        self.analyzeRivers()
 
         # Draw layers back to front.
         
@@ -193,10 +195,45 @@ class VoronoiHexTilePlotter():
         filter.add_op("feComposite", {'in':"offset", 'in2':"SourceGraphic", 'operator':"atop", 'result':"composite2"})
         self.svg.add_filter(filter)
 
-    # Calc updated regions that have been adjusted by rivers.
-    def calcUpdatedRegions(self):
-        self.sid2updatedRegion = copy.deepcopy(self.sid2region)
-        
+    def analyzeRivers(self):
+        # Scan the tile edges to determine if a river is required.
+        # Build a list of tile edges that have a river exit: |riverEdges|.
+        self.riverEdges = []
+        seedIdCorner = 0
+        seedIdEdge = 6
+        for e in self.edgeTypes:
+            eInfo = self.edgeRegionInfo[e]
+            numEdgeRegions = len(eInfo) - 2  # Ignore first/last since those are corners.
+            
+            if e in EDGE_RIVER_INFO:
+                rInfo = EDGE_RIVER_INFO[e]
+                regions = [seedIdCorner]
+                regions += list(range(seedIdEdge, seedIdEdge + numEdgeRegions))
+                regions += [(seedIdCorner + 1) % 6]
+                riverIndex = rInfo.index('*')
+                r0 = regions[riverIndex-1]
+                r1 = regions[riverIndex]
+                self.riverEdges.append(calcSortedId(r0,r1))
+            seedIdCorner += 1
+            seedIdEdge += numEdgeRegions
+
+        # Exit if this tile has no tile edges with rivers.
+        if len(self.riverEdges) == 0:
+            return
+
+        if self.riverData:
+            # Build a clean list of ridge segments that should be rivers.
+            rRidges = [r for r in self.riverData if r]
+            lakes = []
+            if "lake" in self.overlayData:
+                lakes = [int(lake) for lake in self.overlayData['lake'] if lake]
+            
+            rb = RiverBuilder(self.riverEdges, rRidges, lakes, RIVER_WIDTH)
+            rb.setTileInfo(self.tile.sid2region)
+            rb.buildRiverInfo(self.vor)
+            self.vertexOverride = rb.analyze()
+            self.riverBuilder = rb
+
     def drawHexTileBorder(self, id, layer_name, style):
         layer_border = self.svg.add_inkscape_layer(id, layer_name, self.layer)
         p = Path()
@@ -219,7 +256,7 @@ class VoronoiHexTilePlotter():
             terrain_type = self.seed2terrain[sid]
             color = self.getTerrainStyle(terrain_type)
             self.plotRegion(vids, color)
-            self.drawRegion(id, vids, color, gClip)
+            self.drawRegion(id, sid, vids, color, gClip)
 
     def drawRoundedRegionFillLayer(self):
         layer_region_rounded = self.svg.add_inkscape_layer(
@@ -246,7 +283,7 @@ class VoronoiHexTilePlotter():
             else:
                 id = f"roundedregionfill-{sid}"
                 vids = self.sid2region[sid]
-                region = self.calcRoundedRegionPath(id, vids, False)
+                region = self.calcRoundedRegionPath(id, sid, vids, False)
 
                 color = self.getTerrainStyle(terrainType)
                 style = Style(color, None)
@@ -286,7 +323,7 @@ class VoronoiHexTilePlotter():
         # Clip the texture to the region.
         gClip = Group(f"gclip-rregion-{sid}")
         vids = self.sid2region[sid]
-        path = self.calcRoundedRegionPath(f"rregion-{sid}", vids, False)
+        path = self.calcRoundedRegionPath(f"rregion-{sid}", sid, vids, False)
         clipid = self.svg.add_clip_path(f"rregion-{sid}", path)
         gClip.set("clip-path", f"url(#{clipid})")
         SVG.add_node(gClip, gTrans)
@@ -310,7 +347,7 @@ class VoronoiHexTilePlotter():
             vids = self.sid2region[sid]
             id = f"roundedregionstroke-{sid}"
 
-            path = self.calcRoundedRegionPath(id, vids, True)
+            path = self.calcRoundedRegionPath(id, sid, vids, True)
 
             style = Style(None, STROKE_COLOR, THICK_STROKE_WIDTH)
             path.set_style(style)
@@ -343,7 +380,7 @@ class VoronoiHexTilePlotter():
             else:
                 id = f"lake-{sid}"
                 vids = self.sid2region[sid]
-                region = self.calcRoundedRegionPath(id, vids, False)
+                region = self.calcRoundedRegionPath(id, sid, vids, False)
 
                 style = Style(REGION_COLOR[terrainType], None)
                 region.set_style(style)
@@ -357,7 +394,7 @@ class VoronoiHexTilePlotter():
         for sid in range(0, self.numActiveSeeds):
             rid = self.vor.point_region[sid]
             id = f"region-{sid}"
-            self.drawRegion(id, self.vor.regions[rid], "#ffffff", layer_region)
+            self.drawRegion(id, sid, self.vor.regions[rid], "#ffffff", layer_region)
 
     def drawSeedLayer(self):
         layer_seeds = self.svg.add_inkscape_layer('seeds', "Seeds", self.layer)
@@ -598,6 +635,9 @@ class VoronoiHexTilePlotter():
         return lerp(-self.size/2, self.size/2, t)
       
     def drawRivers(self):
+        if not self.riverBuilder:
+            return
+
         # There are 2 layers for the rivers: the black border and the blue river fill.
         # This is so that all the borders are behind all of the river fills.
         self.layer_river_border = self.svg.add_inkscape_layer(
@@ -620,7 +660,7 @@ class VoronoiHexTilePlotter():
         self.style_river.set("stroke-linecap", "round")
         self.style_river.set("stroke-linejoin", "round")
 
-        rivers = self._calcRiverVertices()
+        rivers = self.riverBuilder.getRiverVertices()
         for r in rivers:
             p = Path()
             for vInfo in r:
@@ -635,47 +675,6 @@ class VoronoiHexTilePlotter():
             p2.set_style(self.style_river)
             SVG.add_node(self.group_river, p2)
         
-    def _calcRiverVertices(self):
-        # Scan the tile edges to determine if a river is required.
-        # Build a list of tile edges that have a river exit: |riverEdges|.
-        riverEdges = []
-        seedIdCorner = 0
-        seedIdEdge = 6
-        for e in self.edgeTypes:
-            eInfo = self.edgeRegionInfo[e]
-            numEdgeRegions = len(eInfo) - 2  # Ignore first/last since those are corners.
-            
-            if e in EDGE_RIVER_INFO:
-                rInfo = EDGE_RIVER_INFO[e]
-                regions = [seedIdCorner]
-                regions += list(range(seedIdEdge, seedIdEdge + numEdgeRegions))
-                regions += [(seedIdCorner + 1) % 6]
-                riverIndex = rInfo.index('*')
-                r0 = regions[riverIndex-1]
-                r1 = regions[riverIndex]
-                riverEdges.append(calcSortedId(r0,r1))
-            seedIdCorner += 1
-            seedIdEdge += numEdgeRegions
-
-        # Exit if this tile has no tile edges with rivers.
-        if len(riverEdges) == 0:
-            return []
-
-        if self.riverData:
-            # Build a clean list of ridge segments that should be rivers.
-            rRidges = [r for r in self.riverData if r]
-            lakes = []
-            if "lake" in self.overlayData:
-                lakes = [int(lake) for lake in self.overlayData['lake'] if lake]
-            
-            rb = RiverBuilder(riverEdges, rRidges, lakes, RIVER_WIDTH)
-            rb.setTileInfo(self.tile.sid2region)
-            rb.buildRiverInfo(self.vor)
-            self.vertexOverride = rb.analyze()
-            
-            return rb.getRiverVertices()
-        return []
-
     def drawOverlay(self):
         self.layer_overlay = self.svg.add_inkscape_layer(
             'overlay', "Overlay", self.layer)
@@ -729,7 +728,6 @@ class VoronoiHexTilePlotter():
                     icon.set('transform', f"translate({x} {y})")
 
     # Given an edge defined by the 2 seeds, return the 2 ridge vertices of the edge.
-    #???
     def getEdgeRidgeVertices(self, sid0, sid1):
         edgeToFind = f"{sid0}-{sid1}"
         n_ridges = len(self.vor.ridge_points)
@@ -851,10 +849,10 @@ class VoronoiHexTilePlotter():
         plt.fill(*zip(*vertices), facecolor=color, edgecolor="black")
 
     # Draw voronoi region in the SVG file, given a list of vertex ids.
-    def drawRegion(self, id, vids, color, layer):
+    def drawRegion(self, id, sid, vids, color, layer):
         if len(vids) == 0:
             return
-        vertices = [self.vertices[i] for i in vids]
+        vertices = [self.getVertexForRegion(i, sid) for i in vids]
         
         p = Path() if id == None else Path(id)
         p.addPoints(vertices)
@@ -863,7 +861,7 @@ class VoronoiHexTilePlotter():
         SVG.add_node(layer, p)
 
     # Calc voronoi region path with rounded points, given a list of vertex ids.
-    def calcRoundedRegionPath(self, id, vids, isStroke):
+    def calcRoundedRegionPath(self, id, sid, vids, isStroke):
         if len(vids) == 0:
             return
         num_verts = len(vids)
@@ -915,7 +913,7 @@ class VoronoiHexTilePlotter():
         p = Path() if id == None else Path(id)
         for i in iv:
             vid = vids[i]
-            v = self.vertices[vid]
+            v = self.getVertexForRegion(vid, sid)
 
             # We don't want to round the vertices along the edge of the tile. We can
             # identify these edge vertices easily because they are the ones that we
