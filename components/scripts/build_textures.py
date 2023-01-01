@@ -23,7 +23,7 @@ TEXTURE_DIR = "../../third_party/textures"
 TEXTURES = {
     # <id>: [ <swatch-size> ]
     "l01": [50],
-    "m01": [40],
+    "m01": [45],
     "h02": [40],
 }
 
