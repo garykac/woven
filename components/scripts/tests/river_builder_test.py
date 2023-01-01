@@ -366,7 +366,8 @@ def checkRiverVertices(river_info):
     rb.setTileInfo(tile.sid2region)
     vor = FakeVoronoi()
     rb.buildRiverInfo(vor)
-    loops = rb.calcRegionLoop()
+    rb.analyze()
+
     verts = rb.getRiverVertices()
     assert len(verts) == len(vertex_loop)
     for ix in range(len(vertex_loop)):
@@ -401,8 +402,9 @@ def checkRiverBanks(river_info):
     rb.setVerbose(True)
     rb.setTileInfo(tile.sid2region)
     rb.buildRiverInfo(FakeVoronoi())
+    rb.analyze()
 
-    loops = rb.calcRegionLoop()
+    loops = rb.regionLoops
     assert len(loops) == len(region_loop)
     for ix in range(len(region_loop)):
         checkRegions(loops[ix], region_loop[ix])
@@ -435,8 +437,9 @@ def test_newVertices(single_river):
     rb = RiverBuilder(edges, ridges, lakes, 0)
     rb.setTileInfo(tile.sid2region)
     rb.buildRiverInfo(FakeVoronoi())
+    rb.analyze()
 
-    loops = rb.calcRegionLoop()
+    loops = rb.regionLoops
     rb.setVerbose(True)
     verts = rb.getRiverVertices()
     

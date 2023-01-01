@@ -8,6 +8,10 @@ def calcSortedId(id0, id1):
         return f"{id0}-{id1}"
     return f"{id1}-{id0}"
 
+def calcSortedIdFromPair(seeds):
+    (seedA, seedB) = seeds
+    return calcSortedId(seedA, seedB)
+
 class RiverBuilder():
     def __init__(self, riverEdges, riverRidges, lakes, width):
         # The set of river ridges that extend off the tile, so only 1 vertex links up with
@@ -123,7 +127,7 @@ class RiverBuilder():
             d[key] = []
         d[key].append(value)
 
-    def findNextRiverEdge(self):
+    def _findNextRiverEdge(self):
         # Get next available river edge from the |rRidges|.
         # We scan |rRidges| from start each time so that we process the ridges in the
         # order that we specified them in the data file.
@@ -134,7 +138,7 @@ class RiverBuilder():
     
     # Given a ridge, find the vertex that is not shared with another ridge.
     # This is typically used for river edges.
-    def findUnmatchedRidgeVertex(self, ridge):
+    def _findUnmatchedRidgeVertex(self, ridge):
         rInfo = self.ridgeInfo[ridge]
         for v in rInfo['vertex-ids']:
             if len(self.v2ridges[v]) == 1:
@@ -167,16 +171,42 @@ class RiverBuilder():
         return False
 
     # Get the loop of regions that define the outer boundary of the rivers.
-    def calcRegionLoop(self):
+    # Each region in the loop is identified by its seed-id and the seed-id of the
+    # region on the opposite side of the river. These 2 seeds define the river ridge.
+    # 
+    # For example,
+    #                 a         b         c
+    #                 |         |         |
+    #             1   |    2    |    3    |   4
+    #              . .|. . . . .|. . . . .|. .
+    #              .  |         |         |  .
+    #     - - - -d====e====f----g----h----i----j- - - -
+    #            : .       #         |       . :
+    #       5    : .  6    #    7    |    8  . :    9
+    #            : .       #         |       . :
+    #            : .       #         |       . :
+    #     - - - -k----l----m====n----o----p----q- - - -
+    #              .  |         #         |  .
+    #              . .|. . . . .#. . . . .|. .
+    #            10   |   11    #   12    |   13
+    #                 |         #         |
+    #                 r         s         t
+    # The river:
+    #   d e f m n s
+    # would have a region loop of:
+    #    1 ( 6)    2 ( 6)    7 ( 6)    7 (11)   12 (11)
+    #   11 (12)   11 ( 7)    6 ( 7)    6 ( 2)    6 ( 1)
+    # where a (b) means a = seed-id, and b = opposite seed-id
+    def _calcRegionLoops(self):
         self.logger.log(f"calcRegionLoops:")
         self.logger.indent()
         self.regionLoops = []
         while True:
             # Find a river edge to start.
-            self.startEdge = self.findNextRiverEdge()
+            self.startEdge = self._findNextRiverEdge()
             if self.startEdge == None:
                 break
-            vStart = self.findUnmatchedRidgeVertex(self.startEdge)
+            vStart = self._findUnmatchedRidgeVertex(self.startEdge)
             self.logger.log(f"start edge: {self.startEdge}, off-tile vertex: {vStart}")
 
             self.riverEdges.remove(self.startEdge)
@@ -272,17 +302,17 @@ class RiverBuilder():
 
         self.logger.outdent()
 
-        return self.regionLoops
-
     # Calculate the line parallel to the ridge between |seedA| and |seedB|.
     # The parallel line should be distance |dist| away from the ridge.
     # Since there are 2 parallel lines that satisfy this condition, choose
     # the one closest to |seedA|.
-    def _findInsetRidge(self, seedA, seedB, dist):
+    def _findInsetRidgeVertices(self, seedA, seedB, dist):
         ridgeKey = calcSortedId(seedA, seedB)
         (v0, v1) = self.ridgeInfo[ridgeKey]['vertex-ids']
         ridge = [self.vor.vertices[v0], self.vor.vertices[v1]]
         
+        # Setting |dist| to 0 is only used by the unittests to make it easier to
+        # verify the results.
         if dist == 0:
             return ridge
 
@@ -301,7 +331,7 @@ class RiverBuilder():
         (seedA, seedB) = seeds
         ridgeKey = calcSortedId(seedA, seedB)
         (v0, v1) = self.ridgeInfo[ridgeKey]['vertex-ids']
-        return [v0, v1]
+        return [v0, v1]  # Return a copy
 
     def _calcInsetRidgeSegments(self, loopRegions):
         self.logger.log("_calcInsetRidgeSegments:")
@@ -312,68 +342,105 @@ class RiverBuilder():
             (seedId, seedOpposite) = loopRegions[rIndex]
             self.logger.log(f"Seeds: {seedId} ({seedOpposite})")
             self.logger.indent()
-            insetRidge = self._findInsetRidge(seedId, seedOpposite, self.riverWidth / 2)
-            self.logger.log(f"inset ridge: {insetRidge}")
+            insetRidgeVerts = self._findInsetRidgeVertices(seedId, seedOpposite, self.riverWidth / 2)
+            self.logger.log(f"inset ridge: {insetRidgeVerts}")
+
+            rIndexNext = (rIndex + 1) % numRegions
+            rIndexPrev = (rIndex + numRegions - 1) % numRegions
 
             # Order the vertices to match the direction that we're
             # looping around the river.
-            firstVert = None
-            verts = self._getRidgeVertexIds(loopRegions[rIndex])
-            vertsNext = self._getRidgeVertexIds(loopRegions[(rIndex+1) % numRegions])
+            firstVertId = None
+            lastVertId = None
+            vids = self._getRidgeVertexIds(loopRegions[rIndex])
+            vidsNext = self._getRidgeVertexIds(loopRegions[rIndexNext])
             # Calc vert in next ridge that is not in the current ridge.
-            nextVert = [x for x in vertsNext if not x in verts]
+            nextRidgeNewVertId = [x for x in vidsNext if not x in vids]
 
-            self.logger.log(f"vert ids: {verts}")
+            self.logger.log(f"vert ids: {vids}")
 
-            if len(nextVert) == 0:
+            if len(nextRidgeNewVertId) == 0:
                 # If the next ridge entirely overlaps with the current ridge, then
                 # this is river edge (that exits the tile). So we'll need to check
                 # the previous ridge to determine the correct order.
-                vertsPrev = self._getRidgeVertexIds(loopRegions[(rIndex+numRegions-1) % numRegions])
-                prevVert = [x for x in vertsPrev if not x in verts]
-                if len(prevVert) == 0:
+                vidsPrev = self._getRidgeVertexIds(loopRegions[rIndexPrev])
+                prevRidgeNewVertId = [x for x in vidsPrev if not x in vids]
+                if len(prevRidgeNewVertId) == 0:
+                    # This means that the next ridge is the same as the previous ridge.
                     # This can happen with a single-ridge river. Force clockwise order.
-                    # Create a triangle with seed + ridge to check.
+                    # Create a triangle with seed + the 2 ridge points to check.
                     tri = [self.vor.points[seedId],
-                        self.vor.vertices[verts[0]],
-                        self.vor.vertices[verts[1]]]
+                        self.vor.vertices[vids[0]],
+                        self.vor.vertices[vids[1]]]
                     if isClockwise(tri):
-                        firstVert = verts[0]
+                        firstVertId = vids[0]
+                        lastVertId = vids[1]
                     else:
-                        firstVert = verts[1]
+                        firstVertId = vids[1]
+                        lastVertId = vids[0]
                 else:
-                    vertsPrev.remove(prevVert[0])
-                    firstVert = vertsPrev[0]
-                    #lastVert = [x for x in verts if x != firstVert][0]
+                    # Find vertex shared with the previous ridge.
+                    vidsPrev.remove(prevRidgeNewVertId[0])
+                    firstVertId = vidsPrev[0]
+                    lastVertId = [x for x in vids if x != firstVertId][0]
             else:
-                vertsNext.remove(nextVert[0])
-                lastVert = vertsNext[0]
-                firstVert = [x for x in verts if x != lastVert][0]
+                # Find vertex shared with the next ridge.
+                vidsNext.remove(nextRidgeNewVertId[0])
+                lastVertId = vidsNext[0]
+                # First vertex of this ridge is the one not shared with the next ridge.
+                firstVertId = [x for x in vids if x != lastVertId][0]
 
-            if verts[0] != firstVert:
-                insetRidge = insetRidge[::-1]
-                self.logger.log(f"swapping vertex order: {insetRidge}")
+            if vids[0] != firstVertId:
+                insetRidgeVerts = insetRidgeVerts[::-1]
+                self.logger.log(f"swapping vertex order: {insetRidgeVerts}")
             
+            self._addVertexOverride(firstVertId, seedId, insetRidgeVerts[0])
+            self._addVertexOverride(lastVertId, seedId, insetRidgeVerts[1])
+
             self.logger.outdent()
 
-            ridgeSegments.append([seedId, seedOpposite, insetRidge])
+            ridgeSegments.append([seedId, seedOpposite, [firstVertId, lastVertId]])
         self.logger.outdent()
         return ridgeSegments
+
+    def _calcRidgeSegmentLoops(self):
+        self.ridgeSegmentLoops = []
+        self.vertexOverride = {}
+        for loop in self.regionLoops:
+            self.ridgeSegmentLoops.append(self._calcInsetRidgeSegments(loop))
+
+    def _addVertexOverride(self, vid, sid, vert):
+        if not vid in self.vertexOverride:
+            self.vertexOverride[vid] = {}
+        vidOverride = self.vertexOverride[vid]
+        vidOverride[sid] = vert
+
+    def _getVertexForRegion(self, vid, sid):
+        if vid in self.vertexOverride:
+            overrides = self.vertexOverride[vid]
+            if sid in overrides:
+                return overrides[sid]
+        return self.vor.vertices[vid]
+
+    def analyze(self):
+        self._calcRegionLoops()
+        self._calcRidgeSegmentLoops()
 
     def getRiverVertices(self):
         self.logger.log("getRiverVertices:")
         self.logger.indent()
         rivers = []
-        for loop in self.regionLoops:
-            ridgeSegments = self._calcInsetRidgeSegments(loop)
+        for ridgeSegments in self.ridgeSegmentLoops:
             river = []
             numSegments = len(ridgeSegments)
             for iSeg in range(numSegments):
                 seg = ridgeSegments[iSeg]
                 self.logger.log(f"{seg}")
                 (seedId, seedOpposite, insetRidge) = seg
-                river.append(insetRidge[0])
-                river.append(insetRidge[1])
+                v0 = self._getVertexForRegion(insetRidge[0], seedId)
+                v1 = self._getVertexForRegion(insetRidge[1], seedId)
+                river.append(v0)
+                river.append(v1)
             rivers.append(river)
         self.logger.outdent()
         self.logger.log(f"{rivers}")
