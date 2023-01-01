@@ -218,6 +218,57 @@ def line_intersection_t(line1, line2):
     #print(t2, lerp_pt(pt2a, pt2b, t2))
     return (t1, t2)
 
+# Calculate 2x signed area of the region defined by the vertices.
+def _signedArea2(verts):
+    # Algorithm:
+    #   Calculate the signed area.
+    #   Sum (x2 - x1)(y2 + y1) for each segment.
+    # Positive = clockwise, Negative = counter-clockwise.
+    #   Divide by 2 to get area.
+    # Example:
+    #  5 +
+    #    |
+    #  4 +              ,C,
+    #    |            ,'   `,
+    #  3 +          ,'       `,
+    #    |        ,'           `,
+    #  2 +       A - - - - - - - B
+    #    |
+    #  1 +
+    #    |
+    #  0 +---+---+---+---+---+---+---+---+
+    #    0   1   2   3   4   5   6   7   8
+    #  A = (2,2)  B = (6,2)  C = (4,4)
+    # For [A, B, C]:
+    #   Calc A->B, B->C and C->A
+    #   = (6-2)(2+2) + (4-6)(4+2) + (2-4)(2+4)
+    #   = 16 + -12 + -12
+    #   = -8 (counter-clockwise)
+    # For [A, C, B]:
+    #   Calc A->C, C->B and B->A
+    #   = (4-2)(4+2) + (6-4)(2+4) + (2-6)(2+2)
+    #   = 12 + 12 + -16
+    #   = 8 (clockwise)
+    # Area = 8 / 2 = 4
+    area2 = 0.0
+    numVerts = len(verts)
+    for i in range(0, numVerts):
+        pt1 = verts[i]
+        pt2 = verts[(i+1) % numVerts]
+        area2 += (pt2[0] - pt1[0]) * (pt2[1] + pt1[1])
+    # The sign of area2 indicates the direction of the points.
+    # The actual area can be obtained by dividing |area2| by 2.
+    return area2
+
+# Return true if the points are in clockwise order.
+def isClockwise(verts):
+    # No need to divide by 2 since we don't need the area, just the sign.
+    return fge(_signedArea2(verts), 0.0)
+
+def area(self, verts):
+    # Divide the absolute value by 2 to get the area.
+    return abs(_signedArea2(verts)) / 2;
+
 __hexXMax = math.sqrt(3) / 2
 
 # Return True if |pt| is within a hexagon of size |size|, centered at the origin.

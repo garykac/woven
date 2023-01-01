@@ -8,6 +8,7 @@ from hex_tile_plotter import VoronoiHexTilePlotter
 from math_utils import (feq, fge, fle, scale, clamp,
                         lerp, lerp_pt, lerp_pt_delta, lerperp,
                         near, dist, dist_pt_line, line_intersection_t,
+                        isClockwise, area,
                         ptInHex)
 
 NUM_SIDES = 6
@@ -769,58 +770,19 @@ class VoronoiHexTile():
     def calcEdgeVertices(self, sid, rid, sid0, sid1, t_ccw, t_cw):
         return self.__calcEdgeVertices(sid, rid, sid0, sid1, sid1, t_ccw, t_cw)
 
-    # Calculate 2x signed area of the region.
-    def __signedArea2(self, sid):
+    def _getRegionVertices(self, sid):
         rid = self.vor.point_region[sid]
-        pts = self.vor.regions[rid]
-
-        # Algorithm:
-        #   Calculate the signed area.
-        #   Sum (x2 - x1)(y2 + y1) for each segment.
-        # Positive = clockwise, Negative = counter-clockwise.
-        #   Divide by 2 to get area.
-        # Example:
-        #  5 +
-        #    |
-        #  4 +              ,C,
-        #    |            ,'   `,
-        #  3 +          ,'       `,
-        #    |        ,'           `,
-        #  2 +       A - - - - - - - B
-        #    |
-        #  1 +
-        #    |
-        #  0 +---+---+---+---+---+---+---+---+
-        #    0   1   2   3   4   5   6   7   8
-        #  A = (2,2)  B = (6,2)  C = (4,4)
-        # For [A, B, C]:
-        #   Calc A->B, B->C and C->A
-        #   = (6-2)(2+2) + (4-6)(4+2) + (2-4)(2+4)
-        #   = 16 + -12 + -12
-        #   = -8 (counter-clockwise)
-        # For [A, C, B]:
-        #   Calc A->C, C->B and B->A
-        #   = (4-2)(4+2) + (6-4)(2+4) + (2-6)(2+2)
-        #   = 12 + 12 + -16
-        #   = 8 (clockwise)
-        # Area = 8 / 2 = 4
-        area2 = 0.0
-        for i in range(0, len(pts)):
-            pt1 = self.vertices[pts[i]]
-            pt2 = self.vertices[pts[(i+1) % len(pts)]]
-            area2 += (pt2[0] - pt1[0]) * (pt2[1] + pt1[1])
-        # The sign of area2 indicates the direction of the points.
-        # The actual area can be obtained by dividing |area2| by 2.
-        return area2
+        vids = self.vor.regions[rid]
+        return [self.vertices[vid] for vid in vids]
 
     # Return true if the points are in clockwise order.
     def isClockwise(self, sid):
-        # No need to divide by 2 since we don't need the area, just the sign.
-        return fge(self.__signedArea2(sid), 0.0)
+        verts = self._getRegionVertices(sid)
+        return isClockwise(verts)
 
     def area(self, sid):
-        # Divide the absolute value by 2 to get the area.
-        return abs(self.__signedArea2(sid)) / 2;
+        verts = self._getRegionVertices(sid)
+        return area(verts)
 
     # sid - seed id for the region being calculated
     # rid - region id

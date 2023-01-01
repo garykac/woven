@@ -607,7 +607,7 @@ class VoronoiHexTilePlotter():
         clippath_id = self.addHexTileClipPath()
         self.group_river_border.set("clip-path", f"url(#{clippath_id})")
         self.style_river_border = Style(None, STROKE_COLOR,
-                                   RIVER_WIDTH + 6 * STROKE_WIDTH)
+                                   THICK_STROKE_WIDTH * 2)
         self.style_river_border.set("stroke-linecap", "round")
         self.style_river_border.set("stroke-linejoin", "round")
 
@@ -616,15 +616,15 @@ class VoronoiHexTilePlotter():
         SVG.add_node(self.layer_river, self.group_river)
         clippath_id = self.addHexTileClipPath()
         self.group_river.set("clip-path", f"url(#{clippath_id})")
-        self.style_river = Style(None, REGION_COLOR['r'], RIVER_WIDTH)
+        self.style_river = Style(REGION_COLOR['r'], None)
         self.style_river.set("stroke-linecap", "round")
         self.style_river.set("stroke-linejoin", "round")
 
         rivers = self._calcRiverVertices()
         for r in rivers:
             p = Path()
-            for vid in r:
-                p.addPoint(self.vertices[vid])
+            for v in r:
+                p.addPoint(v)
             p.end(False)
             p2 = copy.deepcopy(p)
 
@@ -667,10 +667,10 @@ class VoronoiHexTilePlotter():
             if "lake" in self.overlayData:
                 lakes = [int(lake) for lake in self.overlayData['lake'] if lake]
             
-            rb = RiverBuilder(riverEdges, rRidges, lakes)
+            rb = RiverBuilder(riverEdges, rRidges, lakes, RIVER_WIDTH)
             rb.setTileInfo(self.tile.sid2region)
             rb.buildRiverInfo(self.vor)
-            rb.buildTransitions()
+            rb.calcRegionLoop()
             
             return rb.getRiverVertices()
         return []
