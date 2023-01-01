@@ -218,6 +218,7 @@ class RiverBuilder():
             # Special case - directly from tile edge into a lake.
             if self._isRiverAtLake(currV):
                 seedList = [[currSeed, oppositeSeed], [oppositeSeed, currSeed]]
+                self.logger.log("direct from edge into lake")
                 self.regionLoops.append(seedList)
                 continue
 
@@ -285,10 +286,10 @@ class RiverBuilder():
                             currV = self._getRidgeOtherVert(ridgeKey, currV)
 
                         if self._isRiverAtLake(currV):
+                            seedList.append([currSeed, oppositeSeed])
                             self.logger.log(f"River enters lake - switching to other side")
                             (currSeed, oppositeSeed) = (oppositeSeed, currSeed)
                             self.logger.log(f"new curr {currSeed}; opposite {oppositeSeed}; vertex: {currV}; {ridgeKey}")
-                            seedList.append([currSeed, oppositeSeed])
                             # Switch the vertex back since we swapped it above.
                             currV = self._getRidgeOtherVert(ridgeKey, currV)
 
@@ -425,6 +426,7 @@ class RiverBuilder():
     def analyze(self):
         self._calcRegionLoops()
         self._calcRidgeSegmentLoops()
+        return self.vertexOverride
 
     def getRiverVertices(self):
         self.logger.log("getRiverVertices:")
@@ -437,10 +439,8 @@ class RiverBuilder():
                 seg = ridgeSegments[iSeg]
                 self.logger.log(f"{seg}")
                 (seedId, seedOpposite, insetRidge) = seg
-                v0 = self._getVertexForRegion(insetRidge[0], seedId)
-                v1 = self._getVertexForRegion(insetRidge[1], seedId)
-                river.append(v0)
-                river.append(v1)
+                river.append([seedId, insetRidge[0]])
+                river.append([seedId, insetRidge[1]])
             rivers.append(river)
         self.logger.outdent()
         self.logger.log(f"{rivers}")

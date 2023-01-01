@@ -71,7 +71,7 @@ def short_river():
     ridges = ["3-4", "4-8"]
     lakes = []
     vertex_loop = [
-        [c,i, i,j, j,i, i,c],
+        [[3,c],[3,i], [8,i],[8,j], [4,j],[4,i], [4,i],[4,c]],
     ]
     region_loop = [
         [
@@ -103,8 +103,8 @@ def single_river():
     lakes = []
     vertex_loop = [
         [
-            d,e, e,f, f,m, m,n, n,o, o,p, p,q,
-            q,p, p,o, o,n, n,m, m,f, f,e, e,d
+            [1,d],[1,e], [2,e],[2,f], [7,f],[7,m], [7,m],[7,n], [7,n],[7,o], [8,o],[8,p], [8,p],[8,q],
+            [13,q],[13,p], [12,p],[12,o], [12,o],[12,n], [11,n],[11,m], [6,m],[6,f], [6,f],[6,e], [6,e],[6,d]
         ],
     ]
     region_loop = [
@@ -138,8 +138,8 @@ def single_river2():
     lakes = []
     vertex_loop = [
         [
-            d,e, e,f, f,m, m,n, n,o, o,h, h,g, g,b,
-            b,g, g,h, h,o, o,n, n,m, m,f, f,e, e,d
+            [1,d],[1,e], [2,e],[2,f], [7,f],[7,m], [7,m],[7,n], [7,n],[7,o], [7,o],[7,h], [7,h],[7,g], [2,g],[2,b],
+            [3,b],[3,g], [3,g],[3,h], [8,h],[8,o], [12,o],[12,n], [11,n],[11,m], [6,m],[6,f], [6,f],[6,e], [6,e],[6,d]
         ],
     ]
     region_loop = [
@@ -179,11 +179,11 @@ def two_rivers():
     lakes = []
     vertex_loop = [
         [
-            d,e, e,f, f,g, g,h, h,i, i,j,
-            j,i, i,h, h,g, g,f, f,e, e,d
+            [1,d],[1,e], [2,e],[2,f], [2,f],[2,g], [3,g],[3,h], [3,h],[3,i], [4,i],[4,j],
+            [8,j],[8,i], [8,i],[8,h], [7,h],[7,g], [7,g],[7,f], [6,f],[6,e], [6,e],[6,d]
         ], [
-            k,l, l,m, m,n, n,o, o,p, p,q,
-            q,p, p,o, o,n, n,m, m,l, l,k
+            [6,k],[6,l], [6,l],[6,m], [7,m],[7,n], [7,n],[7,o], [8,o],[8,p], [8,p],[8,q],
+            [13,q],[13,p], [12,p],[12,o], [12,o],[12,n], [11,n],[11,m], [11,m],[11,l], [10,l],[10,k]
         ],
     ]
     region_loop = [
@@ -223,11 +223,11 @@ def with_lake():
     ]
     lakes = [ 7 ]
     vertex_loop = [
-        [d,e, e,f, f,e, e,d],
+        [[1,d],[1,e], [2,e],[2,f], [6,f],[6,e], [6,e],[6,d]],
     ]
     region_loop = [
         [
-            [1, 6], [6, 2], [6, 2], [6, 1]
+            [1, 6], [2, 6], [6, 2], [6, 1]
         ]
     ]
     return (edges, ridges, lakes, vertex_loop, region_loop)
@@ -258,7 +258,7 @@ def direct_into_lake():
     ]
     lakes = [ 7 ]
     vertex_loop = [
-        [g,b, b,g],
+        [[2,g],[2,b], [3,b],[3,g]],
     ]
     region_loop = [
         [
@@ -375,7 +375,7 @@ def checkRiverVertices(river_info):
 
 def checkVertices(verts, vertex_expect, vor):
     for ix in range(len(vertex_expect)):
-        assert verts[ix] == vor.vertices[vertex_expect[ix]]
+        assert verts[ix] == vertex_expect[ix]
 
 def test_riverVertices_shortRiver(short_river):
     checkRiverVertices(short_river)

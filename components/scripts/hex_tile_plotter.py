@@ -623,8 +623,9 @@ class VoronoiHexTilePlotter():
         rivers = self._calcRiverVertices()
         for r in rivers:
             p = Path()
-            for v in r:
-                p.addPoint(v)
+            for vInfo in r:
+                (sid, vid) = vInfo
+                p.addPoint(self.getVertexForRegion(vid, sid))
             p.end(False)
             p2 = copy.deepcopy(p)
 
@@ -670,7 +671,7 @@ class VoronoiHexTilePlotter():
             rb = RiverBuilder(riverEdges, rRidges, lakes, RIVER_WIDTH)
             rb.setTileInfo(self.tile.sid2region)
             rb.buildRiverInfo(self.vor)
-            rb.analyze()
+            self.vertexOverride = rb.analyze()
             
             return rb.getRiverVertices()
         return []
@@ -728,6 +729,7 @@ class VoronoiHexTilePlotter():
                     icon.set('transform', f"translate({x} {y})")
 
     # Given an edge defined by the 2 seeds, return the 2 ridge vertices of the edge.
+    #???
     def getEdgeRidgeVertices(self, sid0, sid1):
         edgeToFind = f"{sid0}-{sid1}"
         n_ridges = len(self.vor.ridge_points)
@@ -833,6 +835,13 @@ class VoronoiHexTilePlotter():
         circle = SVG.circle(0, v[0], v[1], '1')
         circle.set_style(Style(fill="#800000"))
         SVG.add_node(layer, circle)
+
+    def getVertexForRegion(self, vid, sid):
+        if vid in self.vertexOverride:
+            overrides = self.vertexOverride[vid]
+            if sid in overrides:
+                return overrides[sid]
+        return self.vertices[vid]
 
     # Plot voronoi region given a list of vertex ids.
     def plotRegion(self, vids, color):
