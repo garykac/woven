@@ -29,9 +29,6 @@ TEXTURES = {
 }
 
 def run(cmd):
-    if True:
-        #print(cmd)
-        return ""
     result = subprocess.run(cmd, stdout=subprocess.PIPE)
     return result.stdout.decode("utf8")
 
@@ -74,7 +71,7 @@ class TextureBuilder():
             (ns, tag) = splitTag(c.tag)
             if tag in ["ellipse", "circle"]:
                 swatchId += 1
-                print(".", end='')
+                print(".", flush=True, end='')
                 cx = (float)(c.attrib.get("cx"))
                 cy = (float)(c.attrib.get("cy"))
                 self.genTexture(swatchId, cx, -cy)
