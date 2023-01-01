@@ -284,7 +284,7 @@ class VoronoiHexTilePlotter():
             else:
                 id = f"roundedregionfill-{sid}"
                 vids = self.sid2region[sid]
-                region = self.calcRoundedRegionPath(id, sid, vids, False)
+                region = self.calcRoundedRegionPath(id, sid, vids)
 
                 color = self.getTerrainStyle(terrainType)
                 style = Style(color, None)
@@ -324,7 +324,7 @@ class VoronoiHexTilePlotter():
         # Clip the texture to the region.
         gClip = Group(f"gclip-rregion-{sid}")
         vids = self.sid2region[sid]
-        path = self.calcRoundedRegionPath(f"rregion-{sid}", sid, vids, False)
+        path = self.calcRoundedRegionPath(f"rregion-{sid}", sid, vids)
         clipid = self.svg.add_clip_path(f"rregion-{sid}", path)
         gClip.set("clip-path", f"url(#{clipid})")
         SVG.add_node(gClip, gTrans)
@@ -348,7 +348,7 @@ class VoronoiHexTilePlotter():
             vids = self.sid2region[sid]
             id = f"roundedregionstroke-{sid}"
 
-            path = self.calcRoundedRegionPath(id, sid, vids, True)
+            path = self.calcRoundedRegionPath(id, sid, vids)
 
             style = Style(None, STROKE_COLOR, THICK_STROKE_WIDTH)
             path.set_style(style)
@@ -381,7 +381,7 @@ class VoronoiHexTilePlotter():
             else:
                 id = f"lake-{sid}"
                 vids = self.sid2region[sid]
-                region = self.calcRoundedRegionPath(id, sid, vids, False)
+                region = self.calcRoundedRegionPath(id, sid, vids)
 
                 style = Style(REGION_COLOR[terrainType], None)
                 region.set_style(style)
@@ -871,75 +871,27 @@ class VoronoiHexTilePlotter():
         SVG.add_node(layer, p)
 
     # Calc voronoi region path with rounded points, given a list of vertex ids.
-    def calcRoundedRegionPath(self, id, sid, vids, isStroke):
+    def calcRoundedRegionPath(self, id, sid, vids):
         if len(vids) == 0:
             return
         num_verts = len(vids)
         
         iv = list(range(0, num_verts))
 
-        # The first vertex of the region to draw.
-        firstVertex = 0
-        # The number of vertices at the end to skip (only for strokes).
-        numSkipVertices = 0
-        # True if we should automatically connect the last vertex to the first.
-        closePath = True
-        
-        # If this is an edge region, then we:
-        # * Don't want to round off the vertices along the edge.
-        # * Don't want to close off the segment corresponding to the edge
-        #   (Because we don't want a fat stroke along that edge).
-        isEdgeRegion = False
-        numEdgeVertices = 0
-        for i in range(0, num_verts):
-            if self.tile.isEdgeVertex(vids[i]):
-                isEdgeRegion = True
-                numEdgeVertices += 1
-
-        if isEdgeRegion and isStroke:
-            closePath = False
-
-            # Rotate vertex indices until the last edge vertex is in the first position.
-            # Scenarios (edge vertices in parentheses)
-            #    2 edge vertex:
-            #      (0) -  1  -  2  -  3  - (4)   : -
-            #      (0) - (1) -  2  -  3  -  4    : rotate 1
-            #       0  - (1) - (2) -  3  -  4    : rotate 2
-            #       0  -  1  - (2) - (3) -  4    : rotate 3
-            #       0  -  1  -  2  - (3) - (4)   : rotate 4
-            #    3 edge vertex:
-            #      (0) -  1  -  2  - (3) - (4)   : -
-            #      (0) - (1) -  2  -  3  - (4)   : rotate 1
-            #      (0) - (1) - (2) -  3  -  4    : rotate 2
-            #       0  - (1) - (2) - (3) -  4    : rotate 3
-            #       0  -  1  - (2) - (3) - (4)   : rotate 4
-            while not (self.tile.isEdgeVertex(vids[iv[0]]) and not self.tile.isEdgeVertex(vids[iv[1]])):
-                iv = iv[1:] + iv[:1]
-            
-            # Remove the last vertex from the stroke if we have 3 edge vertices.
-            if numEdgeVertices == 3:
-                iv.pop()
-                
         p = Path() if id == None else Path(id)
         for i in iv:
             vid = vids[i]
             v = self.getVertexForRegion(vid, sid)
 
-            # We don't want to round the vertices along the edge of the tile. We can
-            # identify these edge vertices easily because they are the ones that we
-            # added to the end of the vertex list during clipping.
-            if self.tile.isEdgeVertex(vid):
-                p.addPoint(v)
-            else:
-                # Add a small curve for this vertex.
-                prev = (i + num_verts - 1) % num_verts
-                next = (i + num_verts + 1) % num_verts
+            # Add a small curve for this vertex.
+            prev = (i + num_verts - 1) % num_verts
+            next = (i + num_verts + 1) % num_verts
 
-                vPrev = self.getVertexForRegion(vids[prev], sid)
-                vNext = self.getVertexForRegion(vids[next], sid)
-                self.addCurvePoints(p, vPrev, v, vNext)
+            vPrev = self.getVertexForRegion(vids[prev], sid)
+            vNext = self.getVertexForRegion(vids[next], sid)
+            self.addCurvePoints(p, vPrev, v, vNext)
 
-        p.end(closePath)
+        p.end()
         return p
 
     def addCurvePoints(self, path, vPrev, v, vNext):
