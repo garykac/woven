@@ -11,9 +11,9 @@ class VoronoiHexTileLoader():
             self.processTileData(self.options['load'])
             return
 
-        self.processTile(None, None, None)
+        self.processTile(None, None, None, None)
 
-    def processTile(self, terrainData, riverData, overlayData):
+    def processTile(self, terrainData, riverData, cliffData, overlayData):
         options = self.options.copy()
 
         print(f"Tile {options['id']} - pattern {options['pattern']} - seed {options['seed']}")
@@ -22,6 +22,7 @@ class VoronoiHexTileLoader():
         v.init()
         v.setTerrainData(terrainData)
         v.setRiverData(riverData)
+        v.setCliffData(cliffData)
         v.setOverlayData(overlayData)
 
         if options['anim']:
@@ -56,6 +57,7 @@ class VoronoiHexTileLoader():
             center = None
             terrain_data = None
             river_data = None
+            cliff_data = None
             overlay_data = None
 
             last_id = None
@@ -78,13 +80,14 @@ class VoronoiHexTileLoader():
                     self.options['pattern'] = pattern
                     self.options['seed'] = seed
                     self.options['center'] = center
-                    self.processTile(terrain_data, river_data, overlay_data)
+                    self.processTile(terrain_data, river_data, cliff_data, overlay_data)
 
                     pattern = None
                     seed = None
                     center = None
                     terrain_data = None
                     river_data = None
+                    cliff_data = None
                     overlay_data = None
 
                 if rowType == "TERRAIN":
@@ -112,6 +115,12 @@ class VoronoiHexTileLoader():
                         overlay_data = {}
                     # Lake |overlay_data| is an array of region ids that are lakes.
                     overlay_data['lake'] = data
+                elif rowType == "CLIFF":
+                    # |cliff_data| is an array of cliff segments identified as
+                    # "<c1>-<c2>" pairs where <c1> and <c2> identify the 2 cells on
+                    # either side of the cliff segment. Segments may be followed by '*'
+                    # to indicate that they are the end of a cliff.
+                    cliff_data = data
                 elif rowType == "MARK":
                     if not overlay_data:
                         overlay_data = {}
@@ -128,5 +137,5 @@ class VoronoiHexTileLoader():
             self.options['pattern'] = pattern
             self.options['seed'] = seed
             self.options['center'] = center
-            self.processTile(terrain_data, river_data, overlay_data)
+            self.processTile(terrain_data, river_data, cliff_data, overlay_data)
 

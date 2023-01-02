@@ -6,8 +6,10 @@ import os
 import re
 import subprocess
 
+from cliff_builder import CliffBuilder
 from inkscape import Inkscape
-from math_utils import (lerp, pt_along_line)
+from map_common import calcSortedId
+from math_utils import (feq_pt, lerp, pt_along_line)
 from svg import SVG, Filter, Group, Image, Style, Node, Path, Text
 from object3d import Object3d
 from river_builder import RiverBuilder
@@ -26,6 +28,7 @@ STROKE_WIDTH = 0.3
 THICK_STROKE_WIDTH = 0.9
 
 RIVER_WIDTH = 2.5
+CLIFF_WIDTH = 2.5
 
 # Fill colors for regions based on terrain height.
 REGION_COLOR = {
@@ -34,6 +37,7 @@ REGION_COLOR = {
     'm': "#f0ce76",  #'#dcc382',  # medium
     'h': "#e7a311",  #'#d69200',  # high
     'r': "#a2c6ff",  # river/water
+    'c': "#ffffff",  # cliff
     'v': "#be850a",  # very high mountain
 }
 
@@ -49,11 +53,6 @@ EDGE_RIVER_INFO = {
 EDGE_CLIFF_INFO = {
     '3f': ['m', 'm', 'h', '*', 'm', 'h'],      # m - h, h - m
 }
-
-def calcSortedId(id0, id1):
-    if int(id0) < int(id1):
-        return f"{id0}-{id1}"
-    return f"{id1}-{id0}"
 
 class VoronoiHexTilePlotter():
     def __init__(self, tile):
@@ -104,10 +103,13 @@ class VoronoiHexTilePlotter():
 
         # Explicit terrain/river data (loaded from file).
         self.riverData = tile.riverData
+        self.cliffData = tile.cliffData
         self.overlayData = tile.overlayData
 
         self.riverBuilder = None
-        self.vertexOverride = {}
+        self.vertexOverrideRiver = {}
+        self.cliffBuilder = None
+        self.vertexOverrideCliff = {}
                 
         # Reset number of annotation lines.
         self.numLines = 0
@@ -149,7 +151,7 @@ class VoronoiHexTilePlotter():
         stroke = Style("none", "#000000", STROKE_WIDTH)
         black_fill = Style(fill="#000000")
 
-        self.analyzeRivers()
+        self.analyzeSpecialRidges()
 
         # Draw layers back to front.
         
@@ -173,13 +175,14 @@ class VoronoiHexTilePlotter():
 
         self.drawTileId()
 
-        self.drawAnnotations()
+        self.drawAnnotationsLayer()
 
-        self.drawTerrainLabels()
+        self.drawTerrainLabelsLayer()
 
-        self.drawRivers()
+        self.drawRiverLayer()
+        self.drawCliffLayer()
         
-        self.drawOverlay()
+        self.drawOverlayLayer()
 
         self.drawRegionIdLayer()
 
@@ -196,10 +199,11 @@ class VoronoiHexTilePlotter():
         filter.add_op("feComposite", {'in':"offset", 'in2':"SourceGraphic", 'operator':"atop", 'result':"composite2"})
         self.svg.add_filter(filter)
 
-    def analyzeRivers(self):
+    def analyzeSpecialRidges(self):
         # Scan the tile edges to determine if a river is required.
         # Build a list of tile edges that have a river exit: |riverEdges|.
         self.riverEdges = []
+        self.cliffEdges = []
         seedIdCorner = 0
         seedIdEdge = 6
         for e in self.edgeTypes:
@@ -208,21 +212,17 @@ class VoronoiHexTilePlotter():
             
             if e in EDGE_RIVER_INFO:
                 rInfo = EDGE_RIVER_INFO[e]
-                regions = [seedIdCorner]
-                regions += list(range(seedIdEdge, seedIdEdge + numEdgeRegions))
-                regions += [(seedIdCorner + 1) % 6]
-                riverIndex = rInfo.index('*')
-                r0 = regions[riverIndex-1]
-                r1 = regions[riverIndex]
-                self.riverEdges.append(calcSortedId(r0,r1))
+                edge = self._findSpecialEdge(rInfo, seedIdCorner, seedIdEdge, numEdgeRegions)
+                self.riverEdges.append(edge)
+            if e in EDGE_CLIFF_INFO:
+                rInfo = EDGE_CLIFF_INFO[e]
+                edge = self._findSpecialEdge(rInfo, seedIdCorner, seedIdEdge, numEdgeRegions)
+                self.cliffEdges.append(edge)
+
             seedIdCorner += 1
             seedIdEdge += numEdgeRegions
 
-        # Exit if this tile has no tile edges with rivers.
-        if len(self.riverEdges) == 0:
-            return
-
-        if self.riverData:
+        if len(self.riverEdges) != 0 and self.riverData:
             # Build a clean list of ridge segments that should be rivers.
             rRidges = [r for r in self.riverData if r]
             lakes = []
@@ -231,10 +231,39 @@ class VoronoiHexTilePlotter():
             
             rb = RiverBuilder(self.riverEdges, rRidges, lakes, RIVER_WIDTH)
             rb.setTileInfo(self.tile.sid2region)
-            rb.buildRiverInfo(self.vor)
-            self.vertexOverride = rb.analyze()
+            rb.buildRidgeInfo(self.vor)
+            self.vertexOverrideRiver = rb.analyze()
             self.riverBuilder = rb
 
+        if len(self.cliffEdges) != 0 and self.cliffData:
+            # Build a clean list of ridge segments that should be cliffs and extract the
+            # cliff ends.
+            rRidges = []
+            rRidgeEnds = []
+            for r in self.cliffData:
+                if not r:
+                    continue
+                if r[-1] == '*':
+                    rRidges.append(r[:-1])
+                    rRidgeEnds.append(r[:-1])
+                else:
+                    rRidges.append(r)
+            
+            cb = CliffBuilder(self.cliffEdges, rRidges, rRidgeEnds, CLIFF_WIDTH)
+            cb.setTileInfo(self.tile.sid2region)
+            cb.buildRidgeInfo(self.vor)
+            self.vertexOverrideCliff = cb.analyze()
+            self.cliffBuilder = cb
+
+    def _findSpecialEdge(self, rInfo, seedIdCorner, seedIdEdge, numEdgeRegions):
+        regions = [seedIdCorner]
+        regions += list(range(seedIdEdge, seedIdEdge + numEdgeRegions))
+        regions += [(seedIdCorner + 1) % 6]
+        edgeIndex = rInfo.index('*')
+        r0 = regions[edgeIndex - 1]
+        r1 = regions[edgeIndex]
+        return calcSortedId(r0, r1)
+    
     def drawHexTileBorder(self, id, layer_name, style):
         layer_border = self.svg.add_inkscape_layer(id, layer_name, self.layer)
         p = Path()
@@ -495,7 +524,7 @@ class VoronoiHexTilePlotter():
             id_text.set('transform', f"translate(0 {-self.size+8})")
             SVG.set_text(id_text, f"{id:03d}")
 
-    def drawAnnotations(self):
+    def drawAnnotationsLayer(self):
         self.layer_text = self.svg.add_inkscape_layer(
             'annotations', "Annotations", self.layer)
         self.layer_text.set_transform("scale(1,-1)")
@@ -536,7 +565,7 @@ class VoronoiHexTilePlotter():
         SVG.add_node(self.layer_text, t)
         self.numLines += 1
     
-    def drawTerrainLabels(self):
+    def drawTerrainLabelsLayer(self):
         # Add corner terrain labels.
         for i in range(0, self.tile.numSides):
             t = self.options['pattern'][i]
@@ -592,7 +621,7 @@ class VoronoiHexTilePlotter():
                 seedPattern = self.edgeSeedInfo[edgeType]
                 x = self._calcEdgeFeatureOffset(rIndex, seedPattern)
 
-                color = self.getTerrainStyle('r')
+                color = self.getTerrainStyle('c')
                 r = SVG.rect(0, x-1.5, -self.xMax -8, 3, 8)
                 r.set_style(Style(color, STROKE_COLOR, STROKE_WIDTH))
                 SVG.add_node(g, r)
@@ -635,43 +664,30 @@ class VoronoiHexTilePlotter():
         t = (before + after) / 2
         return lerp(-self.size/2, self.size/2, t)
       
-    def drawRivers(self):
+    def drawRiverLayer(self):
         if not self.riverBuilder:
             return
 
-        self.layer_river = self.svg.add_inkscape_layer('river', "River", self.layer)
-        self.group_river = SVG.group('river-group')
-        SVG.add_node(self.layer_river, self.group_river)
+        layer_river = self.svg.add_inkscape_layer('river', "River", self.layer)
+        group_river = SVG.group('river-group')
+        SVG.add_node(layer_river, group_river)
         clippath_id = self.addHexTileClipPath()
-        self.group_river.set("clip-path", f"url(#{clippath_id})")
-        self.style_river = Style(REGION_COLOR['r'], None)
-        self.style_river.set("stroke-linecap", "round")
-        self.style_river.set("stroke-linejoin", "round")
+        group_river.set("clip-path", f"url(#{clippath_id})")
 
-        self.layer_river_border = self.svg.add_inkscape_layer(
-            'river-border', "River Border", self.layer)
-        self.group_river_border = SVG.group('river-border-group')
-        SVG.add_node(self.layer_river_border, self.group_river_border)
-        clippath_id = self.addHexTileClipPath()
-        self.group_river_border.set("clip-path", f"url(#{clippath_id})")
-        self.style_river_border = Style(None, STROKE_COLOR, THICK_STROKE_WIDTH)
-        self.style_river_border.set("stroke-linecap", "round")
-        self.style_river_border.set("stroke-linejoin", "round")
-
-        rivers = self.riverBuilder.getRiverVertices()
-        for r in rivers:
+        rivers = self.riverBuilder.getRidgeVertices()
+        for river in rivers:
             p = Path()
-            numVerts = len(r)
+            numVerts = len(river)
             for i in range(numVerts):
-                vInfo = r[i]
+                vInfo = river[i]
                 (sid, vid) = vInfo
                 v = self.getVertexForRegion(vid, sid)
 
                 # Add a small curve for this vertex.
                 prev = (i + numVerts - 1) % numVerts
                 next = (i + 1) % numVerts
-                vPrevInfo = r[prev]
-                vNextInfo = r[next]
+                vPrevInfo = river[prev]
+                vNextInfo = river[next]
                 vPrev = self.getVertexForRegion(vPrevInfo[1], vPrevInfo[0])
                 vNext = self.getVertexForRegion(vNextInfo[1], vNextInfo[0])
                 self.addCurvePoints(p, vPrev, v, vNext)
@@ -679,13 +695,67 @@ class VoronoiHexTilePlotter():
             p.end(False)
             p2 = copy.deepcopy(p)
 
-            p.set_style(self.style_river_border)
-            SVG.add_node(self.group_river_border, p)
-
-            p2.set_style(self.style_river)
-            SVG.add_node(self.group_river, p2)
+            style_river = Style(REGION_COLOR['r'], None)
+            style_river.set("stroke-linecap", "round")
+            style_river.set("stroke-linejoin", "round")
+            p2.set_style(style_river)
+            SVG.add_node(group_river, p2)
         
-    def drawOverlay(self):
+            style_river_border = Style(None, STROKE_COLOR, THICK_STROKE_WIDTH)
+            style_river_border.set("stroke-linecap", "round")
+            style_river_border.set("stroke-linejoin", "round")
+            p.set_style(style_river_border)
+            SVG.add_node(group_river, p)
+
+    def drawCliffLayer(self):
+        if not self.cliffBuilder:
+            return
+
+        layer_cliff = self.svg.add_inkscape_layer('cliff', "Cliff", self.layer)
+        group_cliff = SVG.group('cliff-group')
+        SVG.add_node(layer_cliff, group_cliff)
+        clippath_id = self.addHexTileClipPath()
+        group_cliff.set("clip-path", f"url(#{clippath_id})")
+
+        cliffs = self.cliffBuilder.getRidgeVertices()
+        for cliff in cliffs:
+            p = Path()
+            numVerts = len(cliff)
+            for i in range(numVerts):
+                vInfo = cliff[i]
+                (sid, vid) = vInfo
+                v = self.getVertexForRegion(vid, sid)
+
+                prev = (i + numVerts - 1) % numVerts
+                next = (i + 1) % numVerts
+                vPrevInfo = cliff[prev]
+                vNextInfo = cliff[next]
+                vPrev = self.getVertexForRegion(vPrevInfo[1], vPrevInfo[0])
+                vNext = self.getVertexForRegion(vNextInfo[1], vNextInfo[0])
+
+                # Cliffs end in a single point, so don't add curves at that point.
+                if feq_pt(v, vPrev) or feq_pt(v, vNext):
+                    p.addPoint(v)
+                else:
+                    # Add a small curve for this vertex.
+                    self.addCurvePoints(p, vPrev, v, vNext)
+
+            p.end(False)
+            p2 = copy.deepcopy(p)
+
+            style_cliff = Style(REGION_COLOR['c'], None)
+            style_cliff.set("stroke-linecap", "round")
+            style_cliff.set("stroke-linejoin", "round")
+            p2.set_style(style_cliff)
+            SVG.add_node(group_cliff, p2)
+        
+            style_cliff_border = Style(None, STROKE_COLOR, THICK_STROKE_WIDTH)
+            style_cliff_border.set("stroke-linecap", "round")
+            style_cliff_border.set("stroke-linejoin", "round")
+            p.set_style(style_cliff_border)
+            SVG.add_node(group_cliff, p)
+
+    def drawOverlayLayer(self):
         self.layer_overlay = self.svg.add_inkscape_layer(
             'overlay', "Overlay", self.layer)
         self.layer_overlay.set_scale_transform(1, -1)
@@ -698,16 +768,16 @@ class VoronoiHexTilePlotter():
                 if bridge:
                     m = re.match(r"^(\d+\-\d+)$", bridge)
                     if m:
-                        cells = m.group(1)
+                        seedIds = m.group(1)
                     else:
                         raise Exception(f"Unrecognized bridge data: {bridge}")
 
-                    (start, end) = cells.split('-')
-                    ptStart = self.seeds[int(start)]
-                    ptEnd = self.seeds[int(end)]
+                    (startId, endId) = seedIds.split('-')
+                    ptStart = self.seeds[int(startId)]
+                    ptEnd = self.seeds[int(endId)]
                     rTheta = math.atan2(-(ptEnd[1] - ptStart[1]), ptEnd[0] - ptStart[0])
                     degTheta = 90 + (rTheta * 180 / math.pi);
-                    edge_vertices = self.getEdgeRidgeVertices(start, end)
+                    edge_vertices = self.getEdgeRidgeVertices(startId, endId)
                     center = lerp(edge_vertices[0], edge_vertices[1], 0.5)
                     icon = self.svg.add_loaded_element(self.layer_overlay, 'obj-bridge')
                     
@@ -739,13 +809,11 @@ class VoronoiHexTilePlotter():
 
     # Given an edge defined by the 2 seeds, return the 2 ridge vertices of the edge.
     def getEdgeRidgeVertices(self, sid0, sid1):
-        edgeToFind = f"{sid0}-{sid1}"
+        edgeToFind = calcSortedId(sid0, sid1)
         n_ridges = len(self.vor.ridge_points)
         for i in range(0, n_ridges):
             (s0, s1) = self.vor.ridge_points[i]
-            if s1 < s0:
-                s0,s1 = s1,s0
-            key = f"{s0}-{s1}"
+            key = calcSortedId(s0, s1)
             if key == edgeToFind:
                 return [self.vertices[i] for i in self.vor.ridge_vertices[i]]
         return None
@@ -845,8 +913,12 @@ class VoronoiHexTilePlotter():
         SVG.add_node(layer, circle)
 
     def getVertexForRegion(self, vid, sid):
-        if vid in self.vertexOverride:
-            overrides = self.vertexOverride[vid]
+        if vid in self.vertexOverrideRiver:
+            overrides = self.vertexOverrideRiver[vid]
+            if sid in overrides:
+                return overrides[sid]
+        if vid in self.vertexOverrideCliff:
+            overrides = self.vertexOverrideCliff[vid]
             if sid in overrides:
                 return overrides[sid]
         return self.vertices[vid]

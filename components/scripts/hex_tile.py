@@ -5,6 +5,7 @@ import random  # Only used to seed numpy random, if needed
 import scipy.spatial
 
 from hex_tile_plotter import VoronoiHexTilePlotter
+from map_common import calcSortedId
 from math_utils import (feq, fge, fle, scale, clamp,
                         lerp, lerp_pt, lerp_pt_delta, lerperp,
                         near, dist, dist_pt_line, line_intersection_t,
@@ -68,11 +69,6 @@ TERRAIN_DIST = {
     'l': [ 0.80, 0.20, 0.00 ],
     'h': [ 0.00, 0.50, 0.50 ],
 }
-
-def calcSortedId(id0, id1):
-    if int(id0) < int(id1):
-        return f"{id0}-{id1}"
-    return f"{id1}-{id0}"
 
 class VoronoiHexTile():
     def __init__(self, options):
@@ -182,6 +178,7 @@ class VoronoiHexTile():
         # Explicit terrain/river data (loaded from file).
         self.terrainData = None
         self.riverData = None
+        self.cliffData = None
         self.overlayData = None
 
         # Calculate data for reversed edges ('r') from the forward ('f') edges.
@@ -200,6 +197,9 @@ class VoronoiHexTile():
         
     def setRiverData(self, data):
         self.riverData = data
+        
+    def setCliffData(self, data):
+        self.cliffData = data
         
     def setOverlayData(self, data):
         self.overlayData = data

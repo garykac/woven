@@ -371,10 +371,10 @@ def checkRiverVertices(river_info):
     rb.setVerbose(True)
     rb.setTileInfo(tile.sid2region)
     vor = FakeVoronoi()
-    rb.buildRiverInfo(vor)
+    rb.buildRidgeInfo(vor)
     rb.analyze()
 
-    verts = rb.getRiverVertices()
+    verts = rb.getRidgeVertices()
     assert len(verts) == len(vertex_loop)
     for ix in range(len(vertex_loop)):
         checkVertices(verts[ix], vertex_loop[ix], vor)
@@ -407,7 +407,7 @@ def checkRiverBanks(river_info):
     rb = RiverBuilder(edges, ridges, lakes, 0)
     rb.setVerbose(True)
     rb.setTileInfo(tile.sid2region)
-    rb.buildRiverInfo(FakeVoronoi())
+    rb.buildRidgeInfo(FakeVoronoi())
     rb.analyze()
 
     loops = rb.regionLoops
@@ -442,10 +442,10 @@ def test_newVertices(single_river):
     tile = FakeHexTile()
     rb = RiverBuilder(edges, ridges, lakes, 0)
     rb.setTileInfo(tile.sid2region)
-    rb.buildRiverInfo(FakeVoronoi())
+    rb.buildRidgeInfo(FakeVoronoi())
     rb.analyze()
 
     loops = rb.regionLoops
     rb.setVerbose(True)
-    verts = rb.getRiverVertices()
+    verts = rb.getRidgeVertices()
     
