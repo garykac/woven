@@ -6,13 +6,20 @@ from math_utils import lerp_line, dist_pt_line, line_intersection_t, parallel_li
 
 # Bases class for handling special voronoi ridges.
 class RidgeBuilder():
-    def __init__(self, ridgeEdges, ridges, width):
+    def __init__(self, ridgeEdges, ridges, ridgeEnds, width):
         # The set of ridges that extend off the tile, so only 1 vertex links up with
         # other ridges.
-        self.ridgeEdges = ridgeEdges.copy()
+        self.ridgeEdges = ridgeEdges
 
         # The set of all ridges that comprise this kind of special ridge on this tile.
-        self.ridges = ridges.copy()
+        self.ridges = ridges
+
+        # Ridges that end in the middle of the tile. Currently only used for cliffs.
+        self.ridgeEnds = ridgeEnds
+        
+        # The set of ridges at the end of a ridge sequence, where we will loop around
+        # to process the other direction.
+        self.reverseRidges = self.ridgeEdges.copy() + self.ridgeEnds.copy()
 
         self.ridgeWidth = width
 
@@ -44,8 +51,9 @@ class RidgeBuilder():
         self.logger.setVerbose(v)
     
     def buildRidgeInfo(self, vor):
-        self.logger.log(f"ridgeEdges: {self.ridgeEdges}")
         self.logger.log(f"ridges: {self.ridges}")
+        self.logger.log(f"ridgeEdges: {self.ridgeEdges}")
+        self.logger.log(f"ridgeEnds: {self.ridgeEnds}")
 
         self._buildRidgeInfo(vor)
         self._buildBankInfo()
@@ -121,7 +129,7 @@ class RidgeBuilder():
         # We scan |ridges| from start each time so that we process the ridges in the
         # order that we specified them in the data file.
         for r in self.ridges:
-            if r in self.ridgeEdges:
+            if r in self.reverseRidges:
                 return r
         return None
     
@@ -142,11 +150,10 @@ class RidgeBuilder():
                 return v
         return None
 
-    def _isRidgeAtTileEdge(self, ridge):
-        # Ridges can end when they exit a tile edge.
-        if ridge in self.ridgeEdges:
+    def _isRidgeAtEnd(self, ridge):
+        if ridge in self.reverseRidges:
             return True
-        # The start edge is removed from |ridgeEdges|, so we need to check it separately.
+        # The start edge is removed from |reverseRidges|, so we need to check it separately.
         if ridge == self.startEdge:
             return True
         return False
@@ -186,6 +193,7 @@ class RidgeBuilder():
     def _calcRegionLoops(self):
         self.logger.log(f"calcRegionLoops:")
         self.logger.indent()
+
         self.regionLoops = []
         while True:
             # Find a river edge to start.
@@ -195,99 +203,107 @@ class RidgeBuilder():
             vStart = self._findUnmatchedRidgeVertex(self.startEdge)
             self.logger.log(f"start edge: {self.startEdge}, off-tile vertex: {vStart}")
 
-            self.ridgeEdges.remove(self.startEdge)
+            self.reverseRidges.remove(self.startEdge)
             
             # Pick one of the seeds as a stating point.
             (currSeed, oppositeSeed) = self.ridgeInfo[self.startEdge]['seed-ids']
             currV = self._getRidgeOtherVert(self.startEdge, vStart)
 
             # Special case - directly from tile edge into a lake.
+            # Note that cliff edges are not allowed to end immediately.
             if self._regionLoopReverseCheck("", currV):
                 seedList = [[currSeed, oppositeSeed], [oppositeSeed, currSeed]]
                 self.logger.log("direct from edge into lake")
                 self.regionLoops.append(seedList)
                 continue
 
-            # Keep of list of seeds that have already been added.
-            seedList = []
-            
-            done = False
-            while not done:
-                self.logger.log(f"curr seed: {currSeed}; vertex: {currV}")
-                self.logger.indent()
-
-                self.logger.log(f"adding {currSeed} ({oppositeSeed}) to loop")             
-                seedList.append([currSeed, oppositeSeed])
-                
-                # Check the neighbors of the current vertex for a region that shares the
-                # riverbank.
-                found = False
-                for n in self.vid2sids[currV]:
-                    if n == oppositeSeed or n == currSeed:
-                        continue
-
-                    ridgeKey = calcSortedId(currSeed, n)
-                    self.logger.log(f"checking {currSeed} neighbor {n} with {ridgeKey}")
-
-                    # Check if we hit the edge of a tile.
-                    foundEdge = False
-                    if self._isRidgeAtTileEdge(ridgeKey):
-                        foundEdge = True
-
-                    # Does this neighbor have a ridge shared with the currSeed or
-                    # oppositeSeed?
-                    # Check |currSeed| first.
-                    if ridgeKey in self.ridges:
-                        if n in self.sid2neighbors[oppositeSeed]:
-                            self.logger.log(f"found opposite-side riverbank neighbor with {n} via {ridgeKey}")
-                            oppositeSeed = n
-                            found = True
-
-                    # Check |oppositeSeed| if we didn't find a match with |currSeed|.
-                    if not found:
-                        ridgeKey = calcSortedId(oppositeSeed, n)
-                        self.logger.log(f"checking {oppositeSeed} neighbor {n} with {ridgeKey}")
-                        # Check ridges that cross the tile edge.
-                        if self._isRidgeAtTileEdge(ridgeKey):
-                            foundEdge = True
-                        if ridgeKey in self.ridges:
-                            self.logger.log(f"found same-side riverbank neighbor with {n} via {ridgeKey}")
-                            currSeed = n
-                            found = True
-
-                    if found:
-                        self.logger.log(f"found {ridgeKey} {currV}")
-                        if foundEdge:
-                            # Switch to the other side of the river.
-                            self.logger.log(f"Edge of tile - switching to other side")
-                            self.logger.log(f"adding {currSeed} ({oppositeSeed}) to loop")             
-                            seedList.append([currSeed, oppositeSeed])
-                            (currSeed, oppositeSeed) = (oppositeSeed, currSeed)
-                            # Note: |currV| stays the same since we switched direction.
-                            if ridgeKey == self.startEdge:
-                                done = True
-                            else:
-                                self.ridgeEdges.remove(ridgeKey)
-                        else:
-                            currV = self._getRidgeOtherVert(ridgeKey, currV)
-
-                        if self._regionLoopReverseCheck(ridgeKey, currV):
-                            seedList.append([currSeed, oppositeSeed])
-                            self.logger.log(f"River enters lake - switching to other side")
-                            (currSeed, oppositeSeed) = (oppositeSeed, currSeed)
-                            self.logger.log(f"new curr {currSeed}; opposite {oppositeSeed}; vertex: {currV}; {ridgeKey}")
-                            # Switch the vertex back since we swapped it above.
-                            currV = self._getRidgeOtherVert(ridgeKey, currV)
-
-                        self.logger.outdent()
-                        break
-
-                if not found:
-                    raise Exception(f"Unable to find match for seed {currSeed} from vertex {currV}")
-
+            seedList = self._calcRegionLoop(self.startEdge, currV)
             self.regionLoops.append(seedList)
 
         self.logger.outdent()
+
+    def _calcRegionLoop(self, startRidge, currV):
+        (currSeed, oppositeSeed) = self.ridgeInfo[startRidge]['seed-ids']
+
+        # Keep of list of seeds that have already been added.
+        seedList = []
+        
+        done = False
+        while not done:
+            self.logger.log(f"curr seed: {currSeed}; vertex: {currV}")
+            self.logger.indent()
+
+            self.logger.log(f"adding {currSeed} ({oppositeSeed}) to loop")             
+            seedList.append([currSeed, oppositeSeed])
+            
+            # Check the neighbors of the current vertex for a region that shares the
+            # riverbank.
+            found = False
+            for n in self.vid2sids[currV]:
+                if n == oppositeSeed or n == currSeed:
+                    continue
+
+                ridgeKey = calcSortedId(currSeed, n)
+                self.logger.log(f"checking {currSeed} neighbor {n} with {ridgeKey}")
+
+                # Check if we hit the end of a ridge sequence.
+                foundEnd = False
+                if self._isRidgeAtEnd(ridgeKey):
+                    foundEnd = True
+
+                # Does this neighbor have a ridge shared with the currSeed or
+                # oppositeSeed?
+                # Check |currSeed| first.
+                if ridgeKey in self.ridges:
+                    if n in self.sid2neighbors[oppositeSeed]:
+                        self.logger.log(f"found opposite-side riverbank neighbor with {n} via {ridgeKey}")
+                        oppositeSeed = n
+                        found = True
+
+                # Check |oppositeSeed| if we didn't find a match with |currSeed|.
+                if not found:
+                    ridgeKey = calcSortedId(oppositeSeed, n)
+                    self.logger.log(f"checking {oppositeSeed} neighbor {n} with {ridgeKey}")
+                    # Check ridges that cross the tile edge.
+                    if self._isRidgeAtEnd(ridgeKey):
+                        foundEnd = True
+                    if ridgeKey in self.ridges:
+                        self.logger.log(f"found same-side riverbank neighbor with {n} via {ridgeKey}")
+                        currSeed = n
+                        found = True
+
+                if found:
+                    self.logger.log(f"found {ridgeKey} {currV}")
+                    if foundEnd:
+                        # Switch to the other side of the river.
+                        self.logger.log(f"Edge of tile - switching to other side")
+                        self.logger.log(f"adding {currSeed} ({oppositeSeed}) to loop")             
+                        seedList.append([currSeed, oppositeSeed])
+                        (currSeed, oppositeSeed) = (oppositeSeed, currSeed)
+                        # Note: |currV| stays the same since we switched direction.
+                        if ridgeKey == self.startEdge:
+                            done = True
+                        else:
+                            self.reverseRidges.remove(ridgeKey)
+                    else:
+                        currV = self._getRidgeOtherVert(ridgeKey, currV)
+
+                    if self._regionLoopReverseCheck(ridgeKey, currV):
+                        seedList.append([currSeed, oppositeSeed])
+                        self.logger.log(f"Reversing ridge processing - switching to other side")
+                        (currSeed, oppositeSeed) = (oppositeSeed, currSeed)
+                        self.logger.log(f"new curr {currSeed}; opposite {oppositeSeed}; vertex: {currV}; {ridgeKey}")
+                        # Switch the vertex back since we swapped it above.
+                        currV = self._getRidgeOtherVert(ridgeKey, currV)
+
+                    self.logger.outdent()
+                    break
+
+            if not found:
+                raise Exception(f"Unable to find match for seed {currSeed} from vertex {currV}")
+        
+        return seedList
+
         
     # Calculate the line parallel to the ridge between |seedA| and |seedB|.
     # The parallel line should be distance |dist| away from the ridge.
