@@ -235,7 +235,7 @@ class VoronoiHexTilePlotter():
             self.vertexOverrideRiver = rb.analyze()
             self.riverBuilder = rb
 
-        if len(self.cliffEdges) != 0 and self.cliffData:
+        if self.cliffData:
             # Build a clean list of ridge segments that should be cliffs and extract the
             # cliff ends.
             rRidges = []
@@ -248,12 +248,13 @@ class VoronoiHexTilePlotter():
                     rRidgeEnds.append(r[:-1])
                 else:
                     rRidges.append(r)
-            
-            cb = CliffBuilder(self.cliffEdges, rRidges, rRidgeEnds, CLIFF_WIDTH)
-            cb.setTileInfo(self.tile.sid2region)
-            cb.buildRidgeInfo(self.vor)
-            self.vertexOverrideCliff = cb.analyze()
-            self.cliffBuilder = cb
+
+            if len(rRidges) != 0:
+                cb = CliffBuilder(self.cliffEdges, rRidges, rRidgeEnds, CLIFF_WIDTH)
+                cb.setTileInfo(self.tile.sid2region)
+                cb.buildRidgeInfo(self.vor)
+                self.vertexOverrideCliff = cb.analyze()
+                self.cliffBuilder = cb
 
     def _findSpecialEdge(self, rInfo, seedIdCorner, seedIdEdge, numEdgeRegions):
         regions = [seedIdCorner]
