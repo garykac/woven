@@ -51,7 +51,7 @@ EDGE_RIVER_INFO = {
 # Mark where cliffs are located on edges using an '*' to note the regions that
 # are separated by a cliff.
 EDGE_CLIFF_INFO = {
-    '3f': ['m', 'm', 'h', '*', 'm', 'h'],      # m - h, h - m
+    '3f': ['m', 'm', '*', 'h', 'm', 'h'],      # m - h, h - m
 }
 
 class VoronoiHexTilePlotter():
