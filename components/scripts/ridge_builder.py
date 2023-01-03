@@ -304,7 +304,6 @@ class RidgeBuilder():
         
         return seedList
 
-        
     # Calculate the line parallel to the ridge between |seedA| and |seedB|.
     # The parallel line should be distance |dist| away from the ridge.
     # Since there are 2 parallel lines that satisfy this condition, choose
@@ -489,3 +488,6 @@ class RidgeBuilder():
         self.logger.outdent()
         self.logger.log(f"{ridges}")
         return ridges
+    
+    def getRidgeSegmentLoops(self):
+        return self.ridgeSegmentLoops

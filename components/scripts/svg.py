@@ -104,6 +104,17 @@ class Path(Node):
             self.path.append(['l', dx, dy])
         self.currPosition = [x, y]
     
+    def moveXY(self, x, y):
+        if len(self.path) == 0:
+            # First point must be "move" to location.
+            self.path.append(['m', x, y])
+        else:
+            # Subsequent points are relative to the previous point.
+            dx = x - self.currPosition[0]
+            dy = y - self.currPosition[1]
+            self.path.append(['m', dx, dy])
+        self.currPosition = [x, y]
+    
     def addPoint(self, pt):
         x, y = pt
         self.addXY(x, y)

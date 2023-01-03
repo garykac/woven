@@ -8,8 +8,8 @@ import subprocess
 
 from cliff_builder import CliffBuilder
 from inkscape import Inkscape
-from map_common import calcSortedId
-from math_utils import (feq_pt, lerp, pt_along_line)
+from map_common import calcSortedId, calcSortedIdFromPair
+from math_utils import (feq_pt, lerp, lerp_line, perp_offset, pt_along_line, dist)
 from svg import SVG, Filter, Group, Image, Style, Node, Path, Text
 from object3d import Object3d
 from river_builder import RiverBuilder
@@ -28,7 +28,7 @@ STROKE_WIDTH = 0.3
 THICK_STROKE_WIDTH = 0.9
 
 RIVER_WIDTH = 2.5
-CLIFF_WIDTH = 2.5
+CLIFF_WIDTH = 1.6
 
 # Fill colors for regions based on terrain height.
 REGION_COLOR = {
@@ -143,6 +143,7 @@ class VoronoiHexTilePlotter():
         self.addInnerGlowFilter("filterInnerGlowM", 2.5, "rgb(220,174,16)")
         self.addInnerGlowFilter("filterInnerGlowL", 2.5, "rgb(203,201,43)")
         self.addInnerGlowFilter("filterInnerGlowR", 2.0, "rgb(111,161,232)")
+        self.addInnerGlowFilter("filterInnerGlowC", 2.0, "rgb(200,200,200)")
 
         layer = self.svg.add_inkscape_layer('layer', "Layer")
         layer.set_transform("translate(107.95 120) scale(1, -1)")
@@ -735,6 +736,7 @@ class VoronoiHexTilePlotter():
                 vNext = self.getVertexForRegion(vNextInfo[1], vNextInfo[0])
 
                 # Cliffs end in a single point, so don't add curves at that point.
+                # Detect this because we get 2 identical points in a row.
                 if feq_pt(v, vPrev) or feq_pt(v, vNext):
                     p.addPoint(v)
                 else:
@@ -742,20 +744,87 @@ class VoronoiHexTilePlotter():
                     self.addCurvePoints(p, vPrev, v, vNext)
 
             p.end(False)
-            p2 = copy.deepcopy(p)
+            pBorder = copy.deepcopy(p)
 
             style_cliff = Style(REGION_COLOR['c'], None)
             style_cliff.set("stroke-linecap", "round")
             style_cliff.set("stroke-linejoin", "round")
-            p2.set_style(style_cliff)
-            SVG.add_node(group_cliff, p2)
-        
+            style_cliff.set("filter", "url(#filterInnerGlowC)")
+            p.set_style(style_cliff)
+            SVG.add_node(group_cliff, p)
+            
             style_cliff_border = Style(None, STROKE_COLOR, THICK_STROKE_WIDTH)
             style_cliff_border.set("stroke-linecap", "round")
             style_cliff_border.set("stroke-linejoin", "round")
-            p.set_style(style_cliff_border)
+            pBorder.set_style(style_cliff_border)
+            SVG.add_node(group_cliff, pBorder)
+
+        # Draw fill lines for the cliff.
+        for cliffLoop in self.cliffBuilder.getRidgeSegmentLoops():
+            ridgeInfo = []
+            lastRidgeKey = None
+            # Convert the loop into a single list of regions that bound the ridge.
+            for seg in cliffLoop:
+                (seeds, verts) = seg
+                ridgeKey = calcSortedIdFromPair(seeds)
+                if ridgeKey == lastRidgeKey:
+                    break
+                lastRidgeKey = ridgeKey
+                ridgeInfo.append([seeds, verts])
+
+            terrainOrder = ['l', 'm', 'h']
+            p = Path()
+            numSegments = len(ridgeInfo)
+            for iSeg in range(numSegments):
+                seg = ridgeInfo[iSeg]
+                (seeds, verts) = seg
+                v = []
+                terrain = []
+                for seedId in seeds:
+                    terrain.append(self.seed2terrain[seedId])
+                    for vertexId in verts:
+                        v.append(self.getVertexForRegion(vertexId, seedId))
+                line0 = [v[0], v[1]]
+                line1 = [v[2], v[3]]
+                # Force line0 to be the region with higher elevation.
+                if terrainOrder.index(terrain[1]) > terrainOrder.index(terrain[0]):
+                    line0, line1 = line1, line0
+                self._drawRidgeTeeth(p, line0, line1, iSeg == 0, iSeg == numSegments - 1)
+            p.end()
+            style_cliff_pattern = Style(STROKE_COLOR)
+            p.set_style(style_cliff_pattern)
             SVG.add_node(group_cliff, p)
 
+    def _drawRidgeTeeth(self, path, lineA, lineB, firstSegment, lastSegment):
+        MM_PER_TOOTH = 2.2
+        lenA = dist(lineA[0], lineA[1])
+        lenB = dist(lineB[0], lineB[1])
+        minLength = min(lenA, lenB)
+        if not firstSegment:
+            self._drawRidgeTooth(path, lineA, lineB, 0)
+        numTeeth = int(minLength / MM_PER_TOOTH)
+        for i in range(numTeeth):
+            self._drawRidgeTooth(path, lineA, lineB, (i+1) / (numTeeth+1))
+        if not lastSegment:
+            self._drawRidgeTooth(path, lineA, lineB, 1)
+
+    def _drawRidgeTooth(self, path, lineA, lineB, t):
+        TOOTH_WIDTH = 0.8   # (mm)
+        TOOTH_POINT_WIDTH = 0.1  # (mm)
+        ptA = lerp_line(lineA, t)
+        ptB = lerp_line(lineB, t)
+        A = perp_offset([ptA, ptB], TOOTH_WIDTH)
+        B = perp_offset([ptB, ptA], TOOTH_POINT_WIDTH)
+        first = True
+        for b in B:
+            if first:
+                path.moveXY(b[0], b[1])
+            else:
+                path.addXY(b[0], b[1])
+            first = False
+        for a in A:
+            path.addXY(a[0], a[1])
+    
     def drawOverlayLayer(self):
         self.layer_overlay = self.svg.add_inkscape_layer(
             'overlay', "Overlay", self.layer)
