@@ -695,19 +695,43 @@ class VoronoiHexTilePlotter():
                 self.addCurvePoints(p, vPrev, v, vNext)
 
             p.end(False)
-            p2 = copy.deepcopy(p)
+            pBorder = copy.deepcopy(p)
 
-            style_river = Style(REGION_COLOR['r'], None)
-            style_river.set("stroke-linecap", "round")
-            style_river.set("stroke-linejoin", "round")
-            p2.set_style(style_river)
-            SVG.add_node(group_river, p2)
+            # Use groups to isolate the clip region from the image transforms/filters.
+            # +-gGlow with inner glow filter
+            #    +-gClip with clip region
+            #       +-gRotate with rotate
+            #          +-texture
+                
+            # Add a new copy of the texture swatch.
+            path = os.path.join(TEXTURES_DIR, f"r/r01.png")
+            s = 200
+            texture = Image(f"tex-river", path, -s/2, -s/2, s, s)
+            texture.set_scale_transform(1, -1)
+
+            # Choose random rotation.
+            gRotate = Group(f"grotate-rregion-river")
+            gRotate.set_transform(f"rotate(45)")
+            SVG.add_node(gRotate, texture)
+
+            # Clip the texture to the region.
+            gClip = Group(f"gclip-rregion-river")
+            clipid = self.svg.add_clip_path(f"rregion-river", p)
+            gClip.set("clip-path", f"url(#{clipid})")
+            SVG.add_node(gClip, gRotate)
+
+            # Add inner glow to enhance border.
+            gGlow = Group(f"gglow-rregion-river")
+            gGlow.set_style(f"filter:url(#filterInnerGlowR)")
+            SVG.add_node(gGlow, gClip)
+
+            SVG.add_node(group_river, gGlow)
         
             style_river_border = Style(None, STROKE_COLOR, THICK_STROKE_WIDTH)
             style_river_border.set("stroke-linecap", "round")
             style_river_border.set("stroke-linejoin", "round")
-            p.set_style(style_river_border)
-            SVG.add_node(group_river, p)
+            pBorder.set_style(style_river_border)
+            SVG.add_node(group_river, pBorder)
 
     def drawCliffLayer(self):
         if not self.cliffBuilder:
@@ -747,8 +771,6 @@ class VoronoiHexTilePlotter():
             pBorder = copy.deepcopy(p)
 
             style_cliff = Style(REGION_COLOR['c'], None)
-            style_cliff.set("stroke-linecap", "round")
-            style_cliff.set("stroke-linejoin", "round")
             style_cliff.set("filter", "url(#filterInnerGlowC)")
             p.set_style(style_cliff)
             SVG.add_node(group_cliff, p)
@@ -796,13 +818,13 @@ class VoronoiHexTilePlotter():
             SVG.add_node(group_cliff, p)
 
     def _drawRidgeTeeth(self, path, lineA, lineB, firstSegment, lastSegment):
-        MM_PER_TOOTH = 2.2
+        TOOTH_SPACING = 2.2  # (mm)
         lenA = dist(lineA[0], lineA[1])
         lenB = dist(lineB[0], lineB[1])
         minLength = min(lenA, lenB)
         if not firstSegment:
             self._drawRidgeTooth(path, lineA, lineB, 0)
-        numTeeth = int(minLength / MM_PER_TOOTH)
+        numTeeth = int(minLength / TOOTH_SPACING)
         for i in range(numTeeth):
             self._drawRidgeTooth(path, lineA, lineB, (i+1) / (numTeeth+1))
         if not lastSegment:
@@ -810,7 +832,7 @@ class VoronoiHexTilePlotter():
 
     def _drawRidgeTooth(self, path, lineA, lineB, t):
         TOOTH_WIDTH = 0.8   # (mm)
-        TOOTH_POINT_WIDTH = 0.1  # (mm)
+        TOOTH_POINT_WIDTH = 0.05  # (mm)
         ptA = lerp_line(lineA, t)
         ptB = lerp_line(lineB, t)
         A = perp_offset([ptA, ptB], TOOTH_WIDTH)
@@ -855,7 +877,9 @@ class VoronoiHexTilePlotter():
                     icon.set('transform', transform)
 
         if "mark" in self.overlayData:
+            id = 0
             for mark in self.overlayData['mark']:
+                id += 1
                 if mark:
                     # <type> '-' <cell-id> '(' <x-offset> <y-offset> ')'
                     m = re.match(r"^([a-z0-9-]+)\-(\d+)(\(([\d.-]+ [\d.-]+)\))?$", mark)
@@ -869,13 +893,69 @@ class VoronoiHexTilePlotter():
                         raise Exception(f"Unrecognized star data: {mark}")
 
                     center = self.seeds[int(cell)]
-                    icon = self.svg.add_loaded_element(self.layer_overlay, f"obj-{type}")
                     x = center[0]
                     y = -center[1]
                     if offset:
                         x += float(offset[0])
                         y -= float(offset[1])
-                    icon.set('transform', f"translate({x} {y})")
+                    if True:
+                        icon = self.svg.add_loaded_element(self.layer_overlay, f"obj-{type}")
+                        icon.set('transform', f"translate({x} {y})")
+                    else:
+                        icon = self.svg.get_loaded_path(f"obj-{type}")
+
+                        # Use groups to isolate the clip region from the image transforms/filters.
+                        # +-gGlow with inner glow filter
+                        #    +-gClip with clip region
+                        #       +-gRotate with rotate
+                        #          +-texture
+                        
+                        # Add a new copy of the texture swatch.
+                        path = os.path.join(TEXTURES_DIR, f"t/t01/t01-04.png")
+                        s = 20
+                        texture = Image(f"tex-tree-{id}", path, -s/2, -s/2, s, s)
+                        texture.set_scale_transform(1, -1)
+
+                        # Choose random rotation.
+                        gRotate = Group(f"grotate-rregion-tree-{id}")
+                        angle = 20 + self.rng.randint(50)
+                        gRotate.set_transform(f"rotate({angle})")
+                        SVG.add_node(gRotate, texture)
+
+                        # Clip the texture to the region.
+                        gClip = Group(f"gclip-rregion-tree-{id}")
+                        clipid = self.svg.add_clip_path(f"rregion-tree-{id}", icon)
+                        gClip.set("clip-path", f"url(#{clipid})")
+                        SVG.add_node(gClip, gRotate)
+
+                        # Move texture sample to the current voronoi region.
+                        gTrans = Group(f"gtrans-rregion-tree-{id}")
+                        gTrans.set_translate_transform(x, y)
+                        SVG.add_node(gTrans, gClip)
+
+                        # Add inner glow to enhance border.
+                        #gGlow = Group(f"gglow-rregion-tree")
+                        #gGlow.set_style(f"filter:url(#filterInnerGlowC)")
+                        #SVG.add_node(gGlow, gTrans)
+
+                        #style_river = Style(REGION_COLOR['r'], None)
+                        #style_river.set("stroke-linecap", "round")
+                        #style_river.set("stroke-linejoin", "round")
+                        #p.set_style(style_river)
+                        SVG.add_node(self.layer_overlay, gTrans)
+        
+                        icon = self.svg.get_loaded_path(f"obj-{type}")
+                        style_icon_border = Style(None, STROKE_COLOR, THICK_STROKE_WIDTH)
+                        style_icon_border.set("stroke-linecap", "round")
+                        style_icon_border.set("stroke-linejoin", "round")
+                        icon.set_style(style_icon_border)
+
+                        # Move texture sample to the current voronoi region.
+                        gTrans = Group(f"gtrans-rregion-tree-{id}")
+                        gTrans.set_translate_transform(x, y)
+                        SVG.add_node(gTrans, icon)
+
+                        SVG.add_node(self.layer_overlay, gTrans)
 
     # Given an edge defined by the 2 seeds, return the 2 ridge vertices of the edge.
     def getEdgeRidgeVertices(self, sid0, sid1):

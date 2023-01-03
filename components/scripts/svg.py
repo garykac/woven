@@ -294,6 +294,11 @@ class SVG(object):
             parent.add_node(layer)
         return layer
 
+    def get_loaded_path(self, id):
+        path = Path()
+        path.element = copy.deepcopy(self.idmap[id])
+        return path
+
     def add_loaded_element(self, parent, id):
         elem = copy.deepcopy(self.idmap[id])
         parent.element.append(elem)

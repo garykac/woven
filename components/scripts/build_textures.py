@@ -24,8 +24,8 @@ TEXTURES = {
     # <id>: <swatch-size>
     "l01": 50,
     "m01": 45,
-    #"h01": 40,
     "h02": 40,
+    "t01": 40,
 }
 
 def run(cmd):
@@ -146,7 +146,7 @@ class TextureBuilder():
             fout.write("}\n")
             fout.write("\n")
 
-            tTypes = {"l": [], "m": [], "h": []}
+            tTypes = {"l": [], "m": [], "h": [], "t": []}
             for t in TEXTURES:
                 tTypes[t[0]].append(t)
             fout.write("TEXTURES = {\n")
