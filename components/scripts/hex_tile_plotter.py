@@ -26,6 +26,7 @@ PLOT_CELL_IDS = True   # Add cell ids to png output file.
 STROKE_COLOR = "#000000"
 STROKE_WIDTH = 0.3
 THICK_STROKE_WIDTH = 0.9
+ICON_STROKE_WIDTH = 0.7
 
 RIVER_WIDTH = 2.5
 CLIFF_WIDTH = 1.6
@@ -52,6 +53,17 @@ EDGE_RIVER_INFO = {
 # are separated by a cliff.
 EDGE_CLIFF_INFO = {
     '3f': ['m', 'm', '*', 'h', 'm', 'h'],      # m - h, h - m
+}
+
+# Textures to use for each type of mark (for the overlay).
+OVERLAY_MARK_TEXTURES = {
+    "bridge": "t01",
+    "star": "t01",
+    "tower": "t01",
+    "tree1": "t01",
+    "tree2": "t01",
+    "tree3": "t01",
+    "tree4": "t01",
 }
 
 class VoronoiHexTilePlotter():
@@ -326,7 +338,12 @@ class VoronoiHexTilePlotter():
     def calcTexturedRegion(self, sid, terrainType, texId, swatchId, rotateAngle):
         if not terrainType in ['l', 'm', 'h']:
             raise Exception(f"Unexpected terrain type {terrainType}")
+        
+        vids = self.sid2region[sid]
+        path = self.calcRoundedRegionPath(f"rregion-{sid}", sid, vids)
+        return self.calcTexturedPath(sid, path, [terrainType, texId, swatchId], rotateAngle, self.vor.points[sid], [0,0], terrainType)
 
+    def calcTexturedPath(self, id, clipPath, texture, rotateAngle, offsetTexture, offsetPath, glowType=None):
         # Use groups to isolate the clip region from the image transforms/filters.
         # +-gGlow with inner glow filter
         #    +-gClip with clip region
@@ -335,37 +352,51 @@ class VoronoiHexTilePlotter():
         #             +-texture swatch
                 
         # Add a new copy of the texture swatch.
-        path = os.path.join(TEXTURES_DIR, f"{terrainType}/{texId}/{texId}-{swatchId:02}.png")
+        (textureType, texId, swatchId) = texture
+        textureName = f"{textureType}/{texId}/{texId}-{swatchId:02}.png"
+        texPath = os.path.join(TEXTURES_DIR, textureName)
         (swatchSize, numSwatches) = TEXTURE_INFO[texId]
         s = swatchSize
-        texture = Image(f"tex-{sid}-{texId}-{swatchId:02}", path, -s/2, -s/2, s, s)
+        texture = Image(f"tex-{id}-{texId}-{swatchId:02}", texPath, -s/2, -s/2, s, s)
         texture.set_scale_transform(1, -1)
+        childNode = texture
 
-        # Choose random rotation.
-        gRotate = Group(f"grotate-rregion-{sid}")
-        gRotate.set_transform(f"rotate({rotateAngle})")
-        SVG.add_node(gRotate, texture)
+        # Rotate the texture.
+        if rotateAngle != 0:
+            gRotate = Group(f"grotate-rregion-{id}")
+            gRotate.set_transform(f"rotate({rotateAngle})")
+            SVG.add_node(gRotate, childNode)
+            childNode = gRotate
 
-        # Move texture sample to the current voronoi region.
-        gTrans = Group(f"gtrans-rregion-{sid}")
-        (cx, cy) = self.vor.points[sid]
-        gTrans.set_translate_transform(cx, cy)
-        SVG.add_node(gTrans, gRotate)
+        # Move the center of the texture sample to the specified point.
+        if not feq_pt(offsetTexture, [0,0]):
+            gTransTex = Group(f"gtranstex-rregion-{id}")
+            gTransTex.set_translate_transform(offsetTexture[0], offsetTexture[1])
+            SVG.add_node(gTransTex, childNode)
+            childNode = gTransTex
 
-        # Clip the texture to the region.
-        gClip = Group(f"gclip-rregion-{sid}")
-        vids = self.sid2region[sid]
-        path = self.calcRoundedRegionPath(f"rregion-{sid}", sid, vids)
-        clipid = self.svg.add_clip_path(f"rregion-{sid}", path)
+        # Clip the texture to the path.
+        gClip = Group(f"gclip-rregion-{id}")
+        clipid = self.svg.add_clip_path(f"rregion-{id}", clipPath)
         gClip.set("clip-path", f"url(#{clipid})")
-        SVG.add_node(gClip, gTrans)
+        SVG.add_node(gClip, childNode)
+        childNode = gClip
+
+        # Move the path (with clipped texture) to |offsetPath|.
+        if not feq_pt(offsetPath, [0,0]):
+            gTransPath = Group(f"gtranspath-rregion-{id}")
+            gTransPath.set_translate_transform(offsetPath[0], offsetPath[1])
+            SVG.add_node(gTransPath, childNode)
+            childNode = gTransPath
 
         # Add inner glow to enhance border.
-        gGlow = Group(f"gglow-rregion-{sid}")
-        gGlow.set_style(f"filter:url(#filterInnerGlow{terrainType.upper()})")
-        SVG.add_node(gGlow, gClip)
+        if glowType != None:
+            gGlow = Group(f"gglow-rregion-{id}")
+            gGlow.set_style(f"filter:url(#filterInnerGlow{glowType})")
+            SVG.add_node(gGlow, childNode)
+            childNode = gGlow
         
-        return gGlow
+        return childNode
 
     def drawRoundedRegionStrokeLayer(self):
         layer_region_rounded = self.svg.add_inkscape_layer(
@@ -697,35 +728,8 @@ class VoronoiHexTilePlotter():
             p.end(False)
             pBorder = copy.deepcopy(p)
 
-            # Use groups to isolate the clip region from the image transforms/filters.
-            # +-gGlow with inner glow filter
-            #    +-gClip with clip region
-            #       +-gRotate with rotate
-            #          +-texture
-                
-            # Add a new copy of the texture swatch.
-            path = os.path.join(TEXTURES_DIR, f"r/r01.png")
-            s = 200
-            texture = Image(f"tex-river", path, -s/2, -s/2, s, s)
-            texture.set_scale_transform(1, -1)
-
-            # Choose random rotation.
-            gRotate = Group(f"grotate-rregion-river")
-            gRotate.set_transform(f"rotate(45)")
-            SVG.add_node(gRotate, texture)
-
-            # Clip the texture to the region.
-            gClip = Group(f"gclip-rregion-river")
-            clipid = self.svg.add_clip_path(f"rregion-river", p)
-            gClip.set("clip-path", f"url(#{clipid})")
-            SVG.add_node(gClip, gRotate)
-
-            # Add inner glow to enhance border.
-            gGlow = Group(f"gglow-rregion-river")
-            gGlow.set_style(f"filter:url(#filterInnerGlowR)")
-            SVG.add_node(gGlow, gClip)
-
-            SVG.add_node(group_river, gGlow)
+            node = self.calcTexturedPath("texriver", p, ["r", "r02", 1], 45, [0,0], [0,0], "R")
+            SVG.add_node(group_river, node)
         
             style_river_border = Style(None, STROKE_COLOR, THICK_STROKE_WIDTH)
             style_river_border.set("stroke-linecap", "round")
@@ -885,73 +889,41 @@ class VoronoiHexTilePlotter():
                     m = re.match(r"^([a-z0-9-]+)\-(\d+)(\(([\d.-]+ [\d.-]+)\))?$", mark)
                     if m:
                         type = m.group(1)
-                        cell = m.group(2)
+                        sid = m.group(2)
                         offset = None
                         if m.group(3):
                             offset = m.group(4).split(' ')
                     else:
-                        raise Exception(f"Unrecognized star data: {mark}")
+                        raise Exception(f"Unrecognized mark data: {mark}")
 
-                    center = self.seeds[int(cell)]
+                    center = self.seeds[int(sid)]
                     x = center[0]
                     y = -center[1]
                     if offset:
                         x += float(offset[0])
                         y -= float(offset[1])
-                    if True:
+                    if False:
                         icon = self.svg.add_loaded_element(self.layer_overlay, f"obj-{type}")
                         icon.set('transform', f"translate({x} {y})")
                     else:
                         icon = self.svg.get_loaded_path(f"obj-{type}")
 
-                        # Use groups to isolate the clip region from the image transforms/filters.
-                        # +-gGlow with inner glow filter
-                        #    +-gClip with clip region
-                        #       +-gRotate with rotate
-                        #          +-texture
-                        
-                        # Add a new copy of the texture swatch.
-                        path = os.path.join(TEXTURES_DIR, f"t/t01/t01-04.png")
-                        s = 20
-                        texture = Image(f"tex-tree-{id}", path, -s/2, -s/2, s, s)
-                        texture.set_scale_transform(1, -1)
-
-                        # Choose random rotation.
-                        gRotate = Group(f"grotate-rregion-tree-{id}")
-                        angle = 20 + self.rng.randint(50)
-                        gRotate.set_transform(f"rotate({angle})")
-                        SVG.add_node(gRotate, texture)
-
-                        # Clip the texture to the region.
-                        gClip = Group(f"gclip-rregion-tree-{id}")
-                        clipid = self.svg.add_clip_path(f"rregion-tree-{id}", icon)
-                        gClip.set("clip-path", f"url(#{clipid})")
-                        SVG.add_node(gClip, gRotate)
-
-                        # Move texture sample to the current voronoi region.
-                        gTrans = Group(f"gtrans-rregion-tree-{id}")
-                        gTrans.set_translate_transform(x, y)
-                        SVG.add_node(gTrans, gClip)
-
-                        # Add inner glow to enhance border.
-                        #gGlow = Group(f"gglow-rregion-tree")
-                        #gGlow.set_style(f"filter:url(#filterInnerGlowC)")
-                        #SVG.add_node(gGlow, gTrans)
-
-                        #style_river = Style(REGION_COLOR['r'], None)
-                        #style_river.set("stroke-linecap", "round")
-                        #style_river.set("stroke-linejoin", "round")
-                        #p.set_style(style_river)
-                        SVG.add_node(self.layer_overlay, gTrans)
+                        texId = OVERLAY_MARK_TEXTURES[type]
+                        texType = texId[0]
+                        (swatchSize, numSwatches) = TEXTURE_INFO[texId]
+                        swatchId = self.rng.randint(numSwatches) + 1
+                        rotateAngle = self.rng.randint(360)
+                        node = self.calcTexturedPath(f"{sid}-{type}-{id}", icon, [texType, texId, swatchId], rotateAngle, [0,0], [x,y], None)
+                        SVG.add_node(self.layer_overlay, node)
         
                         icon = self.svg.get_loaded_path(f"obj-{type}")
-                        style_icon_border = Style(None, STROKE_COLOR, THICK_STROKE_WIDTH)
+                        style_icon_border = Style(None, STROKE_COLOR, ICON_STROKE_WIDTH)
                         style_icon_border.set("stroke-linecap", "round")
                         style_icon_border.set("stroke-linejoin", "round")
                         icon.set_style(style_icon_border)
 
-                        # Move texture sample to the current voronoi region.
-                        gTrans = Group(f"gtrans-rregion-tree-{id}")
+                        # Move icon to the correct location.
+                        gTrans = Group(f"gtransborder-{sid}-{type}-{id}")
                         gTrans.set_translate_transform(x, y)
                         SVG.add_node(gTrans, icon)
 

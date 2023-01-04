@@ -15,6 +15,8 @@ import xml.etree.ElementTree as ET
 from xml.etree.ElementTree import Element
 from xml.etree.ElementTree import ElementTree
 
+VERBOSE = False
+
 MAP_OUTPUT_DIR = "../maps"
 MAP_TEMPLATE_DIR = os.path.join(MAP_OUTPUT_DIR, 'templates')
 
@@ -25,8 +27,11 @@ TEXTURES = {
     "l01": 50,
     "m01": 45,
     "h02": 40,
-    "t01": 40,
+    "t01": 20,
+    "r02": 200,
 }
+
+TEXTURE_TYPES = [t[0] for t in TEXTURES.keys()]
 
 def run(cmd):
     result = subprocess.run(cmd, stdout=subprocess.PIPE)
@@ -60,13 +65,17 @@ class TextureBuilder():
             if tag == "image":
                 self.x = (float)(c.attrib.get("x"))
                 self.y = (float)(c.attrib.get("y"))
-                self.scaledHeight = (float)(c.attrib.get("height"))
                 self.scaledWidth = (float)(c.attrib.get("width"))
                 self.scaledHeight = (float)(c.attrib.get("height"))
 
     def extractCircleInfo(self, root):
         swatchId = 0
         print(f"Processing {self.id}", end='')
+
+        outputDir = os.path.join(TEXTURE_DIR, f"{self.terrainType}/{self.id}")
+        if not os.path.exists(outputDir):
+           os.makedirs(outputDir)
+
         for c in root:
             (ns, tag) = splitTag(c.tag)
             if tag in ["ellipse", "circle"]:
@@ -81,8 +90,9 @@ class TextureBuilder():
         self.swatchCounts[self.id] = swatchId
 
     def genTexture(self, swatchId, cx, cy):
-        #print(f"size: {self.width} x {self.height}")
-        #print(f"Scaled size: {self.scaledWidth} x {self.scaledHeight}")
+        if VERBOSE:
+            print(f"size: {self.width} x {self.height}")
+            print(f"Scaled size: {self.scaledWidth} x {self.scaledHeight}")
         scale = self.width / self.scaledWidth
         #            (x,y)               scaledWidth
         #               +-------------------+
@@ -105,6 +115,16 @@ class TextureBuilder():
         originX = (int)((x - swatchSize/2) * scale)
         originY = (int)((y - swatchSize/2) * scale)
 
+        # If the scale is too large, we'll have larger files than needed.
+        # Restrict the overall scale to be 10 (dots-per-mm) which is roughly 254dpi.
+        resizeScale = None
+        if scale > 10:
+            resizeScale = 10 / scale
+            if VERBOSE:
+                print(f"resizeScale: {resizeScale}")
+
+        if VERBOSE:
+            print(f"swatchSize: {swatchSize}; scale: {scale} {width}x{height} @ {originX},{originY}")
         if originX + width > self.width:
             error(f"Swatch {swatchId} off right edge of texture: {originX} + {width} > {self.width}")
         if originY + height > self.height:
@@ -114,6 +134,10 @@ class TextureBuilder():
         cmd = ["convert"]
         cmd.append(os.path.join(TEXTURE_DIR, f"{self.terrainType}/{id}.png"))
         cmd.extend(["-crop", f"{width}x{height}+{originX}+{originY}"])
+        if resizeScale:
+            newWidth = width * resizeScale
+            newHeight = height * resizeScale
+            cmd.extend(["-resize", f"{newWidth}x{newHeight}"])
         cmd.append(os.path.join(TEXTURE_DIR, f"{self.terrainType}/{id}/{id}-{swatchId:02d}.png"))
         result = run(cmd)
 
@@ -146,7 +170,10 @@ class TextureBuilder():
             fout.write("}\n")
             fout.write("\n")
 
-            tTypes = {"l": [], "m": [], "h": [], "t": []}
+            
+            tTypes = {}
+            for t in TEXTURE_TYPES:
+                tTypes[t] = []
             for t in TEXTURES:
                 tTypes[t[0]].append(t)
             fout.write("TEXTURES = {\n")
