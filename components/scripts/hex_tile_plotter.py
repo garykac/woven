@@ -708,8 +708,9 @@ class VoronoiHexTilePlotter():
         group_river.set("clip-path", f"url(#{clippath_id})")
 
         rivers = self.riverBuilder.getRidgeVertices()
+        p = Path()
         for river in rivers:
-            p = Path()
+            p.resetMove()
             numVerts = len(river)
             for i in range(numVerts):
                 vInfo = river[i]
@@ -725,17 +726,17 @@ class VoronoiHexTilePlotter():
                 vNext = self.getVertexForRegion(vNextInfo[1], vNextInfo[0])
                 self.addCurvePoints(p, vPrev, v, vNext)
 
-            p.end(False)
-            pBorder = copy.deepcopy(p)
+        p.end()
+        pBorder = copy.deepcopy(p)
 
-            node = self.calcTexturedPath("texriver", p, ["r", "r02", 1], 45, [0,0], [0,0], "R")
-            SVG.add_node(group_river, node)
-        
-            style_river_border = Style(None, STROKE_COLOR, THICK_STROKE_WIDTH)
-            style_river_border.set("stroke-linecap", "round")
-            style_river_border.set("stroke-linejoin", "round")
-            pBorder.set_style(style_river_border)
-            SVG.add_node(group_river, pBorder)
+        node = self.calcTexturedPath("texriver", p, ["r", "r02", 1], 45, [0,0], [0,0], "R")
+        SVG.add_node(group_river, node)
+    
+        style_river_border = Style(None, STROKE_COLOR, THICK_STROKE_WIDTH)
+        style_river_border.set("stroke-linecap", "round")
+        style_river_border.set("stroke-linejoin", "round")
+        pBorder.set_style(style_river_border)
+        SVG.add_node(group_river, pBorder)
 
     def drawCliffLayer(self):
         if not self.cliffBuilder:

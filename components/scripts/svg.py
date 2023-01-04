@@ -92,27 +92,33 @@ class Path(Node):
         super().__init__('path', id)
         self.path = []
         self.currPosition = [0, 0]
+        self.moveNextPoint = True
     
+    def resetMove(self):
+        self.moveNextPoint = True
+
     def addXY(self, x, y):
-        if len(self.path) == 0:
+        if self.moveNextPoint:
             # First point must be "move" to location.
-            self.path.append(['m', x, y])
+            self.path.append(['M', x, y])
         else:
             # Subsequent points draw lines from the previous point.
             dx = x - self.currPosition[0]
             dy = y - self.currPosition[1]
             self.path.append(['l', dx, dy])
+        self.moveNextPoint = False
         self.currPosition = [x, y]
     
     def moveXY(self, x, y):
-        if len(self.path) == 0:
+        if self.moveNextPoint:
             # First point must be "move" to location.
-            self.path.append(['m', x, y])
+            self.path.append(['M', x, y])
         else:
             # Subsequent points are relative to the previous point.
             dx = x - self.currPosition[0]
             dy = y - self.currPosition[1]
             self.path.append(['m', dx, dy])
+        self.moveNextPoint = False
         self.currPosition = [x, y]
     
     def addPoint(self, pt):
@@ -148,7 +154,7 @@ class Path(Node):
                 current_type = type
             first_point = False
             
-            if type in ['l', 'm']:
+            if type in ['l', 'm', 'M']:
                 (x, y) = pt[1:]
                 path += f" {x:.6g} {y:.6g}"
             elif type == "c":
