@@ -57,9 +57,9 @@ EDGE_CLIFF_INFO = {
 
 # Textures to use for each type of mark (for the overlay).
 OVERLAY_MARK_TEXTURES = {
-    "bridge": "t01",
-    "star": "t01",
-    "tower": "t01",
+    "bridge": "g01",
+    "star": "s01",
+    "tower": "g01",
     "tree1": "t01",
     "tree2": "t01",
     "tree3": "t01",
@@ -323,7 +323,7 @@ class VoronoiHexTilePlotter():
                 # Random texture rotation angle.
                 angle = self.rng.randint(360)
 
-                region = self.calcTexturedRegion(sid, terrainType, texId, swatchId, angle)
+                region = self.calcTexturedRegionNode(sid, terrainType, texId, swatchId, angle)
             else:
                 id = f"roundedregionfill-{sid}"
                 vids = self.sid2region[sid]
@@ -335,24 +335,55 @@ class VoronoiHexTilePlotter():
 
             SVG.add_node(group_region_rounded, region)
 
-    def calcTexturedRegion(self, sid, terrainType, texId, swatchId, rotateAngle):
+    def calcTexturedRegionNode(self, sid, terrainType, texId, swatchId, rotateAngle):
         if not terrainType in ['l', 'm', 'h']:
             raise Exception(f"Unexpected terrain type {terrainType}")
         
+        id = f"rregion-{sid}"
         vids = self.sid2region[sid]
-        path = self.calcRoundedRegionPath(f"rregion-{sid}", sid, vids)
-        return self.calcTexturedPath(sid, path, [terrainType, texId, swatchId], rotateAngle, self.vor.points[sid], [0,0], terrainType)
+        path = self.calcRoundedRegionPath(id, sid, vids)
+        texturedPathOps = {
+            'pathClip': path,
+            'textureType': terrainType,
+            'textureId': texId,
+            'textureSwatchId': swatchId,
+            'textureRotateAngle': rotateAngle,
+            'textureOffsetXY': self.vor.points[sid],
+            'pathInnerGlow': terrainType.upper(),
+        }
+        return self.calcTexturedPathNode(id, texturedPathOps)
 
-    def calcTexturedPath(self, id, clipPath, texture, rotateAngle, offsetTexture, offsetPath, glowType=None):
+    # |ops| contains the options for the textured path:
+    # Path options:
+    #   pathClip - the path used for clipping the texture
+    #   pathRotateAngle - rotation applied after clipping
+    #   pathOffsetXY - the offset to apply after clipping
+    #   pathInnerGlow - inner glow filter suffix to apply: H, M, L, R or C
+    #      Filter name is "filterInnerGlow" + suffix
+    # Texture options:
+    #   textureType - texture type: h, m, l, r or c
+    #   textureId - texture id: x##, where x is textureType and ## is 2-digit number
+    #   textureSwatchId - the swatch id to use from the texture
+    #   textureRotateAngle - texture rotation angle applied before clipping
+    #   textureOffsetXY - texture offset applied before clipping
+    def calcTexturedPathNode(self, id, ops):
+
+        if self.options['texture-fill']:
+            raise Exception("Texture fill is disabled.")
+
         # Use groups to isolate the clip region from the image transforms/filters.
         # +-gGlow with inner glow filter
-        #    +-gClip with clip region
-        #       +-gTranslate with translate to move to region center
-        #          +-gRotate with rotate
-        #             +-texture swatch
+        # +-gTransPath - translate the clipped path
+        # +-gRotateTex - rotate the clipped path
+        # +-gClip - clip the texture
+        # +-gTransTex - translate the texture to move it to the path
+        # +-gRotateTex - rotate the texture
+        # +-texture swatch
                 
         # Add a new copy of the texture swatch.
-        (textureType, texId, swatchId) = texture
+        textureType = ops['textureType']
+        texId = ops['textureId']
+        swatchId = ops['textureSwatchId']
         textureName = f"{textureType}/{texId}/{texId}-{swatchId:02}.png"
         texPath = os.path.join(TEXTURES_DIR, textureName)
         (swatchSize, numSwatches) = TEXTURE_INFO[texId]
@@ -362,36 +393,48 @@ class VoronoiHexTilePlotter():
         childNode = texture
 
         # Rotate the texture.
-        if rotateAngle != 0:
-            gRotate = Group(f"grotate-rregion-{id}")
-            gRotate.set_transform(f"rotate({rotateAngle})")
-            SVG.add_node(gRotate, childNode)
-            childNode = gRotate
+        rotateAngle = ops.get('textureRotateAngle', None)
+        if not rotateAngle is None:
+            gRotateTex = Group(f"gRotateTex-{id}")
+            gRotateTex.set_transform(f"rotate({rotateAngle})")
+            SVG.add_node(gRotateTex, childNode)
+            childNode = gRotateTex
 
         # Move the center of the texture sample to the specified point.
-        if not feq_pt(offsetTexture, [0,0]):
-            gTransTex = Group(f"gtranstex-rregion-{id}")
+        offsetTexture = ops.get('textureOffsetXY', None)
+        if not offsetTexture is None:
+            gTransTex = Group(f"gTransTex-{id}")
             gTransTex.set_translate_transform(offsetTexture[0], offsetTexture[1])
             SVG.add_node(gTransTex, childNode)
             childNode = gTransTex
 
         # Clip the texture to the path.
-        gClip = Group(f"gclip-rregion-{id}")
-        clipid = self.svg.add_clip_path(f"rregion-{id}", clipPath)
+        gClip = Group(f"gclip-{id}")
+        clipid = self.svg.add_clip_path(id, ops['pathClip'])
         gClip.set("clip-path", f"url(#{clipid})")
         SVG.add_node(gClip, childNode)
         childNode = gClip
 
-        # Move the path (with clipped texture) to |offsetPath|.
-        if not feq_pt(offsetPath, [0,0]):
-            gTransPath = Group(f"gtranspath-rregion-{id}")
+        # Rotate the clipped path.
+        rotateAngle = ops.get('pathRotateAngle', None)
+        if not rotateAngle is None:
+            gRotatePath = Group(f"gRotatePath-{id}")
+            gRotatePath.set_transform(f"rotate({rotateAngle})")
+            SVG.add_node(gRotatePath, childNode)
+            childNode = gRotatePath
+
+        # Translate the clipped path.
+        offsetPath = ops.get('pathOffsetXY', None)
+        if not offsetPath is None:
+            gTransPath = Group(f"gTransPath-{id}")
             gTransPath.set_translate_transform(offsetPath[0], offsetPath[1])
             SVG.add_node(gTransPath, childNode)
             childNode = gTransPath
 
         # Add inner glow to enhance border.
-        if glowType != None:
-            gGlow = Group(f"gglow-rregion-{id}")
+        glowType = ops.get('pathInnerGlow', None)
+        if not glowType is None:
+            gGlow = Group(f"gglow-{id}")
             gGlow.set_style(f"filter:url(#filterInnerGlow{glowType})")
             SVG.add_node(gGlow, childNode)
             childNode = gGlow
@@ -439,7 +482,7 @@ class VoronoiHexTilePlotter():
                 # Random texture rotation angle.
                 angle = self.rng.randint(360)
 
-                region = self.calcTexturedRegion(sid, terrainType, texId, 0, angle)
+                region = self.calcTexturedRegionNode(sid, terrainType, texId, 0, angle)
             else:
                 id = f"lake-{sid}"
                 vids = self.sid2region[sid]
@@ -729,9 +772,24 @@ class VoronoiHexTilePlotter():
         p.end()
         pBorder = copy.deepcopy(p)
 
-        node = self.calcTexturedPath("texriver", p, ["r", "r02", 1], 45, [0,0], [0,0], "R")
-        SVG.add_node(group_river, node)
-    
+        if self.options['texture-fill']:
+            texturedPathOps = {
+                'pathClip': p,
+                'textureType': "r",
+                'textureId': "r02",
+                'textureSwatchId': 1,
+                'textureRotateAngle': 45,
+                'pathInnerGlow': "R",
+            }
+            node = self.calcTexturedPathNode("texriver", texturedPathOps)
+            SVG.add_node(group_river, node)
+        else:
+            style_river = Style(REGION_COLOR['r'], None)
+            style_river.set("stroke-linecap", "round")
+            style_river.set("stroke-linejoin", "round")
+            p.set_style(style_river)
+            SVG.add_node(group_river, p)
+
         style_river_border = Style(None, STROKE_COLOR, THICK_STROKE_WIDTH)
         style_river_border.set("stroke-linecap", "round")
         style_river_border.set("stroke-linejoin", "round")
@@ -869,6 +927,7 @@ class VoronoiHexTilePlotter():
                     else:
                         raise Exception(f"Unrecognized bridge data: {bridge}")
 
+                    # Place the  bridge at the midpoint of the ridge between the regions.
                     (startId, endId) = seedIds.split('-')
                     ptStart = self.seeds[int(startId)]
                     ptEnd = self.seeds[int(endId)]
@@ -876,10 +935,44 @@ class VoronoiHexTilePlotter():
                     degTheta = 90 + (rTheta * 180 / math.pi);
                     edge_vertices = self.getEdgeRidgeVertices(startId, endId)
                     center = lerp(edge_vertices[0], edge_vertices[1], 0.5)
-                    icon = self.svg.add_loaded_element(self.layer_overlay, 'obj-bridge')
-                    
-                    transform = f"translate({center[0]} {-center[1]}) rotate({degTheta})"
-                    icon.set('transform', transform)
+
+                    if self.options['texture-fill']:
+                        type = 'bridge'
+                        sidPair = f"{startId}-{endId}"
+                        texId = OVERLAY_MARK_TEXTURES[type]
+                        texType = texId[0]
+                        (swatchSize, numSwatches) = TEXTURE_INFO[texId]
+                        swatchId = self.rng.randint(numSwatches) + 1
+                        icon = self.svg.get_loaded_path(f"obj-{type}")
+
+                        texturedPathOps = {
+                            'pathClip': icon,
+                            'pathRotateAngle': degTheta,
+                            'pathOffsetXY': [center[0], -center[1]],
+                            'textureType': texType,
+                            'textureId': texId,
+                            'textureSwatchId': swatchId,
+                        }
+                        node = self.calcTexturedPathNode(f"{sidPair}-{type}", texturedPathOps)
+                        SVG.add_node(self.layer_overlay, node)
+
+                        icon = self.svg.get_loaded_path(f"obj-{type}")
+                        style_icon_border = Style(None, STROKE_COLOR, ICON_STROKE_WIDTH)
+                        style_icon_border.set("stroke-linecap", "round")
+                        style_icon_border.set("stroke-linejoin", "round")
+                        icon.set_style(style_icon_border)
+
+                        # Move icon border to the correct location.
+                        gTrans = Group(f"gtransborder-{sidPair}-{type}")
+                        transform = f"translate({center[0]} {-center[1]}) rotate({degTheta})"
+                        gTrans.set('transform', transform)
+                        SVG.add_node(gTrans, icon)
+
+                        SVG.add_node(self.layer_overlay, gTrans)
+                    else:
+                        icon = self.svg.add_loaded_element(self.layer_overlay, 'obj-bridge')
+                        transform = f"translate({center[0]} {-center[1]}) rotate({degTheta})"
+                        icon.set('transform', transform)
 
         if "mark" in self.overlayData:
             id = 0
@@ -903,10 +996,8 @@ class VoronoiHexTilePlotter():
                     if offset:
                         x += float(offset[0])
                         y -= float(offset[1])
-                    if False:
-                        icon = self.svg.add_loaded_element(self.layer_overlay, f"obj-{type}")
-                        icon.set('transform', f"translate({x} {y})")
-                    else:
+
+                    if self.options['texture-fill']:
                         icon = self.svg.get_loaded_path(f"obj-{type}")
 
                         texId = OVERLAY_MARK_TEXTURES[type]
@@ -914,7 +1005,16 @@ class VoronoiHexTilePlotter():
                         (swatchSize, numSwatches) = TEXTURE_INFO[texId]
                         swatchId = self.rng.randint(numSwatches) + 1
                         rotateAngle = self.rng.randint(360)
-                        node = self.calcTexturedPath(f"{sid}-{type}-{id}", icon, [texType, texId, swatchId], rotateAngle, [0,0], [x,y], None)
+
+                        texturedPathOps = {
+                            'pathClip': icon,
+                            'pathOffsetXY': [x,y],
+                            'textureType': texType,
+                            'textureId': texId,
+                            'textureSwatchId': swatchId,
+                            'textureRotateAngle': rotateAngle,
+                        }
+                        node = self.calcTexturedPathNode(f"{sid}-{type}-{id}", texturedPathOps)
                         SVG.add_node(self.layer_overlay, node)
         
                         icon = self.svg.get_loaded_path(f"obj-{type}")
@@ -923,12 +1023,15 @@ class VoronoiHexTilePlotter():
                         style_icon_border.set("stroke-linejoin", "round")
                         icon.set_style(style_icon_border)
 
-                        # Move icon to the correct location.
+                        # Move icon border to the correct location.
                         gTrans = Group(f"gtransborder-{sid}-{type}-{id}")
                         gTrans.set_translate_transform(x, y)
                         SVG.add_node(gTrans, icon)
 
                         SVG.add_node(self.layer_overlay, gTrans)
+                    else:
+                        icon = self.svg.add_loaded_element(self.layer_overlay, f"obj-{type}")
+                        icon.set('transform', f"translate({x} {y})")
 
     # Given an edge defined by the 2 seeds, return the 2 ridge vertices of the edge.
     def getEdgeRidgeVertices(self, sid0, sid1):

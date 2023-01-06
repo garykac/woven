@@ -25,14 +25,14 @@
      inkscape:document-units="mm"
      showgrid="false"
      inkscape:zoom="15.329353"
-     inkscape:cx="1.4351552"
-     inkscape:cy="0.84804625"
+     inkscape:cx="2.5767558"
+     inkscape:cy="1.6308581"
      inkscape:window-width="1132"
      inkscape:window-height="892"
      inkscape:window-x="504"
-     inkscape:window-y="72"
+     inkscape:window-y="44"
      inkscape:window-maximized="0"
-     inkscape:current-layer="layer1" />
+     inkscape:current-layer="layer3" />
   <defs
      id="defs2" />
   <g
@@ -440,13 +440,13 @@
      inkscape:groupmode="layer"
      id="layer3"
      inkscape:label="Bridge"
-     style="display:none">
+     style="display:inline">
     <path
        sodipodi:nodetypes="ccccc"
        inkscape:connector-curvature="0"
        id="obj-bridge"
-       d="m -1.3629478,2.973799 c 0.6829002,-2.17565439 0.68923869,-3.60295062 0.015075,-5.9083917 l 2.8035417,0.00714 C 0.73648446,-0.63363961 0.73738591,0.81474035 1.4406036,2.9809656 Z"
-       style="display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:2.14313;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:2.14313, 4.28625;stroke-dashoffset:0;stroke-opacity:1" />
+       d="m -1.8914385,4.0802787 c 0.93898783,-2.9915248 0.94770326,-4.9540571 0.020728,-8.1240386 l 3.8548699,0.00981 C 0.99528092,-0.87994939 0.99652041,1.111573 1.9634448,4.0901328 Z"
+       style="display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:2.9468;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:2.9468, 5.89359;stroke-dashoffset:0;stroke-opacity:1" />
   </g>
   <g
      inkscape:label="Star"

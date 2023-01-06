@@ -24,11 +24,13 @@ TEXTURE_DIR = "../../third_party/textures"
 
 TEXTURES = {
     # <id>: <swatch-size>
-    "l01": 50,
-    "m01": 45,
-    "h02": 40,
-    "t01": 20,
-    "r02": 200,
+    "g01": 30,  # grey stone (castle/tower, bridge)
+    "h02": 40,  # high elevation
+    "l01": 50,  # low elevation
+    "m01": 45,  # mid elevation
+    "r02": 200, # rivers and lakes
+    "s01": 20,  # star icons
+    "t01": 20,  # trees
 }
 
 TEXTURE_TYPES = [t[0] for t in TEXTURES.keys()]
@@ -54,9 +56,13 @@ class TextureBuilder():
         tree.parse(file)
 
         imageNode = findId(tree.getroot(), f"{self.id}")
+        if not imageNode:
+            raise Exception(f"Unable to find {self.id} in {file}")
         self.extractImageInfo(imageNode)
 
         circlesNode = findId(tree.getroot(), f"{self.id}-circles")
+        if not imageNode:
+            raise Exception(f"Unable to find {self.id}-circles in {file}")
         self.extractCircleInfo(circlesNode)
 
     def extractImageInfo(self, root):
