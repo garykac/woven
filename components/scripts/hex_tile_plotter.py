@@ -178,6 +178,7 @@ class VoronoiHexTilePlotter():
         self.drawRoundedRegionStrokeLayer()
         
         self.drawRegionLayer()
+        self.drawUnmodifiedRegionLayer()
 
         self.drawSeedLayer()
         self.drawSeedExclusionZoneLayer()
@@ -300,7 +301,7 @@ class VoronoiHexTilePlotter():
             terrain_type = self.seed2terrain[sid]
             color = self.getTerrainStyle(terrain_type)
             self.plotRegion(vids, color)
-            self.drawRegion(id, sid, vids, color, gClip)
+            self.drawUnmodifiedRegion(id, sid, vids, color, gClip)
 
     def drawRoundedRegionFillLayer(self):
         layer_region_rounded = self.svg.add_inkscape_layer(
@@ -501,6 +502,15 @@ class VoronoiHexTilePlotter():
             rid = self.vor.point_region[sid]
             id = f"region-{sid}"
             self.drawRegion(id, sid, self.vor.regions[rid], "#ffffff", layer_region)
+
+    def drawUnmodifiedRegionLayer(self):
+        layer_region = self.svg.add_inkscape_layer('unmod-region', "Unmodified Region", self.layer)
+        layer_region.hide()
+
+        for sid in range(0, self.numActiveSeeds):
+            rid = self.vor.point_region[sid]
+            id = f"unmodregion-{sid}"
+            self.drawUnmodifiedRegion(id, sid, self.vor.regions[rid], "#ffffff", layer_region)
 
     def drawSeedLayer(self):
         layer_seeds = self.svg.add_inkscape_layer('seeds', "Seeds", self.layer)
@@ -1185,6 +1195,18 @@ class VoronoiHexTilePlotter():
         if len(vids) == 0:
             return
         vertices = [self.getVertexForRegion(i, sid) for i in vids]
+        
+        p = Path() if id == None else Path(id)
+        p.addPoints(vertices)
+        p.end()
+        p.set_style(Style(color, STROKE_COLOR, STROKE_WIDTH))
+        SVG.add_node(layer, p)
+
+    # Draw voronoi region in the SVG file, given a list of vertex ids.
+    def drawUnmodifiedRegion(self, id, sid, vids, color, layer):
+        if len(vids) == 0:
+            return
+        vertices = [self.vertices[i] for i in vids]
         
         p = Path() if id == None else Path(id)
         p.addPoints(vertices)
