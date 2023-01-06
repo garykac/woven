@@ -20,6 +20,8 @@ OPTIONS = {
                  'desc': "Export .obj"},
     'export-pdf': {'type': 'bool', 'default': False,
                    'desc': "Export .pdf from .svg"},
+    'export-png': {'type': 'bool', 'default': True,
+                   'desc': "Export .png from .svg"},
     'id': {'type': 'int', 'default': None,
            'desc': "Process only this tile id (used with --load)"},
     'iter': {'type': 'int', 'default': 500,

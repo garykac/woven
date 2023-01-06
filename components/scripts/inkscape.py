@@ -35,3 +35,35 @@ class Inkscape(object):
         cmd.append("--export-area-page")
         cmd.append(svg_path)
         subprocess.run(cmd, stdout = subprocess.DEVNULL)
+
+    @staticmethod
+    def run_actions(svg_path, inkscape_actions):
+        cmd = [INKSCAPE_APP]
+
+        actions = ';'.join(inkscape_actions.actions)
+        cmd.append(f"--actions={actions}")
+
+        cmd.append(svg_path)
+        subprocess.run(cmd, stdout = subprocess.DEVNULL)
+
+class InkscapeActions(object):
+    def __init__(self):
+        self.actions = []
+    
+    def addAction(self, action):
+        self.actions.append(action)
+
+    def selectById(self, id):
+        self.addAction(f"select-by-id:{id}")
+
+    def selectionHide(self):
+        self.addAction("selection-hide")
+
+    def exportId(self, id):
+        self.addAction(f"export-id:{id}")
+
+    def exportFilename(self, filename):
+        self.addAction(f"export-filename:{filename}")
+
+    def exportDo(self):
+        self.addAction("export-do")

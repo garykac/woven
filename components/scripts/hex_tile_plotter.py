@@ -7,7 +7,7 @@ import re
 import subprocess
 
 from cliff_builder import CliffBuilder
-from inkscape import Inkscape
+from inkscape import Inkscape, InkscapeActions
 from map_common import calcSortedId, calcSortedIdFromPair
 from math_utils import (feq_pt, lerp, lerp_line, perp_offset, pt_along_line, dist)
 from svg import SVG, Filter, Group, Image, Style, Node, Path, Text
@@ -368,7 +368,7 @@ class VoronoiHexTilePlotter():
     #   textureOffsetXY - texture offset applied before clipping
     def calcTexturedPathNode(self, id, ops):
 
-        if self.options['texture-fill']:
+        if not self.options['texture-fill']:
             raise Exception("Texture fill is disabled.")
 
         # Use groups to isolate the clip region from the image transforms/filters.
@@ -1079,6 +1079,26 @@ class VoronoiHexTilePlotter():
                         os.path.abspath(out_svg),
                         os.path.abspath(out_pdf))
 
+                if self.options['export-png']:
+                    outdir_png = self.getPngOutputDir()
+                    out_png = os.path.join(outdir_png, f"{name}.png")
+
+                    actions = InkscapeActions()
+
+                    # Hide the "annotations" layer.
+                    actions.selectById("annotations")
+                    actions.selectionHide()
+
+                    # Export only the hex tile
+                    actions.exportId("border")
+
+                    actions.exportFilename(out_png)
+                    actions.exportDo()
+
+                    Inkscape.run_actions(
+                        os.path.abspath(out_svg),
+                        actions)
+
                 out_pngid = os.path.join(outdir_pngid, '%s.png' % name)
             else:
                 outdir_pngid = os.path.join(outdir_pngid, self.options['anim_subdir'])
@@ -1093,6 +1113,10 @@ class VoronoiHexTilePlotter():
             if GENERATE_PLOT:
                 plt.savefig(out_pngid, bbox_inches='tight')
             plt.close(fig)
+
+    def getPngOutputDir(self):
+        out_dir = self.options['outdir_png']
+        return self.makeDir(out_dir)
 
     def getPngIdOutputDir(self):
         out_dir = self.options['outdir_png_id']
