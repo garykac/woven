@@ -1065,7 +1065,7 @@ class VoronoiHexTilePlotter():
 
     def writeOutput(self, fig, plotId):
         if self.options['write_output']:
-            outdir_png = self.getPngOutputDir()
+            outdir_pngid = self.getPngIdOutputDir()
             name = self.calcBaseFilename()
             if plotId == None:
                 outdir_svg = self.getSvgOutputDir()
@@ -1079,23 +1079,23 @@ class VoronoiHexTilePlotter():
                         os.path.abspath(out_svg),
                         os.path.abspath(out_pdf))
 
-                out_png = os.path.join(outdir_png, '%s.png' % name)
+                out_pngid = os.path.join(outdir_pngid, '%s.png' % name)
             else:
-                outdir_png = os.path.join(outdir_png, self.options['anim_subdir'])
-                if not os.path.isdir(outdir_png):
-                    os.makedirs(outdir_png);
-                out_png = os.path.join(outdir_png, f"{name}-{plotId:03d}")
+                outdir_pngid = os.path.join(outdir_pngid, self.options['anim_subdir'])
+                if not os.path.isdir(outdir_pngid):
+                    os.makedirs(outdir_pngid);
+                out_pngid = os.path.join(outdir_pngid, f"{name}-{plotId:03d}")
                 plt.text(-self.size, -self.size, plotId)
 
             plt.axis("off")
             plt.xlim([x * self.size for x in [-1, 1]])
             plt.ylim([y * self.size for y in [-1, 1]])
             if GENERATE_PLOT:
-                plt.savefig(out_png, bbox_inches='tight')
+                plt.savefig(out_pngid, bbox_inches='tight')
             plt.close(fig)
 
-    def getPngOutputDir(self):
-        out_dir = self.options['outdir_png']
+    def getPngIdOutputDir(self):
+        out_dir = self.options['outdir_png_id']
         return self.makeDir(out_dir)
 
     def getSvgOutputDir(self):

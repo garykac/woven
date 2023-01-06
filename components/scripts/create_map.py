@@ -99,6 +99,7 @@ def parse_options():
     # Non-public options.
     options['outdir_svg'] = os.path.join(MAP_OUTPUT_DIR, "map-svg")
     options['outdir_png'] = os.path.join(MAP_OUTPUT_DIR, "map-png")
+    options['outdir_png_id'] = os.path.join(MAP_OUTPUT_DIR, "map-png-id")
     options['outdir_pdf'] = os.path.join(MAP_OUTPUT_DIR, "map-pdf")
     options['map_obj_template'] = os.path.join(MAP_TEMPLATE_DIR, 'map-obj-template.svg')
     options['anim_subdir'] = "anim"  # Subdirectory of png output dir
