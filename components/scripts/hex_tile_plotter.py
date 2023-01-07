@@ -138,12 +138,13 @@ class VoronoiHexTilePlotter():
             return REGION_COLOR['_']
         return REGION_COLOR[type]
 
-    def plot_anim(self, plotId):
+    def plotTile(self, plotId):
         fig = plt.figure(figsize=(8,8))
         self.plotClippedRegions()
-        self.plotBadEdges()
-        self.plotTooCloseSeedsLayer()
-        self.plotInscribedCircles()
+        if plotId:
+            self.plotBadEdges()
+            self.plotTooCloseSeedsLayer()
+            self.plotInscribedCircles()
         self.plotRegionIds()
         self.writePlotOutput(fig, plotId)
 
@@ -199,11 +200,14 @@ class VoronoiHexTilePlotter():
         outdir_pngid = self.getPngIdOutputDir()
         name = self.tile.calcBaseFilename()
 
-        outdir_pngid = os.path.join(outdir_pngid, self.options['anim_subdir'])
-        if not os.path.isdir(outdir_pngid):
-            os.makedirs(outdir_pngid);
-        out_pngid = os.path.join(outdir_pngid, f"{name}-{plotId:03d}")
-        plt.text(-self.size, -self.size, plotId)
+        if plotId is None:
+            out_pngid = os.path.join(outdir_pngid, f"{name}.png")
+        else:
+            outdir_pngid = os.path.join(outdir_pngid, self.options['anim_subdir'])
+            if not os.path.isdir(outdir_pngid):
+                os.makedirs(outdir_pngid);
+            out_pngid = os.path.join(outdir_pngid, f"{name}-{plotId:03d}")
+            plt.text(-self.size, -self.size, plotId)
 
         plt.axis("off")
         plt.xlim([x * self.size for x in [-1, 1]])
@@ -214,8 +218,7 @@ class VoronoiHexTilePlotter():
 
     def plot(self, plotId=None):
         self.svg = SVG([215.9, 279.4])  #SVG([210, 297])
-        if plotId:
-            self.plot_anim(plotId)
+        self.plotTile(plotId)
 
         # Build list of template ids and then load from svg file.
         svg_ids = []
@@ -667,12 +670,12 @@ class VoronoiHexTilePlotter():
             self._drawCircle(id, center, '0.5', black_fill, layer_circles)
     
     def drawTileId(self):
-        if self.options['id']:
+        id = self.options['id']
+        if id:
             self.layer_text = self.svg.add_inkscape_layer(
                 'tile-id', "Tile Id", self.layer)
             self.layer_text.set_transform("scale(1,-1)")
 
-            id = self.options['id']
             id_text = self.svg.add_loaded_element(self.layer_text, 'tile-id')
             id_text.set('transform', f"translate(0 {-self.size+8})")
             SVG.set_text(id_text, f"{id:03d}")
@@ -694,8 +697,7 @@ class VoronoiHexTilePlotter():
             self._addAnnotationText("rng seed RANDOM")
 
         pattern = self.options['pattern']
-        pNum = self.tile.calcNumericPattern()
-        self._addAnnotationText(f"pattern {pNum} / {pattern}")
+        self._addAnnotationText(f"pattern {pattern}")
         self._addAnnotationText(f"seed attempts: {self.tile.seedAttempts}")
         self._addAnnotationText(f"seed distance: "
                 f"l {self.tile.minDistanceL:.03g}; "
@@ -1302,17 +1304,6 @@ class VoronoiHexTilePlotter():
         p.addPoints(self.vHex)
         p.end()
         return self.svg.add_clip_path(None, p)
-
-    def writeTileData(self):
-        center = self.options['center']
-        if center == None:
-            center = "AVG"
-        print(f"TERRAIN,{self.options['pattern']},{self.options['seed']},{center},", end='')
-
-        while len(self.seed2terrain) <= 100:
-            self.seed2terrain.append('')
-        terrain = ','.join(self.seed2terrain)
-        print(terrain)
 
     #
     # 3D tile generation (for rendering in Blender)

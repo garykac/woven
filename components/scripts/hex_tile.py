@@ -7,6 +7,7 @@ import random  # Only used to seed numpy random, if needed
 import scipy.spatial
 import subprocess
 
+from data_tile_pattern_ids import TILE_PATTERN_IDS
 from hex_tile_plotter import VoronoiHexTilePlotter
 from map_common import calcSortedId
 from math_utils import (feq, fge, fle, scale, clamp,
@@ -1192,13 +1193,19 @@ class VoronoiHexTile():
 
         # Apply the adjustments.
         newInterior = self.vInteriorSeeds.copy()
+        numAdjustments = 0
         for sid in range(0, len(self.vInteriorSeeds)):
             if sid in self.adjustments:
+                numAdjustments += 1
                 if self.debug == sid:
                     print(f"Adjusting {sid} by {self.adjustments[sid]}")
                 newInterior[sid][0] += self.adjustments[sid][0]
                 newInterior[sid][1] += self.adjustments[sid][1]
         self.vInteriorSeeds = np.array(newInterior)
+
+        if hasChanges and numAdjustments == 0:
+            # This could happen when the only adjustable seeds are along the tile edge.
+            raise Exception("Unable to make further adjustments")
 
         return hasChanges
 
@@ -1209,24 +1216,32 @@ class VoronoiHexTile():
         plotter = VoronoiHexTilePlotter(self)
         plotter.plot(plotId)
 
-    def calcNumericPattern(self):
-        altPattern = {
-            'l': '1',
-            'm': '2',
-            'h': '3',
-        }
-    
-        pattern = self.options['pattern']
-        return ''.join([altPattern[i] for i in pattern])
-        
+    def writeTileData(self):
+        center = self.options['center']
+        if center == None:
+            center = "AVG"
+        id = self.options['id']
+        if id is None:
+            id = TILE_PATTERN_IDS[self.options['pattern']]
+            id = f"{id}+"
+
+        print(f"{id},TERRAIN,{self.options['pattern']},{self.options['seed']},{center},", end='')
+
+        while len(self.seed2terrain) <= 100:
+            self.seed2terrain.append('')
+        terrain = ','.join(self.seed2terrain)
+        print(terrain)
+
     def calcBaseFilename(self):
-        name = "hex"
-        if self.options['id'] != None:
-            name = f"hex-{self.options['id']:03d}"
-        elif self.options['seed'] != None:
-            pNum = self.calcNumericPattern()
-            name = f"hex-{pNum}-{self.options['seed']}"
-        return name
+        id = self.options['id']
+        if id:
+            return f"hex-{id:03d}"
+
+        id = TILE_PATTERN_IDS[self.options['pattern']]
+        suffix = ""
+        if self.options['seed']:
+            suffix = f"-{self.options['seed']}"
+        return f"hex-{id:03d}{suffix}"
 
     def cleanupAnimation(self):
         out_dir = os.path.join(self.options['outdir_png_id'], self.options['anim_subdir'])

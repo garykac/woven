@@ -1,4 +1,5 @@
 
+from data_tile_pattern_ids import TILE_PATTERN_IDS
 from hex_tile import VoronoiHexTile
 
 class VoronoiHexTileLoader():
@@ -16,8 +17,22 @@ class VoronoiHexTileLoader():
     def processTile(self, terrainData, riverData, cliffData, overlayData):
         options = self.options.copy()
 
-        print(f"Tile {options['id']} - pattern {options['pattern']} - seed {options['seed']}")
+        id = options['id']
+        pattern = options['pattern']
+        seed = options['seed']
+        if id is None:
+            idString = "???"
+        else:
+            idString = f"{id}"
+        print(f"Tile {idString} - pattern {pattern} - seed {seed}")
 
+        if id:
+            # Verify the that id matches the correct range for this pattern.
+            # Note that the 0th value of each range is unused.
+            patternBaseId = TILE_PATTERN_IDS[pattern]
+            if id <= patternBaseId or id >= patternBaseId+20:
+                print(f"WARNING: Id {options['id']} does not match pattern range {patternBaseId}+")
+        
         v = VoronoiHexTile(options)
         v.init()
         v.setTerrainData(terrainData)
@@ -33,7 +48,7 @@ class VoronoiHexTileLoader():
             v.generate()
         v.plot()
 
-        if self.options['verbose']:
+        if self.options['verbose'] or not id or not seed:
             v.writeTileData()
 
         if options['export-3d']:
