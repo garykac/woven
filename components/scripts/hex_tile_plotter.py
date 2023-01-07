@@ -1,10 +1,8 @@
 import copy
-import glob
 import math
 import matplotlib.pyplot as plt
 import os
 import re
-import subprocess
 
 from cliff_builder import CliffBuilder
 from inkscape import Inkscape, InkscapeActions
@@ -140,9 +138,84 @@ class VoronoiHexTilePlotter():
             return REGION_COLOR['_']
         return REGION_COLOR[type]
 
+    def plot_anim(self, plotId):
+        fig = plt.figure(figsize=(8,8))
+        self.plotClippedRegions()
+        self.plotBadEdges()
+        self.plotTooCloseSeedsLayer()
+        self.plotInscribedCircles()
+        self.plotRegionIds()
+        self.writePlotOutput(fig, plotId)
+
+    def plotClippedRegions(self):
+        for sid in range(0, self.numActiveSeeds):
+            vids = self.sid2clippedRegion[sid]
+            terrain_type = self.seed2terrain[sid]
+            color = self.getTerrainStyle(terrain_type)
+            self.plotRegion(vids, color)
+
+    def plotBadEdges(self):
+        if len(self.tile.badEdges) == 0:
+            return
+        
+        for bei in self.tile.badEdges:
+            badEdge = self.tile.badEdges[bei]
+            vid0, vid1, rid = badEdge[0]
+            self.plotBadVertex(self.vertices[vid0])
+            self.plotBadVertex(self.vertices[vid1])
+
+    def plotTooCloseSeedsLayer(self):
+        if len(self.tile.tooClose) == 0:
+            return
+
+        for spair in self.tile.tooClose:
+            s0, s1 = spair
+            self.plotBadVertex(self.seeds[s0])
+            self.plotBadVertex(self.seeds[s1])
+    
+    def plotBadVertex(self, v):
+        circle = plt.Circle(v, 1, color="r")
+        plt.gca().add_patch(circle)
+
+    def plotInscribedCircles(self):
+        if self.tile.enableSmallRegionCheck:
+            if self.tile.circleRatio > self.tile.circleRatioThreshold:
+                for c in [self.tile.minCircle, self.tile.maxCircle]:
+                    center, radius = self.tile.regionCircles[c]
+                    circle = plt.Circle(center, radius, color="#80000080")
+                    plt.gca().add_patch(circle)
+    
+    def plotRegionIds(self):
+        for sid in range(0, self.numActiveSeeds):
+            center = self.seeds[sid]
+            text = f"{sid}"
+            if PLOT_CELL_IDS:
+                plt.text(center[0]-1.4, center[1]-1.5, text)
+
+    def writePlotOutput(self, fig, plotId):
+        if not self.options['write_output']:
+            return
+
+        outdir_pngid = self.getPngIdOutputDir()
+        name = self.tile.calcBaseFilename()
+
+        outdir_pngid = os.path.join(outdir_pngid, self.options['anim_subdir'])
+        if not os.path.isdir(outdir_pngid):
+            os.makedirs(outdir_pngid);
+        out_pngid = os.path.join(outdir_pngid, f"{name}-{plotId:03d}")
+        plt.text(-self.size, -self.size, plotId)
+
+        plt.axis("off")
+        plt.xlim([x * self.size for x in [-1, 1]])
+        plt.ylim([y * self.size for y in [-1, 1]])
+        if GENERATE_PLOT:
+            plt.savefig(out_pngid, bbox_inches='tight')
+        plt.close(fig)
+
     def plot(self, plotId=None):
         self.svg = SVG([215.9, 279.4])  #SVG([210, 297])
-        fig = plt.figure(figsize=(8,8))
+        if plotId:
+            self.plot_anim(plotId)
 
         # Build list of template ids and then load from svg file.
         svg_ids = []
@@ -183,6 +256,7 @@ class VoronoiHexTilePlotter():
         self.drawSeedLayer()
         self.drawSeedExclusionZoneLayer()
         self.drawMarginExclusionZoneLayer()
+
         self.drawBadEdgeLayer()
         self.drawTooCloseSeedsLayer()
         self.drawInscribedCirclesLayer()
@@ -202,7 +276,7 @@ class VoronoiHexTilePlotter():
 
         self.drawHexTileBorder("border", "Border", stroke)
         
-        self.writeOutput(fig, plotId)
+        self.writeSvgOutput()
 
     def addInnerGlowFilter(self, name, blur, rgb):
         filter = Filter(name, 0.41051782, 0.41554717, 0.16543989, 0.17009096)
@@ -297,7 +371,6 @@ class VoronoiHexTilePlotter():
         for sid in range(0, self.numActiveSeeds):
             vids = self.sid2clippedRegion[sid]
             id = f"clippedregion-{sid}"
-            color = "#ffffff"
             terrain_type = self.seed2terrain[sid]
             color = self.getTerrainStyle(terrain_type)
             self.plotRegion(vids, color)
@@ -557,8 +630,8 @@ class VoronoiHexTilePlotter():
         for bei in self.tile.badEdges:
             badEdge = self.tile.badEdges[bei]
             vid0, vid1, rid = badEdge[0]
-            self.plotBadVertex(self.vertices[vid0], layer_bad_edges)
-            self.plotBadVertex(self.vertices[vid1], layer_bad_edges)
+            self.drawBadVertex(self.vertices[vid0], layer_bad_edges)
+            self.drawBadVertex(self.vertices[vid1], layer_bad_edges)
 
     def drawTooCloseSeedsLayer(self):
         if len(self.tile.tooClose) == 0:
@@ -573,8 +646,8 @@ class VoronoiHexTilePlotter():
             p.set_style(Style(None, "#800000", "0.5px"))
             SVG.add_node(layer_too_close, p)
             
-            self.plotBadVertex(self.seeds[s0], layer_too_close)
-            self.plotBadVertex(self.seeds[s1], layer_too_close)
+            self.drawBadVertex(self.seeds[s0], layer_too_close)
+            self.drawBadVertex(self.seeds[s1], layer_too_close)
     
     def drawInscribedCirclesLayer(self):
         layer_circles = self.svg.add_inkscape_layer(
@@ -592,12 +665,6 @@ class VoronoiHexTilePlotter():
 
             id = f"incircle-ctr-{sid}"
             self._drawCircle(id, center, '0.5', black_fill, layer_circles)
-        if self.tile.enableSmallRegionCheck:
-            if self.circleRatio > self.circleRatioThreshold:
-                for c in [self.minCircle, self.maxCircle]:
-                    center, radius = self.tile.regionCircles[c]
-                    circle = plt.Circle(center, radius, color="#80000080")
-                    plt.gca().add_patch(circle)
     
     def drawTileId(self):
         if self.options['id']:
@@ -627,7 +694,7 @@ class VoronoiHexTilePlotter():
             self._addAnnotationText("rng seed RANDOM")
 
         pattern = self.options['pattern']
-        pNum = self.calcNumericPattern()
+        pNum = self.tile.calcNumericPattern()
         self._addAnnotationText(f"pattern {pNum} / {pattern}")
         self._addAnnotationText(f"seed attempts: {self.tile.seedAttempts}")
         self._addAnnotationText(f"seed distance: "
@@ -1063,8 +1130,6 @@ class VoronoiHexTilePlotter():
         for sid in range(0, self.numActiveSeeds):
             center = self.seeds[sid]
             text = f"{sid}"
-            if PLOT_CELL_IDS:
-                plt.text(center[0]-1.4, center[1]-1.5, text)
             t = Text(None, center[0]-1.4, -center[1], text)
             SVG.add_node(layer_region_ids, t)
 
@@ -1073,56 +1138,43 @@ class VoronoiHexTilePlotter():
         circle.set_style(fill)
         SVG.add_node(layer, circle)
 
-    def writeOutput(self, fig, plotId):
-        if self.options['write_output']:
-            outdir_pngid = self.getPngIdOutputDir()
-            name = self.calcBaseFilename()
-            if plotId == None:
-                outdir_svg = self.getSvgOutputDir()
-                out_svg = os.path.join(outdir_svg, '%s.svg' % name)
-                self.svg.write(out_svg)
+    def writeSvgOutput(self):
+        if not self.options['write_output']:
+            return
 
-                if self.options['export-pdf']:
-                    outdir_pdf = self.getPdfOutputDir()
-                    out_pdf = os.path.join(outdir_pdf, '%s.pdf' % name)
-                    Inkscape.export_pdf(
-                        os.path.abspath(out_svg),
-                        os.path.abspath(out_pdf))
+        outdir_pngid = self.getPngIdOutputDir()
+        name = self.tile.calcBaseFilename()
 
-                if self.options['export-png']:
-                    outdir_png = self.getPngOutputDir()
-                    out_png = os.path.join(outdir_png, f"{name}.png")
+        outdir_svg = self.getSvgOutputDir()
+        out_svg = os.path.join(outdir_svg, '%s.svg' % name)
+        self.svg.write(out_svg)
 
-                    actions = InkscapeActions()
+        if self.options['export-pdf']:
+            outdir_pdf = self.getPdfOutputDir()
+            out_pdf = os.path.join(outdir_pdf, '%s.pdf' % name)
+            Inkscape.export_pdf(
+                os.path.abspath(out_svg),
+                os.path.abspath(out_pdf))
 
-                    # Hide the "annotations" layer.
-                    actions.selectById("annotations")
-                    actions.selectionHide()
+        if self.options['export-png']:
+            outdir_png = self.getPngOutputDir()
+            out_png = os.path.join(outdir_png, f"{name}.png")
 
-                    # Export only the hex tile
-                    actions.exportId("border")
+            actions = InkscapeActions()
 
-                    actions.exportFilename(out_png)
-                    actions.exportDo()
+            # Hide the "annotations" layer.
+            actions.selectById("annotations")
+            actions.selectionHide()
 
-                    Inkscape.run_actions(
-                        os.path.abspath(out_svg),
-                        actions)
+            # Export only the hex tile
+            actions.exportId("border")
 
-                out_pngid = os.path.join(outdir_pngid, '%s.png' % name)
-            else:
-                outdir_pngid = os.path.join(outdir_pngid, self.options['anim_subdir'])
-                if not os.path.isdir(outdir_pngid):
-                    os.makedirs(outdir_pngid);
-                out_pngid = os.path.join(outdir_pngid, f"{name}-{plotId:03d}")
-                plt.text(-self.size, -self.size, plotId)
+            actions.exportFilename(out_png)
+            actions.exportDo()
 
-            plt.axis("off")
-            plt.xlim([x * self.size for x in [-1, 1]])
-            plt.ylim([y * self.size for y in [-1, 1]])
-            if GENERATE_PLOT:
-                plt.savefig(out_pngid, bbox_inches='tight')
-            plt.close(fig)
+            Inkscape.run_actions(
+                os.path.abspath(out_svg),
+                actions)
 
     def getPngOutputDir(self):
         out_dir = self.options['outdir_png']
@@ -1145,29 +1197,7 @@ class VoronoiHexTilePlotter():
             os.makedirs(directory);
         return directory
 
-    def calcNumericPattern(self):
-        altPattern = {
-            'l': '1',
-            'm': '2',
-            'h': '3',
-        }
-    
-        pattern = self.options['pattern']
-        return ''.join([altPattern[i] for i in pattern])
-        
-    def calcBaseFilename(self):
-        name = "hex"
-        if self.options['id'] != None:
-            name = f"hex-{self.options['id']:03d}"
-        elif self.options['seed'] != None:
-            pNum = self.calcNumericPattern()
-            name = f"hex-{pNum}-{self.options['seed']}"
-        return name
-
-    def plotBadVertex(self, v, layer):
-        circle = plt.Circle(v, 1, color="r")
-        plt.gca().add_patch(circle)
-
+    def drawBadVertex(self, v, layer):
         circle = SVG.circle(0, v[0], v[1], '1')
         circle.set_style(Style(fill="#800000"))
         SVG.add_node(layer, circle)
@@ -1273,29 +1303,6 @@ class VoronoiHexTilePlotter():
         p.end()
         return self.svg.add_clip_path(None, p)
 
-    def cleanupAnimation(self):
-        out_dir = os.path.join(self.options['outdir_png'], self.options['anim_subdir'])
-        anim_pngs = os.path.join(out_dir, '*.png')
-        for png in glob.glob(anim_pngs):
-            os.remove(png)
-
-    def exportAnimation(self):
-        anim_dir = os.path.join(self.options['outdir_png'], self.options['anim_subdir'])
-        cmd = ["convert"]
-        cmd.extend(["-delay", "15"])
-        cmd.extend(["-loop", "0"])
-        cmd.append(os.path.join(anim_dir, "hex-*"))
-
-        base = self.calcBaseFilename()
-        last_file = f"{base}-{self.iteration-1:03d}.png"
-        cmd.extend(["-delay", "100"])
-        cmd.append(os.path.join(anim_dir, last_file))
-
-        anim_file = os.path.join(self.options['outdir_png'], f"{base}.gif")
-        cmd.append(anim_file)
-
-        subprocess.run(cmd)
-
     def writeTileData(self):
         center = self.options['center']
         if center == None:
@@ -1340,7 +1347,7 @@ class VoronoiHexTilePlotter():
         obj = Object3d()
 
         out_dir = self.getObjOutputDir()
-        name = self.calcBaseFilename()
+        name = self.tile.calcBaseFilename()
         outfile = os.path.join(out_dir, '%s.obj' % name)
         obj.open(outfile)
         

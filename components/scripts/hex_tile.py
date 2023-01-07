@@ -1,8 +1,11 @@
 import copy
+import glob
 import math
 import numpy as np
+import os
 import random  # Only used to seed numpy random, if needed
 import scipy.spatial
+import subprocess
 
 from hex_tile_plotter import VoronoiHexTilePlotter
 from map_common import calcSortedId
@@ -1205,3 +1208,45 @@ class VoronoiHexTile():
     def plot(self, plotId=None):
         plotter = VoronoiHexTilePlotter(self)
         plotter.plot(plotId)
+
+    def calcNumericPattern(self):
+        altPattern = {
+            'l': '1',
+            'm': '2',
+            'h': '3',
+        }
+    
+        pattern = self.options['pattern']
+        return ''.join([altPattern[i] for i in pattern])
+        
+    def calcBaseFilename(self):
+        name = "hex"
+        if self.options['id'] != None:
+            name = f"hex-{self.options['id']:03d}"
+        elif self.options['seed'] != None:
+            pNum = self.calcNumericPattern()
+            name = f"hex-{pNum}-{self.options['seed']}"
+        return name
+
+    def cleanupAnimation(self):
+        out_dir = os.path.join(self.options['outdir_png_id'], self.options['anim_subdir'])
+        anim_pngs = os.path.join(out_dir, '*.png')
+        for png in glob.glob(anim_pngs):
+            os.remove(png)
+
+    def exportAnimation(self):
+        anim_dir = os.path.join(self.options['outdir_png_id'], self.options['anim_subdir'])
+        cmd = ["convert"]
+        cmd.extend(["-delay", "15"])
+        cmd.extend(["-loop", "0"])
+        cmd.append(os.path.join(anim_dir, "hex-*"))
+
+        base = self.calcBaseFilename()
+        last_file = f"{base}-{self.iteration-1:03d}.png"
+        cmd.extend(["-delay", "100"])
+        cmd.append(os.path.join(anim_dir, last_file))
+
+        anim_file = os.path.join(self.options['outdir_png_id'], f"{base}.gif")
+        cmd.append(anim_file)
+
+        subprocess.run(cmd)

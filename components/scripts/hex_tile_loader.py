@@ -39,8 +39,8 @@ class VoronoiHexTileLoader():
         if options['export-3d']:
 	        v.writeObject3d()
     
-        #if options['anim']:
-        #    v.exportAnimation()
+        if options['anim']:
+            v.exportAnimation()
 
     def processTileData(self, file):
         header = True
