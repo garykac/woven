@@ -238,6 +238,8 @@ class VoronoiHexTile():
         for i in range(0, NUM_SIDES):
             i2 = (i + 1) % NUM_SIDES
             corners = pattern[i] + pattern[i2]
+            if not corners in self.corner2edge:
+                raise Exception(f"Invalid adjacent corners: {pattern[i]} and {pattern[i2]}")
             self.edgeTypes.append(self.corner2edge[corners])
 
         self.nSeedsPerEdge = [len(self.edgeSeedInfo[x]) for x in self.edgeTypes]
@@ -257,6 +259,17 @@ class VoronoiHexTile():
                 raise Exception(f"Edge patterns don't connect: {edge} ({edgeTypes}) and {edgeNext} ({edgeNextTypes})")
             self.cornerType.append(edgeRegionTypes[0])
 
+        # Verify that the pattern is in its canonical form.
+        if self.options['_allow_non_canonical_pattern'] == False:
+            if not pattern in TILE_PATTERN_IDS:
+                # Try to find the canonical form.
+                for p in TILE_PATTERN_IDS:
+                    for i in range(1, NUM_SIDES):
+                        rotatedPattern = p[i:] + p[:i]
+                        if pattern == rotatedPattern:
+                            raise Exception(f"Non canonical pattern. Use {p} instead of {pattern}.")
+                raise Exception("Non canonical pattern.")
+                    
         # Record the terrain type for each region along the edge of the tile.
         self.seed2terrain = []
         # Add the 6 corners.

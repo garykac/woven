@@ -1444,7 +1444,8 @@ class VoronoiHexTilePlotter():
             if i != 0:
                 pattern = pattern[-i:] + pattern[0:self.tile.numSides-i]
             options['pattern'] = pattern
-            
+            options['_allow_non_canonical_pattern'] = True
+
             edgeTile = VoronoiHexTile(options)
             edgeTile.init()
             edgeTile.generate()

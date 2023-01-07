@@ -118,6 +118,8 @@ def parse_options():
     options['_neighbor_tile'] = False
     # Current edge to export (if exporting 3d).
     options['_export_3d_edge'] = None
+    # Used when generating mirrored 3d neighbors of the current tile.
+    options['_allow_non_canonical_pattern'] = False
 
     return options
 
