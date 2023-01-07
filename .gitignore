@@ -8,6 +8,7 @@ _tmp/
 
 # Map pdfs (since the binary file changes whenever they are regenerated)
 components/maps/map-pdf/*
+components/maps/map-png-id/anim/*
 
 # Archive
 archive/maps/v1-hex/map-hex-22x19.jpg
