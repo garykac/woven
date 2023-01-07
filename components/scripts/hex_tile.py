@@ -127,10 +127,6 @@ class VoronoiHexTile():
         # Min ridge length along tile edge.
         self.minRidgeLengthEdge = MIN_RIDGE_LEN_EDGE
 
-        # Circle ratio threshold.
-        # Maximum allowed ratio between largest and smallest inscribed circles.
-        self.circleRatioThreshold = 1.51
-        
         # Voronoi object has following attributes:
         # .points : array of seed values used to create the Voronoi
         # .point_region : mapping from seed index to region index
@@ -969,69 +965,39 @@ class VoronoiHexTile():
     # Find any regions that are too small.
     def findSmallRegions(self):
         self.regionCircles = {}
-        self.circleRatio = 0
         self.minCircle = None
         self.maxCircle = None
     
         minCircleRadius = 0
         maxCircleRadius = 0
         for sid in range(0, self.endInteriorSeed):
-            r = self.sid2clippedRegion[sid]
+            r = self.sid2region[sid]
             polyCenter = []
             polyRadius = 0
 
-            # Handle corner and edge regions.
-            if sid < self.endEdgeSeed:
-                if sid < self.endCornerSeed:
-                    # Center is the corner seed.
-                    polyCenter = self.seeds[sid]
-                elif sid < self.endEdgeSeed:
-                    # Find the 2 vertices that were added during clipping. This
-                    # will be the outer edge.
-                    v = []
-                    for vid in r:
-                        if self.isEdgeVertex(vid):
-                            v.append(vid)
-                    # Midpoint of outer edge is center.
-                    polyCenter = lerp_pt(self.vertices[v[0]],
-                                         self.vertices[v[1]], 0.5)
+            # Create voronoi for this polygon to use as a seleton.
+            polySeeds = []
+            for rv0 in range(0, len(r)):
+                rv1 = (rv0 + 1) % len(r)
+                vid0 = r[rv0]
+                vid1 = r[rv1]
+                mid = lerp_pt(self.vertices[vid0], self.vertices[vid1], 0.5)
+                polySeeds.append(mid)
+            polyVoro = scipy.spatial.Voronoi(polySeeds)
+
+            for v in polyVoro.vertices:
                 # Calc min distance from v to each edge of original polygon.
                 dist = -1
                 for rv0 in range(0, len(r)):
                     rv1 = (rv0 + 1) % len(r)
                     edge = [self.vertices[r[rv0]], self.vertices[r[rv1]]]
-                    d = dist_pt_line(polyCenter, edge)
-                    # Ignore if d == 0 because that means that the center vertex
-                    # is on the line (which means it's an outer edge).
-                    if not feq(d, 0) and (dist == -1 or d < dist):
+                    d = dist_pt_line(v, edge)
+                    if dist == -1 or d < dist:
                         dist = d
-                polyRadius = dist
-
-            # Handle internal regions.
-            else:
-                # Create voronoi for this polygon to use as a seleton.
-                polySeeds = []
-                for rv0 in range(0, len(r)):
-                    rv1 = (rv0 + 1) % len(r)
-                    vid0 = r[rv0]
-                    vid1 = r[rv1]
-                    mid = lerp_pt(self.vertices[vid0], self.vertices[vid1], 0.5)
-                    polySeeds.append(mid)
-                polyVoro = scipy.spatial.Voronoi(polySeeds)
-
-                for v in polyVoro.vertices:
-                    # Calc min distance from v to each edge of original polygon.
-                    dist = -1
-                    for rv0 in range(0, len(r)):
-                        rv1 = (rv0 + 1) % len(r)
-                        edge = [self.vertices[r[rv0]], self.vertices[r[rv1]]]
-                        d = dist_pt_line(v, edge)
-                        if dist == -1 or d < dist:
-                            dist = d
-                    # Record vertex with largest min distance
-                    if len(polyCenter) == 0 or dist > polyRadius:
-                        polyCenter = v
-                        polyRadius = dist
+                # Record vertex with largest min distance
+                if len(polyCenter) == 0 or dist > polyRadius:
+                    polyCenter = v
+                    polyRadius = dist
 
             self.regionCircles[sid] = [polyCenter, polyRadius]
             if self.minCircle == None or polyRadius < minCircleRadius:
@@ -1040,7 +1006,6 @@ class VoronoiHexTile():
             if self.maxCircle == None or polyRadius > maxCircleRadius:
                 self.maxCircle = sid
                 maxCircleRadius = polyRadius
-        self.circleRatio = maxCircleRadius / minCircleRadius
 
     # Calculate and analyze the voronoi graph from the set of seed points.
     def generate(self):
@@ -1073,30 +1038,25 @@ class VoronoiHexTile():
 
         self.analyze()
         
-        self.printIteration(self.iteration if self.iteration > 0 else "START")
+        if self.options['verbose_iteration']:
+            self.printIteration(self.iteration if self.iteration > 0 else "START")
         if self.options['anim']:
             self.plot(self.iteration)
         self.iteration += 1
         
     def printIteration(self, i):
-        if self.options['verbose_iteration']:
-            print("Iteration", i, end='')
-            print(" -", len(self.badEdges), "bad edges", end='')
+        print("Iteration", i, end='')
+        print(" -", len(self.badEdges), "bad edges", end='')
 
-            nTooClose = len(self.tooClose)
-            if nTooClose > 0:
-                print(" -", nTooClose, "seed pairs are too close", end='')
-            
-            if self.enableSmallRegionCheck:
-                min = self.minCircle
-                max = self.maxCircle
-                if min and max:
-                    print(f" - {min} {self.regionCircles[min][1]:.5g} {max} {self.regionCircles[max][1]:.5g}", end='')
-                    print(f" - ratio {self.circleRatio:.5g}", end='')
-                if self.circleRatio > self.circleRatioThreshold:
-                    print(" - adj min/max", end='')
+        nTooClose = len(self.tooClose)
+        if nTooClose > 0:
+            print(" -", nTooClose, "seed pairs are too close", end='')
+        
+        if self.enableSmallRegionCheck:
+            min = self.minCircle
+            max = self.maxCircle
 
-            print()
+        print()
         
     def analyze(self):
         # Create a dict to map from region id to seed id.
@@ -1137,6 +1097,7 @@ class VoronoiHexTile():
 
     def update(self):
         if self.iteration > self.maxIterations:
+            self.successfulTileGeneration = False
             return False
         hasChanges = False
         self.adjustments = {}
@@ -1191,17 +1152,11 @@ class VoronoiHexTile():
             hasChanges = True
             
         if self.enableSmallRegionCheck:
-            # If there's too much difference between the largest and smallest
-            # circle, adjust the regions that surround the min and max regions.
-            if self.circleRatio > self.circleRatioThreshold:
+            if False:
                 # Move neighboring regions slightly away from the small region.
                 for sid in self.calcNeighboringRegions(self.minCircle):
                     self.calcAdjustment(sid, self.seeds[self.minCircle],
                                         self.adjustmentGrow)
-                # Move neighboring regions slightly away from the small region.
-                for sid in self.calcNeighboringRegions(self.maxCircle):
-                    self.calcAdjustment(sid, self.seeds[self.maxCircle],
-                                        self.adjustmentShrink)
                 hasChanges = True
 
         # Apply the adjustments.
@@ -1220,6 +1175,8 @@ class VoronoiHexTile():
             # This could happen when the only adjustable seeds are along the tile edge.
             raise Exception("Unable to make further adjustments")
 
+        if not hasChanges:
+            self.successfulTileGeneration = True
         return hasChanges
 
     def isEdgeVertex(self, vid):

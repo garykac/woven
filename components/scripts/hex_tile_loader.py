@@ -46,9 +46,12 @@ class VoronoiHexTileLoader():
         v.generate()
         while v.update():
             v.generate()
+        if not v.successfulTileGeneration:
+            print("Tile generation failed!")
+            v.printIteration("Final")
         v.plot()
 
-        if self.options['verbose'] or not id or not seed:
+        if v.successfulTileGeneration and (self.options['verbose'] or not id or not seed):
             v.writeTileData()
 
         if options['export-3d']:
