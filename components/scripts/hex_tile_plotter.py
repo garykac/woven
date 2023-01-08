@@ -179,19 +179,21 @@ class VoronoiHexTilePlotter():
         plt.gca().add_patch(circle)
 
     def plotInscribedCircles(self):
-        if self.tile.enableSmallRegionCheck:
-            if self.tile.circleRatio > self.tile.circleRatioThreshold:
-                for c in [self.tile.minCircle, self.tile.maxCircle]:
-                    center, radius = self.tile.regionCircles[c]
-                    circle = plt.Circle(center, radius, color="#80000080")
-                    plt.gca().add_patch(circle)
+        for sid in range(0, self.numActiveSeeds):
+            polyCenter, polyRadius = self.tile.regionCircles[sid]
+            if polyRadius < self.tile.minInscribedCircleRadius:
+                circle = plt.Circle(polyCenter, polyRadius, color="#80000080")
+                plt.gca().add_patch(circle)
     
     def plotRegionIds(self):
         for sid in range(0, self.numActiveSeeds):
             center = self.seeds[sid]
-            text = f"{sid}"
             if PLOT_CELL_IDS:
-                plt.text(center[0]-1.4, center[1]-1.5, text)
+                # Shift center point over so the id is drawn centered over the seed point.
+                xOffset = 1.4
+                if sid >= 10:
+                    xOffset *= 2
+                plt.text(center[0]-xOffset, center[1]-1.5, f"{sid}")
 
     def writePlotOutput(self, fig, plotId):
         if not self.options['write_output']:
@@ -257,6 +259,7 @@ class VoronoiHexTilePlotter():
         self.drawUnmodifiedRegionLayer()
 
         self.drawSeedLayer()
+        self.drawCentroidLayer()
         self.drawSeedExclusionZoneLayer()
         self.drawMarginExclusionZoneLayer()
 
@@ -597,6 +600,16 @@ class VoronoiHexTilePlotter():
             center = self.seeds[sid]
             id = f"seed-{sid}"
             self._drawCircle(id, center, 1.0, black_fill, layer_seeds)
+
+    def drawCentroidLayer(self):
+        layer_centroids = self.svg.add_inkscape_layer('centroids', "Centroids", self.layer)
+        layer_centroids.hide()
+
+        black_fill = Style(fill="#008080")
+        for sid in range(0, self.numActiveSeeds):
+            center = self.tile.calcCentroid(sid)
+            id = f"centroid-{sid}"
+            self._drawCircle(id, center, 1.0, black_fill, layer_centroids)
 
     def drawSeedExclusionZoneLayer(self):
         layer_seed_ex = self.svg.add_inkscape_layer(

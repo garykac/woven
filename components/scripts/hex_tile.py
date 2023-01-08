@@ -57,6 +57,10 @@ MIN_DISTANCE_H = 0.20 #0.16
 MIN_RIDGE_LEN = 0.08
 MIN_RIDGE_LEN_EDGE = 0.04
 
+# Min allowed radius for circle inscribed within region.
+# Should be at least 7.5 so that 15mm diameter pieces fit well in the region.
+MIN_INSCRIBED_CIRCLE_RADIUS = 8
+
 # Random dist of terrain types based on the corner terrain.
 # Exact probs for each cell are interpolated from corners (and center).
 TERRAIN_DIST = {
@@ -122,6 +126,8 @@ class VoronoiHexTile():
         self.minDistanceM = MIN_DISTANCE_M
         self.minDistanceH = MIN_DISTANCE_H
 
+        self.minInscribedCircleRadius = MIN_INSCRIBED_CIRCLE_RADIUS
+        
         # Min distance between 2 voronoi vertices along a ridge.
         self.minRidgeLength = MIN_RIDGE_LEN
         # Min ridge length along tile edge.
@@ -160,21 +166,25 @@ class VoronoiHexTile():
 
         # Adjustments to apply when we need to move a seed.
         # Each type of adjustment has a slightly different value so that if a
-        # seed is being adjusted in multiple ways, it will still make progress
+        # seed is being adjusted in multiple ways, it's more likely to make progress
         # toward a goal.
+        
         # Move seeds toward or away from an edge to make it longer.
         self.adjustmentSide = 0.011
         self.adjustmentNeighbor = -0.009
+
         # Move neighboring seeds closer or further to make inscribed circle
         # smaller or larger.
-        self.adjustmentGrow = -0.005  # -0.006
-        self.adjustmentShrink = 0.005
+        self.adjustmentGrow = -0.003  # -0.006
+        self.adjustmentShrink = 0.003
+
         # Move seeds away when they are too close.
         self.closeThreshold = 0.90
         self.adjustmentTooClose = -0.013
-
-        self.enableSmallRegionCheck = False
         
+        # Move seeds toward their centroid when relaxing the entire voronoi graph.
+        self.centroidRelax = 0.001
+
         # Explicit terrain/river data (loaded from file).
         self.terrainData = None
         self.riverData = None
@@ -648,6 +658,7 @@ class VoronoiHexTile():
                 sides.append([vid1, sid])
         return sides
 
+    # Calc adjustment of |sid| to move it toward |vMod| by |lerp_t|.
     def calcAdjustment(self, sid, vMod, lerp_t):
         # Don't adjust the fixed seeds along the edge.
         if sid < self.startInteriorSeed:
@@ -720,6 +731,46 @@ class VoronoiHexTile():
             self.sid2clippedRegion[sid] = self.vor.regions[rid]
             if not self.isClockwise(sid):
                 self.sid2clippedRegion[sid] = self.vor.regions[rid][::-1]
+
+    def calcCentroid(self, sid):
+        verts = self._getRegionVertices(sid)
+
+        area2 = 0.0
+        cx = 0.0
+        cy = 0.0
+        numVerts = len(verts)
+        for i in range(0, numVerts):
+            # Formula for the centroid of a polygon
+            #               n-1
+            #        1     ,---
+            # c  = ------   >     ( x  + x   ) (x  y     -  x    y  )
+            #  x    6 A    '---      i    i+1    i  i+1      i+1  i
+            #               n=0
+            #
+            #               n-1
+            #        1     ,---
+            # c  = ------   >     ( y  + y   ) (x  y     -  x    y  )
+            #  y    6 A    '---      i    i+1    i  i+1      i+1  i
+            #               n=0
+            #
+            # where A is the area:
+            #           n-1
+            #      1   ,---
+            # A = ---   >     (x  y     -  x    y  )
+            #      2   '---     i  i+1      i+1  i
+            #           n=0
+            # Note that the list of vertices wraps around so x[i+1] equals x[0].
+            (xi, yi) = verts[i]
+            (xi_1, yi_1) = verts[(i+1) % numVerts]
+            t = (xi * yi_1) - (xi_1 * yi)
+            area2 += t
+            cx += (xi + xi_1) * t
+            cy += (yi + yi_1) * t
+        
+        area = 0.5 * area2
+        cx /= 6 * area
+        cy /= 6 * area
+        return [cx, cy]
 
     # sid_c0 - seed id of start corner
     # sid_c1 - seed id of end corner
@@ -963,8 +1014,11 @@ class VoronoiHexTile():
                         print("Seeds", sid, n_sid, "are close")
 
     # Find any regions that are too small.
+    # Calculate the radius of the largest inscribed circle for each region.
+    # Flag regions with a radius that is below the threshold.
     def findSmallRegions(self):
         self.regionCircles = {}
+        self.tooSmallCircles = []
         self.minCircle = None
         self.maxCircle = None
     
@@ -1006,6 +1060,9 @@ class VoronoiHexTile():
             if self.maxCircle == None or polyRadius > maxCircleRadius:
                 self.maxCircle = sid
                 maxCircleRadius = polyRadius
+
+            if polyRadius < self.minInscribedCircleRadius:
+                self.tooSmallCircles.append([sid, polyCenter, polyRadius])
 
     # Calculate and analyze the voronoi graph from the set of seed points.
     def generate(self):
@@ -1052,9 +1109,9 @@ class VoronoiHexTile():
         if nTooClose > 0:
             print(" -", nTooClose, "seed pairs are too close", end='')
         
-        if self.enableSmallRegionCheck:
-            min = self.minCircle
-            max = self.maxCircle
+        nTooSmall = len(self.tooSmallCircles)
+        if nTooSmall > 0:
+            print(" -", nTooSmall, "regions are too small", end='')
 
         print()
         
@@ -1151,14 +1208,42 @@ class VoronoiHexTile():
                 print(f"Seed {s1} is being pushed away from {s0}")
             hasChanges = True
             
-        if self.enableSmallRegionCheck:
-            if False:
-                # Move neighboring regions slightly away from the small region.
-                for sid in self.calcNeighboringRegions(self.minCircle):
-                    self.calcAdjustment(sid, self.seeds[self.minCircle],
-                                        self.adjustmentGrow)
-                hasChanges = True
+        # Adjust regions that are too small.
+        for smallCircleInfo in self.tooSmallCircles:
+            sid, polyCenter, polyRadius = smallCircleInfo
+            neighbors = self.calcNeighboringRegions(sid)
 
+            if self.debug == sid:
+                print(f"Region {sid} is too small (r={polyRadius}).")
+
+            # Calc distance to each neighbor.
+            dClosest = 1000
+            dFurthest = 0
+            for n in neighbors:
+                d = dist(self.seeds[sid], self.seeds[n])
+                if d > dFurthest:
+                    dFurthest = d
+                    sidFurthest = n
+                if d < dClosest:
+                    dClosest = d
+                    sidClosest = n
+
+            # Move the furthest neighbor closer and the closest one further to reshape
+            # the region.
+            self.calcAdjustment(sidFurthest, self.seeds[sid], self.adjustmentShrink)
+            self.calcAdjustment(sidClosest, self.seeds[sid], self.adjustmentGrow)
+
+            hasChanges = True
+
+        # If we're making any adjustments, then relax the entire voronoi graph by moving
+        # the seeds closer to their centroid.
+        if hasChanges:
+            for sid in range(0, self.numActiveSeeds):
+                centroid = self.calcCentroid(sid)
+                self.calcAdjustment(sid, centroid, self.centroidRelax)
+                if self.debug == sid:
+                    print(f"relaxing {sid} from {self.seeds[sid]} to {centroid} @ {self.centroidRelax}")
+            
         # Apply the adjustments.
         newInterior = self.vInteriorSeeds.copy()
         numAdjustments = 0
