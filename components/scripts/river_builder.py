@@ -8,6 +8,8 @@ class RiverBuilder(RidgeBuilder):
         # Regions that are lakes.
         self.lakes = lakes
         
+        self.lakeVertices = {}
+        
     def _post_analyze(self):
         pass
 
@@ -16,5 +18,6 @@ class RiverBuilder(RidgeBuilder):
         for lake in self.lakes:
             if currV in self.sid2region[lake]:
                 self.logger.log(f"found lake {lake} at vertex {currV}")
+                self.lakeVertices[currV] = ridgeKey
                 return True
         return False

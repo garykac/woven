@@ -26,8 +26,8 @@ STROKE_WIDTH = 0.3
 THICK_STROKE_WIDTH = 0.9
 ICON_STROKE_WIDTH = 0.7
 
-RIVER_WIDTH = 2.5
-CLIFF_WIDTH = 1.6
+RIVER_WIDTH = 2.8
+CLIFF_WIDTH = 2.0
 
 # Fill colors for regions based on terrain height.
 REGION_COLOR = {
@@ -825,19 +825,12 @@ class VoronoiHexTilePlotter():
         for river in rivers:
             p.resetMove()
             numVerts = len(river)
+            verts = []
             for i in range(numVerts):
-                vInfo = river[i]
-                (sid, vid) = vInfo
-                v = self.getVertexForRegion(vid, sid)
+                (sid, vid) = river[i]
+                verts.append(self.getVertexForRegion(vid, sid))
 
-                # Add a small curve for this vertex.
-                prev = (i + numVerts - 1) % numVerts
-                next = (i + 1) % numVerts
-                vPrevInfo = river[prev]
-                vNextInfo = river[next]
-                vPrev = self.getVertexForRegion(vPrevInfo[1], vPrevInfo[0])
-                vNext = self.getVertexForRegion(vNextInfo[1], vNextInfo[0])
-                self.addCurvePoints(p, vPrev, v, vNext)
+            self.addRoundedVerticesToPath(p, verts)
 
         # Add lakes to path so they can share the same water texture.
         if self.overlayData and "lake" in self.overlayData:
@@ -845,9 +838,7 @@ class VoronoiHexTilePlotter():
                 if not lake_sid:
                     continue
 
-                sid = int(lake_sid)
-                vids = self.sid2region[sid]
-                self.calcRoundedRegionPath(None, sid, vids, addToPath=p)
+                self.addLakeToPath(p, int(lake_sid), self.riverBuilder.lakeVertices)
         
         p.end()
         pBorder = copy.deepcopy(p)
@@ -1250,32 +1241,76 @@ class VoronoiHexTilePlotter():
         SVG.add_node(layer, p)
 
     # Calc voronoi region path with rounded points, given a list of vertex ids.
-    def calcRoundedRegionPath(self, id, sid, vids, addToPath=None):
+    # Use |addToPath| to add this region to an existing path.
+    def calcRoundedRegionPath(self, id, sid, vids):
         if len(vids) == 0:
             return
-        num_verts = len(vids)
         
-        iv = list(range(0, num_verts))
+        p = Path() if id == None else Path(id)
 
-        p = addToPath
-        if p is None:
-            p = Path() if id == None else Path(id)
-        p.resetMove()
-
-        for i in iv:
-            vid = vids[i]
-            v = self.getVertexForRegion(vid, sid)
-
-            # Add a small curve for this vertex.
-            prev = (i + num_verts - 1) % num_verts
-            next = (i + num_verts + 1) % num_verts
-
-            vPrev = self.getVertexForRegion(vids[prev], sid)
-            vNext = self.getVertexForRegion(vids[next], sid)
-            self.addCurvePoints(p, vPrev, v, vNext)
+        verts = [self.getVertexForRegion(vid, sid) for vid in vids]
+        self.addRoundedVerticesToPath(p, verts)
 
         p.end()
         return p
+
+    def addLakeToPath(self, path, lakeId, lakeVertices):
+        vids = self.sid2region[lakeId]
+        if len(vids) == 0:
+            return
+
+        # Pre-calc the list of vertices for this lake.
+        # Find all the places where rivers meet the lake since we need to expand those
+        # vertices into 2 separate vertices.        
+        newVerts = []
+        nVerts = len(vids)
+        for i in list(range(0, nVerts)):
+            iPrev = (i + nVerts - 1) % nVerts
+            iNext = (i + 1) % nVerts
+
+            vid = vids[i]
+            vidPrev = vids[iPrev]
+            vidNext = vids[iNext]
+            
+            # Get the current vertex from the POV of the neighbors. If they are not the
+            # same, then that means a river is entering the lake at that point and we
+            # need to add 2 vertices (for the left/right bank).
+            # |sidPrev| is the sid of the neighbor that shares the previous vertex.
+            # |sidNext| is the sid of the neighbor that shares the next vertex.
+            sidPrev = self.findNeighborId(lakeId, vidPrev, vid)
+            sidNext = self.findNeighborId(lakeId, vid, vidNext)
+            v0 = self.getVertexForRegion(vid, sidPrev)
+            v1 = self.getVertexForRegion(vid, sidNext)
+            if not feq_pt(v0, v1):
+                newVerts.append(v0)
+                newVerts.append(v1)
+            else:
+                newVerts.append(v0)
+        
+        self.addRoundedVerticesToPath(path, newVerts)
+
+    def addRoundedVerticesToPath(self, path, verts):
+        # Build rounded path from the vertices.
+        path.resetMove()
+        nVerts = len(verts)
+        for i in list(range(0, nVerts)):
+            v = verts[i]
+            iPrev = (i + nVerts - 1) % nVerts
+            iNext = (i + 1) % nVerts
+            
+            # Add a small curve for this vertex.
+            vPrev = verts[iPrev]
+            vNext = verts[iNext]
+            self.addCurvePoints(path, vPrev, v, vNext)
+
+    # Find the neighbor of |sid| with the shared ridge |vid0| to |vid1|.
+    def findNeighborId(self, sid, vid0, vid1):
+        rb = self.riverBuilder
+        for sidNeighbor in rb.sid2neighbors[sid]:
+            vids = self.sid2region[sidNeighbor]
+            if vid0 in vids and vid1 in vids:
+                return sidNeighbor
+        raise Exception(f"Unable to find neighbor of {sid} with vertices {vid0} and {vid1}.")
 
     def addCurvePoints(self, path, vPrev, v, vNext):
         #   vPrev *
