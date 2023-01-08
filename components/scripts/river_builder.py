@@ -2,8 +2,8 @@
 from ridge_builder import RidgeBuilder
 
 class RiverBuilder(RidgeBuilder):
-    def __init__(self, riverEdges, riverRidges, lakes, width):
-        super().__init__(riverEdges, riverRidges, [], width)
+    def __init__(self, riverEdges, riverRidges, riverEnds, lakes, width):
+        super().__init__(riverEdges, riverRidges, riverEnds, width)
 
         # Regions that are lakes.
         self.lakes = lakes

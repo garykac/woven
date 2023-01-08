@@ -80,7 +80,7 @@ def short_river():
             [4, 8], [4, 3]
         ],
     ]
-    return (edges, ridges, lakes, vertex_loop, region_loop)
+    return (edges, ridges, [], lakes, vertex_loop, region_loop)
 
 @pytest.fixture
 def single_river():
@@ -115,7 +115,7 @@ def single_river():
             [13, 8], [12, 8], [12, 7], [11, 7], [6, 7], [6, 2], [6, 1]
         ],
     ]
-    return (edges, ridges, lakes, vertex_loop, region_loop)
+    return (edges, ridges, [], lakes, vertex_loop, region_loop)
 
 @pytest.fixture
 def single_river2():
@@ -150,7 +150,7 @@ def single_river2():
             [3, 2], [3, 7], [8, 7], [12, 7], [11, 7], [6, 7], [6, 2], [6, 1]
         ],
     ]
-    return (edges, ridges, lakes, vertex_loop, region_loop)
+    return (edges, ridges, [], lakes, vertex_loop, region_loop)
 
 @pytest.fixture
 def two_rivers():
@@ -197,7 +197,7 @@ def two_rivers():
             [13, 8], [12, 8], [12, 7], [11, 7], [11, 6], [10, 6]
         ]
     ]
-    return (edges, ridges, lakes, vertex_loop, region_loop)
+    return (edges, ridges, [], lakes, vertex_loop, region_loop)
 
 @pytest.fixture
 def with_lake():
@@ -223,6 +223,9 @@ def with_lake():
     ridges = [
         "1-6", "2-6",
     ]
+    ridge_ends = [
+        "2-6",
+    ]
     lakes = [ 7 ]
     vertex_loop = [
         [[1,d],[1,e], [2,f],
@@ -234,7 +237,7 @@ def with_lake():
             [6, 2], [6, 1]
         ]
     ]
-    return (edges, ridges, lakes, vertex_loop, region_loop)
+    return (edges, ridges, ridge_ends, lakes, vertex_loop, region_loop)
 
 @pytest.fixture
 def direct_into_lake():
@@ -260,6 +263,7 @@ def direct_into_lake():
     ridges = [
         "2-3",
     ]
+    ridge_ends = []
     lakes = [ 7 ]
     vertex_loop = [
         [[2,g],[2,b],
@@ -271,7 +275,7 @@ def direct_into_lake():
             [3, 2]
         ]
     ]
-    return (edges, ridges, lakes, vertex_loop, region_loop)
+    return (edges, ridges, ridge_ends, lakes, vertex_loop, region_loop)
 
 class FakeVoronoi:
     def __init__(self):
@@ -365,9 +369,9 @@ class FakeHexTile():
         ]
 
 def checkRiverVertices(river_info):
-    (edges, ridges, lakes, vertex_loop, region_loop) = river_info
+    (edges, ridges, ridge_ends, lakes, vertex_loop, region_loop) = river_info
     tile = FakeHexTile()
-    rb = RiverBuilder(edges, ridges, lakes, 0)
+    rb = RiverBuilder(edges, ridges, ridge_ends, lakes, 0)
     rb.setVerbose(True)
     rb.setTileInfo(tile.sid2region)
     vor = FakeVoronoi()
@@ -402,9 +406,9 @@ def test_riverVertices_direct_into_lake(direct_into_lake):
     checkRiverVertices(direct_into_lake)
 
 def checkRiverBanks(river_info):
-    (edges, ridges, lakes, vertex_loop, region_loop) = river_info
+    (edges, ridges, ridge_ends, lakes, vertex_loop, region_loop) = river_info
     tile = FakeHexTile()
-    rb = RiverBuilder(edges, ridges, lakes, 0)
+    rb = RiverBuilder(edges, ridges, ridge_ends, lakes, 0)
     rb.setVerbose(True)
     rb.setTileInfo(tile.sid2region)
     rb.buildRidgeInfo(FakeVoronoi())
@@ -438,9 +442,9 @@ def test_riverBankRegions_direct_into_lake(direct_into_lake):
     checkRiverBanks(direct_into_lake)
 
 def test_newVertices(single_river):
-    (edges, ridges, lakes, vertex_expect, loop_expect) = single_river
+    (edges, ridges, ridge_ends, lakes, vertex_expect, loop_expect) = single_river
     tile = FakeHexTile()
-    rb = RiverBuilder(edges, ridges, lakes, 0)
+    rb = RiverBuilder(edges, ridges, ridge_ends, lakes, 0)
     rb.setTileInfo(tile.sid2region)
     rb.buildRidgeInfo(FakeVoronoi())
     rb.analyze()

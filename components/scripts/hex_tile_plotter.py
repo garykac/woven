@@ -317,13 +317,24 @@ class VoronoiHexTilePlotter():
             seedIdEdge += numEdgeRegions
 
         if len(self.riverEdges) != 0 and self.riverData:
-            # Build a clean list of ridge segments that should be rivers.
-            rRidges = [r for r in self.riverData if r]
+            # Build a clean list of ridge segments that should be rivers and extract
+            # river ends.
+            rRidges = []
+            rRidgeEnds = []
+            for r in self.riverData:
+                if not r:
+                    continue
+                if r[-1] == '*':
+                    rRidges.append(r[:-1])
+                    rRidgeEnds.append(r[:-1])
+                else:
+                    rRidges.append(r)
+
             lakes = []
-            if "lake" in self.overlayData:
+            if self.overlayData and "lake" in self.overlayData:
                 lakes = [int(lake) for lake in self.overlayData['lake'] if lake]
             
-            rb = RiverBuilder(self.riverEdges, rRidges, lakes, RIVER_WIDTH)
+            rb = RiverBuilder(self.riverEdges, rRidges, rRidgeEnds, lakes, RIVER_WIDTH)
             rb.setTileInfo(self.tile.sid2region)
             rb.buildRidgeInfo(self.vor)
             self.vertexOverrideRiver = rb.analyze()
@@ -964,6 +975,8 @@ class VoronoiHexTilePlotter():
                 line0 = [v[0], v[1]]
                 line1 = [v[2], v[3]]
                 # Force line0 to be the region with higher elevation.
+                if (not terrain[0] in terrainOrder) or (not terrain[1] in terrainOrder):
+                    raise Exception(f"Terrain not defined for seeds {seeds}")
                 if terrainOrder.index(terrain[1]) > terrainOrder.index(terrain[0]):
                     line0, line1 = line1, line0
                 self._drawRidgeTeeth(p, line0, line1, iSeg == 0, iSeg == numSegments - 1)
