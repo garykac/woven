@@ -61,7 +61,7 @@ The map is comprised of geomorphic tiles that can be arranged in many different 
 
 For the basic game, arrange the tiles as follows:
 
-<a href="../maps/citadel.png"><img src="../maps/citadel.png" height="300"></a>
+<a href="../../archive/maps/v3-voronoi-sq/citadel.png"><img src="../../archive/maps/v3-voronoi-sq/citadel.png" height="300"></a>
 
 There are 3 elevations on the map:
 
@@ -89,7 +89,7 @@ In the center of the map there are special symbols:
 
 ### Spell Cards
 
-<a href="../img/readme/spell1.png"><img src="../img/readme/spell1.png" height="200" /></a> &nbsp; <a href="../img/readme/spell2.png"><img src="../img/readme/spell2.png" height="200" /></a>
+<a href="../../img/readme/spell1.png"><img src="../../img/readme/spell1.png" height="200" /></a> &nbsp; <a href="../../img/readme/spell2.png"><img src="../../img/readme/spell2.png" height="200" /></a>
 
 The top part of each Spell Card contains:
 
@@ -103,7 +103,7 @@ At the bottom of each card is an alternate [Mundane Effect](#mundane-effects) th
 
 Tapestry cards are used to build the patterns required to cast spells.
 
-<img src="../img/placement1a.png" height="200">
+<img src="../../img/placement1a.png" height="200">
 
 # How to Play
 
@@ -250,12 +250,12 @@ The act of casting a spell is a multi-step process.
 First, you must create your Tapestry and ensure that it is arranged so that the spell
 pattern can be created.
 
-<a href="../img/readme/tapestry.png"><img src="../img/readme/tapestry.png" height="300"/></a>
+<a href="../../img/readme/tapestry.png"><img src="../../img/readme/tapestry.png" height="300"/></a>
 
 Then you must play the spell card and add Threads to the Tapestry to complete the pattern.
 
-<a href="../img/readme/spell1.png"><img src="../img/readme/spell1.png" height="200" /></a>
-<a href="../img/readme/tapestry-mana1.png"><img src="../img/readme/tapestry-mana1.png" height="300"/></a>
+<a href="../../img/readme/spell1.png"><img src="../../img/readme/spell1.png" height="200" /></a>
+<a href="../../img/readme/tapestry-mana1.png"><img src="../../img/readme/tapestry-mana1.png" height="300"/></a>
 
 ### Spell Patterns
 
@@ -277,7 +277,7 @@ When a Charge is removed from a Spell, the Spell remains in the Active area unti
 
 # Mundane Effects
 
-<img src="../img/readme/action-tapestry.png">
+<img src="../../img/readme/action-tapestry.png">
 
 ## Draw Tapestry Card
 
@@ -287,7 +287,7 @@ When adding Tapestry cards, they must be placed so that they overlap at least on
 
 See <a href="tapestry-card-placement.md">additional info on Tapestry card placement</a>.
 
-<img src="../img/readme/action-eye.png">
+<img src="../../img/readme/action-eye.png">
 
 ## Create Eye
 
@@ -295,13 +295,13 @@ Create a new Eye by taking Mana from your Pool and placing it on the map at your
 
 If there are any Anchored Eyes in this location, then they are un-Anchored (turning them into normal Eyes).
 
-<img src="../img/readme/action-move.png">
+<img src="../../img/readme/action-move.png">
 
 ## Move
 
 Move your Mage 2 MP
 
-<img src="../img/readme/action-thread.png">
+<img src="../../img/readme/action-thread.png">
 
 ## Pull Thread
 
