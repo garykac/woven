@@ -231,7 +231,7 @@ class VoronoiHexTilePlotter():
 
         self.addInnerGlowFilter("filterInnerGlowH", 2.5, "rgb(217,104,14)")
         self.addInnerGlowFilter("filterInnerGlowM", 2.5, "rgb(220,174,16)")
-        self.addInnerGlowFilter("filterInnerGlowL", 2.5, "rgb(203,201,43)")
+        self.addInnerGlowFilter("filterInnerGlowL", 2.5, "rgb(219,217,86)")
         self.addInnerGlowFilter("filterInnerGlowR", 2.0, "rgb(111,161,232)")
         self.addInnerGlowFilter("filterInnerGlowC", 2.0, "rgb(200,200,200)")
 
@@ -404,6 +404,8 @@ class VoronoiHexTilePlotter():
             terrainType = self.seed2terrain[sid]
             if self.options['texture-fill']:
                 # Choose a random texture for this terrain.
+                if not terrainType in TEXTURES:
+                    continue
                 texId = TEXTURES[terrainType][0]
 
                 # Choose a random swatch from the texture.
