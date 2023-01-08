@@ -251,7 +251,6 @@ class VoronoiHexTilePlotter():
         self.drawClippedRegionLayer()
 
         self.drawRoundedRegionFillLayer()
-        self.drawLakeOverlayLayer()
 
         self.drawRoundedRegionStrokeLayer()
         
@@ -550,40 +549,6 @@ class VoronoiHexTilePlotter():
             path.set_style(style)
             SVG.add_node(group_region_rounded, path)
 
-    def drawLakeOverlayLayer(self):
-        if not self.overlayData:
-            return
-        if not "lake" in self.overlayData:
-            return
-
-        self.layer_lakes = self.svg.add_inkscape_layer(
-            'lakes', "Lakes", self.layer)
-        #self.layer_lakes.set_scale_transform(1, -1)
-
-        for lake_sid in self.overlayData['lake']:
-            if not lake_sid:
-                continue
-
-            sid = int(lake_sid)
-            terrainType = 'r'
-            if False:  # self.options['texture-fill']:
-                # Choose a random texture for this terrain.
-                texId = TEXTURES[terrainType][0]
-
-                # Random texture rotation angle.
-                angle = self.rng.randint(360)
-
-                region = self.calcTexturedRegionNode(sid, terrainType, texId, 0, angle)
-            else:
-                id = f"lake-{sid}"
-                vids = self.sid2region[sid]
-                region = self.calcRoundedRegionPath(id, sid, vids)
-
-                style = Style(REGION_COLOR[terrainType], None)
-                region.set_style(style)
-
-            SVG.add_node(self.layer_lakes, region)
-
     def drawRegionLayer(self):
         layer_region = self.svg.add_inkscape_layer('region', "Region", self.layer)
         layer_region.hide()
@@ -872,6 +837,16 @@ class VoronoiHexTilePlotter():
                 vNext = self.getVertexForRegion(vNextInfo[1], vNextInfo[0])
                 self.addCurvePoints(p, vPrev, v, vNext)
 
+        # Add lakes to path so they can share the same water texture.
+        if self.overlayData and "lake" in self.overlayData:
+            for lake_sid in self.overlayData['lake']:
+                if not lake_sid:
+                    continue
+
+                sid = int(lake_sid)
+                vids = self.sid2region[sid]
+                self.calcRoundedRegionPath(None, sid, vids, addToPath=p)
+        
         p.end()
         pBorder = copy.deepcopy(p)
 
@@ -1273,14 +1248,18 @@ class VoronoiHexTilePlotter():
         SVG.add_node(layer, p)
 
     # Calc voronoi region path with rounded points, given a list of vertex ids.
-    def calcRoundedRegionPath(self, id, sid, vids):
+    def calcRoundedRegionPath(self, id, sid, vids, addToPath=None):
         if len(vids) == 0:
             return
         num_verts = len(vids)
         
         iv = list(range(0, num_verts))
 
-        p = Path() if id == None else Path(id)
+        p = addToPath
+        if p is None:
+            p = Path() if id == None else Path(id)
+        p.resetMove()
+
         for i in iv:
             vid = vids[i]
             v = self.getVertexForRegion(vid, sid)

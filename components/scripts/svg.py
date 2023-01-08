@@ -94,8 +94,10 @@ class Path(Node):
         self.currPosition = [0, 0]
         self.moveNextPoint = True
     
-    def resetMove(self):
+    def resetMove(self, closePath = True):
         self.moveNextPoint = True
+        if closePath and len(self.path) != 0:
+            self.path.append(['z'])
 
     def addXY(self, x, y):
         if self.moveNextPoint:
@@ -144,6 +146,9 @@ class Path(Node):
         self.currPosition = [x, y]
 
     def end(self, closePath = True):
+        if closePath:
+            self.path.append(['z'])
+
         path = "m"
         current_type = "l"
         first_point = True
@@ -160,11 +165,11 @@ class Path(Node):
             elif type == "c":
                 (c0dx, c0dy, c1dx, c1dy, dx, dy) = pt[1:]
                 path += f" {c0dx:.6g} {c0dy:.6g} {c1dx:.6g} {c1dy:.6g} {dx:.6g} {dy:.6g}"
+            elif type == "z":
+                path += " z"
             else:
                 raise Exception(f"Unsupport path type: {type}")
 
-        if closePath:
-            path += " z"
         self.set('d', path)
 
     def setPoints(self, pts):
