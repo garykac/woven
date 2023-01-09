@@ -273,7 +273,7 @@ class VoronoiHexTile():
                     for i in range(1, NUM_SIDES):
                         rotatedPattern = p[i:] + p[:i]
                         if pattern == rotatedPattern:
-                            raise Exception(f"Non canonical pattern. Use {p} instead of {pattern}.")
+                            raise Exception(f"Non canonical pattern. Use {p} ({TILE_PATTERN_IDS[p]}) instead of {pattern}.")
                 raise Exception("Non canonical pattern.")
                     
         # Record the terrain type for each region along the edge of the tile.

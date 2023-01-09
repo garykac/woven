@@ -47,7 +47,7 @@ class VoronoiHexTileLoader():
         while v.update():
             v.generate()
         if not v.successfulTileGeneration:
-            print("Tile generation failed!")
+            print(f"Tile generation failed for pattern {pattern} with seed {options['seed']}")
             v.printIteration("Final")
         v.plot()
 
