@@ -201,6 +201,22 @@ class VoronoiHexTile():
                     offset, perp_offset = si
                     newSeedInfo.append([1.0-offset, -perp_offset])
                 self.edgeSeedInfo[newType] = newSeedInfo
+            # Verify that symmetric edges are actually symmetric.
+            if type[-1] == 's':
+                nSeeds = len(self.edgeSeedInfo[type])
+                if (nSeeds % 2) == 1:
+                    # The middle seed (if present) must be at [0.5 0].
+                    midIndex = int(nSeeds / 2)
+                    sInfo = self.edgeSeedInfo[type][midIndex]
+                    if not (feq(sInfo[0], 0.5) and feq(sInfo[1], 0)):
+                        raise Exception(f"Middle edge seed for {type} musst be at [0.5,0.0] instead of {sInfo}")
+                if nSeeds > 1:
+                    first = sInfo = self.edgeSeedInfo[type][0]
+                    last = sInfo = self.edgeSeedInfo[type][-1]
+                    if not feq(first[0], 1.0 - last[0]):
+                        raise Exception(f"Seed offsets for {type} are not symmetric: {first[0]} and {last[0]}")
+                    if not feq(first[1], -last[1]):
+                        raise Exception(f"Seed perpendcular offsets for {type} do not match: {first[1]} and {last[1]}")
         
     def setTerrainData(self, data):
         self.terrainData = data
@@ -732,6 +748,31 @@ class VoronoiHexTile():
             if not self.isClockwise(sid):
                 self.sid2clippedRegion[sid] = self.vor.regions[rid][::-1]
 
+    # sid_c0 - seed id of start corner
+    # sid_c1 - seed id of end corner
+    # sid_e0 - seed id of first edge seed
+    # sid_e1 - seed id of second edge seed
+    # Returns t, the position of the intersection between the two corner seeds
+    #   (sid_c0 and sid_c1).
+    def calcEdgeRidgeIntersection(self, sid_c0, sid_c1, sid_e0, sid_e1):
+        c0 = self.seeds[sid_c0]
+        c1 = self.seeds[sid_c1]
+        # Seeds for the prev/next region along the edge.
+        pt_e0 = self.seeds[sid_e0]
+        pt_e1 = self.seeds[sid_e1]
+
+        # Calc points along perpendicular bisector (= voronoi ridge between
+        # these 2 seeds).
+        dx,dy = lerp_pt_delta(pt_e0, pt_e1, 0.5)
+        # First pt is midpoint between seeds.
+        mid = [pt_e0[0] + dx, pt_e0[1] + dy]
+        # Arbitrary second pt on perpendicular bisector.
+        pb = [mid[0] - dy, mid[1] + dx]
+
+        # Calc intersection |t| along edge (from corner to corner).
+        t1, t2 = line_intersection_t([c0, c1], [mid, pb])
+        return t1
+
     def calcCentroid(self, sid):
         verts = self._getRegionVertices(sid)
 
@@ -771,31 +812,6 @@ class VoronoiHexTile():
         cx /= 6 * area
         cy /= 6 * area
         return [cx, cy]
-
-    # sid_c0 - seed id of start corner
-    # sid_c1 - seed id of end corner
-    # sid_e0 - seed id of first edge seed
-    # sid_e1 - seed id of second edge seed
-    # Returns t, the position of the intersection between the two corner seeds
-    #   (sid_c0 and sid_c1).
-    def calcEdgeRidgeIntersection(self, sid_c0, sid_c1, sid_e0, sid_e1):
-        c0 = self.seeds[sid_c0]
-        c1 = self.seeds[sid_c1]
-        # Seeds for the prev/next region along the edge.
-        pt_e0 = self.seeds[sid_e0]
-        pt_e1 = self.seeds[sid_e1]
-
-        # Calc points along perpendicular bisector (= voronoi ridge between
-        # these 2 seeds).
-        dx,dy = lerp_pt_delta(pt_e0, pt_e1, 0.5)
-        # First pt is midpoint between seeds.
-        mid = [pt_e0[0] + dx, pt_e0[1] + dy]
-        # Arbitrary second pt on perpendicular bisector.
-        pb = [mid[0] - dy, mid[1] + dx]
-
-        # Calc intersection |t| along edge (from corner to corner).
-        t1, t2 = line_intersection_t([c0, c1], [mid, pb])
-        return t1
 
     # sid - seed id of corner vertex
     # rid - region id
