@@ -279,8 +279,9 @@ class VoronoiHexTilePlotter():
 
         self.drawRegionIdLayer()
 
-        if not self.options['bleed']:
-            self.drawHexTileBorder("border", "Border", stroke)
+        border_layer = self.drawHexTileBorder("border", "Border", stroke)
+        if self.options['bleed']:
+            border_layer.hide()
         
         self.writeSvgOutput()
 
@@ -377,6 +378,7 @@ class VoronoiHexTilePlotter():
         p.end()
         p.set_style(style)
         SVG.add_node(layer_border, p)
+        return layer_border
 
     def drawClippedRegionLayer(self):
         layer_region_clip = self.svg.add_inkscape_layer(
@@ -1168,7 +1170,7 @@ class VoronoiHexTilePlotter():
             actions.selectionHide()
 
             # Export only the hex tile
-            actions.exportId("background")
+            actions.exportId("border")
 
             actions.exportFilename(out_png)
             actions.exportDo()
