@@ -279,7 +279,8 @@ class VoronoiHexTilePlotter():
 
         self.drawRegionIdLayer()
 
-        self.drawHexTileBorder("border", "Border", stroke)
+        if not self.options['bleed']:
+            self.drawHexTileBorder("border", "Border", stroke)
         
         self.writeSvgOutput()
 
@@ -397,8 +398,9 @@ class VoronoiHexTilePlotter():
             f"region-rounded-fill", f"Region Rounded Fill", self.layer)
         group_region_rounded = SVG.group('region-rounded-fill-group')
         SVG.add_node(layer_region_rounded, group_region_rounded)
-        clippath_id = self.addHexTileClipPath()
-        group_region_rounded.set("clip-path", f"url(#{clippath_id})")
+        if not self.options['bleed']:
+            clippath_id = self.addHexTileClipPath()
+            group_region_rounded.set("clip-path", f"url(#{clippath_id})")
 
         for sid in range(0, self.numActiveSeeds):
             terrainType = self.seed2terrain[sid]
@@ -538,8 +540,9 @@ class VoronoiHexTilePlotter():
             f"region-rounded-stroke", f"Region Rounded Stroke", self.layer)
         group_region_rounded = SVG.group('region-rounded-stroke-group')
         SVG.add_node(layer_region_rounded, group_region_rounded)
-        clippath_id = self.addHexTileClipPath()
-        group_region_rounded.set("clip-path", f"url(#{clippath_id})")
+        if not self.options['bleed']:
+            clippath_id = self.addHexTileClipPath()
+            group_region_rounded.set("clip-path", f"url(#{clippath_id})")
 
         for sid in range(0, self.numActiveSeeds):
             vids = self.sid2region[sid]
@@ -817,8 +820,9 @@ class VoronoiHexTilePlotter():
         layer_river = self.svg.add_inkscape_layer('river', "River", self.layer)
         group_river = SVG.group('river-group')
         SVG.add_node(layer_river, group_river)
-        clippath_id = self.addHexTileClipPath()
-        group_river.set("clip-path", f"url(#{clippath_id})")
+        if not self.options['bleed']:
+            clippath_id = self.addHexTileClipPath()
+            group_river.set("clip-path", f"url(#{clippath_id})")
 
         rivers = self.riverBuilder.getRidgeVertices()
         p = Path()
@@ -874,8 +878,9 @@ class VoronoiHexTilePlotter():
         layer_cliff = self.svg.add_inkscape_layer('cliff', "Cliff", self.layer)
         group_cliff = SVG.group('cliff-group')
         SVG.add_node(layer_cliff, group_cliff)
-        clippath_id = self.addHexTileClipPath()
-        group_cliff.set("clip-path", f"url(#{clippath_id})")
+        if not self.options['bleed']:
+            clippath_id = self.addHexTileClipPath()
+            group_cliff.set("clip-path", f"url(#{clippath_id})")
 
         cliffs = self.cliffBuilder.getRidgeVertices()
         for cliff in cliffs:
@@ -1163,7 +1168,7 @@ class VoronoiHexTilePlotter():
             actions.selectionHide()
 
             # Export only the hex tile
-            actions.exportId("border")
+            actions.exportId("background")
 
             actions.exportFilename(out_png)
             actions.exportDo()
