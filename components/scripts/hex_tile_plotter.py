@@ -7,12 +7,14 @@ import re
 from cliff_builder import CliffBuilder
 from inkscape import Inkscape, InkscapeActions
 from map_common import calcSortedId, calcSortedIdFromPair
-from math_utils import (feq_pt, lerp, lerp_line, perp_offset, pt_along_line, dist)
+from math_utils import (feq, feq_pt, lerp, lerperp, lerp_line, perp_offset, pt_along_line, dist)
 from svg import SVG, Filter, Group, Image, Style, Node, Path, Text
 from object3d import Object3d
 from river_builder import RiverBuilder
 
 from data_texture import TEXTURES, TEXTURE_INFO
+
+NUM_SIDES = 6
 
 TEXTURES_DIR = "../../../third_party/textures"
 
@@ -51,6 +53,18 @@ EDGE_RIVER_INFO = {
 # are separated by a cliff.
 EDGE_CLIFF_INFO = {
     '3f': ['m', 'm', '*', 'h', 'm', 'h'],      # m - h, h - m
+}
+
+# Edge puzzle tab info.
+# The locations (and type) of the puzzle tabs for interlocking hex tiles.
+# Each entry is:
+#   [ offset-along-edge, tab-style, tab-width, tab-height ]
+EDGE_PUZZLE_INFO = {
+    '1s': [[0.16, "hook", 0.05, -0.05], [0.84, "hook", 0.05, 0.05]],    # l-l-l
+    '2f': [[0.36, "hook", 0.05,  0.05]],                                # l-l-l-m
+    '2s': [[ 1/3, "hook", 0.05,  0.05], [ 2/3, "hook", 0.05, -0.05]],   # m-m-m-m
+    '3f': [[0.28, "hook", 0.03, -0.05], [0.76, "hook", 0.03, -0.05]],    # m-m-h-m-h
+    '3s': [[0.24, "hook", 0.05, -0.05], [0.76, "hook", 0.05, 0.05]],    # h-h-m-h-h
 }
 
 # Textures to use for each type of mark (for the overlay).
@@ -132,6 +146,24 @@ class VoronoiHexTilePlotter():
                     EDGE_RIVER_INFO[newType] = EDGE_RIVER_INFO[type][::-1]
                 if type in EDGE_CLIFF_INFO:
                     EDGE_CLIFF_INFO[newType] = EDGE_CLIFF_INFO[type][::-1]
+                if type in EDGE_PUZZLE_INFO:
+                    newEdgePuzzleInfo = []
+                    for si in reversed(EDGE_PUZZLE_INFO[type]):
+                        offset, tabType, tabWidth, tabHeight = si
+                        newEdgePuzzleInfo.append([1.0-offset, tabType, tabWidth, -tabHeight])
+                    EDGE_PUZZLE_INFO[newType] = newEdgePuzzleInfo
+            if type[-1] == 's':
+                if type in EDGE_PUZZLE_INFO:
+                    # Verify the symmetry.
+                    first, second = EDGE_PUZZLE_INFO[type]
+                    if not feq(first[0], 1.0 - second[0]):
+                        raise Exception(f"Puzzle tab offsets for {type} are not symmetric: {first[0]} and {second[0]}")
+                    if first[1] != second[1]:
+                        raise Exception(f"Puzzle tab types for {type} are not the same type: {first[1]} and {second[1]}")
+                    if not feq(first[2], second[2]):
+                        raise Exception(f"Puzzle tab widths for {type} do not match: {first[2]} and {second[2]}")
+                    if not feq(first[3], -second[3]):
+                        raise Exception(f"Puzzle tab heights for {type} are not compatible: {first[3]} and {second[3]}")
 
     def getTerrainStyle(self, type):
         if self.options['bw']:
@@ -282,6 +314,8 @@ class VoronoiHexTilePlotter():
         border_layer = self.drawHexTileBorder("border", "Border", stroke)
         if self.options['bleed']:
             border_layer.hide()
+        
+        self.drawHexTilePuzzleBorder()
         
         self.writeSvgOutput()
 
@@ -1136,6 +1170,48 @@ class VoronoiHexTilePlotter():
             t = Text(None, center[0]-1.4, -center[1], text)
             SVG.add_node(layer_region_ids, t)
 
+    def drawHexTilePuzzleBorder(self):
+        layer_puzzle = self.svg.add_inkscape_layer("puzzle", "Puzzle Border", self.layer)
+        if not self.options['bleed']:
+            layer_puzzle.hide()
+
+        HOOK_SIZE = 0.005
+        # Calculate seeds along hex edges
+        vertices = []
+        for i0 in range(0, NUM_SIDES):
+            i1 = (i0 + 1) % NUM_SIDES
+            edgeType = self.edgeTypes[i0]
+            puzzlePattern = EDGE_PUZZLE_INFO[edgeType]
+
+            startPt = self.vHex[i0]
+            endPt = self.vHex[i1]
+            vertices.append(startPt)
+            for j in range(0, len(puzzlePattern)):
+                t, tabType, tabWidth, tabHeight = puzzlePattern[j]
+                if tabType == "tri":
+                    vertices.append(lerp(startPt, endPt, t - tabWidth))
+                    vertices.append(lerperp(startPt, endPt, t, tabHeight))
+                    vertices.append(lerp(startPt, endPt, t + tabWidth))
+                elif tabType == "sq":
+                    vertices.append(lerp(startPt, endPt, t - tabWidth))
+                    vertices.append(lerperp(startPt, endPt, t - tabWidth, tabHeight))
+                    vertices.append(lerperp(startPt, endPt, t + tabWidth, tabHeight))
+                    vertices.append(lerp(startPt, endPt, t + tabWidth))
+                elif tabType == "hook":
+                    vertices.append(lerp(startPt, endPt, t - tabWidth + HOOK_SIZE))
+                    vertices.append(lerperp(startPt, endPt, t - tabWidth -HOOK_SIZE, tabHeight))
+                    vertices.append(lerperp(startPt, endPt, t + tabWidth +HOOK_SIZE, tabHeight))
+                    vertices.append(lerp(startPt, endPt, t + tabWidth - HOOK_SIZE))
+
+            # End point will be added by next tile edge.
+            #vertices.append(endPt)
+
+        p = Path()
+        self.addRoundedVerticesToPath(p, vertices, 0.3)
+        p.end()
+        p.set_style(Style("none", "#000000", STROKE_WIDTH))
+        SVG.add_node(layer_puzzle, p)
+    
     def _drawCircle(self, id, center, radius, fill, layer):
         circle = SVG.circle(id, center[0], center[1], radius)
         circle.set_style(fill)
@@ -1261,6 +1337,49 @@ class VoronoiHexTilePlotter():
         p.end()
         return p
 
+    def addRoundedVerticesToPath(self, path, verts, curveOffset=0.5):
+        # Build rounded path from the vertices.
+        path.resetMove()
+        nVerts = len(verts)
+        for i in list(range(0, nVerts)):
+            v = verts[i]
+            iPrev = (i + nVerts - 1) % nVerts
+            iNext = (i + 1) % nVerts
+            
+            # Add a small curve for this vertex.
+            vPrev = verts[iPrev]
+            vNext = verts[iNext]
+            self.addCurvePoints(path, vPrev, v, vNext, curveOffset)
+
+    # |curveOffset| dist from vertex to off-curve control point (in mm)
+    def addCurvePoints(self, path, vPrev, v, vNext, curveOffset=0.5):
+        #   vPrev *
+        #          \
+        #           \
+        #            \
+        #             \
+        #      prev_pt +
+        #               \
+        #             c0 +
+        #                 \    c1  next_pt
+        #                  *----+----+-----------*
+        #                v                      vNext
+        #
+        # * = actual vertices of the region: vPrev, v, vNext
+        # + = calculated vertices of the curved corner:
+        #     prev_pt, next_pt and the 2 off-curve control points: c0, c1
+        # Note: The points for the curve are calculated using an absolute distance
+        # from the current vertex along the line to the neighboring vertices.
+        ptOffset = 3 * curveOffset  # (mm)
+
+        prev_pt = pt_along_line(v, vPrev, ptOffset)
+        path.addPoint(prev_pt)
+
+        curve0_pt = pt_along_line(v, vPrev, curveOffset)
+        curve1_pt = pt_along_line(v, vNext, curveOffset)
+        next_pt = pt_along_line(v, vNext, ptOffset)
+        path.addCurvePoint(curve0_pt, curve1_pt, next_pt)
+
     def addLakeToPath(self, path, lakeId, lakeVertices):
         vids = self.sid2region[lakeId]
         if len(vids) == 0:
@@ -1296,20 +1415,6 @@ class VoronoiHexTilePlotter():
         
         self.addRoundedVerticesToPath(path, newVerts)
 
-    def addRoundedVerticesToPath(self, path, verts):
-        # Build rounded path from the vertices.
-        path.resetMove()
-        nVerts = len(verts)
-        for i in list(range(0, nVerts)):
-            v = verts[i]
-            iPrev = (i + nVerts - 1) % nVerts
-            iNext = (i + 1) % nVerts
-            
-            # Add a small curve for this vertex.
-            vPrev = verts[iPrev]
-            vNext = verts[iNext]
-            self.addCurvePoints(path, vPrev, v, vNext)
-
     # Find the neighbor of |sid| with the shared ridge |vid0| to |vid1|.
     def findNeighborId(self, sid, vid0, vid1):
         rb = self.riverBuilder
@@ -1318,35 +1423,6 @@ class VoronoiHexTilePlotter():
             if vid0 in vids and vid1 in vids:
                 return sidNeighbor
         raise Exception(f"Unable to find neighbor of {sid} with vertices {vid0} and {vid1}.")
-
-    def addCurvePoints(self, path, vPrev, v, vNext):
-        #   vPrev *
-        #          \
-        #           \
-        #            \
-        #             \
-        #      prev_pt +
-        #               \
-        #             c0 +
-        #                 \    c1  next_pt
-        #                  *----+----+-----------*
-        #                v                      vNext
-        #
-        # * = actual vertices of the region: vPrev, v, vNext
-        # + = calculated vertices of the curved corner:
-        #     prev_pt, next_pt and the 2 off-curve control points: c0, c1
-        # Note: The points for the curve are calculated using an absolute distance
-        # from the current vertex along the line to the neighboring vertices.
-        PT_OFFSET = 1.5  # (mm)
-        CURVE_PT_OFFSET = 0.5  # (mm)
-
-        prev_pt = pt_along_line(v, vPrev, PT_OFFSET)
-        path.addPoint(prev_pt)
-
-        curve0_pt = pt_along_line(v, vPrev, CURVE_PT_OFFSET)
-        curve1_pt = pt_along_line(v, vNext, CURVE_PT_OFFSET)
-        next_pt = pt_along_line(v, vNext, PT_OFFSET)
-        path.addCurvePoint(curve0_pt, curve1_pt, next_pt)
 
     def addHexTileClipPath(self):
         p = Path()
