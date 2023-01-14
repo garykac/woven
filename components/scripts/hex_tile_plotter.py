@@ -26,6 +26,7 @@ PLOT_CELL_IDS = True   # Add cell ids to png output file.
 STROKE_WIDTH = 0.3
 THICK_STROKE_WIDTH = 1.0
 ICON_STROKE_WIDTH = 0.7
+ICON_STROKE_WIDTH_MIRROR = 0.5
 
 RIVER_WIDTH = 2.8
 CLIFF_WIDTH = 2.0
@@ -41,8 +42,10 @@ REGION_COLOR = {
     'h': "#e7a311",  #'#d69200',  # high
     'r': "#a2c6ff",  # river/water
     'c': "#808080",  # cliff
-    't': "#5ba22d",  # tree
     'v': "#be850a",  # very high mountain
+    's': "#eb6eff",  # star/special
+    't': "#5ba22d",  # tree
+    'x': "#000000",  # annotations
 }
 REGION_COLOR_MIRROR = {
     '_': "#000000",  # blank
@@ -52,6 +55,9 @@ REGION_COLOR_MIRROR = {
     'r': "#6286ff",  # river/water
     'c': "#808080",  # cliff
     'v': "#be850a",  # very high mountain
+    's': "#eb6eff",  # star/special
+    't': "#5ba22d",  # tree
+    'x': "#ffffff",  # annotations
 }
 
 # Mark where rivers are located on edges using an '*' to note the regions that
@@ -79,15 +85,39 @@ EDGE_PUZZLE_INFO = {
     '3s': [[0.24, 0.03, -0.05], [0.76, 0.03, 0.05]],    # h-h-m-h-h
 }
 
-# Textures to use for each type of mark (for the overlay).
-OVERLAY_MARK_TEXTURES = {
-    "bridge": "g01",
-    "star": "s01",
-    "tower": "g01",
-    "tree1": "t01",
-    "tree2": "t01",
-    "tree3": "t01",
-    "tree4": "t01",
+# Style to use for each type of mark (for the overlay).
+OVERLAY_MARK_STYLES = {
+    "bridge": "stone",
+    "star": "star",
+    "tower": "stone",
+    "tree1": "tree",
+    "tree2": "tree",
+    "tree3": "tree",
+    "tree4": "tree",
+}
+
+OVERLAY_MARK_STYLE_INFO = {
+    "stone": {
+        "tex-type": "g",
+        "tex-id": "g01",
+        "stroke": ['x', ICON_STROKE_WIDTH],
+        "mirror-fill": 'x',
+        "mirror-stroke": [None, ICON_STROKE_WIDTH_MIRROR],
+        },
+    "star": {
+        "tex-type": "s",
+        "tex-id": "s01",
+        "stroke": ['x', ICON_STROKE_WIDTH],
+        "mirror-fill": 's',
+        "mirror-stroke": ['x', ICON_STROKE_WIDTH_MIRROR],
+        },
+    "tree": {
+        "tex-type": "t",
+        "tex-id": "t01",
+        "stroke": ['x', ICON_STROKE_WIDTH],
+        "mirror-fill": 't',
+        "mirror-stroke": ['x', ICON_STROKE_WIDTH_MIRROR],
+        },
 }
 
 class VoronoiHexTilePlotter():
@@ -180,11 +210,15 @@ class VoronoiHexTilePlotter():
                         raise Exception(f"Puzzle tab heights for {type} are not compatible: {first[3]} and {second[3]}")
 
     def getTerrainFillColor(self, type):
+        if type is None:
+            return None
         if self.mirrorMode:
             return REGION_COLOR_MIRROR[type]
         return REGION_COLOR[type]
 
     def getStrokeColor(self):
+        if type is None:
+            return None
         if self.mirrorMode:
             return STROKE_COLOR_MIRROR
         return STROKE_COLOR
@@ -275,7 +309,12 @@ class VoronoiHexTilePlotter():
         if self.options['mirror']:
             self.mirror = True
             self.mirrorMode = True
+            saveTextureFillMode = self.options['texture-fill']
+            self.options['texture-fill'] = False
+
             self._plot(False)
+
+            self.options['texture-fill'] = saveTextureFillMode
 
     def _plot(self, doPlot, plotId=None):
         self.svg = SVG([215.9, 279.4])  #SVG([210, 297])
@@ -1135,47 +1174,14 @@ class VoronoiHexTilePlotter():
                     ptStart = self.seeds[int(startId)]
                     ptEnd = self.seeds[int(endId)]
                     rTheta = math.atan2(-(ptEnd[1] - ptStart[1]), ptEnd[0] - ptStart[0])
-                    degTheta = 90 + (rTheta * 180 / math.pi);
+                    pathRotate = 90 + (rTheta * 180 / math.pi);
+                    
                     edge_vertices = self.getEdgeRidgeVertices(startId, endId)
                     center = lerp(edge_vertices[0], edge_vertices[1], 0.5)
 
-                    if self.options['texture-fill']:
-                        type = 'bridge'
-                        sidPair = f"{startId}-{endId}"
-                        texId = OVERLAY_MARK_TEXTURES[type]
-                        texType = texId[0]
-                        (swatchSize, numSwatches) = TEXTURE_INFO[texId]
-                        swatchId = self.rng.randint(numSwatches) + 1
-                        icon = self.svg.get_loaded_path(f"obj-{type}")
-
-                        texturedPathOps = {
-                            'pathClip': icon,
-                            'pathRotateAngle': degTheta,
-                            'pathOffsetXY': [center[0], -center[1]],
-                            'textureType': texType,
-                            'textureId': texId,
-                            'textureSwatchId': swatchId,
-                        }
-                        node = self.calcTexturedPathNode(f"{sidPair}-{type}", texturedPathOps)
-                        SVG.add_node(self.layer_overlay, node)
-
-                        icon = self.svg.get_loaded_path(f"obj-{type}")
-                        style_icon_border = Style(None, self.getStrokeColor(), ICON_STROKE_WIDTH)
-                        style_icon_border.set("stroke-linecap", "round")
-                        style_icon_border.set("stroke-linejoin", "round")
-                        icon.set_style(style_icon_border)
-
-                        # Move icon border to the correct location.
-                        gTrans = Group(f"gtransborder-{sidPair}-{type}")
-                        transform = f"translate({center[0]} {-center[1]}) rotate({degTheta})"
-                        gTrans.set('transform', transform)
-                        SVG.add_node(gTrans, icon)
-
-                        SVG.add_node(self.layer_overlay, gTrans)
-                    else:
-                        icon = self.svg.add_loaded_element(self.layer_overlay, 'obj-bridge')
-                        transform = f"translate({center[0]} {-center[1]}) rotate({degTheta})"
-                        icon.set('transform', transform)
+                    x = center[0]
+                    y = -center[1]
+                    self.addMark(f"{startId}-{endId}", "bridge", x, y, pathRotate, 0, self.layer_overlay)
 
         if "mark" in self.overlayData:
             id = 0
@@ -1200,41 +1206,55 @@ class VoronoiHexTilePlotter():
                         x += float(offset[0])
                         y -= float(offset[1])
 
-                    if self.options['texture-fill']:
-                        icon = self.svg.get_loaded_path(f"obj-{type}")
+                    pathRotate = 0
+                    texRotate = self.rng.randint(360)
+                    self.addMark(f"{sid}-{id}", type, x, y, pathRotate, texRotate, self.layer_overlay)
 
-                        texId = OVERLAY_MARK_TEXTURES[type]
-                        texType = texId[0]
-                        (swatchSize, numSwatches) = TEXTURE_INFO[texId]
-                        swatchId = self.rng.randint(numSwatches) + 1
-                        rotateAngle = self.rng.randint(360)
+    def addMark(self, id, type, x, y, pathRotate, texRotate, parent):
+        style = OVERLAY_MARK_STYLES[type]
+        styleInfo = OVERLAY_MARK_STYLE_INFO[style]
 
-                        texturedPathOps = {
-                            'pathClip': icon,
-                            'pathOffsetXY': [x,y],
-                            'textureType': texType,
-                            'textureId': texId,
-                            'textureSwatchId': swatchId,
-                            'textureRotateAngle': rotateAngle,
-                        }
-                        node = self.calcTexturedPathNode(f"{sid}-{type}-{id}", texturedPathOps)
-                        SVG.add_node(self.layer_overlay, node)
-        
-                        icon = self.svg.get_loaded_path(f"obj-{type}")
-                        style_icon_border = Style(None, self.getStrokeColor(), ICON_STROKE_WIDTH)
-                        style_icon_border.set("stroke-linecap", "round")
-                        style_icon_border.set("stroke-linejoin", "round")
-                        icon.set_style(style_icon_border)
+        if self.options['texture-fill']:
+            icon = self.svg.get_loaded_path(f"obj-{type}")
+            texId = styleInfo["tex-id"]
+            texType = styleInfo["tex-type"]
+            (swatchSize, numSwatches) = TEXTURE_INFO[texId]
+            swatchId = self.rng.randint(numSwatches) + 1
 
-                        # Move icon border to the correct location.
-                        gTrans = Group(f"gtransborder-{sid}-{type}-{id}")
-                        gTrans.set_translate_transform(x, y)
-                        SVG.add_node(gTrans, icon)
+            texturedPathOps = {
+                'pathClip': icon,
+                'pathRotateAngle': pathRotate,
+                'pathOffsetXY': [x,y],
+                'textureType': texType,
+                'textureId': texId,
+                'textureSwatchId': swatchId,
+                'textureRotateAngle': texRotate,
+            }
+            node = self.calcTexturedPathNode(f"{id}-{type}", texturedPathOps)
+            SVG.add_node(parent, node)
+            
+            fillColor = None
+            strokeColorId, strokeSize = styleInfo["stroke"]
+            strokeColor = self.getTerrainFillColor(strokeColorId)
+        else:
+            fillColorId = styleInfo["mirror-fill"]
+            fillColor = self.getTerrainFillColor(fillColorId)
+            strokeColorId, strokeSize = styleInfo["mirror-stroke"]
+            strokeColor = self.getTerrainFillColor(strokeColorId)
 
-                        SVG.add_node(self.layer_overlay, gTrans)
-                    else:
-                        icon = self.svg.add_loaded_element(self.layer_overlay, f"obj-{type}")
-                        icon.set('transform', f"translate({x} {y})")
+        icon = self.svg.get_loaded_path(f"obj-{type}")
+        style_icon_border = Style(fillColor, strokeColor, strokeSize)
+        style_icon_border.set("stroke-linecap", "round")
+        style_icon_border.set("stroke-linejoin", "round")
+        icon.set_style(style_icon_border)
+
+        # Move icon border to the correct location.
+        gTrans = Group(f"gtransborder-{id}-{type}")
+        transform = f"translate({x} {y}) rotate({pathRotate})"
+        gTrans.set('transform', transform)
+        SVG.add_node(gTrans, icon)
+
+        SVG.add_node(parent, gTrans)
 
     # Given an edge defined by the 2 seeds, return the 2 ridge vertices of the edge.
     def getEdgeRidgeVertices(self, sid0, sid1):
