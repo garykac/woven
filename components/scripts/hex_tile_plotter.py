@@ -178,9 +178,6 @@ class VoronoiHexTilePlotter():
         self.cliffBuilder = None
         self.vertexOverrideCliff = {}
                 
-        # Reset number of annotation lines.
-        self.numLines = 0
-        
         self.calcReversedEdges()
 
     def calcReversedEdges(self):
@@ -826,6 +823,9 @@ class VoronoiHexTilePlotter():
             'annotations', "Annotations", self.layer)
         self.layer_text.set_scale_transform(1, -1)
 
+        # Reset number of annotation lines.
+        self.numLines = 0
+        
         if self.options['id']:
             id = self.options['id']
             self.numLines -= 1
