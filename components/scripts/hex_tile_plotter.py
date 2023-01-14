@@ -251,8 +251,16 @@ class VoronoiHexTilePlotter():
         plt.close(fig)
 
     def plot(self, plotId=None):
+        self.mirror = False
+        self._plot(True, plotId)
+        if self.options['mirror']:
+            self.mirror = True
+            self._plot(False)
+
+    def _plot(self, doPlot, plotId=None):
         self.svg = SVG([215.9, 279.4])  #SVG([210, 297])
-        self.plotTile(plotId)
+        if doPlot:
+            self.plotTile(plotId)
 
         # Build list of template ids and then load from svg file.
         svg_ids = []
@@ -301,8 +309,7 @@ class VoronoiHexTilePlotter():
         self.drawTileId()
 
         self.drawAnnotationsLayer()
-
-        self.drawTerrainLabelsLayer()
+        self.drawEdgeAnnotationsLayer()
 
         self.drawRiverLayer()
         self.drawCliffLayer()
@@ -316,6 +323,8 @@ class VoronoiHexTilePlotter():
             border_layer.hide()
         
         self.drawHexTilePuzzleBorder()
+
+        self.drawRegistrationMarksLayer()
         
         self.writeSvgOutput()
 
@@ -417,9 +426,12 @@ class VoronoiHexTilePlotter():
     def drawClippedRegionLayer(self):
         layer_region_clip = self.svg.add_inkscape_layer(
             'region-clip', "Region Clipped", self.layer)
+        if self.mirror:
+            layer_region_clip.set_scale_transform(-1, 1)
+        layer_region_clip.hide()
+
         gClip = SVG.group('clipped-regions')
         SVG.add_node(layer_region_clip, gClip)
-        layer_region_clip.hide()
 
         for sid in range(0, self.numActiveSeeds):
             vids = self.sid2clippedRegion[sid]
@@ -432,6 +444,9 @@ class VoronoiHexTilePlotter():
     def drawRoundedRegionFillLayer(self):
         layer_region_rounded = self.svg.add_inkscape_layer(
             f"region-rounded-fill", f"Region Rounded Fill", self.layer)
+        if self.mirror:
+            layer_region_rounded.set_scale_transform(-1, 1)
+
         group_region_rounded = SVG.group('region-rounded-fill-group')
         SVG.add_node(layer_region_rounded, group_region_rounded)
         if not self.options['bleed']:
@@ -574,6 +589,9 @@ class VoronoiHexTilePlotter():
     def drawRoundedRegionStrokeLayer(self):
         layer_region_rounded = self.svg.add_inkscape_layer(
             f"region-rounded-stroke", f"Region Rounded Stroke", self.layer)
+        if self.mirror:
+            layer_region_rounded.set_scale_transform(-1, 1)
+
         group_region_rounded = SVG.group('region-rounded-stroke-group')
         SVG.add_node(layer_region_rounded, group_region_rounded)
         if not self.options['bleed']:
@@ -592,6 +610,8 @@ class VoronoiHexTilePlotter():
 
     def drawRegionLayer(self):
         layer_region = self.svg.add_inkscape_layer('region', "Region", self.layer)
+        if self.mirror:
+            layer_region.set_scale_transform(-1, 1)
         layer_region.hide()
 
         for sid in range(0, self.numActiveSeeds):
@@ -601,6 +621,8 @@ class VoronoiHexTilePlotter():
 
     def drawUnmodifiedRegionLayer(self):
         layer_region = self.svg.add_inkscape_layer('unmod-region', "Unmodified Region", self.layer)
+        if self.mirror:
+            layer_region.set_scale_transform(-1, 1)
         layer_region.hide()
 
         for sid in range(0, self.numActiveSeeds):
@@ -610,6 +632,8 @@ class VoronoiHexTilePlotter():
 
     def drawSeedLayer(self):
         layer_seeds = self.svg.add_inkscape_layer('seeds', "Seeds", self.layer)
+        if self.mirror:
+            layer_seeds.set_scale_transform(-1, 1)
         layer_seeds.hide()
 
         black_fill = Style(fill="#000000")
@@ -620,6 +644,8 @@ class VoronoiHexTilePlotter():
 
     def drawCentroidLayer(self):
         layer_centroids = self.svg.add_inkscape_layer('centroids', "Centroids", self.layer)
+        if self.mirror:
+            layer_centroids.set_scale_transform(-1, 1)
         layer_centroids.hide()
 
         black_fill = Style(fill="#008080")
@@ -631,6 +657,8 @@ class VoronoiHexTilePlotter():
     def drawSeedExclusionZoneLayer(self):
         layer_seed_ex = self.svg.add_inkscape_layer(
             'seed_exclusion', "Seed Exclusion", self.layer)
+        if self.mirror:
+            layer_seed_ex.set_scale_transform(-1, 1)
         layer_seed_ex.hide()
 
         fill = Style(fill="#800000")
@@ -645,6 +673,8 @@ class VoronoiHexTilePlotter():
     def drawMarginExclusionZoneLayer(self):
         layer_margin_ex = self.svg.add_inkscape_layer(
             'margin_exclusion', "Margin Exclusion", self.layer)
+        if self.mirror:
+            layer_margin_ex.set_scale_transform(-1, 1)
         layer_margin_ex.hide()
 
         fill = Style(fill="#000080")
@@ -652,7 +682,7 @@ class VoronoiHexTilePlotter():
 
         for mz in self.tile.edgeMarginZone:
             center, radius = mz
-            self._drawCircle(0, center, radius, fill, layer_margin_ex)
+            self._drawCircle(None, center, radius, fill, layer_margin_ex)
 
     def drawBadEdgeLayer(self):
         if len(self.tile.badEdges) == 0:
@@ -660,6 +690,9 @@ class VoronoiHexTilePlotter():
         
         layer_bad_edges = self.svg.add_inkscape_layer(
             'bad-edges', "Bad Edges", self.layer)
+        if self.mirror:
+            layer_bad_edges.set_scale_transform(-1, 1)
+
         for bei in self.tile.badEdges:
             badEdge = self.tile.badEdges[bei]
             vid0, vid1, rid = badEdge[0]
@@ -672,6 +705,9 @@ class VoronoiHexTilePlotter():
 
         layer_too_close = self.svg.add_inkscape_layer(
             'too-close', "Too Close Seeds", self.layer)
+        if self.mirror:
+            layer_too_close.set_scale_transform(-1, 1)
+
         for spair in self.tile.tooClose:
             s0, s1 = spair
             p = Path()
@@ -685,6 +721,8 @@ class VoronoiHexTilePlotter():
     def drawInscribedCirclesLayer(self):
         layer_circles = self.svg.add_inkscape_layer(
             'circles', "Inscribed Circles", self.layer)
+        if self.mirror:
+            layer_circles.set_scale_transform(-1, 1)
         layer_circles.hide()
         
         fill = Style(fill="#008000")
@@ -702,18 +740,40 @@ class VoronoiHexTilePlotter():
     def drawTileId(self):
         id = self.options['id']
         if id:
-            self.layer_text = self.svg.add_inkscape_layer(
+            layer_id = self.svg.add_inkscape_layer(
                 'tile-id', "Tile Id", self.layer)
-            self.layer_text.set_transform("scale(1,-1)")
+            layer_id.set_scale_transform(1, -1)
 
-            id_text = self.svg.add_loaded_element(self.layer_text, 'tile-id')
+            g = SVG.group('tile-id-group')
+            SVG.add_node(layer_id, g)
+            
+            pattern = self.options['pattern']
+            patternInfo = self.tile.patternMirror[pattern]
+            mirrorPattern = patternInfo[0]
+            rotate = patternInfo[1]
+            mirrorId = patternInfo[2]
+
+            # Only use a/b suffix if the front and back pattern are identical.
+            suffix = ""
+            if pattern == mirrorPattern:
+                suffix = "a"
+            if self.mirror:
+                suffix = ""
+                # Rotate the id to the appropriate corner for the mirrored side.
+                g.set_rotate_transform(-60 * rotate)
+                if pattern == mirrorPattern:
+                    suffix = "b"
+                else:
+                    id = mirrorId
+
+            id_text = self.svg.add_loaded_element(g, 'tile-id')
             id_text.set('transform', f"translate(0 {-self.size+8})")
-            SVG.set_text(id_text, f"{id:03d}")
+            SVG.set_text(id_text, f"{id:03d}{suffix}")
 
     def drawAnnotationsLayer(self):
         self.layer_text = self.svg.add_inkscape_layer(
             'annotations', "Annotations", self.layer)
-        self.layer_text.set_transform("scale(1,-1)")
+        self.layer_text.set_scale_transform(1, -1)
 
         if self.options['id']:
             id = self.options['id']
@@ -745,25 +805,48 @@ class VoronoiHexTilePlotter():
         self._addAnnotationText(f"adjustments: side {self.tile.adjustmentSide:.03g}, neighbor {self.tile.adjustmentNeighbor:.03g}")
         self._addAnnotationText(f"closeness: {self.tile.closeThreshold:.03g}, adjust {self.tile.adjustmentTooClose:.03g}")
 
+        # Add 15mm circle (for mana size).
+        self._drawCircle('mana', [50,110], '7.5',
+                         Style(fill="#000000"), self.layer_text)
+        
+        # Add terrain swatches.
+        y_start = 90
+        for type in ['v', 'h', 'm', 'l', 'r']:
+            color = self.getTerrainStyle(type)
+            r = SVG.rect(0, 75, y_start, 15, 6)
+            r.set_style(Style(color, STROKE_COLOR, STROKE_WIDTH))
+            SVG.add_node(self.layer_text, r)
+
+            label = Text(None, 70, y_start + 4.5, type.upper())
+            SVG.add_node(self.layer_text, label)
+            y_start += 10
+      
     def _addAnnotationText(self, text):
         t = Text(None, -92, 90 + 5.5 * self.numLines, text)
         SVG.add_node(self.layer_text, t)
         self.numLines += 1
     
-    def drawTerrainLabelsLayer(self):
+    def drawEdgeAnnotationsLayer(self):
+        self.layer_edge_annotations = self.svg.add_inkscape_layer(
+            'edge-annotations', "Edge Annotations", self.layer)
+        if self.mirror:
+            self.layer_edge_annotations.set_scale_transform(-1, -1)
+        else:
+            self.layer_edge_annotations.set_scale_transform(1, -1)
+
         # Add corner terrain labels.
         for i in range(0, self.tile.numSides):
             t = self.options['pattern'][i]
             label = Text(None, -1.5, -(self.size + 2), t.upper())
             if i != 0:
                 label.set_transform(f"rotate({60 * i})")
-            SVG.add_node(self.layer_text, label)
+            SVG.add_node(self.layer_edge_annotations, label)
 
         # Add edge terrain labels.
         for i in range(0, self.tile.numSides):
             g = Group(None)
             g.set_transform(f"rotate({30 + i * 60})")
-            SVG.add_node(self.layer_text, g)
+            SVG.add_node(self.layer_edge_annotations, g)
             edgeType = self.tile.edgeTypes[i]
             seedPattern = self.edgeSeedInfo[edgeType]
             for j in range(0, len(seedPattern)):
@@ -780,7 +863,7 @@ class VoronoiHexTilePlotter():
             if edgeType in EDGE_RIVER_INFO:
                 g = Group(None)
                 g.set_transform(f"rotate({30 + i * 60})")
-                SVG.add_node(self.layer_text, g)
+                SVG.add_node(self.layer_edge_annotations, g)
 
                 rIndex = EDGE_RIVER_INFO[edgeType].index('*')
                 seedPattern = self.edgeSeedInfo[edgeType]
@@ -800,7 +883,7 @@ class VoronoiHexTilePlotter():
             if edgeType in EDGE_CLIFF_INFO:
                 g = Group(None)
                 g.set_transform(f"rotate({30 + i * 60})")
-                SVG.add_node(self.layer_text, g)
+                SVG.add_node(self.layer_edge_annotations, g)
 
                 rIndex = EDGE_CLIFF_INFO[edgeType].index('*')
                 seedPattern = self.edgeSeedInfo[edgeType]
@@ -814,22 +897,6 @@ class VoronoiHexTilePlotter():
                 label = Text(None, x - 1.5, -(self.xMax + 10), "X")
                 SVG.add_node(g, label)
 
-        # Add 15mm circle (for mana size).
-        self._drawCircle('mana', [50,110], '7.5',
-                         Style(fill="#000000"), self.layer_text)
-        
-        # Add terrain swatches.
-        y_start = 90
-        for type in ['v', 'h', 'm', 'l', 'r']:
-            color = self.getTerrainStyle(type)
-            r = SVG.rect(0, 75, y_start, 15, 6)
-            r.set_style(Style(color, STROKE_COLOR, STROKE_WIDTH))
-            SVG.add_node(self.layer_text, r)
-
-            label = Text(None, 70, y_start + 4.5, type.upper())
-            SVG.add_node(self.layer_text, label)
-            y_start += 10
-      
     def _calcEdgeFeatureOffset(self, rIndex, seedPattern):
         # EDGE_RIVER_INFO: [ 'l' '*' 'l' 'l' 'm' ]
         #    edgeSeedInfo:    -       x   x   -
@@ -854,6 +921,9 @@ class VoronoiHexTilePlotter():
             return
 
         layer_river = self.svg.add_inkscape_layer('river', "River", self.layer)
+        if self.mirror:
+            layer_river.set_scale_transform(-1, 1)
+
         group_river = SVG.group('river-group')
         SVG.add_node(layer_river, group_river)
         if not self.options['bleed']:
@@ -912,6 +982,9 @@ class VoronoiHexTilePlotter():
             return
 
         layer_cliff = self.svg.add_inkscape_layer('cliff', "Cliff", self.layer)
+        if self.mirror:
+            layer_cliff.set_scale_transform(-1, 1)
+
         group_cliff = SVG.group('cliff-group')
         SVG.add_node(layer_cliff, group_cliff)
         if not self.options['bleed']:
@@ -1027,7 +1100,10 @@ class VoronoiHexTilePlotter():
     def drawOverlayLayer(self):
         self.layer_overlay = self.svg.add_inkscape_layer(
             'overlay', "Overlay", self.layer)
-        self.layer_overlay.set_scale_transform(1, -1)
+        if self.mirror:
+            self.layer_overlay.set_scale_transform(-1, -1)
+        else:
+            self.layer_overlay.set_scale_transform(1, -1)
 
         if not self.overlayData:
             return
@@ -1161,9 +1237,13 @@ class VoronoiHexTilePlotter():
     def drawRegionIdLayer(self):
         layer_region_ids = self.svg.add_inkscape_layer(
             'region_ids', "Region Ids", self.layer)
+        if self.mirror:
+            layer_region_ids.set_scale_transform(-1, -1)
+        else:
+            layer_region_ids.set_scale_transform(1, -1)
         if not self.options['show-seed-ids']:
             layer_region_ids.hide()
-        layer_region_ids.set_transform("scale(1,-1)")
+
         for sid in range(0, self.numActiveSeeds):
             center = self.seeds[sid]
             text = f"{sid}"
@@ -1172,6 +1252,8 @@ class VoronoiHexTilePlotter():
 
     def drawHexTilePuzzleBorder(self):
         layer_puzzle = self.svg.add_inkscape_layer("puzzle", "Puzzle Border", self.layer)
+        if self.mirror:
+            layer_puzzle.set_scale_transform(-1, 1)
         if not self.options['bleed']:
             layer_puzzle.hide()
 
@@ -1212,6 +1294,19 @@ class VoronoiHexTilePlotter():
         p.set_style(Style("none", "#000000", STROKE_WIDTH))
         SVG.add_node(layer_puzzle, p)
     
+    def drawRegistrationMarksLayer(self):
+        layerRegMarks = self.svg.add_inkscape_layer("regmarks", "Registration Marks", self.layer)
+        if not self.options['bleed']:
+            layerRegMarks.hide()
+
+        yMax = self.tile.size
+        xMax = self.xMax
+        blackFill = Style(fill="#000000")
+        self._drawCircle(None, [xMax * 1.3, 0], 2.0, blackFill, layerRegMarks)
+        self._drawCircle(None, [xMax * -1.3, 0], 2.0, blackFill, layerRegMarks)
+        self._drawCircle(None, [0, yMax * 1.3], 2.0, blackFill, layerRegMarks)
+        self._drawCircle(None, [0, yMax * -1.3], 2.0, blackFill, layerRegMarks)
+
     def _drawCircle(self, id, center, radius, fill, layer):
         circle = SVG.circle(id, center[0], center[1], radius)
         circle.set_style(fill)
@@ -1223,6 +1318,8 @@ class VoronoiHexTilePlotter():
 
         outdir_pngid = self.getPngIdOutputDir()
         name = self.tile.calcBaseFilename()
+        if self.mirror:
+            name += "r"
 
         outdir_svg = self.getSvgOutputDir()
         out_svg = os.path.join(outdir_svg, '%s.svg' % name)

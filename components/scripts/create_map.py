@@ -30,6 +30,8 @@ OPTIONS = {
              'desc': "Max iterations"},
     'load': {'type': 'string', 'default': None,
              'desc': "Load data from file"},
+    'mirror': {'type': 'bool', 'default': False,
+               'desc': "Generate tile mirrored on x-axis"},
     'pattern': {'type': 'string', 'default': "llllll",
                 'desc': "Edge pattern ([lmh] x6)"},
     'random-terrain-fill': {'type': 'bool', 'default': False,

@@ -190,7 +190,7 @@ class VoronoiHexTile():
         self.riverData = None
         self.cliffData = None
         self.overlayData = None
-
+        
         # Calculate data for reversed edges ('r') from the forward ('f') edges.
         for type in self.singleEdgeTypes:
             if type[-1] == 'f':
@@ -218,6 +218,19 @@ class VoronoiHexTile():
                     if not feq(first[1], -last[1]):
                         raise Exception(f"Seed perpendcular offsets for {type} do not match: {first[1]} and {last[1]}")
         
+        # Calculate the pattern mirror map.
+        # Corner ids for:
+        #           ,0,             ,0,
+        #  Front  5'   `1   Back  1'   `5
+        #         |     |         |     |
+        #         4,   ,2         2,   ,4
+        #           `3'             `3'
+        self.patternMirror = {}
+        for t in TILE_PATTERN_IDS:
+            rev = t[0] + t[5:0:-1]
+            canonPattern, rotate, pId = self.findCanonicalEdgePattern(rev)
+            self.patternMirror[t] = [canonPattern, rotate, pId]
+
     def setTerrainData(self, data):
         self.terrainData = data
         
@@ -284,13 +297,11 @@ class VoronoiHexTile():
         # Verify that the pattern is in its canonical form.
         if self.options['_allow_non_canonical_pattern'] == False:
             if not pattern in TILE_PATTERN_IDS:
-                # Try to find the canonical form.
-                for p in TILE_PATTERN_IDS:
-                    for i in range(1, NUM_SIDES):
-                        rotatedPattern = p[i:] + p[:i]
-                        if pattern == rotatedPattern:
-                            raise Exception(f"Non canonical pattern. Use {p} ({TILE_PATTERN_IDS[p]}) instead of {pattern}.")
-                raise Exception("Non canonical pattern.")
+                cPattern = self.findCanonicalEdgePattern(pattern)
+                if cPattern:
+                    p, i = cPattern
+                    raise Exception(f"Non canonical pattern. Use {p} ({TILE_PATTERN_IDS[p]}) instead of {pattern}.")
+                raise Exception("Invalid pattern: {pattern}")
                     
         # Record the terrain type for each region along the edge of the tile.
         self.seed2terrain = []
@@ -321,6 +332,17 @@ class VoronoiHexTile():
         if self.options['verbose']:
             print("Center weight:", self.centerWeight)
 
+    # Return the canonical form of the pattern and rotation offset if it exists.
+    # The rotation offset identifies the start index of the canonical form of the pattern.
+    def findCanonicalEdgePattern(self, pattern):
+        # Try to find the canonical form.
+        for p in TILE_PATTERN_IDS:
+            for i in range(0, NUM_SIDES):
+                rotatedPattern = p[i:] + p[:i]
+                if pattern == rotatedPattern:
+                    return [p, i, TILE_PATTERN_IDS[p]]
+        return None
+    
     # Initialize the fixed seeds along the edge of the hex tile.
     def initFixedSeeds(self):
         size = self.size

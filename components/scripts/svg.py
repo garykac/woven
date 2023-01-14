@@ -34,6 +34,9 @@ class Node(object):
     def set_translate_transform(self, x, y):
         self.element.set('transform', f"translate({x} {y})")
 
+    def set_rotate_transform(self, r):
+        self.element.set('transform', f"rotate({r})")
+
 class Group(Node):
     def __init__(self, id=None):
         super().__init__('g', id)
@@ -391,7 +394,7 @@ class SVG(object):
 
     @staticmethod
     def clone(id, xlink, x, y):
-        if id == 0:
+        if not id:
             id = f'use{SVG.next_id()}'
         n = Node('use', id)
         n.set('xlink:href', str(xlink))
@@ -403,7 +406,7 @@ class SVG(object):
         
     @staticmethod
     def rect(id, x, y, width, height):
-        if id == 0:
+        if not id:
             id = f'rect{SVG.next_id()}'
         n = Node('rect', id)
         n.set('x', str(x))
@@ -423,7 +426,7 @@ class SVG(object):
         
     @staticmethod
     def circle(id, cx, cy, r):
-        if id == 0:
+        if not id:
             id = f'circle{SVG.next_id()}'
         n = Node('circle', id)
         n.set('cx', str(cx))
