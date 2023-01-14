@@ -167,9 +167,12 @@ class VoronoiHexTilePlotter():
                     if not feq(first[2], -second[2]):
                         raise Exception(f"Puzzle tab heights for {type} are not compatible: {first[3]} and {second[3]}")
 
-    def getTerrainStyle(self, type):
+    def getTerrainFillColor(self, type):
         return REGION_COLOR[type]
 
+    def getStrokeColor(self):
+        return STROKE_COLOR
+        
     def plotTile(self, plotId):
         fig = plt.figure(figsize=(8,8))
         self.plotClippedRegions()
@@ -184,7 +187,7 @@ class VoronoiHexTilePlotter():
         for sid in range(0, self.numActiveSeeds):
             vids = self.sid2clippedRegion[sid]
             terrain_type = self.seed2terrain[sid]
-            color = self.getTerrainStyle(terrain_type)
+            color = self.getTerrainFillColor(terrain_type)
             self.plotRegion(vids, color)
 
     def plotBadEdges(self):
@@ -438,7 +441,7 @@ class VoronoiHexTilePlotter():
             vids = self.sid2clippedRegion[sid]
             id = f"clippedregion-{sid}"
             terrain_type = self.seed2terrain[sid]
-            color = self.getTerrainStyle(terrain_type)
+            color = self.getTerrainFillColor(terrain_type)
             self.plotRegion(vids, color)
             self.drawUnmodifiedRegion(id, sid, vids, color, gClip)
 
@@ -475,7 +478,7 @@ class VoronoiHexTilePlotter():
                 vids = self.sid2region[sid]
                 region = self.calcRoundedRegionPath(id, sid, vids)
 
-                color = self.getTerrainStyle(terrainType)
+                color = self.getTerrainFillColor(terrainType)
                 style = Style(color, None)
                 region.set_style(style)
 
@@ -605,7 +608,7 @@ class VoronoiHexTilePlotter():
 
             path = self.calcRoundedRegionPath(id, sid, vids)
 
-            style = Style(None, STROKE_COLOR, THICK_STROKE_WIDTH)
+            style = Style(None, self.getStrokeColor(), THICK_STROKE_WIDTH)
             path.set_style(style)
             SVG.add_node(group_region_rounded, path)
 
@@ -813,9 +816,9 @@ class VoronoiHexTilePlotter():
         # Add terrain swatches.
         y_start = 90
         for type in ['v', 'h', 'm', 'l', 'r']:
-            color = self.getTerrainStyle(type)
+            color = self.getTerrainFillColor(type)
             r = SVG.rect(0, 75, y_start, 15, 6)
-            r.set_style(Style(color, STROKE_COLOR, STROKE_WIDTH))
+            r.set_style(Style(color, self.getStrokeColor(), STROKE_WIDTH))
             SVG.add_node(self.layer_text, r)
 
             label = Text(None, 70, y_start + 4.5, type.upper())
@@ -872,9 +875,9 @@ class VoronoiHexTilePlotter():
                 seedPattern = self.edgeSeedInfo[edgeType]
                 x = self._calcEdgeFeatureOffset(rIndex, seedPattern)
 
-                color = self.getTerrainStyle('r')
+                fillColor = self.getTerrainFillColor('r')
                 r = SVG.rect(0, x-1.5, -self.xMax -8, 3, 8)
-                r.set_style(Style(color, STROKE_COLOR, STROKE_WIDTH))
+                r.set_style(Style(fillColor, self.getStrokeColor(), STROKE_WIDTH))
                 SVG.add_node(g, r)
 
                 label = Text(None, x - 1.5, -(self.xMax + 10), "R")
@@ -892,9 +895,9 @@ class VoronoiHexTilePlotter():
                 seedPattern = self.edgeSeedInfo[edgeType]
                 x = self._calcEdgeFeatureOffset(rIndex, seedPattern)
 
-                color = self.getTerrainStyle('c')
+                fillColor = self.getTerrainFillColor('c')
                 r = SVG.rect(0, x-1.5, -self.xMax -8, 3, 8)
-                r.set_style(Style(color, STROKE_COLOR, STROKE_WIDTH))
+                r.set_style(Style(fillColor, self.getStrokeColor(), STROKE_WIDTH))
                 SVG.add_node(g, r)
 
                 label = Text(None, x - 1.5, -(self.xMax + 10), "X")
@@ -968,13 +971,13 @@ class VoronoiHexTilePlotter():
             node = self.calcTexturedPathNode("texriver", texturedPathOps)
             SVG.add_node(group_river, node)
         else:
-            style_river = Style(REGION_COLOR['r'], None)
+            style_river = Style(self.getTerrainFillColor('r'), None)
             style_river.set("stroke-linecap", "round")
             style_river.set("stroke-linejoin", "round")
             p.set_style(style_river)
             SVG.add_node(group_river, p)
 
-        style_river_border = Style(None, STROKE_COLOR, THICK_STROKE_WIDTH)
+        style_river_border = Style(None, self.getStrokeColor(), THICK_STROKE_WIDTH)
         style_river_border.set("stroke-linecap", "round")
         style_river_border.set("stroke-linejoin", "round")
         pBorder.set_style(style_river_border)
@@ -1021,12 +1024,12 @@ class VoronoiHexTilePlotter():
             p.end(False)
             pBorder = copy.deepcopy(p)
 
-            style_cliff = Style(REGION_COLOR['c'], None)
+            style_cliff = Style(self.getTerrainFillColor('c'), None)
             style_cliff.set("filter", "url(#filterInnerGlowC)")
             p.set_style(style_cliff)
             SVG.add_node(group_cliff, p)
             
-            style_cliff_border = Style(None, STROKE_COLOR, THICK_STROKE_WIDTH)
+            style_cliff_border = Style(None, self.getStrokeColor(), THICK_STROKE_WIDTH)
             style_cliff_border.set("stroke-linecap", "round")
             style_cliff_border.set("stroke-linejoin", "round")
             pBorder.set_style(style_cliff_border)
@@ -1066,7 +1069,7 @@ class VoronoiHexTilePlotter():
                     line0, line1 = line1, line0
                 self._drawRidgeTeeth(p, line0, line1, iSeg == 0, iSeg == numSegments - 1)
             p.end()
-            style_cliff_pattern = Style(STROKE_COLOR)
+            style_cliff_pattern = Style(self.getStrokeColor())
             p.set_style(style_cliff_pattern)
             SVG.add_node(group_cliff, p)
 
@@ -1150,7 +1153,7 @@ class VoronoiHexTilePlotter():
                         SVG.add_node(self.layer_overlay, node)
 
                         icon = self.svg.get_loaded_path(f"obj-{type}")
-                        style_icon_border = Style(None, STROKE_COLOR, ICON_STROKE_WIDTH)
+                        style_icon_border = Style(None, self.getStrokeColor(), ICON_STROKE_WIDTH)
                         style_icon_border.set("stroke-linecap", "round")
                         style_icon_border.set("stroke-linejoin", "round")
                         icon.set_style(style_icon_border)
@@ -1211,7 +1214,7 @@ class VoronoiHexTilePlotter():
                         SVG.add_node(self.layer_overlay, node)
         
                         icon = self.svg.get_loaded_path(f"obj-{type}")
-                        style_icon_border = Style(None, STROKE_COLOR, ICON_STROKE_WIDTH)
+                        style_icon_border = Style(None, self.getStrokeColor(), ICON_STROKE_WIDTH)
                         style_icon_border.set("stroke-linecap", "round")
                         style_icon_border.set("stroke-linejoin", "round")
                         icon.set_style(style_icon_border)
@@ -1398,7 +1401,7 @@ class VoronoiHexTilePlotter():
         p = Path() if id == None else Path(id)
         p.addPoints(vertices)
         p.end()
-        p.set_style(Style(color, STROKE_COLOR, STROKE_WIDTH))
+        p.set_style(Style(color, self.getStrokeColor(), STROKE_WIDTH))
         SVG.add_node(layer, p)
 
     # Draw voronoi region in the SVG file, given a list of vertex ids.
@@ -1410,7 +1413,7 @@ class VoronoiHexTilePlotter():
         p = Path() if id == None else Path(id)
         p.addPoints(vertices)
         p.end()
-        p.set_style(Style(color, STROKE_COLOR, STROKE_WIDTH))
+        p.set_style(Style(color, self.getStrokeColor(), STROKE_WIDTH))
         SVG.add_node(layer, p)
 
     # Calc voronoi region path with rounded points, given a list of vertex ids.
