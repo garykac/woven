@@ -12,8 +12,6 @@ OPTIONS = {
              'desc': "Generate animation plots"},
     'bleed': {'type': 'bool', 'default': False,
               'desc': "Create output for printing (with bleed and no tile outline)"},
-    'bw': {'type': 'bool', 'default': False,
-           'desc': "Black & white SVG output"},
     'center': {'type': 'string', 'default': None,
                'desc': "Terrain type for center of tile: l, m, h"},
     'debug': {'type': 'int', 'default': -1,

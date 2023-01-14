@@ -82,6 +82,7 @@ class VoronoiHexTilePlotter():
     def __init__(self, tile):
         self.tile = tile
         self.options = tile.options
+        self.darkMode = False
         
         # Random number generator state
         self.rng = tile.rng
@@ -167,8 +168,6 @@ class VoronoiHexTilePlotter():
                         raise Exception(f"Puzzle tab heights for {type} are not compatible: {first[3]} and {second[3]}")
 
     def getTerrainStyle(self, type):
-        if self.options['bw']:
-            return REGION_COLOR['_']
         return REGION_COLOR[type]
 
     def plotTile(self, plotId):
@@ -256,6 +255,7 @@ class VoronoiHexTilePlotter():
         self._plot(True, plotId)
         if self.options['mirror']:
             self.mirror = True
+            self.darkMode = True
             self._plot(False)
 
     def _plot(self, doPlot, plotId=None):
