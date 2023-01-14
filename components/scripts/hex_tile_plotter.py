@@ -58,13 +58,13 @@ EDGE_CLIFF_INFO = {
 # Edge puzzle tab info.
 # The locations (and type) of the puzzle tabs for interlocking hex tiles.
 # Each entry is:
-#   [ offset-along-edge, tab-style, tab-width, tab-height ]
+#   [ offset-along-edge, tab-width, tab-height ]
 EDGE_PUZZLE_INFO = {
-    '1s': [[0.16, "hook", 0.05, -0.05], [0.84, "hook", 0.05, 0.05]],    # l-l-l
-    '2f': [[0.36, "hook", 0.05,  0.05]],                                # l-l-l-m
-    '2s': [[ 1/3, "hook", 0.05,  0.05], [ 2/3, "hook", 0.05, -0.05]],   # m-m-m-m
-    '3f': [[0.28, "hook", 0.03, -0.05], [0.76, "hook", 0.03, -0.05]],    # m-m-h-m-h
-    '3s': [[0.24, "hook", 0.05, -0.05], [0.76, "hook", 0.05, 0.05]],    # h-h-m-h-h
+    '1s': [[0.16, 0.05, -0.05], [0.84, 0.05, 0.05]],    # l-l-l
+    '2f': [[0.36, 0.05,  0.05]],                        # l-l-l-m
+    '2s': [[ 1/3, 0.05,  0.05], [ 2/3, 0.05, -0.05]],   # m-m-m-m
+    '3f': [[0.28, 0.03, -0.05], [0.76, 0.03, -0.05]],   # m-m-h-m-h
+    '3s': [[0.24, 0.05, -0.05], [0.76, 0.05, 0.05]],    # h-h-m-h-h
 }
 
 # Textures to use for each type of mark (for the overlay).
@@ -149,8 +149,8 @@ class VoronoiHexTilePlotter():
                 if type in EDGE_PUZZLE_INFO:
                     newEdgePuzzleInfo = []
                     for si in reversed(EDGE_PUZZLE_INFO[type]):
-                        offset, tabType, tabWidth, tabHeight = si
-                        newEdgePuzzleInfo.append([1.0-offset, tabType, tabWidth, -tabHeight])
+                        offset, tabWidth, tabHeight = si
+                        newEdgePuzzleInfo.append([1.0-offset, tabWidth, -tabHeight])
                     EDGE_PUZZLE_INFO[newType] = newEdgePuzzleInfo
             if type[-1] == 's':
                 if type in EDGE_PUZZLE_INFO:
@@ -158,11 +158,9 @@ class VoronoiHexTilePlotter():
                     first, second = EDGE_PUZZLE_INFO[type]
                     if not feq(first[0], 1.0 - second[0]):
                         raise Exception(f"Puzzle tab offsets for {type} are not symmetric: {first[0]} and {second[0]}")
-                    if first[1] != second[1]:
-                        raise Exception(f"Puzzle tab types for {type} are not the same type: {first[1]} and {second[1]}")
-                    if not feq(first[2], second[2]):
+                    if not feq(first[1], second[1]):
                         raise Exception(f"Puzzle tab widths for {type} do not match: {first[2]} and {second[2]}")
-                    if not feq(first[3], -second[3]):
+                    if not feq(first[2], -second[2]):
                         raise Exception(f"Puzzle tab heights for {type} are not compatible: {first[3]} and {second[3]}")
 
     def getTerrainStyle(self, type):
@@ -1269,21 +1267,11 @@ class VoronoiHexTilePlotter():
             endPt = self.vHex[i1]
             vertices.append(startPt)
             for j in range(0, len(puzzlePattern)):
-                t, tabType, tabWidth, tabHeight = puzzlePattern[j]
-                if tabType == "tri":
-                    vertices.append(lerp(startPt, endPt, t - tabWidth))
-                    vertices.append(lerperp(startPt, endPt, t, tabHeight))
-                    vertices.append(lerp(startPt, endPt, t + tabWidth))
-                elif tabType == "sq":
-                    vertices.append(lerp(startPt, endPt, t - tabWidth))
-                    vertices.append(lerperp(startPt, endPt, t - tabWidth, tabHeight))
-                    vertices.append(lerperp(startPt, endPt, t + tabWidth, tabHeight))
-                    vertices.append(lerp(startPt, endPt, t + tabWidth))
-                elif tabType == "hook":
-                    vertices.append(lerp(startPt, endPt, t - tabWidth + HOOK_SIZE))
-                    vertices.append(lerperp(startPt, endPt, t - tabWidth -HOOK_SIZE, tabHeight))
-                    vertices.append(lerperp(startPt, endPt, t + tabWidth +HOOK_SIZE, tabHeight))
-                    vertices.append(lerp(startPt, endPt, t + tabWidth - HOOK_SIZE))
+                t, tabWidth, tabHeight = puzzlePattern[j]
+                vertices.append(lerp(startPt, endPt, t - tabWidth + HOOK_SIZE))
+                vertices.append(lerperp(startPt, endPt, t - tabWidth -HOOK_SIZE, tabHeight))
+                vertices.append(lerperp(startPt, endPt, t + tabWidth +HOOK_SIZE, tabHeight))
+                vertices.append(lerp(startPt, endPt, t + tabWidth - HOOK_SIZE))
 
             # End point will be added by next tile edge.
             #vertices.append(endPt)
