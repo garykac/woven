@@ -3,6 +3,9 @@ TILE_PATTERN_IDS = {
                    # M = pattern id for the mirrored form of this pattern.
                    #     '-' means that mirrored pattern has the same canonical form.
                    # Tiles = current status of tiles being created for this pattern.
+                   #     o = generated
+                   #     + = terrain complete
+                   #     * = complete
                    #
                    #  M   Tiles
     "llllll": 100, #  -   *
@@ -26,11 +29,11 @@ TILE_PATTERN_IDS = {
     "lmlmhm": 400, #  -   +
     "lmmlmm": 420, #  -   
     "lmmmmm": 440, #  -   + o
-    "lmmmhm": 460, # 520  +
+    "lmmmhm": 460, # 520  
     "lmmhmm": 480, #  -   o
 
     "lmmhhm": 500, # 560  
-    "lmhmmm": 520, # 460  +
+    "lmhmmm": 520, # 460  
     "lmhmhm": 540, #  -   +
     "lmhhmm": 560, # 500  
     "lmhhhm": 580, #  -   
@@ -42,7 +45,7 @@ TILE_PATTERN_IDS = {
     "mmmhhh": 680, #  -   
 
     "mmhmmh": 700, #  -   * +
-    "mmhmhh": 720, # 740  *
+    "mmhmhh": 720, # 740  
     "mmhhmh": 740, # 720  
     "mmhhhh": 760, #  -   + o
     "mhmhmh": 780, #  -   
@@ -54,11 +57,6 @@ TILE_PATTERN_IDS = {
 
     # 900+ for special tiles
 }
-
-# Annotations:
-#   * = complete
-#   + = terrain complete
-#   o = generated
 
 # Capture the Toad:
 #                _H_           _H_
