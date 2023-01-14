@@ -23,13 +23,15 @@ PLOT_CELL_IDS = True   # Add cell ids to png output file.
 
 # NOTE: Default units for SVG is mm.
 
-STROKE_COLOR = "#000000"
 STROKE_WIDTH = 0.3
 THICK_STROKE_WIDTH = 1.0
 ICON_STROKE_WIDTH = 0.7
 
 RIVER_WIDTH = 2.8
 CLIFF_WIDTH = 2.0
+
+STROKE_COLOR = "#000000"
+STROKE_COLOR_MIRROR = "#ffffff"
 
 # Fill colors for regions based on terrain height.
 REGION_COLOR = {
@@ -38,7 +40,17 @@ REGION_COLOR = {
     'm': "#f0ce76",  #'#dcc382',  # medium
     'h': "#e7a311",  #'#d69200',  # high
     'r': "#a2c6ff",  # river/water
-    'c': "#ffffff",  # cliff
+    'c': "#808080",  # cliff
+    't': "#5ba22d",  # tree
+    'v': "#be850a",  # very high mountain
+}
+REGION_COLOR_MIRROR = {
+    '_': "#000000",  # blank
+    'l': "#fae470",  # low
+    'm': "#e9b530",  # medium
+    'h': "#885111",  # high
+    'r': "#6286ff",  # river/water
+    'c': "#808080",  # cliff
     'v': "#be850a",  # very high mountain
 }
 
@@ -82,7 +94,7 @@ class VoronoiHexTilePlotter():
     def __init__(self, tile):
         self.tile = tile
         self.options = tile.options
-        self.darkMode = False
+        self.mirrorMode = False
         
         # Random number generator state
         self.rng = tile.rng
@@ -168,9 +180,13 @@ class VoronoiHexTilePlotter():
                         raise Exception(f"Puzzle tab heights for {type} are not compatible: {first[3]} and {second[3]}")
 
     def getTerrainFillColor(self, type):
+        if self.mirrorMode:
+            return REGION_COLOR_MIRROR[type]
         return REGION_COLOR[type]
 
     def getStrokeColor(self):
+        if self.mirrorMode:
+            return STROKE_COLOR_MIRROR
         return STROKE_COLOR
         
     def plotTile(self, plotId):
@@ -258,7 +274,7 @@ class VoronoiHexTilePlotter():
         self._plot(True, plotId)
         if self.options['mirror']:
             self.mirror = True
-            self.darkMode = True
+            self.mirrorMode = True
             self._plot(False)
 
     def _plot(self, doPlot, plotId=None):
@@ -277,20 +293,18 @@ class VoronoiHexTilePlotter():
         self.addInnerGlowFilter("filterInnerGlowM", 2.5, "rgb(220,174,16)")
         self.addInnerGlowFilter("filterInnerGlowL", 2.5, "rgb(219,217,86)")
         self.addInnerGlowFilter("filterInnerGlowR", 2.0, "rgb(111,161,232)")
-        self.addInnerGlowFilter("filterInnerGlowC", 2.0, "rgb(200,200,200)")
 
         layer = self.svg.add_inkscape_layer('layer', "Layer")
         layer.set_transform("translate(107.95 120) scale(1, -1)")
         self.layer = layer
 
-        stroke = Style("none", "#000000", STROKE_WIDTH)
-        black_fill = Style(fill="#000000")
-
         self.analyzeSpecialRidges()
 
         # Draw layers back to front.
         
-        self.drawHexTileBorder("background", "Tile Background", black_fill)
+        # Copy background fill from stroke color.
+        backgroundFill = Style(fill=self.getStrokeColor())
+        self.drawHexTileBorder("background", "Tile Background", backgroundFill)
 
         self.drawClippedRegionLayer()
 
@@ -322,6 +336,7 @@ class VoronoiHexTilePlotter():
 
         self.drawRegionIdLayer()
 
+        stroke = Style("none", self.getStrokeColor(), STROKE_WIDTH)
         border_layer = self.drawHexTileBorder("border", "Border", stroke)
         if self.options['bleed']:
             border_layer.hide()
@@ -621,7 +636,7 @@ class VoronoiHexTilePlotter():
         for sid in range(0, self.numActiveSeeds):
             rid = self.vor.point_region[sid]
             id = f"region-{sid}"
-            self.drawRegion(id, sid, self.vor.regions[rid], "#ffffff", layer_region)
+            self.drawRegion(id, sid, self.vor.regions[rid], self.getTerrainFillColor('_'), layer_region)
 
     def drawUnmodifiedRegionLayer(self):
         layer_region = self.svg.add_inkscape_layer('unmod-region', "Unmodified Region", self.layer)
@@ -632,7 +647,7 @@ class VoronoiHexTilePlotter():
         for sid in range(0, self.numActiveSeeds):
             rid = self.vor.point_region[sid]
             id = f"unmodregion-{sid}"
-            self.drawUnmodifiedRegion(id, sid, self.vor.regions[rid], "#ffffff", layer_region)
+            self.drawUnmodifiedRegion(id, sid, self.vor.regions[rid], self.getTerrainFillColor('_'), layer_region)
 
     def drawSeedLayer(self):
         layer_seeds = self.svg.add_inkscape_layer('seeds', "Seeds", self.layer)
@@ -640,7 +655,7 @@ class VoronoiHexTilePlotter():
             layer_seeds.set_scale_transform(-1, 1)
         layer_seeds.hide()
 
-        black_fill = Style(fill="#000000")
+        black_fill = Style(fill=self.getStrokeColor())
         for sid in range(0, self.numActiveSeeds):
             center = self.seeds[sid]
             id = f"seed-{sid}"
@@ -731,7 +746,7 @@ class VoronoiHexTilePlotter():
         
         fill = Style(fill="#008000")
         fill.set('fill-opacity', 0.15)
-        black_fill = Style(fill="#000000")
+        black_fill = Style(fill=self.getStrokeColor())
 
         for sid in self.tile.regionCircles:
             center, radius = self.tile.regionCircles[sid]
@@ -757,22 +772,15 @@ class VoronoiHexTilePlotter():
             rotate = patternInfo[1]
             mirrorId = patternInfo[2]
 
-            # Only use a/b suffix if the front and back pattern are identical.
-            suffix = ""
-            if pattern == mirrorPattern:
-                suffix = "a"
             if self.mirror:
-                suffix = ""
                 # Rotate the id to the appropriate corner for the mirrored side.
                 g.set_rotate_transform(-60 * rotate)
-                if pattern == mirrorPattern:
-                    suffix = "b"
-                else:
+                if pattern != mirrorPattern:
                     id = mirrorId
 
             id_text = self.svg.add_loaded_element(g, 'tile-id')
             id_text.set('transform', f"translate(0 {-self.size+8})")
-            SVG.set_text(id_text, f"{id:03d}{suffix}")
+            SVG.set_text(id_text, f"{id:03d}")
 
     def drawAnnotationsLayer(self):
         self.layer_text = self.svg.add_inkscape_layer(
@@ -1025,7 +1033,6 @@ class VoronoiHexTilePlotter():
             pBorder = copy.deepcopy(p)
 
             style_cliff = Style(self.getTerrainFillColor('c'), None)
-            style_cliff.set("filter", "url(#filterInnerGlowC)")
             p.set_style(style_cliff)
             SVG.add_node(group_cliff, p)
             
@@ -1287,7 +1294,7 @@ class VoronoiHexTilePlotter():
         p = Path()
         self.addRoundedVerticesToPath(p, vertices, 0.3)
         p.end()
-        p.set_style(Style("none", "#000000", STROKE_WIDTH))
+        p.set_style(Style("none", self.getStrokeColor(), STROKE_WIDTH))
         SVG.add_node(layer_puzzle, p)
     
     def drawRegistrationMarksLayer(self):
@@ -1393,7 +1400,7 @@ class VoronoiHexTilePlotter():
         plt.fill(*zip(*vertices), facecolor=color, edgecolor="black")
 
     # Draw voronoi region in the SVG file, given a list of vertex ids.
-    def drawRegion(self, id, sid, vids, color, layer):
+    def drawRegion(self, id, sid, vids, colorFill, layer):
         if len(vids) == 0:
             return
         vertices = [self.getVertexForRegion(i, sid) for i in vids]
@@ -1401,7 +1408,7 @@ class VoronoiHexTilePlotter():
         p = Path() if id == None else Path(id)
         p.addPoints(vertices)
         p.end()
-        p.set_style(Style(color, self.getStrokeColor(), STROKE_WIDTH))
+        p.set_style(Style(colorFill, self.getStrokeColor(), STROKE_WIDTH))
         SVG.add_node(layer, p)
 
     # Draw voronoi region in the SVG file, given a list of vertex ids.
