@@ -62,9 +62,9 @@ EDGE_CLIFF_INFO = {
 EDGE_PUZZLE_INFO = {
     '1s': [[0.16, 0.05, -0.05], [0.84, 0.05, 0.05]],    # l-l-l
     '2f': [[0.36, 0.05,  0.05]],                        # l-l-l-m
-    '2s': [[ 1/3, 0.05,  0.05], [ 2/3, 0.05, -0.05]],   # m-m-m-m
-    '3f': [[0.28, 0.03, -0.05], [0.76, 0.03, -0.05]],   # m-m-h-m-h
-    '3s': [[0.24, 0.05, -0.05], [0.76, 0.05, 0.05]],    # h-h-m-h-h
+    '2s': [[ 1/3, 0.04,  0.05], [ 2/3, 0.04, -0.05]],   # m-m-m-m
+    '3f': [[0.28, 0.03, -0.05], [0.78, 0.03, -0.05]],   # m-m-h-m-h
+    '3s': [[0.24, 0.03, -0.05], [0.76, 0.03, 0.05]],    # h-h-m-h-h
 }
 
 # Textures to use for each type of mark (for the overlay).
@@ -137,7 +137,10 @@ class VoronoiHexTilePlotter():
                 
         # Reset number of annotation lines.
         self.numLines = 0
+        
+        self.calcReversedEdges()
 
+    def calcReversedEdges(self):
         # Calculate data for reversed edges ('r') from the forward ('f') edges.
         for type in self.tile.singleEdgeTypes:
             if type[-1] == 'f':
@@ -825,12 +828,14 @@ class VoronoiHexTilePlotter():
         self.numLines += 1
     
     def drawEdgeAnnotationsLayer(self):
-        self.layer_edge_annotations = self.svg.add_inkscape_layer(
+        layer_edge_annotations = self.svg.add_inkscape_layer(
             'edge-annotations', "Edge Annotations", self.layer)
         if self.mirror:
-            self.layer_edge_annotations.set_scale_transform(-1, -1)
+            layer_edge_annotations.set_scale_transform(-1, -1)
         else:
-            self.layer_edge_annotations.set_scale_transform(1, -1)
+            layer_edge_annotations.set_scale_transform(1, -1)
+        if not self.options['show-seed-ids']:
+            layer_edge_annotations.hide()
 
         # Add corner terrain labels.
         for i in range(0, self.tile.numSides):
@@ -838,13 +843,13 @@ class VoronoiHexTilePlotter():
             label = Text(None, -1.5, -(self.size + 2), t.upper())
             if i != 0:
                 label.set_transform(f"rotate({60 * i})")
-            SVG.add_node(self.layer_edge_annotations, label)
+            SVG.add_node(layer_edge_annotations, label)
 
         # Add edge terrain labels.
         for i in range(0, self.tile.numSides):
             g = Group(None)
             g.set_transform(f"rotate({30 + i * 60})")
-            SVG.add_node(self.layer_edge_annotations, g)
+            SVG.add_node(layer_edge_annotations, g)
             edgeType = self.tile.edgeTypes[i]
             seedPattern = self.edgeSeedInfo[edgeType]
             for j in range(0, len(seedPattern)):
@@ -861,7 +866,7 @@ class VoronoiHexTilePlotter():
             if edgeType in EDGE_RIVER_INFO:
                 g = Group(None)
                 g.set_transform(f"rotate({30 + i * 60})")
-                SVG.add_node(self.layer_edge_annotations, g)
+                SVG.add_node(layer_edge_annotations, g)
 
                 rIndex = EDGE_RIVER_INFO[edgeType].index('*')
                 seedPattern = self.edgeSeedInfo[edgeType]
@@ -881,7 +886,7 @@ class VoronoiHexTilePlotter():
             if edgeType in EDGE_CLIFF_INFO:
                 g = Group(None)
                 g.set_transform(f"rotate({30 + i * 60})")
-                SVG.add_node(self.layer_edge_annotations, g)
+                SVG.add_node(layer_edge_annotations, g)
 
                 rIndex = EDGE_CLIFF_INFO[edgeType].index('*')
                 seedPattern = self.edgeSeedInfo[edgeType]
