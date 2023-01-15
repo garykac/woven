@@ -87,7 +87,7 @@ EDGE_PUZZLE_INFO = {
 
 # Style to use for each type of mark (for the overlay).
 OVERLAY_MARK_STYLES = {
-    "bridge": "stone",
+    "bridge": "bridge",
     "star": "star",
     "tower": "stone",
     "tree1": "tree",
@@ -97,6 +97,13 @@ OVERLAY_MARK_STYLES = {
 }
 
 OVERLAY_MARK_STYLE_INFO = {
+    "bridge": {
+        "tex-type": "g",
+        "tex-id": "g01",
+        "stroke": ['x', ICON_STROKE_WIDTH],
+        "mirror-fill": '_',
+        "mirror-stroke": ['x', ICON_STROKE_WIDTH_MIRROR],
+        },
     "stone": {
         "tex-type": "g",
         "tex-id": "g01",
