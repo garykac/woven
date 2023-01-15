@@ -1325,10 +1325,11 @@ class VoronoiHexTilePlotter():
         yMax = self.tile.size
         xMax = self.xMax
         blackFill = Style(fill="#000000")
-        self._drawCircle(None, [xMax * 1.3, 0], 2.0, blackFill, layerRegMarks)
-        self._drawCircle(None, [xMax * -1.3, 0], 2.0, blackFill, layerRegMarks)
-        self._drawCircle(None, [0, yMax * 1.3], 2.0, blackFill, layerRegMarks)
-        self._drawCircle(None, [0, yMax * -1.3], 2.0, blackFill, layerRegMarks)
+        for offset in [1.3, 1.4, 1.5]:
+            self._drawCircle(None, [xMax * offset, 0], 2.0, blackFill, layerRegMarks)
+            self._drawCircle(None, [xMax * -offset, 0], 2.0, blackFill, layerRegMarks)
+            self._drawCircle(None, [0, yMax * offset], 2.0, blackFill, layerRegMarks)
+            self._drawCircle(None, [0, yMax * -offset], 2.0, blackFill, layerRegMarks)
 
     def _drawCircle(self, id, center, radius, fill, layer):
         circle = SVG.circle(id, center[0], center[1], radius)
