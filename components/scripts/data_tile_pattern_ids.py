@@ -38,7 +38,7 @@ TILE_PATTERN_IDS = {
     "lmhhmm": 560, # 500  
     "lmhhhm": 580, #  -   
 
-    "mmmmmm": 600, #  -   
+    "mmmmmm": 600, #  -   +
     "mmmmmh": 620, #  -   
     "mmmmhh": 640, #  -   
     "mmmhmh": 660, #  -   +
