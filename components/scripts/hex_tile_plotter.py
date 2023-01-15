@@ -100,10 +100,22 @@ OVERLAY_MARK_STYLES = {
     "tree4": "tree",
 }
 
+# Dictionary keys:
+#   For texture-fill:
+#     tex-type: type of texture
+#     tex-id: texture image id
+#   For non-texture-fill
+#     fill: fill color
+#   Fill for texture/non-texture
+#     stroke: stroke color and style
+#   Mirror fill/stroke:
+#     mirror-fill: fill color
+#     mirror-stroke: stroke color and style
 OVERLAY_MARK_STYLE_INFO = {
     "bridge": {
         "tex-type": "g",
         "tex-id": "g01",
+        "fill": 'x',
         "stroke": ['x', ICON_STROKE_WIDTH],
         "mirror-fill": '_',
         "mirror-stroke": ['x', ICON_STROKE_WIDTH_MIRROR],
@@ -111,6 +123,7 @@ OVERLAY_MARK_STYLE_INFO = {
     "stone": {
         "tex-type": "g",
         "tex-id": "g01",
+        "fill": '_',
         "stroke": ['x', ICON_STROKE_WIDTH],
         "mirror-fill": 'x',
         "mirror-stroke": [None, ICON_STROKE_WIDTH_MIRROR],
@@ -118,6 +131,7 @@ OVERLAY_MARK_STYLE_INFO = {
     "star": {
         "tex-type": "s",
         "tex-id": "s01",
+        "fill": 's',
         "stroke": ['x', ICON_STROKE_WIDTH],
         "mirror-fill": 's',
         "mirror-stroke": ['x', ICON_STROKE_WIDTH_MIRROR],
@@ -125,6 +139,7 @@ OVERLAY_MARK_STYLE_INFO = {
     "tree": {
         "tex-type": "t",
         "tex-id": "t01",
+        "fill": 't',
         "stroke": ['x', ICON_STROKE_WIDTH],
         "mirror-fill": 't',
         "mirror-stroke": ['x', ICON_STROKE_WIDTH_MIRROR],
@@ -135,7 +150,6 @@ class VoronoiHexTilePlotter():
     def __init__(self, tile):
         self.tile = tile
         self.options = tile.options
-        self.mirrorMode = False
         
         # Random number generator state
         self.rng = tile.rng
@@ -220,14 +234,14 @@ class VoronoiHexTilePlotter():
     def getTerrainFillColor(self, type):
         if type is None:
             return None
-        if self.mirrorMode:
+        if self.mirror:
             return REGION_COLOR_MIRROR[type]
         return REGION_COLOR[type]
 
     def getStrokeColor(self):
         if type is None:
             return None
-        if self.mirrorMode:
+        if self.mirror:
             return STROKE_COLOR_MIRROR
         return STROKE_COLOR
         
@@ -316,7 +330,6 @@ class VoronoiHexTilePlotter():
         self._plot(True, plotId)
         if self.options['mirror']:
             self.mirror = True
-            self.mirrorMode = True
             saveTextureFillMode = self.options['texture-fill']
             self.options['texture-fill'] = False
 
@@ -1254,32 +1267,36 @@ class VoronoiHexTilePlotter():
         style = OVERLAY_MARK_STYLES[type]
         styleInfo = OVERLAY_MARK_STYLE_INFO[style]
 
-        if self.options['texture-fill']:
-            icon = self.svg.get_loaded_path(f"obj-{type}")
-            texId = styleInfo["tex-id"]
-            texType = styleInfo["tex-type"]
-            (swatchSize, numSwatches) = TEXTURE_INFO[texId]
-            swatchId = self.rng.randint(numSwatches) + 1
-
-            texturedPathOps = {
-                'pathClip': icon,
-                'pathRotateAngle': pathRotate,
-                'pathOffsetXY': [x,y],
-                'textureType': texType,
-                'textureId': texId,
-                'textureSwatchId': swatchId,
-                'textureRotateAngle': texRotate,
-            }
-            node = self.calcTexturedPathNode(f"{id}-{type}", texturedPathOps)
-            SVG.add_node(parent, node)
-            
-            fillColor = None
-            strokeColorId, strokeSize = styleInfo["stroke"]
-            strokeColor = self.getTerrainFillColor(strokeColorId)
-        else:
+        if self.mirror:
             fillColorId = styleInfo["mirror-fill"]
             fillColor = self.getTerrainFillColor(fillColorId)
             strokeColorId, strokeSize = styleInfo["mirror-stroke"]
+            strokeColor = self.getTerrainFillColor(strokeColorId)
+        else:
+            if self.options['texture-fill']:
+                icon = self.svg.get_loaded_path(f"obj-{type}")
+                texId = styleInfo["tex-id"]
+                texType = styleInfo["tex-type"]
+                (swatchSize, numSwatches) = TEXTURE_INFO[texId]
+                swatchId = self.rng.randint(numSwatches) + 1
+
+                texturedPathOps = {
+                    'pathClip': icon,
+                    'pathRotateAngle': pathRotate,
+                    'pathOffsetXY': [x,y],
+                    'textureType': texType,
+                    'textureId': texId,
+                    'textureSwatchId': swatchId,
+                    'textureRotateAngle': texRotate,
+                }
+                node = self.calcTexturedPathNode(f"{id}-{type}", texturedPathOps)
+                SVG.add_node(parent, node)
+            
+                fillColor = None
+            else:
+                fillColorId = styleInfo["fill"]
+                fillColor = self.getTerrainFillColor(fillColorId)
+            strokeColorId, strokeSize = styleInfo["stroke"]
             strokeColor = self.getTerrainFillColor(strokeColorId)
 
         icon = self.svg.get_loaded_path(f"obj-{type}")
