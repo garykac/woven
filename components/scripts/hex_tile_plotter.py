@@ -31,6 +31,10 @@ ICON_STROKE_WIDTH_MIRROR = 0.5
 RIVER_WIDTH = 2.8
 CLIFF_WIDTH = 2.0
 
+CLIFF_TOOTH_SPACING = 2.2  # (mm)
+CLIFF_TOOTH_WIDTH = 0.8   # (mm)
+CLIFF_TOOTH_POINT_WIDTH = 0.05  # (mm)
+
 STROKE_COLOR = "#000000"
 STROKE_COLOR_MIRROR = "#ffffff"
 
@@ -1120,32 +1124,61 @@ class VoronoiHexTilePlotter():
                     raise Exception(f"Terrain not defined for seeds {seeds}")
                 if terrainOrder.index(terrain[1]) > terrainOrder.index(terrain[0]):
                     line0, line1 = line1, line0
-                self._drawRidgeTeeth(p, line0, line1, iSeg == 0, iSeg == numSegments - 1)
+                if iSeg != 0:
+                    self._drawCornerRidgeTooth(p, prevLine0, prevLine1, line0, line1)
+                self._drawRidgeTeeth(p, line0, line1)
+                prevLine0 = line0
+                prevLine1 = line1
             p.end()
             style_cliff_pattern = Style(self.getStrokeColor())
             p.set_style(style_cliff_pattern)
             SVG.add_node(group_cliff, p)
 
-    def _drawRidgeTeeth(self, path, lineA, lineB, firstSegment, lastSegment):
-        TOOTH_SPACING = 2.2  # (mm)
+    def _drawCornerRidgeTooth(self, path, prev0, prev1, line0, line1):
+        # Create tooth at the start point of line0/line1, using prev0/prev1 for reference.
+        #                          +
+        #                     0   /
+        #                    e   /    
+        #                   n   /    
+        #                  i   /       +
+        #                 l   /       /
+        #                    +       /  1
+        #   prev0       pt0 / |     /  e
+        #  +-----------+---*   ,   /  n
+        #               \      '  /  i
+        #                 \    | /  l
+        #                   \   +
+        #  +-----------------+-*
+        #   prev1               pt1
+        #
+        # Line at higher elevation (with wider part of tooth):
+        #   prev0 - line0, connected by pt0
+        # Line at lower elevation (with narrower part of tooth):
+        #   prev1 - line1, connected by pt1
+        # Rather than connect pt0 to pt1, we want a tooth-shaped connection so it is wider
+        # at the top (the prev0/line0 side), and narrower at the bottom (prev1/side1).
+        pt0 = line0[0]
+        pt1 = line1[0]
+        path.movePoint(pt0)
+        path.addPoint(pt_along_line(pt0, line0[1], CLIFF_TOOTH_WIDTH))
+        path.addPoint(pt_along_line(pt1, line1[1], CLIFF_TOOTH_POINT_WIDTH))
+        path.addPoint(pt1)
+        path.addPoint(pt_along_line(pt1, prev1[0], CLIFF_TOOTH_POINT_WIDTH))
+        path.addPoint(pt_along_line(pt0, prev0[0], CLIFF_TOOTH_WIDTH))
+    
+    def _drawRidgeTeeth(self, path, lineA, lineB):
         lenA = dist(lineA[0], lineA[1])
         lenB = dist(lineB[0], lineB[1])
         minLength = min(lenA, lenB)
-        if not firstSegment:
-            self._drawRidgeTooth(path, lineA, lineB, 0)
-        numTeeth = int(minLength / TOOTH_SPACING)
+        numTeeth = int(minLength / CLIFF_TOOTH_SPACING)
         for i in range(numTeeth):
             self._drawRidgeTooth(path, lineA, lineB, (i+1) / (numTeeth+1))
-        if not lastSegment:
-            self._drawRidgeTooth(path, lineA, lineB, 1)
 
     def _drawRidgeTooth(self, path, lineA, lineB, t):
-        TOOTH_WIDTH = 0.8   # (mm)
-        TOOTH_POINT_WIDTH = 0.05  # (mm)
         ptA = lerp_line(lineA, t)
         ptB = lerp_line(lineB, t)
-        A = perp_offset([ptA, ptB], TOOTH_WIDTH)
-        B = perp_offset([ptB, ptA], TOOTH_POINT_WIDTH)
+        A = perp_offset([ptA, ptB], CLIFF_TOOTH_WIDTH)
+        B = perp_offset([ptB, ptA], CLIFF_TOOTH_POINT_WIDTH)
         first = True
         for b in B:
             if first:

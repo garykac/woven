@@ -134,6 +134,10 @@ class Path(Node):
         for pt in pts:
             self.addPoint(pt)
     
+    def movePoint(self, pt):
+        x, y = pt
+        self.moveXY(x, y)
+
     def addCurvePoint(self, c0, c1, pt):
         if len(self.path) == 0:
             raise Exception(f"Must add fixed point before adding curve points")
