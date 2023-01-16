@@ -10,7 +10,7 @@ class VoronoiHexTileLoader():
     def process(self):
         # Load data from file.
         if self.options['load']:
-            self.processTileData(self.options['load'])
+            self.processTileData(self.options['load'], self.options['filter'])
             return
 
         self.processTile(None, None, None, None)
@@ -31,7 +31,7 @@ class VoronoiHexTileLoader():
             # Verify the that id matches the correct range for this pattern.
             # Note that the 0th value of each range is unused.
             patternBaseId = TILE_PATTERN_IDS[pattern]
-            if id <= patternBaseId or id >= patternBaseId+20:
+            if id <= patternBaseId or id >= patternBaseId + 20:
                 print(f"WARNING: Id {options['id']} does not match pattern range {patternBaseId}+")
         
         v = VoronoiHexTile(options)
@@ -61,25 +61,29 @@ class VoronoiHexTileLoader():
         if options['anim']:
             v.exportAnimation()
 
-    def processTileData(self, file):
+    def processTileData(self, fileData, fileFilter):
         header = True
         
         # If |id| is set on the command line, then only generate that map tile from
-        # the data file.
-        select_id = None
+        # the data file. Alternately, if a |fileFilter| is given, only generate those
+        # tiles.
+        selectId = None
+        filterIds = None
         if self.options['id']:
-            select_id = self.options['id']
+            selectId = self.options['id']
+        elif fileFilter:
+            filterIds = []
 
-        with open(file) as f:
+        with open(fileData) as f:
             pattern = None
             seed = None
             center = None
-            terrain_data = None
-            river_data = None
-            cliff_data = None
-            overlay_data = None
+            terrainData = None
+            riverData = None
+            cliffData = None
+            overlayData = None
 
-            last_id = None
+            lastId = None
             for line in f:
                 if header:
                     header = False
@@ -90,28 +94,28 @@ class VoronoiHexTileLoader():
                 rowType = data.pop(0)
                 
                 # Skip over non-matching id if we're only processing a specific one.
-                if select_id and id != select_id:
+                if selectId and id != selectId:
                     continue
                 
-                if last_id and id != last_id:
+                if lastId and id != lastId:
                     if rowType != "INFO":
                         raise Exception(f"Expected INFO as first line of new tile {id}. Found {rowType}")
 
                     # Write out previous tile.
-                    self.options['id'] = last_id
+                    self.options['id'] = lastId
                     self.options['pattern'] = pattern
                     self.options['seed'] = seed
                     self.options['center'] = center
                     if active:
-                        self.processTile(terrain_data, river_data, cliff_data, overlay_data)
+                        self.processTile(terrainData, riverData, cliffData, overlayData)
 
                     pattern = None
                     seed = None
                     center = None
-                    terrain_data = None
-                    river_data = None
-                    cliff_data = None
-                    overlay_data = None
+                    terrainData = None
+                    riverData = None
+                    cliffData = None
+                    overlayData = None
 
                 if rowType == "INFO":
                     active = True
@@ -124,54 +128,53 @@ class VoronoiHexTileLoader():
                     if center == "AVG":
                         center = None
                 elif rowType == "TERRAIN":
-                    # |terrain_data| is an array of 'l', 'm', 'h'.
-                    terrain_data = data
+                    # |terrainData| is an array of 'l', 'm', 'h'.
+                    terrainData = data
                 elif rowType == "RIVER":
-                    # |river_data| is an array of river segments identified as
+                    # |riverData| is an array of river segments identified as
                     # "<c1>-<c2>" pairs where <c1> and <c2> identify the 2 cells on
                     # either side of the river segment.
-                    river_data = data
+                    riverData = data
                 elif rowType == "BRIDGE":
-                    if not overlay_data:
-                        overlay_data = {}
-                    # Bridge |overlay_data| is an array of edges that should have a bridge.
+                    if not overlayData:
+                        overlayData = {}
+                    # Bridge |overlayData| is an array of edges that should have a bridge.
                     # Each bridge is a set of "<c1>-<c2>" pairs with an optional
                     # "(<x> <y>)" offset to shift the location along the edge.
-                    overlay_data['bridge'] = data
+                    overlayData['bridge'] = data
                 elif rowType == "LAKE":
-                    if not overlay_data:
-                        overlay_data = {}
-                    # Lake |overlay_data| is an array of region ids that are lakes.
-                    overlay_data['lake'] = data
+                    if not overlayData:
+                        overlayData = {}
+                    # Lake |overlayData| is an array of region ids that are lakes.
+                    overlayData['lake'] = data
                 elif rowType == "CLIFF":
-                    # |cliff_data| is an array of cliff segments identified as
+                    # |cliffData| is an array of cliff segments identified as
                     # "<c1>-<c2>" pairs where <c1> and <c2> identify the 2 cells on
                     # either side of the cliff segment. Segments may be followed by '*'
                     # to indicate that they are the end of a cliff.
-                    cliff_data = data
+                    cliffData = data
                 elif rowType == "MARK":
-                    if not overlay_data:
-                        overlay_data = {}
-                    # Star |overlay_data| is an array of cells that should be marked with
-                    # an icon. Each cell index may have an optional "(<x> <y>)" offset to
-                    # shift the icon from the cell's seed location.
-                    overlay_data['mark'] = data
+                    if not overlayData:
+                        overlayData = {}
+                    # Mark |overlayData| is an array of cells that should be marked with
+                    # an icon along with a mark type. Each cell index may have an optional
+                    # "(<x> <y>)" offset to shift the icon from the cell's seed location.
+                    overlayData['mark'] = data
                 elif rowType == "TREE":
-                    if not overlay_data:
-                        overlay_data = {}
-                    # Tree |overlay_data| is an array of cells and tree types. Each cell
+                    if not overlayData:
+                        overlayData = {}
+                    # Tree |overlayData| is an array of cells and tree types. Each cell
                     # index may have an optional "(<x> <y>)" offset to shift the icon
                     # from the cell's seed location.
-                    overlay_data['tree'] = data
+                    overlayData['tree'] = data
                 else:
                     raise Exception(f"Unrecognized row type: {rowType}")
-                last_id = id
+                lastId = id
 
             # Write out final tile.
-            self.options['id'] = last_id
+            self.options['id'] = lastId
             self.options['pattern'] = pattern
             self.options['seed'] = seed
             self.options['center'] = center
             if active:
-                self.processTile(terrain_data, river_data, cliff_data, overlay_data)
-
+                self.processTile(terrainData, riverData, cliffData, overlayData)

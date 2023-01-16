@@ -22,6 +22,8 @@ OPTIONS = {
                    'desc': "Export .pdf from .svg"},
     'export-png': {'type': 'bool', 'default': True,
                    'desc': "Export .png from .svg"},
+    'filter': {'type': 'string', 'default': None,
+               'desc': "Filename with ids to process (used with --load)"},
     'id': {'type': 'int', 'default': None,
            'desc': "Process only this tile id (used with --load)"},
     'iter': {'type': 'int', 'default': 500,
