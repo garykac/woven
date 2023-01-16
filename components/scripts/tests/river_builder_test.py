@@ -277,6 +277,47 @@ def direct_into_lake():
     ]
     return (edges, ridges, ridge_ends, lakes, vertex_loop, region_loop)
 
+@pytest.fixture
+def direct_into_lake_x2():
+    #                 a         b         c
+    #                 |         #         |
+    #             1   |    2    #    3    |   4
+    #              . .|. . . . .#. . . . .|. .
+    #              .  |         #         |  .
+    #     - - - -d----e----f----g----h----i----j- - - -
+    #            : .       | ~ ~ ~ ~ |       . :
+    #       5    : .  6    |~ ~ 7 ~ ~|    8  . :    9
+    #            : .       | ~ ~ ~ ~ |       . :
+    #            : .       |~ ~ ~ ~ ~|       . :
+    #     - - - -k----l----m----n----o----p----q- - - -
+    #              .  |         #         |  .
+    #              . .|. . . . .#. . . . .|. .
+    #            10   |   11    #   12    |   13
+    #                 |         #         |
+    #                 r         s         t
+    edges = [
+        "2-3", "11-12"
+    ]
+    ridges = [
+        "2-3", "11-12"
+    ]
+    ridge_ends = []
+    lakes = [ 7 ]
+    vertex_loop = [
+        [[2,g],[2,b],
+        [3,b],[3,g]],
+    ]
+    region_loop = [
+        [
+            [2, 3],
+            [3, 2]
+        ], [
+            [11, 12],
+            [12, 11]
+        ],
+    ]
+    return (edges, ridges, ridge_ends, lakes, vertex_loop, region_loop)
+
 class FakeVoronoi:
     def __init__(self):
         # Vertices.
@@ -440,6 +481,9 @@ def test_riverBankRegions_lake(with_lake):
 
 def test_riverBankRegions_direct_into_lake(direct_into_lake):
     checkRiverBanks(direct_into_lake)
+
+def test_riverBankRegions_direct_into_lake_x2(direct_into_lake_x2):
+    checkRiverBanks(direct_into_lake_x2)
 
 def test_newVertices(single_river):
     (edges, ridges, ridge_ends, lakes, vertex_expect, loop_expect) = single_river

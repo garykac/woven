@@ -133,15 +133,19 @@ class RidgeBuilder():
                 return r
         return None
     
-    # Given a ridge, find the vertex that is not shared with another ridge.
-    # This is typically used for river edges.
-    def _findUnmatchedRidgeVertex(self, ridge):
+    # Given an edge ridge, find the vertex that is outside the tile area.
+    def _findEdgeRidgeOfftileVertex(self, ridge):
+        extraVerts = self._getKnownVertices()
         rInfo = self.ridgeInfo[ridge]
         for v in rInfo['vertex-ids']:
-            if len(self.v2ridges[v]) == 1:
+            if len(self.v2ridges[v]) == 1 and (not v in extraVerts):
                 return v
         return None
     
+    def _getKnownVertices(self):
+        # Subclass should override to return a list of valid internal ridge endpoints.
+        return []
+
     # Each ridge has 2 vertices. Given a ridge and one vertex, return the other vertex.
     def _getRidgeOtherVert(self, ridge, vCurr):
         verts = self.ridgeInfo[ridge]['vertex-ids']
@@ -200,7 +204,7 @@ class RidgeBuilder():
             self.startEdge = self._findNextRidgeEdge()
             if self.startEdge == None:
                 break
-            vStart = self._findUnmatchedRidgeVertex(self.startEdge)
+            vStart = self._findEdgeRidgeOfftileVertex(self.startEdge)
             self.logger.log(f"start edge: {self.startEdge}, off-tile vertex: {vStart}")
 
             self.reverseRidges.remove(self.startEdge)
