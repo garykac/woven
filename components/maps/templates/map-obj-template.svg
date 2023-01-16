@@ -25,14 +25,14 @@
      inkscape:document-units="mm"
      showgrid="false"
      inkscape:zoom="15.329353"
-     inkscape:cx="-9.0349541"
-     inkscape:cy="-2.6746073"
+     inkscape:cx="-1.1742179"
+     inkscape:cy="1.7613268"
      inkscape:window-width="1371"
      inkscape:window-height="892"
      inkscape:window-x="265"
      inkscape:window-y="38"
      inkscape:window-maximized="0"
-     inkscape:current-layer="layer9" />
+     inkscape:current-layer="layer1" />
   <defs
      id="defs2" />
   <g
@@ -303,7 +303,7 @@
      inkscape:groupmode="layer"
      id="layer9"
      inkscape:label="Tile Id"
-     style="display:inline">
+     style="display:none">
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:1.25;font-family:sans-serif;text-align:center;text-anchor:middle;fill:#dddddd;fill-opacity:1;stroke:#565656;stroke-width:0.1;stroke-dasharray:none;stroke-opacity:1"
@@ -312,9 +312,9 @@
        id="tile-id"><tspan
          sodipodi:role="line"
          id="tspan439"
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.23333px;font-family:'Arial Narrow';-inkscape-font-specification:'Arial Narrow Bold';text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:#fffffe;stroke-width:0.1;stroke-dasharray:none;stroke-opacity:1"
-         x="-2.5425106e-07"
-         y="0">403a</tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.23333px;font-family:'Arial Black';-inkscape-font-specification:'Arial Black,  Bold';text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:#fffffe;stroke-width:0.1;stroke-dasharray:none;stroke-opacity:1"
+         x="-1.4621764e-07"
+         y="0">403</tspan></text>
   </g>
   <g
      inkscape:groupmode="layer"
@@ -452,7 +452,7 @@
      inkscape:label="Star"
      inkscape:groupmode="layer"
      id="layer1"
-     style="display:none">
+     style="display:inline">
     <path
        style="display:inline;fill:#eb6eff;fill-opacity:1;stroke:#000000;stroke-width:0.7;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
        d="m 0.0020996,-3.2191828 -1.0211245,1.81591 -2.042771,0.41030977 1.4118,1.53272403 -0.241329,2.069123 1.8934245,-0.86868 1.893424,0.86868 -0.240813,-2.069123 1.411285,-1.53272403 -2.042253,-0.41030977 z"
