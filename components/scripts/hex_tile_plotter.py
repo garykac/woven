@@ -1237,58 +1237,45 @@ class VoronoiHexTilePlotter():
                     self.addMark(f"{startId}-{endId}", "bridge", x, y, pathRotate, 0, self.layer_overlay)
 
         if "tree" in self.overlayData:
-            id = 0
-            for tree in self.overlayData['tree']:
-                id += 1
-                if tree:
-                    # <cell-id> '-' <tree-type> '(' <x-offset> <y-offset> ')'
-                    m = re.match(r"^(\d+)\-t([0-9])(\(([\d.-]+ [\d.-]+)\))?$", tree)
-                    if m:
-                        sid = m.group(1)
-                        treeType = m.group(2)
-                        offset = None
-                        if m.group(3):
-                            offset = m.group(4).split(' ')
-                    else:
-                        raise Exception(f"Unrecognized tree data: {tree}")
-
-                    center = self.seeds[int(sid)]
-                    x = center[0]
-                    y = -center[1]
-                    if offset:
-                        x += float(offset[0])
-                        y -= float(offset[1])
-
-                    pathRotate = 0
-                    texRotate = self.rng.randint(360)
-                    self.addMark(f"{sid}-{id}", f"tree{treeType}", x, y, pathRotate, texRotate, self.layer_overlay)
+            self.handleMarkData("tree")
 
         if "mark" in self.overlayData:
-            id = 0
-            for mark in self.overlayData['mark']:
-                id += 1
-                if mark:
-                    # <type> '-' <cell-id> '(' <x-offset> <y-offset> ')'
-                    m = re.match(r"^([a-z0-9-]+)\-(\d+)(\(([\d.-]+ [\d.-]+)\))?$", mark)
-                    if m:
-                        type = m.group(1)
-                        sid = m.group(2)
-                        offset = None
-                        if m.group(3):
-                            offset = m.group(4).split(' ')
-                    else:
-                        raise Exception(f"Unrecognized mark data: {mark}")
+            self.handleMarkData("mark")
 
-                    center = self.seeds[int(sid)]
-                    x = center[0]
-                    y = -center[1]
-                    if offset:
-                        x += float(offset[0])
-                        y -= float(offset[1])
+    def handleMarkData(self, type):
+        id = 0
+        for mark in self.overlayData[type]:
+            id += 1
+            if mark:
+                # <cell-id> '-' <mark-type> '(' <x-offset> <y-offset> ')'
+                m = re.match(r"^(\d+)\-([a-z0-9-]+)(\(([\d.-]+ [\d.-]+)\))?$", mark)
+                if m:
+                    sid = m.group(1)
+                    markType = m.group(2)
+                    offset = None
+                    if m.group(3):
+                        offset = m.group(4).split(' ')
+                else:
+                    raise Exception(f"Unrecognized {type} data: {mark}")
 
-                    pathRotate = 0
-                    texRotate = self.rng.randint(360)
-                    self.addMark(f"{sid}-{id}", type, x, y, pathRotate, texRotate, self.layer_overlay)
+                if type == "tree":
+                    # Expand "t1" into "tree1".
+                    m2 = re.match(r"t([1-4])", markType)
+                    if not m2:
+                        raise Exception(f"Invalid tree tyoe: {markType}")
+                    markType = f"tree{m2.group(1)}"
+                    print(f"converting {mark} to {markType}")
+
+                center = self.seeds[int(sid)]
+                x = center[0]
+                y = -center[1]
+                if offset:
+                    x += float(offset[0])
+                    y -= float(offset[1])
+
+                pathRotate = 0
+                texRotate = self.rng.randint(360)
+                self.addMark(f"{sid}-{id}", markType, x, y, pathRotate, texRotate, self.layer_overlay)
 
     def addMark(self, id, type, x, y, pathRotate, texRotate, parent):
         style = OVERLAY_MARK_STYLES[type]
