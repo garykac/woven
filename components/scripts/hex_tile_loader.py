@@ -93,12 +93,16 @@ class VoronoiHexTileLoader():
                     continue
                 
                 if last_id and id != last_id:
+                    if rowType != "INFO":
+                        raise Exception(f"Expected INFO as first line of new tile {id}. Found {rowType}")
+
                     # Write out previous tile.
                     self.options['id'] = last_id
                     self.options['pattern'] = pattern
                     self.options['seed'] = seed
                     self.options['center'] = center
-                    self.processTile(terrain_data, river_data, cliff_data, overlay_data)
+                    if active:
+                        self.processTile(terrain_data, river_data, cliff_data, overlay_data)
 
                     pattern = None
                     seed = None
@@ -108,12 +112,17 @@ class VoronoiHexTileLoader():
                     cliff_data = None
                     overlay_data = None
 
-                if rowType == "TERRAIN":
+                if rowType == "INFO":
+                    active = True
+                    status = data.pop(0)
+                    if status != "_":
+                        active = False
                     pattern = data.pop(0)
                     seed = int(data.pop(0))
                     center = data.pop(0)
                     if center == "AVG":
                         center = None
+                elif rowType == "TERRAIN":
                     # |terrain_data| is an array of 'l', 'm', 'h'.
                     terrain_data = data
                 elif rowType == "RIVER":
@@ -155,5 +164,6 @@ class VoronoiHexTileLoader():
             self.options['pattern'] = pattern
             self.options['seed'] = seed
             self.options['center'] = center
-            self.processTile(terrain_data, river_data, cliff_data, overlay_data)
+            if active:
+                self.processTile(terrain_data, river_data, cliff_data, overlay_data)
 
