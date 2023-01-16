@@ -1309,22 +1309,6 @@ class VoronoiHexTile():
         plotter = VoronoiHexTilePlotter(self)
         plotter.plot(plotId)
 
-    def writeTileData(self):
-        center = self.options['center']
-        if center == None:
-            center = "AVG"
-        id = self.options['id']
-        if id is None:
-            id = TILE_PATTERN_IDS[self.options['pattern']]
-            id = f"{id}+"
-
-        print(f"{id},TERRAIN,{self.options['pattern']},{self.options['seed']},{center},", end='')
-
-        while len(self.seed2terrain) <= 100:
-            self.seed2terrain.append('')
-        terrain = ','.join(self.seed2terrain)
-        print(terrain)
-
     def calcBaseFilename(self):
         id = self.options['id']
         if id:

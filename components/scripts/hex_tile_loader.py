@@ -53,7 +53,7 @@ class VoronoiHexTileLoader():
         v.plot()
 
         if v.successfulTileGeneration and (self.options['verbose'] or not id or not seed):
-            v.writeTileData()
+            self.writeTileData(v)
 
         if options['export-3d']:
 	        v.writeObject3d()
@@ -188,3 +188,18 @@ class VoronoiHexTileLoader():
             self.options['center'] = center
             if active:
                 self.processTile(terrainData, riverData, cliffData, overlayData)
+
+    def writeTileData(self, tile):
+        center = tile.options['center']
+        if center == None:
+            center = "AVG"
+        id = tile.options['id']
+        if id is None:
+            id = TILE_PATTERN_IDS[tile.options['pattern']]
+
+        print(f"{id},INFO,{tile.options['pattern']},{tile.options['seed']},{center}")
+        print(f"{id},TERRAIN,", end='')
+
+        terrain = ','.join(tile.seed2terrain)
+        print(terrain)
+
