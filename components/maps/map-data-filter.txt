@@ -1,0 +1,13 @@
+# Start tiles
+# These have the same edge on all 6 sides.
+101
+861
+
+# These can be placed around the start tile, or arranged side by side.
+341
+342
+343
+344
+345
+346
+

@@ -73,6 +73,13 @@ class VoronoiHexTileLoader():
             selectId = self.options['id']
         elif fileFilter:
             filterIds = []
+            with open(fileFilter) as f:
+                for line in f:
+                    if line.startswith('#'):
+                        continue
+                    id = line.strip()
+                    if id:
+                        filterIds.append(int(id))
 
         with open(fileData) as f:
             pattern = None
@@ -83,6 +90,7 @@ class VoronoiHexTileLoader():
             cliffData = None
             overlayData = None
 
+            active = False
             lastId = None
             for line in f:
                 if header:
@@ -96,7 +104,9 @@ class VoronoiHexTileLoader():
                 # Skip over non-matching id if we're only processing a specific one.
                 if selectId and id != selectId:
                     continue
-                
+                if filterIds and not id in filterIds:
+                    continue
+
                 if lastId and id != lastId:
                     if rowType != "INFO":
                         raise Exception(f"Expected INFO as first line of new tile {id}. Found {rowType}")
