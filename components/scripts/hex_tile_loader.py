@@ -1,3 +1,4 @@
+import re
 
 from data_tile_pattern_ids import TILE_PATTERN_IDS
 from hex_tile import VoronoiHexTile
@@ -155,6 +156,13 @@ class VoronoiHexTileLoader():
                     # an icon. Each cell index may have an optional "(<x> <y>)" offset to
                     # shift the icon from the cell's seed location.
                     overlay_data['mark'] = data
+                elif rowType == "TREE":
+                    if not overlay_data:
+                        overlay_data = {}
+                    # Tree |overlay_data| is an array of cells and tree types. Each cell
+                    # index may have an optional "(<x> <y>)" offset to shift the icon
+                    # from the cell's seed location.
+                    overlay_data['tree'] = data
                 else:
                     raise Exception(f"Unrecognized row type: {rowType}")
                 last_id = id

@@ -1236,6 +1236,33 @@ class VoronoiHexTilePlotter():
                     y = -center[1]
                     self.addMark(f"{startId}-{endId}", "bridge", x, y, pathRotate, 0, self.layer_overlay)
 
+        if "tree" in self.overlayData:
+            id = 0
+            for tree in self.overlayData['tree']:
+                id += 1
+                if tree:
+                    # <cell-id> '-' <tree-type> '(' <x-offset> <y-offset> ')'
+                    m = re.match(r"^(\d+)\-t([0-9])(\(([\d.-]+ [\d.-]+)\))?$", tree)
+                    if m:
+                        sid = m.group(1)
+                        treeType = m.group(2)
+                        offset = None
+                        if m.group(3):
+                            offset = m.group(4).split(' ')
+                    else:
+                        raise Exception(f"Unrecognized tree data: {tree}")
+
+                    center = self.seeds[int(sid)]
+                    x = center[0]
+                    y = -center[1]
+                    if offset:
+                        x += float(offset[0])
+                        y -= float(offset[1])
+
+                    pathRotate = 0
+                    texRotate = self.rng.randint(360)
+                    self.addMark(f"{sid}-{id}", f"tree{treeType}", x, y, pathRotate, texRotate, self.layer_overlay)
+
         if "mark" in self.overlayData:
             id = 0
             for mark in self.overlayData['mark']:
