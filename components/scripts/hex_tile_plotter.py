@@ -1237,34 +1237,38 @@ class VoronoiHexTilePlotter():
                     self.addMark(f"{startId}-{endId}", "bridge", x, y, pathRotate, 0, self.layer_overlay)
 
         if "tree" in self.overlayData:
-            self.handleMarkData("tree")
+            self.handleMarkData("tree", "t1")
 
         if "mark" in self.overlayData:
-            self.handleMarkData("mark")
+            self.handleMarkData("mark", "star")
 
-    def handleMarkData(self, type):
+    def handleMarkData(self, type, default):
         id = 0
         for mark in self.overlayData[type]:
             id += 1
             if mark:
                 # <cell-id> '-' <mark-type> '(' <x-offset> <y-offset> ')'
-                m = re.match(r"^(\d+)\-([a-z0-9-]+)(\(([\d.-]+ [\d.-]+)\))?$", mark)
+                m = re.match(r"^(\d+)(\-([a-z0-9-]+))?(\(([\d.-]+ [\d.-]+)\))?$", mark)
                 if m:
                     sid = m.group(1)
-                    markType = m.group(2)
+                    markType = None
+                    if m.group(2):
+                        markType = m.group(3)
                     offset = None
-                    if m.group(3):
-                        offset = m.group(4).split(' ')
+                    if m.group(4):
+                        offset = m.group(5).split(' ')
                 else:
                     raise Exception(f"Unrecognized {type} data: {mark}")
 
+                if markType is None:
+                    markType = default
+                
                 if type == "tree":
                     # Expand "t1" into "tree1".
                     m2 = re.match(r"t([1-4])", markType)
                     if not m2:
                         raise Exception(f"Invalid tree tyoe: {markType}")
                     markType = f"tree{m2.group(1)}"
-                    print(f"converting {mark} to {markType}")
 
                 center = self.seeds[int(sid)]
                 x = center[0]
