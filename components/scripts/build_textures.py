@@ -28,6 +28,7 @@ TEXTURES = {
     "h02": 40,  # high elevation
     "l01": 50,  # low elevation
     "m01": 45,  # mid elevation
+    "r01": 200, # rivers and lakes
     "r02": 200, # rivers and lakes
     "s01": 20,  # star icons
     "t01": 20,  # trees

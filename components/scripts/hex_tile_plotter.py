@@ -1034,7 +1034,7 @@ class VoronoiHexTilePlotter():
             texturedPathOps = {
                 'pathClip': p,
                 'textureType': "r",
-                'textureId': "r02",
+                'textureId': "r01",
                 'textureSwatchId': 1,
                 'textureRotateAngle': 45,
                 'pathInnerGlow': "R",
