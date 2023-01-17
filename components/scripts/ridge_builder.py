@@ -28,6 +28,10 @@ class RidgeBuilder():
         # Build dict of ridge segments that should be rivers.
         self.ridgeSegments = {}
         for r in ridges:
+            (s0, s1) = r.split('-')
+            key = calcSortedId(s0, s1)
+            if r != key:
+                raise Exception(f"Wrong order for ridge segment: {r}")
             self.ridgeSegments[r] = 1
 
         # Make sure river edges are defined where the tile needs them.
