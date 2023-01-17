@@ -194,7 +194,9 @@ class VoronoiHexTileLoader():
         if filterIds and self.options['export-pdf']:
             PDF_PATH = "../maps/map-pdf"
             pdfFiles = [f"{PDF_PATH}/hex-{id}.pdf" for id in filterIds]
-            GhostScript.combine_pdfs("../maps/map-tiles.pdf", pdfFiles)
+            output = "map-tiles.pdf"
+            print(f"Writing combined pdf to {output}...")
+            GhostScript.combine_pdfs(f"../maps/{output}", pdfFiles)
 
     def writeTileData(self, tile):
         center = tile.options['center']
