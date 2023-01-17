@@ -1,6 +1,7 @@
 import re
 
 from data_tile_pattern_ids import TILE_PATTERN_IDS
+from ghostscript import GhostScript
 from hex_tile import VoronoiHexTile
 
 class VoronoiHexTileLoader():
@@ -188,6 +189,12 @@ class VoronoiHexTileLoader():
             self.options['center'] = center
             if active:
                 self.processTile(terrainData, riverData, cliffData, overlayData)
+
+        # Write out combined pdf.
+        if filterIds and self.options['export-pdf']:
+            PDF_PATH = "../maps/map-pdf"
+            pdfFiles = [f"{PDF_PATH}/hex-{id}.pdf" for id in filterIds]
+            GhostScript.combine_pdfs("../maps/map-tiles.pdf", pdfFiles)
 
     def writeTileData(self, tile):
         center = tile.options['center']
