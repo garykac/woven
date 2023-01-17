@@ -4,8 +4,8 @@ TILE_PATTERN_IDS = {
     #     '-' means that mirrored pattern has the same canonical form.
     # Tiles = current status of tiles being created for this pattern.
     #     o = generated
-    #     + = terrain complete
-    #     * = complete
+    #     + = terrain complete (with rivers, cliffs and bridges)
+    #     * = complete (with trees and other marks)
     #
     #              #  M   Tiles
     "llllll": 100, #  -   *
@@ -26,14 +26,14 @@ TILE_PATTERN_IDS = {
     "lmlmlm": 360, #  -   
     "lmlmmm": 380, #  -   +
 
-    "lmlmhm": 400, #  -   + + + +
+    "lmlmhm": 400, #  -   * * + +
     "lmmlmm": 420, #  -   
     "lmmmmm": 440, #  -   + o
-    "lmmmhm": 460, # 520  
-    "lmmhmm": 480, #  -   + + o o
+    "lmmmhm": 460, # 520  +
+    "lmmhmm": 480, #  -   * * o o
 
     "lmmhhm": 500, # 560  
-    "lmhmmm": 520, # 460  
+    "lmhmmm": 520, # 460  +
     "lmhmhm": 540, #  -   +
     "lmhhmm": 560, # 500  
     "lmhhhm": 580, #  -   
@@ -41,11 +41,11 @@ TILE_PATTERN_IDS = {
     "mmmmmm": 600, #  -   +
     "mmmmmh": 620, #  -   
     "mmmmhh": 640, #  -   
-    "mmmhmh": 660, #  -   +
+    "mmmhmh": 660, #  -   * * o
     "mmmhhh": 680, #  -   
 
     "mmhmmh": 700, #  -   * +
-    "mmhmhh": 720, # 740  
+    "mmhmhh": 720, # 740  +
     "mmhhmh": 740, # 720  
     "mmhhhh": 760, #  -   + o
     "mhmhmh": 780, #  -   
@@ -53,7 +53,7 @@ TILE_PATTERN_IDS = {
     "mhmhhh": 800, #  -   +
     "mhhmhh": 820, #  -   * *
     "mhhhhh": 840, #  -   
-    "hhhhhh": 860, #  -   * + o
+    "hhhhhh": 860, #  -   * * o
 
     # 900+ for special tiles
 }
@@ -135,32 +135,28 @@ TILE_PATTERN_IDS = {
 #  
 #                                      mlm                                 mhm
 #                            l-- m-- h--  --l --m --h            l-- m-- h--  --l --m --h
-#  "lllmlm": 160, # mlm-lll   x            x                                               X
+#  "lllmlm": 160, # mlm-lll   x            x
 #  "lllmhm": 200, #                                     mhm-lll   x            x
 #  "lmlmlm": 360, # mlm-lml   x            x
-#  "lmlmmm": 380, # mlm-lmm   x   x        x   x                                           X Y
+#  "lmlmmm": 380, # mlm-lmm   x   x        x   x
 #                 # mlm-mml
-#  "lmlmhm": 400, # mlm-lmh   x       x    x       x    mhm-lml   x            x           X Y
+#  "lmlmhm": 400, # mlm-lmh   x       x    x       x    mhm-lml   x            x
 #                 # mlm-hml
 #  "lmmlmm": 420, # mlm-mlm       x            x
 #  "lmmmmm": 440, # mlm-mmm       x            x
-#  "lmmhmm": 480, # mlm-mhm       x            x        mhm-mlm       x            x       X
-#  "lmhmhm": 540, # mlm-hmh           x            x    mhm-lmh   x       x    x       x   X Y
+#  "lmmhmm": 480, # mlm-mhm       x            x        mhm-mlm       x            x
+#  "lmhmhm": 540, # mlm-hmh           x            x    mhm-lmh   x       x    x       x
 #                 #                                     mhm-hml
 #  "lmhhhm": 580, # mlm-hhh           x            x
 #  "mmmmmh": 620, #                                     mhm-mmm       x            x
 
-#  "mmmhmh": 660, #                                     mhm-mmh       x   x        x   x   X Y
+#  "mmmhmh": 660, #                                     mhm-mmh       x   x        x   x
 #                 #                                     mhm-hmm
 #  "mmhmmh": 700, #                                     mhm-mhm       x            x
 #  "mhmhmh": 780, #                                     mhm-hmh           x            x
-#  "mhmhhh": 800, #                                     mhm-hhh           x            x   X
+#  "mhmhhh": 800, #                                     mhm-hhh           x            x
 #
-# Sum rows with 'X' at eng:   3   3   3    3   3   3              3   3   3    3   3   3
-#
-# Sum rows with 'Y' at eng:   2   1   3    2   2   2              2   2   2    3   1   2
-#
-# Removed tiles because they don't self-mirror:
+# Removed tile candidates because they don't self-mirror:
 #  "llmlmm": 240, # mlm-mll       x        x                                               - Mirrors with 260
 #  "llmmlm": 260, # mlm-llm   x                x                                           - Mirrors with 240
 #  "llmmhm": 300, #                                     mhm-llm   x                x       - Mirrors with 320
