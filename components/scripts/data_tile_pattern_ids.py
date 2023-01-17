@@ -53,7 +53,7 @@ TILE_PATTERN_IDS = {
     "mhmhhh": 800, #  -   +
     "mhhmhh": 820, #  -   * *
     "mhhhhh": 840, #  -   
-    "hhhhhh": 860, #  -   * * o
+    "hhhhhh": 860, #  -   * * o o
 
     # 900+ for special tiles
 }
