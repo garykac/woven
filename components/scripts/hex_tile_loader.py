@@ -206,7 +206,7 @@ class VoronoiHexTileLoader():
         if id is None:
             id = TILE_PATTERN_IDS[tile.options['pattern']]
 
-        print(f"{id},INFO,{tile.options['pattern']},{tile.options['seed']},{center}")
+        print(f"{id},INFO,_,{tile.options['pattern']},{tile.options['seed']},{center}")
         print(f"{id},TERRAIN,", end='')
 
         terrain = ','.join(tile.seed2terrain)
