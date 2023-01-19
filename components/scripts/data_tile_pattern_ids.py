@@ -23,7 +23,7 @@ TILE_PATTERN_IDS = {
     "llmmhm": 300, # 320  
     "llmhmm": 320, # 300  
     "llmhhm": 340, #  -   * * * * * *
-    "lmlmlm": 360, #  -   
+    "lmlmlm": 360, #  -   o
     "lmlmmm": 380, #  -   +
 
     "lmlmhm": 400, #  -   * * + +
@@ -48,7 +48,7 @@ TILE_PATTERN_IDS = {
     "mmhmhh": 720, # 740  +
     "mmhhmh": 740, # 720  
     "mmhhhh": 760, #  -   + o
-    "mhmhmh": 780, #  -   
+    "mhmhmh": 780, #  -   *
 
     "mhmhhh": 800, #  -   +
     "mhhmhh": 820, #  -   * *

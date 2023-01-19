@@ -1,7 +1,7 @@
 # Start tiles
-# These have the same edge (l-l or h-h) on all 6 sides.
+# These have the same edge (l-l) on all 6 sides.
 101
-861
+781
 
 # These can be placed around one of the 2 start tiles:
 #          ,+,   ,+,
