@@ -30,7 +30,7 @@ SINGLE_EDGE_TYPES = ['1s', '2f', '2s', '3f', '3s']
 EDGE_REGION_INFO = {
     '1s': ['l', 'l', 'l'],                     # l - l
     '2f': ['l', 'l', 'l', 'm'],                # l - m, m - h
-    '2s': ['m', 'm', 'm', 'm'],                # m - m
+    '2s': ['m', 'l', 'l', 'm'],                # m - m
     '3f': ['m', 'm', 'h', 'm', 'h'],           # m - h, h - m
     '3s': ['h', 'h', 'm', 'h', 'h'],           # h - h
 }
