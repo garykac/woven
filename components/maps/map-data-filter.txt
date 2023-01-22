@@ -1,5 +1,4 @@
 # Start tiles
-# These have the same edge (l-l) on all 6 sides.
 101
 781
 
@@ -25,8 +24,8 @@
 342
 343
 344
-#345
-#346
+345
+346
 
 # For Futball map, we have 4 tiles (as above) arranged in a line, and we need
 # to add tiles that fill out the sides:
@@ -72,3 +71,10 @@
 #         B  m-h                 m-h  B
 661
 662
+
+
+# Adventure
+#701
+#141
+#181
+#182

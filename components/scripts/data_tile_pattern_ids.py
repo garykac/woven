@@ -2,58 +2,60 @@
 TILE_PATTERN_IDS = {
     # M = pattern id for the mirrored form of this pattern.
     #     '-' means that mirrored pattern has the same canonical form.
+    # Search pattern - search for any sequence of corners to find all tiles that have
+    #     that sequence.
     # Tiles = current status of tiles being created for this pattern.
     #     o = generated
     #     + = terrain complete (with rivers, cliffs and bridges)
     #     * = complete (with trees and other marks)
     #
-    #              #  M   Tiles
-    "llllll": 100, #  -   *
-    "lllllm": 120, #  -   
-    "llllmm": 140, #  -   
-    "lllmlm": 160, #  -   *
-    "lllmmm": 180, #  -   *
+    #              #  M   Search Pat   Tiles
+    "llllll": 100, #  -   lllllllllll  *
+    "lllllm": 120, #  -   lllllmlllll  
+    "llllmm": 140, #  -   llllmmllllm  * o
+    "lllmlm": 160, #  -   lllmlmlllml  *
+    "lllmmm": 180, #  -   lllmmmlllmm  * *
 
-    "lllmhm": 200, #  -   *
-    "llmllm": 220, #  -   *
-    "llmlmm": 240, # 260  
-    "llmmlm": 260, # 240  
-    "llmmmm": 280, #  -   
+    "lllmhm": 200, #  -   lllmhmlllmh  *
+    "llmllm": 220, #  -   llmllmllmll  *
+    "llmlmm": 240, # 260  llmlmmllmlm  
+    "llmmlm": 260, # 240  llmmlmllmml  
+    "llmmmm": 280, #  -   llmmmmllmmm  
 
-    "llmmhm": 300, # 320  
-    "llmhmm": 320, # 300  
-    "llmhhm": 340, #  -   * * * * * *
-    "lmlmlm": 360, #  -   o
-    "lmlmmm": 380, #  -   +
+    "llmmhm": 300, # 320  llmmlmllmmh  
+    "llmhmm": 320, # 300  llmhmmllmhm  
+    "llmhhm": 340, #  -   llmhhmllmhh  * * * * * *
+    "lmlmlm": 360, #  -   lmlmlmlmlml  o
+    "lmlmmm": 380, #  -   lmlmmmlmlmm  +
 
-    "lmlmhm": 400, #  -   * * + +
-    "lmmlmm": 420, #  -   
-    "lmmmmm": 440, #  -   + o
-    "lmmmhm": 460, # 520  +
-    "lmmhmm": 480, #  -   * * o o
+    "lmlmhm": 400, #  -   lmlmhmlmlmh  * * + +
+    "lmmlmm": 420, #  -   lmmlmmlmmlm  
+    "lmmmmm": 440, #  -   lmmmmmlmmmm  + o
+    "lmmmhm": 460, # 520  lmmmhmlmmmh  +
+    "lmmhmm": 480, #  -   lmmhmmlmmhm  * * o o
 
-    "lmmhhm": 500, # 560  
-    "lmhmmm": 520, # 460  +
-    "lmhmhm": 540, #  -   +
-    "lmhhmm": 560, # 500  
-    "lmhhhm": 580, #  -   
+    "lmmhhm": 500, # 560  lmmhhmlmmhh  
+    "lmhmmm": 520, # 460  lmhmmmlmhmm  +
+    "lmhmhm": 540, #  -   lmhmhmlmhmh  +
+    "lmhhmm": 560, # 500  lmhhmmlmhhm  
+    "lmhhhm": 580, #  -   lmhhhmlmhhh  
 
-    "mmmmmm": 600, #  -   +
-    "mmmmmh": 620, #  -   
-    "mmmmhh": 640, #  -   
-    "mmmhmh": 660, #  -   * * o
-    "mmmhhh": 680, #  -   
+    "mmmmmm": 600, #  -   mmmmmmmmmmm  +
+    "mmmmmh": 620, #  -   mmmmmhmmmmm  
+    "mmmmhh": 640, #  -   mmmmhhmmmmh  
+    "mmmhmh": 660, #  -   mmmhmhmmmhm  * * o
+    "mmmhhh": 680, #  -   mmmhhhmmmhh  
 
-    "mmhmmh": 700, #  -   * +
-    "mmhmhh": 720, # 740  +
-    "mmhhmh": 740, # 720  
-    "mmhhhh": 760, #  -   + o
-    "mhmhmh": 780, #  -   *
+    "mmhmmh": 700, #  -   mmhmmhmmhmm  * *
+    "mmhmhh": 720, # 740  mmhmhhmmhmh  +
+    "mmhhmh": 740, # 720  mmhhmhmmhhm  
+    "mmhhhh": 760, #  -   mmhhhhmmhhh  + o
+    "mhmhmh": 780, #  -   mhmhmhmhmhm  *
 
-    "mhmhhh": 800, #  -   +
-    "mhhmhh": 820, #  -   * *
-    "mhhhhh": 840, #  -   
-    "hhhhhh": 860, #  -   * * o o
+    "mhmhhh": 800, #  -   mhmhhhmhmhh  +
+    "mhhmhh": 820, #  -   mhhmhhmhhmh  * *
+    "mhhhhh": 840, #  -   mhhhhhmhhhh  
+    "hhhhhh": 860, #  -   hhhhhhhhhhh  * * o o
 
     # 900+ for special tiles
 }
