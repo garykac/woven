@@ -18,8 +18,6 @@ from data_spell_cards_blank import spell_card_blank_data
 
 from data_spell_patterns import spell_card_patterns
 
-from data_ops import valid_ops
-
 elem_map = {
     'a': 'air',
     'e': 'earth',
@@ -39,15 +37,6 @@ spell_categories = [
     "thread-move",
     "anchor-create", "anchor-attack", "anchor-move",
 ]
-
-SPELL_OPS = ['eye', 'emove2', 'mmove']
-
-# Mapping from minor/mundane op to category
-op2cat = {
-    'eye': 'eye-create',
-    'emove2': 'eye-move',
-    'mmove': 'mage-move'
-}
 
 # Spell description keys
 spell_desc_keys = {
@@ -81,7 +70,6 @@ class WovenSpellCards():
         self.pattern_elements = {}
         self.elements = {}
         self.categories = {}
-        self.ops = {}
         self.id2name = {}
         self.id2pattern = {}
         self.id2attrs = {}
@@ -93,7 +81,6 @@ class WovenSpellCards():
                 
         self.valid_elements = ['none', 'air', 'fire', 'earth', 'water']
         self.valid_categories = spell_card_categories
-        self.valid_ops = valid_ops
 
         # Poker size cards: 2.5" x 3.5" = 225px x 315px = 63.5mm x 88.9mm
         # Bridge size cards: 2.25" x 3.5" = 202.5px x 315px
@@ -191,9 +178,6 @@ class WovenSpellCards():
         if not attrs['pattern'] in self.card_patterns:
             raise Exception("{0:s}: Invalid pattern: {1}".format(name, attrs['pattern']))
 
-        if not attrs['op'] in self.valid_ops:
-            raise Exception("{0:s}: Invalid op: {1}".format(name, attrs['op']))
-
     def validate_desc(self, name, desc):
         # Ensure all keys are valid.
         for key in desc.keys():
@@ -267,11 +251,6 @@ class WovenSpellCards():
             self.categories[cat].append(id)
             if cat == 'starter':
                 self.starters.append(id)
-
-        op = attrs['op']
-        if not op in self.ops:
-            self.ops[op] = []
-        self.ops[op].append(id)
         
     #
     # CARD GENERATION
@@ -350,6 +329,8 @@ class WovenSpellCards():
         # Build list of template ids and then load from svg file.
         svg_ids = []
         svg_ids.extend(['element-{0}'.format(elem_map[e]) for e in elem_map])
+        svg_ids.append('graybar')
+        svg_ids.append('graybar-clip')
         svg_ids.append('spell-title')
         svg_ids.append('spell-pattern-border')
         svg_ids.append('spell-pattern-border-4')
@@ -362,20 +343,30 @@ class WovenSpellCards():
         svg_ids.append('separator')
         svg_ids.append('icon-companion')
         svg_ids.append('icon-starter')
-        svg_ids.extend(['op-{0}'.format(op) for op in valid_ops])
         svg_ids.extend(['cat-{0}'.format(cat) for cat in spell_categories])
         svg.load_ids(CARD_TEMPLATE, svg_ids)
 
-        # Add Element and Op masters (hidden, used for cloning).
+        # Add Element and category masters (hidden, used for cloning).
         g_masters = SVG.group('masters')
         g_masters.set_style("display:none")
         SVG.add_node(svg_group, g_masters)
-        for op in SPELL_OPS:
-            svg.add_loaded_element(g_masters, f"op-{op}")
         for (e,elem) in elem_map.items():
             svg.add_loaded_element(g_masters, f"element-{elem}")
         for cat in spell_categories:
             svg.add_loaded_element(g_masters, f"cat-{cat}")
+
+        clip = svg.get_loaded_path(f"graybar-clip")
+        clipid = svg.add_clip_path(None, clip)
+        graybar = svg.get_loaded_path('graybar')
+        graybar.set("clip-path", f"url(#{clipid})")
+        if element == "fire":
+            graybar.set_style(Style("#ffcccc", None))
+        elif element == "earth":
+            graybar.set_style(Style("#cef4ce", None))
+        elif element == "water":
+            graybar.set_style(Style("#dbdffc", None))
+        SVG.add_node(svg_group, graybar)
+
 
         if attrs['category'] != 'blank':
             # Draw spell title.
@@ -385,7 +376,7 @@ class WovenSpellCards():
             # Draw elements in title bar
             elemaster = '#element-{0}'.format(element)
             SVG.add_node(svg_group, SVG.clone(0, elemaster, 3, 3))
-            SVG.add_node(svg_group, SVG.clone(0, elemaster, 55, 3))
+            #SVG.add_node(svg_group, SVG.clone(0, elemaster, 55, 3))
 
             # Draw spell id.
             id_text = svg.add_loaded_element(svg_group, 'spell-id')
@@ -397,15 +388,6 @@ class WovenSpellCards():
                 flavor_text = svg.add_loaded_element(svg_group, 'spell-flavor')
                 SVG.set_text(flavor_text, attrs['flavor'])
             
-            svg.add_loaded_element(svg_group, 'separator')
-
-        # Draw alternate action.
-        op = attrs['op']
-        svg.add_loaded_element(svg_group, f'op-{op}')
-        # Category icon for alternate action.
-        cat_clone = SVG.clone(0, f"#cat-{op2cat[op]}", 0, 68.5)
-        SVG.add_node(svg_group, cat_clone)
-
         # Add spell pattern/description based on spell pattern height.
         if len(pattern) == 4:
             svg.add_loaded_element(svg_group, 'spell-pattern-border-4')
@@ -421,7 +403,7 @@ class WovenSpellCards():
         for cat in attrs['category'].split(','):
             if cat in spell_categories:
                 cat_master = f"#cat-{cat}"
-                cat_clone = SVG.clone(0, cat_master, 0, cat_count*5)
+                cat_clone = SVG.clone(0, cat_master, 0, cat_count*6)
                 SVG.add_node(svg_group, cat_clone)
                 cat_count += 1
 
@@ -436,8 +418,6 @@ class WovenSpellCards():
         for cat in attrs['category'].split(','):
             if cat == 'starter':
                 svg.add_loaded_element(svg_group, 'icon-starter')
-
-        #self.draw_vp(attrs['vp'], svg, svg_group)
 
     def draw_vp(self, vp, svg, svg_group):
         if vp != 0:
@@ -463,7 +443,7 @@ class WovenSpellCards():
         # Max pattern width that fits on the card.
         max_width = 7
         # Center of pattern area.
-        pcenter_x = self.width / 2
+        pcenter_x = (self.width / 2) + 2.8
         # Upper left corner of pattern area
         px0 = pcenter_x - (((max_width-1) * box_spacing) + box_size) / 2
         # Adjust offsets to center the patterns horizontally.
@@ -596,18 +576,6 @@ class WovenSpellCards():
 
             summary.write('\n')
 
-        print('Ops')
-        for op in SPELL_OPS:
-            count = 0
-            for k,v in self.ops.items():
-                if k.find(op) != -1:
-                    count += len(v)
-            print(f'  {op} ({count})')
-        #print('Ops combos')
-        #for k,v in sorted(self.ops.items()):
-        #    if k.find('-') != -1 or k.find('+') != -1:
-        #        print(f'  {k} ({len(v)})')
-        
         summary.write('## By Pattern\n\n')
         print('Patterns')
         for pattern_key,sid in sorted(self.pattern2id.items(), key=_pattern_sort_):
@@ -642,7 +610,7 @@ class WovenSpellCards():
         print('Starters')
         for s in self.starters:
             attr = self.id2attrs[s]
-            print(f"  {self.id2name[s]} - {attr['element']} - {attr['op']}")
+            print(f"  {self.id2name[s]} - {attr['element']}")
 
         summary.close()
         print(f'Total spell count = {count}')
