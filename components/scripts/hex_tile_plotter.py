@@ -20,6 +20,7 @@ TEXTURES_DIR = "../../../third_party/textures"
 
 GENERATE_PLOT = True   # As PNG file.
 PLOT_CELL_IDS = True   # Add cell ids to png output file.
+DRAW_PUZZLE_BORDER = False
 
 # NOTE: Default units for SVG is mm.
 
@@ -495,9 +496,12 @@ class VoronoiHexTilePlotter():
     
     def drawHexTileBorder(self, id, layer_name, style):
         layer_border = self.svg.add_inkscape_layer(id, layer_name, self.layer)
-        p = Path()
-        p.addPoints(self.vHex)
-        p.end()
+        if DRAW_PUZZLE_BORDER:
+            p = self.calcPuzzleBorder()
+        else:
+            p = Path()
+            p.addPoints(self.vHex)
+            p.end()
         p.set_style(style)
         SVG.add_node(layer_border, p)
         return layer_border
@@ -528,7 +532,7 @@ class VoronoiHexTilePlotter():
 
         group_region_rounded = SVG.group('region-rounded-fill-group')
         SVG.add_node(layer_region_rounded, group_region_rounded)
-        if not self.options['bleed']:
+        if DRAW_PUZZLE_BORDER or not self.options['bleed']:
             clippath_id = self.addHexTileClipPath()
             group_region_rounded.set("clip-path", f"url(#{clippath_id})")
 
@@ -673,7 +677,7 @@ class VoronoiHexTilePlotter():
 
         group_region_rounded = SVG.group('region-rounded-stroke-group')
         SVG.add_node(layer_region_rounded, group_region_rounded)
-        if not self.options['bleed']:
+        if DRAW_PUZZLE_BORDER or not self.options['bleed']:
             clippath_id = self.addHexTileClipPath()
             group_region_rounded.set("clip-path", f"url(#{clippath_id})")
 
@@ -1003,7 +1007,7 @@ class VoronoiHexTilePlotter():
 
         group_river = SVG.group('river-group')
         SVG.add_node(layer_river, group_river)
-        if not self.options['bleed']:
+        if DRAW_PUZZLE_BORDER or not self.options['bleed']:
             clippath_id = self.addHexTileClipPath()
             group_river.set("clip-path", f"url(#{clippath_id})")
 
@@ -1064,7 +1068,7 @@ class VoronoiHexTilePlotter():
 
         group_cliff = SVG.group('cliff-group')
         SVG.add_node(layer_cliff, group_cliff)
-        if not self.options['bleed']:
+        if DRAW_PUZZLE_BORDER or not self.options['bleed']:
             clippath_id = self.addHexTileClipPath()
             group_cliff.set("clip-path", f"url(#{clippath_id})")
 
@@ -1365,6 +1369,15 @@ class VoronoiHexTilePlotter():
         if not self.options['bleed']:
             layer_puzzle.hide()
 
+        p = self.calcPuzzleBorder()
+        p.set_style(Style("none", self.getStrokeColor(), STROKE_WIDTH))
+        SVG.add_node(layer_puzzle, p)
+        
+    def addPuzzleBorderClipPath(self):
+        p = self.calcPuzzleBorder()
+        return self.svg.add_clip_path(None, p)
+
+    def calcPuzzleBorder(self):
         HOOK_SIZE = 0.005
         # Calculate seeds along hex edges
         vertices = []
@@ -1389,8 +1402,7 @@ class VoronoiHexTilePlotter():
         p = Path()
         self.addRoundedVerticesToPath(p, vertices, 0.3)
         p.end()
-        p.set_style(Style("none", self.getStrokeColor(), STROKE_WIDTH))
-        SVG.add_node(layer_puzzle, p)
+        return p
     
     def drawRegistrationMarksLayer(self):
         layerRegMarks = self.svg.add_inkscape_layer("regmarks", "Registration Marks", self.layer)
@@ -1621,6 +1633,9 @@ class VoronoiHexTilePlotter():
         raise Exception(f"Unable to find neighbor of {sid} with vertices {vid0} and {vid1}.")
 
     def addHexTileClipPath(self):
+        if DRAW_PUZZLE_BORDER:
+            return self.addPuzzleBorderClipPath()
+
         p = Path()
         p.addPoints(self.vHex)
         p.end()
