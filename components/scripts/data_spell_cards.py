@@ -2,7 +2,7 @@
 
 # Text -> ASCII Art: http://patorjk.com/software/taag/#p=display&f=Rectangles&t=Monster
 
-spell_card_revision = 12
+spell_card_revision = 13
 
 spell_card_categories = [
     'blank',        # Cannot be combined with other categories.
@@ -262,7 +262,7 @@ spell_card_data = [
             'cast': "Consume one of your Eyes to Attack 1 at that location.",
         } ],
 
-    ["Duplicate",
+    ["Asunder",
         {'element': 'water', 'pattern': 'E2-27', 'op': 'mmove',
          'category': 'starter,eye-create',
         }, {
