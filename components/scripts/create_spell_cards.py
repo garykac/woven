@@ -329,6 +329,7 @@ class WovenSpellCards():
         # Build list of template ids and then load from svg file.
         svg_ids = []
         svg_ids.extend(['element-{0}'.format(elem_map[e]) for e in elem_map])
+        svg_ids.append('card-border')
         svg_ids.append('graybar')
         svg_ids.append('graybar-clip')
         svg_ids.append('spell-title')
@@ -367,6 +368,7 @@ class WovenSpellCards():
             graybar.set_style(Style("#dbdffc", None))
         SVG.add_node(svg_group, graybar)
 
+        svg.add_loaded_element(svg_group, 'card-border')
 
         if attrs['category'] != 'blank':
             # Draw spell title.

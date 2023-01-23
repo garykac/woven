@@ -316,9 +316,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="2.382414"
-     inkscape:cx="57.294828"
-     inkscape:cy="158.87247"
+     inkscape:zoom="2.296709"
+     inkscape:cx="63.351518"
+     inkscape:cy="159.14076"
      inkscape:document-units="mm"
      inkscape:current-layer="layer2"
      showgrid="false"
@@ -366,6 +366,15 @@
        x="-8.3292618"
        y="-3.4427614"
        clip-path="url(#clipPath9844)" />
+    <rect
+       id="card-border"
+       x="0"
+       y="0"
+       width="63.5"
+       height="88.900002"
+       rx="3"
+       ry="3"
+       style="fill:none;stroke:#000000;stroke-width:0.2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;fill-opacity:1" />
   </g>
   <g
      inkscape:label="Spell Layout"
