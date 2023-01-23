@@ -2,7 +2,7 @@
 
 ## Woven is a tabletop game of tactical magecraft
 
-### Cast spells by making patterns found on Spell Cards
+### Prepare spells by making patterns found on Spell Cards
 
 <p align="center">
 <a href="img/readme/spell1.png"><img src="img/readme/spell1.png" height="200" /></a>
@@ -14,7 +14,7 @@
 
 <p align="center"><a href="img/readme/tapestry.png"><img src="img/readme/tapestry.png" height="300"/></a></p>
 
-### Finish the spellcast by adding mana Threads that complete the pattern
+### Complete the spellcast by adding mana Threads that complete the pattern
 
 <p align="center">
 <a href="img/readme/spell1.png"><img src="img/readme/spell1.png" height="200" /></a>
@@ -66,27 +66,7 @@
 
 <p align="center"><a href="img/readme/spell4.png"><img src="img/readme/spell4.png" height="200" /></a></p>
 
-### But your mana is limited, and you must balance your need for Threads and Eyes
+### But your mana is limited, and you must balance your need for Threads (to cast spells) and Eyes (for influence on the map)
 
 <p align="center"><a href="img/readme/player-mana.png"><img src="img/readme/player-mana.png" height="200" /></a></p>
-
-### Each spell card also has a set of alternate actions
-
-<p align="center"><a href="img/readme/actions.png"><img src="img/readme/actions.png" height="150" /></a></p>
-
-### These actions allow you to move your frail body on the map...
-
-<p align="center"><a href="img/readme/action-move.png"><img src="img/readme/action-move.png" height="100" /></a></p>
-
-### ...or place a new Eye on the map
-
-<p align="center"><a href="img/readme/action-eye.png"><img src="img/readme/action-eye.png" height="100" /></a></p>
-
-### ...or recover a Thread back into your mana pool
-
-<p align="center"><a href="img/readme/action-thread.png"><img src="img/readme/action-thread.png" height="100" /></a></p>
-
-### ...or add a new card to your Tapestry
-
-<p align="center"><a href="img/readme/action-tapestry.png"><img src="img/readme/action-tapestry.png" height="100" /></a></p>
 
