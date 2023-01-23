@@ -64,29 +64,29 @@
 
 ### Or trigger effects in that location
 
-<p align="center"><a href="img/readme/spell4.png"><img src="img/readme/spell4.png" height="200" /></p>
+<p align="center"><a href="img/readme/spell4.png"><img src="img/readme/spell4.png" height="200" /></a></p>
 
 ### But your mana is limited, and you must balance your need for Threads and Eyes
 
-<p align="center"><a href="img/readme/player-mana.png"><img src="img/readme/player-mana.png" height="200" /></p>
+<p align="center"><a href="img/readme/player-mana.png"><img src="img/readme/player-mana.png" height="200" /></a></p>
 
 ### Each spell card also has a set of alternate actions
 
-<p align="center"><a href="img/readme/actions.png"><img src="img/readme/actions.png" height="150" /></p>
+<p align="center"><a href="img/readme/actions.png"><img src="img/readme/actions.png" height="150" /></a></p>
 
 ### These actions allow you to move your frail body on the map...
 
-<p align="center"><a href="img/readme/action-move.png"><img src="img/readme/action-move.png" height="100" /></p>
+<p align="center"><a href="img/readme/action-move.png"><img src="img/readme/action-move.png" height="100" /></a></p>
 
 ### ...or place a new Eye on the map
 
-<p align="center"><a href="img/readme/action-eye.png"><img src="img/readme/action-eye.png" height="100" /></p>
+<p align="center"><a href="img/readme/action-eye.png"><img src="img/readme/action-eye.png" height="100" /></a></p>
 
 ### ...or recover a Thread back into your mana pool
 
-<p align="center"><a href="img/readme/action-thread.png"><img src="img/readme/action-thread.png" height="100" /></p>
+<p align="center"><a href="img/readme/action-thread.png"><img src="img/readme/action-thread.png" height="100" /></a></p>
 
 ### ...or add a new card to your Tapestry
 
-<p align="center"><a href="img/readme/action-tapestry.png"><img src="img/readme/action-tapestry.png" height="100" /></p>
+<p align="center"><a href="img/readme/action-tapestry.png"><img src="img/readme/action-tapestry.png" height="100" /></a></p>
 
