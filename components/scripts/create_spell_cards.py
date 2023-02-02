@@ -77,7 +77,6 @@ class WovenSpellCards():
         self.pattern2id = {}
         self.max_id = 0
         self.blank_count = 0
-        self.starters = []
                 
         self.valid_elements = ['none', 'air', 'fire', 'earth', 'water']
         self.valid_categories = spell_card_categories
@@ -249,8 +248,6 @@ class WovenSpellCards():
             if not cat in self.categories:
                 self.categories[cat] = []
             self.categories[cat].append(id)
-            if cat == 'starter':
-                self.starters.append(id)
         
     #
     # CARD GENERATION
@@ -343,7 +340,8 @@ class WovenSpellCards():
         svg_ids.append('spell-flavor')
         svg_ids.append('separator')
         svg_ids.append('icon-companion')
-        svg_ids.append('icon-starter')
+        svg_ids.append('icon-starter-circle')
+        svg_ids.append('icon-starter-id')
         svg_ids.extend(['cat-{0}'.format(cat) for cat in spell_categories])
         svg.load_ids(CARD_TEMPLATE, svg_ids)
 
@@ -417,18 +415,11 @@ class WovenSpellCards():
             svg.add_loaded_element(svg_group, 'icon-companion')
 
         # Add icon for starter cards
-        for cat in attrs['category'].split(','):
-            if cat == 'starter':
-                svg.add_loaded_element(svg_group, 'icon-starter')
+        if 'starter' in attrs:
+            svg.add_loaded_element(svg_group, 'icon-starter-circle')
+            starterId = svg.add_loaded_element(svg_group, 'icon-starter-id')
+            SVG.set_text(starterId, attrs['starter'])
 
-    def draw_vp(self, vp, svg, svg_group):
-        if vp != 0:
-            svg.add_loaded_element(svg_group, 'icon-star-1')
-            if vp > 1:
-                svg.add_loaded_element(svg_group, 'icon-star-2')
-            if vp > 2:
-                svg.add_loaded_element(svg_group, 'icon-star-3')
-                
     def draw_pattern(self, id, pattern_raw, element, svg_group):        
         pattern = [x.split() for x in pattern_raw]
         pheight = len(pattern)
@@ -608,11 +599,6 @@ class WovenSpellCards():
                     continue
                 summary.write(d + '\n')
                 summary.write('\n')
-
-        print('Starters')
-        for s in self.starters:
-            attr = self.id2attrs[s]
-            print(f"  {self.id2name[s]} - {attr['element']}")
 
         summary.close()
         print(f'Total spell count = {count}')
