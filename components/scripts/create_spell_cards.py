@@ -27,7 +27,7 @@ elem_map = {
 
 # Spell attributes
 spell_attributes = [
-    'element', 'pattern', 'companion', 'id', 'category', 'flavor', 'DISABLE'
+    'element', 'pattern', 'companion', 'id', 'set', 'category', 'flavor', 'DISABLE'
 ]
 
 # General spell categories
@@ -340,8 +340,8 @@ class WovenSpellCards():
         svg_ids.append('spell-flavor')
         svg_ids.append('separator')
         svg_ids.append('icon-companion')
-        svg_ids.append('icon-starter-circle')
-        svg_ids.append('icon-starter-id')
+        svg_ids.append('icon-set-circle')
+        svg_ids.append('icon-set-id')
         svg_ids.extend(['cat-{0}'.format(cat) for cat in spell_categories])
         svg.load_ids(CARD_TEMPLATE, svg_ids)
 
@@ -414,11 +414,11 @@ class WovenSpellCards():
         if 'companion' in attrs:
             svg.add_loaded_element(svg_group, 'icon-companion')
 
-        # Add icon for starter cards
-        if 'starter' in attrs:
-            svg.add_loaded_element(svg_group, 'icon-starter-circle')
-            starterId = svg.add_loaded_element(svg_group, 'icon-starter-id')
-            SVG.set_text(starterId, attrs['starter'])
+        # Add icon for card set.
+        if 'set' in attrs:
+            svg.add_loaded_element(svg_group, 'icon-set-circle')
+            starterId = svg.add_loaded_element(svg_group, 'icon-set-id')
+            SVG.set_text(starterId, attrs['set'])
 
     def draw_pattern(self, id, pattern_raw, element, svg_group):        
         pattern = [x.split() for x in pattern_raw]

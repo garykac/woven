@@ -316,9 +316,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="2.296709"
-     inkscape:cx="63.351518"
-     inkscape:cy="159.14076"
+     inkscape:zoom="8.0904073"
+     inkscape:cx="192.14113"
+     inkscape:cy="304.62001"
      inkscape:document-units="mm"
      inkscape:current-layer="layer2"
      showgrid="false"
@@ -409,10 +409,10 @@
          style="font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;font-size:4.7625px;font-family:'Fira Sans';-inkscape-font-specification:'Fira Sans Heavy';fill:#000000;fill-opacity:1;stroke-width:0.264583"
          id="tspan64-5">Spell Title</tspan></text>
     <flowRoot
-       transform="matrix(0.26458333,0,0,0.26458333,4.4400262,-0.29262208)"
+       transform="matrix(0.26458333,0,0,0.26458333,4.9691929,-0.29262208)"
        xml:space="preserve"
        id="spell-description"
-       style="font-style:normal;font-weight:normal;font-size:10px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"><flowRegion
+       style="font-style:normal;font-weight:normal;font-size:10.6667px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"><flowRegion
          id="flowRegion4270"><rect
            x="28.799999"
            y="146"
@@ -420,7 +420,7 @@
            height="147.84549"
            id="rect88" /></flowRegion><flowPara
          id="flowPara91"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Slabo 27px';-inkscape-font-specification:'Slabo 27px, '">Spell Description</flowPara></flowRoot>
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'Slabo 27px';-inkscape-font-specification:'Slabo 27px, '">Spell Description</flowPara></flowRoot>
     <text
        id="spell-id"
        xml:space="preserve"
@@ -447,10 +447,10 @@
          style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8px;font-family:'Fira Sans Condensed';-inkscape-font-specification:'Fira Sans Condensed,  Italic';text-align:center;text-anchor:middle"
          id="flowPara1367">Spell Flavor with multiple lines of text so that it fits on the card correctly.</flowPara></flowRoot>
     <flowRoot
-       transform="matrix(0.26458333,0,0,0.26458333,4.4400262,4.9990446)"
+       transform="matrix(0.26458333,0,0,0.26458333,4.9691929,4.9990446)"
        xml:space="preserve"
        id="spell-description-4"
-       style="font-style:normal;font-weight:normal;font-size:10px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"><flowRegion
+       style="font-style:normal;font-weight:normal;font-size:10.6667px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"><flowRegion
          id="flowRegion4600"><rect
            x="28.799999"
            y="146"
@@ -458,7 +458,7 @@
            height="130.35522"
            id="rect4598" /></flowRegion><flowPara
          id="flowPara4602"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Slabo 27px';-inkscape-font-specification:'Slabo 27px, '">Spell Description a very long description for this spell to see how the text looks.</flowPara></flowRoot>
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'Slabo 27px';-inkscape-font-specification:'Slabo 27px, '">Spell Description a very long description for this spell to see how the text looks.</flowPara></flowRoot>
     <rect
        style="display:inline;fill:none;stroke:#000000;stroke-width:0.5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
        id="spell-pattern-border"
@@ -2161,19 +2161,33 @@
   <g
      inkscape:groupmode="layer"
      id="layer26"
-     inkscape:label="Starter"
+     inkscape:label="Set Id"
      style="display:inline">
+    <path
+       id="icon-set-circle"
+       style="font-size:8.46667px;font-family:'Arial Narrow';-inkscape-font-specification:'Arial Bold';text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;stroke-width:0.264583"
+       d="M 58.030566 78.762634 C 57.473839 78.762634 56.995659 78.96245 56.596029 79.362081 C 56.199154 79.758955 56.000716 80.237135 56.000716 80.796619 C 56.000716 81.350589 56.200532 81.827391 56.600163 82.227022 C 56.999794 82.626653 57.476596 82.826469 58.030566 82.826469 C 58.590049 82.826469 59.068229 82.628031 59.465104 82.231156 C 59.864735 81.831526 60.064551 81.353346 60.064551 80.796619 C 60.064551 80.239892 59.864735 79.761712 59.465104 79.362081 C 59.065473 78.96245 58.587293 78.762634 58.030566 78.762634 z M 58.030566 79.167778 C 58.477051 79.167778 58.860146 79.32763 59.17985 79.647335 C 59.499555 79.967039 59.659408 80.350134 59.659408 80.796619 C 59.659408 81.243103 59.499555 81.626198 59.17985 81.945903 C 58.860146 82.262852 58.477051 82.421326 58.030566 82.421326 C 57.584082 82.421326 57.200987 82.262852 56.881283 81.945903 C 56.564334 81.626198 56.405859 81.243103 56.405859 80.796619 C 56.405859 80.350134 56.564334 79.967039 56.881283 79.647335 C 57.200987 79.32763 57.584082 79.167778 58.030566 79.167778 z " />
     <text
-       id="icon-starter"
+       id="icon-starter-old"
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:8.46667px;line-height:125%;font-family:'Arial Narrow';text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
-       x="58.032692"
-       y="83.157249"
-       inkscape:label="icon-starter"><tspan
-         x="58.032692"
+       x="73.907692"
+       y="83.157249"><tspan
+         x="73.907692"
          y="83.157249"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:8.46667px;font-family:Arial;-inkscape-font-specification:'Arial Bold';fill:#000000;fill-opacity:1;stroke-width:0.264583"
-         id="tspan64-5-2">⍟</tspan></text>
+         id="tspan1276">⍟</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:2.11667px;line-height:1.25;font-family:'Fira Sans';-inkscape-font-specification:'Fira Sans';stroke-width:0.264583"
+       x="58.032635"
+       y="81.593544"
+       id="icon-set-id"><tspan
+         sodipodi:role="line"
+         id="tspan1389"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.11667px;font-family:'Arial Black';-inkscape-font-specification:'Arial Black, ';text-align:center;text-anchor:middle;stroke-width:0.264583"
+         x="58.032635"
+         y="81.593544">S4</tspan></text>
   </g>
   <g
      inkscape:groupmode="layer"

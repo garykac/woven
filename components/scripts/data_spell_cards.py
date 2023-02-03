@@ -208,6 +208,7 @@ spell_card_data = [
     #
     # Representative spells for each element.
 
+
     ["Haste",
         {'element': 'air', 'pattern': 'E2-2', 'companion': True, 'DISABLE': True,
          'category': 'mage-move',
@@ -234,13 +235,6 @@ spell_card_data = [
          'category': 'eye-move',
         }, {
             'cast': "Move one of your Eyes 5 spaces.",
-        } ],
-
-    ["Airwalk",
-        {'element': 'air', 'pattern': 'E2-7', 'companion': True, 'DISABLE': True,
-         'category': 'terrain,mage-move',
-        }, {
-            'cast': "Move 5 spaces over same or lower elevation, passing over rivers and water. You must end at the same elevation as your start location.",
         } ],
 
     ["Shield",
@@ -286,27 +280,34 @@ spell_card_data = [
     # Levitate/Fly - ignore terrain cost, easier to detect
     # Move into location and push others
     
+    ["Plainswalker",
+        {'element': 'earth', 'pattern': 'E2-5', 'companion': True, 'set': "S1",
+         'category': 'terrain,mage-move',
+        }, {
+            'cast': "If in low-elevation, move 5 spaces through low-elevation.",
+        } ],
+
+    ["Waterwalk",
+        {'element': 'water', 'pattern': 'E2-34', 'companion': True, 'set': "S1",
+         'category': 'terrain,mage-move',
+         #'flavor': "Rising columns of mud form a temporary bridge.",
+        }, {
+            'cast': "If adjacent to a river, move 5 spaces along that river, switching sides at will.",
+        } ],
+
+    ["Airwalk",
+        {'element': 'air', 'pattern': 'E2-7', 'companion': True, 'set': "S2",
+         'category': 'terrain,mage-move',
+        }, {
+            'cast': ["Move 5 spaces over same or lower elevation, passing over rivers and water.", "You must end at the same elevation as your start location."],
+        } ],
+
     ["Endurance",
         {'element': 'earth', 'pattern': 'E2-9', 'companion': True, 'DISABLE': True,
          'category': 'terrain,mage-move',
         }, {
             'cast': "{{ADD_CHARGE}}",
             'charged': "Your max movement range is increased by 2 whenever you cast a spell that moves yourself.",
-        } ],
-
-    ["Plainswalker",
-        {'element': 'earth', 'pattern': 'E2-5', 'companion': True, 'DISABLE': True,
-         'category': 'terrain,mage-move',
-        }, {
-            'cast': "If in low-elevation, move 7 spaces through low-elevation.",
-        } ],
-
-    ["Waterwalk",
-        {'element': 'water', 'pattern': 'E2-34', 'companion': True, 'DISABLE': True,
-         'category': 'terrain,mage-move',
-         #'flavor': "Rising columns of mud form a temporary bridge.",
-        }, {
-            'cast': "If adjacent to a river, move 5 spaces along that river, switching sides at will.",
         } ],
 
     ["Blur",
@@ -351,6 +352,13 @@ spell_card_data = [
     # Move into adjacent location, pushing any mage there into another location
     #    moving them to one of your Eye locations
     
+    ["Windslap",
+        {'element': 'air', 'pattern': 'E2-2', 'set': "S1",
+         'category': 'mage-other-attack',
+        }, {
+            'cast': ["All creatures in target space are pushed by gusts of wind into a neighboring space.", "If they are pushed off a cliff, into a cliff wall, over a river, or off the map, then ouch! (Attack 1)"],
+        } ],
+
     #     ____      ___           _    _____                _____     _ ___ 
     #    |    \ ___|  _|___ ___ _| |  |     |___ _ _ ___   |   __|___| |  _|
     #    |  |  | -_|  _| -_|   | . |  | | | | . | | | -_|  |__   | -_| |  _|
@@ -410,6 +418,21 @@ spell_card_data = [
     # Move Eye in plain/water/forest N spaces within that terrain
     # Move Eye in plain/water/forest to another within N spaces
     
+    ["Spell #2",
+        {'element': 'water', 'pattern': 'E2-35', 'set': "S2",
+         'category': 'eye-move',
+         #'flavor': "The air crackles as the Eye splits in two and one half shoots away. ",
+        }, {
+            'cast': ["Move your eyes a total of 4.", "Each eye moves +1 space if at some point it crosses a river."],
+        } ],
+
+    ["Extend",
+        {'element': 'earth', 'pattern': 'E2-1', 'set': "S1",
+         'category': 'eye-move',
+        }, {
+            'cast': "Move one of your Eyes 5 spaces, but it may not cross water.",
+        } ],
+
     ["Eyedrop",
         {'element': 'air', 'pattern': 'E2-14', 'DISABLE': True,
          'category': 'eye-create,eye-move',
@@ -497,13 +520,6 @@ spell_card_data = [
     # Create Anchored Eye
     # Anchor remote eye
     
-    ["New Anchor",
-        {'element': 'earth', 'pattern': 'E1-6', 'DISABLE': True,
-         'category': 'eye-create,anchor-create',
-        }, {
-            'cast': "Create a new Eye and then Anchor it.",
-        } ],
-
     #     _____ _   _           _      _____         
     #    |  _  | |_| |_ ___ ___| |_   |   __|_ _ ___ 
     #    |     |  _|  _| .'|  _| '_|  |   __| | | -_|
@@ -606,6 +622,13 @@ spell_card_data = [
     # Groups of 3 Eyes are Wall of Flame. Charge lost if group broken
     # Extra damage against shield spell
 
+    ["Tumbler",
+        {'element': 'earth', 'pattern': 'E1-6', 'set': "S2",
+         'category': 'mage-other-attack',
+        }, {
+            'cast': ["A cascade of rock tumbles from a space where you have an Eye into an adjacent space of lower elevation.", "All creatures in the lower space are crushed (Attack 1)."],
+        } ],
+
     ["Turbo Ignis",
         {'element': 'fire', 'pattern': 'E2-29', 'DISABLE': True,
          'category': 'mage-other-attack',
@@ -662,6 +685,13 @@ spell_card_data = [
     # Charge: If in same location as Eye, that Eye acts as shield 2
     # Charge: Deflect attack into adjacent location
     # Charge: Boost defense power by 1
+
+    ["Defense Spell #1",
+        {'element': 'fire', 'pattern': 'E2-79', 'set': "S2",
+         'category': 'mage-defend',
+        }, {
+            'cast': "Vines reach out and form a protective barrier around you before fading back into the ground.",
+        } ],
 
     ["Deflect",
         {'element': 'earth', 'pattern': 'E2-6', 'companion': True, 'DISABLE': True,
