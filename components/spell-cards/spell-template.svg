@@ -316,11 +316,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="8.0904073"
-     inkscape:cx="192.14113"
-     inkscape:cy="304.62001"
+     inkscape:zoom="3.7167744"
+     inkscape:cx="126.72278"
+     inkscape:cy="226.67504"
      inkscape:document-units="mm"
-     inkscape:current-layer="layer2"
+     inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:snap-global="true"
      inkscape:window-width="1728"
@@ -402,9 +402,9 @@
        id="spell-title"
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.175px;line-height:125%;font-family:Lato;-inkscape-font-specification:'Lato Bold';text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
-       x="31.8081"
+       x="34.382748"
        y="7.5253239"><tspan
-         x="31.8081"
+         x="34.382748"
          y="7.5253239"
          style="font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;font-size:4.7625px;font-family:'Fira Sans';-inkscape-font-specification:'Fira Sans Heavy';fill:#000000;fill-opacity:1;stroke-width:0.264583"
          id="tspan64-5">Spell Title</tspan></text>
@@ -416,8 +416,8 @@
          id="flowRegion4270"><rect
            x="28.799999"
            y="146"
-           width="171.61772"
-           height="147.84549"
+           width="171.75475"
+           height="163.49103"
            id="rect88" /></flowRegion><flowPara
          id="flowPara91"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'Slabo 27px';-inkscape-font-specification:'Slabo 27px, '">Spell Description</flowPara></flowRoot>
@@ -435,7 +435,7 @@
        style="font-style:normal;font-weight:normal;font-size:10px;line-height:100%;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        id="spell-flavor"
        xml:space="preserve"
-       transform="matrix(0.26458333,0,0,0.26458333,5.1102828,39.693419)"><flowRegion
+       transform="matrix(0.26458333,0,0,0.26458333,5.1102828,55.56842)"><flowRegion
          id="flowRegion904"
          style="text-align:center;text-anchor:middle"><rect
            id="rect902"
@@ -454,8 +454,8 @@
          id="flowRegion4600"><rect
            x="28.799999"
            y="146"
-           width="172.11678"
-           height="130.35522"
+           width="171.75475"
+           height="140.47121"
            id="rect4598" /></flowRegion><flowPara
          id="flowPara4602"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'Slabo 27px';-inkscape-font-specification:'Slabo 27px, '">Spell Description a very long description for this spell to see how the text looks.</flowPara></flowRoot>
@@ -473,6 +473,19 @@
        height="30.540628"
        x="12.105194"
        y="10.106171" />
+    <flowRoot
+       transform="matrix(0.26458333,0,0,0.26458333,4.9691933,33.574044)"
+       xml:space="preserve"
+       id="spell-info"
+       style="font-style:normal;font-weight:normal;font-size:9.33333px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"><flowRegion
+         id="flowRegion1289"><rect
+           x="28.799999"
+           y="146"
+           width="172.11678"
+           height="130.35522"
+           id="rect1287" /></flowRegion><flowPara
+         id="flowPara1291"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:9.33333px;font-family:'Slabo 27px';-inkscape-font-specification:'Slabo 27px, '">Spell Description a very long description</flowPara></flowRoot>
   </g>
   <g
      inkscape:groupmode="layer"

@@ -188,7 +188,7 @@ spell_card_categories = [
 #     'cast': Description when spell is cast.
 #     'react': Indicates that spells can be cast immediately in reaction to an event
 #     'charged': Description when spell is charged.
-#     'notes': Additional notes
+#     'note': Additional notes
 #     'sacrifice': Description when charge is sacrificed.
 
 spell_card_data = [
@@ -208,56 +208,262 @@ spell_card_data = [
     #
     # Representative spells for each element.
 
+    # Set S1
+
+    ["Slapper",
+        {'element': 'air', 'pattern': 'E2-56', 'set': "S1",
+         'category': 'mage-other-move,mage-other-attack',
+        }, {
+            'target': "{{EYE_LOCATION}}",
+            'cost': "{{EYE_SACRIFICE}}",
+            'cast': [
+                "All creatures in target space are pushed by gusts of wind into the same neighboring space.",
+                "If they are pushed through a barrier (off a cliff, into a cliff wall, or over a river) or off the map, then that's really unfortunate (Attack 1)."
+            ],
+        } ],
+
+    ["Extend (Land)",
+        {'element': 'earth', 'pattern': 'E2-10', 'set': "S1",
+         'category': 'eye-move',
+        }, {
+            'target': "{{EYE}}",
+            'prereq': "Target Eye must not be over water",
+            'cast': "Move one of your Eyes 5 spaces, but it may not cross water.",
+        } ],
+
+    ["Plainswalker",
+        {'element': 'fire', 'pattern': 'E2-44', 'companion': True, 'set': "S1",
+         'category': 'mage-move',
+        }, {
+            'target': "{{SELF_OR_TEAMMATE}}",
+            'prereq': "Target is in lowland",
+            'cast': "Move yourself 6 spaces through lowlands.",
+        } ],
+
+    ["Asunder",
+        {'element': 'water', 'pattern': 'E2-27', 'set': "S1",
+         'category': 'eye-create,eye-move',
+        }, {
+            'target': "{{EYE}}",
+            'cast': "Duplicate one of your Eyes and then move it 2 spaces.",
+        } ],
+
+    # Set S2
+
+    ["Cloudwalk",
+        {'element': 'air', 'pattern': 'E2-60', 'companion': True, 'set': "S2",
+         'category': 'mage-move',
+        }, {
+            'target': "{{SELF_OR_TEAMMATE}}",
+            'cast': [
+                "A perfectly flat-top cloud walkway forms between the start and end location.",
+                "Move yourself 5 spaces across this walkway, passing over any barriers and water.",
+                "The walkway must end at the same elevation as the start location, and it may not pass through a higher elevation space."
+            ],
+        } ],
+
+    ["Tumbler",
+        {'element': 'earth', 'pattern': 'E2-16', 'set': "S2",
+         'category': 'mage-other-attack',
+        }, {
+            'prereq': "{{TARGET_HI_MID}}",
+            'target': "{{EYE_LOCATION}}",
+            'cost': "{{EYE_SACRIFICE}}",
+            'cast': [
+                "A cascade of rock tumbles from the target location into an adjacent space of lower elevation.",
+                "All creatures in the lower space are crushed (Attack 1)."
+            ],
+        } ],
+
+    ["Scorch",
+        {'element': 'fire', 'pattern': 'E2-78', 'set': "S2",
+         'category': 'eye-move,eye-other-attack',
+        }, {
+            'target': "{{EYE}}",
+            'cast': "Move one of your Eyes 3 spaces, removing one opponent Eye from each location it moves into this turn.",
+            'cost': "{{EYE_SACRIFICE}}",
+        } ],
+
+    ["Disperse (+Water)",
+        {'element': 'water', 'pattern': 'E2-28', 'set': "S2",
+         'category': 'eye-move',
+        }, {
+            'target': "{{EYES}}",
+            'cast': [
+                "Move your Eyes a total of 4 spaces.",
+                "Each Eye moves +1 space if at some point it crosses a river."
+            ],
+        } ],
+
+    # Set S3
+    
+    ["Extend",
+        {'element': 'air', 'pattern': 'E2-1', 'set': "S3",
+         'category': 'eye-move',
+        }, {
+            'target': "{{EYE}}",
+            'cast': "Move one of your Eyes 5 spaces.",
+        } ],
+
+    ["Ground",
+        {'element': 'earth', 'pattern': 'E2-51', 'set': "S3",
+         'category': 'eye-other-attack',
+        }, {
+            'target': "{{MAGE_LOCATION}}",
+            'cast': "Remove all Eyes from your location and all adjacent spaces.",
+        } ],
+
+    ["Flambough",
+        {'element': 'fire', 'pattern': 'E2-48', 'set': "S3",
+         'category': 'mage-other-attack',
+        }, {
+            'prereq': "Target Eye must be in Forest space",
+            'target': "{{EYE_LOCATION}}",
+            'cost': "{{EYE_SACRIFICE}}",
+            'cast': [
+                "The trees in the target location burst into flame and the main boughs shoot out in all directions.",
+                "All creatures in the target space (and in one neighboring space at the same elevation) are pierced in an unpleasant manner (Attack 1)."
+            ],
+        } ],
+
+    ["Waterstride",
+        {'element': 'water', 'pattern': 'E2-79', 'companion': True, 'set': "S3",
+         'category': 'mage-move',
+        }, {
+            'prereq': "Target must be adjacent to river",
+            'target': "{{SELF_OR_TEAMMATE}}",
+            'cast': "Move yourself 6 spaces along the river, switching sides at will.",
+        } ],
+
+    # Set S4
+    
+    ["Repel",
+        {'element': 'air', 'pattern': 'E2-14', 'companion': True, 'set': "S4",
+         'category': 'eye-other-attack',
+        }, {
+            'cast': "{{ADD_CHARGE}}",
+            'react': "You may cast this when an Eye moves into your location.",
+            'trigger': "{{EYE_ENTERS_LOCATION}}",
+            'sacrifice': "When an Eye moves into your location, you may spend a Charge to destroy that Eye.",
+        } ],
+
+    ["Longarm", # Brachiate
+        {'element': 'earth', 'pattern': 'E2-9', 'companion': True, 'set': "S4",
+         'category': 'mage-move',
+        }, {
+            'target': "{{SELF_OR_TEAMMATE}}",
+            'cast': "You swing from treetop to treetop into neighboring forest spaces (max 5), ignoring barriers like rivers and cliffs.",
+        } ],
+
+     ["Extend (+Highland)",
+        {'element': 'fire', 'pattern': 'E2-35', 'set': "S4",
+         'category': 'eye-move',
+        }, {
+            'target': "{{EYE}}",
+            'cast': "Move one of your Eyes 3 spaces, +1 space if the start location is within 2 spaces of highland.",
+        } ],
+
+    ["River Lurker",
+        {'element': 'water', 'pattern': 'E2-36', 'set': "S4",
+         'category': 'mage-other-attack',
+        }, {
+            'prereq': "Target Eye that is adjacent to river",
+            'target': "{{SEE_DESC}}",
+            'cost': "{{EYE_SACRIFICE}}",
+            'cast': [
+                "Select a target location downriver (or upriver) from the target Eye, no more than 9 river segments away.",
+                "Tendrils of water reach out and grab all creatures in the target location, dragging them into the water (Attack 1).",
+            ],
+        } ],
+  
+    # Extra spells
+    
+    ["Slipstream",
+        {'element': 'air', 'pattern': 'E2-8', 'companion': True,
+         'category': 'mage-move,mage-defend',
+        }, {
+            'target': "{{SELF_OR_TEAMMATE}}",
+            'cast': "You catch a gust of air which transports you to a neighboring location (of your choice), bypassing any barriers.",
+            'trigger': "{{WHEN_ATTACKED}}",
+            'react': "Same effect as when cast normally, with the added bonus of avoiding the attack.",
+        } ],
+
+    ["Switch",
+        {'element': 'earth', 'pattern': 'E2-53', 'companion': True,
+         'category': 'eye-defend',
+        }, {
+            'cast': "{{ADD_CHARGE}}",
+            'charged': "When you need to remove an Eye, you may instead remove one of your other Eyes.",
+            'react': "You may cast this when one of your Eyes is attacked.",
+        } ],
+
+    ["Lava Shield",
+        {'element': 'fire', 'pattern': 'E2-37', 'companion': True,
+         'category': 'mage-defend',
+        }, {
+            'target': "{{SELF_OR_TEAMMATE}}",
+            'prereq': "{{TARGET_HI_MID}}",
+            'trigger': "{{WHEN_ATTACKED}}",
+            'react': "Molten rock and metal shoot up from the ground to form a protective barrier (Defend 1) around you before melting back into the ground.",
+        } ],
+
+    ["Riverbank",
+        {'element': 'water', 'pattern': 'E2-31',
+         'category': 'eye-create',
+        }, {
+            'cast': "If next to a river, place an Eye in any location along that river within 5 spaces.",
+        } ],
 
     ["Haste",
-        {'element': 'air', 'pattern': 'E2-2', 'companion': True, 'DISABLE': True,
+        {'element': 'air', 'pattern': 'E2-5', 'companion': True,
          'category': 'mage-move',
         }, {
             'cast': "Move 3 along the same elevation.",
         } ],
 
-    ["Anchor",
-        {'element': 'earth', 'pattern': 'E2-1', 'DISABLE': True,
-         'category': 'anchor-create',
+    ["Beetlefeet",
+        {'element': 'earth', 'pattern': 'E2-59', 'companion': True,
+         'category': 'mage-move',
         }, {
-            'cast': ["{{ADD_CHARGE}}", "Convert one of your Eyes into an Anchor. Remove all other Eyes from that space and then push away all Eyes in neighboring spaces.", "No Eyes may move within 1 space of this Anchor. This Anchor remains in effect as long as this charge remains."],
+            'target': "{{SELF_OR_TEAMMATE}}",
+            'cast': "{{ADD_CHARGE}}",
+            'charged': "When you enter a space with a cliff edge, you may immediately (for no cost) scramble up or down that cliff edge into the neighboring space.",
+            'note': "Only once per movement action (physical or magical) per charge.",
         } ],
 
     ["Dispel",
-        {'element': 'fire', 'pattern': 'E2-28', 'DISABLE': True,
-         'category': 'eye-other-attack,anchor-attack',
+        {'element': 'fire', 'pattern': 'E2-40',
+         'category': 'eye-other-attack',
         }, {
-            'cast': ["Consume one of your Eyes to remove all Eyes in that space.", "OR", "Remove all Eyes and Anchors from your location."],
+            'cast': ["Consume one of your Eyes to remove all Eyes in that space."],
         } ],
 
-    ["Extend",
-        {'element': 'water', 'pattern': 'E2-31', 'DISABLE': True,
-         'category': 'eye-move',
+    ["Fjord",
+        {'element': 'water', 'pattern': 'E2-32', 'companion': True,
+         'category': 'mage-move',
         }, {
-            'cast': "Move one of your Eyes 5 spaces.",
-        } ],
-
-    ["Shield",
-        {'element': 'earth', 'pattern': 'E2-15', 'companion': True, 'DISABLE': True,
-         'category': 'mage-defend',
-        }, {
+            'target': "{{SELF_OR_TEAMMATE}}",
             'cast': "{{ADD_CHARGE}}",
-            'react': "When attacked, you may immediately cast this spell.",
-            'sacrifice': "Remove a charge to cancel an attack of 1 damage.",
+            'charged': "When you enter a space with a river edge, you may force the waters to part so you can (immediately, for no additional cost) walk across the muddy riverbed to the space on the other side.",
+            'note': "Only once per movement action (physical or magical) per charge."
         } ],
 
+    # v12 starters
+    
     ["Fire Shards",
-        {'element': 'fire', 'pattern': 'E2-36', 'DISABLE': True,
+        {'element': 'fire', 'pattern': 'blank', 'DISABLE': True,
          'category': 'mage-other-attack',
         }, {
             'cast': "Consume one of your Eyes to Attack 1 at that location.",
         } ],
 
-    ["Asunder",
-        {'element': 'water', 'pattern': 'E2-27', 'DISABLE': True,
-         'category': 'eye-create',
+    ["Shield",
+        {'element': 'earth', 'pattern': 'blank', 'companion': True, 'DISABLE': True,
+         'category': 'mage-defend',
         }, {
-            'cast': "In a location where you have at least one Eye, split each of your Eyes into two separate Eyes.",
+            'cast': "{{ADD_CHARGE}}",
+            'react': "When attacked, you may immediately cast this spell.",
+            'sacrifice': "Remove a charge to cancel an attack of 1 damage.",
         } ],
 
 
@@ -270,6 +476,7 @@ spell_card_data = [
     # Move mage N spaces, create eye
     # Move into adjacent location via land (w/o crossing water)
     # Cross over river
+    #   Earth: "Rising columns of mud form a temporary bridge.",
     # Ignore movement penalty: rough terrain, elevation, cross rivers
     # Move through connected terrain type (forest, dense forest, river, plain)
     # Move through forest for a number of tree icons
@@ -280,30 +487,8 @@ spell_card_data = [
     # Levitate/Fly - ignore terrain cost, easier to detect
     # Move into location and push others
     
-    ["Plainswalker",
-        {'element': 'earth', 'pattern': 'E2-5', 'companion': True, 'set': "S1",
-         'category': 'terrain,mage-move',
-        }, {
-            'cast': "If in low-elevation, move 5 spaces through low-elevation.",
-        } ],
-
-    ["Waterwalk",
-        {'element': 'water', 'pattern': 'E2-34', 'companion': True, 'set': "S1",
-         'category': 'terrain,mage-move',
-         #'flavor': "Rising columns of mud form a temporary bridge.",
-        }, {
-            'cast': "If adjacent to a river, move 5 spaces along that river, switching sides at will.",
-        } ],
-
-    ["Airwalk",
-        {'element': 'air', 'pattern': 'E2-7', 'companion': True, 'set': "S2",
-         'category': 'terrain,mage-move',
-        }, {
-            'cast': ["Move 5 spaces over same or lower elevation, passing over rivers and water.", "You must end at the same elevation as your start location."],
-        } ],
-
     ["Endurance",
-        {'element': 'earth', 'pattern': 'E2-9', 'companion': True, 'DISABLE': True,
+        {'element': 'earth', 'pattern': 'blank', 'companion': True, 'DISABLE': True,
          'category': 'terrain,mage-move',
         }, {
             'cast': "{{ADD_CHARGE}}",
@@ -311,21 +496,21 @@ spell_card_data = [
         } ],
 
     ["Blur",
-        {'element': 'air', 'pattern': 'E2-1', 'DISABLE': True,
+        {'element': 'air', 'pattern': 'blank', 'DISABLE': True,
          'category': 'mage-move',
         }, {
             'cast': "Move 5 through any terrain.",
         } ],
 
     ["Forest Passage",
-        {'element': 'air', 'pattern': 'E2-59', 'companion': True, 'DISABLE': True,
+        {'element': 'air', 'pattern': 'blank', 'companion': True, 'DISABLE': True,
          'category': 'terrain,mage-move',
         }, {
             'cast': "If you are in a Forest location, you may move to any connected Forest location up to 6 spaces away, ignoring any terrain costs and crossing rivers.",
         } ],
 
     ["Forest Home",
-        {'element': 'air', 'pattern': 'E2-60', 'companion': True, 'DISABLE': True,
+        {'element': 'air', 'pattern': 'blank', 'companion': True, 'DISABLE': True,
          'category': 'terrain,mage-move,mage-defend',
         }, {
             'cast': "If in a Forest location, jump to another Forest location no more than 4 spaces away.",
@@ -333,7 +518,7 @@ spell_card_data = [
         } ],
 
     ["Dodge",
-        {'element': 'air', 'pattern': 'E1-3', 'companion': True, 'DISABLE': True,
+        {'element': 'air', 'pattern': 'blank', 'companion': True, 'DISABLE': True,
          'category': 'mage-move,mage-defend',
         }, {
             'cast': "Move 4 through any terrain.",
@@ -352,13 +537,6 @@ spell_card_data = [
     # Move into adjacent location, pushing any mage there into another location
     #    moving them to one of your Eye locations
     
-    ["Windslap",
-        {'element': 'air', 'pattern': 'E2-2', 'set': "S1",
-         'category': 'mage-other-attack',
-        }, {
-            'cast': ["All creatures in target space are pushed by gusts of wind into a neighboring space.", "If they are pushed off a cliff, into a cliff wall, over a river, or off the map, then ouch! (Attack 1)"],
-        } ],
-
     #     ____      ___           _    _____                _____     _ ___ 
     #    |    \ ___|  _|___ ___ _| |  |     |___ _ _ ___   |   __|___| |  _|
     #    |  |  | -_|  _| -_|   | . |  | | | | . | | | -_|  |__   | -_| |  _|
@@ -378,22 +556,15 @@ spell_card_data = [
     # When in location of opponent's Eye, create Eye in one of their Eye's location
     # When in forest/water, create Eye in same terrain within N spaces
 
-    ["Water Target",
-        {'element': 'water', 'pattern': 'E1-5', 'DISABLE': True,
-         'category': 'eye-create',
-        }, {
-            'cast': "If next to a river, place an Eye in any location along that river within 5 spaces.",
-        } ],
-
     ["Woodland Target",
-        {'element': 'earth', 'pattern': 'E2-10', 'DISABLE': True,
+        {'element': 'earth', 'pattern': 'blank', 'DISABLE': True,
          'category': 'eye-create',
         }, {
             'cast': "If in a forest, place an Eye in any connected forest location.",
         } ],
 
     ["Traceback",
-        {'element': 'water', 'pattern': 'E2-36', 'DISABLE': True,
+        {'element': 'water', 'pattern': 'blank', 'DISABLE': True,
          'category': 'eye-create',
         }, {
             'cast': "If in a location with another mage's Eye, you may place an Eye at that Mage's location.",
@@ -418,59 +589,36 @@ spell_card_data = [
     # Move Eye in plain/water/forest N spaces within that terrain
     # Move Eye in plain/water/forest to another within N spaces
     
-    ["Spell #2",
-        {'element': 'water', 'pattern': 'E2-35', 'set': "S2",
-         'category': 'eye-move',
-         #'flavor': "The air crackles as the Eye splits in two and one half shoots away. ",
-        }, {
-            'cast': ["Move your eyes a total of 4.", "Each eye moves +1 space if at some point it crosses a river."],
-        } ],
-
-    ["Extend",
-        {'element': 'earth', 'pattern': 'E2-1', 'set': "S1",
-         'category': 'eye-move',
-        }, {
-            'cast': "Move one of your Eyes 5 spaces, but it may not cross water.",
-        } ],
-
     ["Eyedrop",
-        {'element': 'air', 'pattern': 'E2-14', 'DISABLE': True,
+        {'element': 'air', 'pattern': 'blank', 'DISABLE': True,
          'category': 'eye-create,eye-move',
         }, {
             'cast': "Create an Eye and then move it 4.",
         } ],
     
     ["Seek",
-        {'element': 'air', 'pattern': 'E2-16', 'DISABLE': True,
+        {'element': 'air', 'pattern': 'blank', 'DISABLE': True,
          'category': 'eye-move',
         }, {
             'cast': "Move one of your Eyes 2 spaces. If it ends in the same location as another Mage's Eye, then move your Eye to that Mage's location.",
         } ],
     
     ["Gust",
-        {'element': 'air', 'pattern': 'E2-69', 'DISABLE': True,
+        {'element': 'air', 'pattern': 'blank', 'DISABLE': True,
          'category': 'eye-move',
         }, {
             'cast': "Move your Eyes 6 spaces, split among any number of Eyes.",
         } ],
     
     ["Spread",
-        {'element': 'water', 'pattern': 'E2-32', 'DISABLE': True,
+        {'element': 'water', 'pattern': 'blank', 'DISABLE': True,
          'category': 'eye-move',
         }, {
             'cast': "Move all your Eyes 3 spaces each.",
         } ],
 
-    ["Expand",
-        {'element': 'water', 'pattern': 'E2-35', 'DISABLE': True,
-         'category': 'eye-create,eye-move',
-         'flavor': "The air crackles as the Eye splits in two and one half shoots away. ",
-        }, {
-            'cast': "Duplicate an existing Eye and then move it 4 spaces.",
-        } ],
-
     ["Bolt",
-        {'element': 'fire', 'pattern': 'E1-8', 'DISABLE': True,
+        {'element': 'fire', 'pattern': 'blank', 'DISABLE': True,
          'category': 'eye-move,mage-other-attack',
         }, {
             'cast': "Move a single Eye 2 spaces and then consume it to Attack 1.",
@@ -489,14 +637,14 @@ spell_card_data = [
     # Move Eye N spaces, for each space entered move all Eyes 1 space
 
     ["Disperse",
-        {'element': 'air', 'pattern': 'E2-53', 'DISABLE': True,
+        {'element': 'air', 'pattern': 'blank', 'DISABLE': True,
          'category': 'eye-move,eye-other-move',
         }, {
             'cast': "Move one of your Eyes 3 spaces. When moving this Eye into a space, push any Eyes already in that space into an adjacent space.",
         } ],
 
     ["Control",
-        {'element': 'water', 'pattern': 'E2-78', 'DISABLE': True,
+        {'element': 'water', 'pattern': 'blank', 'DISABLE': True,
          'category': 'eye-other-move',
         }, {
             'cast': "If you have an Eye in the same location as another Eye (yours or someone else's), then you may move that other Eye 4 spaces.",
@@ -504,7 +652,7 @@ spell_card_data = [
         } ],
 
     ["Control Burst",
-        {'element': 'water', 'pattern': 'E2-79', 'DISABLE': True,
+        {'element': 'water', 'pattern': 'blank', 'DISABLE': True,
          'category': 'eye-other-move',
         }, {
             'cast': "If you have an Eye in the same location as other Eyes, then you may move all other Eyes 2 spaces each.",
@@ -536,29 +684,6 @@ spell_card_data = [
     #    Sacrifice charge to move 4 spaces.
     # Remove Eye from adjacent location and move into that space
 
-    ["Ground",
-        {'element': 'earth', 'pattern': 'E2-65', 'DISABLE': True,
-         'category': 'eye-other-attack',
-        }, {
-            'cast': "Remove all Eyes from your location and all adjacent locations.",
-        } ],
-
-    ["Scorch",
-        {'element': 'fire', 'pattern': 'E2-44', 'DISABLE': True,
-         'category': 'eye-move,eye-other-attack',
-        }, {
-            'cast': "Move one of your Eyes 4 spaces, removing one opponent Eye from each location it moves into this turn. Consume this Eye.",
-        } ],
-
-    ["Repel",
-        {'element': 'fire', 'pattern': 'E2-37', 'companion': True, 'DISABLE': True,
-         'category': 'eye-other-attack',
-        }, {
-            'cast': "{{ADD_CHARGE}}",
-            'react': "You may cast this when an Eye moves into your location.",
-            'sacrifice': "When an Eye moves into your location, you may spend a Charge to destroy that Eye.",
-        } ],
-
     #     ____      ___           _    _____         
     #    |    \ ___|  _|___ ___ _| |  |   __|_ _ ___ 
     #    |  |  | -_|  _| -_|   | . |  |   __| | | -_|
@@ -573,21 +698,12 @@ spell_card_data = [
     # Charge: all Eyes become anchors
 
     ["Sacrificium",
-        {'element': 'earth', 'pattern': 'E2-8', 'companion': True, 'DISABLE': True,
+        {'element': 'earth', 'pattern': 'blank', 'companion': True, 'DISABLE': True,
          'category': 'eye-defend',
         }, {
             'cast': "{{ADD_CHARGE}}",
             'react': "You may cast this when one of your Eyes is attacked.",
             'sacrifice': "When you need to remove an Eye, you may instead remove a Charge from this spell.",
-        } ],
-
-    ["Switch",
-        {'element': 'earth', 'pattern': 'E2-11', 'companion': True, 'DISABLE': True,
-         'category': 'eye-defend',
-        }, {
-            'cast': "{{ADD_CHARGE}}",
-            'charged': "When you need to remove an Eye, you may instead remove one of your other Eyes.",
-            'react': "You may cast this when one of your Eyes is attacked.",
         } ],
 
     #     _____                _____         _           
@@ -598,7 +714,7 @@ spell_card_data = [
     # Move Anchor
 
     ["Move Anchor",
-        {'element': 'earth', 'pattern': 'E3-33', 'DISABLE': True,
+        {'element': 'earth', 'pattern': 'blank', 'DISABLE': True,
          'category': 'anchor-move',
         }, {
             'cast': ["Move one of your Anchors one space.", "You may not move your Anchor adjacent to any existing Anchor."],
@@ -622,22 +738,15 @@ spell_card_data = [
     # Groups of 3 Eyes are Wall of Flame. Charge lost if group broken
     # Extra damage against shield spell
 
-    ["Tumbler",
-        {'element': 'earth', 'pattern': 'E1-6', 'set': "S2",
-         'category': 'mage-other-attack',
-        }, {
-            'cast': ["A cascade of rock tumbles from a space where you have an Eye into an adjacent space of lower elevation.", "All creatures in the lower space are crushed (Attack 1)."],
-        } ],
-
     ["Turbo Ignis",
-        {'element': 'fire', 'pattern': 'E2-29', 'DISABLE': True,
+        {'element': 'fire', 'pattern': 'blank', 'DISABLE': True,
          'category': 'mage-other-attack',
         }, {
             'cast': "Consume one of your Eyes to Attack 1 at location adjacent to that Eye.",
         } ],
 
     ["Redirect",
-        {'element': 'fire', 'pattern': 'E2-33', 'DISABLE': True,
+        {'element': 'fire', 'pattern': 'blank', 'DISABLE': True,
          'category': 'mage-other-attack,mage-defend',
         }, {
             'cast': "Attack 1 at one of your Eyes, consuming it.",
@@ -645,21 +754,21 @@ spell_card_data = [
         } ],
 
     ["Wall of Flame",
-        {'element': 'fire', 'pattern': 'E3-34', 'DISABLE': True,
+        {'element': 'fire', 'pattern': 'blank', 'DISABLE': True,
          'category': 'mage-other-attack',
         }, {
             'cast': ["{{ADD_CHARGE}} Choose a single group of 3 connected Eyes that you control.", "Those Eyes cause 1 Damage to any creature as long as this spell is charged and the Eyes are connected. These Eyes move at half speed (rounded down) while they are aflame."],
         } ],
 
     ["Lavastone",
-        {'element': 'fire', 'pattern': 'E2-31', 'DISABLE': True,
+        {'element': 'fire', 'pattern': 'blank', 'DISABLE': True,
          'category': 'mage-other-attack',
         }, {
             'cast': "Attack 2 at one of your Eyes. Attack 3 if targeting rough terrain or high elevation.",
         } ],
 
     ["Boost",
-        {'element': 'fire', 'pattern': 'E2-28', 'DISABLE': True,
+        {'element': 'fire', 'pattern': 'blank', 'DISABLE': True,
          'category': 'mage-other-attack',
         }, {
             'cast': "{{ADD_CHARGE}}",
@@ -667,7 +776,7 @@ spell_card_data = [
         } ],
 
     ["Geyser",
-        {'element': 'water', 'pattern': 'E2-45', 'DISABLE': True,
+        {'element': 'water', 'pattern': 'blank', 'DISABLE': True,
          'category': 'mage-other-attack',
         }, {
             'cast': "Attack 1 at two of your Eyes, consuming one of them.",
@@ -685,16 +794,10 @@ spell_card_data = [
     # Charge: If in same location as Eye, that Eye acts as shield 2
     # Charge: Deflect attack into adjacent location
     # Charge: Boost defense power by 1
-
-    ["Defense Spell #1",
-        {'element': 'fire', 'pattern': 'E2-79', 'set': "S2",
-         'category': 'mage-defend',
-        }, {
-            'cast': "Vines reach out and form a protective barrier around you before fading back into the ground.",
-        } ],
+    # "Vines reach out and form a protective barrier around you before fading back into the ground.",
 
     ["Deflect",
-        {'element': 'earth', 'pattern': 'E2-6', 'companion': True, 'DISABLE': True,
+        {'element': 'earth', 'pattern': 'blank', 'companion': True, 'DISABLE': True,
          'category': 'mage-defend,mage-other-attack',
         }, {
             'cast': "{{ADD_CHARGE}}",
@@ -703,7 +806,7 @@ spell_card_data = [
         } ],
 
     ["Reflect",
-        {'element': 'fire', 'pattern': 'E2-79', 'DISABLE': True,
+        {'element': 'fire', 'pattern': 'blank', 'DISABLE': True,
          'category': 'mage-defend,mage-other-attack',
         }, {
             'cast': "Reflect an attack of 1 back at the attacker.",
@@ -723,7 +826,7 @@ spell_card_data = [
     #     If attacked, recover 2 threads
 
     ["Introspect",
-        {'element': 'water', 'pattern': 'E1-2', 'DISABLE': True,
+        {'element': 'water', 'pattern': 'blank', 'DISABLE': True,
          'category': 'thread-move',
         }, {
             'cast': "Move a Thread in your Tapestry to another square. If this completes a spell, you may cast it.",

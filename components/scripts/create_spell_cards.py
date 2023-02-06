@@ -45,16 +45,29 @@ spell_desc_keys = {
     'react': {
         'prefix': "Reaction",
     },
-    'active': {
-        'prefix': "While active",
-    },
     'charged': {
         'prefix': "While charged",
     },
     'sacrifice': {
         'prefix': "Sacrifice charge",
     },
-    'notes': {
+    'note': {
+    },
+}
+
+# Spell info keys (appear at bottom of card).
+spell_info_keys = {
+    'prereq': {
+        'prefix': "Prereq",
+    },
+    'target': {
+        'prefix': "Target",
+    },
+    'trigger': {
+        'prefix': "Trigger",
+    },
+    'cost': {
+        'prefix': "Cost",
     },
 }
 
@@ -180,13 +193,34 @@ class WovenSpellCards():
     def validate_desc(self, name, desc):
         # Ensure all keys are valid.
         for key in desc.keys():
-            if not key in spell_desc_keys:
+            if not key in spell_desc_keys and not key in spell_info_keys:
                 raise Exception("{0:s}: Unknown key: {1:s}".format(name, key))
 
         # Ensure charged spells have a charge effect.
-        if desc['cast'] == '{{ADD_CHARGE}}':
+        if 'cast' in desc and desc['cast'] == '{{ADD_CHARGE}}':
             if not 'charged' in desc and not 'sacrifice' in desc:
                 raise Exception(f"{name}: Charged spell with no effect")
+
+    def expand_info(self, raw_desc):
+        info = []
+        for key in spell_info_keys:
+            if not key in raw_desc:
+                continue
+            rdesc = raw_desc[key]
+            info.append(self.fixup_info(key, rdesc))
+        
+        # Pad with empty lines at the top.
+        numLines = len(info)
+        for x in range(0, 4-numLines):
+            info.insert(0, "-")
+        return info
+    
+    def fixup_info(self, key, d):
+        d = self.desc_info_replace(d)
+        if 'prefix' in spell_info_keys[key]:
+            prefix = spell_info_keys[key]['prefix']
+            return f"{prefix}: {d}"
+        return d
 
     def expand_desc(self, raw_desc):
         desc = []
@@ -207,16 +241,36 @@ class WovenSpellCards():
                     desc.append('-')
                 first = False
 
-                d = d.replace('{{ADD_CHARGE}}', 'Place a Charge on this spell.')
-                d = d.replace('{{ADD_ACTION}}', 'Take another action.')
-
-                if 'prefix' in spell_desc_keys[key]:
-                    prefix = spell_desc_keys[key]['prefix']
-                    desc.append(f"{prefix}: {d}")
-                else:
-                    desc.append(d)
+                desc.append(self.fixup_desc(key, d))
         return desc
 
+    def fixup_desc(self, key, d):
+        d = self.desc_info_replace(d)
+        if 'prefix' in spell_desc_keys[key]:
+            prefix = spell_desc_keys[key]['prefix']
+            return f"{prefix}: {d}"
+        return d
+
+    def desc_info_replace(self, d):
+        # Targets
+        d = d.replace('{{SELF_OR_TEAMMATE}}', 'Self or teammate')
+        d = d.replace('{{EYE}}', 'One of your Eyes')
+        d = d.replace('{{EYES}}', 'One or more of your Eyes')
+        d = d.replace('{{MAGE_LOCATION}}', 'Your location')
+        d = d.replace('{{EYE_LOCATION}}', 'Location where you have an Eye')
+        d = d.replace('{{EYE_ENTERS_LOCATION}}', 'An Eye moves into your location')
+        d = d.replace('{{SEE_DESC}}', 'See description')
+        # When cast
+        d = d.replace('{{ADD_CHARGE}}', 'Place a Charge on this spell.')
+        # React
+        d = d.replace('{{TARGET_HI_MID}}', 'Target is in highlands or midlands')
+        # Trigger
+        d = d.replace('{{WHEN_ATTACKED}}', 'Target is attacked')
+        # Cost
+        d = d.replace('{{EYE_SACRIFICE}}', 'Target Eye is sacrificed')
+        
+        return d
+   
     def record_spell_info(self, name, pattern, attrs, desc):
         id = attrs['id']
         self.name2id[name] = id
@@ -319,7 +373,7 @@ class WovenSpellCards():
             pelems.append("none")
         else:
             pelems = [elem_map[p] for p in pelem_data]
-        if not element in pelems:
+        if pattern_id != 'blank' and not element in pelems:
             raise Exception("{0:s}: Spell pattern does not match element {1:s}"
                   .format(name, element))
 
@@ -334,6 +388,7 @@ class WovenSpellCards():
         svg_ids.append('spell-pattern-border-4')
         svg_ids.append('spell-description')
         svg_ids.append('spell-description-4')
+        svg_ids.append('spell-info')
         svg_ids.append('spell-id')
         svg_ids.extend(['icon-star-{0}'.format(n) for n in [1,2,3]])
         svg_ids.append('icon-vp')
@@ -388,14 +443,19 @@ class WovenSpellCards():
                 flavor_text = svg.add_loaded_element(svg_group, 'spell-flavor')
                 SVG.set_text(flavor_text, attrs['flavor'])
             
-        # Add spell pattern/description based on spell pattern height.
+        # Add spell pattern/description placeholder based on spell pattern height.
         if len(pattern) == 4:
             svg.add_loaded_element(svg_group, 'spell-pattern-border-4')
-            text = svg.add_loaded_element(svg_group, 'spell-description-4')
+            spellDesc = svg.add_loaded_element(svg_group, 'spell-description-4')
         else:
             svg.add_loaded_element(svg_group, 'spell-pattern-border')
-            text = svg.add_loaded_element(svg_group, 'spell-description')
+            spellDesc = svg.add_loaded_element(svg_group, 'spell-description')
+        spellInfo = svg.add_loaded_element(svg_group, 'spell-info')
 
+        # Draw description/pattern.
+        if attrs['category'] != 'blank':
+            SVG.set_text(spellDesc, self.expand_desc(desc))
+            SVG.set_text(spellInfo, self.expand_info(desc))
         self.draw_pattern(pattern_id, pattern, element, svg_group)
 
         # Add spell category icons.
@@ -406,10 +466,6 @@ class WovenSpellCards():
                 cat_clone = SVG.clone(0, cat_master, 0, cat_count*6)
                 SVG.add_node(svg_group, cat_clone)
                 cat_count += 1
-
-        # Draw description.
-        if attrs['category'] != 'blank':
-            SVG.set_text(text, self.expand_desc(desc))
 
         if 'companion' in attrs:
             svg.add_loaded_element(svg_group, 'icon-companion')

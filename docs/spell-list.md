@@ -1,379 +1,154 @@
 # List of Spell Fragments
 
-Generated on 2022/12/11 @ 07:50
+Generated on 2023/02/05 @ 18:57
 
 ## By Category
 
-Anchor Attack (1)
+Eye Create (2)
 
-* [Dispel](#dispel) - _Fire_
+* [Asunder](#asunder) - _Water_
+* [Riverbank](#riverbank) - _Water_
 
-Anchor Create (1)
+Eye Defend (1)
 
-* [Anchor](#anchor) - _Earth_
-
-Anchor Move (1)
-
-* [Move Anchor](#move-anchor) - _Earth_
-
-Eye Create (4)
-
-* [Duplicate](#duplicate) - _Water_
-* [Expand](#expand) - _Water_
-* [Eyedrop](#eyedrop) - _Air_
-* [Water Target](#water-target) - _Water_
-
-Eye Defend (2)
-
-* [Sacrificium](#sacrificium) - _Earth_
 * [Switch](#switch) - _Earth_
 
-Eye Move (9)
+Eye Move (6)
 
-* [Bolt](#bolt) - _Fire_
-* [Disperse](#disperse) - _Air_
-* [Expand](#expand) - _Water_
-* [Extend](#extend) - _Water_
-* [Eyedrop](#eyedrop) - _Air_
-* [Gust](#gust) - _Air_
+* [Asunder](#asunder) - _Water_
+* [Disperse (+Water)](#disperse-(+water)) - _Water_
+* [Extend](#extend) - _Air_
+* [Extend (+Highland)](#extend-(+highland)) - _Fire_
+* [Extend (Land)](#extend-(land)) - _Earth_
 * [Scorch](#scorch) - _Fire_
-* [Seek](#seek) - _Air_
-* [Spread](#spread) - _Water_
 
 Eye Other Attack (4)
 
 * [Dispel](#dispel) - _Fire_
 * [Ground](#ground) - _Earth_
-* [Repel](#repel) - _Fire_
+* [Repel](#repel) - _Air_
 * [Scorch](#scorch) - _Fire_
 
-Eye Other Move (2)
+Mage Defend (2)
 
-* [Control](#control) - _Water_
-* [Disperse](#disperse) - _Air_
-
-Mage Defend (6)
-
-* [Deflect](#deflect) - _Earth_
-* [Dodge](#dodge) - _Air_
-* [Forest Home](#forest-home) - _Air_
-* [Redirect](#redirect) - _Fire_
-* [Reflect](#reflect) - _Fire_
-* [Shield](#shield) - _Earth_
+* [Lava Shield](#lava-shield) - _Fire_
+* [Slipstream](#slipstream) - _Air_
 
 Mage Move (8)
 
-* [Airwalk](#airwalk) - _Air_
-* [Dodge](#dodge) - _Air_
-* [Endurance](#endurance) - _Earth_
-* [Forest Home](#forest-home) - _Air_
-* [Forest Passage](#forest-passage) - _Air_
+* [Beetlefeet](#beetlefeet) - _Earth_
+* [Cloudwalk](#cloudwalk) - _Air_
+* [Fjord](#fjord) - _Water_
 * [Haste](#haste) - _Air_
-* [Plainswalker](#plainswalker) - _Earth_
-* [Waterwalk](#waterwalk) - _Water_
+* [Longarm](#longarm) - _Earth_
+* [Plainswalker](#plainswalker) - _Fire_
+* [Slipstream](#slipstream) - _Air_
+* [Waterstride](#waterstride) - _Water_
 
-Mage Other Attack (8)
+Mage Other Attack (4)
 
-* [Bolt](#bolt) - _Fire_
-* [Deflect](#deflect) - _Earth_
-* [Fire Shards](#fire-shards) - _Fire_
-* [Geyser](#geyser) - _Water_
-* [Redirect](#redirect) - _Fire_
-* [Reflect](#reflect) - _Fire_
-* [Turbo Ignis](#turbo-ignis) - _Fire_
-* [Wall of Flame](#wall-of-flame) - _Fire_
+* [Flambough](#flambough) - _Fire_
+* [River Lurker](#river-lurker) - _Water_
+* [Slapper](#slapper) - _Air_
+* [Tumbler](#tumbler) - _Earth_
 
-Starter (8)
+Mage Other Move (1)
 
-* [Airwalk](#airwalk) - _Air_
-* [Anchor](#anchor) - _Earth_
-* [Dispel](#dispel) - _Fire_
-* [Duplicate](#duplicate) - _Water_
-* [Extend](#extend) - _Water_
-* [Fire Shards](#fire-shards) - _Fire_
-* [Haste](#haste) - _Air_
-* [Shield](#shield) - _Earth_
-
-Terrain (6)
-
-* [Airwalk](#airwalk) - _Air_
-* [Endurance](#endurance) - _Earth_
-* [Forest Home](#forest-home) - _Air_
-* [Forest Passage](#forest-passage) - _Air_
-* [Plainswalker](#plainswalker) - _Earth_
-* [Waterwalk](#waterwalk) - _Water_
-
-Thread Move (1)
-
-* [Introspect](#introspect) - _Water_
+* [Slapper](#slapper) - _Air_
 
 ## By Element
 
-Air (9)
+Air (6)
 
-* [Airwalk](#airwalk) - _Starter, Terrain, Mage Move_
-* [Disperse](#disperse) - _Eye Move, Eye Other Move_
-* [Dodge](#dodge) - _Mage Move, Mage Defend_
-* [Eyedrop](#eyedrop) - _Eye Create, Eye Move_
-* [Forest Home](#forest-home) - _Terrain, Mage Move, Mage Defend_
-* [Forest Passage](#forest-passage) - _Terrain, Mage Move_
-* [Gust](#gust) - _Eye Move_
-* [Haste](#haste) - _Starter, Mage Move_
-* [Seek](#seek) - _Eye Move_
-
-Fire (9)
-
-* [Bolt](#bolt) - _Eye Move, Mage Other Attack_
-* [Dispel](#dispel) - _Starter, Eye Other Attack, Anchor Attack_
-* [Fire Shards](#fire-shards) - _Starter, Mage Other Attack_
-* [Redirect](#redirect) - _Mage Other Attack, Mage Defend_
-* [Reflect](#reflect) - _Mage Defend, Mage Other Attack_
+* [Cloudwalk](#cloudwalk) - _Mage Move_
+* [Extend](#extend) - _Eye Move_
+* [Haste](#haste) - _Mage Move_
 * [Repel](#repel) - _Eye Other Attack_
+* [Slapper](#slapper) - _Mage Other Move, Mage Other Attack_
+* [Slipstream](#slipstream) - _Mage Move, Mage Defend_
+
+Fire (6)
+
+* [Dispel](#dispel) - _Eye Other Attack_
+* [Extend (+Highland)](#extend-(+highland)) - _Eye Move_
+* [Flambough](#flambough) - _Mage Other Attack_
+* [Lava Shield](#lava-shield) - _Mage Defend_
+* [Plainswalker](#plainswalker) - _Mage Move_
 * [Scorch](#scorch) - _Eye Move, Eye Other Attack_
-* [Turbo Ignis](#turbo-ignis) - _Mage Other Attack_
-* [Wall of Flame](#wall-of-flame) - _Mage Other Attack_
 
-Earth (9)
+Earth (6)
 
-* [Anchor](#anchor) - _Starter, Anchor Create_
-* [Deflect](#deflect) - _Mage Defend, Mage Other Attack_
-* [Endurance](#endurance) - _Terrain, Mage Move_
+* [Beetlefeet](#beetlefeet) - _Mage Move_
+* [Extend (Land)](#extend-(land)) - _Eye Move_
 * [Ground](#ground) - _Eye Other Attack_
-* [Move Anchor](#move-anchor) - _Anchor Move_
-* [Plainswalker](#plainswalker) - _Terrain, Mage Move_
-* [Sacrificium](#sacrificium) - _Eye Defend_
-* [Shield](#shield) - _Starter, Mage Defend_
+* [Longarm](#longarm) - _Mage Move_
 * [Switch](#switch) - _Eye Defend_
+* [Tumbler](#tumbler) - _Mage Other Attack_
 
-Water (9)
+Water (6)
 
-* [Control](#control) - _Eye Other Move_
-* [Duplicate](#duplicate) - _Starter, Eye Create_
-* [Expand](#expand) - _Eye Create, Eye Move_
-* [Extend](#extend) - _Starter, Eye Move_
-* [Geyser](#geyser) - _Mage Other Attack_
-* [Introspect](#introspect) - _Thread Move_
-* [Spread](#spread) - _Eye Move_
-* [Water Target](#water-target) - _Eye Create_
-* [Waterwalk](#waterwalk) - _Terrain, Mage Move_
+* [Asunder](#asunder) - _Eye Create, Eye Move_
+* [Disperse (+Water)](#disperse-(+water)) - _Eye Move_
+* [Fjord](#fjord) - _Mage Move_
+* [River Lurker](#river-lurker) - _Mage Other Attack_
+* [Riverbank](#riverbank) - _Eye Create_
+* [Waterstride](#waterstride) - _Mage Move_
 
 ## By Pattern
 
-* E1-2 [Introspect](#introspect) (water)
-* E1-3 [Dodge](#dodge) (air)
-* E1-5 [Water Target](#water-target) (water)
-* E1-8 [Bolt](#bolt) (fire)
-* E2-1 [Anchor](#anchor) (earth)
-* E2-2 [Haste](#haste) (air)
-* E2-5 [Plainswalker](#plainswalker) (earth)
-* E2-6 [Deflect](#deflect) (earth)
-* E2-7 [Airwalk](#airwalk) (air)
-* E2-8 [Sacrificium](#sacrificium) (earth)
-* E2-9 [Endurance](#endurance) (earth)
-* E2-11 [Switch](#switch) (earth)
-* E2-14 [Eyedrop](#eyedrop) (air)
-* E2-15 [Shield](#shield) (earth)
-* E2-16 [Seek](#seek) (air)
-* E2-27 [Duplicate](#duplicate) (water)
-* E2-28 [Dispel](#dispel) (fire)
-* E2-29 [Turbo Ignis](#turbo-ignis) (fire)
-* E2-31 [Extend](#extend) (water)
-* E2-32 [Spread](#spread) (water)
-* E2-33 [Redirect](#redirect) (fire)
-* E2-34 [Waterwalk](#waterwalk) (water)
-* E2-35 [Expand](#expand) (water)
-* E2-36 [Fire Shards](#fire-shards) (fire)
-* E2-37 [Repel](#repel) (fire)
-* E2-44 [Scorch](#scorch) (fire)
-* E2-45 [Geyser](#geyser) (water)
-* E2-53 [Disperse](#disperse) (air)
-* E2-59 [Forest Passage](#forest-passage) (air)
-* E2-60 [Forest Home](#forest-home) (air)
-* E2-65 [Ground](#ground) (earth)
-* E2-69 [Gust](#gust) (air)
-* E2-78 [Control](#control) (water)
-* E2-79 [Reflect](#reflect) (fire)
-* E3-33 [Move Anchor](#move-anchor) (earth)
-* E3-34 [Wall of Flame](#wall-of-flame) (fire)
+* E2-1 [Extend](#extend) (air)
+* E2-5 [Haste](#haste) (air)
+* E2-8 [Slipstream](#slipstream) (air)
+* E2-9 [Longarm](#longarm) (earth)
+* E2-10 [Extend (Land)](#extend-(land)) (earth)
+* E2-14 [Repel](#repel) (air)
+* E2-16 [Tumbler](#tumbler) (earth)
+* E2-27 [Asunder](#asunder) (water)
+* E2-28 [Disperse (+Water)](#disperse-(+water)) (water)
+* E2-31 [Riverbank](#riverbank) (water)
+* E2-32 [Fjord](#fjord) (water)
+* E2-35 [Extend (+Highland)](#extend-(+highland)) (fire)
+* E2-36 [River Lurker](#river-lurker) (water)
+* E2-37 [Lava Shield](#lava-shield) (fire)
+* E2-40 [Dispel](#dispel) (fire)
+* E2-44 [Plainswalker](#plainswalker) (fire)
+* E2-48 [Flambough](#flambough) (fire)
+* E2-51 [Ground](#ground) (earth)
+* E2-53 [Switch](#switch) (earth)
+* E2-56 [Slapper](#slapper) (air)
+* E2-59 [Beetlefeet](#beetlefeet) (earth)
+* E2-60 [Cloudwalk](#cloudwalk) (air)
+* E2-78 [Scorch](#scorch) (fire)
+* E2-79 [Waterstride](#waterstride) (water)
 
 ## By Name
 
-### Airwalk
-```
-X @ . X
-```
-Element: Air
-
-'Category: Starter, Terrain, Mage Move
-
-Move 5 spaces over same or lower elevation, passing over rivers and water. You must end at the same elevation as your start location.
-
-### Anchor
-```
-@ X
-X .
-```
-Element: Earth
-
-'Category: Starter, Anchor Create
-
-Place a Charge on this spell.
-
-Convert one of your Eyes into an Anchor. Remove all other Eyes from that space and then push away all Eyes in neighboring spaces.
-
-No Eyes may move within 1 space of this Anchor. This Anchor remains in effect as long as this charge remains.
-
-### Bolt
-```
-@ . . .
-. . . .
-. . . X
-```
-Element: Fire
-
-'Category: Eye Move, Mage Other Attack
-
-Move a single Eye 2 spaces and then consume it to Attack 1.
-
-### Control
-```
-@ . .
-. . X
-. . X
-```
-Element: Water
-
-'Category: Eye Other Move
-
-If you have an Eye in the same location as another Eye (yours or someone else's), then you may move that other Eye 4 spaces.
-
-Reaction: When another Eye moves into the same space as one of your Eyes, you may immediately cast this spell.
-
-### Deflect
-```
-@ . X
-X . .
-```
-Element: Earth
-
-'Category: Mage Defend, Mage Other Attack
-
-Place a Charge on this spell.
-
-Reaction: When attacked, you may immediately cast this spell.
-
-Sacrifice charge: Remove a charge to deflect an attack of 1 into a neighboring space.
-
-### Dispel
-```
-X . .
-. @ .
-. . X
-```
-Element: Fire
-
-'Category: Starter, Eye Other Attack, Anchor Attack
-
-Consume one of your Eyes to remove all Eyes in that space.
-
-OR
-
-Remove all Eyes and Anchors from your location.
-
-### Disperse
-```
-@ . X
-. . X
-```
-Element: Air
-
-'Category: Eye Move, Eye Other Move
-
-Move one of your Eyes 3 spaces. When moving this Eye into a space, push any Eyes already in that space into an adjacent space.
-
-### Dodge
-```
-@ . X
-```
-Element: Air
-
-'Category: Mage Move, Mage Defend
-
-Move 4 through any terrain.
-
-Reaction: When attacked, cast to move into any valid adjacent location.
-
-### Duplicate
+### Asunder
 ```
 . @ .
 X . X
 ```
 Element: Water
 
-'Category: Starter, Eye Create
+'Category: Eye Create, Eye Move
 
-In a location where you have at least one Eye, split each of your Eyes into two separate Eyes.
+Duplicate one of your Eyes and then move it 2 spaces.
 
-### Endurance
+### Beetlefeet
 ```
-X . .
-@ . .
-. . X
+@ . X X
 ```
 Element: Earth
 
-'Category: Terrain, Mage Move
+'Category: Mage Move
 
 Place a Charge on this spell.
 
-While charged: Your max movement range is increased by 2 whenever you cast a spell that moves yourself.
+While charged: When you enter a space with a cliff edge, you may immediately (for no cost) scramble up or down that cliff edge into the neighboring space.
 
-### Expand
-```
-@ . .
-. X .
-. . X
-```
-Element: Water
+Only once per movement action (physical or magical) per charge.
 
-'Category: Eye Create, Eye Move
-
-Duplicate an existing Eye and then move it 4 spaces.
-
-### Extend
-```
-@ . .
-. X X
-```
-Element: Water
-
-'Category: Starter, Eye Move
-
-Move one of your Eyes 5 spaces.
-
-### Eyedrop
-```
-@ X . X
-```
-Element: Air
-
-'Category: Eye Create, Eye Move
-
-Create an Eye and then move it 4.
-
-### Fire Shards
-```
-. @ . .
-X . . .
-. . . X
-```
-Element: Fire
-
-'Category: Starter, Mage Other Attack
-
-Consume one of your Eyes to Attack 1 at that location.
-
-### Forest Home
+### Cloudwalk
 ```
 @ . . X
 . . . .
@@ -381,140 +156,168 @@ X . . .
 ```
 Element: Air
 
-'Category: Terrain, Mage Move, Mage Defend
+'Category: Mage Move
 
-If in a Forest location, jump to another Forest location no more than 4 spaces away.
+A perfectly flat-top cloud walkway forms between the start and end location.
 
-Reaction: If attacked while in a Forest, you may cast this to move into a neighboring location within the same Forest.
+Move yourself 5 spaces across this walkway, passing over any barriers and water.
 
-### Forest Passage
-```
-@ . X X
-```
-Element: Air
+The walkway must end at the same elevation as the start location, and it may not pass through a higher elevation space.
 
-'Category: Terrain, Mage Move
-
-If you are in a Forest location, you may move to any connected Forest location up to 6 spaces away, ignoring any terrain costs and crossing rivers.
-
-### Geyser
-```
-. X . .
-@ . . .
-. . . .
-. . . X
-```
-Element: Water
-
-'Category: Mage Other Attack
-
-Attack 1 at two of your Eyes, consuming one of them.
-
-### Ground
+### Dispel
 ```
 @ . . .
-. . . X
-X . . .
+. X . X
 ```
-Element: Earth
+Element: Fire
 
 'Category: Eye Other Attack
 
-Remove all Eyes from your location and all adjacent locations.
+Consume one of your Eyes to remove all Eyes in that space.
 
-### Gust
+### Disperse (+Water)
 ```
-@ . . .
-. . . .
-X . . X
+X . .
+. @ .
+. . X
+```
+Element: Water
+
+'Category: Eye Move
+
+Move your Eyes a total of 4 spaces.
+
+Each Eye moves +1 space if at some point it crosses a river.
+
+### Extend
+```
+@ X
+X .
 ```
 Element: Air
 
 'Category: Eye Move
 
-Move your Eyes 6 spaces, split among any number of Eyes.
+Move one of your Eyes 5 spaces.
 
-### Haste
+### Extend (+Highland)
 ```
-X @ X
+@ . .
+. X .
+. . X
 ```
-Element: Air
+Element: Fire
 
-'Category: Starter, Mage Move
+'Category: Eye Move
 
-Move 3 along the same elevation.
+Move one of your Eyes 3 spaces, +1 space if the start location is within 2 spaces of highland.
 
-### Introspect
+### Extend (Land)
 ```
-@ .
-. X
+X @ . .
+. . . X
+```
+Element: Earth
+
+'Category: Eye Move
+
+Move one of your Eyes 5 spaces, but it may not cross water.
+
+### Fjord
+```
+. @ .
+X . .
+. . X
 ```
 Element: Water
 
-'Category: Thread Move
+'Category: Mage Move
 
-Move a Thread in your Tapestry to another square. If this completes a spell, you may cast it.
+Place a Charge on this spell.
 
-### Move Anchor
+While charged: When you enter a space with a river edge, you may force the waters to part so you can (immediately, for no additional cost) walk across the muddy riverbed to the space on the other side.
+
+Only once per movement action (physical or magical) per charge.
+
+### Flambough
 ```
+@ . . .
 . X . .
-. @ . X
-X . . .
+. . . .
+. . . X
+```
+Element: Fire
+
+'Category: Mage Other Attack
+
+The trees in the target location burst into flame and the main boughs shoot out in all directions.
+
+All creatures in the target space (and in one neighboring space at the same elevation) are pierced in an unpleasant manner (Attack 1).
+
+### Ground
+```
+@ . X
+. . .
+X . .
 ```
 Element: Earth
 
-'Category: Anchor Move
+'Category: Eye Other Attack
 
-Move one of your Anchors one space.
+Remove all Eyes from your location and all adjacent spaces.
 
-You may not move your Anchor adjacent to any existing Anchor.
-
-### Plainswalker
+### Haste
 ```
 @ X X
 ```
-Element: Earth
+Element: Air
 
-'Category: Terrain, Mage Move
+'Category: Mage Move
 
-If in low-elevation, move 7 spaces through low-elevation.
+Move 3 along the same elevation.
 
-### Redirect
+### Lava Shield
 ```
 X . . .
 . @ . .
+. . . .
 . . . X
 ```
 Element: Fire
 
-'Category: Mage Other Attack, Mage Defend
+'Category: Mage Defend
 
-Attack 1 at one of your Eyes, consuming it.
+Reaction: Molten rock and metal shoot up from the ground to form a protective barrier (Defend 1) around you before melting back into the ground.
 
-Reaction: When attacked, cast to redirect the attack to one of your Eyes.
-
-### Reflect
+### Longarm
 ```
-. @ . .
-. . . .
-X . . X
+X . .
+@ . .
+. . X
+```
+Element: Earth
+
+'Category: Mage Move
+
+You swing from treetop to treetop into neighboring forest spaces (max 5), ignoring barriers like rivers and cliffs.
+
+### Plainswalker
+```
+@ . . .
+. X . .
+. . . X
 ```
 Element: Fire
 
-'Category: Mage Defend, Mage Other Attack
+'Category: Mage Move
 
-Reflect an attack of 1 back at the attacker.
-
-Reaction: When attacked, you may immediately cast this spell.
+Move yourself 6 spaces through lowlands.
 
 ### Repel
 ```
-X . . .
-. @ . .
-. . . .
-. . . X
+@ X . X
 ```
-Element: Fire
+Element: Air
 
 'Category: Eye Other Attack
 
@@ -524,74 +327,74 @@ Reaction: You may cast this when an Eye moves into your location.
 
 Sacrifice charge: When an Eye moves into your location, you may spend a Charge to destroy that Eye.
 
-### Sacrificium
+### River Lurker
 ```
-@ X .
-. . X
+. @ . .
+X . . .
+. . . X
 ```
-Element: Earth
+Element: Water
 
-'Category: Eye Defend
+'Category: Mage Other Attack
 
-Place a Charge on this spell.
+Select a target location downriver (or upriver) from the target Eye, no more than 9 river segments away.
 
-Reaction: You may cast this when one of your Eyes is attacked.
+Tendrils of water reach out and grab all creatures in the target location, dragging them into the water (Attack 1).
 
-Sacrifice charge: When you need to remove an Eye, you may instead remove a Charge from this spell.
+### Riverbank
+```
+@ . .
+. X X
+```
+Element: Water
+
+'Category: Eye Create
+
+If next to a river, place an Eye in any location along that river within 5 spaces.
 
 ### Scorch
 ```
-@ . . .
-. X . .
-. . . X
+@ . .
+. . X
+. . X
 ```
 Element: Fire
 
 'Category: Eye Move, Eye Other Attack
 
-Move one of your Eyes 4 spaces, removing one opponent Eye from each location it moves into this turn. Consume this Eye.
+Move one of your Eyes 3 spaces, removing one opponent Eye from each location it moves into this turn.
 
-### Seek
+### Slapper
 ```
-X @ . . X
+@ . X
+. . .
+. X .
 ```
 Element: Air
 
-'Category: Eye Move
+'Category: Mage Other Move, Mage Other Attack
 
-Move one of your Eyes 2 spaces. If it ends in the same location as another Mage's Eye, then move your Eye to that Mage's location.
+All creatures in target space are pushed by gusts of wind into the same neighboring space.
 
-### Shield
+If they are pushed through a barrier (off a cliff, into a cliff wall, or over a river) or off the map, then that's really unfortunate (Attack 1).
+
+### Slipstream
 ```
-@ . . X
-X . . .
-```
-Element: Earth
-
-'Category: Starter, Mage Defend
-
-Place a Charge on this spell.
-
-Reaction: When attacked, you may immediately cast this spell.
-
-Sacrifice charge: Remove a charge to cancel an attack of 1 damage.
-
-### Spread
-```
-. @ .
-X . .
+@ X .
 . . X
 ```
-Element: Water
+Element: Air
 
-'Category: Eye Move
+'Category: Mage Move, Mage Defend
 
-Move all your Eyes 3 spaces each.
+You catch a gust of air which transports you to a neighboring location (of your choice), bypassing any barriers.
+
+Reaction: Same effect as when cast normally, with the added bonus of avoiding the attack.
 
 ### Switch
 ```
-@ . .
-X . X
+@ . X
+. . X
 ```
 Element: Earth
 
@@ -603,52 +406,27 @@ Reaction: You may cast this when one of your Eyes is attacked.
 
 While charged: When you need to remove an Eye, you may instead remove one of your other Eyes.
 
-### Turbo Ignis
+### Tumbler
 ```
-@ . X
-. X .
+X @ . . X
 ```
-Element: Fire
+Element: Earth
 
 'Category: Mage Other Attack
 
-Consume one of your Eyes to Attack 1 at location adjacent to that Eye.
+A cascade of rock tumbles from the target location into an adjacent space of lower elevation.
 
-### Wall of Flame
-```
-. . . X .
-X . @ . .
-. . . . .
-. . . . X
-```
-Element: Fire
+All creatures in the lower space are crushed (Attack 1).
 
-'Category: Mage Other Attack
-
-Place a Charge on this spell. Choose a single group of 3 connected Eyes that you control.
-
-Those Eyes cause 1 Damage to any creature as long as this spell is charged and the Eyes are connected. These Eyes move at half speed (rounded down) while they are aflame.
-
-### Water Target
-```
-@ . .
-. . .
-. . X
-```
-Element: Water
-
-'Category: Eye Create
-
-If next to a river, place an Eye in any location along that river within 5 spaces.
-
-### Waterwalk
+### Waterstride
 ```
 . @ . .
+. . . .
 X . . X
 ```
 Element: Water
 
-'Category: Terrain, Mage Move
+'Category: Mage Move
 
-If adjacent to a river, move 5 spaces along that river, switching sides at will.
+Move yourself 6 spaces along the river, switching sides at will.
 

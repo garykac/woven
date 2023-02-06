@@ -94,68 +94,68 @@
 
 # Air
 # ---------
-# Base: *E1-1 - [ Haste ]
-# Doubled: *E2-1, E2-2 - [ Blur, - ]
+# Base: E1-1
+# Doubled: E2-1, E2-2
 # Extended: E2-5, E2-6, E2-7
-# Long extended: *E2-14, *E2-15, E2-16 - [ *, *, - ]
+# Long extended: E2-14, E2-15, E2-16
 # Weak long extended:  E2-17, E2-18, E2-19, E2-20
 # Neutral extended: E2-8, E2-9, E2-10, E2-11
 
-# Long base: *E1-3 - [ Dodge ]
-# Base boosted: E2-5, E2-6, *E2-7 - [ -, -, Airwalk ]
+# Long base: E1-3
+# Base boosted: E2-5, E2-6, E2-7
 # Doubled: E2-51, E2-52
-# Extended: *E2-59, E2-60, E2-61 - [ Forest Blink, Dense Passage, - ]
+# Extended: E2-59, E2-60, E2-61
 # Weak extended: E2-62, E2-63, E2-64, E2-65
-# Neutral extended: *E2-53, E2-54, E2-55, E2-56 - [ Disperse ]
+# Neutral extended: E2-53, E2-54, E2-55, E2-56
 
-# Long long base: *E1-6 - [ Gust ]
-# Base boosted: *E2-14, *E2-15, E2-16 - [ Eyedrop, Seek, - ]
-# Extension boosted: *E2-59, *E2-60, E2-61 - [ *, *, - ]
+# Long long base: E1-6
+# Base boosted: E2-14, *E2-15, E2-16
+# Extension boosted: E2-59, E2-60, E2-61
 # Doubled: E2-121, E2-122
 # Weak extended: E2-123, E2-124, E2-125, E2-126
 # Neutral extended: E2-82, E2-83, E2-84, E2-85
 
 # Earth
 # ---------
-# Base: *E1-1 - [ Endurance ]
-# Doubled: E2-1, *E2-2 - [ -, Plainswalker ]
+# Base: E1-1
+# Doubled: E2-1, E2-2
 # Extended: E2-5, E2-6, E2-7
-# Long extended: E2-14, E2-15, E2-16 - [ -, -, * ]
+# Long extended: E2-14, E2-15, E2-16
 # Weak long extended:  E2-17, E2-18, E2-19, E2-20
-# Neutral extended: *E2-8, E2-9, E2-10, *E2-11 - [ Sacrificium, -, -, Switch ]
+# Neutral extended: E2-8, E2-9, E2-10, E2-11
 
-# Long base: *E1-3 - [ Shield ]
-# Base boosted: *E2-5, E2-6, E2-7 - [ Deflect, -, - ]
+# Long base: E1-3
+# Base boosted: E2-5, E2-6, E2-7
 # Doubled: E2-51, E2-52
-# Extended: E2-59, *E2-60, E2-61 - [ -, Ground, - ]
+# Extended: E2-59, E2-60, E2-61
 # Weak extended: E2-62, E2-63, E2-64, E2-65
 # Neutral extended: E2-53, E2-54, E2-55, E2-56
 
-# Long long base: *E1-6 - [ Anchor ]
-# Base boosted: E2-14, *E2-15, *E2-16 - [ -, Remote Anchor, Woodland Target (sub E2-10) ]
-# Extension boosted: E2-59, *E2-60, E2-61 - [ -, *, - ]
+# Long long base: E1-6
+# Base boosted: E2-14, E2-15, E2-16
+# Extension boosted: E2-59, E2-60, E2-61
 # Doubled: E2-121, E2-122
 # Weak extended: E2-123, E2-124, E2-125, E2-126
 # Neutral extended: E2-82, E2-83, E2-84, E2-85
 
 # Fire
 # ----------
-# Base: *E1-2 - [ Fire Shards ]
-# Doubled: *E2-27, *E2-28 - [ Ignis, Boost ]
-# Extended: E2-35, E2-36, E2-37 - [ *. *. - ]
+# Base: E1-2
+# Doubled: E2-27, E2-28]
+# Extended: E2-35, E2-36, E2-37
 # Long extended: E2-48, E2-49, E2-50
 # Weak long extended: E2-44, E2-45, E2-46, E2-47
-# Neutral extended: *E2-31, *E2-32, E2-33, E2-34 - [ Lavastone, Redirect, -, - ]
+# Neutral extended: E2-31, E2-32, E2-33, E2-34
 
-# Long base: *E1-5 - [ Dispel ]
-# Base boosted: *E2-35, *E2-36, E2-37 - [ Repel, Scorch, - ]
+# Long base: E1-5
+# Base boosted: E2-35, E2-36, E2-37
 # Doubled: E2-106, E2-107
 # Extended: E2-118, E2-119, E2-120
 # Weak extended: E2-114, E2-115, E2-116, E2-117
 # Neutral extended: E2-78, E2-79, E2-80, E2-81
 
-# Long long base: *E1-9 - [ Bolt (sub E1-8) ]
-# Base boosted: *E2-48, E2-49, E2-50 - [ Reflect (sub E2-44), -, - ]
+# Long long base: E1-9
+# Base boosted: E2-48, E2-49, E2-50
 # Extension boosted: E2-118, E2-119, E2-120
 # Doubled: E2-163, E2-164
 # Weak extended: E2-159, E2-160, E2-161, E2-162
@@ -163,21 +163,21 @@
 
 # Water
 # ----------
-# Base: *E1-2 - [ Extend ]
-# Doubled: E2-27, *E2-28 -  [ -, Duplicate ]
-# Extended: *E2-35, *E2-36, E2-37 - [ *, Traceback, - ] 
+# Base: E1-2
+# Doubled: E2-27, E2-28
+# Extended: E2-35, E2-36, E2-37
 # Long extended: E2-48, E2-49, E2-50
 # Weak long extended: E2-44, E2-45, E2-46, E2-47
-# Neutral extended: *E2-31, E2-32, E2-33, *E2-34 - [ Spread, -, -, Waterwalk ]
+# Neutral extended: E2-31, E2-32, E2-33, E2-34
 
-# Long base: E1-5 - [ Water Target ]
-# Base boosted: *E2-35, *E2-36, E2-37 - [ Expand, *, - ]
+# Long base: E1-5
+# Base boosted: E2-35, E2-36, E2-37
 # Doubled: E2-106, E2-107
 # Extended: E2-118, E2-119, E2-120
 # Weak extended: E2-114, E2-115, E2-116, E2-117
-# Neutral extended: *E2-78, *E2-79, E2-80, E2-81 - [ Control, Control Burst, -, -]
+# Neutral extended: E2-78, E2-79, E2-80, E2-81
 
-# Long long base: E1-9 - [ Geyser (sub E1-8) ]
+# Long long base: E1-9
 # Base boosted: E2-48, E2-49, E2-50
 # Extension boosted: E2-118, E2-119, E2-120
 # Doubled: E2-163, E2-164
@@ -1261,7 +1261,7 @@ spell_card_patterns = {
     #                                         4 . 3 . 1 . 1
     #                                         . . . . . . .
     #                                         . . 3 . 2 . .
-    'E2-40':    {'elements': 'aefw',
+    'E2-40':    {'elements': 'fw',
                  'pattern': [   "@ . . .",
                                 ". X . X",
                             ],
@@ -1274,7 +1274,7 @@ spell_card_patterns = {
     # +---------+                             4 . 5 . 7 . 1
     #                                         . . . . . . .
     #                                         . . 7 . 6 . .
-    'E2-41':    {'elements': 'aefw',
+    'E2-41':    {'elements': 'fw',
                  'pattern': [   ". X . .",
                                 "@ . . .",
                                 ". . . X",
@@ -1286,7 +1286,7 @@ spell_card_patterns = {
     # | . @ . . . |  Cards 4
     # | . . . . X |  Transform 8: 12/8
     # +-----------+
-    'E2-42':    {'elements': 'aefw',
+    'E2-42':    {'elements': 'fw',
                  'pattern': [],
                 },
     
@@ -1294,7 +1294,7 @@ spell_card_patterns = {
     # | . @ . . . |  Threads 2
     # | X . . . X |  Cards 2
     # +-----------+  Transform 8: 12/8
-    'E2-43':    {'elements': 'aefw',
+    'E2-43':    {'elements': 'fw',
                  'pattern': [],
                 },
 
@@ -1390,18 +1390,25 @@ spell_card_patterns = {
     # | . . . X |
     # +---------+
     'E2-48':    {'elements': 'fw',
-                 'pattern': [],
+                 'pattern': [   "@ . . .",
+                                ". X . .",
+                                ". . . .",
+                                ". . . X",
+                            ],
                 },
 
-    # +---------+  Level 3
-    # | . X . . |  Threads 2
-    # | @ . . . |  Cards 2
-    # | . . . . |  Transform 4: 8/5
-    # | . . . . |
-    # | . . . X |
-    # +---------+
+    # +-----------+  Level 3
+    # | . @ . . . |  Threads 2
+    # | X . . . . |  Cards 2
+    # | . . . . . |  Transform 4: 8/5
+    # | . . . . X |
+    # +-----------+
     'E2-49':    {'elements': 'fw',
-                 'pattern': [],
+                 'pattern': [   ". @ . . .",
+                                "X . . . .",
+                                ". . . . .",
+                                ". . . . X",
+                            ],
                 },
 
     # +-----------+  Level 3
@@ -1412,7 +1419,12 @@ spell_card_patterns = {
     # | . . . . X |
     # +-----------+
     'E2-50':    {'elements': 'fw',
-                 'pattern': [],
+                 'pattern': [   "X . . . .",
+                                ". @ . . .",
+                                ". . . . .",
+                                ". . . . .",
+                                ". . . . X",
+                            ],
                 },
 
    
@@ -2259,7 +2271,7 @@ spell_card_patterns = {
     # | . . @ . . X |  Threads 2
     # | . . . . . . |  Cards 
     # | X . . . . . |  Transform
-    # +-----------+
+    # +-------------+
     'E2-109':   {'elements': 'aefw',
                  'pattern': [],
                 },
@@ -2285,7 +2297,7 @@ spell_card_patterns = {
     # | . . . X |  Cards 
     # | . . X . |  Transform
     # +---------+
-    'E2-110':   {'elements': 'aefw',
+    'E2-110':   {'elements': 'fw',
                  'pattern': [],
                 },
 
@@ -2295,7 +2307,7 @@ spell_card_patterns = {
     # | X . . . |  Transform
     # | . . . X |
     # +---------+
-    'E2-111':   {'elements': 'aefw',
+    'E2-111':   {'elements': 'fw',
                  'pattern': [],
                 },
 
@@ -2305,7 +2317,7 @@ spell_card_patterns = {
     # | . . . . . . |  Transform
     # | X . . . . . |
     # +-------------+
-    'E2-112':   {'elements': 'aefw',
+    'E2-112':   {'elements': 'fw',
                  'pattern': [],
                 },
 
@@ -2314,7 +2326,7 @@ spell_card_patterns = {
     # | . . . . . X |  Cards 
     # | X . . . . . |  Transform
     # +-------------+
-    'E2-113':   {'elements': 'aefw',
+    'E2-113':   {'elements': 'fw',
                  'pattern': [],
                 },
 
@@ -2388,9 +2400,20 @@ spell_card_patterns = {
     # . . . . . . .
     # . . . a . . .
 
+    # +---------+  Level
+    # | @ . . X |  Threads 2
+    # | . . . . |  Cards 
+    # | . . . . |  Transform 3
+    # | X . . . |
+    # +---------+
     'E2-121':   {'elements': 'ae',
                  'pattern': [],
                 },
+
+    # +---------------+  Level
+    # | X . . @ . . X |  Threads 2
+    # +---------------+  Cards 
+    #                    Transform 3
     'E2-122':   {'elements': 'ae',
                  'pattern': [],
                 },
@@ -2439,16 +2462,16 @@ spell_card_patterns = {
     # . . . . . . X    c . . . . . a
     # . . . d . . .    . b . . . d .
 
-    'E2-127':   {'elements': 'aefw',
+    'E2-127':   {'elements': 'ae',
                  'pattern': [],
                 },
-    'E2-128':   {'elements': 'aefw',
+    'E2-128':   {'elements': 'ae',
                  'pattern': [],
                 },
-    'E2-129':   {'elements': 'aefw',
+    'E2-129':   {'elements': 'ae',
                  'pattern': [],
                 },
-    'E2-130':   {'elements': 'aefw',
+    'E2-130':   {'elements': 'ae',
                  'pattern': [],
                 },
 
@@ -2572,16 +2595,16 @@ spell_card_patterns = {
     # . . . . . . .    . . . . . . .
     # d . . . . . a    . . b . a . X
 
-    'E2-148':   {'elements': 'aefw',
+    'E2-148':   {'elements': 'fw',
                  'pattern': [],
                 },
-    'E2-149':   {'elements': 'aefw',
+    'E2-149':   {'elements': 'fw',
                  'pattern': [],
                 },
-    'E2-150':   {'elements': 'aefw',
+    'E2-150':   {'elements': 'fw',
                  'pattern': [],
                 },
-    'E2-151':   {'elements': 'aefw',
+    'E2-151':   {'elements': 'fw',
                  'pattern': [],
                 },
 
