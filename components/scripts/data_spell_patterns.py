@@ -946,7 +946,7 @@ spell_card_patterns = {
                 },
 
     # +---------+  Level 
-    # | X @ . . |  Threads 
+    # | X @ . . |  Threads 2
     # | . . . . |  Cards 
     # | . . . . |  Transform 
     # | . . . X |
@@ -960,7 +960,7 @@ spell_card_patterns = {
                 },
 
     # +-----------+  Level 
-    # | X @ . . . |  Threads 
+    # | X @ . . . |  Threads 2
     # | . . . . . |  Cards 
     # | . . . . X |  Transform 
     # +-----------+
@@ -1002,7 +1002,7 @@ spell_card_patterns = {
     # . . . . . . X    b . . . . . a
     
     # +---------+  Level 
-    # | @ X . . |  Threads 
+    # | @ X . . |  Threads 2
     # | . . . . |  Cards 
     # | . . . . |  Transform 
     # | . . . X |
@@ -1016,7 +1016,7 @@ spell_card_patterns = {
                 },
 
     # +-----------+  Level 
-    # | X @ . . . |  Threads 
+    # | X @ . . . |  Threads 2
     # | . . . . . |  Cards 
     # | . . . . . |  Transform 
     # | . . . . X |
@@ -1565,7 +1565,7 @@ spell_card_patterns = {
     # . . . . . . .
     
     # +-------+  Level 
-    # | @ . X |  Threads 
+    # | @ . X |  Threads 2
     # | . . . |  Cards 
     # | . . X |  Transform 
     # +-------+
@@ -1577,7 +1577,7 @@ spell_card_patterns = {
                 },
 
     # +-----------+  Level 
-    # | X . @ . . |  Threads 
+    # | X . @ . . |  Threads 2
     # | . . . . . |  Cards 
     # | . . . . X |  Transform 
     # +-----------+
@@ -1658,7 +1658,7 @@ spell_card_patterns = {
                 },
 
     # +---------+  Level 
-    # | X . @ . |  Threads 
+    # | X . @ . |  Threads 2
     # | . . . . |  Cards 
     # | . . . . |  Transform
     # | . . . X |
@@ -1672,7 +1672,7 @@ spell_card_patterns = {
                 },
 
     # +-------------+  Level 
-    # | X . @ . . . |  Threads 
+    # | X . @ . . . |  Threads 2
     # | . . . . . X |  Cards 
     # +-------------+  Transform 
     'E2-64':    {'elements': 'ae',
@@ -1682,7 +1682,7 @@ spell_card_patterns = {
                 },
 
     # +---------+  Level 
-    # | @ . . . |  Threads 
+    # | @ . . . |  Threads 2
     # | . . . X |  Cards 
     # | X . . . |  Transform
     # +---------+
@@ -1710,7 +1710,7 @@ spell_card_patterns = {
     # . . . . . . .    . b . . . d .
     
     # +---------+  Level 
-    # | @ . X . |  Threads 
+    # | @ . X . |  Threads 2
     # | . . . . |  Cards 
     # | . . . X |  Transform
     # +---------+
@@ -1722,7 +1722,7 @@ spell_card_patterns = {
                 },
 
     # +-----------+  Level 
-    # | X . @ . . |  Threads 
+    # | X . @ . . |  Threads 2
     # | . . . . . |  Cards 
     # | . . . . . |  Transform
     # | . . . . X |
@@ -1736,7 +1736,7 @@ spell_card_patterns = {
                 },
 
     # +-------------+  Level 
-    # | X . @ . . . |  Threads 
+    # | X . @ . . . |  Threads 2
     # | . . . . . . |  Cards 
     # | . . . . . X |  Transform
     # +-------------+
@@ -1749,7 +1749,7 @@ spell_card_patterns = {
                 },
 
     # +---------+  Level 
-    # | @ . . . |  Threads 
+    # | @ . . . |  Threads 2
     # | . . . . |  Cards 
     # | X . . X |  Transform
     # +---------+
@@ -1778,7 +1778,7 @@ spell_card_patterns = {
     # . . . . . . X
     
     # +---------+  Level 
-    # | @ . X . |  Threads 
+    # | @ . X . |  Threads 2
     # | . . . . |  Cards 
     # | . . . . |  Transform
     # | . . . X |
@@ -1792,7 +1792,7 @@ spell_card_patterns = {
                 },
 
     # +-------------+  Level 
-    # | X . @ . . . |  Threads 
+    # | X . @ . . . |  Threads 2
     # | . . . . . . |  Cards 
     # | . . . . . . |  Transform
     # | . . . . . X |
@@ -1881,7 +1881,7 @@ spell_card_patterns = {
                 },
 
     # +-------+  Level 
-    # | @ . . |  Threads 
+    # | @ . . |  Threads 2
     # | . . X |  Cards 
     # | . X . |  Transform
     # +-------+
@@ -1908,7 +1908,7 @@ spell_card_patterns = {
     # . . . . . . .
     
     # +-------+  Level 
-    # | @ . . |  Threads 
+    # | @ . . |  Threads 2
     # | . . X |  Cards 
     # | . . X |  Transform
     # +-------+
@@ -1920,7 +1920,7 @@ spell_card_patterns = {
                 },
 
     # +---------+  Level 
-    # | . @ . . |  Threads 
+    # | . @ . . |  Threads 2
     # | . . . . |  Cards 
     # | X . . X |  Transform
     # +---------+
@@ -1932,7 +1932,7 @@ spell_card_patterns = {
                 },
 
     # +-----------+  Level 
-    # | . . @ . . |  Threads 
+    # | . . @ . . |  Threads 2
     # | X . . . . |  Cards 
     # | . . . . X |  Transform
     # +-----------+
@@ -1944,7 +1944,7 @@ spell_card_patterns = {
                 },
 
     # +-----------+  Level 
-    # | X . . . . |  Threads 
+    # | X . . . . |  Threads 2
     # | . . @ . . |  Cards 
     # | . . . . . |  Transform
     # | . . . . X |
@@ -1975,7 +1975,7 @@ spell_card_patterns = {
     # +---------+  Level 3
     # | @ . . X |  Threads 2
     # | . . X . |  Cards 2
-    # +---------+  Transform 8: 12/
+    # +---------+  Transform 8: 12
     'E2-82':    {'elements': 'ae',
                  'pattern': [   "@ . . X",
                                 ". . X .",
@@ -1983,7 +1983,7 @@ spell_card_patterns = {
                 },
 
     # +---------+  Level 
-    # | @ . . X |  Threads 
+    # | @ . . X |  Threads 2
     # | . . . . |  Cards 
     # | . X . . |  Transform
     # +---------+
@@ -1995,7 +1995,7 @@ spell_card_patterns = {
                 },
 
     # +-----------+  Level 
-    # | . @ . . X |  Threads 
+    # | . @ . . X |  Threads 2
     # | . . . . . |  Cards 
     # | X . . . . |  Transform
     # +-----------+
@@ -2007,7 +2007,7 @@ spell_card_patterns = {
                 },
 
     # +-------------+  Level 
-    # | . . @ . . X |  Threads 
+    # | . . @ . . X |  Threads 2
     # | X . . . . . |  Cards 
     # +-------------+  Transform 
     'E2-85':    {'elements': 'ae',
@@ -2035,7 +2035,7 @@ spell_card_patterns = {
     # +---------+  Level 3
     # | @ . . . |  Threads 2
     # | . . X X |  Cards 2
-    # +---------+  Transform 8: 16/
+    # +---------+  Transform 8: 16
     'E2-86':    {'elements': 'ae',
                  'pattern': [   "@ . . .",
                                 ". . X X",
@@ -2043,7 +2043,7 @@ spell_card_patterns = {
                 },
 
     # +---------+  Level 
-    # | . . X . |  Threads 
+    # | . . X . |  Threads 2
     # | @ . . . |  Cards 
     # | . . . X |  Transform
     # +---------+
@@ -2055,7 +2055,7 @@ spell_card_patterns = {
                 },
 
     # +---------+  Level 
-    # | . X . . |  Threads 
+    # | . X . . |  Threads 2
     # | . . . . |  Cards 
     # | @ . . . |  Transform
     # | . . . X |
@@ -2069,7 +2069,7 @@ spell_card_patterns = {
                 },
 
     # +-----------+  Level 
-    # | X . . . . |  Threads 
+    # | X . . . . |  Threads 2
     # | . . . . . |  Cards 
     # | . @ . . . |  Transform
     # | . . . . X |
@@ -2083,7 +2083,7 @@ spell_card_patterns = {
                 },
 
     # +-------------+  Level 
-    # | X . . . . . |  Threads 
+    # | X . . . . . |  Threads 2
     # | . . @ . . . |  Cards 
     # | . . . . . X |  Transform
     # +-------------+
@@ -2097,7 +2097,7 @@ spell_card_patterns = {
     # +-------------+  Level 3
     # | . . @ . . . |  Threads 2
     # | X . . . . X |  Cards 2
-    # +-------------+  Transform 8: 16/
+    # +-------------+  Transform 8: 16
     'E2-91':    {'elements': 'ae',
                  'pattern': [   ". . @ . . .",
                                 "X . . . . X",
@@ -2107,7 +2107,7 @@ spell_card_patterns = {
     # +-----------+  Level 3
     # | . @ . . . |  Threads 2
     # | . . . . X |  Cards 2
-    # | X . . . . |  Transform 8: 16/
+    # | X . . . . |  Transform 8: 16
     # +-----------+
     'E2-92':    {'elements': 'ae',
                  'pattern': [   ". @ . . .",
@@ -2119,7 +2119,7 @@ spell_card_patterns = {
     # +---------+  Level 3
     # | @ . . . |  Threads 2
     # | . . . X |  Cards 2
-    # | . X . . |  Transform 8: 16/
+    # | . X . . |  Transform 8: 16
     # +---------+
     'E2-93':    {'elements': 'ae',
                  'pattern': [],
@@ -2525,7 +2525,7 @@ spell_card_patterns = {
     # | X . . . . . |  Threads 2
     # | . . . . . . |  Cards 
     # | . . @ . . . |  Transform
-    # | . . . . . . |  Transform
+    # | . . . . . . |
     # | . . . . . X |
     # +-------------+
     'E2-116':   {'elements': 'fw',
@@ -2566,10 +2566,10 @@ spell_card_patterns = {
     # . b . . . a .    . . . . . X .
     # . . . . . . X    b . . . . . a
 
-    # +---------+
-    # | @ . . . |
-    # | . . . . |
-    # | . . X . |
+    # +---------+  Level
+    # | @ . . . |  Threads 2
+    # | . . . . |  Cards
+    # | . . X . |  Transform
     # | . . . X |
     # +---------+
     'E2-118':   {'elements': 'fw',
@@ -2580,10 +2580,10 @@ spell_card_patterns = {
                             ],
                 },
 
-    # +-------------+
-    # | . . @ . . . |
-    # | . . . . . . |
-    # | X . . . . . |
+    # +-------------+  Level
+    # | . . @ . . . |  Threads 2
+    # | . . . . . . |  Cards
+    # | X . . . . . |  Transform
     # | . . . . . X |
     # +-------------+
     'E2-119':   {'elements': 'fw',
@@ -2594,10 +2594,10 @@ spell_card_patterns = {
                             ],
                 },
 
-    # +-------------+
-    # | X . . . . . |
-    # | . . . . . . |
-    # | . . @ . . . |
+    # +-------------+  Level
+    # | X . . . . . |  Threads 2
+    # | . . . . . . |  Cards
+    # | . . @ . . . |  Transform
     # | . . . . . . |
     # | . . . . . . |
     # | . . . . . X |
@@ -2643,7 +2643,7 @@ spell_card_patterns = {
     # +---------------+  Level
     # | X . . @ . . X |  Threads 2
     # +---------------+  Cards 
-    #                    Transform 3
+    #                    Transform 2
     'E2-122':   {'elements': 'ae',
                  'pattern': [   "X . . @ . . X",
                             ],
@@ -2664,20 +2664,20 @@ spell_card_patterns = {
     # . . . . . . .    . . . . . . .
     # . . . d . . .    . . b . d . .
 
-    # +---------+
-    # | @ . . X |
-    # | . . . X |
-    # +---------+
+    # +---------+  Level
+    # | @ . . X |  Threads 2
+    # | . . . X |  Cards
+    # +---------+  Transform
     'E2-123':   {'elements': 'ae',
                  'pattern': [   "@ . . X",
                                 ". . . X",
                             ],
                 },
 
-    # +-----------+
-    # | . @ . . X |
-    # | . . . . . |
-    # | . . . . . |
+    # +-----------+  Level
+    # | . @ . . X |  Threads 2
+    # | . . . . . |  Cards
+    # | . . . . . |  Transform
     # | X . . . . |
     # +-----------+
     'E2-124':   {'elements': 'ae',
@@ -2688,20 +2688,20 @@ spell_card_patterns = {
                             ],
                 },
 
-    # +---------------+
-    # | . . . @ . . X |
-    # | X . . . . . . |
-    # +---------------+
+    # +---------------+  Level
+    # | . . . @ . . X |  Threads 2
+    # | X . . . . . . |  Cards
+    # +---------------+  Transform
     'E2-125':   {'elements': 'ae',
                  'pattern': [   ". . . @ . . X",
                                 "X . . . . . .",
                             ],
                 },
 
-    # +---------+
-    # | @ . . X |
-    # | . . . . |
-    # | . . . . |
+    # +---------+  Level
+    # | @ . . X |  Threads 2
+    # | . . . . |  Cards
+    # | . . . . |  Transform
     # | . X . . |
     # +---------+
     'E2-126':   {'elements': 'ae',
@@ -2728,10 +2728,10 @@ spell_card_patterns = {
     # . . . . . . X    c . . . . . a
     # . . . d . . .    . b . . . d .
 
-    # +---------+
-    # | @ . . X |
-    # | . . . . |
-    # | . . . X |
+    # +---------+  Level
+    # | @ . . X |  Threads 2
+    # | . . . . |  Cards
+    # | . . . X |  Transform
     # +---------+
     'E2-127':   {'elements': 'ae',
                  'pattern': [   "@ . . X",
@@ -2740,10 +2740,10 @@ spell_card_patterns = {
                             ],
                 },
 
-    # +-------------+
-    # | . . @ . . X |
-    # | . . . . . . |
-    # | . . . . . . |
+    # +-------------+  Level
+    # | . . @ . . X |  Threads 2
+    # | . . . . . . |  Cards
+    # | . . . . . . |  Transform
     # | X . . . . . |
     # +-------------+
     'E2-128':   {'elements': 'ae',
@@ -2754,10 +2754,10 @@ spell_card_patterns = {
                             ],
                 },
 
-    # +---------------+
-    # | . . . @ . . X |
-    # | . . . . . . . |
-    # | X . . . . . . |
+    # +---------------+  Level
+    # | . . . @ . . X |  Threads 2
+    # | . . . . . . . |  Cards
+    # | X . . . . . . |  Transform
     # +---------------+
     'E2-129':   {'elements': 'ae',
                  'pattern': [   ". . . @ . . X",
@@ -2766,10 +2766,10 @@ spell_card_patterns = {
                             ],
                 },
 
-    # +---------+
-    # | @ . . X |
-    # | . . . . |
-    # | . . . . |
+    # +---------+  Level
+    # | @ . . X |  Threads 2
+    # | . . . . |  Cards
+    # | . . . . |  Transform
     # | . . X . |
     # +---------+
     'E2-130':   {'elements': 'ae',
@@ -2797,10 +2797,10 @@ spell_card_patterns = {
     # . . . . . . .    . . . . . . .
     # . . . a . . X    b . . . . . a
 
-    # +---------+
-    # | @ . . X |
-    # | . . . . |
-    # | . . . . |
+    # +---------+  Level
+    # | @ . . X |  Threads 2
+    # | . . . . |  Cards
+    # | . . . . |  Transform
     # | . . . X |
     # +---------+
     'E2-131':   {'elements': 'aefw',
@@ -2811,10 +2811,10 @@ spell_card_patterns = {
                             ],
                 },
 
-    # +---------------+
-    # | . . . @ . . X |
-    # | . . . . . . . |
-    # | . . . . . . . |
+    # +---------------+  Level
+    # | . . . @ . . X |  Threads 2
+    # | . . . . . . . |  Cards
+    # | . . . . . . . |  Transform
     # | X . . . . . . |
     # +---------------+
     'E2-132':   {'elements': 'aefw',
@@ -2840,10 +2840,10 @@ spell_card_patterns = {
     # . . . . . . .    f = 138
     # . . f . g . .    g = 139
 
-    # +---------+
-    # | . . . X |
-    # | @ . . . |
-    # | . . . X |
+    # +---------+  Level
+    # | . . . X |  Threads 2
+    # | @ . . . |  Cards
+    # | . . . X |  Transform
     # +---------+
     'E2-133':   {'elements': 'ae',
                  'pattern': [   ". . . X",
@@ -2852,10 +2852,10 @@ spell_card_patterns = {
                             ],
                 },
 
-    # +-----------+
-    # | . @ . . . |
-    # | . . . . X |
-    # | . . . . . |
+    # +-----------+  Level
+    # | . @ . . . |  Threads 2
+    # | . . . . X |  Cards
+    # | . . . . . |  Transform
     # | X . . . . |
     # +-----------+
     'E2-134':   {'elements': 'ae',
@@ -2866,10 +2866,10 @@ spell_card_patterns = {
                             ],
                 },
 
-    # +-----------+
-    # | . . . . X |
-    # | . @ . . . |
-    # | . . . . . |
+    # +-----------+  Level
+    # | . . . . X |  Threads 2
+    # | . @ . . . |  Cards
+    # | . . . . . |  Transform
     # | . . . . . |
     # | X . . . . |
     # +-----------+
@@ -2882,10 +2882,10 @@ spell_card_patterns = {
                             ],
                 },
 
-    # +---------------+
-    # | X . . . . . . |
-    # | . . . @ . . . |
-    # | . . . . . . X |
+    # +---------------+  Level
+    # | X . . . . . . |  Threads 2
+    # | . . . @ . . . |  Cards
+    # | . . . . . . X |  Transform
     # +---------------+
     'E2-136':   {'elements': 'ae',
                  'pattern': [   "X . . . . . .",
@@ -2894,20 +2894,20 @@ spell_card_patterns = {
                             ],
                 },
 
-    # +---------------+
-    # | . . . @ . . . |
-    # | X . . . . . X |
-    # +---------------+
+    # +---------------+  Level
+    # | . . . @ . . . |  Threads 2
+    # | X . . . . . X |  Cards
+    # +---------------+  Transform
     'E2-137':   {'elements': 'ae',
                  'pattern': [   ". . . @ . . .",
                                 "X . . @ . . X",
                             ],
                 },
 
-    # +-----------+
-    # | . @ . . . |
-    # | . . . . X |
-    # | . . . . . |
+    # +-----------+  Level
+    # | . @ . . . |  Threads 2
+    # | . . . . X |  Cards
+    # | . . . . . |  Transform
     # | X . . . . |
     # +-----------+
     'E2-138':   {'elements': 'ae',
@@ -2918,10 +2918,10 @@ spell_card_patterns = {
                             ],
                 },
 
-    # +---------+
-    # | @ . . . |
-    # | . . . X |
-    # | . . . . |
+    # +---------+  Level
+    # | @ . . . |  Threads 2
+    # | . . . X |  Cards
+    # | . . . . |  Transform
     # | . X . . |
     # +---------+
     'E2-139':   {'elements': 'ae',
@@ -2949,10 +2949,10 @@ spell_card_patterns = {
     # . g . . . h .    . . g . h . .    g = 146
     #                                   h = 147
 
-    # +---------+
-    # | @ . . . |
-    # | . . . X |
-    # | . . . X |
+    # +---------+  Level
+    # | @ . . . |  Threads 2
+    # | . . . X |  Cards
+    # | . . . X |  Transform
     # +---------+
     'E2-140':   {'elements': 'aefw',
                  'pattern': [   "@ . . .",
@@ -2961,10 +2961,10 @@ spell_card_patterns = {
                             ],
                 },
 
-    # +---------+
-    # | . @ . . |
-    # | . . . . |
-    # | . . . . |
+    # +---------+  Level
+    # | . @ . . |  Threads 2
+    # | . . . . |  Cards
+    # | . . . . |  Transform
     # | X . . X |
     # +---------+
     'E2-141':   {'elements': 'aefw',
@@ -2975,10 +2975,10 @@ spell_card_patterns = {
                             ],
                 },
 
-    # +-----------+
-    # | . @ . . . |
-    # | . . . . . |
-    # | . . . . X |
+    # +-----------+  Level
+    # | . @ . . . |  Threads 2
+    # | . . . . . |  Cards
+    # | . . . . X |  Transform
     # | X . . . . |
     # +-----------+
     'E2-142':   {'elements': 'aefw',
@@ -2989,10 +2989,10 @@ spell_card_patterns = {
                             ],
                 },
 
-    # +-------------+
-    # | . . . . . X |
-    # | . . @ . . . |
-    # | . . . . . . |
+    # +-------------+  Level
+    # | . . . . . X |  Threads 2
+    # | . . @ . . . |  Cards
+    # | . . . . . . |  Transform
     # | . . . . . . |
     # | X . . . . . |
     # +-------------+
@@ -3005,10 +3005,10 @@ spell_card_patterns = {
                             ],
                 },
 
-    # +---------------+
-    # | . . . . . . X |
-    # | . . . @ . . . |
-    # | . . . . . . . |
+    # +---------------+  Level
+    # | . . . . . . X |  Threads 2
+    # | . . . @ . . . |  Cards
+    # | . . . . . . . |  Transform
     # | X . . . . . . |
     # +---------------+
     'E2-144':   {'elements': 'aefw',
@@ -3019,10 +3019,10 @@ spell_card_patterns = {
                             ],
                 },
 
-    # +---------------+
-    # | . . . @ . . . |
-    # | . . . . . . X |
-    # | X . . . . . . |
+    # +---------------+  Level
+    # | . . . @ . . . |  Threads 2
+    # | . . . . . . X |  Cards
+    # | X . . . . . . |  Transform
     # +---------------+
     'E2-145':   {'elements': 'aefw',
                  'pattern': [   ". . . @ . . .",
@@ -3031,10 +3031,10 @@ spell_card_patterns = {
                             ],
                 },
 
-    # +-------------+
-    # | . . @ . . . |
-    # | . . . . . X |
-    # | . . . . . . |
+    # +-------------+  Level
+    # | . . @ . . . |  Threads 2
+    # | . . . . . X |  Cards
+    # | . . . . . . |  Transform
     # | X . . . . . |
     # +-------------+
     'E2-146':   {'elements': 'aefw',
@@ -3045,10 +3045,10 @@ spell_card_patterns = {
                             ],
                 },
 
-    # +---------+
-    # | @ . . . |
-    # | . . . X |
-    # | . . . . |
+    # +---------+  Level
+    # | @ . . . |  Threads 2
+    # | . . . X |  Cards
+    # | . . . . |  Transform
     # | . . X . |
     # +---------+
     'E2-147':   {'elements': 'aefw',
@@ -3076,10 +3076,10 @@ spell_card_patterns = {
     # . . . . . . .    . . . . . . .
     # d . . . . . a    . . b . a . X
 
-    # +---------+
-    # | @ . . . |
-    # | . . . X |
-    # | . . . . |
+    # +---------+  Level
+    # | @ . . . |  Threads 2
+    # | . . . X |  Cards
+    # | . . . . |  Transform
     # | . . . X |
     # +---------+
     'E2-148':   {'elements': 'fw',
@@ -3090,10 +3090,10 @@ spell_card_patterns = {
                             ],
                 },
 
-    # +-----------+
-    # | . @ . . . |
-    # | . . . . . |
-    # | . . . . . |
+    # +-----------+  Level
+    # | . @ . . . |  Threads 2
+    # | . . . . . |  Cards
+    # | . . . . . |  Transform
     # | X . . . X |
     # +-----------+
     'E2-149':   {'elements': 'fw',
@@ -3104,10 +3104,10 @@ spell_card_patterns = {
                             ],
                 },
 
-    # +---------------+
-    # | X . . . . . . |
-    # | . . . @ . . . |
-    # | . . . . . . . |
+    # +---------------+  Level
+    # | X . . . . . . |  Threads 2
+    # | . . . @ . . . |  Cards
+    # | . . . . . . . |  Transform
     # | . . . . . . . |
     # | . . . . . . X |
     # +---------------+
@@ -3120,10 +3120,10 @@ spell_card_patterns = {
                             ],
                 },
 
-    # +---------------+
-    # | . . . @ . . . |
-    # | . . . . . . X |
-    # | . . . . . . . |
+    # +---------------+  Level
+    # | . . . @ . . . |  Threads 2
+    # | . . . . . . X |  Cards
+    # | . . . . . . . |  Transform
     # | X . . . . . . |
     # +---------------+
     'E2-151':   {'elements': 'fw',
@@ -3150,10 +3150,10 @@ spell_card_patterns = {
     # e . . . . . X    f = 157
     # . b . . . f .
 
-    # +-----------+
-    # | . . @ . . |
-    # | . . . . . |
-    # | . . . . . |
+    # +-----------+  Level
+    # | . . @ . . |  Threads 2
+    # | . . . . . |  Cards
+    # | . . . . . |  Transform
     # | X . . . X |
     # +-----------+
     'E2-152':   {'elements': 'fw',
@@ -3164,10 +3164,10 @@ spell_card_patterns = {
                             ],
                 },
 
-    # +-------------+
-    # | . . @ . . . |
-    # | . . . . . . |
-    # | . . . . . X |
+    # +-------------+  Level
+    # | . . @ . . . |  Threads 2
+    # | . . . . . . |  Cards
+    # | . . . . . X |  Transform
     # | X . . . . . |
     # +-------------+
     'E2-153':   {'elements': 'fw',
@@ -3178,10 +3178,10 @@ spell_card_patterns = {
                             ],
                 },
 
-    # +-------------+
-    # | . . . . . X |
-    # | . . . . . . |
-    # | . . @ . . . |
+    # +-------------+  Level
+    # | . . . . . X |  Threads 2
+    # | . . . . . . |  Cards
+    # | . . @ . . . |  Transform
     # | . . . . . . |
     # | . . . . . . |
     # | X . . . . . |
@@ -3196,10 +3196,10 @@ spell_card_patterns = {
                             ],
                 },
 
-    # +---------------+
-    # | X . . . . . . |
-    # | . . . . . . . |
-    # | . . . @ . . . |
+    # +---------------+  Level
+    # | X . . . . . . |  Threads 2
+    # | . . . . . . . |  Cards
+    # | . . . @ . . . |  Transform
     # | . . . . . . . |
     # | . . . . . . X |
     # +---------------+
@@ -3212,10 +3212,10 @@ spell_card_patterns = {
                             ],
                 },
 
-    # +---------------+
-    # | . . . @ . . . |
-    # | . . . . . . . |
-    # | X . . . . . X |
+    # +---------------+  Level
+    # | . . . @ . . . |  Threads 2
+    # | . . . . . . . |  Cards
+    # | X . . . . . X |  Transform
     # +---------------+
     'E2-156':   {'elements': 'fw',
                  'pattern': [   ". . . @ . . .",
@@ -3224,10 +3224,10 @@ spell_card_patterns = {
                             ],
                 },
 
-    # +---------+
-    # | @ . . . |
-    # | . . . . |
-    # | . . . X |
+    # +---------+  Level
+    # | @ . . . |  Threads 2
+    # | . . . . |  Cards
+    # | . . . X |  Transform
     # | . . X . |
     # +---------+
     'E2-157':   {'elements': 'fw',
@@ -3255,12 +3255,13 @@ spell_card_patterns = {
     # . . . . . . X    d . . . . . a
     # d . . . . . a    . b . . . a X
 
-    # +---------+
-    # | @ . . . |
-    # | . . . . |
-    # | . . . X |
-    # | . . . X |
-    # +---------+
+    # +---------+  Level          Transforms  5 6 . . . 3 3
+    # | @ . . . |  Threads 2                  5 . . . . . 4
+    # | . . . . |  Cards                      . . . . . . .
+    # | . . . X |  Transform 8: 12            . . . @ . . .
+    # | . . . X |                             . . . . . . .
+    # +---------+                             8 . . . . . 1
+    #                                         7 7 . . . 2 1
     'E2-158':   {'elements': 'fw',
                  'pattern': [   "@ . . .",
                                 ". . . .",
@@ -3269,10 +3270,10 @@ spell_card_patterns = {
                             ],
                 },
 
-    # +-------------+
-    # | . . @ . . . |
-    # | . . . . . . |
-    # | . . . . . . |
+    # +-------------+  Level
+    # | . . @ . . . |  Threads 2
+    # | . . . . . . |  Cards
+    # | . . . . . . |  Transform
     # | X . . . . X |
     # +-------------+
     'E2-159':   {'elements': 'fw',
@@ -3283,10 +3284,10 @@ spell_card_patterns = {
                             ],
                 },
 
-    # +---------------+
-    # | . . . . . . X |
-    # | . . . . . . . |
-    # | . . . @ . . . |
+    # +---------------+  Level
+    # | . . . . . . X |  Threads 2
+    # | . . . . . . . |  Cards
+    # | . . . @ . . . |  Transform
     # | . . . . . . . |
     # | . . . . . . . |
     # | X . . . . . . |
@@ -3301,10 +3302,10 @@ spell_card_patterns = {
                             ],
                 },
 
-    # +---------------+
-    # | . . . @ . . . |
-    # | . . . . . . . |
-    # | . . . . . . X |
+    # +---------------+  Level
+    # | . . . @ . . . |  Threads 2
+    # | . . . . . . . |  Cards
+    # | . . . . . . X |  Transform
     # | X . . . . . . |
     # +---------------+
     'E2-161':   {'elements': 'fw',
@@ -3332,10 +3333,10 @@ spell_card_patterns = {
     # . . . . . . .
     # a . . . . . X
 
-    # +---------------+
-    # | . . . @ . . . |
-    # | . . . . . . . |
-    # | . . . . . . . |
+    # +---------------+  Level
+    # | . . . @ . . . |  Threads 2
+    # | . . . . . . . |  Cards
+    # | . . . . . . . |  Transform 3: 4
     # | X . . . . . X |
     # +---------------+
     'E2-162':   {'elements': 'fw',
@@ -3346,10 +3347,10 @@ spell_card_patterns = {
                             ],
                 },
 
-    # +---------------+
-    # | X . . . . . . |
-    # | . . . . . . . |
-    # | . . . . . . . |
+    # +---------------+  Level
+    # | X . . . . . . |  Threads 2
+    # | . . . . . . . |  Cards
+    # | . . . . . . . |  Transform 2: 4
     # | . . . @ . . . |
     # | . . . . . . . |
     # | . . . . . . . |
