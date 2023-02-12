@@ -389,14 +389,14 @@ class WovenSpellCards():
         svg_ids.append('spell-description')
         svg_ids.append('spell-description-4')
         svg_ids.append('spell-info')
+        svg_ids.append('rev-id')
         svg_ids.append('spell-id')
+        svg_ids.append('spell-id-border')
         svg_ids.extend(['icon-star-{0}'.format(n) for n in [1,2,3]])
         svg_ids.append('icon-vp')
         svg_ids.append('spell-flavor')
         svg_ids.append('separator')
         svg_ids.append('icon-companion')
-        svg_ids.append('icon-set-circle')
-        svg_ids.append('icon-set-id')
         svg_ids.extend(['cat-{0}'.format(cat) for cat in spell_categories])
         svg.load_ids(CARD_TEMPLATE, svg_ids)
 
@@ -434,9 +434,11 @@ class WovenSpellCards():
             #SVG.add_node(svg_group, SVG.clone(0, elemaster, 55, 3))
 
             # Draw spell id.
+            revision_text = svg.add_loaded_element(svg_group, 'rev-id')
+            SVG.set_text(revision_text, f"{spell_card_revision}")
             id_text = svg.add_loaded_element(svg_group, 'spell-id')
-            SVG.set_text(id_text,
-                         "{0:d}/{1:d}".format(spell_card_revision, attrs['id']))
+            SVG.set_text(id_text, f"{attrs['id']}")
+            svg.add_loaded_element(svg_group, 'spell-id-border')
             
             # Draw flavor text (if present).
             if 'flavor' in attrs:
@@ -469,12 +471,6 @@ class WovenSpellCards():
 
         if 'companion' in attrs:
             svg.add_loaded_element(svg_group, 'icon-companion')
-
-        # Add icon for card set.
-        if 'set' in attrs:
-            svg.add_loaded_element(svg_group, 'icon-set-circle')
-            starterId = svg.add_loaded_element(svg_group, 'icon-set-id')
-            SVG.set_text(starterId, attrs['set'])
 
     def draw_pattern(self, id, pattern_raw, element, svg_group):        
         pattern = [x.split() for x in pattern_raw]
