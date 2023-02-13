@@ -316,11 +316,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="15.303158"
-     inkscape:cx="216.32789"
-     inkscape:cy="315.39241"
+     inkscape:zoom="10.158909"
+     inkscape:cx="209.91428"
+     inkscape:cy="314.5515"
      inkscape:document-units="mm"
-     inkscape:current-layer="layer1"
+     inkscape:current-layer="layer2"
      showgrid="false"
      inkscape:snap-global="true"
      inkscape:window-width="1728"
@@ -424,32 +424,32 @@
     <text
        id="rev-id"
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:3.175px;line-height:125%;font-family:Georgia;text-align:end;letter-spacing:0px;word-spacing:0px;text-anchor:end;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       style="font-style:normal;font-weight:normal;font-size:1.76389px;line-height:125%;font-family:Georgia;text-align:end;letter-spacing:0px;word-spacing:0px;text-anchor:end;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
        x="58.611317"
-       y="86.411659"><tspan
+       y="86.385612"><tspan
          x="57.485416"
-         y="86.411659"
-         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.11667px;font-family:Georgia;text-align:end;text-anchor:end;fill:#000000;fill-opacity:1;stroke-width:0.264583"
+         y="86.385612"
+         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:1.76389px;font-family:Georgia;text-align:end;text-anchor:end;fill:#000000;fill-opacity:1;stroke-width:0.264583"
          id="tspan71">id13</tspan></text>
     <rect
        style="display:inline;fill:none;fill-opacity:0.458078;stroke:#000000;stroke-width:0.2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
        id="spell-id-border"
-       width="3.603441"
-       height="2.1351242"
-       x="57.894012"
-       y="84.729866"
+       width="3.2127724"
+       height="1.8486351"
+       x="57.998207"
+       y="84.990311"
        ry="0.66162157" />
     <text
        xml:space="preserve"
-       style="font-size:2.11667px;line-height:1.25;font-family:'Fira Sans';-inkscape-font-specification:'Fira Sans';display:inline;stroke-width:0.264583"
-       x="59.717438"
-       y="86.540817"
+       style="font-size:1.76389px;line-height:1.25;font-family:'Fira Sans';-inkscape-font-specification:'Fira Sans';display:inline;stroke-width:0.264583"
+       x="59.622681"
+       y="86.548523"
        id="spell-id"><tspan
          sodipodi:role="line"
          id="tspan3892"
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:condensed;font-size:2.11667px;font-family:'Arial Narrow';-inkscape-font-specification:'Arial Narrow Bold Condensed';text-align:center;text-anchor:middle;stroke-width:0.264583"
-         x="59.717438"
-         y="86.540817">222</tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:condensed;font-size:1.76389px;font-family:'Arial Narrow';-inkscape-font-specification:'Arial Narrow Bold Condensed';text-align:center;text-anchor:middle;stroke-width:0.264583"
+         x="59.622681"
+         y="86.548523">222</tspan></text>
     <flowRoot
        style="font-style:normal;font-weight:normal;font-size:10px;line-height:100%;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        id="spell-flavor"

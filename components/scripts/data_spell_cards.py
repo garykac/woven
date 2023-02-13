@@ -37,12 +37,6 @@ spell_card_categories = [
     'terrain',
 ]
 
-# Basic abilities
-#   Create eye in current location
-#   Small move self
-#   Recover Thread
-#   Expand tapestry
-
 # Required spell types
 #   Move self/target
 #     using river
@@ -210,15 +204,15 @@ spell_card_data = [
 
     # Set S1
 
-    ["Slapper",
+    ["Cloudslap",
         {'element': 'air', 'pattern': 'E2-56', 'set': "S1",
          'category': 'mage-other-move,mage-other-attack',
         }, {
             'target': "{{EYE_LOCATION}}",
             'cost': "{{EYE_SACRIFICE}}",
             'cast': [
-                "All creatures in target space are pushed by gusts of wind into the same neighboring space.",
-                "If they are pushed through a barrier (off a cliff, into a cliff wall, or over a river) or off the map, then that's really unfortunate (Attack 1)."
+                "All creatures in target space are surrounded by cloud puffs and pushed into the same neighboring space.",
+                "If they are pushed through a barrier (off a cliff, into a cliff wall, or over a river), then that's really unfortunate (Attack 1)."
             ],
         } ],
 
@@ -250,7 +244,7 @@ spell_card_data = [
 
     # Set S2
 
-    ["Cloudwalk",
+    ["Airwalk",
         {'element': 'air', 'pattern': 'E2-60', 'companion': True, 'set': "S2",
          'category': 'mage-move',
         }, {
@@ -472,20 +466,7 @@ spell_card_data = [
     #    | | | | . | | | -_|  |__   | -_| |  _|
     #    |_|_|_|___|\_/|___|  |_____|___|_|_|
     #
-    # Move mage N spaces
-    # Move mage N spaces, create eye
-    # Move into adjacent location via land (w/o crossing water)
-    # Cross over river
-    #   Earth: "Rising columns of mud form a temporary bridge.",
-    # Ignore movement penalty: rough terrain, elevation, cross rivers
-    # Move through connected terrain type (forest, dense forest, river, plain)
-    # Move through forest for a number of tree icons
-    # Dense forest teleport within 5 spaces
-    # React: when attacked, move to adjacent location
-    # Air walk: move along same or lower terrain. must end at same level.
-    # Teleport link: within forest, swap positions with an Eye.
-    # Levitate/Fly - ignore terrain cost, easier to detect
-    # Move into location and push others
+    # Move mage on map
     
     ["Endurance",
         {'element': 'earth', 'pattern': 'blank', 'companion': True, 'DISABLE': True,
@@ -531,11 +512,6 @@ spell_card_data = [
     #    |_|_|_|___|\_/|___|  |_____|_| |_|_|___|_|
     #
     # Attack another mage's position on the map
-    # Locations next to eyes are barriers that others cannot move into
-    # Teleport other
-    # Target is prevented from moving out of current location
-    # Move into adjacent location, pushing any mage there into another location
-    #    moving them to one of your Eye locations
     
     #     ____      ___           _    _____                _____     _ ___ 
     #    |    \ ___|  _|___ ___ _| |  |     |___ _ _ ___   |   __|___| |  _|
@@ -622,6 +598,7 @@ spell_card_data = [
          'category': 'eye-move,mage-other-attack',
         }, {
             'cast': "Move a single Eye 2 spaces and then consume it to Attack 1.",
+            'cost': "{{EYE_SACRIFICE}}",
         } ],
 
     #     _____                _____ _   _              _____         
