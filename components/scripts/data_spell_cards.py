@@ -204,7 +204,7 @@ spell_card_data = [
 
     # Set S1
 
-    ["Cloudslap",
+    ["Cloudpush",
         {'element': 'air', 'pattern': 'E2-56', 'set': "S1",
          'category': 'mage-other-move,mage-other-attack',
         }, {
@@ -527,10 +527,6 @@ spell_card_data = [
     #                                       |___|
     #
     # Convert mana into an Eye on the map
-    # Duplicate Eye - double number of eyes
-    # When in location of opponent's Eye, create Eye in their location
-    # When in location of opponent's Eye, create Eye in one of their Eye's location
-    # When in forest/water, create Eye in same terrain within N spaces
 
     ["Woodland Target",
         {'element': 'earth', 'pattern': 'blank', 'DISABLE': True,
@@ -554,16 +550,6 @@ spell_card_data = [
     #                               |___|
     #
     # Move your Eyes on the map
-    # Move one 1 Eye N spaces
-    # Move all Eyes N spaces each
-    # Move N spaces, split among M Eyes
-    # Move N spaces, split among any number of Eyes
-    # Duplicate an Eye and then move it N spaces
-    # Create Eye, then move Eyes
-    # Move Eye N spaces, if Eye in same location as another mage's Eye,
-    #    move Eye to that mage's location
-    # Move Eye in plain/water/forest N spaces within that terrain
-    # Move Eye in plain/water/forest to another within N spaces
     
     ["Eyedrop",
         {'element': 'air', 'pattern': 'blank', 'DISABLE': True,
@@ -608,10 +594,6 @@ spell_card_data = [
     #                                                        |___|
     #
     # Move an opponent's Eye
-    # Move all eyes in your location N spaces
-    # Move all eyes from adjacent spaces
-    # Move self N spaces, for each space entered move all Eyes 1 space
-    # Move Eye N spaces, for each space entered move all Eyes 1 space
 
     ["Disperse",
         {'element': 'air', 'pattern': 'blank', 'DISABLE': True,
@@ -642,8 +624,6 @@ spell_card_data = [
     #                                                            |___|
     #
     # Defend against an opponent moving your Eyes
-    # Create Anchored Eye
-    # Anchor remote eye
     
     #     _____ _   _           _      _____         
     #    |  _  | |_| |_ ___ ___| |_   |   __|_ _ ___ 
@@ -652,14 +632,6 @@ spell_card_data = [
     #                                       |___|
     #
     # Move or destroy an opponent's Eye
-    # Cast: Remove all Eyes at location
-    # Charge: When opponent's eye moves into your location, destroy Eye
-    # Remove all Eyes from 1 location adjacent to Eye (or all locations adjacent)
-    # Cast: Move 3 spaces, removing 1 Eye from each location you enter.
-    # Cast: If in location with other Eye, remove 1 of that mage's Eyes
-    # Charge: At end of turn, move co-located Eye 1 space.
-    #    Sacrifice charge to move 4 spaces.
-    # Remove Eye from adjacent location and move into that space
 
     #     ____      ___           _    _____         
     #    |    \ ___|  _|___ ___ _| |  |   __|_ _ ___ 
@@ -668,11 +640,6 @@ spell_card_data = [
     #                                       |___|
     #
     # Defend against an opponent removing one of your eyes
-    # Charge: Sacrifice charge to substitute one Eye for another being removed
-    # Charge: Sacrifice charge to prevent Eye from being removed
-    # N charges protects N Eyes on map
-    # Anchor Eye
-    # Charge: all Eyes become anchors
 
     ["Sacrificium",
         {'element': 'earth', 'pattern': 'blank', 'companion': True, 'DISABLE': True,
@@ -703,17 +670,6 @@ spell_card_data = [
     #    |__|__|_| |_| |__,|___|_,_|    |__|__|__|
     #
     # Attack another mage/creature
-    # Attack at Eye
-    # Attack adjacent to Eye
-    # React: Redirect attack to one of your Eyes
-    # Charge: When opponent's eye moves into your location, attack 1 at mage
-    # Attack 1 at all Eyes
-    # Attack 2 in all Eyes in Forest/Rough/next to water
-    # Attack 3 in neighboring location to Eye in mountain
-    # Move 1 and then attack 1 adjacent to new location
-    # Charge: Sacrifice to boost power of attack by 1
-    # Groups of 3 Eyes are Wall of Flame. Charge lost if group broken
-    # Extra damage against shield spell
 
     ["Turbo Ignis",
         {'element': 'fire', 'pattern': 'blank', 'DISABLE': True,
@@ -765,13 +721,6 @@ spell_card_data = [
     #    |____/|___|_| |___|_|_|___|    |__|__|__|
     #
     # Defend against being attacked
-    # Charge: Defend 1 damage
-    # React: Cast to defend
-    # Charge: Defend from attack, but attack reflected back at attacker
-    # Charge: If in same location as Eye, that Eye acts as shield 2
-    # Charge: Deflect attack into adjacent location
-    # Charge: Boost defense power by 1
-    # "Vines reach out and form a protective barrier around you before fading back into the ground.",
 
     ["Deflect",
         {'element': 'earth', 'pattern': 'blank', 'companion': True, 'DISABLE': True,
@@ -796,11 +745,6 @@ spell_card_data = [
     #      |_| |__,|  _|___|___|_| |_| |_  |
     #              |_|                 |___|
     # Tapestry modification
-    # Remove thread from tapestry. Take another action.
-    # Move a thread within the tapestry
-    # Recovery shield - Protection shield 1, but:
-    #     Charge may be sacrificed to recover 2 threads
-    #     If attacked, recover 2 threads
 
     ["Introspect",
         {'element': 'water', 'pattern': 'blank', 'DISABLE': True,
@@ -815,10 +759,6 @@ spell_card_data = [
     #    |_____|_| |_|_|___|_|      |_| |__,|  _|___|___|_| |_| |_  |
     #                                       |_|                 |___|
     # Attack an opponent's tapestry
-    # Attack: Cover a element spot in another mage's tapestry.
-    # Attack: Cover a normal space in opponent's tapestry
-    # Attack: Opponent is forced to add mana to their tapestry
-    #    New mana must be placed adjacent to existing mana
 
     #     ____      ___           _    _____                 _           
     #    |    \ ___|  _|___ ___ _| |  |_   _|___ ___ ___ ___| |_ ___ _ _ 
@@ -833,7 +773,6 @@ spell_card_data = [
     #      |_| |___|_| |_| |__,|_|_|_|
     #
     # Change terrain type: -> water, forest, rough
-    # While charged, Eyes represent terrain type
 
     #     _____         _ _ 
     #    |   __|___ ___| | |
@@ -841,7 +780,6 @@ spell_card_data = [
     #    |_____|  _|___|_|_|
     #          |_|
     # Interact with your spells
-    # Duplicate Charge on one of your spells
 
     #     _____ _   _              _____         _ _ 
     #    |     | |_| |_ ___ ___   |   __|___ ___| | |
@@ -849,8 +787,6 @@ spell_card_data = [
     #    |_____|_| |_|_|___|_|    |_____|  _|___|_|_|
     #                                   |_|
     # Remove a charge from an opponent's spell
-    # Copy effect of another's spell
-    # Copy charge - if Eye adjacent to mage, add charge to one of their spells
 
     #     _____     _   _         
     #    |  _  |___| |_|_|___ ___ 
@@ -858,7 +794,6 @@ spell_card_data = [
     #    |__|__|___|_| |_|___|_|_|
     #
     # Gain an extra action
-    # Store an action for later - sacrifice charge
 
     #     _____     _           _ 
     #    |  _  |___| |_ ___ ___| |
