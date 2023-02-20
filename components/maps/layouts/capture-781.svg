@@ -8,7 +8,7 @@
    version="1.1"
    id="svg989"
    xml:space="preserve"
-   inkscape:version="1.2.1 (9c6d41e, 2022-07-14)"
+   inkscape:version="1.2.2 (b0a84865, 2022-12-01)"
    sodipodi:docname="capture-781.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
@@ -26,14 +26,14 @@
      inkscape:document-units="mm"
      showgrid="false"
      inkscape:zoom="0.2160869"
-     inkscape:cx="-122.63585"
-     inkscape:cy="400.30192"
+     inkscape:cx="254.52723"
+     inkscape:cy="571.52932"
      inkscape:window-width="1678"
      inkscape:window-height="1045"
      inkscape:window-x="7"
      inkscape:window-y="38"
      inkscape:window-maximized="0"
-     inkscape:current-layer="layer10" /><defs
+     inkscape:current-layer="layer4" /><defs
      id="defs986"><clipPath
        clipPathUnits="userSpaceOnUse"
        id="clipPath534"><path
@@ -154,7 +154,7 @@
        inkscape:label="101"
        style="display:inline"
        clip-path="url(#clipPath1320)"
-       transform="translate(-40.530055,-259.95334)" /><image
+       transform="translate(-44.178794,-350.32384)" /><image
        width="138.90625"
        height="160.33749"
        preserveAspectRatio="none"
@@ -165,7 +165,7 @@
        inkscape:label="161"
        style="display:inline"
        clip-path="url(#clipPath1316)"
-       transform="rotate(60,-51.391826,-12.112987)" /><image
+       transform="rotate(60,-171.99141,-66.965513)" /><image
        width="138.90625"
        height="160.33749"
        preserveAspectRatio="none"
@@ -176,7 +176,7 @@
        inkscape:label="181"
        style="display:inline"
        clip-path="url(#clipPath1312)"
-       transform="rotate(60,-164.3379,-24.072265)" /></g><g
+       transform="rotate(60,-157.97669,-154.69932)" /></g><g
      inkscape:groupmode="layer"
      id="layer7"
      inkscape:label="2xx"><image
@@ -278,7 +278,7 @@
        id="image1937"
        x="-36.798683"
        y="-111.81494"
-       transform="rotate(-60,209.33027,-319.10225)"
+       transform="rotate(-60,251.76527,-567.47549)"
        clip-path="url(#clipPath1285)"
        inkscape:label="361"
        style="display:inline" /><image
@@ -533,7 +533,7 @@
        id="image996"
        x="18.759888"
        y="146.86571"
-       transform="rotate(60,386.11771,484.63629)"
+       transform="rotate(60,399.35113,628.36)"
        clip-path="url(#clipPath1235)"
        inkscape:label="762"
        style="display:inline" /><image
@@ -591,7 +591,7 @@
        id="image1021"
        x="-36.798676"
        y="-111.81492"
-       transform="translate(-191.43901,-190.39218)"
+       transform="translate(-252.18552,-262.25489)"
        clip-path="url(#clipPath1217)"
        inkscape:label="861"
        style="display:inline" /><image
