@@ -1,6 +1,6 @@
 # List of Spell Fragments
 
-Generated on 2023/02/05 @ 18:57
+Generated on 2023/02/20 @ 10:55
 
 ## By Category
 
@@ -36,8 +36,8 @@ Mage Defend (2)
 
 Mage Move (8)
 
+* [Airwalk](#airwalk) - _Air_
 * [Beetlefeet](#beetlefeet) - _Earth_
-* [Cloudwalk](#cloudwalk) - _Air_
 * [Fjord](#fjord) - _Water_
 * [Haste](#haste) - _Air_
 * [Longarm](#longarm) - _Earth_
@@ -47,24 +47,24 @@ Mage Move (8)
 
 Mage Other Attack (4)
 
+* [Cloudpush](#cloudpush) - _Air_
 * [Flambough](#flambough) - _Fire_
 * [River Lurker](#river-lurker) - _Water_
-* [Slapper](#slapper) - _Air_
 * [Tumbler](#tumbler) - _Earth_
 
 Mage Other Move (1)
 
-* [Slapper](#slapper) - _Air_
+* [Cloudpush](#cloudpush) - _Air_
 
 ## By Element
 
 Air (6)
 
-* [Cloudwalk](#cloudwalk) - _Mage Move_
+* [Airwalk](#airwalk) - _Mage Move_
+* [Cloudpush](#cloudpush) - _Mage Other Move, Mage Other Attack_
 * [Extend](#extend) - _Eye Move_
 * [Haste](#haste) - _Mage Move_
 * [Repel](#repel) - _Eye Other Attack_
-* [Slapper](#slapper) - _Mage Other Move, Mage Other Attack_
 * [Slipstream](#slipstream) - _Mage Move, Mage Defend_
 
 Fire (6)
@@ -115,13 +115,29 @@ Water (6)
 * E2-48 [Flambough](#flambough) (fire)
 * E2-51 [Ground](#ground) (earth)
 * E2-53 [Switch](#switch) (earth)
-* E2-56 [Slapper](#slapper) (air)
+* E2-56 [Cloudpush](#cloudpush) (air)
 * E2-59 [Beetlefeet](#beetlefeet) (earth)
-* E2-60 [Cloudwalk](#cloudwalk) (air)
+* E2-60 [Airwalk](#airwalk) (air)
 * E2-78 [Scorch](#scorch) (fire)
 * E2-79 [Waterstride](#waterstride) (water)
 
 ## By Name
+
+### Airwalk
+```
+@ . . X
+. . . .
+X . . .
+```
+Element: Air
+
+Category: Mage Move
+
+A perfectly flat-top cloud walkway forms between the start and end location.
+
+Move yourself 5 spaces across this walkway, passing over any barriers and water.
+
+The walkway must end at the same elevation as the start location, and it may not pass through a higher elevation space.
 
 ### Asunder
 ```
@@ -130,7 +146,7 @@ X . X
 ```
 Element: Water
 
-'Category: Eye Create, Eye Move
+Category: Eye Create, Eye Move
 
 Duplicate one of your Eyes and then move it 2 spaces.
 
@@ -140,7 +156,7 @@ Duplicate one of your Eyes and then move it 2 spaces.
 ```
 Element: Earth
 
-'Category: Mage Move
+Category: Mage Move
 
 Place a Charge on this spell.
 
@@ -148,21 +164,19 @@ While charged: When you enter a space with a cliff edge, you may immediately (fo
 
 Only once per movement action (physical or magical) per charge.
 
-### Cloudwalk
+### Cloudpush
 ```
-@ . . X
-. . . .
-X . . .
+@ . X
+. . .
+. X .
 ```
 Element: Air
 
-'Category: Mage Move
+Category: Mage Other Move, Mage Other Attack
 
-A perfectly flat-top cloud walkway forms between the start and end location.
+All creatures in target space are surrounded by cloud puffs and pushed into the same neighboring space.
 
-Move yourself 5 spaces across this walkway, passing over any barriers and water.
-
-The walkway must end at the same elevation as the start location, and it may not pass through a higher elevation space.
+If they are pushed through a barrier (off a cliff, into a cliff wall, or over a river), then that's really unfortunate (Attack 1).
 
 ### Dispel
 ```
@@ -171,7 +185,7 @@ The walkway must end at the same elevation as the start location, and it may not
 ```
 Element: Fire
 
-'Category: Eye Other Attack
+Category: Eye Other Attack
 
 Consume one of your Eyes to remove all Eyes in that space.
 
@@ -183,7 +197,7 @@ X . .
 ```
 Element: Water
 
-'Category: Eye Move
+Category: Eye Move
 
 Move your Eyes a total of 4 spaces.
 
@@ -196,7 +210,7 @@ X .
 ```
 Element: Air
 
-'Category: Eye Move
+Category: Eye Move
 
 Move one of your Eyes 5 spaces.
 
@@ -208,7 +222,7 @@ Move one of your Eyes 5 spaces.
 ```
 Element: Fire
 
-'Category: Eye Move
+Category: Eye Move
 
 Move one of your Eyes 3 spaces, +1 space if the start location is within 2 spaces of highland.
 
@@ -219,7 +233,7 @@ X @ . .
 ```
 Element: Earth
 
-'Category: Eye Move
+Category: Eye Move
 
 Move one of your Eyes 5 spaces, but it may not cross water.
 
@@ -231,7 +245,7 @@ X . .
 ```
 Element: Water
 
-'Category: Mage Move
+Category: Mage Move
 
 Place a Charge on this spell.
 
@@ -248,7 +262,7 @@ Only once per movement action (physical or magical) per charge.
 ```
 Element: Fire
 
-'Category: Mage Other Attack
+Category: Mage Other Attack
 
 The trees in the target location burst into flame and the main boughs shoot out in all directions.
 
@@ -262,7 +276,7 @@ X . .
 ```
 Element: Earth
 
-'Category: Eye Other Attack
+Category: Eye Other Attack
 
 Remove all Eyes from your location and all adjacent spaces.
 
@@ -272,7 +286,7 @@ Remove all Eyes from your location and all adjacent spaces.
 ```
 Element: Air
 
-'Category: Mage Move
+Category: Mage Move
 
 Move 3 along the same elevation.
 
@@ -285,7 +299,7 @@ X . . .
 ```
 Element: Fire
 
-'Category: Mage Defend
+Category: Mage Defend
 
 Reaction: Molten rock and metal shoot up from the ground to form a protective barrier (Defend 1) around you before melting back into the ground.
 
@@ -297,7 +311,7 @@ X . .
 ```
 Element: Earth
 
-'Category: Mage Move
+Category: Mage Move
 
 You swing from treetop to treetop into neighboring forest spaces (max 5), ignoring barriers like rivers and cliffs.
 
@@ -309,7 +323,7 @@ You swing from treetop to treetop into neighboring forest spaces (max 5), ignori
 ```
 Element: Fire
 
-'Category: Mage Move
+Category: Mage Move
 
 Move yourself 6 spaces through lowlands.
 
@@ -319,7 +333,7 @@ Move yourself 6 spaces through lowlands.
 ```
 Element: Air
 
-'Category: Eye Other Attack
+Category: Eye Other Attack
 
 Place a Charge on this spell.
 
@@ -335,7 +349,7 @@ X . . .
 ```
 Element: Water
 
-'Category: Mage Other Attack
+Category: Mage Other Attack
 
 Select a target location downriver (or upriver) from the target Eye, no more than 9 river segments away.
 
@@ -348,7 +362,7 @@ Tendrils of water reach out and grab all creatures in the target location, dragg
 ```
 Element: Water
 
-'Category: Eye Create
+Category: Eye Create
 
 If next to a river, place an Eye in any location along that river within 5 spaces.
 
@@ -360,23 +374,9 @@ If next to a river, place an Eye in any location along that river within 5 space
 ```
 Element: Fire
 
-'Category: Eye Move, Eye Other Attack
+Category: Eye Move, Eye Other Attack
 
 Move one of your Eyes 3 spaces, removing one opponent Eye from each location it moves into this turn.
-
-### Slapper
-```
-@ . X
-. . .
-. X .
-```
-Element: Air
-
-'Category: Mage Other Move, Mage Other Attack
-
-All creatures in target space are pushed by gusts of wind into the same neighboring space.
-
-If they are pushed through a barrier (off a cliff, into a cliff wall, or over a river) or off the map, then that's really unfortunate (Attack 1).
 
 ### Slipstream
 ```
@@ -385,7 +385,7 @@ If they are pushed through a barrier (off a cliff, into a cliff wall, or over a 
 ```
 Element: Air
 
-'Category: Mage Move, Mage Defend
+Category: Mage Move, Mage Defend
 
 You catch a gust of air which transports you to a neighboring location (of your choice), bypassing any barriers.
 
@@ -398,7 +398,7 @@ Reaction: Same effect as when cast normally, with the added bonus of avoiding th
 ```
 Element: Earth
 
-'Category: Eye Defend
+Category: Eye Defend
 
 Place a Charge on this spell.
 
@@ -412,7 +412,7 @@ X @ . . X
 ```
 Element: Earth
 
-'Category: Mage Other Attack
+Category: Mage Other Attack
 
 A cascade of rock tumbles from the target location into an adjacent space of lower elevation.
 
@@ -426,7 +426,7 @@ X . . X
 ```
 Element: Water
 
-'Category: Mage Move
+Category: Mage Move
 
 Move yourself 6 spaces along the river, switching sides at will.
 

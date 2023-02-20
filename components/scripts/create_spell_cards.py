@@ -119,7 +119,7 @@ class WovenSpellCards():
             ['N2', 9],
             ['N3', 5],
             ['E1', 9],
-            ['E2', 163],
+            ['E2', 162],
             ['E3', 34],
             ['EE1', 7],
             ['EE2', 8],
@@ -640,7 +640,7 @@ class WovenSpellCards():
             for prow in self.id2pattern[sid]:
                 summary.write(prow + '\n')
             summary.write('```\n')
-            summary.write(f"Element: {self.element_name(self.id2attrs[sid]['element'])}\n\n'")
+            summary.write(f"Element: {self.element_name(self.id2attrs[sid]['element'])}\n\n")
 
             summary.write('Category: ')
             summary.write(self.category_list(self.id2attrs[sid]['category']))
