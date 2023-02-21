@@ -1,0 +1,136 @@
+14			Pattern		Pattern Info					Mage					Eye					Thread													
+										Self			Other		Eye Own			Eye Other		Own		Other											
+Name		Element	Type	#	Level	Bias	Size	Trans	Tap	Move	Move+	Defend	Move	Attack	Create	Move	Defend	Move	Attack	Recover	Move	Block	Other	Team	Prereq	Target	Cost	Cast	Charged	Trigger	React	Sacrifice	Note
+Plainswalker	*	Fire	E2	44	3	fw+	4x3	8/12	2/2	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	TRUE	Target is in lowland	{{SELF_OR_TEAMMATE}}		Move yourself 5 spaces through lowlands.					
+Waterstride	*	Water	E2	79	3	fw	4x3	8/12	2/2	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	TRUE	Target must be adjacent to river	{{SELF_OR_TEAMMATE}}		Move yourself 6 spaces along the river, switching sides at will.					
+Longarm	*	Earth	E2	9	2	ae	3x3	8/12	2/4	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	TRUE		{{SELF_OR_TEAMMATE}}		You swing from treetop to treetop into neighboring forest spaces (max 5), ignoring barriers like rivers and cliffs.					
+Haste	*	Air	E2	5	1	ae x2	3x1	4/8	1/	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	TRUE				Move 4 along the same elevation.					
+Blur		Air								TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE				Move 5 through any terrain.					
+Forest Passage		Air								TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE				If you are in a Forest location, you may move to any connected Forest location up to 5 spaces away, ignoring any terrain costs and crossing rivers.					
+Mudslide										TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE									Move self 5 spaces, crossing over rivers at will. Ground slick with mud, slide across terrain.
+x										TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE									If in Forest, move into connected forest for 10 tree icons.
+x										TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE									If in dense forest (2 or more tree icons), teleport to another dense forest within 5 spaces
+x	S1	Earth	E2	30	2	fw+ae	4x2	7/8	2/4	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE									If in forest, swap positions with one of your eyes in a forest location within 8 spaces
+x										TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE									Fly over terrain
+Airwalk	*	Air	E2	60	3	ae x2	4x3	6/8	2/2	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	TRUE		{{SELF_OR_TEAMMATE}}		A perfectly flat-top cloud walkway forms between the start and end location.;Move yourself 5 spaces across this walkway, passing over any barriers and water.;The walkway must end at the same elevation as the start location, and it may not pass through a higher elevation space.					
+Slipstream	*	Air	E2	8	1	ae	3x2	8/12	1/	TRUE	FALSE	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	TRUE		{{SELF_OR_TEAMMATE}}		You catch a gust of air which transports you to a neighboring location (of your choice), bypassing any barriers.		{{WHEN_ATTACKED}}	Same effect as when cast normally, with the added bonus of avoiding the attack.		
+Forest Home		Air								TRUE	FALSE	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	TRUE				If in a Forest location, jump to another Forest location no more than 4 spaces away.			If attacked while in a Forest, you may cast this to move into a neighboring location within the same Forest.		
+Dodge		Air								TRUE	FALSE	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	TRUE				Move 4 through any terrain.			When attacked, cast to move into any valid adjacent location.		
+x										TRUE	FALSE	FALSE	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE									Move 4 spaces, pushing any creatures into adjacent spaces.
+x										TRUE	FALSE	FALSE	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE									Swap positions with another mage targetted with eye
+x										TRUE	FALSE	FALSE	FALSE	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE									Move self 1 and attack adjacent
+x										TRUE	FALSE	FALSE	FALSE	FALSE	TRUE	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE									Move self N spaces, create Eye and move it 1 space
+x										TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE									Move self N spaces, for each space enteres push eyes 1 space away
+x										TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE									Remove eye from adjacent location and move into space
+																																	
+Beetlefeet	S1	Earth	E2	59	2	ae x2	4x1	4/8	2/4	FALSE	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	TRUE		{{SELF_OR_TEAMMATE}}		{{ADD_CHARGE}}	When you enter a space with a cliff edge, you may immediately (for no cost) scramble up or down that cliff edge into the neighboring space.				Only once per movement action (physical or magical) per charge.
+Fjord	S2	Water	E2	32	2	fw	3x3	8/12	2/4	FALSE	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	TRUE		{{SELF_OR_TEAMMATE}}		{{ADD_CHARGE}}	When you enter a space with a river edge, you may force the waters to part so you can (immediately, for no additional cost) walk across the muddy riverbed to the space on the other side.				Only once per movement action (physical or magical) per charge.
+Move Range Boost	S3	Air	E2	13	3	ae+fw	4x3	7/8	2/2	FALSE	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	TRUE		{{SELF_OR_TEAMMATE}}		{{ADD_CHARGE}}	When you cast a movement spell, your maximum distance or range is increased by 2.				
+Endurance	S4	Earth	E2	15	2	ae x2	4x2	6/8	2/4	FALSE	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	TRUE		{{SELF_OR_TEAMMATE}}		{{ADD_CHARGE}}	When moving non-magically, you may move 2 spaces and ignore elevation changes.				
+																																	
+Lava Shield	*	Fire	E2	37	4	fw x2	4x4	4/8	2/1	FALSE	FALSE	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	TRUE	{{TARGET_HI_MID}}	{{SELF_OR_TEAMMATE}}				{{WHEN_ATTACKED}}	Molten rock and metal shoot up from the ground to form a protective barrier (Defend 1) around you before melting back into the ground.		
+Shield		Earth								FALSE	FALSE	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE				{{ADD_CHARGE}}	Remove a charge to cancel an attack of 1 damage.		When attacked, you may immediately cast this spell.		
+x										FALSE	FALSE	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE									React: redirect attack to one of attacker's eyes
+x										FALSE	FALSE	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE									Charge: If in same location as eye, eye acts as shield 2
+x										FALSE	FALSE	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE									Charge: defend 1
+x										FALSE	FALSE	TRUE	FALSE	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE									React: redirect attack to one of your eyes
+Deflect	*	Earth	E2	82	2	ae	4x2	8/12	2/4	FALSE	FALSE	TRUE	FALSE	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE				{{ADD_CHARGE}}			When attacked, you may immediately cast this spell.	Remove a charge to deflect an attack of 1 into a neighboring space.	
+Redirect		Fire								FALSE	FALSE	TRUE	FALSE	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE				Attack 1 at one of your Eyes, consuming it.			When attacked, cast to redirect the attack to one of your Eyes.		
+Reflect	*	Fire	E2	33	3	fw	4x3	8/12	2/2	FALSE	FALSE	TRUE	FALSE	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE				Reflect an attack of 1 back at the attacker.			When attacked, you may immediately cast this spell.		
+																																	
+x										FALSE	FALSE	FALSE	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE									Teleport other mage at an Eye to another of your Eye position
+x										FALSE	FALSE	FALSE	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE									While charged, spaces next to your eyes are physical barriers that cannot be moved into
+x										FALSE	FALSE	FALSE	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE									Prevent other mage from moving from current location
+x										FALSE	FALSE	FALSE	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE									Teleport other mage in your location to one of your Eye locations
+Cloudpush	*	Air	E2	56	2	ae	3x3	8/12	2/4	FALSE	FALSE	FALSE	TRUE	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE		{{EYE_LOCATION}}	{{EYE_SACRIFICE}}	All creatures in target space are surrounded by aggressive cloud puffs and pushed into the same neighboring space.;If they are pushed through a barrier (off a cliff, into a cliff wall, or over a river), then that's really unfortunate (Attack 1).					
+																																	
+Tumbler		Earth	E2	16	3	ae x2	5x1	4/8	2/2	FALSE	FALSE	FALSE	FALSE	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	{{TARGET_HI_MID}}	{{EYE_LOCATION}}	{{EYE_SACRIFICE}}	A cascade of rock tumbles from the target location into an adjacent space of lower elevation.;All creatures in the lower space are crushed (Attack 1).					
+Flambough	*	Fire	E2	48	4	fw x2	4x4	4/8	2/1	FALSE	FALSE	FALSE	FALSE	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	Target Eye must be in Forest space	{{EYE_LOCATION}}	{{EYE_SACRIFICE}}	The trees in the target location burst into flame and the main boughs shoot out in all directions.;All creatures in the target space (and in one neighboring space at the same elevation) are pierced in an unpleasant manner (Attack 1).					
+River Lurker		Water	E2	36	3	fw x2	4x3	6/8	2/2	FALSE	FALSE	FALSE	FALSE	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	Target Eye that is adjacent to river	{{SEE_DESC}}	{{EYE_SACRIFICE}}	Select a target location downriver (or upriver) from the target Eye, no more than 9 river segments away.;Tendrils of water reach out and grab all creatures in the target location, dragging them into the water (Attack 1).					
+Fire Shards		Fire								FALSE	FALSE	FALSE	FALSE	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE			{{EYE_SACRIFICE}}	Consume one of your Eyes to Attack 1 at that location.					
+Turbo Ignis		Fire								FALSE	FALSE	FALSE	FALSE	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE				Consume one of your Eyes to Attack 1 at location adjacent to that Eye.					
+Wall of Flame		Fire								FALSE	FALSE	FALSE	FALSE	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE				{{ADD_CHARGE}} Choose a single group of 3 connected Eyes that you control.;Those Eyes cause 1 Damage to any creature as long as this spell is charged and the Eyes are connected. These Eyes move at half speed (rounded down) while they are aflame.					
+Lavastone		Fire								FALSE	FALSE	FALSE	FALSE	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE				Attack 1 at one of your Eyes. Attack 2 if targeting rough terrain or high elevation.					
+Boost		Fire								FALSE	FALSE	FALSE	FALSE	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE				{{ADD_CHARGE}}	Spend a Charge to increase Attack strength by 1.				
+Geyser		Water								FALSE	FALSE	FALSE	FALSE	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE				Attack 1 at two of your Eyes, consuming one of them.					
+x										FALSE	FALSE	FALSE	FALSE	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE									Attack at eye
+x										FALSE	FALSE	FALSE	FALSE	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE									Attack adjacent to eye
+x										FALSE	FALSE	FALSE	FALSE	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE									Attack at all eyes in forest, river, terrain
+x										FALSE	FALSE	FALSE	FALSE	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE									Charge: when an opponent's eye moves into location, attack mage
+Bolt		Fire								FALSE	FALSE	FALSE	FALSE	TRUE	FALSE	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE			{{EYE_SACRIFICE}}	Move a single Eye 2 spaces and then consume it to Attack 1.					
+																																	
+Riverbank	*	Water	E2	31	1	fw	3x2	8/12	1/	FALSE	FALSE	FALSE	FALSE	FALSE	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE				If next to a river, place an Eye in any location along that river within 5 spaces.					
+Woodland Target	*	Earth	E2	10	2	ae	4x2	8/12	2/4	FALSE	FALSE	FALSE	FALSE	FALSE	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE				If in a forest, place an Eye in any connected forest location.					
+Traceback		Water								FALSE	FALSE	FALSE	FALSE	FALSE	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE				If in a location with another mage's Eye, you may place an Eye at that Mage's location.			You may cast this when an opponent's Eye is moved into your location.		
+x										FALSE	FALSE	FALSE	FALSE	FALSE	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE									If in location of opponent's eye, create eye in their location
+x										FALSE	FALSE	FALSE	FALSE	FALSE	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE									If in location of opponent's eye, create eye in one of their eye's location
+Asunder	*	Water	E2	27	1	fw	3x2	3/4	1/	FALSE	FALSE	FALSE	FALSE	FALSE	TRUE	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE		{{EYE}}		Duplicate one of your Eyes and then move it 2 spaces.					
+Eyedrop	*	Air	E2	62	2	ae+	4x2	8/12	2/4	FALSE	FALSE	FALSE	FALSE	FALSE	TRUE	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE				Create an Eye and then move it 4.					
+																																	
+Extend (Land)	*	Fire	E2	12	2	ae+fw	3x3	7/8	2/4	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	Target Eye must not be over water	{{EYE}}		Move one of your Eyes 5 spaces, but it may not cross water.					
+Disperse (Water)	*	Water	E2	28	2	fw	3x3	2/4	2/4	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE		{{EYES}}		Move your Eyes a total of 4 spaces.;Each Eye moves +1 space if at some point it crosses a river.					
+Extend	*	Air	E2	1	1	ae x2	2x2	3/4	1/	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE		{{EYE}}		Move one of your Eyes 5 spaces.					
+Extend (Highland)	*	Fire	E2	35	2	fw x2	3x3	4/8	2/4	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE		{{EYE}}		Move one of your Eyes 3 spaces, +1 space if the start location is within 2 spaces of highland.					
+Seek		Air								FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE				Move one of your Eyes 2 spaces. If it ends in the same location as another Mage's Eye, then move your Eye to that Mage's location.					
+Gust	*	Air	E2	52	3	ae x2	5x1	2/4	2/2	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE				Move your Eyes 6 spaces, split among any number of Eyes.					
+Spread	*	Water	E2	46						FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE				Move all your Eyes 2 spaces each.					
+x										FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE									Move Eyes N spaces, split amongst M eyes
+x										FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE									Move eye N spaces, if in same location as another mage's eye, move eye to mages location
+River Flow	*	Water	E2	45						FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	Target Eye next to River	{{EYE}}		Move one of your Eyes 5 spaces along river.					
+Sylvan Seeker	S1	Earth	E1	3	1	ae	3x1	4/4	1/	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	Target Eye in Forest	{{EYE}}		Move one of your Eyes in a Forest location to another Forest space no further than 5 spaces away.					
+x										FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE									Charge: at end of turn, move co-located eye 1 space. Sacrifice charge to move eye 4
+Disperse	*	Air	E2	53	1	ae	3x2	8/12	1/	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	TRUE	FALSE	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE		{{EYE}}		Move one of your Eyes 3 spaces. When moving this Eye into a space, push any Eyes already in that space into an adjacent space.					
+x										FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	TRUE	FALSE	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE									Move all eyes (including other's) in your location N spaces
+x										FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	TRUE	FALSE	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE									Move all eyes in adjacent spaces
+Control		Water								FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	TRUE	FALSE	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE				If you have an Eye in the same location as another Eye (yours or someone else's), then you may move that other Eye 4 spaces.			When another Eye moves into the same space as one of your Eyes, you may immediately cast this spell.		
+Control Burst		Water								FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	TRUE	FALSE	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE				If you have an Eye in the same location as other Eyes, then you may move all other Eyes 2 spaces each.					
+Scorch	*	Fire	E2	118	4	fw x2	4x4	4/8	2/1	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	TRUE	FALSE	FALSE	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE		{{EYE}}	{{EYE_SACRIFICE}}	Move one of your Eyes 3 spaces, removing one opponent Eye from each location it moves into this turn.					
+																																	
+Switch	*	Earth	E2	84	5	ae	5x3	8/12	3/5	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	TRUE				{{ADD_CHARGE}}	When you need to remove an Eye, you may instead remove one of your other Eyes.		You may cast this when one of your Eyes is attacked.		
+Sacrificium	*	Earth	E1	6	2	ae	4x1	4/4	2/4	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE				{{ADD_CHARGE}}	When you need to remove an Eye, you may instead remove a Charge from this spell.		You may cast this when one of your Eyes is attacked.		
+x										FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE									Charge: sacrifice to remove a different eye when one needs to be removed
+x										FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE									N charges protect n eyes on map
+																																	
+																																	
+Ground	*	Earth	E2	51	2	ae x2	3x3	3/4	2/4	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE		{{MAGE_LOCATION}}		Remove all Eyes from your location and all adjacent spaces.					
+Repel	*	Air	E2	14	2	ae x2	4x1	4/8	2/4	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	TRUE	FALSE	FALSE	FALSE	FALSE	TRUE				{{ADD_CHARGE}}		{{EYE_ENTERS_LOCATION}}	You may cast this when an Eye moves into your location.	When an Eye moves into your location, you may spend a Charge to destroy that Eye.	
+Burn	*	Fire	E2	40	2	fw-	4x2	8/12	2/4	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE			{{EYE_SACRIFICE}}	Consume one of your Eyes to remove all Eyes in that space.					
+x										FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE									Remove all eyes in location
+x										FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE									Charge: when an opponent's eye moves into location, destroy eye
+x										FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE									Remove all eyes from 1 location adjacent to you/eye
+x										FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE									If in location with other eye, remove one of that mage's eyes
+																																	
+Recover Thread	*	Water	E1	9	4	fw	4x4	4/4	2/1	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	TRUE	FALSE	FALSE	FALSE	FALSE				Recover a Thread from your Tapestry.					
+Defense Thread Recover										FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	TRUE	FALSE	FALSE	FALSE	FALSE									Charge: if attacked, recover 2 theads
+Sacrifice for Threads	*	Fire	E1	5	2	fw	3x3	4/4	2/4	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	TRUE	FALSE	FALSE	FALSE	FALSE				{{ADD_CHARGE}}				You may sacrifice a charge to recover a Thread.	
+																																	
+Introspect	*	Water	E1	8	3	fw-	4x3	8/8	2/2	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	TRUE	FALSE	FALSE	FALSE				Move a Thread in your Tapestry to another square. If this completes a spell, you may cast it.					
+Move Threads	*	Air	E1	7	2	ae-	4x2	8/8	2/4	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	TRUE	FALSE	FALSE	FALSE									Move 2 threads. No auto-casting.
+																																	
+Cover Element	*	Fire	E2	78	2	fw	3x3	8/12	2/4	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	TRUE	FALSE	FALSE									Attack tapestry: cover an element in another mage's tapestry
+Swap Tapestry Square	*	Water	E2	42	4	fw-	5x3	8/12	2/1	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	TRUE	FALSE	FALSE									Attack tapestry: replace mana with your own in another mage's tapestry
+Fill Empty Tap	*	Water	E2	102	4	fw	4x4	8/12	2/1	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	TRUE	FALSE	FALSE									Attack tapestry: fill an empty square in another mage's tapestry
+Magic Drain	*	Fire	E2	114	3	fw+	4x3	8/12	2/2	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	TRUE	FALSE	FALSE									Force opponent to add thread to tapestry to defend. Must be placed adjacent to existing thread
+																																	
+Move Anchor		Earth								FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	TRUE	FALSE				Move one of your Anchors one space.;You may not move your Anchor adjacent to any existing Anchor.					Move an anchor 1 space
+Clone Spell										FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	TRUE	FALSE									When charged, you may cast an active Element spell from any player/creature
+Create Anchor Here										FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	TRUE	FALSE									Create anchor in current location
+Create Anchor										FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	TRUE	FALSE									Convert Eye to anchor
+Eyes 2 Anchors										FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	TRUE	FALSE									charge: All eyes become anchors
+Eyes 2 Terrain										FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	TRUE	FALSE									Charge: All eyes change terrain (to forest, ...)
+Boost Attack										FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	TRUE	FALSE									Charge: boost attack power by 1
+Boost Attack Element										FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	TRUE	FALSE									Extra damage against shield spell (based on element)
+Boost Defense										FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	TRUE	FALSE									Boost defense by 1
+Duplicate Charge										FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	TRUE	FALSE									Duplicate charge on existing spell
+Copy Charged Spell										FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	TRUE	FALSE									If adjacent to mage, add charge to one of their spells
+Store Action	*	Earth	E2	55	3	ae	5x2	8/12	2/2	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	TRUE	FALSE									Store an action, sacrifice charge to take it.
+										FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE									
+										FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE									
+										FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE									
+										FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE									
+										FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE									
+										FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE									
+										FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE									
+										FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE									
+										FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE									
+										FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE									

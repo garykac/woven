@@ -14,8 +14,6 @@ from data_spell_cards import spell_card_data
 from data_spell_cards import spell_card_revision
 from data_spell_cards import spell_card_categories
 
-from data_spell_cards_blank import spell_card_blank_data
-
 from data_spell_patterns import spell_card_patterns
 
 elem_map = {
