@@ -12,7 +12,8 @@ from svg import SVG, Style, Node
 
 from data_spell_cards import spell_card_data
 from data_spell_cards import spell_card_revision
-from data_spell_cards import spell_card_categories
+
+from data_spell_categories import SPELL_CATEGORIES
 
 from data_spell_patterns import spell_card_patterns
 
@@ -26,14 +27,6 @@ elem_map = {
 # Spell attributes
 spell_attributes = [
     'element', 'pattern', 'companion', 'id', 'set', 'category', 'flavor', 'DISABLE'
-]
-
-# General spell categories
-spell_categories = [
-    "eye-create", "eye-move", "eye-defend", "eye-other-move", "eye-other-attack",
-    "mage-move", "mage-defend", "mage-other-move", "mage-other-attack",
-    "thread-move",
-    "anchor-create", "anchor-attack", "anchor-move",
 ]
 
 # Spell description keys
@@ -90,7 +83,9 @@ class WovenSpellCards():
         self.blank_count = 0
                 
         self.valid_elements = ['none', 'air', 'fire', 'earth', 'water']
-        self.valid_categories = spell_card_categories
+        self.valid_categories = set()
+        for c in SPELL_CATEGORIES:
+            self.valid_categories.add(c)
 
         # Poker size cards: 2.5" x 3.5" = 225px x 315px = 63.5mm x 88.9mm
         # Bridge size cards: 2.25" x 3.5" = 202.5px x 315px
@@ -106,6 +101,7 @@ class WovenSpellCards():
         self.card_patterns = spell_card_patterns
         self.validate_patterns()
 
+        
     #
     # DATA VALIDATION
     #
@@ -395,7 +391,7 @@ class WovenSpellCards():
         svg_ids.append('spell-flavor')
         svg_ids.append('separator')
         svg_ids.append('icon-companion')
-        svg_ids.extend(['cat-{0}'.format(cat) for cat in spell_categories])
+        svg_ids.extend(['cat-{0}'.format(cat) for cat in self.valid_categories])
         svg.load_ids(CARD_TEMPLATE, svg_ids)
 
         # Add Element and category masters (hidden, used for cloning).
@@ -404,7 +400,7 @@ class WovenSpellCards():
         SVG.add_node(svg_group, g_masters)
         for (e,elem) in elem_map.items():
             svg.add_loaded_element(g_masters, f"element-{elem}")
-        for cat in spell_categories:
+        for cat in self.valid_categories:
             svg.add_loaded_element(g_masters, f"cat-{cat}")
 
         clip = svg.get_loaded_path(f"graybar-clip")
@@ -461,7 +457,7 @@ class WovenSpellCards():
         # Add spell category icons.
         cat_count = 0
         for cat in attrs['category'].split(','):
-            if cat in spell_categories:
+            if cat in self.valid_categories:
                 cat_master = f"#cat-{cat}"
                 cat_clone = SVG.clone(0, cat_master, 0, cat_count*6)
                 SVG.add_node(svg_group, cat_clone)

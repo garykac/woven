@@ -6,30 +6,10 @@ import os
 import subprocess
 import sys
 
+from data_spell_categories import SPELL_CATEGORIES
+
 SPELL_RAW_DATA = "data_spell_cards.tsv"
 SPELL_DATA_OUTPUT = "data_spell_cards.py"
-
-CATEGORIES = [
-    'mage-move',            # Mage self move
-    'mage-move',            # Mage self move bonus
-    'mage-defend',          # Mage defend
-
-    'mage-other-move',      # Mage other move
-    'mage-other-attack',    # Mage other attack
-
-    'eye-create',           # Eye own create
-    'eye-move',             # Eye own move
-    'eye-defend',           # Eye own defend
-
-    'eye-other-move',       # Eye other move
-    'eye-other-attack',     # Eye other attack
-
-    'thread-recover',       # Thread own recover
-    'thread-move',          # Thread own move
-    'thread-block',         # Thread other attack
-    
-    'other',                # Other
-]
 
 class GenerateSpellCardData():
     
@@ -74,7 +54,7 @@ class GenerateSpellCardData():
         self.write(f"spell_card_revision = {version}")
         self.write("")
         self.write("spell_card_categories = [")
-        for c in CATEGORIES:
+        for c in SPELL_CATEGORIES:
             self.write(f"\t'{c}',")
         self.write("]")
         self.write("")
@@ -83,7 +63,7 @@ class GenerateSpellCardData():
         cats = set()
         for i in range(len(categories)):
             if categories[i] == "TRUE":
-                cats.add(CATEGORIES[i])
+                cats.add(SPELL_CATEGORIES[i])
         
         self.write(f"\t\t 'category': '{','.join(cats)}',")
 

@@ -50,11 +50,13 @@ spell_card_data = [
         }, {
             'cast': "Move 4 along the same elevation.",
         } ],
-    ["x",
+    ["Forest Swap",
         {'element': 'earth', 'pattern': 'E2-30',
          'category': 'mage-move',
         }, {
-            'note': "If in forest, swap positions with one of your eyes in a forest location within 8 spaces",
+            'prereq': "You and target Eye are in a Forest",
+            'target': "{{SELF_OR_TEAMMATE}}",
+            'cast': "If in forest, swap positions with one of your eyes in a forest location within 8 spaces",
         } ],
     ["Airwalk",
         {'element': 'air', 'pattern': 'E2-60', 'companion': True,
@@ -69,7 +71,7 @@ spell_card_data = [
         } ],
     ["Slipstream",
         {'element': 'air', 'pattern': 'E2-8', 'companion': True,
-         'category': 'mage-defend,mage-move',
+         'category': 'mage-move,mage-defend',
         }, {
             'target': "{{SELF_OR_TEAMMATE}}",
             'cast': "You catch a gust of air which transports you to a neighboring location (of your choice), bypassing any barriers.",
@@ -244,7 +246,7 @@ spell_card_data = [
         } ],
     ["Disperse",
         {'element': 'air', 'pattern': 'E2-53',
-         'category': 'eye-other-move,eye-move',
+         'category': 'eye-move,eye-other-move',
         }, {
             'target': "{{EYE}}",
             'cast': "Move one of your Eyes 3 spaces. When moving this Eye into a space, push any Eyes already in that space into an adjacent space.",
