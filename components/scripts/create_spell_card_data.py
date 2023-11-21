@@ -59,7 +59,7 @@ class GenerateSpellCardData():
         self.write("]")
         self.write("")
 
-    def genCategories(self, categories):
+    def genSpellCategories(self, categories):
         cats = set()
         for i in range(len(categories)):
             if categories[i] == "TRUE":
@@ -89,13 +89,14 @@ class GenerateSpellCardData():
                     team = data[24]
                     (prereq, target, cost, cast, charged, trigger, react, sacrifice, note) = data[25:]
                     note = note.rstrip()
+
                     if active and pattern != "-":
                         self.write(f"\t[\"{title}\",")
                         extra = ""
                         if team == "TRUE":
                             extra += f" 'companion': True,"
                         self.write(f"\t\t{{'element': '{element.lower()}', 'pattern': '{pattern}',{extra}")
-                        self.genCategories(categories)
+                        self.genSpellCategories(categories)
                         self.write(f"\t\t}}, {{")
                         if prereq:
                             self.write(f"\t\t\t'prereq': \"{prereq}\",")

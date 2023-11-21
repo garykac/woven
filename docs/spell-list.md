@@ -1,6 +1,6 @@
 # List of Spell Fragments
 
-Generated on 2023/02/20 @ 18:23
+Generated on 2023/02/22 @ 08:03
 
 ## By Category
 
@@ -55,27 +55,13 @@ Mage Move (11)
 * [Beetlefeet](#beetlefeet) - _Earth_
 * [Endurance](#endurance) - _Earth_
 * [Fjord](#fjord) - _Water_
+* [Forest Swap](#forest-swap) - _Earth_
 * [Haste](#haste) - _Air_
 * [Longarm](#longarm) - _Earth_
 * [Move Range Boost](#move-range-boost) - _Air_
 * [Plainswalker](#plainswalker) - _Fire_
 * [Slipstream](#slipstream) - _Air_
 * [Waterstride](#waterstride) - _Water_
-* [x](#x) - _Earth_
-
-Mage Move (11)
-
-* [Airwalk](#airwalk) - _Air_
-* [Beetlefeet](#beetlefeet) - _Earth_
-* [Endurance](#endurance) - _Earth_
-* [Fjord](#fjord) - _Water_
-* [Haste](#haste) - _Air_
-* [Longarm](#longarm) - _Earth_
-* [Move Range Boost](#move-range-boost) - _Air_
-* [Plainswalker](#plainswalker) - _Fire_
-* [Slipstream](#slipstream) - _Air_
-* [Waterstride](#waterstride) - _Water_
-* [x](#x) - _Earth_
 
 Mage Other Attack (4)
 
@@ -115,7 +101,7 @@ Air (11)
 
 * [Airwalk](#airwalk) - _Mage Move_
 * [Cloudpush](#cloudpush) - _Mage Other Move, Mage Other Attack_
-* [Disperse](#disperse) - _Eye Other Move, Eye Move_
+* [Disperse](#disperse) - _Eye Move, Eye Other Move_
 * [Extend](#extend) - _Eye Move_
 * [Eyedrop](#eyedrop) - _Eye Move, Eye Create_
 * [Gust](#gust) - _Eye Move_
@@ -123,7 +109,7 @@ Air (11)
 * [Move Range Boost](#move-range-boost) - _Mage Move_
 * [Move Threads](#move-threads) - _Thread Move_
 * [Repel](#repel) - _Eye Other Attack_
-* [Slipstream](#slipstream) - _Mage Defend, Mage Move_
+* [Slipstream](#slipstream) - _Mage Move, Mage Defend_
 
 Fire (11)
 
@@ -144,6 +130,7 @@ Earth (11)
 * [Beetlefeet](#beetlefeet) - _Mage Move_
 * [Deflect](#deflect) - _Mage Defend, Mage Other Attack_
 * [Endurance](#endurance) - _Mage Move_
+* [Forest Swap](#forest-swap) - _Mage Move_
 * [Ground](#ground) - _Eye Other Attack_
 * [Longarm](#longarm) - _Mage Move_
 * [Sacrificium](#sacrificium) - _Eye Defend_
@@ -151,7 +138,6 @@ Earth (11)
 * [Switch](#switch) - _Eye Defend_
 * [Sylvan Seeker](#sylvan-seeker) - _Eye Move_
 * [Woodland Target](#woodland-target) - _Eye Create_
-* [x](#x) - _Mage Move_
 
 Water (11)
 
@@ -186,7 +172,7 @@ Water (11)
 * E2-15 [Endurance](#endurance) (earth)
 * E2-27 [Asunder](#asunder) (water)
 * E2-28 [Disperse (Water)](#disperse-(water)) (water)
-* E2-30 [x](#x) (earth)
+* E2-30 [Forest Swap](#forest-swap) (earth)
 * E2-31 [Riverbank](#riverbank) (water)
 * E2-32 [Fjord](#fjord) (water)
 * E2-33 [Reflect](#reflect) (fire)
@@ -316,7 +302,7 @@ Sacrifice charge: Remove a charge to deflect an attack of 1 into a neighboring s
 ```
 Element: Air
 
-Category: Eye Other Move, Eye Move
+Category: Eye Move, Eye Other Move
 
 Move one of your Eyes 3 spaces. When moving this Eye into a space, push any Eyes already in that space into an adjacent space.
 
@@ -436,6 +422,17 @@ Category: Mage Other Attack
 The trees in the target location burst into flame and the main boughs shoot out in all directions.
 
 All creatures in the target space (and in one neighboring space at the same elevation) are pierced in an unpleasant manner (Attack 1).
+
+### Forest Swap
+```
+. @ . X
+X . . .
+```
+Element: Earth
+
+Category: Mage Move
+
+If in forest, swap positions with one of your eyes in a forest location within 8 spaces
 
 ### Ground
 ```
@@ -668,7 +665,7 @@ Move one of your Eyes 3 spaces, removing one opponent Eye from each location it 
 ```
 Element: Air
 
-Category: Mage Defend, Mage Move
+Category: Mage Move, Mage Defend
 
 You catch a gust of air which transports you to a neighboring location (of your choice), bypassing any barriers.
 
@@ -758,15 +755,4 @@ Element: Earth
 Category: Eye Create
 
 If in a forest, place an Eye in any connected forest location.
-
-### x
-```
-. @ . X
-X . . .
-```
-Element: Earth
-
-Category: Mage Move
-
-If in forest, swap positions with one of your eyes in a forest location within 8 spaces
 

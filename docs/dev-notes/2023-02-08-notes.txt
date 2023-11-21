@@ -1,0 +1,61 @@
+Adam suggested yesterday that allowing players to attack each other could be removed (in the context of the starter game: Capture the Frog).
+
+My initial thought is that the ability to attack is needed because that's the primary motivation for players to create/move eyes (attack/defense spells).
+
+But I don't want attack spells to be the primary way that players solve the task. Which is the dilemma that prompted Adam to ask why they are allowed at all.
+
+So, further thoughts on this...
+
+Core game components/mechanisms
+
+Tapestry
+	Threads
+	Make patterns from spells
+Map
+	Terrain
+	Eyes
+	Mage
+Spells
+	Connects tapestry to map effects
+	Patterns for tapestry
+	Effects on map
+
+
+
+First Game Requirements/Goals:
+
+Introduce all the core mechanics
+
+Spells that:
+	Move the Mage
+	Are affected by terrain (otherwise play on generic grid)
+	Create/Move Eyes
+
+A reason for the player to:
+	Want to move the Mage (a goal)
+	Want to cast spells (vs. non-spell ways of doing the same thing)
+	Want to create/move Eyes
+
+
+Why do players want to create/move eyes?
+
+Spell effects that depend on Eyes:
+	A few movement/terrain spells
+	Attack spells (attack mage)
+	Defense (anchor, attack eye)
+Note: Almost all are (currently) related to attack/defense
+
+Capture The Frog added an extra use for Eyes:
+	Moving the Toad
+
+How to increase usefulness of Eyes
+	Generalize and extend using Eyes to move objects
+	Add more movement spells that depend on Eyes
+	Other spells?
+	
+tl;dr
+The game needs spells that motivate player to create/move Eyes
+Attack spells are (currently) the easiest spells to depend on Eyes
+The Capture The Frog scenario added an alternate use for Eyes
+Need to make more non-attack spells that depend on eyes
+Then we can introduce attack/defense in a later scenario (after all, it is a school)

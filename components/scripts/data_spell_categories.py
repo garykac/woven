@@ -2,7 +2,7 @@
 # The values here must match the order of the columns in the raw data .tsv file.
 SPELL_CATEGORIES = [
     'mage-move',            # Mage self move
-    'mage-move',            # Mage self move bonus
+    'mage-move',            # Mage self move (bonus)
     'mage-defend',          # Mage defend
 
     'mage-other-move',      # Mage other move

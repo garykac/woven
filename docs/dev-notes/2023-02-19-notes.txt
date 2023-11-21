@@ -1,0 +1,48 @@
+Turn:
+	3AP Actions
+	Choose 1:
+		Meld Tapestry (recover threads you cover)
+		Cast Spells
+
+General actions
+	2 Move same elevation
+	3 Move different elevation
+	1 Magical pick up
+	1 Create eye
+	2 Move eye 1
+	2 Move thread 1
+	3 Cast Cantrip
+
+Cantrips:
+	Clone spell (place charge/marker on it)
+	Split Eyes
+	Anchor
+	Dispel
+
+Special 1-shot Abilities: (deal out 3 to each player)
+	Recover 2 threads
+	+6 AP
+	Potion (+1 mana in Tapestry)
+
+Basic spells
+1x Move mage
+1x Move boost
+1x Attack
+	mage - not in start
+	Tapestry/thread element
+1x Defend self
+2x Move eyes
+1x Attack eye
+1x Defend eye
+1x Thread move/recover
+
+Open issues:
+Must buy tapestry card beforehand for 2 APs?
+	Can meld multiple at same time
+	Additional complexity
+Allow recover 2 threads as an option in addition to meld & cast
+
+
+
+Solo rules
+how to enemies move/act

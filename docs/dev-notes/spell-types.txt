@@ -1,0 +1,127 @@
+# Required spell types
+#   Move self/target
+#     using river
+#     using forest
+#     using dense forest
+#     using rough terrain
+#     ignoring rough terrain
+#     through unobstructed terrain
+#     to location at same elevation
+#   Create eye distant
+#     anywhere in connected forest/rough/river
+#     in same location as existing eye
+#     follow another's eye back to mage
+#   Move eye
+#     single eye
+#     multiple eyes
+#     n spaces split between eyes
+#     to another mage when eye overlaps
+#     n spaces along matching terrain
+#   Attack eye
+#     Remove eye in same location
+#     Remove eyes adjacent
+#     Move other eye
+#   Defend eye against attack
+#     Sacrifice charge to defend eye
+#   Defend eye from being consumed
+#   Defend eye move - Anchor eye
+#   Attack creature
+#     at eye
+#     at eye in a forest/mountain
+#     by targeting one of their eyes
+#   Defend self against attack
+#     Defend target against attack
+#     Reflect attack back at attacker
+#     Deflect attack to adjacent
+#     shield if in same location as eye
+#     shield that also recovers Thread when attacked
+
+#   Hide from detection
+#   Push adjacent creature/mage
+#   Anchor (to counter push)
+#   Teleport to eye
+#     Exchange locations with an eye
+#   Levitate/fly
+#     + move while levitated
+#   Charges
+#     extra action
+#     copy charge on another's spell
+
+#   Terraform
+#     add/remove forest
+#     add/remove rough terrain
+#     area around an eye changes type: forest, water
+#     change elevation
+#   Attack tapestry
+#     cover an element
+#     cover a space
+#   Defend tapestry
+
+# Spell combos:
+#   Move + create eye
+
+# Artifact abilities
+#   Recover Thread
+#   Move Threads
+#   Concealment
+#   Ignore terrain penalty
+
+
+# Core abilities:
+# * Map
+#   * Move Self
+#   * Create eye (in current location)
+# * Tapestry
+#   * Recover thread (= mental rest to recover)
+#   * Move thread (within Tapestry without casting)
+#   * Gain Tapestry card (= focus on spell casting - new patterns)
+# * Spell deck
+#   * Trash spell card (= focus spell deck - reduce spells)
+#   * Interaction with Spell deck
+
+# Element opposites
+#   Air <-> Earth
+#   Fire <-> Water
+
+# Spell affinity
+#                         Air          Fire          Earth         Water
+#                   +-------------+-------------+-------------+-------------+
+# Move Self              + + +           +            + +            +
+# Move Other              + +            +           + + +          + +
+# Defend Move Self
+#
+# Create Eye              + +            +             +           + + +
+# Move Eye                + +           + +            +           + + +
+# Move Other Eye
+# Defend Move Eye
+# Attack Eye               +           + + +          + +            +
+# Defend Eye
+#
+# Create Anchor            +            + +          + + +           +
+# Attack Anchor                        + + +
+# Defend Anchor
+# Move Anchor                                        + + +
+#
+# Attack HP                +           + + +          + +           + +
+# Defend HP               + +            +           + + +          + +
+# Recover HP              + +            +            + +          + + +
+#
+# Tapestry                                                         + + +
+# Other Tapestry
+# Defend Tapestry
+#
+# Spell
+# Other Spell
+#
+# Astral
+
+# TODO:
+# Triggers - spell effects for current turn
+#   On <trigger>, do X
+#   On push mage into another location, do cause 1 damage
+#   On enter location with mage, do push mage out
+# Reactions - spell effects in response to another mage's spell
+#   If attacked, cast spell to deflect
+#   If eye moves onto you, cast spell to dispel, reflect, push away
+#   If eye moves next to you, do X
+

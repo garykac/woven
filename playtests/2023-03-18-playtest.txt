@@ -1,0 +1,64 @@
+Woven playtest
+
+Sat 18 Mar 2023
+
+Yellow
+39 A Move Threads
+43 F Magic Drain     xxxxxxxxxxxxxxx
+33 E Ground
+19 W Asunder
+24 F Extend (High)
+ 7 A Slipstream
+ 4 A Haste
+ 9 W Fjord
+
+
+Blue
+35 F Burn
+22 W Disperse W
+25 A Gust
+27 W River Flow
+ 8 E Beetlefeet
+ 3 E Longarm
+ 6 A Airwalk
+42 W Fill Element   xxxxxxxxxxxxxxx
+
+Green
+10 A Move Range Boost   xxxxxxxxxxxxxxx
+28 E Sylvan Seeker
+ 5 E x
+18 E Woodland Target
+21 F Extend (Land)
+26 W Spread
+20 A Eyedrop
+38 W Introspect
+
+
+Red
+ 1 F Plainswalker
+ 2 W Waterstride
+11 E Endurance
+40 F Cover Element  xxxxxxxxxxxxxxx
+30 F Scorch
+17 W Riverbank
+23 A Extend
+29 A Disperse
+
+
+
+Unused
+34 A Repel
+41 W Swap Tapestry Square
+
+
+
+When final thread completes multiple spells:
+	choose only 1 vs all are activated.
+Potion adds 1 thread
+7 mana
+
+
+
+Next time
+Potion that adds eyes and/or moves them
+

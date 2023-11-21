@@ -1,0 +1,77 @@
+Woven playtest
+2 Dec 2022 - PAX Unplugged
+
+JoeyS, SameerN
+
+# Setup
+
+6 hex tile arranged around a center hex tile.
+
+Capture the Frog.
+
+Each player starts game with 2 spells in hand + draw up to 5
+
+Capture the Frog:
+The toad can only be moved using Eyes, and they move at 1/2 speed (round down) when moving the toad.
+You cannot move your own toad. It can only be moved toward the tower.
+
+Move to center tower to draw 3, choose 2 spells to keep.
+
+# Rules being tested
+
+Players each have a conveyor belt of spells.
+Recover a Thread from their Tapestry when they discard the right-most (oldest) spell from
+the conveyor.
+
+# Notes
+
+10:25 - 11:45 - teach + gameplay + discussion
+
+Arrange tapestry cards - how long does this take?
+
+Swap order of cast/recover actions.
+
+When forced to remove cards from the conveyor, do you still recover a thread?
+
+When a new Tapestry card is added, it must be melded before the start of the next turn.
+
+Expand spell may be too powerful.
+
+When are Anchors removed?
+
+* when the spell retires
+* whenever the mage wants
+
+Anchors cannot be turn back into Eyes.
+
+Cannot pull Anchors, Threads or Charges back at will. Only Eyes.
+
+Swap pattern for Duplicate and Expand
+
+Wants to be able to pick up toad mid-turn
+
+Terminology: Attack, Creature - be explicit
+
+# Comments
+
+S:
+
+Likes the capture the flag game - doesn't see that a lot.
+Places to defend + places to attack.
+
+Likes setting up Tapestry
+
+J:
+
+Actions gated by:
+
+* If eyes were in a separate turn - cycle the mage/player
+* wanted to move & eye - mundane move + attack
+
+Maybe 4 player with 2 specialized spells per player
+
+S:
+
+Being able to place an Anchor over the Toad - too powerful
+
+J: Broken? weak if you have to be on the spot. Adjacent might be better.

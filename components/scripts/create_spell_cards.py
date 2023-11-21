@@ -26,7 +26,7 @@ elem_map = {
 
 # Spell attributes
 spell_attributes = [
-    'element', 'pattern', 'companion', 'id', 'set', 'category', 'flavor', 'DISABLE'
+    'element', 'pattern', 'companion', 'id', 'set', 'category',
 ]
 
 # Spell description keys
