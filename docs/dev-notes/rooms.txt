@@ -1,0 +1,533 @@
+Library
+Crypt
+Gardens
+Laboratory
+Altar
+Armory
+Gallery
+Storeroom
+Apothecary
+Ossuary
+Fighting Pit
+Trophy Room
+Mirror Pool
+
+Larder
+
+
+==========
+
+https://www.reddit.com/r/DnD/comments/dd1wq2/list_of_rooms_in_a_dungeon/
+
+Dining Room
+Secret Treasure Room
+Fake Treasure Room
+Barracks
+Library
+Relaxation Room
+Monster Breeding Room/Egg Hatching Room
+Kitchen
+Small Bedrooms
+Large Bedrooms
+Secret Cabinet
+Secret Ladder/Door Room
+Burial Room
+Chapel Room
+Study
+Wine Cellar
+Piano/Music Room
+Trophy Room
+Pet Room
+Bar Room
+Parlor
+Sitting Room
+Casino Room
+Junk Room
+Storage Room
+Observatory
+Servant Living Quarters
+Greenhouse
+Armory
+Sun Room
+Cold Room
+Stables
+Guard Post
+Town Hall
+
+
+Alter Room
+Death Trap Room - Traps
+Dock
+Escape Tunnels
+Garden (plants / mushrooms) - alchemy ingredient / bio-luminescent / drug / food / monster plants / poison
+Giant Door Room
+Hallways
+Lab - alchemy / artificer / necromancy
+Lift
+Map Room
+Maze / Labyrinth
+Monster Lair
+Natural Caverns
+Pool Room - fish pond / magic pool / reflecting pool / scrying pool
+Portal Room
+Prison
+Room of Wall Murals / Room of Cave Paintings
+Sacrificial Alter Room
+Scrying Room
+Sealed Room
+Smithy
+Stairway
+Summoning Room
+Torture Chamber
+Training Room
+Underground - crystal forest / dock / forest / lake / mushroom forest / river
+Vault - treasure room / hidden treasure room / safe room / dangerous artifacts room
+Well
+
+
+==========
+
+https://unlawfulgames.blogspot.com/2018/09/d100-mansion-rooms.html
+
+Porch
+Foyer
+Cloak room
+Gallery
+Great hall
+Dining hall
+Ballroom
+Piano room
+Billiard room
+Drawing room
+Study
+Library
+Conservatory
+Trophy room
+Armory
+Shooting range
+Indoor Pool
+Stables
+Tack Room
+Groom's room
+Coach House
+Servant's Quarters
+Silver polishing room
+Gift wrapping room
+Canning room
+Wine cellar
+Root cellar
+Larder
+Pantry
+Butler's pantry
+Family kitchen
+Personal Dining Room
+Parlor
+Master Bedroom
+Guest Bedroom
+Dressing Room
+Powder Room
+Master Bathroom
+Guest Bathroom
+Garret
+Attic
+Belvedere
+Theater
+Topiary Maze
+Panic Room
+Sub-Basement
+Atrium
+Boudoir
+Chapel
+Fainting Room
+Furnace Room
+Sauna
+Smoking Room
+Dark Room
+Lumber Room
+Nursery
+Play Room
+Tennis Court
+Saucery
+Scullery
+Spicery
+Sun Room
+Seance Room
+Reception Hall
+Storage Closet
+Hallway
+Mirror Room
+Torture Chamber
+Veranda
+Weaving/Needlepoint Room
+Balcony
+Pigeonnier
+Humidor
+Exercise Room
+Walk-in Icebox
+Apothecary
+Observatory
+Apiary
+Coal Room
+Telegraph Room
+Guest House
+Surgery
+Still Room
+Antechamber
+Laundry Room
+Courtyard
+Oubliette
+Roof
+Crawl Space
+Kennel
+Elevator
+Harem Room
+Crypt
+Museum
+Menagerie
+Chamber
+Art Studio
+Butchering Room
+Aquarium
+Display Room
+
+
+==========
+
+https://www.reddit.com/r/worldbuilding/comments/t79gw1/list_of_structures_landmarks/
+
+Abattoir (slaughterhouse)
+Abbey
+Academy (+ alchemist, arcane, artificer’s, bards, healers, mages, military, naval, royal, science)
+Acropolis, Citadel
+Ale House, Pub, Tavern
+Alley
+Alms House, Poor House
+Altar (deity, element, power, environment, luck, magic, old one, outsider, sacrificial, spirit, etc)
+Amphitheater
+Apiary, Bee House
+Aquarium
+Aqueduct
+Archives
+Archway
+Arena (+ gladiatorial, music, performance, racing, sports)
+Assaying House
+Assembly House, Bouleuterion, Council House, Senate House
+Asylum
+Atelier (artist workshop or studio)
+Auction House
+Aviary
+Bakery
+Bank
+Bar
+Barn
+Barracks
+Barrows (earthen or stone mound over a tomb)
+Bathhouse
+Battle Ground
+Bazaar
+Black Market, Underground Market
+Blockhouse
+Board (+ message, quest)
+Boom Chain - harbor chain or river chain used to block boats. Operated from a chain tower
+Breakwater
+Brewery
+Bridge (Covered Bridge, Draw Bridge, Living Root Bridge, Rope Bridge, Sky Bridge)
+Brothel, House of Ill Repute
+Bungalow
+Burial Ground, Cemetery, Graveyard
+Burial Mound
+Cabin
+Cache (+ pirates, rebel, smugglers, thieves)
+Caer / Cair (stronghold)
+Cairn
+Cafe (coffee house)
+Canal
+Cantina
+Caravan (wagons)(+ merchant, military, nomads, pilgrims, prison, refugee, settlers, slavers)
+Caravanserai (inn / outfitter for caravans)
+Casino, Gambling Hall
+Castle
+Catacombs
+Cathedral
+Causeway
+Cellar (+ root, storm, wine)
+Cemetery, Burial Ground, Graveyard, Necropolis
+Chain Tower - tower used to raise or lower a boom chain (harbor or river chain)
+Chalet (alpine cottage, herdsman’s hut)
+Chantry - arcane base, safe house, or stronghold / chapel or alter
+Chapel
+Chateau
+Church
+Circle of Stones
+Circle of Wagons
+Circus
+Cistern
+Citadel, Acropolis
+City
+Cliff Dwellings
+Coach House
+Coffeehouse
+College (+ alchemist, arcane, bards, healers, mages, naval, of artificers, of science, royal)
+Colosseum
+Conservatory (greenhouse)
+Consulate
+Convent, Nunnery
+Cooking Pit, Fire Pit
+Corral (cattle, horse, livestock)
+Cottage
+Courthouse
+Covered Walkway
+Croft (rented farmhouse & land)
+Crypt, Mausoleum, Sepulcher, Tomb
+Cupola (domed roof supported by pillars)
+Custom House (office for importing or exporting goods)
+Dam
+Den (+ assassins, drug, gambling, hookah, opium, smugglers, thieves)
+Dig Site (fossils, minerals, ruins)
+Dike / Levee
+Dock (boat, ship, airship)
+Dockyard
+Dojo, Sparring Hall, Training Hall
+Dome
+Dovecote
+Drill Grounds, Parade Grounds, Training Grounds
+Drug (+ den, lounge, parlor)
+Dugout, Pit-House
+Dungeon, Jail, Prison
+Embassy (+ country, dimensional travelers, major faction, minor faction, race, realm, world)
+Estate
+Executioners Block
+Fairgrounds
+Farm, Farms, Farmland (animal, crop, dairy, fallowed, share croppers)
+Feasting Hall, Mead Hall - large building, single room, the residence of a lord or king and his retainers
+Ferry
+Fighting Pit
+Fire Pit, Cooking Pit
+Flotilla (+ town, village, city)
+Forge
+Fort, Fortress (+ coastal, island, mountain, sea / wooden, stone, metal)
+Fortifications (cheval de frise, moat, palisade, towers, trench, wall, wooden stakes)
+Fountain
+Freehold
+Gallows, Gibbet
+Gambling (+ den, hall, lounge, parlor), Casino
+Garden, Gardens (+ crop*, flower, hanging, herb, mushroom, rock, rooftop, sculpture, zen)
+Garrison
+Gate, Gates
+Gate House
+Giant Board Game (chess, game of UR, go, mancala, oware, patolli, tafl, etc)
+Giant (+ construct, golem, idol, mecha, statue)
+Giant object from a bygone age (helmet, shield, sword, etc)
+Gibbet, Gallows
+Granary
+Grange - farmhouse & outbuildings
+Grave (+ fresh, marker, mass, open, site, stone, vacated, yard)
+Graveyard, Burial Ground, Cemetery
+Greens, Park
+Grounds (+ burial, fair, parade, sacred, tourney, training)
+Guard House
+Guard Post
+Guild, Guild Hall, Guild House
+Hall (+ city, gambling, guild, mead, meeting, music, opera, town, training)
+Hanging Tree, Hangman's Tree
+Harbor
+Hash House, Hashish House (place where drug hashish can be bought)
+Hatchery (animal, beast, monster)
+Hay Stack
+Hedge Maze
+Henge
+Hideout
+Hippodrome (stadium for horse racing)
+Hold
+Home
+Homestead
+Hookah (+ bar, den, lounge, parlor)
+Horreum (warehouse)
+Hostel (bed & breakfast)
+Hot Springs (+ bath, bathhouse, resort, spa)
+House (+ assaying, bath, boat, coach, coffee, farm, guard, guest, guild, hashish, long, manor, opera, ritual, safe, smoke, sod, summer, tea, theater, turf, winter)
+House of Ill Repute, Brothel
+Hovel
+Hut, Huts (adobe, cloth, earthen, grass, hide, ice, mud, snow, stone, straw, wood)
+Idol
+Inn
+Jail, Dungeon, Prison
+Keep
+Labyrinth
+Library (+ arcane, great, royal)
+Lift (wench & platform)
+Lighthouse
+Lock, Locks (waterway)
+Lodge (+ hunting, masons, medicine, porters, safari, secret society*, sweat, wardens)
+Lyceum - hall for public lectures
+Machinery (from bygone age or civilization / size – cart, building, town)
+Magical Construct (energy construct, gateway, giant guardian golem, giant levitating crystal, moving sculpture, orb of power, rune stones, sigil stones, summoning circle, teleportation circle, well of power)
+Manor
+Marker
+Marker Stone (border stone, boundary stone)
+Market, Market Place, Market Square, Street Market
+Market Stall, Street Stall
+Massage Parlor
+Mausoleum, Crypt, Sepulcher, Tomb
+Mead Hall, Feasting Hall - large building, single room, the residence of a lord or king and his retainers
+Megalith (single: capstone, menhir, monolith / multiple: alignment, circle, cist, dolmen, wall)
+Memorial
+Messenger Pigeon Loft
+Mews (row or courtyard of stables and carriage houses with living quarters above them)
+Midden (+ heap, mound, pile)
+Mill (+flour, saw, water, wind)
+Minaret
+Mine, Mines (coal, crystal [normal, magic], gem stone [normal, magic], guano, metal [normal, magic], mineral [normal, magic], salt, substance)
+Mint (coin / currency manufacturer)
+Mission (place for missionary work)
+Moat (+ dry, lava, mud, quicksand, spiked, tar, water)
+Monastery
+Monolith
+Monument
+Mosque
+Mound (+ burial, ceremonial, midden, shell, temple)
+Museum
+Music Hall
+Necropolis, Cemetery, Burial Ground, Graveyard
+Nunnery, Convent
+Obelisk
+Observatory
+Opera Hall / Opera House
+Opium Den
+Oratory
+Orchard
+Orphanage
+Orrery (A mechanical model of the solar system. Used to represent the positions and motions of celestial bodies)
+Ossuary (building, well, or site for skeletal remains)
+Outfitters
+Outpost
+Paddock
+Pagoda (a tiered tower with multiple eaves )
+Palace
+Palafito, Stilt House (house or building on stilts)
+Palisade
+Parade Grounds, Drill Grounds, Training Grounds
+Park, Greens
+Parlor, Parlour (drug, massage, tattoo)
+Pattern - Large pattern or symbol that can be seen from above (crop circle / geoglyph / natural formation that resembles something)
+Pen, Pens (+ animal, monster, slave)
+Pier
+Pillar, Pillars
+Pit (+ dwelling, fighting, monster, prison, slave)
+Plantation
+Playhouse, Theater House
+Plazza
+Port
+Portal
+Prison, Dungeon, Jail
+Privy, Outhouse
+Pub, Ale House, Tavern
+Public Square
+Public Toilets
+Pueblo
+Pyramid
+Pyre (+ funeral)
+Qanat, kārīz (underground aqueduct, transporting water from an aquifer or water well to the surface)
+Quarry (crystal, magic crystal, metal, mineral, stone, substance)
+Ranch (animal, monster)
+Redoubt (temporary fortification)
+Reflecting Pool, Reflection Pool
+Road, Roads (cobblestone, dirt, paved / + abandoned, cross, main, rural)
+Rondavel (round hut with a conical roof)
+Rooftop Slums
+Root Cellar
+Ruin, Ruins
+Rune Stone
+Sally Port (secure, controlled entry way to a fortification or prison)
+Saltern, Salt Works
+Sanctuary
+Sauna
+Sawmill
+Scaffolding
+School
+Sculpture (+ large, giant, garden, scale city model)
+Sea Gate
+Sea Wall
+Sepulcher, Crypt, Mausoleum, Tomb
+Sewer, Sewers
+Shack
+Shanty Town
+Shed
+Sheepfold
+Shelter
+Ship Graveyard
+Shipwreck
+Shipyard, Shipyards
+Shop
+Shrine (deity, druidic, element, power, environment, guardian, luck, magic, old one, outsider, spirit, etc)
+Siege Tower
+Sign
+Sign Post
+Site (+ building, camp, construction, dig, excavation, grave, ritual)
+Slaughter House
+Slums
+Smithy
+Sparring Hall, Dojo, Training Hall
+Square (+ market, public, town)
+Stables
+Stair
+Statue (Idol, large, giant, guardian, monument)
+Steading (farmstead, homestead)
+Stele (stone or wooden slab inscribed, carved, or painted with text or ornamentation)
+Stockade
+Stockyard
+Stone (+ guide, marker, navigation, sigil, ward)
+Store
+Storehouse, Warehouse
+Street
+Street Vendors, Market Stall, Street Stall ( alcove, booth, cart, stall, stand, tent)
+Stronghold
+Sun Dial
+Sunken (city, ruins, ship, temple)
+Supply Post
+Symbol (coat of arms, emblem, flag, ritual circle, rune, seal, sigil, symbol, ward)
+Tannery
+Taphouse (inn / tavern with liquor on tap)
+Tavern, Ale House, Pub
+Tea House
+Temple
+Tent City (+ merchant, military, nomads, pilgrims, refugee, settlers, squatters)
+Theater House, Playhouse
+Threshing Floor
+Tomb, Crypt, Mausoleum, Sepulcher
+Totem Pole
+Tourney Field / Tournament Field
+Tower (+ bell, chain, clock, guard, peel, siege, signal, watch, wizard)
+Town
+Trade Route
+Trading Post
+Training Grounds, Drill Grounds, Parade Grounds
+Training Hall, Dojo, Sparring Hall
+Tree House
+Tree Town
+Trench (+ spiked)
+Tunnel
+University (+ alchemist, arcane, artificer’s, bards, healers, mages, naval, of science, royal)
+Vault
+Ventilation Shafts - vertical ventilation shafts for a underground (large structure / town / city)
+Villa (large country house / estate)
+Village
+Vineyard
+Wall (+ barrier, breached, city, earthen, great, inner, outer, sea, stone, town, wooden)
+Ward Stone, Warding Stone, Sigil Stone
+Warehouse, Storehouse
+Watch Tower
+Water Mill
+Weighhouse, Weighing House
+Well (+ artesian, covered, dry, house, of magic, water)
+Well House
+Wharf
+Windcatcher, Wind Tower. Wind Scoop (700 year old cooling system)
+Windmill
+Winery
+Work Camp
+Workshop
+Wormery
+Yurt (round tent covered in skins or felt, used by nomads)
+Ziggurat
+Zoo (mundane, rare, exotic, magical, alien - creatures)
