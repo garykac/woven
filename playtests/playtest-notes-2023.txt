@@ -1,0 +1,38 @@
+Playtest 2023
+One color is broken - no useful spells to use
+
+Blue player spells:
+#17 Riverbank
+#23 Extend
+#1 Plainswalker
+#29 Disperse
+#11 Endurance
+#2 Waterstride
+#30 Scorch
+
+Red player spells:
+#6 Airwalk
+#22 Disperse (Water)
+#3 Longarm
+#8 Beetlefeet
+#27 River Flow
+#35 Burn
+#25 Gust
+
+Green player spells:
+#18 Woodland Target
+#28 Sylvan Seeker
+#5 x
+#29 Spread
+#38 Introspect
+#21 Extend (Land)
+#20 Eyedrop
+
+Yellow player spells:
+#39 Move Threads
+#33 Ground
+#9 Fjord
+#7 Slipstream
+#4 Haste
+#24 Extend (Highland)
+#19 Asunder
