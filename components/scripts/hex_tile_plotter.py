@@ -83,6 +83,7 @@ EDGE_CLIFF_INFO = {
 # Each entry is:
 #   [ offset-along-edge, tab-width, tab-height ]
 EDGE_PUZZLE_INFO = {
+    '0s': [[0.16, 0.05, -0.05], [0.84, 0.05, 0.05]],    # l-l
     '1s': [[0.16, 0.05, -0.05], [0.84, 0.05, 0.05]],    # l-l-l
     '2f': [[0.36, 0.05,  0.05]],                        # l-l-l-m
     '2s': [[ 1/3, 0.04,  0.05], [ 2/3, 0.04, -0.05]],   # m-m-m-m

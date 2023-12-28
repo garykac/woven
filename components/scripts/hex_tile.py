@@ -19,6 +19,7 @@ from math_utils import (feq, fge, fle, scale, clamp,
 NUM_SIDES = 6
 
 SINGLE_EDGE_TYPES = ['1s', '2f', '2s', '3f', '3s']
+NEW_SINGLE_EDGE_TYPES = ['0s', '1s', '2f', '2s', '3f', '3s']
 
 # EdgeRegionInfo:
 # Each dict entry contains an array of region heights, one per region on this
@@ -34,6 +35,14 @@ EDGE_REGION_INFO = {
     '3f': ['m', 'm', 'h', 'm', 'h'],           # m - h, h - m
     '3s': ['h', 'h', 'm', 'h', 'h'],           # h - h
 }
+NEW_EDGE_REGION_INFO = {
+    '0s': ['l', 'l'],                          # l - l
+    '1s': ['l', 'l', 'm'],                     # l - l
+    '2f': ['m', 'l', 'l', 'm'],                # l - m, m - h
+    #'2s': ['m', 'l', 'l', 'm'],                # m - m
+    '3f': ['m', 'm', 'h', 'm', 'h'],           # m - h, h - m
+    '3s': ['h', 'h', 'm', 'h', 'h'],           # h - h
+}
 
 # Edge seed info.
 # Each dict entry contains an array of seed positions along the edge.
@@ -41,6 +50,14 @@ EDGE_REGION_INFO = {
 # Each seed position is:
 #   [ offset-along-edge, perpendicular-offset ]
 EDGE_SEED_INFO = {
+    '1s': [[0.50, 0]],
+    '2f': [[0.33, 0.04],  [0.71, -0.03]],
+    '2s': [[1/3, 0.04],   [2/3, -0.04]],
+    '3f': [[0.26, -0.04], [0.55, 0],      [0.77, 0.03]],
+    '3s': [[0.28, -0.05], [0.50, 0],      [0.72, 0.05]],
+}
+NEW_EDGE_SEED_INFO = {
+    '0s': [],
     '1s': [[0.50, 0]],
     '2f': [[0.33, 0.04],  [0.71, -0.03]],
     '2s': [[1/3, 0.04],   [2/3, -0.04]],
@@ -87,7 +104,10 @@ class VoronoiHexTile():
         self.size = self.options['size']
         self.xMax = (math.sqrt(3) * self.size) / 2
 
-        self.singleEdgeTypes = SINGLE_EDGE_TYPES
+        if options['new-edge']:
+            self.singleEdgeTypes = NEW_SINGLE_EDGE_TYPES
+        else:
+            self.singleEdgeTypes = SINGLE_EDGE_TYPES
         
         # This is used to position the exterior seeds around the outside of the
         # tile. These seed regions constrain the regions in the hex tile and
@@ -119,8 +139,12 @@ class VoronoiHexTile():
         # value > 1.0 to enforce min length for these ridge segments.
         self.edgeMarginScale = 1.1
 
-        self.edgeSeedInfo = EDGE_SEED_INFO
-        self.edgeRegionInfo = EDGE_REGION_INFO
+        if options['new-edge']:
+            self.edgeSeedInfo = NEW_EDGE_SEED_INFO
+            self.edgeRegionInfo = NEW_EDGE_REGION_INFO
+        else:
+            self.edgeSeedInfo = EDGE_SEED_INFO
+            self.edgeRegionInfo = EDGE_REGION_INFO
         
         self.minDistanceL = MIN_DISTANCE_L
         self.minDistanceM = MIN_DISTANCE_M
@@ -267,7 +291,8 @@ class VoronoiHexTile():
             info = self.edgeRegionInfo[eri]
             edge = info[0] + info[-1]
             self.corner2edge[edge] = eri
-
+        #print(self.corner2edge)
+        
         # Convert corner pattern ("llllll") -> edge pattern (2s-2s-2s-2s-2s-2s).
         self.edgeTypes = []
         for i in range(0, NUM_SIDES):
@@ -276,6 +301,7 @@ class VoronoiHexTile():
             if not corners in self.corner2edge:
                 raise Exception(f"Invalid adjacent corners: {pattern[i]} and {pattern[i2]}")
             self.edgeTypes.append(self.corner2edge[corners])
+        #print(self.edgeTypes)
 
         self.nSeedsPerEdge = [len(self.edgeSeedInfo[x]) for x in self.edgeTypes]
 
@@ -371,6 +397,7 @@ class VoronoiHexTile():
             i1 = (i0 + 1) % NUM_SIDES
             edgeType = self.edgeTypes[i0]
             seedPattern = self.edgeSeedInfo[edgeType]
+            #print(seedPattern)
             prev_sid = i0
             for j in range(0, len(seedPattern)):
                 t, perp_t = seedPattern[j]
@@ -391,9 +418,14 @@ class VoronoiHexTile():
                 self.edgeAdjacent[i1] = [prev_sid]
         self.vEdgeSeeds = np.array(vertices)
 
+        #print(self.vHex)
+        #print(self.vEdgeSeeds)
         # Build temp seeds so that it can be used for the rest of the seed
         # initialization.
-        self.seeds = np.concatenate((self.vHex, self.vEdgeSeeds))
+        if self.vEdgeSeeds.size:
+            self.seeds = np.concatenate((self.vHex, self.vEdgeSeeds))
+        else:
+            self.seeds = self.vHex
 
     # Initialize the margin exclusion zones.
     # These zone prevent seeds from getting too close to the tile boundary where
@@ -441,7 +473,10 @@ class VoronoiHexTile():
 
     # Generate the interior seed points.
     def initInteriorSeeds(self):
-        startSeeds = np.concatenate((self.vHex, self.vEdgeSeeds))
+        if self.vEdgeSeeds.size:
+            startSeeds = np.concatenate((self.vHex, self.vEdgeSeeds))
+        else:
+            startSeeds = self.vHex
 
         # Calc mininum seed distance based on seed location.
         seed2minDistance = []
@@ -1104,7 +1139,10 @@ class VoronoiHexTile():
 
     # Calculate and analyze the voronoi graph from the set of seed points.
     def generate(self):
-        self.seeds = np.concatenate((self.vHex, self.vEdgeSeeds))
+        if self.vEdgeSeeds.size:
+            self.seeds = np.concatenate((self.vHex, self.vEdgeSeeds))
+        else:
+            self.seeds = self.vHex
         if len(self.vInteriorSeeds) > 0:
             self.seeds = np.append(self.seeds, self.vInteriorSeeds, 0)
         self.seeds = np.append(self.seeds, self.vOutsideSeeds, 0)
