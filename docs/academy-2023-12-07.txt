@@ -1,0 +1,90 @@
+
+
+Woven Academy
+
+Components: (4 players)
+
+Tapestry Cards
+Mana (7 per player)
+
+Spell Cards
+	Basic cards
+	Advanced cards
+Markers (20 per player)
+
+RoomCards
+	Environment
+		narrow passages, water, fire
+	Items (potions, scrolls)
+Map start card
+Token (1 per player)
+
+Monster token
+Monster cards
+	attack type, range
+	strengths, weaknesses
+	movement
+
+
+Setup:
+	SetupMap
+	SetupTapestryDeck
+	SetupPlayers
+	SetupExam
+
+SetupMap:
+	Place Start map card in center of table
+	Shuffle Room cards to make RoomDeck
+	Draw 3 rooms and make a line of rooms leading away from the start card
+	Place Monster token on furthest room
+	Place Player tokens in the Start room
+
+SetupTapestryDeck:
+	Shuffle tapestry cards together
+
+SetupPlayers:
+	For each Player:
+		Choose player color, take matching components:
+			mana
+			token
+			markers
+		Draw 2 tapestry cards
+
+SetupExam:
+	Place 4 basic cards and 4 advanced cards in exam area
+
+
+Gameplay:
+	Repeat until AllSpellsCast:
+		PlayersTurn
+		MonsterTurn
+
+AllSpellsCast: Condition
+	if each spell in the exam area has:
+		at least one marker from each player
+		total markers equal to 2x the number of players
+
+PlayersTurn:
+	Each player simultaneously:
+		Choose one:
+			MoveToNextRoom
+			CastSpells
+
+MoveToNextRoom:
+	Move token into an adjacent room
+	If that room has not yet been revealed:
+		DrawNewRoomCard
+
+DrawNewRoomCard:
+	Draw RoomCard and place next to current room
+	Handle any special room features (objects)
+
+CastSpells:
+	Draw tapestry card
+	Meld into Tapestry
+	Add mana to cast spells
+	Place Marker on the corresponding spell card
+	Apply spell effect
+	
+MonsterTurn:
+	Do monster action from card (roll dice?)

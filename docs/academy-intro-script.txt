@@ -1,0 +1,47 @@
+"Welcome 5th Year Students!"
+
+"I'm glad you were able to make it here promptly for your final exams."
+
+"As you are undoubtedly aware, as part of this exam, you're going to have to demonstrate that you have mastered the ability to cast the spells that you learned in your classes. Not all of them, of course, we don't have time for that. We'll choose a representative sample of spells from each of your classes."
+
+"However, before beginning, I am required by the Board of Regents to begin with a review spellcasting basics. Personally, I don't feel this is necessary - you've all been paying attention in class, haven't you? - but it's apparently a 'liability concern' even though there hasn't been an incident in...", the voice pauses, "Well, there hasn't been one recently."
+
+Anyway, As You All Already Know, you cast spells by weaving the spell patterns into your Tapestry, which is 
+...4 basic elements...
+You don't construct your Tapestry all at once, you build it up piece by piece, overlapping and linking the chunks together so that you can create the patterns you need.
+
+...
+
+"Any questions? Good. Let's begin."
+
+<Place start room on table. Place player tokens on it>
+
+You fall 30' down into a room, landing gently on the floor (magic, no doubt).
+
+"You are now in the Chamber of Testing. There are rooms to your left and right, and feel free to explore as much as you like, but be aware that there is no exit that will allow you to escape from the Chamber other than by casting spells to pass the test."
+
+"Oh, did I forget to mention that this is a group exam? If so, I suppose that now's a good time to go over that: You each need to cast each of the spells twice. Each of you. Twice. And you will succeed or fail as a group. If one of you fails to complete this test, then all of you will fail. You're permitted to help each other, but it's not a requirement."
+
+"Each turn, you will add to your Tapestry and then recover one Thread back into you Mana pool."
+
+<Draw a Tapestry card and meld it into you Tapestry>
+
+"And then you have choice: You may cast spells, or you can take a Mundane action."
+
+"To cast spells, well, you already know how to do that. You can cast as many as you want as long as you have the Mana available."
+
+"If you choose to do a Mundane action, then you either Locomote or Thwack."
+
+"If you Locomote, then you may move into an adjacent room. You must also choose one of the following terms to describe how you are moving: saunter, meander, stroll, mosey, amble, creep, slither, wriggle, slide, scramble, lollygag, drag, plod, hustle, gallivant, rush, scurry, scuttle, scamper, scoot, sprint, dash, flitter, whisk, traipse, drift. You can only use each term once, but no one is really tracking this, so: Honor System."
+
+"For Thwacking, you look around in your curren location for an object that you can use to thwack your target. After using this object to thwack, it breaks in a dramatic fashion and cannot be used to thwack again. You'll have to use a different object next time."
+
+"Now at this point you might be wondering why you might need to Thwack or what you might possibly want to Thwack, so this is as good a time as any to mention that each of you has been assigned an Apparition that will follow you around."
+
+<Deal a monster card face-up to each player>
+
+"These Apparations will start nearby"
+
+<Place a monster token matching each player color in the room next to the Chamber of Testing>
+
+"And they will move toward you."
