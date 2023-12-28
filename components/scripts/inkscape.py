@@ -59,11 +59,27 @@ class InkscapeActions(object):
     def selectionHide(self):
         self.addAction("selection-hide")
 
+    def layerHide(self, layer_id):
+        self.addAction(f"select-clear")
+        self.addAction(f"select-by-id:{layer_id}")
+        self.addAction(f"object-set-attribute:style, display:none")
+
+    def layerShow(self, layer_id):
+        self.addAction(f"select-clear")
+        self.addAction(f"select-by-id:{layer_id}")
+        self.addAction(f"object-set-attribute:style, display:inline")
+
     def exportId(self, id):
         self.addAction(f"export-id:{id}")
 
     def exportFilename(self, filename):
         self.addAction(f"export-filename:{filename}")
+
+    def exportDpi(self, dpi):
+        self.addAction(f"export-dpi:{dpi}")
+
+    def exportAreaPage(self):
+        self.addAction("export-area-page")
 
     def exportDo(self):
         self.addAction("export-do")
