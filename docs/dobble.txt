@@ -1,0 +1,158 @@
+
+https://www.petercollingridge.co.uk/blog/mathematics-toys-and-games/dobble/
+
+Dobble 3
+
+A  B
+A     C
+   B  C
+   
+   
+Dobble 7
+
+A  B  C
+A         D  E
+A                F  G
+ 
+   B      D      F
+   B         E      G
+
+      C   D         G
+      C      E   F
+
+
+Dobble 13
+
+A  B  C  D
+A            E  F  G
+A                      H  I  J
+A                                K  L  M
+
+   B         E         H         K
+   B            F         I         L
+   B               G         J         M
+
+      C      E            I            M
+      C         F            J   K
+      C            G   H            L
+
+        D    E               J      L
+        D       F      H               M
+        D          G      I      K
+      
+
+Random alphabet order:
+cgyehdwmrbzaf
+
+C  G  Y  E                                 -> Y G E C
+C            H  D  W                       -> W H D C
+C                      M  R  B             -> R M C B
+C                                Z  A  F   -> Z F C A
+
+   G         H         M         Z         -> Z M H G
+   G            D         R         A      -> R G D A
+   G               W         B         F   -> W G F B
+
+      Y      H            R            F   -> Y R H F
+      Y         D            B   Z         -> Z Y D B
+      Y            W   M            A      -> Y W M A
+
+         E   H               B      A      -> H E B A
+         E      D      M               F   -> M F E D
+         E         W      R      Z         -> Z W R E
+
+
+Elemental triggers (movement)
+Sorted      Air Fir Ear Wat
+H E B A          x
+M F E D      x       x
+R G D A      x           x
+R M C B          x   x
+W G F B          x       x
+W H D C              x   x
+Y G E C      x   x
+Y R H F              x
+Y W M A      x           x
+Z F C A      x   x   x
+Z M H G          x       x
+Z W R E              x
+Z Y D B      x           x
+
+
+Symbol triggers (2 symbols on each card cause special actions)
+          Z  Y  W  R  M  H  G  F  E  D  C  B  A
+H E B A                  0        0        _  _    xx__
+M F E D               0        _  _  0             x__x
+R G D A            _        0        _        0    _x_x
+R M C B            0  _                 _  0       x__x
+W G F B         _           0  0           _       _xx_
+W H D C         0        _           0  _          x_x_
+Y G E C      _              _     0     0          __xx
+Y R H F      _     _     0     0                   __xx
+Y W M A      0  _     _                       0    x__x
+Z F C A   0                    _        0     _    x_x_
+Z M H G   0           0  _  _                      xx__
+Z W R E   _     0  0              _                _xx_
+Z Y D B   _  0                       _     0       _x_x
+
+['h', 'e', 'b', 'a'] -> ['h', 'e', '_', '_']
+['m', 'f', 'e', 'd'] -> ['m', '_', '_', 'd']
+['r', 'g', 'd', 'a'] -> ['_', 'g', '_', 'a']
+['r', 'm', 'c', 'b'] -> ['r', '_', '_', 'b']
+['w', 'g', 'f', 'b'] -> ['_', 'g', 'f', '_']
+['w', 'h', 'd', 'c'] -> ['w', '_', 'd', '_']
+['y', 'g', 'e', 'c'] -> ['_', '_', 'e', 'c']
+['y', 'r', 'h', 'f'] -> ['_', '_', 'h', 'f']
+['y', 'w', 'm', 'a'] -> ['y', '_', '_', 'a']
+['z', 'f', 'c', 'a'] -> ['z', '_', 'c', '_']
+['z', 'm', 'h', 'g'] -> ['z', 'm', '_', '_']
+['z', 'w', 'r', 'e'] -> ['_', 'w', 'r', '_']
+['z', 'y', 'd', 'b'] -> ['_', 'y', '_', 'b']
+
+Number of times each pattern appears for each symbol (2 unique per symbol):
+a {'0101', '1001'}
+b {'0101', '1001'}
+c {'1010', '0011'}
+d {'1010', '1001'}
+e {'1100', '0011'}
+f {'0110', '0011'}
+g {'0110', '0101'}
+h {'1100', '0011'}
+m {'1100', '1001'}
+r {'0110', '1001'}
+w {'0110', '1010'}
+y {'0101', '1001'}
+z {'1100', '1010'}
+
+Number of symbols associated with each pattern (keep balanced: 2 or 3)
+{'0011': 2, '0101': 2, '0110': 2, '1001': 3, '1010': 2, '1100': 2}
+
+
+Actions for symbols:
+
+         +---------------------------------------------------------------+
+         |             Self              |            Group              |
+         |  Move  Attack  Range  Defend  |  Move  Attack  Range  Defend  |
+         +---------------------------------------------------------------+
+H E B A  |           x              -    |                          x    |  > Catoblepas
+M F E D  |           -      x            |           x                   |  > Birdman
+R G D A  |                  x       -    |                          x    |  < Unicorn
+R M C B  |    x      x                   |                               |  > Boar
+W G F B  |    x      x                   |                               |  < Rooster
+W H D C  |    x             x            |                               |  > Pigeon
+Y G E C  |    x                     x    |                               |  > Peryton
+Y R H F  |           -      -            |           x      x            |  < Mandragora    
+Y W M A  |    x                     x    |                               |  < Wyrm
+Z F C A  |           x      x            |                               |  > Hare
+Z M H G  |                  -       x    |                  x            |  > Griffin
+Z W R E  |           x              -    |                          x    |  < Giant
+Z Y D B  |    x             x            |                               |  < Fox
+         +---------------------------------------------------------------+
+
+Action pattern count:
+1100 xx
+1010 xx
+1001 xx
+0110 xxx
+0101 xx
+0011 xx
