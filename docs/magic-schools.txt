@@ -1,0 +1,232 @@
+
+INVC 201 - Magical Assisted Movement
+
+INVC 220 - Advanced Magical Mobility
+	Haste - Move self/target 2
+	Sproing - Select target 1 or 2 spaces away and then snap them to the corresponding space on the opposite side of your location
+	Migrate - Move 2 different targets 1 space each
+	Teleport - Jump instantly to another student's position - bypassing walls/barriers
+	
+ABJR 322 - Protective Barriers II
+	Shield - Defend self/target against 1 attack
+	Wall - Wall of rock rises from the floor between 2 rooms, preventing movement and attacks
+	Sphere of Protection - dome - barrier around room protecting multiple people
+	Redirect - deflect incoming attack and split it into 2 attacks that can target monsters in your current room
+	
+INVC 301 - Thaumaturgical Aggression: Theory and Applications
+	Fireball - Attack target with fire
+	Icicles - Attack target with sharp icy projectiles
+	Trap - lay trap in space
+	Push
+	
+TRNS 341 - Fundamental Techniques of Metamorphosis
+	Fly - Self/target can move 2, bypassing barriers/obstacles
+	Stallion - Self/target move 2. Can pick-up/drop-off other students at any time during move.
+	Bite
+	
+NCRO 211 - Healing: A Regenerative Approach
+	Revive - revive stunned target (must be in same room)
+
+
+Other class titles:
+
+Advanced...
+Advanced Experimental Methods in...
+Advanced Techniques of...
+Advanced Topics in...
+Advanced Work in...
+Analysis and Design of...
+Applied...
+Basic...
+Comparative...
+Contemporary...
+Current Research in...
+Current Topics in...
+Effective Properties of...
+The Elements of...
+Experimental Methods in...
+Experimental Projects in...
+Foundational Principles of...
+Frontiers in...
+Frontiers of...
+Fundamentals of...
+Fundamental Techniques of...
+Great Ideas in...
+The Great Ideas of...
+Intermediate...
+Introduction to...
+Introductory...
+Introductory Methods of...
+Methods of...
+Practical...
+Principles of...
+Procedures of...
+Projects in...
+Readings in...
+Research in...
+Selected Topics in...
+Seminar in...
+Special Topics in...
+Special Topics in the...
+Structure and Evolution of...
+Topics in...
+Tutorial in...
+
+Undergraduate Research|Projects|Reading in...
+Graduate Research in...
+Senior Thesis in...
+Independent Reading in...
+
+xxx and Applications to yyy
+xxx Design
+xxx Dynamics
+xxx in the yyy
+xxx Lab
+xxx Methods for yyy
+xxx Practicum
+xxx Processes
+xxx Techniques
+xxx Theory
+xxx Theory and Applications
+xxx Through a yyy Lens
+xxx with Applications
+
+Advanced xxx Design
+Applications of xxx to the yyy
+Design and Construction of xxx
+Experimental xxx
+Exploring xxx Principles Through yyy
+Nature of the xxx
+Optimal Design of xxx
+Reading xxx Literature
+The Structure of the xxx
+The Xxx Basis of yyy
+
+States of Matter
+Responsible Conduct in Research
+
+
+Types of Magic
+
+Arcane magic
+Spells that manipulate energy or summon a creature to perform a task
+
+Divine magic
+Spells granted by a diety
+
+Primal
+Granted by the natural world
+
+
+Schools of Magic
+
+Abjuration
+Abjuration is a school of magic that deals in protective spells and the suppression of others' magic. Magic of this school creates physical or magical barriers, negates magical or physical abilities, harms trespassers, or even banishes the target of the spell to another plane of existence.
+The abjuration school of magic encompassed protective spells. They created physical or magical barriers, negated magical or physical abilities, harmed trespassers, or even banished the subject of the spell to another plane of existence.
+This school is focused on protective spells, as well as spells which cancel or interfere with other spells, magical effects or supernatural abilities.
+Magical spells and effects within the school of abjuration are primarily designed for protection and shielding. Don’t be fooled however, some Abjuration spells can pack quite a punch.
+
+	Low Level: Dispel Magic, Shield
+	Mid Level: Dispel Evil and Good, Greater Restoration
+	High Level: Invulnerability, Antimagic Field
+
+
+Alteration/Transmutation
+The transmutation school of magic consisted of spells that changed the physical properties of some creature, thing, or condition.
+This school focuses on the ability to change matter. Spells in this school alter the properties of their targets.
+Casters who study within the School of Transmutation are able to manipulate the physical properties of both items and people. This could be something simple – such as turning copper into gold – or could be an advanced spell that turns you into a newt (it’ll get better…)
+
+	Low Level: Shape Water, Feather Fall
+	Mid Level: Gaseous Form, Stone Shape
+	High Level: Polymorph, Etherealness
+
+
+Conjuration/Summoning
+The conjuration school of arcane magic calls materials, creatures or energy to the caster and can also be reversed to send creatures to other places, either over long distances or even to a whole different plane of existence.
+This school is focused on instantaneous transportation, conjuring manifestations of creatures, energy or objects, and object creation.
+The School of Conjuration deals with creating objects and creatures, or making them disappear. 
+
+	Calling: Spells of this type take creatures from their natural plane and bring them to the caster. They have one chance to return to their home plane but the spell usually restricts the circumstances that would allow it to do so.
+	Creation: These spells manipulate matter itself to create an object or creature. Most, but not all of these spells require more magic to hold the creation together after it has been made and when the magic of the spell wears off, the creation simply disappears and the matter returns to its original form, whatever that may have been. Those that don't rely on magic to hold it together last indefinitely.
+	Healing: These spells channel positive energy that heals the wounds of creatures and damages undead. More powerful spells of this type can even call the soul of a dead creature back from the Fugue Plane or its afterlife, should it wish to return.
+	Summoning: Summoning spells bring a creature or object from wherever it currently is to the caster of the spell. When the spell expires, creatures are instantly sent back to wherever they came from, although objects do not unless the spell used to summon them was designed to. If a creature is killed while under the effects of a summoning spell, they instantly disappear and reform at the point that they were summoned from.
+	Teleportation: These spells transport the subjects of the spell over great distances, usually via the Astral Plane. The most powerful of these spells can teleport the subject to a destination in another plane entirely. Teleportation spells are often one-way and require another teleportation spell to return.
+
+	Low Level: Find Familiar, Poison Spray
+	Mid Level: Spirit Guardians, Conjure Elemental
+	High Level: Plane Shift, Wish
+
+Divination
+The divination school of magic contains spells that enable the caster to learn secrets long forgotten, interpret dreams, predict the future, to find hidden things or foil deceptive spells. Among them are included detect magic and scry.
+This school is focused on acquiring and revealing information.
+The magical School of Divination is centered around revealing and granting knowledge and information to the caster. Useful for reading ancient scripts, identifying magical items, and seeing invisible enemies. 
+
+	Scrying: Spells from this subschool create an invisible sensor that allows the creator to experience events over long distances. Intelligent creatures can sometimes get the feeling that they are being watched while under this kind of observation, and several spells or even a simple lead sheet can interrupt the sensor.
+
+	Low Level: Identify, Find Traps
+	Mid Level: Scrying, Locate Creature
+	High Level: True Seeing, Foresight
+
+
+Enchantment
+Enchantment spells affect the minds of others, influencing or controlling their behavior. This school includes the spells charm person and mind fog.
+This school is focused on affecting "the minds of others" including "influencing or controlling their behavior".
+Spells within the School of Enchantment are designed to manipulate the mental state of the target. This entire school is very similar to hypnotism, where the affected creature may act completely differently than how they normally behave.
+
+	Charm:
+		These are spells that make the target regard the caster as a friend.
+		Charm spells usually making them act more favorably toward the caster.
+	Compulsion:
+		Spells of this kind force the target to do something beyond their natural will.
+		Compulsion spells can force the targets' to act in a certain way or avoid certain actions, affect the targets' emotions or affect the targets' minds in other ways.
+
+	Low Level: Hold Person, Sleep
+	Mid Level: Modify Memory, Mass Suggestion
+	High Level: Feeblemind, Power Word Kill
+
+
+Evocation/Invocation
+The evocation school of magic included spells that manipulated energy or tapped an unseen source of power in order to produce a desired end. In effect, they created something out of nothing. Many of these spells produced spectacular effects, and evocation spells could deal large amounts of damage. Many iconic offensive spells such as magic missile, lightning bolt and fireball were of the evocation school.
+This school pertains to "creating matter and energy, called up out of nothing [...] The classic spells magic missile and burning hands, both of which call up destructive energy with which to attack enemies, are both examples of evocation"
+Casters within the school of evocation unleash a raw magical energy upon their enemies. Whether it be flames, ice, or pure arcane energy: evocation spellcasters are here to deal damage and chew gum… and they’re all out of gum. 
+
+	Low Level: Burning Hands, Dancing Lights
+	Mid Level: Fireball, Freezing Sphere
+	High Level: Meteor Swarm, Prismatic Spray
+
+
+Illusion/Phantasm
+This school "involves the ability to change the appearance of something, by creating a phantasm"
+The School of Illusion is concerned with manipulating the various senses of people and creatures. This could be vision, hearing, or other various senses such as body temperature. 
+
+	Low Level: Disguise Self, Silent Image
+	Mid Level: Invisibility, Hallucinatory Terrain
+	High Level: Project Image, Weird
+
+
+Necromancy
+Necromancy spells involve death, undeath, and the manipulation of life energy.
+In general, think of spells within the School of Necromancy as manipulating the ebb and flow of different creatures’ “life energy”, or the balance of energy between life and death. This can come across in the form of helping resurrection, or draining necrotic damage. 
+
+	Low Level: Chill Touch, Inflict Wounds
+	Mid Level: Animate Dead, Blight
+	High Level: Resurrection, Finger of Death
+
+
+Artificer
+Artificers were a rare kind of arcane spellcaster who treated magic in the same manner as a mason might see a chisel as a tool for the creation of marvels. An artificer learned to wield their magic through the mastering of sigils and diagrams that they etched into that which they enchanted, as well as magical ingredients. Artificers infused objects of the world, be they inanimate or alive, with the power of the arcane, making them both powerful crafters and healers.
+
+Chronomancy
+Chronomancy was a school of magic dealing with movement through time, or the manipulation of time. It was a secretive and rare school of magic, and most wizards had difficulty comprehending the possibility of altering the natural course of events.
+
+
+
+
+Refs:
+Players Handbook 3.5
+https://forgottenrealms.fandom.com/wiki/
+https://thealpinedm.com/dnd-5e-schools-of-magic/
+https://catalog.caltech.edu/documents/152/catalog_23_24_part5.pdf
+
+See also:
+https://www.reddit.com/r/UnearthedArcana/comments/dbnf5e/13_schools_of_magic_a_worldspecific_list_with_lore/
