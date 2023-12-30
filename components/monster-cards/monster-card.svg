@@ -27,14 +27,14 @@
      inkscape:document-units="mm"
      showgrid="false"
      inkscape:zoom="1.6034522"
-     inkscape:cx="65.171884"
-     inkscape:cy="209.54787"
+     inkscape:cx="49.580524"
+     inkscape:cy="265.67677"
      inkscape:window-width="1672"
      inkscape:window-height="954"
      inkscape:window-x="0"
      inkscape:window-y="38"
      inkscape:window-maximized="0"
-     inkscape:current-layer="monster-heba" /><defs
+     inkscape:current-layer="layer2" /><defs
      id="defs132"><marker
        style="overflow:visible"
        id="TriangleStart"
@@ -1098,7 +1098,7 @@
          d="m -32.575036,58.558869 c -0.316899,0.01132 -0.473642,0.245143 -0.506458,0.40177 -0.03323,0.158602 0.04525,0.464005 0.04525,0.464005 0,0 -0.440974,0.162784 -0.628127,0.299927 -0.159591,0.116946 -0.385546,0.288284 -0.413105,0.503657 -0.01714,0.133946 0.107521,0.241368 0.237691,0.2773 0.170609,0.04709 0.494373,-0.159369 0.588519,-0.01698 0.09267,0.111085 -0.08602,0.42232 -0.203729,0.6055 -0.184865,0.287676 -0.444637,0.873659 -0.288592,0.877111 0.161624,0.0036 0.586131,-0.003 0.843192,-0.01129 0.09876,-0.0032 0.200859,-0.498012 0.325355,-0.498012 0.124496,0 0.226637,0.494819 0.325399,0.498012 0.25706,0.0083 0.681567,0.01487 0.843192,0.01129 0.156044,-0.0035 -0.103772,-0.589435 -0.288636,-0.877111 -0.117715,-0.18318 -0.296355,-0.494415 -0.203686,-0.6055 0.09415,-0.142388 0.41791,0.06408 0.588518,0.01698 0.130171,-0.03593 0.25479,-0.143354 0.237649,-0.2773 -0.02756,-0.215373 -0.253514,-0.386711 -0.413105,-0.503657 -0.187154,-0.137143 -0.628127,-0.299927 -0.628127,-0.299927 0,0 0.07853,-0.305403 0.0453,-0.464005 -0.03282,-0.156627 -0.189603,-0.390453 -0.506501,-0.40177 z"
          style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.323082;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" /></g><g
        id="g5852"
-       transform="translate(0.56922608,-0.34153565)"><use
+       transform="translate(0.56922607,-0.34153565)"><use
          x="0"
          y="0"
          xlink:href="#g19966"
