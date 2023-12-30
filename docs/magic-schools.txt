@@ -2,28 +2,29 @@
 INVC 201 - Magical Assisted Movement
 
 INVC 220 - Advanced Magical Mobility
-	Haste - Move self/target 2
-	Sproing - Select target 1 or 2 spaces away and then snap them to the corresponding space on the opposite side of your location
-	Migrate - Move 2 different targets 1 space each
-	Teleport - Jump instantly to another student's position - bypassing walls/barriers
+A	Haste - Move self/target 2
+E	Sproing - Select target 1 or 2 spaces away and then snap them to the corresponding space on the opposite side of your location
+F	Migrate - Move 2 different targets 1 space each
+W	Teleport - Jump instantly to another student's position - bypassing walls/barriers
 	
 ABJR 322 - Protective Barriers II
-	Shield - Defend self/target against 1 attack
-	Wall - Wall of rock rises from the floor between 2 rooms, preventing movement and attacks
-	Sphere of Protection - dome - barrier around room protecting multiple people
-	Redirect - deflect incoming attack and split it into 2 attacks that can target monsters in your current room
+W	Shield - Defend self/target against 1 attack
+E	Wall - Wall of rock rises from the floor between 2 rooms, preventing movement and attacks
+F	Sphere of Protection - dome - barrier around room protecting multiple people
+A	Redirect - deflect incoming attack and split it into 2 attacks that can target monsters in your current room
 	
 INVC 301 - Thaumaturgical Aggression: Theory and Applications
-	Fireball - Attack target with fire
-	Icicles - Attack target with sharp icy projectiles
-	Trap - lay trap in space
-	Push
+F	Fireball - Attack target with fire
+W	Icicles - Attack target with sharp icy projectiles
+E	Trap - lay trap in space
+A	Push - Target is pushed 2 spaces
 	
 TRNS 341 - Fundamental Techniques of Metamorphosis
-	Fly - Self/target can move 2, bypassing barriers/obstacles
-	Stallion - Self/target move 2. Can pick-up/drop-off other students at any time during move.
-	Bite
-	
+A	Fly - Self/target can move 2, bypassing walls/barriers
+E	Stallion - Self/target move 2. Can pick-up/drop-off allies at any time during move.
+F	Flaming Talons
+W	Venomous Bite/Spit
+
 NCRO 211 - Healing: A Regenerative Approach
 	Revive - revive stunned target (must be in same room)
 
