@@ -64,6 +64,6 @@ def export_5up_pdfs():
 	for x in range(1, 4):
 		export_5up_pdf(f"5up-page{x}")
 
-#export_monsters()
-#export_all_png()
+export_monsters()
+export_all_png()
 export_5up_pdfs()
