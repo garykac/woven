@@ -1,0 +1,196 @@
+Woven Academy playtest
+2024 Feb 18
+Solo 2-player
+
+7 mana per player
+4 spells: Fireball, Haste, Mana Shield, Stallion
+8 rooms (start + 7 random)
+start with 1 monster, add 1 per turn
+
+
+Turn 1
+Draw Peryton and add to pool, respawn
+Green used 3 mana, cast 2 spells
+Red used 4, cast 2 spells
+Complete spellset 1
+Defeat 1 monster - Peryton
+
+Turn 2
+Draw Unicorn and add to pool, Respawn Peryton as Catoblepas
+Green Recover 3 mana, use 3, cast 2 spells
+Red Recover 2, use 2, cast 2 spells
+Complete spellset 2
+Defeat 1 monster Unicorn (1 remaining Catoblepas)
+Monster doesn't move, can't attack
+
+Turn 3
+Draw Hare and add to pool, Respawn Unicorn as Griffin
+Green recover 1 mana, use 3 mana, cast 2 spells
+Red recover 2 mana, use 4 mana, cast 3 spells
+Complete spellset 3 + 1 spell for 4
+Defeat 2 monsters - Griffin, Hare (1 remaining Catoblepas)
+Monster doesn't move, can't attack
+
+Turn 4
+Draw Wyrm and to pool, Respawn Griffin as Fox, respawn Hare as Birdman
+Green recover 3 mana, use 1 mana
+Red recover 4 mana, use 3 mana
+Complete spellset 4 + 2 spells for 5
+Defeat 2 monsters - Birdman, Wyrm - 2 remaining Cato Fox
+Monster move, Cato 1, Fox 1
+Can't attack (out of range)
+
+Turn 5
+Add Cato to pool, Respawn Birdman as Giant, respawn Wyrm as Boar
+Green recover 2 mana, use 2 mana, cast 2
+Red recover 3 mana, use 2 mana, cast 2
+Complete spellset 5 + 2
+--Stop replacing monsters when they are completely eliminated, just respawn
+Defeat 2 monsters - Fox, Boar
+Can't move, can't attack
+
+Turn 6
+Add Fox to pool, Respawn 2 Fox, Giant
+Green recover 4 mana, use 3, cast 2
+Red recover 2 mana, use 2, cast 2
+Complete spellset 6 + 2
+Defeat 2 monsters: 2x Fox
+No monsters move, or can attack
+
+Turn 7
+Add Giant to pool, respawn 2 fox, giant
+Green recover 2 mana, use 3, cast 2 -- 0 mana remaining
+Red recover 3 mana, use , cast  -- 1 mana remaining
+Complete spellset 7 & 8
+Defeat 1 monster: Catoblepas
+Monsters move: Fox, Cato, Boar
+Monsters attack: Boar + bonus attack (vs Green), Fox (vs Red)
+	Fend off with shields
+
+Turn 8
+Add Boar to pool, respawn Cato, Boar
+Green recover 5 mana, use 4, cast 3
+Red recover 3 mana, use 3, cast 3
+Complete spellset 9 + 2 spells
+Defeat 2 monsters: Boar, Fox
+Monsters move: Boar 2 spaces, Giant x2, Cato x2
+No attacks
+
+Turn 9
+Add Cato to pool, respawn Fox, Boar
+Green recover 4 mana, use 4, cast 3 -- 1 remaining
+Red recover 3 mana, use 4, cast 3 -- 0 remaining
+Complete spellset 10 & 11 + 0 spells
+Defeat Boar
+No attacks, not in range
+
+Turn 10
+Add Fox to pool, respawn Fox Boar
+Green recover 4 mana, use 4, cast 4 -- 1 remaining
+Red recover 3 mana, use 3, cast 2 -- 0 remaining
+Complete spellset 12 + 2 spells
+Defeat 2 giants
+Monsters move: Boar, Fox
+No attacks in range
+
+Turn 11
+Add giant to pool, respawn giant x3
+Green recover 2, use 2, cast 2 -- 1 remaining, 4 shields
+Red recover 4, use 4, cast 4 -- 0 remaining, 5 shields
+Complete spellset 13 + 2 (fireball cast 3 times)
+Defeat 3 giants
+Monsters move: cato x3, boar x2 (move twice)
+Monsters attack: Boar attacks Green - defend with shield
+
+Turn 12
+Add Boar to pool, respawn giant x3, boar
+Green recover 2 mana, use 1, cast 1
+Red recover 3 mana, use 2, cast 2
+Complete spellset 14 + 3
+Defeat 1 giant
+Monsters move: Cato x3, Fox x3, Boar x3
+Attack: 4 attacks, 2 each player
+
+Turn 13
+Add Cato to pool, respawn Giant, Cato
+Green recovers 4, use 1, cast 1
+Red recovers 3, use 
+Complete spellset 15 & 16
+Defeat 1 boar
+Monsters move: AEF: all move 1, boars move x2
+Attack: 9 attacks: Red 5 (4 shields + 1 mana), Green 4 (4 shields)
+
+Turn 14
+Add Fox to pool, respawn Fox, Boar
+Green recover 3 mana, use 4, cast 4 -- 0 remain
+Red recover 3 mana, use 2, cast -- 1 remain
+Complete spellset 17 + 3 spells
+Defeat 2 monsters: Fox, Boar
+Monsters move: Giant x2, fox, Boar, most don't need to because they're in same space as players. 
+Monsters attack x9: -2 shields, Green -4, Red -3
+Players have 3 mana each
+
+Turn 15
+Add giant to pool, respawn fox, giant x2
+Green recovers, 
+Red recovers 2, use 2, cast 1
+Complete spellset 18 + 3 spells
+Monsters move: AFW: all move except Giant, Fox moves twice
+Attack: 4 attacks: Green (Shield + mana) Red (2 mana)
+
+Turn 16
+Add Boar to pool, respawn Cato, Boar
+Green recovers 2, use 2, cast 1 (to complete set)
+Red recovers 1, can't do anything
+Complete spellset 19
+Monsters move: FE: Cato x3, Giant x4, Boar x3 (twice)
+Attack: vs Red: x7, vs Green x5 (incl 2 double attacks)
+
+
+Summary:
+	17 cards in each tapestry. 34 Tapestry cards used.
+	Churned through 6 monsters at the start. Made monsters static after turn 5
+		The churn at the start felt too fast
+		The monsters at the end felt too static
+	4 of each monster on board when game ended.
+
+
+Comments:
+? Too much monster churn at start (since they respawn if all are defeated and when there's only 1...)
+	Is it worthwhile to respawn when monster is defeated?
+		Add special event as players complete spellsets
+	But it is nice to have the monsters rotate out periodically
+? Is ramp up too slow at higher player counts
+	Maybe start with monsters = # of players
+Would like a second attack spell - perhaps transform into animal that can choose move or attack
+	Only 1 attack spell limits how to fend off the monsters
+Since the only way to recover mana is to cover tapestry cards, it encourages placing Tapesty cards on top of existing rather than expanding.
+	Which is not necessarily a problem, but I think a bit more expansion would be nice
+	? Start with more mana
+	? Recover 1 mana per turn - interesting decision with placing Tapestry card
+Note: When attacked, mana can be removed from Tapestry before available pool
+	It doesn't have to come from available - that would feel harsh
+Once you have 1 mana left, you can't do anything. but at least everyone gets another turn to cast.
+	I don't think this is a problem
+Some monsters need to be amped up
+
+Game went longer than it should have, because:
+	Some monsters were too easy to avoid
+		Moved slowly, so easy to "hide" in room on other side
+		Monster attack range is small
+	Monsters ramped up slowly at the beginning
+	Many monsters didn't have a home base on the map, so they shared the default starting location
+		2 player = 7 rooms (out of 13) + neutral start
+		Start with more rooms to reduce this?
+
+For next test:
+	Start with more monsters on board (= player count, or always 4?)
+	Review monsters and increase: range, movement
+	More rooms
+	Add events when spellsets are complete
+	
+Possible Spellset events
+* Everyone recover 1 mana
+* Replace 1 monster with a new draw
+* Potions
+* New spell added to set. Or swap out?
