@@ -1,0 +1,120 @@
+Components:
+	Spell marker to track which spells have been cast so far (x4)
+	Spellset tracker to track how many sets have been cast
+	For each player (x5):
+		Mana tokens (x7 or x11)
+		Meeple marker
+	For each monster token type (x?)
+		5 Monster Tokens
+	Monster cards (x13)
+	Room Cards (x13)
+	Starting Room Card (x1)
+	Spell cards (x16)
+	Tapestry Cards (x33)
+	Extra markers for spell effects:
+		shields to defend instead of mana
+		barriers on map
+		shields on map
+		traps
+	Progress tracking card
+	Player aid
+			
+Setup
+	SetupRooms
+	SetupPlayers
+	SetupSpells
+	SetupMonsters
+	SetupSpellsetTrack
+
+SetupRooms
+	Add WaitingRoom
+	Make a ring of rooms based on player count:
+		* 2 players: add 7 rooms
+	Return remaining room cards to box
+
+SetupPlayers
+	Choose color, take all components
+	Place meeple in WaitingRoom
+
+SetupSpells
+	Draw 1 spell from each class (4 total)
+	Place on sideboard
+	Place a spell marker above each spell
+	
+SetupTapestryDeck
+	Shuffle all TapestryCards
+	Place on table
+
+SetupSpellsetTrack
+	Place Spellset tracking card
+	Put Spellset Tracker on 0
+	
+SetupMonsters
+	Shuffle Monster cards into MonsterDeck
+	Place Deck next to MonsterQueue
+	DrawMonster
+	Place MonsterMarker in first (empty) space in MonsterQueue
+	RespawnAllMonsters
+
+PlayGame
+	Repeat until GameOver:
+		RespawnAllMonsters
+		PlayerTurn
+		MonsterTurn
+		MonsterCleanup
+
+GameOver:
+	Any of:
+		Spellset track marker reaches target
+		Any player is unconscious
+
+PlayerTurn
+	For each Player:
+		Draw and Meld a TapestryCard
+		! If first turn:
+			Draw 2 and meld them together
+	CastSpells
+
+MonsterTurn
+	For each Monster:
+		Move based on current element
+	For each Monster:
+		Attack closest target if possible
+	
+DrawMonster
+	Draw monster card into the MonsterQueue
+	Choose monster tokens
+	Place Monster tokens on monster card
+	! If Monster space already has tokens assigned to it:
+		Choose one:
+			Keep the same tokens
+			Replace with new tokens (while keeping them in the same location: on card or in pool)
+
+RespawnAllMonsters
+	If MonsterMarker points to an empty space in the MonsterQueue
+		DrawMonster
+	Add monster token matching the monster indicated by the Monster Marker into MonsterPool
+	For each MonsterToken in the MonsterPool
+		RespawnMonster
+
+RespawnMonster
+	Place monster in home location (or WaitingRoom if no home)
+	When placing multiple of the same type, spread them around (cw or ccw) as shown on card
+
+MonsterCleanup
+	If any monsters have been completely eliminated (all active tokens are in MonsterPool):
+		Discard corresponding monster card
+		DrawMonster
+	Increment MonsterMarker to point to next monster in the MonsterQueue
+	! Move MonsterMarker to the first position if it's at the end
+
+CastSpells
+	Place mana on tapestry to match pattern
+	If the spell cast does not currently have a spell marker on it:
+		Move the spell marker onto the card
+	If all spells have a spell marker:
+		Remove all spell markers from the spells
+		Increment the Spellset tracker
+		If spellset tracker is past threshold:
+			Game ends - you win
+

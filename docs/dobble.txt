@@ -130,29 +130,26 @@ Number of symbols associated with each pattern (keep balanced: 2 or 3)
 
 Actions for symbols:
 
-         +---------------------------------------------------------------+
-         |             Self              |            Group              |
-         |  Move  Attack  Range  Defend  |  Move  Attack  Range  Defend  |
-         +---------------------------------------------------------------+
-H E B A  |           x              -    |                          x    |  > Catoblepas
-M F E D  |           -      x            |           x                   |  > Birdman
-R G D A  |                  x       -    |                          x    |  < Unicorn
-R M C B  |    x      x                   |                               |  > Boar
-W G F B  |    x      x                   |                               |  < Rooster
-W H D C  |    x             x            |                               |  > Pigeon
-Y G E C  |    x                     x    |                               |  > Peryton
-Y R H F  |           -      -            |           x      x            |  < Mandragora    
-Y W M A  |    x                     x    |                               |  < Wyrm
-Z F C A  |           x      x            |                               |  > Hare
-Z M H G  |                  -       x    |                  x            |  > Griffin
-Z W R E  |           x              -    |                          x    |  < Giant
-Z Y D B  |    x             x            |                               |  < Fox
-         +---------------------------------------------------------------+
+         +------------------------------+
+         |        Self or (Group)       |
+         |  Attack     Range    Defend  |
+         +------------------------------+
+H E B A  |     x                  (-)   |  > Catoblepas
+M F E D  |    (-)        x              |  > Birdman
+R G D A  |              (-)       (-)   |  < Unicorn
+R M C B  |     x                   x    |  > Boar
+W G F B  |    (x)                  x    |  < Rooster
+W H D C  |     x         x              |  > Pigeon
+Y G E C  |               x         x    |  > Peryton
+Y R H F  |    (-)       (-)             |  < Mandragora    
+Y W M A  |               x         x    |  < Wyrm
+Z F C A  |     x         x              |  > Hare
+Z M H G  |              (-)        x    |  > Griffin
+Z W R E  |     x                  (-)   |  < Giant
+Z Y D B  |     x         x              |  < Fox
+         +------------------------------+
 
 Action pattern count:
-1100 xx
-1010 xx
-1001 xx
-0110 xxx
-0101 xx
-0011 xx
+011 xxxx
+101 xxxx
+110 xxxxx
