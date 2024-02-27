@@ -3,6 +3,13 @@
 spell_card_revision = 15
 
 spell_card_data = [
+
+    #   _____                           _   
+    #  |     |___ _ _ ___ _____ ___ ___| |_ 
+    #  | | | | . | | | -_|     | -_|   |  _|
+    #  |_|_|_|___|\_/|___|_|_|_|___|_|_|_|  
+    #
+
     ["Haste",
         {'element': 'air', 'pattern': 'E2-5', 'range': '01', 'class': "invc220",
         }, {
@@ -15,32 +22,38 @@ spell_card_data = [
             'target': "{{SELF_OR_TEAMMATE}}",
             'cast': "Two different targets move 1 space each.",
         } ],
-    ["Sproing",
-        {'element': 'earth', 'pattern': 'E2-59', 'range': '12', 'class': "invc220",
+    ["Push-pull",
+        {'element': 'earth', 'pattern': 'E2-59', 'range': '012', 'class': "invc220",
         }, {
-            'target': "{{TEAMMATE}}",
-            'cast': "Targetted ally is magically grabbed and tossed to the corresponding space on the opposite side of your location.",
+            'target': "{{TEAMMATE_OR_OPPONENT}}",
+            'cast': "You anchor yourself and push/pull the target up to 2 spaces.",
         } ],
-    ["Teleport",
+    ["Blink",
         {'element': 'water', 'pattern': 'E2-28', 'range': '0', 'class': "invc220",
         }, {
             'target': "{{SELF_OR_TEAMMATE}}",
-            'cast': "Target jumps instantly to an ally's position, bypassing any walls or barriers.",
+            'cast': "Target teleports (bypassing any walls or barriers) instantly to either: an ally's position, or a room exactly 3 spaces away.",
         } ],
+
+    #   ____      ___                 
+    #  |    \ ___|  _|___ ___ ___ ___ 
+    #  |  |  | -_|  _| -_|   |_ -| -_|
+    #  |____/|___|_| |___|_|_|___|___|
+    #
 
     ["Redirect",
         {'element': 'air', 'pattern': 'E2-8', 'range': '01', 'class': "abjr322",
         }, {
             'target': "{{SELF_OR_TEAMMATE}}",
-            'cast': "A large cudgel appears over the target which will deflect an incoming attack, splitting it into 2 separate attacks against foes in the target's location.",
+            'cast': "A large cudgel appears over the target which will deflect a single incoming attack, redirecting it to attack a foe in the target's location.",
         } ],
     ["Glowing Sphere",
         {'element': 'fire', 'pattern': 'E2-12', 'range': '0', 'class': "abjr322",
         }, {
             'target': "{{MAGE_LOCATION}}",
             'cast': [
-            	"A protective sphere surrounds you and anyone else in your location you choose to include.",
-            	"Foes must attack it twice to dispel it.",
+                "A protective sphere surrounds you and anyone else in your location you choose to include, blocking all incoming and outgoing attacks.",
+                "Dispels at end of turn or if attacked twice.",
             ],
         } ],
     ["Wall",
@@ -48,11 +61,11 @@ spell_card_data = [
         }, {
             'target': "{{PASSAGE_BETWEEN_ROOMS}}",
             'cast': [
-            	"A stone barrier rises from the earth in the passage between your room and a neighboring one (your choice), blocking all movement and attacks.",
-            	"The barrier can withstand 2 hits before dissipating.",
+                "A stone barrier rises from the earth in the passage between your room and a neighboring one, blocking all movement and attacks.",
+                "The barrier remains until it is attacked directly.",
             ],
         } ],
-    ["Mana Shield",
+    ["Faux Mana",
         {'element': 'water', 'pattern': 'E2-32', 'range': '01', 'class': "abjr322",
         }, {
             'target': "{{SELF_OR_TEAMMATE}}",
@@ -62,60 +75,81 @@ spell_card_data = [
             ],
         } ],
 
-    ["Push",
+    #   _____ _   _           _   
+    #  |  _  | |_| |_ ___ ___| |_ 
+    #  |     |  _|  _| .'|  _| '_|
+    #  |__|__|_| |_| |__,|___|_,_|
+    #
+
+    ["Bodyslam",
         {'element': 'air', 'pattern': 'E2-14', 'range': '01', 'class': "invc301",
         }, {
             'target': "{{OPPONENT}}",
-            'cast': "Target is pushed 2 spaces.",
+            'cast': "Two targets in the same location are lifted into the air and smacked into each other, causing an attack to each.",
         } ],
     ["Fireball",
         {'element': 'fire', 'pattern': 'E2-35', 'range': '012', 'class': "invc301",
         }, {
             'target': "{{OPPONENT}}",
-            'cast': "Great balls of fire appear above the targetted foe and attack.",
+            'cast': [
+                "Great balls of fire fly from your outstretched palms to attack the targetted foe.",
+                "If current element includes Fire, then 2 foes along the fireball's path may be targeted.",
+            ],
         } ],
     ["Trap",
         {'element': 'earth', 'pattern': 'E2-30', 'range': '01', 'class': "invc301",
         }, {
             'target': "{{ROOM_OR_NEXT}}",
             'cast': [
-            	"Lay a trap in your current location or a neighboring one.",
-            	"Trap attacks the next foe that enters the room. Or immediately if there is already a foe in the room.",
+                "Lay a trap in your current location or a neighboring one.",
+                "Trap attacks the next foe that enters the room. Or immediately if there is already a foe in the room.",
             ],
         } ],
     ["Icicle Darts",
         {'element': 'water', 'pattern': 'E2-27', 'range': '012', 'class': "invc301",
         }, {
             'target': "{{OPPONENT}}",
-            'cast': "Icicles form in the air around the target and attack.",
+            'cast': [
+                "Icicles form in the air above the target and strike downward to attack.",
+                "If current element includes Water, then 2 foes in the same location may be targeted.",
+            ],
         } ],
 
-    ["Fly",
-        {'element': 'air', 'pattern': 'E2-15', 'range': '01', 'class': "trns341",
-        }, {
-            'target': "{{SELF_OR_TEAMMATE}}",
-            'cast': "Target grows wings and moves 2 spaces, bypassing any walls or barriers.",
-        } ],
-    ["Flaming Talons",
-        {'element': 'fire', 'pattern': 'E2-44', 'range': '012', 'class': "trns341",
-        }, {
-            'target': "{{OPPONENT}}",
-            'cast': "Your hands turn into giant flaming claws that shoot out to attack the target.",
-        } ],
-    ["Stallion",
-        {'element': 'earth', 'pattern': 'E2-1', 'range': '01', 'class': "trns341",
+    #   _____                 ___               
+    #  |_   _|___ ___ ___ ___|  _|___ ___ _____ 
+    #    | | |  _| .'|   |_ -|  _| . |  _|     |
+    #    |_| |_| |__,|_|_|___|_| |___|_| |_|_|_|
+    #
+
+    ["Falcon Dive",
+        {'element': 'air', 'pattern': 'E2-15', 'range': '0', 'class': "trns341",
         }, {
             'target': "{{SELF_OR_TEAMMATE}}",
             'cast': [
-            	"Target grows extra legs which allow them to move 2 spaces, picking up or dropping off allies at any time during the move.",
-            	"Not quite a centaur, but disturbingly similar.",
+                "Target transforms into a falcon and dives into a room 2 spaces away, bypassing any walls or barriers.",
+                "Choose one: Attack 1 foe in that room, or Screech to frighten all creatures there into neighboring rooms.",
             ],
         } ],
-    ["Cobra",
-        {'element': 'water', 'pattern': 'E2-31', 'range': '012', 'class': "trns341",
+    ["Blink Tiger",
+        {'element': 'fire', 'pattern': 'E2-44', 'range': '0', 'class': "trns341",
         }, {
-            'target': "{{OPPONENT}}",
-            'cast': "You bite or spit (depending on the distance) venom to attack the target.",
+            'target': "{{SELF_OR_TEAMMATE}}",
+            'cast': "Target transforms into a tiger and, after optionally teleporting (bypassing walls or barriers) to an ally's location, attacks a foe with flaming claws.",
+        } ],
+    ["Stallion",
+        {'element': 'earth', 'pattern': 'E2-1', 'range': '0', 'class': "trns341",
+        }, {
+            'target': "{{SELF_OR_TEAMMATE}}",
+            'cast': "Target transforms into a stallion and charges into a neighboring room to trample-attack a foe there.",
+        } ],
+    ["Cobra",
+        {'element': 'water', 'pattern': 'E2-31', 'range': '0', 'class': "trns341",
+        }, {
+            'target': "{{SELF_OR_TEAMMATE}}",
+            'cast': [
+                "Target transforms into a giant cobra.",
+                "Choose one: Move 1 space, or Bite-attack a foe in current location.",
+            ],
         } ],
 
 ]

@@ -47,15 +47,15 @@ spell_info_keys = {
 class_names = {
     'invc220': {
         'name': "Advanced Magical Mobility",
-        'sidebar': 'gray',
+        'sidebar': 'hex',
     },
     'abjr322': {
         'name': "Protective Barriers II",
-        'sidebar': 'bars',
+        'sidebar': 'diamonds',
     },
     'invc301': {
         'name': "Thaumaturgical Aggression: Theory and Applications",
-        'sidebar': 'stripes',
+        'sidebar': 'circles',
     },
     'trns341': {
         'name': "Fundamental Techniques of Metamorphosis",
@@ -231,6 +231,7 @@ class WovenSpellCards():
         d = d.replace('{{SELF}}', 'You')
         d = d.replace('{{TEAMMATE}}', 'An ally within range')
         d = d.replace('{{OPPONENT}}', 'A foe within range')
+        d = d.replace('{{TEAMMATE_OR_OPPONENT}}', 'A foe or ally within range')
         d = d.replace('{{MAGE_LOCATION}}', 'Your location')
         d = d.replace('{{ROOM_OR_NEXT}}', 'Your location or neighboring')
         d = d.replace('{{PASSAGE_BETWEEN_ROOMS}}', 'Between your room and adjacent')
@@ -347,7 +348,7 @@ class WovenSpellCards():
         svg_ids.append('spell-description')
         #svg_ids.append('spell-description-4')
         svg_ids.append('class-name')
-        svg_ids.extend(['sidebar-{0}'.format(x) for x in ['gray', 'dots', 'stripes', 'bars']])
+        svg_ids.extend(['sidebar-{0}'.format(x) for x in ['hex', 'dots', 'circles', 'diamonds']])
         svg_ids.append('sidebar-clip')
         svg_ids.append('spell-info')
         svg_ids.append('rev-id')
@@ -577,6 +578,10 @@ def parse_options():
     
 def main():
     options = parse_options()
+    
+    # Force png output for spell cards.
+    options['png'] = True
+    
     cgen = WovenSpellCards(options)
     cgen.generate_cards()
 
