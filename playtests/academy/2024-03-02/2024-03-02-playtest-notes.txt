@@ -1,0 +1,116 @@
+Playtest
+2 Mar 2024
+
+2 player
+10 rooms
+7 mana
+Start with 4 monsters
+move 1/recover 1 mana each turn for free
+crystals appear when a certain # of spellsets are completed
+success = obtain 3 crystals
+
+
+
+Turn 1
+4 monsters: Pigeon, Birdman, Fox, Rooster
+Blue: (7), mana 3, cast 2
+Red: (7), mana 3 cast 2
+Spellsets: 1
+Defeat 2 monsters: Pigeon, Fox
+Attack 1, deflected with faux mana
+
+Turn 2
+Add Pigeon, respawn Pigeon x2, Fox
+Blue: recover 2+1 (7), mana 4, cast 3
+Red: recover 1+1 (6), mana 5, cast 4
+Spellsets: 2 + 3, reveal target
+Defeat 3 monsters: Pigeon, Fox, birdman
+Attack 0 - out of range
+
+Turn 3
+Add birdman, respawn Birdman x2, Pigeon, Fox, 
+Blue: recover 2+1 (6+1 shield), mana 1, cast 1
+Red: recover 3+1 (5+1 shield), mana 1, cast 1
+Spellsets: 4 + 0, gain target + potion
+Defeat 4 monsters: Pigeon, Birdman, Fox, Rooster
+Move: Pigeon 1, Birdman 2
+Attack: 2 (1 each) deflected by shield
+
+Turn 4
+Add Fox, respawn Pigeon, Birdman, Fox x2, Rooster
+Blue: recover 0+1 (4+1 shield), mana 1, cast 1
+Red: recover 3+1 (5), mana 3, cast 4
+Spellsets: 5 (bonus - genocide monster)
+Defeat 6 monsters: Pigeon x2, Birdman x2 (genocide), Fox x2
+Move: no
+Attack: not in range
+
+Turn 5
+Add Rooster, Replace Birdman with Wyrm, respawn Pigeon x2, Wyrm x2, Fox x2, Rooster
+Blue: recover 3+1 (5+s+p), mana 5, cast
+Red: recover 2+1 (4+s+p), mana 3, cast 
+Spellsets: 7 + 1
+Defeat 3 monsters: Wyrm, Rooster x2
+Attack 1 (because of bonus range) deflected with shield
+
+Turn 6
+Add Pigeon, respawn Pigeon, Wyrm, Rooster x2 - add target
+Blue: recover 3+1 (4+s+p), mana 1, cast 1
+Red: recover 4+1 (6+ss+p), mana 
+Spellset 9 (bonus genocide monster)
+Attack 1 (deflected)
+
+Turn 7
+Replace Wym, with Giant, Add Giant, respawn Pigeon, Giant x3, Fox, Rooster
+Blue: recover 3+1 (4+sss), mana 4, cast 3
+Red: recover 1+1 (4+s+p), mana 2, cast 2
+Spellset 10 +1 (potion bonus)
+
+Turn 8
+Add Fox, respawn, Pigeon, Giant, Fox x3
+Blue: recover 3+1 (4+sss+p)
+Red: recover 1+1 (3+ss+pp)
+Spellset: 11+2 (reveal target)
+
+Turn 9
+Add Rooster, respawn Giant, Fox, Rooster - add target to map
+Blue: recover 1+1
+Red: recover 1+1
+
+Acquire 3rd token
+
+
+Status at end
+9 turns
+11 spellsets to capture 3 tokens
+Players cast avg ~3 spells/turn
+Blue:
+	7 mana (5 in tapestry)
+	3 shields
+	0 potions + 2 in tapestry
+Red:
+	7 mana (5 in tapestry)
+	2 shields
+	1 potion + 1 in tapestry
+
+Recover covered mana + 1 felt good -- better tapestry shapes
+	More likely to choose to cover only 1 to build better tapestry shape because of bonus mana
+	Less desperate, more planning
+Single bonus move was fine as well
+	Not a big impact when Haste is available, however
+Goal of 3 crystals felt better than arbitrary # of spellsets
+	Kept focus on the map
+Bonuses associated with completing spellsets was good
+	Esp eliminate/replace monster, which could be used strategically
+A bit too easy to achieve goal:
+	10 rooms is probably too big for 2 players. go back to 8.
+
+Notes:
+Monsters always attack closest target - you choose only if multiple in same room
+Monster shields reset at the start of each turn
+	No need to track monster damage across turns
+Is Faux Mana too good? How hard is it to pass without that spell available?
+Movement doesn't need to be spent immediately
+	But is lost if not spent at end of turn
+	May need a way to track available movement points
+Better to remove all non-present monsters from deck at start of game

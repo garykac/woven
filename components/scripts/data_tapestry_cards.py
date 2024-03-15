@@ -4,10 +4,22 @@
 #   a e f w
 #   a e w f
 #   a f e w
-#   a w e f
 #   a f w e
+#   a w e f
 #   a w f e
-# 
+#   ...
+
+# Element split: 3+1
+# AEF - W
+# AEW - F
+# AFW - E
+# EFW - A
+
+# Element split: 2+2
+# AW - FE
+# AF - WE
+# AE - WF
+
 tapestry_card_data = [
 
     # +---------+       +---------+

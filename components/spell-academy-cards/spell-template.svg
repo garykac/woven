@@ -651,10 +651,10 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.8680241"
-     inkscape:cx="-67.183286"
-     inkscape:cy="129.81631"
+     inkscape:cx="112.41825"
+     inkscape:cy="136.24021"
      inkscape:document-units="mm"
-     inkscape:current-layer="layer4"
+     inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:snap-global="true"
      inkscape:window-width="1728"
@@ -1619,7 +1619,17 @@
            height="140.47121"
            id="rect4598" /></flowRegion><flowPara
          id="flowPara4602"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'Slabo 27px';-inkscape-font-specification:'Slabo 27px, '">Spell Description a very long description for this spell to see how the text looks.</flowPara></flowRoot>
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'Slabo 27px';-inkscape-font-specification:'Slabo 27px, '">Spell Description a very long description for this spell to see how the text looks.</flowPara><flowPara
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'Slabo 27px';-inkscape-font-specification:'Slabo 27px, '"
+         id="flowPara1">Line3</flowPara><flowPara
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'Slabo 27px';-inkscape-font-specification:'Slabo 27px, '"
+         id="flowPara2">Line4</flowPara><flowPara
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'Slabo 27px';-inkscape-font-specification:'Slabo 27px, '"
+         id="flowPara3">Line5</flowPara><flowPara
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'Slabo 27px';-inkscape-font-specification:'Slabo 27px, '"
+         id="flowPara4">Line6</flowPara><flowPara
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'Slabo 27px';-inkscape-font-specification:'Slabo 27px, '"
+         id="flowPara5">Line7</flowPara></flowRoot>
     <rect
        style="display:inline;fill:none;stroke:#000000;stroke-width:0.5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
        id="spell-pattern-border"
@@ -1635,7 +1645,7 @@
        x="9.4275799"
        y="11.164503" />
     <flowRoot
-       transform="matrix(0.26458333,0,0,0.26458333,1.8072589,41.511549)"
+       transform="matrix(0.26458333,0,0,0.26458333,1.8072589,43.09905)"
        xml:space="preserve"
        id="spell-info"
        style="font-style:normal;font-weight:normal;font-size:9.33333px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"><flowRegion
@@ -1672,7 +1682,7 @@
        sodipodi:nodetypes="ccccccccccccccccc" />
     <g
        id="range-0"
-       transform="translate(57.667107,-19.096248)"
+       transform="translate(57.667107,-17.508747)"
        style="display:inline"
        inkscape:label="range-0">
       <path
@@ -1682,7 +1692,7 @@
     </g>
     <g
        id="range-cards"
-       transform="translate(-4.0612153,-0.25842416)"
+       transform="translate(-4.0612153,1.3290758)"
        style="display:inline"
        inkscape:label="range-cards">
       <g
@@ -1735,7 +1745,7 @@
     </g>
     <g
        id="range-1"
-       transform="translate(62.958774,-19.096248)"
+       transform="translate(62.958774,-17.508747)"
        style="display:inline"
        inkscape:label="range-1">
       <path
@@ -1745,7 +1755,7 @@
     </g>
     <g
        id="range-2"
-       transform="translate(68.250441,-19.096248)"
+       transform="translate(68.250441,-17.508747)"
        style="display:inline"
        inkscape:label="range-2">
       <path

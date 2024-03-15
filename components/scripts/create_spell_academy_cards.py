@@ -207,13 +207,13 @@ class WovenSpellCards():
                 rdesc = [rdesc]
 
             # Add space between each paragraph group.
-            if len(desc) != 0:
-                desc.append('-')
+            #if len(desc) != 0:
+            #    desc.append('-')
 
             first = True
             for d in rdesc:
-                if not first:
-                    desc.append('-')
+                #if not first:
+                #    desc.append('-')
                 first = False
 
                 desc.append(self.fixup_desc(key, d))
