@@ -26,8 +26,10 @@ elem_map = {
 
 # Spell attributes
 spell_attributes = [
-    'element', 'pattern', 'id', 'range', 'class',
+    'element', 'pattern', 'id', 'range', 'syms', 'op',
 ]
+
+SYMBOLS = "abcdefghmrwyz"
 
 # Spell description keys
 spell_desc_keys = {
@@ -347,7 +349,7 @@ class WovenSpellCards():
         #svg_ids.append('spell-pattern-border-4')
         svg_ids.append('spell-description')
         #svg_ids.append('spell-description-4')
-        svg_ids.append('class-name')
+        #svg_ids.append('class-name')
         svg_ids.extend(['sidebar-{0}'.format(x) for x in ['hex', 'dots', 'circles', 'diamonds']])
         svg_ids.append('sidebar-clip')
         svg_ids.append('spell-info')
@@ -356,6 +358,11 @@ class WovenSpellCards():
         svg_ids.append('spell-id-border')
         svg_ids.append('range-cards')
         svg_ids.extend(['range-{0}'.format(x) for x in range(3)])
+        #for x in list(SYMBOLS):
+        #    svg_ids.append(f'{x}-master')
+        svg_ids.extend([f'{x}-master' for x in list(SYMBOLS)])
+        svg_ids.append('sym-master-extra')
+        svg_ids.extend([f'op-{x}' for x in ['or2', 'combine']])
 
         svg.load_ids(CARD_TEMPLATE, svg_ids)
 
@@ -365,6 +372,9 @@ class WovenSpellCards():
         SVG.add_node(svg_group, g_masters)
         for (e,elem) in elem_map.items():
             svg.add_loaded_element(g_masters, f"element-{elem}")
+        for sym in list(SYMBOLS):
+            svg.add_loaded_element(g_masters, f"{sym}-master")
+        svg.add_loaded_element(g_masters, f"sym-master-extra")
 
         svg.add_loaded_element(svg_group, 'card-border')
 
@@ -373,16 +383,16 @@ class WovenSpellCards():
         SVG.set_text(title, name)
 
         # Draw class name.
-        classname = svg.add_loaded_element(svg_group, 'class-name')
-        SVG.set_text(classname, class_names[attrs['class']]['name'])
+        #classname = svg.add_loaded_element(svg_group, 'class-name')
+        #SVG.set_text(classname, class_names[attrs['class']]['name'])
 
         # Draw sidebar for class.
-        clip = svg.get_loaded_path(f"sidebar-clip")
-        clipid = svg.add_clip_path(None, clip)
-        sidebar_name = class_names[attrs['class']]['sidebar']
-        sidebar = svg.get_loaded_path(f"sidebar-{sidebar_name}")
-        sidebar.set("clip-path", f"url(#{clipid})")
-        SVG.add_node(svg_group, sidebar)
+        #clip = svg.get_loaded_path(f"sidebar-clip")
+        #clipid = svg.add_clip_path(None, clip)
+        #nsidebar_name = class_names[attrs['class']]['sidebar']
+        #sidebar = svg.get_loaded_path(f"sidebar-{sidebar_name}")
+        #sidebar.set("clip-path", f"url(#{clipid})")
+        #SVG.add_node(svg_group, sidebar)
 
         # Draw spell id.
         revision_text = svg.add_loaded_element(svg_group, 'rev-id')
@@ -400,15 +410,34 @@ class WovenSpellCards():
             spellDesc = svg.add_loaded_element(svg_group, 'spell-description')
         spellInfo = svg.add_loaded_element(svg_group, 'spell-info')
 
+        syms = attrs['syms']
+        symOp = attrs['op']
+        if symOp != 'gen':
+            svg.add_loaded_element(svg_group, f'op-{symOp}')
+        symCount = len(syms)
+        symOffset = -(7*(symCount-1))
+        symDelta = 14
+        if symOp == "or2":
+            symOffset = -(9*(symCount-1))
+            symDelta = 18
+        if symOp == "combine":
+            symOffset = -(10*(symCount-1))
+            symDelta = 20
+        for s in syms:
+            #svg.add_loaded_element(svg_group, f'{s}-master')
+            eleclone = SVG.clone(0, f"#{s}-master", symOffset, 0)
+            symOffset += symDelta
+            SVG.add_node(svg_group, eleclone)
+
         # Draw range.
-        spell_range = attrs['range']
-        svg.add_loaded_element(svg_group, 'range-cards')
-        for r in list(spell_range):
-            svg.add_loaded_element(svg_group, f'range-{r}')
+        #spell_range = attrs['range']
+        #svg.add_loaded_element(svg_group, 'range-cards')
+        #for r in list(spell_range):
+        #    svg.add_loaded_element(svg_group, f'range-{r}')
             
         # Draw description/pattern.
-        SVG.set_text(spellDesc, self.expand_desc(desc))
-        SVG.set_text(spellInfo, self.expand_info(desc))
+        #SVG.set_text(spellDesc, self.expand_desc(desc))
+        #SVG.set_text(spellInfo, self.expand_info(desc))
         self.draw_pattern(pattern_id, pattern, element, svg_group)
 
     def draw_pattern(self, id, pattern_raw, element, svg_group):        
@@ -421,8 +450,8 @@ class WovenSpellCards():
         pwidth = len(pattern[0])
 
         # Size and spacing for each box in pattern.
-        box_size = 6
-        box_spacing = 7.5
+        box_size = 7.5
+        box_spacing = 9
 
         # Max pattern width that fits on the card.
         max_width = 7
@@ -438,9 +467,9 @@ class WovenSpellCards():
         # Tall spells need to use larger pattern area.
         max_height = pheight
         if pheight == 4:
-            pcenter_y = 25.4 + 2.2
+            pcenter_y = 23.9 + 2.2
         else:
-            pcenter_y = 22.4 + 2.1
+            pcenter_y = 23.9 + 2.1
         py0 = pcenter_y - (((max_height-1) * box_spacing) + box_size) / 2
 
         dot_x0 = px0 + (box_size / 2)

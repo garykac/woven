@@ -1,6 +1,6 @@
 # Woven Academy spell card data
 
-spell_card_revision = 16
+spell_card_revision = 17
 
 spell_card_data = [
 
@@ -11,13 +11,13 @@ spell_card_data = [
     #
 
     ["Haste",
-        {'element': 'air', 'pattern': 'E2-5', 'range': '01', 'class': "invc220",
+        {'element': 'air', 'pattern': 'E2-5', 'range': '01', 'syms': 'aa', 'op': 'gen',
         }, {
             'target': "{{SELF_OR_TEAMMATE}}",
             'cast': "Target moves 2 spaces",
         } ],
     ["Migrate",
-        {'element': 'fire', 'pattern': 'E2-40', 'range': '01', 'class': "invc220",
+        {'element': 'fire', 'pattern': 'E2-40', 'range': '01', 'syms': 'bb', 'op': 'gen',
         }, {
             'target': "{{SELF_OR_TEAMMATE}}",
             'cast': [
@@ -27,7 +27,7 @@ spell_card_data = [
             ],
         } ],
     ["Push-pull",
-        {'element': 'earth', 'pattern': 'E2-59', 'range': '012', 'class': "invc220",
+        {'element': 'earth', 'pattern': 'E2-59', 'range': '012', 'syms': 'ace', 'op': 'combine',
         }, {
             'target': "{{TEAMMATE_OR_OPPONENT}}",
             'cast': [
@@ -39,7 +39,7 @@ spell_card_data = [
             ],
         } ],
     ["Blink",
-        {'element': 'water', 'pattern': 'E2-28', 'range': '0', 'class': "invc220",
+        {'element': 'water', 'pattern': 'E2-28', 'range': '0', 'syms': 'dd', 'op': 'gen',
         }, {
             'target': "{{SELF_OR_TEAMMATE}}",
             'cast': [
@@ -56,7 +56,7 @@ spell_card_data = [
     #
 
     ["Redirect",
-        {'element': 'air', 'pattern': 'E2-8', 'range': '01', 'class': "abjr322",
+        {'element': 'air', 'pattern': 'E2-8', 'range': '01', 'syms': 'ab', 'op': 'or2',
         }, {
             'target': "{{SELF_OR_TEAMMATE}}",
             'cast': [
@@ -66,7 +66,7 @@ spell_card_data = [
             ],
         } ],
     ["Glowing Sphere",
-        {'element': 'fire', 'pattern': 'E2-12', 'range': '0', 'class': "abjr322",
+        {'element': 'fire', 'pattern': 'E2-12', 'range': '0', 'syms': 'bde', 'op': 'combine',
         }, {
             'target': "{{MAGE_LOCATION}}",
             'cast': [
@@ -76,7 +76,7 @@ spell_card_data = [
             ],
         } ],
     ["Stonewall",
-        {'element': 'earth', 'pattern': 'E2-6', 'range': '0', 'class': "abjr322",
+        {'element': 'earth', 'pattern': 'E2-6', 'range': '0', 'syms': 'ad', 'op': 'or2',
         }, {
             'target': "{{PASSAGE_BETWEEN_ROOMS}}",
             'cast': [
@@ -86,7 +86,7 @@ spell_card_data = [
             ],
         } ],
     ["Faux Mana",
-        {'element': 'water', 'pattern': 'E2-32', 'range': '01', 'class': "abjr322",
+        {'element': 'water', 'pattern': 'E2-32', 'range': '01', 'syms': 'bc', 'op': 'or2',
         }, {
             'target': "{{SELF_OR_TEAMMATE}}",
             'cast': [
@@ -103,13 +103,13 @@ spell_card_data = [
     #
 
     ["Bodyslam",
-        {'element': 'air', 'pattern': 'E2-14', 'range': '01', 'class': "invc301",
+        {'element': 'air', 'pattern': 'E2-14', 'range': '01', 'syms': 'bd', 'op': 'or2',
         }, {
             'target': "{{OPPONENT}}",
             'cast': "Two targets in the same location are lifted into the air and smacked into each other, causing an attack to each.",
         } ],
     ["Fireball",
-        {'element': 'fire', 'pattern': 'E2-35', 'range': '012', 'class': "invc301",
+        {'element': 'fire', 'pattern': 'E2-35', 'range': '012', 'syms': 'cd', 'op': 'or2',
         }, {
             'target': "{{OPPONENT}}",
             'cast': [
@@ -119,7 +119,7 @@ spell_card_data = [
             ],
         } ],
     ["Trap",
-        {'element': 'earth', 'pattern': 'E2-30', 'range': '01', 'class': "invc301",
+        {'element': 'earth', 'pattern': 'E2-30', 'range': '01', 'syms': 'abf', 'op': 'combine',
         }, {
             'target': "{{ROOM_OR_NEXT}}",
             'cast': [
@@ -129,7 +129,7 @@ spell_card_data = [
             ],
         } ],
     ["Icicle Darts",
-        {'element': 'water', 'pattern': 'E2-27', 'range': '012', 'class': "invc301",
+        {'element': 'water', 'pattern': 'E2-27', 'range': '012', 'syms': 'cc', 'op': 'gen',
         }, {
             'target': "{{OPPONENT}}",
             'cast': [
@@ -146,7 +146,7 @@ spell_card_data = [
     #
 
     ["Dive Bomb",
-        {'element': 'air', 'pattern': 'E2-15', 'range': '0', 'class': "trns341",
+        {'element': 'air', 'pattern': 'E2-15', 'range': '0', 'syms': 'ade', 'op': 'combine',
         }, {
             'target': "{{SELF_OR_TEAMMATE}}",
             'cast': [
@@ -158,7 +158,7 @@ spell_card_data = [
             ],
         } ],
     ["Burning Tyger",
-        {'element': 'fire', 'pattern': 'E2-44', 'range': '0', 'class': "trns341",
+        {'element': 'fire', 'pattern': 'E2-44', 'range': '0', 'syms': 'bcf', 'op': 'combine',
         }, {
             'target': "{{SELF_OR_TEAMMATE}}",
             'cast': [
@@ -170,13 +170,13 @@ spell_card_data = [
             ],
         } ],
     ["Trample",
-        {'element': 'earth', 'pattern': 'E2-1', 'range': '0', 'class': "trns341",
+        {'element': 'earth', 'pattern': 'E2-1', 'range': '0', 'syms': 'ac', 'op': 'or2',
         }, {
             'target': "{{SELF_OR_TEAMMATE}}",
             'cast': "Target transforms into a stallion and charges into a neighboring room to trample-attack a foe there.",
         } ],
-    ["Fang",
-        {'element': 'water', 'pattern': 'E2-31', 'range': '0', 'class': "trns341",
+    ["Black Fang",
+        {'element': 'water', 'pattern': 'E2-31', 'range': '0', 'syms': 'cdf', 'op': 'combine',
         }, {
             'target': "{{SELF_OR_TEAMMATE}}",
             'cast': [
