@@ -115,8 +115,12 @@ class WovenSpellCards():
             ['E1', 9],
             ['E2', 162],
             ['E3', 34],
-            ['EE1', 7],
-            ['EE2', 8],
+            ['EE1-1', 3],
+            ['EE1-2', 4],
+            ['EE1-3', 5],
+            ['EE2-1', 14],
+            ['EE2-2', 21],
+            ['EE2-3', 25],
         ]
         for key in simple:
             self.check_pattern(key)

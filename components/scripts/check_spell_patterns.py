@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import os
+import re
 import sys
 
 from data_spell_patterns import spell_card_patterns
@@ -33,8 +34,12 @@ class CheckSpellPatterns():
             'E1': 9,
             'E2': 162,
             'E3': 34,
-            'EE1': 7,
-            'EE2': 8,
+            'EE1-1': 3,
+            'EE1-2': 4,
+            'EE1-3': 5,
+            'EE2-1': 14,
+            'EE2-2': 21,
+            'EE2-3': 25,
         }
 
         self.valid_elements = ['none', 'air', 'fire', 'earth', 'water']
@@ -45,8 +50,11 @@ class CheckSpellPatterns():
         # Dict of pattern transformations for current pattern.
         self.newPatterns = {}
         
-        # Doct of all possible patterns -> canonical pattern id.
+        # Dict of all possible patterns -> canonical pattern id.
         self.patterns = {}
+
+        # Options
+        self.checkMissing = True
 
     #
     # DATA VALIDATION
@@ -59,9 +67,17 @@ class CheckSpellPatterns():
     def patternFromKey(self, pKey):
         return pKey.split('/')
 
+    def calcNumElements(self, id):
+        if id.startswith('N'):
+            return 0
+        # The number of 'E's at the start of the pattern indicates the number of elements.
+        m = re.match(r"([E]+)\d", id)
+        return len(m.group(1))
+
     def calcNumThreads(self, id):
-        # TODO
-        return 2
+        # First value after the "E"s is the thread count.
+        m = re.search(r"[^EN]", id)
+        return int(id[m.start()])
         
     def checkPatterns(self, base):
         nPatterns = self.ranges[base]
@@ -72,7 +88,9 @@ class CheckSpellPatterns():
             self.mergeNewPatterns(id)
             self.countNewPatternTransforms(id)
 
-        self.scanForMissingPatterns()
+        if self.checkMissing:
+            self.scanForMissingPatterns()
+  
         # Check one beyond the last to verify the ranges are correct.
         id = f"{base}-{nPatterns+1}"
         if id in self.spellPatterns:
@@ -85,17 +103,17 @@ class CheckSpellPatterns():
         debug = False
 
         # Generate all possible permutation of the spell pattern.
-        pattern = self.normalizePattern(id)
-        self.addNewPatternTransforms(pattern, debug)
+        for pattern in self.generatePatterns(id):
+            self.addNewPatternTransforms(pattern, debug)
 
-        pattern = self.rotateCW(pattern)
-        self.addNewPatternTransforms(pattern, debug)
+            pattern = self.rotateCW(pattern)
+            self.addNewPatternTransforms(pattern, debug)
 
-        pattern = self.rotateCW(pattern)
-        self.addNewPatternTransforms(pattern, debug)
+            pattern = self.rotateCW(pattern)
+            self.addNewPatternTransforms(pattern, debug)
 
-        pattern = self.rotateCW(pattern)
-        self.addNewPatternTransforms(pattern, debug)
+            pattern = self.rotateCW(pattern)
+            self.addNewPatternTransforms(pattern, debug)
         
     def addNewPatternTransforms(self, pattern, debug):
         self.addNewPattern(pattern, debug)
@@ -183,12 +201,13 @@ class CheckSpellPatterns():
         for r in pattern:
             print(' '.join(r))
     
-    def normalizePattern(self, id):
+    def generatePatterns(self, id):
         pattern = self.spellPatterns[id]['pattern']
-        origin = None
         y = 0
         num_cols = 0
         threads = []
+        elements = []
+        #print(id, pattern)
         for row in pattern:
             cells = row.split()
             if y == 0:
@@ -199,27 +218,39 @@ class CheckSpellPatterns():
             x = 0
             for c in cells:
                 if c == '@':
-                    if origin != None:
-                        raise Exception(f"Pattern {id}: Multiple '@'")
-                    origin = (x,y)
+                    elements.append((x,y))
                 elif c == 'X':
                     threads.append((x,y))
                 elif c != '.': 
                     raise Exception("Pattern {id}: Invalid cell: {c}")
                 x += 1
             y += 1
-        if len(threads) != self.calcNumThreads(id):
-            raise Exception(f"Pattern {id}: Wrong number of threads: {threads}")
-        if origin == None:
-            raise Exception(f"Pattern {id}: Missing '@'")
-            
-        normPat = [["." for j in range(0,7)] for i in range(0,7)]
-        normPat[3][3] = '@'
-        for t in threads:
-            x = t[0] - origin[0] + 3
-            y = t[1] - origin[1] + 3
-            normPat[y][x] = 'X'
-        return normPat
+
+        numThreads = self.calcNumThreads(id)
+        if len(threads) != numThreads:
+            raise Exception(f"Pattern {id}: Wrong number of threads: {len(threads)} (expected {numThreads})")
+
+        # Do we have the correct number of elements in the pattern?
+        if len(elements) != self.calcNumElements(id):
+            raise Exception(f"Pattern {id}: Wrong number of '@' elements"
+                        f" (expected {self.calcNumElements(id)} found {len(elements)})")
+
+        # Determine which element to use as the origin for the normalized form.
+        normPatterns = []
+        for i in range(0, len(elements)):
+            origin = elements[i]
+            normPat = [["." for j in range(0,7)] for i in range(0,7)]
+            for t in threads:
+                x = t[0] - origin[0] + 3
+                y = t[1] - origin[1] + 3
+                normPat[y][x] = 'X'
+            for e in elements:
+                x = e[0] - origin[0] + 3
+                y = e[1] - origin[1] + 3
+                normPat[y][x] = '@'
+            #print(self.patternKey(normPat))
+            normPatterns.append(normPat)
+        return normPatterns
 
     def rotateCW(self, pattern):
         return list(zip(*pattern[::-1]))
@@ -242,7 +273,22 @@ def _pattern_sort_(x):
 
 def main():
     cpat = CheckSpellPatterns()
+    cpat.checkMissing = False
+    cpat.checkPatterns('N2')
+    cpat.checkPatterns('N3')
+    cpat.checkPatterns('E1')
+
+    cpat.checkMissing = True
     cpat.checkPatterns('E2')
+    cpat.checkMissing = False
+
+    #cpat.checkPatterns('E3')
+    cpat.checkPatterns('EE1-1')
+    cpat.checkPatterns('EE1-2')
+    cpat.checkPatterns('EE1-3')
+    cpat.checkPatterns('EE2-1')
+    cpat.checkPatterns('EE2-2')
+    cpat.checkPatterns('EE2-3')
 
 if __name__ == '__main__':
     main()
