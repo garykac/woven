@@ -194,6 +194,7 @@ from data_spell_patterns_e3 import spell_patterns_e3
 from data_spell_patterns_ee1 import spell_patterns_ee1
 from data_spell_patterns_ee2 import spell_patterns_ee2
 from data_spell_patterns_ee3 import spell_patterns_ee3
+from data_spell_patterns_eee1 import spell_patterns_eee1
 
 spell_card_patterns = {
 
@@ -213,12 +214,6 @@ spell_card_patterns = {
     # +---+
     'N1':       {'elements': 'none',
                  'pattern': [   "X",   ]},
-
-    #  _____ _                   _       _    ___      _      ___   
-    # |   __| |___ _____ ___ ___| |_ ___| |  |_  |   _| |_   |_  |  
-    # |   __| | -_|     | -_|   |  _| .'| |  |_  |  |_   _|   _| |_ 
-    # |_____|_|___|_|_|_|___|_|_|_| |__,|_|  |___|    |_|    |_____|
-    #
 
     #  _____ _                   _       _    ___      _      ___ 
     # |   __| |___ _____ ___ ___| |_ ___| |  |_  |   _| |_   |_  |
@@ -248,3 +243,6 @@ spell_card_patterns.update(spell_patterns_e3)
 spell_card_patterns.update(spell_patterns_ee1)
 spell_card_patterns.update(spell_patterns_ee2)
 spell_card_patterns.update(spell_patterns_ee3)
+
+# Triple Elemental spells (with 1-3 threads)
+spell_card_patterns.update(spell_patterns_eee1)
