@@ -148,6 +148,7 @@ Attack: vs Red: x7, vs Green x5 (incl 2 double attacks)
 
 
 Summary:
+	16 turns
 	17 cards in each tapestry. 34 Tapestry cards used.
 	Churned through 6 monsters at the start. Made monsters static after turn 5
 		The churn at the start felt too fast

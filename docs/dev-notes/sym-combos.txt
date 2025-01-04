@@ -1,0 +1,85 @@
+
+
+
+    a    b    c    d    e    f    g    h    m    r   w    y    z
+
+a
+
+b
+
+c
+
+d
+
+e
+
+f
+
+g
+
+h
+
+m
+
+r
+
+w
+
+y
+
+z
+
+
+aa
+bb
+cc
+dd
+a | b
+a | c
+a | d
+b | c
+b | d
+c | d
+
+a + b -> f
+a + c -> e
+a + d -> e
+b + c -> f
+b + d -> e
+c + d -> f
+
+
+Player abilities
+Bonuses:
+			Potions:
+*	PotBoost	mana boost (extra/temp mana)
+*	Pot+2		restore 2 mana
+*	PotRes		restore all mana
+*	Elem	cover an active element
+*	Deflect	deflect an attack
+*	Glyph	cover a monster glyph
+	Spell+	increase active spell size
+*	Push	push back monster (will return next turn)
+
+Bonus when monster is defeated
+	draw 2 randomly
+
+Monsters:
+score: abcd=1, ef=3
+
+        a    b    c    d    e    f   score
+        2         1         1          6   Boar
+        3    1    2    1               7   Mandragora
+                            1    1     6   Birdman
+             1    1    1         1     6   Wyrm
+        1    1         1    1    1     9   Griffin
+             2    3         1          8   Peryton
+                       5               5   Rooster
+                  1              2     7   Fox
+             2         1    2          9   Unicorn
+        1    1    2              1     7   Pigeon
+        2    4         2               8   Giant
+        2              1    1          6   Hare
+        1         2              1     6   Catoblepas
+    ---------------------------------------
+       12   12   12   12    7    7
