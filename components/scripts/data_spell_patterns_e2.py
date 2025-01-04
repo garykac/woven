@@ -59,7 +59,7 @@ spell_patterns_e2 = {
                                 "X X",   ]},
 
     # +-------+  Level 2          Transforms  7 2 5
-    # | . @ X |  Threads 2                    4 @ 1        
+    # | . @ X |  Threads 2                    4 @ 1
     # | X . . |  Cards 1                      1 6 3
     # +-------+  Transform 7: 8/2
     'E2-4':     {'elements': 'aefw',
