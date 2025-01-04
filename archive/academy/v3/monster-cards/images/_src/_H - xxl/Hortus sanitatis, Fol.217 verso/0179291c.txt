@@ -1,0 +1,58 @@
+Work Record ID	0179291
+Licence	<a href = "https://creativecommons.org/licenses/by/3.0/" target="_blank"><img src = "https://images.is.ed.ac.uk/graphics/by.jpg"/></a>
+Shelfmark	CRC Inc.F.9
+Holding Institution	University of Edinburgh
+Title	Hortus sanitatis
+Subset Index	Fol.217 verso
+Sequence	0442
+Creator	Cuba, Johannes von
+Date	ca.1497
+Description	Woodcuts throughout some hand-coloured
+Production Place	Strasbourg
+Subject Category	Medicine
+Subject Category	Medieval. Botany
+Subject Category	Medical. Herbs.
+Related Work Page No	Fol.217 verso
+Rights Statement	Out of Copyright.
+Repro File Type	Cropped TIFF
+Repro Title	Hortus sanitatis, Fol.217 verso
+Repro Rights Statement	Copyright The University of Edinburgh.
+Repro Publication Status	Full Public Access
+ObjectName	Title: Hortus sanitatis; Author: Cuba, Johannes von; Page No: Fol.217 verso; Shelfmark: CRC Inc.F.9; Date: ca.1497
+Caption	Collection: Incunabula; Persons: N/A; Event: N/A; Place: N/A; Category: Medicine; Medieval. Botany; Medical. Herbs.; Description: Woodcuts throughout some hand-coloured
+CharacterSet	%G
+Headline	0179291
+RecordVersion	0
+Copyright	Digital Image: Copyright The University of Edinburgh. Original: Out of Copyright.
+History[2]/stEvt:action	saved
+CreatorContactInfo/Iptc4xmpCore:CiAdrCtry	UK
+History[1]/stEvt:when	2019-08-22T14:00:44+01:00
+History[2]/stEvt:softwareAgent	Adobe Photoshop CC 2018 (Windows)
+History[2]/stEvt:when	2019-08-29T11:12:20+01:00
+History[1]/stEvt:instanceID	xmp.iid:131c131c-a7f0-b743-89f1-59777e24ecb7
+CreatorContactInfo/Iptc4xmpCore:CiTelWork	0131 650 8379
+History[1]	type=Struct
+format	image/tiff
+DocumentID	adobe:docid:photoshop:9c8e2a1a-39d4-8b4f-b3c7-bd68b10b5ccd
+MetadataDate	2019-08-29T11:12:20+01:00
+History[2]/stEvt:instanceID	xmp.iid:848cebfa-fccf-5c49-b94e-19f209471ecd
+CreatorContactInfo/Iptc4xmpCore:CiAdrCity	Edinburgh
+creator	Digital Imaging Unit
+CreatorContactInfo/Iptc4xmpCore:CiEmailWork	is-crc@ed.ac.uk
+History[2]/stEvt:changed	/
+History[1]/stEvt:softwareAgent	Adobe Photoshop CC 2018 (Windows)
+ModifyDate	2019-08-29T11:12:20+01:00
+CreatorContactInfo/Iptc4xmpCore:CiUrlWork	http://www.lib.ed.ac.uk/resources/collections/crc/index.html
+OriginalDocumentID	xmp.did:131c131c-a7f0-b743-89f1-59777e24ecb7
+History[1]/stEvt:action	created
+ICCProfile	Adobe RGB (1998)
+History[2]	type=Struct
+CreateDate	2019-08-22T14:00:44+01:00
+History	type=Seq
+CreatorContactInfo/Iptc4xmpCore:CiAdrExtadr	Centre for Research Collections, The University of Edinburgh, George Square
+description	lang=x-default 9291 - Left
+CreatorTool	Capture v2.4.0
+ColorMode	3
+InstanceID	xmp.iid:848cebfa-fccf-5c49-b94e-19f209471ecd
+CreatorContactInfo/Iptc4xmpCore:CiAdrPcode	EH8 9LJ
+CreatorContactInfo	type=Struct

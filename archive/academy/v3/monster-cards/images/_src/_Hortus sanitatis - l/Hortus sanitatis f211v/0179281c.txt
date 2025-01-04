@@ -1,0 +1,57 @@
+Work Record ID	0179281
+Licence	<a href = "https://creativecommons.org/licenses/by/3.0/" target="_blank"><img src = "https://images.is.ed.ac.uk/graphics/by.jpg"/></a>
+Shelfmark	CRC Inc.F.9
+Holding Institution	University of Edinburgh
+Title	Hortus sanitatis
+Subset Index	Fol.211 verso
+Sequence	0430
+Creator	Cuba, Johannes von
+Date	ca.1497
+Description	Woodcuts throughout some hand-coloured
+Production Place	Strasbourg
+Subject Category	Medicine
+Subject Category	Medieval. Botany
+Subject Category	Medical. Herbs.
+Related Work Page No	Fol.211 verso
+Rights Statement	Out of Copyright.
+Repro File Type	Cropped TIFF
+Repro Title	Hortus sanitatis, Fol.211 verso
+Repro Rights Statement	Copyright The University of Edinburgh.
+Repro Publication Status	Full Public Access
+ObjectName	Title: Hortus sanitatis; Author: Cuba, Johannes von; Page No: Fol.211 verso; Shelfmark: CRC Inc.F.9; Date: ca.1497
+Caption	Collection: Incunabula; Persons: N/A; Event: N/A; Place: N/A; Category: Medicine; Medieval. Botany; Medical. Herbs.; Description: Woodcuts throughout some hand-coloured
+Headline	0179281
+RecordVersion	0
+Copyright	Digital Image: Copyright The University of Edinburgh. Original: Out of Copyright.
+History[2]/stEvt:action	saved
+CreatorContactInfo/Iptc4xmpCore:CiAdrCtry	UK
+History[1]/stEvt:when	2019-08-22T14:00:21+01:00
+History[2]/stEvt:softwareAgent	Adobe Photoshop CC 2018 (Windows)
+History[2]/stEvt:when	2019-08-29T11:07:26+01:00
+History[1]/stEvt:instanceID	xmp.iid:f9d37d20-1064-484d-b459-17d484ae451b
+CreatorContactInfo/Iptc4xmpCore:CiTelWork	0131 650 8379
+History[1]	type=Struct
+format	image/tiff
+DocumentID	adobe:docid:photoshop:15a915ae-c273-9c40-8f50-6824f99355d7
+MetadataDate	2019-08-29T11:07:26+01:00
+History[2]/stEvt:instanceID	xmp.iid:52043380-b7f5-5e44-95d4-68f2181d6638
+CreatorContactInfo/Iptc4xmpCore:CiAdrCity	Edinburgh
+creator	Digital Imaging Unit
+CreatorContactInfo/Iptc4xmpCore:CiEmailWork	is-crc@ed.ac.uk
+History[2]/stEvt:changed	/
+History[1]/stEvt:softwareAgent	Adobe Photoshop CC 2018 (Windows)
+ModifyDate	2019-08-29T11:07:26+01:00
+CreatorContactInfo/Iptc4xmpCore:CiUrlWork	http://www.lib.ed.ac.uk/resources/collections/crc/index.html
+OriginalDocumentID	xmp.did:f9d37d20-1064-484d-b459-17d484ae451b
+History[1]/stEvt:action	created
+ICCProfile	Adobe RGB (1998)
+History[2]	type=Struct
+CreateDate	2019-08-22T14:00:21+01:00
+History	type=Seq
+CreatorContactInfo/Iptc4xmpCore:CiAdrExtadr	Centre for Research Collections, The University of Edinburgh, George Square
+description	lang=x-default 9281 - Left
+CreatorTool	Capture v2.4.0
+ColorMode	3
+InstanceID	xmp.iid:52043380-b7f5-5e44-95d4-68f2181d6638
+CreatorContactInfo/Iptc4xmpCore:CiAdrPcode	EH8 9LJ
+CreatorContactInfo	type=Struct
