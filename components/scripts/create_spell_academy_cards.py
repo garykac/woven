@@ -4,6 +4,8 @@
 import datetime
 import getopt
 import os
+import platform
+import subprocess
 import sys
 
 from svg_card_gen import SVGCardGen
@@ -26,44 +28,10 @@ elem_map = {
 
 # Spell attributes
 spell_attributes = [
-    'element', 'pattern', 'id', 'range', 'syms', 'op',
+    'element', 'pattern', 'id', 'syms', 'starter', 'flavor',
 ]
 
-SYMBOLS = "abcdefghmrwyz"
-
-# Spell description keys
-spell_desc_keys = {
-    'cast': {
-    },
-    'note': {
-    },
-}
-
-# Spell info keys (appear at bottom of card).
-spell_info_keys = {
-    'target': {
-        'prefix': "Target",
-    },
-}
-
-class_names = {
-    'invc220': {
-        'name': "Advanced Magical Mobility",
-        'sidebar': 'hex',
-    },
-    'abjr322': {
-        'name': "Protective Barriers II",
-        'sidebar': 'diamonds',
-    },
-    'invc301': {
-        'name': "Thaumaturgical Aggression: Theory and Applications",
-        'sidebar': 'circles',
-    },
-    'trns341': {
-        'name': "Fundamental Techniques of Metamorphosis",
-        'sidebar': 'dots',
-    },
-}
+SYMBOLS = "acefgwy"
 
 OUTPUT_DIR = os.path.join('..', 'spell-academy-cards')
 CARD_TEMPLATE = os.path.join(OUTPUT_DIR, 'spell-template.svg')
@@ -79,7 +47,6 @@ class WovenSpellCards():
         self.id2name = {}
         self.id2pattern = {}
         self.id2attrs = {}
-        self.id2desc = {}
         self.pattern2id = {}
         self.max_id = 0
         self.blank_count = 0
@@ -114,8 +81,12 @@ class WovenSpellCards():
             ['E1', 9],
             ['E2', 162],
             ['E3', 34],
-            ['EE1', 7],
-            ['EE2', 8],
+            ['EE1-1', 3],
+            ['EE1-2', 4],
+            ['EE1-3', 5],
+            ['EE2-1', 14],
+            ['EE2-2', 21],
+            ['EE2-3', 25],
         ]
         for key in simple:
             self.check_pattern(key)
@@ -177,96 +148,6 @@ class WovenSpellCards():
         if not attrs['pattern'] in self.card_patterns:
             raise Exception("{0:s}: Invalid pattern: {1}".format(name, attrs['pattern']))
 
-    def validate_desc(self, name, desc):
-        # Ensure all keys are valid.
-        for key in desc.keys():
-            if not key in spell_desc_keys and not key in spell_info_keys:
-                raise Exception("{0:s}: Unknown key: {1:s}".format(name, key))
-
-    def expand_info(self, raw_desc):
-        info = []
-        for key in spell_info_keys:
-            if not key in raw_desc:
-                continue
-            rdesc = raw_desc[key]
-            info.append(self.fixup_info(key, rdesc))
-        return info
-    
-    def fixup_info(self, key, d):
-        d = self.desc_info_replace(d)
-        if 'prefix' in spell_info_keys[key]:
-            prefix = spell_info_keys[key]['prefix']
-            return f"{prefix}: {d}"
-        return d
-
-    def expand_desc(self, raw_desc):
-        desc = []
-        for key in spell_desc_keys:
-            if not key in raw_desc:
-                continue
-            rdesc = raw_desc[key]
-            if not isinstance(rdesc, list):
-                rdesc = [rdesc]
-
-            # Add space between each paragraph group.
-            #if len(desc) != 0:
-            #    desc.append('-')
-
-            first = True
-            for d in rdesc:
-                #if not first:
-                #    desc.append('-')
-                first = False
-
-                desc.append(self.fixup_desc(key, d))
-        return desc
-
-    def fixup_desc(self, key, d):
-        if 'prefix' in spell_desc_keys[key]:
-            prefix = spell_desc_keys[key]['prefix']
-            return f"{prefix}: {d}"
-        return d
-
-    def desc_info_replace(self, d):
-        # Targets
-        d = d.replace('{{SELF_OR_TEAMMATE}}', 'You or an ally within range')
-        d = d.replace('{{SELF}}', 'You')
-        d = d.replace('{{TEAMMATE}}', 'An ally within range')
-        d = d.replace('{{OPPONENT}}', 'A foe within range')
-        d = d.replace('{{TEAMMATE_OR_OPPONENT}}', 'A foe or ally within range')
-        d = d.replace('{{MAGE_LOCATION}}', 'Your location')
-        d = d.replace('{{ROOM_OR_NEXT}}', 'Your location or neighboring')
-        d = d.replace('{{PASSAGE_BETWEEN_ROOMS}}', 'Between your room and adjacent')
-        d = d.replace('{{SEE_DESC}}', 'See description')
-        
-        return d
-   
-    def record_spell_info(self, name, pattern, attrs, desc):
-        id = attrs['id']
-        self.name2id[name] = id
-        self.id2name[id] = name
-        if id > self.max_id:
-            self.max_id = id
-
-        self.id2pattern[id] = pattern
-        self.id2attrs[id] = attrs
-        self.id2desc[id] = desc
-        
-        pattern_id = attrs['pattern']
-        if pattern_id == 'blank':
-            self.blank_count += 1
-        else:
-            pattern_key = f"{pattern_id}:{attrs['element']}"
-            if pattern_key in self.pattern2id:
-                dup_id = self.pattern2id[pattern_key]
-                raise Exception("{0:s}: Pattern {1:s} already assigned to {2:d} ({3:s})"
-                      .format(name, pattern_key, dup_id, self.id2name[dup_id]))
-            self.pattern2id[pattern_key] = id
-
-        element = attrs['element']
-        if not element in self.elements:
-            self.elements[element] = []
-        self.elements[element].append(id)
         
     #
     # CARD GENERATION
@@ -308,26 +189,21 @@ class WovenSpellCards():
         id = metadata['id']
         name = card[0]
         attrs = card[1]
-        desc = card[2]
 
         # Validate attributes
         self.validate_attrs(name, attrs)
         pattern_id = attrs['pattern']
         pattern = self.card_patterns[pattern_id]['pattern']
-        self.record_spell_info(name, pattern, attrs, desc)
         
         # Make sure pattern is not being re-used.
         if pattern_id != 'blank':
             pe_tag = self.pattern_key(pattern)
-            if False:  # If we want to allow different elements to share the same pattern.
+            if True:  # If we want to allow different elements to share the same pattern.
                 pe_tag += '-' + attrs['element']
             if pe_tag in self.pattern_elements:
                 raise Exception(f"Pattern {pattern_id} for '{name}' already used for '{self.pattern_elements[pe_tag]}'")
             self.pattern_elements[pe_tag] = name
 
-        # Validate desc
-        self.validate_desc(name, desc)
-        
         # Verify pattern matches spell element
         element = attrs['element']
         pelem_data = self.card_patterns[pattern_id]['elements']
@@ -346,23 +222,24 @@ class WovenSpellCards():
         svg_ids.append('card-border')
         svg_ids.append('spell-title')
         svg_ids.append('spell-pattern-border')
-        #svg_ids.append('spell-pattern-border-4')
+        svg_ids.append('spell-pattern-border-4')
         svg_ids.append('spell-description')
-        #svg_ids.append('spell-description-4')
+        svg_ids.append('spell-description-4')
+        svg_ids.append('spell-flavor')
+        svg_ids.append('starter-info')
         #svg_ids.append('class-name')
-        svg_ids.extend(['sidebar-{0}'.format(x) for x in ['hex', 'dots', 'circles', 'diamonds']])
-        svg_ids.append('sidebar-clip')
-        svg_ids.append('spell-info')
+        #svg_ids.extend(['sidebar-{0}'.format(x) for x in ['hex', 'dots', 'circles', 'diamonds']])
+        #svg_ids.append('sidebar-clip')
+        #svg_ids.append('spell-info')
         svg_ids.append('rev-id')
         svg_ids.append('spell-id')
         svg_ids.append('spell-id-border')
-        svg_ids.append('range-cards')
-        svg_ids.extend(['range-{0}'.format(x) for x in range(3)])
+        #svg_ids.append('range-cards')
+        #svg_ids.extend(['range-{0}'.format(x) for x in range(3)])
         #for x in list(SYMBOLS):
         #    svg_ids.append(f'{x}-master')
         svg_ids.extend([f'{x}-master' for x in list(SYMBOLS)])
         svg_ids.append('sym-master-extra')
-        svg_ids.extend([f'op-{x}' for x in ['or2', 'combine']])
 
         svg.load_ids(CARD_TEMPLATE, svg_ids)
 
@@ -382,17 +259,14 @@ class WovenSpellCards():
         title = svg.add_loaded_element(svg_group, 'spell-title')
         SVG.set_text(title, name)
 
-        # Draw class name.
-        #classname = svg.add_loaded_element(svg_group, 'class-name')
-        #SVG.set_text(classname, class_names[attrs['class']]['name'])
+        #if 'flavor' in attrs:
+        #    flavor = svg.add_loaded_element(svg_group, 'spell-flavor')
+        #    SVG.set_text(flavor, attrs['flavor'])
 
-        # Draw sidebar for class.
-        #clip = svg.get_loaded_path(f"sidebar-clip")
-        #clipid = svg.add_clip_path(None, clip)
-        #nsidebar_name = class_names[attrs['class']]['sidebar']
-        #sidebar = svg.get_loaded_path(f"sidebar-{sidebar_name}")
-        #sidebar.set("clip-path", f"url(#{clipid})")
-        #SVG.add_node(svg_group, sidebar)
+        # Draw starter info on starter cards.
+        if 'starter' in attrs:
+            starter = svg.add_loaded_element(svg_group, 'starter-info')
+            SVG.set_text(starter, f"STARTER - {attrs['starter'].capitalize()}")
 
         # Draw spell id.
         revision_text = svg.add_loaded_element(svg_group, 'rev-id')
@@ -408,36 +282,19 @@ class WovenSpellCards():
         else:
             svg.add_loaded_element(svg_group, 'spell-pattern-border')
             spellDesc = svg.add_loaded_element(svg_group, 'spell-description')
-        spellInfo = svg.add_loaded_element(svg_group, 'spell-info')
+        #spellInfo = svg.add_loaded_element(svg_group, 'spell-info')
 
         syms = attrs['syms']
-        symOp = attrs['op']
-        if symOp != 'gen':
-            svg.add_loaded_element(svg_group, f'op-{symOp}')
         symCount = len(syms)
         symOffset = -(7*(symCount-1))
         symDelta = 14
-        if symOp == "or2":
-            symOffset = -(9*(symCount-1))
-            symDelta = 18
-        if symOp == "combine":
-            symOffset = -(10*(symCount-1))
-            symDelta = 20
         for s in syms:
             #svg.add_loaded_element(svg_group, f'{s}-master')
             eleclone = SVG.clone(0, f"#{s}-master", symOffset, 0)
             symOffset += symDelta
             SVG.add_node(svg_group, eleclone)
 
-        # Draw range.
-        #spell_range = attrs['range']
-        #svg.add_loaded_element(svg_group, 'range-cards')
-        #for r in list(spell_range):
-        #    svg.add_loaded_element(svg_group, f'range-{r}')
-            
         # Draw description/pattern.
-        #SVG.set_text(spellDesc, self.expand_desc(desc))
-        #SVG.set_text(spellInfo, self.expand_info(desc))
         self.draw_pattern(pattern_id, pattern, element, svg_group)
 
     def draw_pattern(self, id, pattern_raw, element, svg_group):        
@@ -467,7 +324,7 @@ class WovenSpellCards():
         # Tall spells need to use larger pattern area.
         max_height = pheight
         if pheight == 4:
-            pcenter_y = 23.9 + 2.2
+            pcenter_y = 23.9 + 6.4
         else:
             pcenter_y = 23.9 + 2.1
         py0 = pcenter_y - (((max_height-1) * box_spacing) + box_size) / 2
@@ -517,15 +374,18 @@ class WovenSpellCards():
                     else:
                         raise Exception("Unrecognized pattern symbol: {0}"
                                         .format(cell))
-
-def export_all_png():
-	print(f"Exporting all.png")
+def export_png(name):
+	print(f"Exporting {name}.png")
 	actions = InkscapeActions()
-	actions.exportFilename(os.path.join(OUTPUT_DIR, f'all.png'))
+	actions.exportFilename(os.path.join(OUTPUT_DIR, f'{name}.png'))
 	actions.exportDpi(300)
 	actions.exportAreaPage()
 	actions.exportDo()
-	Inkscape.run_actions(os.path.join(OUTPUT_DIR, f'all.svg'), actions)
+	Inkscape.run_actions(os.path.join(OUTPUT_DIR, f'{name}.svg'), actions)
+
+def export_all_png():
+	export_png("spells-starter")
+	export_png("spells-non-starter")
 
 def export_8up_pdf(name):
 	print(f"Exporting {name}")
@@ -537,9 +397,26 @@ def export_8up_pdf(name):
 	Inkscape.run_actions(os.path.join(PDF_8UP_DIR, f'{name}.svg'), actions)
 
 def export_8up_pdfs():
-	for x in range(1, 3):
-		export_8up_pdf(f"8up-page{x}")
+	outfiles = [f"8up-page{x}" for x in range(0,6)]
+	for f in outfiles:
+		export_8up_pdf(f)
+	
+	# gs -dBATCH -dNOPAUSE -q -sDEVICE=pdfwrite -sOutputFile=temp.pdf ../spell-academy-cards/8up/8up*.pdf
+	cmd = ['gs']
+	if platform.system() == 'Darwin': # MacOS
+		cmd = ['/opt/homebrew/bin/gs']
+	cmd.append("-dBATCH")
+	cmd.append("-dNOPAUSE")
+	cmd.append("-q")
+	cmd.append("-sDEVICE=pdfwrite")
+	cmd.append(f"-sOutputFile={OUTPUT_DIR}/combined.pdf")
 
+	for f in outfiles:
+		cmd.append(f"{PDF_8UP_DIR}/{f}.pdf")
+	#subprocess.run(cmd, stdout = subprocess.DEVNULL)
+	subprocess.run(cmd)
+
+    
 # Comparator to zero-pad the spell index so that they sort correctly.
 def _pattern_sort_(x):
     (key, count) = x
