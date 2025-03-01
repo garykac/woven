@@ -1,6 +1,6 @@
 # List of Spell Fragments
 
-Generated on 2023/02/22 @ 08:03
+Generated on 2025/03/01 @ 07:06
 
 ## By Category
 
