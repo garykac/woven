@@ -880,7 +880,7 @@ class VoronoiHexTilePlotter():
             center = self.options['center']
         self._addAnnotationText(f"center: ({center}) {self.tile.centerWeight / self.size:.03g}")
 
-        self._addAnnotationText(f"min ridge length: {self.tile.minRidgeLength:.02g}; at edge: {self.tile.minRidgeLengthEdge:.02g}")
+        self._addAnnotationText(f"min ridge length: {self.tile.minRidgeLength:.02g}; at edge (scale): {self.tile.minRidgeLengthEdgeScale:.02g}")
         self._addAnnotationText(f"edge margin exclusion zone scale: {self.tile.edgeMarginScale:.02g}")
         self._addAnnotationText(f"iterations: {self.tile.iteration-1}")
         self._addAnnotationText(f"adjustments: side {self.tile.adjustmentSide:.03g}, neighbor {self.tile.adjustmentNeighbor:.03g}")

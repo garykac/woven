@@ -27,7 +27,7 @@ SINGLE_EDGE_TYPES = ['0s', '1f', '1s', '2f', '2s']
 # # = number of seeds between the corners
 # 's' = self symmetric
 # 'f' = forward edge, mirror pairs
-# 'r' = reverse edge, auto-calculated from 'f' edge
+# 'r' = reverse edge, not listed here since they are auto-calculated from 'f' edge
 OLD_EDGE_REGION_INFO = {
     '1s': ['l', 'l', 'l'],                     # l - l
     '2f': ['l', 'l', 'l', 'm'],                # l - m, m - h
@@ -69,12 +69,12 @@ EDGE_SEED_INFO = {
 
 # Minimum seed distance based on terrain type.
 # These are also used as weights for each type.
-MIN_DISTANCE_L = 0.37 #0.30 #0.22
+MIN_DISTANCE_L = 0.40 #0.30 #0.22
 MIN_DISTANCE_M = 0.28 #0.24 #0.19
 MIN_DISTANCE_H = 0.20 #0.20 #0.16
 
 MIN_RIDGE_LEN = 0.08
-MIN_RIDGE_LEN_EDGE = 0.04
+MIN_RIDGE_LEN_EDGE_SCALE = 0.5
 
 # Min allowed radius for circle inscribed within region.
 # Should be at least 7.5 so that 15mm diameter pieces fit well in the region.
@@ -136,7 +136,7 @@ class VoronoiHexTile():
         # Margin scale of 1.0 means that voronoi ridges that cross the hex tile
         # edge can end exactly at the tile edge (which we don't want). Use a
         # value > 1.0 to enforce min length for these ridge segments.
-        self.edgeMarginScale = 1.1
+        self.edgeMarginScale = 1.3
 
         self.edgeSeedInfo = EDGE_SEED_INFO
         self.edgeRegionInfo = EDGE_REGION_INFO
@@ -148,8 +148,7 @@ class VoronoiHexTile():
         
         # Min distance between 2 voronoi vertices along a ridge.
         self.minRidgeLength = MIN_RIDGE_LEN
-        # Min ridge length along tile edge.
-        self.minRidgeLengthEdge = MIN_RIDGE_LEN_EDGE
+        self.minRidgeLengthEdgeScale = MIN_RIDGE_LEN_EDGE_SCALE
 
         # Voronoi object has following attributes:
         # .points : array of seed values used to create the Voronoi
@@ -422,7 +421,7 @@ class VoronoiHexTile():
             self.seeds = self.vHex
 
     # Initialize the margin exclusion zones.
-    # These zone prevent seeds from getting too close to the tile boundary where
+    # These zones prevent seeds from getting too close to the tile boundary where
     # they would cause voronoi ridges that are too small, or cause the region to
     # be clipped by the hex boundary.
     def initEdgeMarginZone(self):
@@ -1052,13 +1051,16 @@ class VoronoiHexTile():
                 v0 = self.vertices[vid0]
                 v1 = self.vertices[vid1]
 
-                # If this is one of the edges that is clipped by the hex
-                # boundary, then enforce a smaller min edge
+                # Determin min edge length.
                 minDistance = self.minRidgeLength * self.size
+                # Ignore edges along the hex tile boundary (we can't adjust them).
                 if self.isEdgeVertex(vid0) and self.isEdgeVertex(vid1):
                     continue
+                # If this is one of the edges that is clipped by the hex tile
+                # boundary, then enforce a smaller min edge length (1/2).
                 if self.isEdgeVertex(vid0) or self.isEdgeVertex(vid1):
-                    minDistance = self.minRidgeLengthEdge * self.size
+                    # Scale min ridge len for ridges that cross the tile edge.
+                    minDistance *= self.minRidgeLengthEdgeScale
 
                 if near(v0, v1, minDistance):
                     edgeInfo = [vid0, vid1, sid]
