@@ -18,8 +18,8 @@ from math_utils import (feq, fge, fle, scale, clamp,
 
 NUM_SIDES = 6
 
-SINGLE_EDGE_TYPES = ['1s', '2f', '2s', '3f', '3s']
-NEW_SINGLE_EDGE_TYPES = ['0s', '1f', '1s', '2f', '2s']
+OLD_SINGLE_EDGE_TYPES = ['1s', '2f', '2s', '3f', '3s']
+SINGLE_EDGE_TYPES = ['0s', '1f', '1s', '2f', '2s']
 
 # EdgeRegionInfo:
 # Each dict entry contains an array of region heights, one per region on this
@@ -28,14 +28,14 @@ NEW_SINGLE_EDGE_TYPES = ['0s', '1f', '1s', '2f', '2s']
 # 's' = self symmetric
 # 'f' = forward edge, mirror pairs
 # 'r' = reverse edge, auto-calculated from 'f' edge
-EDGE_REGION_INFO = {
+OLD_EDGE_REGION_INFO = {
     '1s': ['l', 'l', 'l'],                     # l - l
     '2f': ['l', 'l', 'l', 'm'],                # l - m, m - h
     '2s': ['m', 'l', 'l', 'm'],                # m - m
     '3f': ['m', 'm', 'h', 'm', 'h'],           # m - h, h - m
     '3s': ['h', 'h', 'm', 'h', 'h'],           # h - h
 }
-NEW_EDGE_REGION_INFO = {
+EDGE_REGION_INFO = {
     '0s': ['l', 'l'],                          # l - l
     '1f': ['l', 'm', 'm'],                     # l - m, m - l
     '1s': ['m', 'm', 'm'],                     # m - m
@@ -50,14 +50,14 @@ NEW_EDGE_REGION_INFO = {
 # There are implicit seeds at the 2 ends of the edge.
 # Each seed position is:
 #   [ offset-along-edge, perpendicular-offset ]
-EDGE_SEED_INFO = {
+OLD_EDGE_SEED_INFO = {
     '1s': [[0.50, 0]],
     '2f': [[0.33, 0.04],  [0.71, -0.03]],
     '2s': [[1/3, 0.04],   [2/3, -0.04]],
     '3f': [[0.26, -0.04], [0.55, 0],      [0.77, 0.03]],
     '3s': [[0.28, -0.05], [0.50, 0],      [0.72, 0.05]],
 }
-NEW_EDGE_SEED_INFO = {
+EDGE_SEED_INFO = {
     '0s': [],
     '1f': [[0.45, 0.05]],
     '1s': [[0.50, 0]],
@@ -106,10 +106,7 @@ class VoronoiHexTile():
         self.size = self.options['size']
         self.xMax = (math.sqrt(3) * self.size) / 2
 
-        if options['new-edge']:
-            self.singleEdgeTypes = NEW_SINGLE_EDGE_TYPES
-        else:
-            self.singleEdgeTypes = SINGLE_EDGE_TYPES
+        self.singleEdgeTypes = SINGLE_EDGE_TYPES
         
         # This is used to position the exterior seeds around the outside of the
         # tile. These seed regions constrain the regions in the hex tile and
@@ -141,13 +138,8 @@ class VoronoiHexTile():
         # value > 1.0 to enforce min length for these ridge segments.
         self.edgeMarginScale = 1.1
 
-        if options['new-edge']:
-            self.edgeSeedInfo = NEW_EDGE_SEED_INFO
-            self.edgeRegionInfo = NEW_EDGE_REGION_INFO
-        else:
-            self.edgeSeedInfo = EDGE_SEED_INFO
-            self.edgeRegionInfo = EDGE_REGION_INFO
-        
+        self.edgeSeedInfo = EDGE_SEED_INFO
+        self.edgeRegionInfo = EDGE_REGION_INFO
         self.minDistanceL = MIN_DISTANCE_L
         self.minDistanceM = MIN_DISTANCE_M
         self.minDistanceH = MIN_DISTANCE_H

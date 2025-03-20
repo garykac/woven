@@ -35,8 +35,6 @@ OPTIONS = {
              'desc': "Load data from file"},
     'mirror': {'type': 'bool', 'default': False,
                'desc': "Generate tile mirrored on x-axis"},
-    'new-edge': {'type': 'bool', 'default': False,
-                 'desc': "Use new edge seed patterns"},
     'pattern': {'type': 'string', 'default': "llllll",
                 'desc': "Edge pattern ([lmh] x6)"},
     'random-terrain-fill': {'type': 'bool', 'default': False,
