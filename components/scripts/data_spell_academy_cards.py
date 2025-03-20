@@ -1,186 +1,182 @@
 # Woven Academy spell card data
 
-spell_card_revision = 19
+spell_card_revision = 20
 
 spell_card_data = [
 
     # Air Mage Starter Spells
-    ["Quick Strike",
-        {'element': 'air', 'pattern': 'E2-1', 'syms': 'ac', 'starter': 'air',
+    ["Air A",
+        {'element': 'air', 'pattern': 'E2-1', 'starter': 'air',
         } ],
 
-    ["Swirlwind",
-        {'element': 'air', 'pattern': 'E2-5', 'syms': 'aa', 'starter': 'air',
+    ["Air B",
+        {'element': 'air', 'pattern': 'E2-5', 'starter': 'air',
         } ],
     
-    ["Pebble Flick",
-        {'element': 'earth', 'pattern': 'E2-2', 'syms': 'e', 'starter': 'air',
-        'flavor': "Ow! Stop it!",
+    ["Earth (Air)",
+        {'element': 'earth', 'pattern': 'E2-2', 'starter': 'air',
         } ],
     
-    ["Swirling Dervish",
-        {'element': 'fire', 'pattern': 'E2-36', 'syms': 'fg', 'starter': 'air',
+    ["Fire (Air)",
+        {'element': 'fire', 'pattern': 'E2-36', 'starter': 'air',
         } ],
     
-    ["Choking Mist",
-        {'element': 'water', 'pattern': 'E2-48', 'syms': 'wy', 'starter': 'air',
-        'flavor': "A <cough> mist that <cough> <cough> chokes",
+    ["Water (Air)",
+        {'element': 'water', 'pattern': 'E2-48', 'starter': 'air',
         } ],
     
     
     # Fire Mage Starter Spells
-    ["Burning Fist",
-        {'element': 'fire', 'pattern': 'E2-27', 'syms': 'fc', 'starter': 'fire',
+    ["Fire A",
+        {'element': 'fire', 'pattern': 'E2-27', 'starter': 'fire',
         } ],
 
-    ["Fireballs",
-        {'element': 'fire', 'pattern': 'E2-35', 'syms': 'ff', 'starter': 'fire',
-        'flavor': "They're kinda great",
+    ["Fire B",
+        {'element': 'fire', 'pattern': 'E2-35', 'starter': 'fire',
         } ],
     
-    ["Squirt",
-        {'element': 'water', 'pattern': 'E2-28', 'syms': 'w', 'starter': 'fire',
+    ["Water (Fire)",
+        {'element': 'water', 'pattern': 'E2-28', 'starter': 'fire',
         } ],
     
-    ["Flying Shards",
-        {'element': 'air', 'pattern': 'E2-6', 'syms': 'ag', 'starter': 'fire',
+    ["Air (Fire)",
+        {'element': 'air', 'pattern': 'E2-6', 'starter': 'fire',
         } ],
     
-    ["Pyroclast",
-        {'element': 'earth', 'pattern': 'E2-7', 'syms': 'ey', 'starter': 'fire',
+    ["Earth (Fire)",
+        {'element': 'earth', 'pattern': 'E2-7', 'starter': 'fire',
         } ],
     
 
     # Earth Mage Starter Spells
-    ["Bouldersmash",
-        {'element': 'earth', 'pattern': 'E2-1', 'syms': 'eg', 'starter': 'earth',
+    ["Earth A",
+        {'element': 'earth', 'pattern': 'E2-1', 'starter': 'earth',
         } ],
 
-    ["Tramplebug",
-        {'element': 'earth', 'pattern': 'E2-5', 'syms': 'ee', 'starter': 'earth',
+    ["Earth B",
+        {'element': 'earth', 'pattern': 'E2-5', 'starter': 'earth',
         } ],
     
-    ["Huff'n Puff",
-        {'element': 'air', 'pattern': 'E2-2', 'syms': 'a', 'starter': 'earth',
-        'flavor': "...and I'll blow your house down",
+    ["Air (Earth)",
+        {'element': 'air', 'pattern': 'E2-2', 'starter': 'earth',
         } ],
     
-    ["Vine Whip",
-        {'element': 'water', 'pattern': 'E2-36', 'syms': 'wc', 'starter': 'earth',
+    ["Water (Earth)",
+        {'element': 'water', 'pattern': 'E2-36', 'starter': 'earth',
         } ],
     
-    ["Lavaballs",
-        {'element': 'fire', 'pattern': 'E2-37', 'syms': 'fy', 'starter': 'earth',
+    ["Fire (Earth)",
+        {'element': 'fire', 'pattern': 'E2-37', 'starter': 'earth',
         } ],
     
     
     # Water Mage Starter Spells
-    ["Flood",
-        {'element': 'water', 'pattern': 'E2-27', 'syms': 'wg', 'starter': 'water',
+    ["Water A",
+        {'element': 'water', 'pattern': 'E2-27', 'starter': 'water',
         } ],
 
-    ["Icicle Storm",
-        {'element': 'water', 'pattern': 'E2-35', 'syms': 'ww', 'starter': 'water',
+    ["Water B",
+        {'element': 'water', 'pattern': 'E2-35', 'starter': 'water',
         } ],
     
-    ["Spark",
-        {'element': 'fire', 'pattern': 'E2-28', 'syms': 'f', 'starter': 'water',
+    ["Fire (Water)",
+        {'element': 'fire', 'pattern': 'E2-28', 'starter': 'water',
         } ],
     
-    ["Mudslinger",
-        {'element': 'earth', 'pattern': 'E2-6', 'syms': 'ec', 'starter': 'water',
+    ["Earth (Water)",
+        {'element': 'earth', 'pattern': 'E2-6', 'starter': 'water',
         } ],
     
-    ["Steam Burst",
-        {'element': 'air', 'pattern': 'E2-14', 'syms': 'ay', 'starter': 'water',
+    ["Air (Water)",
+        {'element': 'air', 'pattern': 'E2-14', 'starter': 'water',
         } ],
     
     # Extra Air spells
 
-    ["Air Spell 1",
-        {'element': 'air', 'pattern': 'E2-8', 'syms': 'agc',
+    ["Air X 1",
+        {'element': 'air', 'pattern': 'E2-8',
         } ],
     
-    ["Air Spell 2",
-        {'element': 'air', 'pattern': 'E2-20', 'syms': 'acy',
+    ["Air X 2",
+        {'element': 'air', 'pattern': 'E2-20',
         } ],
     
-    ["Air Spell 3",
-        {'element': 'air', 'pattern': 'E2-82', 'syms': 'ayg',
+    ["Air X 3",
+        {'element': 'air', 'pattern': 'E2-82',
         } ],
     
-    ["Air Spell 4",
-        {'element': 'air', 'pattern': 'E2-83', 'syms': 'acg',
+    ["Air X 4",
+        {'element': 'air', 'pattern': 'E2-83',
         } ],
     
-    ["Air Spell 5",
-        {'element': 'air', 'pattern': 'E2-17', 'syms': 'aay',
+    ["Air X 5",
+        {'element': 'air', 'pattern': 'E2-17',
         } ],
     
     # Extra Fire spells
 
-    ["Fire Spell 1",
-        {'element': 'fire', 'pattern': 'E2-34', 'syms': 'fgy',
+    ["Fire X 1",
+        {'element': 'fire', 'pattern': 'E2-34',
         } ],
     
-    ["Fire Spell 2",
-        {'element': 'fire', 'pattern': 'E2-41', 'syms': 'fcg',
+    ["Fire X 2",
+        {'element': 'fire', 'pattern': 'E2-41',
         } ],
     
-    ["Fire Spell 3",
-        {'element': 'fire', 'pattern': 'E2-78', 'syms': 'fcy',
+    ["Fire X 3",
+        {'element': 'fire', 'pattern': 'E2-78',
         } ],
     
-    ["Fire Spell 4",
-        {'element': 'fire', 'pattern': 'E2-114', 'syms': 'fyc',
+    ["Fire X 4",
+        {'element': 'fire', 'pattern': 'E2-114',
         } ],
     
-    ["Fire Spell 5",
-        {'element': 'fire', 'pattern': 'E2-32', 'syms': 'ffg',
+    ["Fire X 5",
+        {'element': 'fire', 'pattern': 'E2-32',
         } ],
     
     # Extra Earth spells
 
-    ["Earth Spell 1",
-        {'element': 'earth', 'pattern': 'E2-11', 'syms': 'eyc',
+    ["Earth X 1",
+        {'element': 'earth', 'pattern': 'E2-11',
         } ],
     
-    ["Earth Spell 2",
-        {'element': 'earth', 'pattern': 'E2-21', 'syms': 'ecg',
+    ["Earth X 2",
+        {'element': 'earth', 'pattern': 'E2-21',
         } ],
     
-    ["Earth Spell 3",
-        {'element': 'earth', 'pattern': 'E2-62', 'syms': 'egy',
+    ["Earth X 3",
+        {'element': 'earth', 'pattern': 'E2-62',
         } ],
     
-    ["Earth Spell 4",
-        {'element': 'earth', 'pattern': 'E2-127', 'syms': 'ecg',
+    ["Earth X 4",
+        {'element': 'earth', 'pattern': 'E2-127',
         } ],
     
-    ["Earth Spell 5",
-        {'element': 'earth', 'pattern': 'E2-10', 'syms': 'eey',
+    ["Earth X 5",
+        {'element': 'earth', 'pattern': 'E2-10',
         } ],
     
     # Extra Water spells
     
-    ["Water Spell 1",
-        {'element': 'water', 'pattern': 'E2-31', 'syms': 'wcg',
+    ["Water X 1",
+        {'element': 'water', 'pattern': 'E2-31',
         } ],
     
-    ["Water Spell 2",
-        {'element': 'water', 'pattern': 'E2-40', 'syms': 'wgy',
+    ["Water X 2",
+        {'element': 'water', 'pattern': 'E2-40',
         } ],
     
-    ["Water Spell 3",
-        {'element': 'water', 'pattern': 'E2-79', 'syms': 'wcy',
+    ["Water X 3",
+        {'element': 'water', 'pattern': 'E2-79',
         } ],
     
-    ["Water Spell 4",
-        {'element': 'water', 'pattern': 'E2-110', 'syms': 'wcy',
+    ["Water X 4",
+        {'element': 'water', 'pattern': 'E2-110',
         } ],
     
-    ["Water Spell 5",
-        {'element': 'water', 'pattern': 'E2-33', 'syms': 'wwg',
+    ["Water X 5",
+        {'element': 'water', 'pattern': 'E2-33',
         } ],
     
 ]

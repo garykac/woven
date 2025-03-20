@@ -259,10 +259,6 @@ class WovenSpellCards():
         title = svg.add_loaded_element(svg_group, 'spell-title')
         SVG.set_text(title, name)
 
-        #if 'flavor' in attrs:
-        #    flavor = svg.add_loaded_element(svg_group, 'spell-flavor')
-        #    SVG.set_text(flavor, attrs['flavor'])
-
         # Draw starter info on starter cards.
         if 'starter' in attrs:
             starter = svg.add_loaded_element(svg_group, 'starter-info')
@@ -283,16 +279,6 @@ class WovenSpellCards():
             svg.add_loaded_element(svg_group, 'spell-pattern-border')
             spellDesc = svg.add_loaded_element(svg_group, 'spell-description')
         #spellInfo = svg.add_loaded_element(svg_group, 'spell-info')
-
-        syms = attrs['syms']
-        symCount = len(syms)
-        symOffset = -(7*(symCount-1))
-        symDelta = 14
-        for s in syms:
-            #svg.add_loaded_element(svg_group, f'{s}-master')
-            eleclone = SVG.clone(0, f"#{s}-master", symOffset, 0)
-            symOffset += symDelta
-            SVG.add_node(svg_group, eleclone)
 
         # Draw description/pattern.
         self.draw_pattern(pattern_id, pattern, element, svg_group)
@@ -397,7 +383,7 @@ def export_8up_pdf(name):
 	Inkscape.run_actions(os.path.join(PDF_8UP_DIR, f'{name}.svg'), actions)
 
 def export_8up_pdfs():
-	outfiles = [f"8up-page{x}" for x in range(0,6)]
+	outfiles = [f"8up-page{x}" for x in range(1,6)]
 	for f in outfiles:
 		export_8up_pdf(f)
 	
@@ -438,7 +424,7 @@ def parse_options():
     option_defs = {}
     option_defs.update(SVGCardGen.OPTIONS)
     option_defs.update({
-        #'summary': {'type': 'bool', 'default': False, 'desc': "Generate spell summary"},
+        'summary': {'type': 'bool', 'default': False, 'desc': "Generate spell summary"},
         })
     short_opts = ""
     long_opts = []
@@ -486,13 +472,14 @@ def main():
     options = parse_options()
     
     # Force png output for spell cards.
-    options['png'] = True
+    #options['png'] = True
     
     cgen = WovenSpellCards(options)
     cgen.generate_cards()
 
-    export_all_png()
-    export_8up_pdfs()
+    if options['summary']:
+	    export_all_png()
+	    export_8up_pdfs()
 
 if __name__ == '__main__':
     main()

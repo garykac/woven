@@ -26,15 +26,15 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
      showgrid="false"
-     inkscape:zoom="1.925262"
-     inkscape:cx="87.520556"
-     inkscape:cy="182.83226"
-     inkscape:window-width="1336"
+     inkscape:zoom="1.5843575"
+     inkscape:cx="127.49647"
+     inkscape:cy="147.06276"
+     inkscape:window-width="1600"
      inkscape:window-height="954"
      inkscape:window-x="0"
      inkscape:window-y="38"
      inkscape:window-maximized="0"
-     inkscape:current-layer="layer2" />
+     inkscape:current-layer="layer3" />
   <defs
      id="defs132" />
   <g
@@ -528,7 +528,7 @@
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.52778px;font-family:CCTreasureTrove;-inkscape-font-specification:'CCTreasureTrove Bold';fill:#000000;fill-opacity:1;stroke-width:0.264583"
          id="tspan64-5">Your Turn</tspan></text>
     <flowRoot
-       transform="matrix(0.26458333,0,0,0.26458333,-1.9388919,7.5116015)"
+       transform="matrix(0.26458333,0,0,0.26458333,-1.9388919,6.4532671)"
        xml:space="preserve"
        id="flowRoot1004"
        style="font-style:normal;font-weight:normal;font-size:10px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"><flowRegion
@@ -544,7 +544,7 @@
            style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:Arial;-inkscape-font-specification:'Arial Bold'"
            id="flowSpan1251">Cast Spells</flowSpan></flowPara></flowRoot>
     <flowRoot
-       transform="matrix(0.26458333,0,0,0.26458333,0.7069416,10.686597)"
+       transform="matrix(0.26458333,0,0,0.26458333,0.7069416,9.6282603)"
        xml:space="preserve"
        id="flowRoot1126"
        style="font-style:normal;font-weight:normal;font-size:10px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"><flowRegion
@@ -556,11 +556,13 @@
            id="rect1116"
            style="stroke-width:1px" /></flowRegion><flowPara
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:9.33333px;font-family:Arial;-inkscape-font-specification:Arial"
-         id="flowPara1122">Place mana onto Tapestry to cast as many spells as you wish</flowPara><flowPara
+         id="flowPara1122">Place mana:</flowPara><flowPara
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:9.33333px;font-family:Arial;-inkscape-font-specification:Arial"
-         id="flowPara1124" /></flowRoot>
+         id="flowPara9">• On your Tapestry to cast spells</flowPara><flowPara
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:9.33333px;font-family:Arial;-inkscape-font-specification:Arial"
+         id="flowPara1124">• On Banishing to banish monsters</flowPara></flowRoot>
     <flowRoot
-       transform="matrix(0.26458333,0,0,0.26458333,0.7069416,-3.0717272)"
+       transform="matrix(0.26458333,0,0,0.26458333,0.7069416,2.2199388)"
        xml:space="preserve"
        id="flowRoot1036"
        style="font-style:normal;font-weight:normal;font-size:10px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"><flowRegion
@@ -572,9 +574,9 @@
            id="rect1024"
            style="stroke-width:1px" /></flowRegion><flowPara
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:9.33333px;font-family:Arial;-inkscape-font-specification:Arial"
-         id="flowPara1049">Recover 1 mana from your Tapestry</flowPara></flowRoot>
+         id="flowPara1049">• Recover 1 mana from your Tapestry</flowPara></flowRoot>
     <flowRoot
-       transform="matrix(0.26458333,0,0,0.26458333,-1.9388919,-6.2467273)"
+       transform="matrix(0.26458333,0,0,0.26458333,-1.9388919,-0.95506078)"
        xml:space="preserve"
        id="flowRoot1140"
        style="font-style:normal;font-weight:normal;font-size:10px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"><flowRegion
@@ -620,7 +622,7 @@
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:9.33333px;font-family:Arial;-inkscape-font-specification:Arial"
          id="flowPara1166">Discard</flowPara></flowRoot>
     <flowRoot
-       transform="matrix(0.26458333,0,0,0.26458333,0.70694153,-26.88423)"
+       transform="matrix(0.26458333,0,0,0.26458333,0.70694153,-22.650897)"
        xml:space="preserve"
        id="flowRoot1176"
        style="font-style:normal;font-weight:normal;font-size:10px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"><flowRegion
@@ -634,9 +636,9 @@
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:9.33333px;font-family:Arial;-inkscape-font-specification:Arial"
          id="flowPara1174">• Gain spell (draw 3, keep 1)</flowPara><flowPara
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:9.33333px;font-family:Arial;-inkscape-font-specification:Arial"
-         id="flowPara15">• Rest</flowPara></flowRoot>
+         id="flowPara15">• Rest - see below</flowPara></flowRoot>
     <flowRoot
-       transform="matrix(0.26458333,0,0,0.26458333,-1.9388919,-30.588393)"
+       transform="matrix(0.26458333,0,0,0.26458333,-1.9388919,-26.35506)"
        xml:space="preserve"
        id="flowRoot1152"
        style="font-style:normal;font-weight:normal;font-size:10px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"><flowRegion
@@ -650,7 +652,7 @@
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:10.6667px;font-family:Arial;-inkscape-font-specification:'Arial Bold'"
          id="flowPara1150">Choose one:</flowPara></flowRoot>
     <flowRoot
-       transform="matrix(0.26458333,0,0,0.26458333,0.7069416,-16.830063)"
+       transform="matrix(0.26458333,0,0,0.26458333,0.7069416,-11.538396)"
        xml:space="preserve"
        id="flowRoot1"
        style="font-style:normal;font-weight:normal;font-size:10px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"><flowRegion
@@ -662,13 +664,11 @@
            id="rect1"
            style="stroke-width:1px" /></flowRegion><flowPara
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:9.33333px;font-family:Arial;-inkscape-font-specification:Arial"
-         id="flowPara1">Draw a Tapestry card</flowPara><flowPara
+         id="flowPara3">• Meld into your Tapestry or the Banishing (only 1 player may Banish/turn)</flowPara><flowPara
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:9.33333px;font-family:Arial;-inkscape-font-specification:Arial"
-         id="flowPara3">Meld it into your Tapestry</flowPara><flowPara
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:9.33333px;font-family:Arial;-inkscape-font-specification:Arial"
-         id="flowPara4">Recover any mana you cover up</flowPara></flowRoot>
+         id="flowPara4">• Recover any mana you cover up</flowPara></flowRoot>
     <flowRoot
-       transform="matrix(0.26458333,0,0,0.26458333,-1.9388919,-20.005064)"
+       transform="matrix(0.26458333,0,0,0.26458333,-1.9388919,-14.713397)"
        xml:space="preserve"
        id="flowRoot2"
        style="font-style:normal;font-weight:normal;font-size:10px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"><flowRegion
@@ -682,9 +682,9 @@
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:Arial;-inkscape-font-specification:Arial"
          id="flowPara2"><flowSpan
            style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:Arial;-inkscape-font-specification:'Arial Bold'"
-           id="flowSpan2">Build Tapestry</flowSpan></flowPara></flowRoot>
+           id="flowSpan2">Build Tapestry or Banishing</flowSpan></flowPara></flowRoot>
     <flowRoot
-       transform="matrix(0.26458333,0,0,0.26458333,0.7069416,28.149101)"
+       transform="matrix(0.26458333,0,0,0.26458333,0.7069416,40.849103)"
        xml:space="preserve"
        id="flowRoot7"
        style="font-style:normal;font-weight:normal;font-size:10px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"><flowRegion
@@ -696,9 +696,9 @@
            id="rect4"
            style="stroke-width:1px" /></flowRegion><flowPara
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:9.33333px;font-family:Arial;-inkscape-font-specification:Arial"
-         id="flowPara7">Monsters in the front row attack based on the top card of the Tapestry deck</flowPara></flowRoot>
+         id="flowPara7">Attack players within reach</flowPara></flowRoot>
     <flowRoot
-       transform="matrix(0.26458333,0,0,0.26458333,-1.9388919,24.974099)"
+       transform="matrix(0.26458333,0,0,0.26458333,-1.9388919,37.674101)"
        xml:space="preserve"
        id="flowRoot8"
        style="font-style:normal;font-weight:normal;font-size:10px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"><flowRegion
@@ -718,13 +718,13 @@
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:3.52778px;line-height:125%;font-family:'Arial Narrow';text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
        x="31.711782"
-       y="62.558666"><tspan
+       y="63.617001"><tspan
          x="31.711782"
-         y="62.558666"
+         y="63.617001"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.52778px;font-family:CCTreasureTrove;-inkscape-font-specification:'CCTreasureTrove Bold';fill:#000000;fill-opacity:1;stroke-width:0.264583"
          id="tspan8">Their Turn</tspan></text>
     <flowRoot
-       transform="matrix(0.26458333,0,0,0.26458333,0.7069416,38.203268)"
+       transform="matrix(0.26458333,0,0,0.26458333,0.7069416,33.440768)"
        xml:space="preserve"
        id="flowRoot9"
        style="font-style:normal;font-weight:normal;font-size:10px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"><flowRegion
@@ -736,11 +736,9 @@
            id="rect8"
            style="stroke-width:1px" /></flowRegion><flowPara
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:9.33333px;font-family:Arial;-inkscape-font-specification:Arial"
-         id="flowPara9">Move Monsters forward</flowPara><flowPara
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:9.33333px;font-family:Arial;-inkscape-font-specification:Arial"
-         id="flowPara11">Discard top card of Tapestry deck</flowPara></flowRoot>
+         id="flowPara11">Move Monsters toward exit</flowPara></flowRoot>
     <flowRoot
-       transform="matrix(0.26458333,0,0,0.26458333,-1.9388919,35.028266)"
+       transform="matrix(0.26458333,0,0,0.26458333,-1.9388919,30.265766)"
        xml:space="preserve"
        id="flowRoot10"
        style="font-style:normal;font-weight:normal;font-size:10px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"><flowRegion
@@ -754,9 +752,9 @@
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:Arial;-inkscape-font-specification:Arial"
          id="flowPara10"><flowSpan
            style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:Arial;-inkscape-font-specification:'Arial Bold'"
-           id="flowSpan9">Reset</flowSpan></flowPara></flowRoot>
+           id="flowSpan9">Move</flowSpan></flowPara></flowRoot>
     <flowRoot
-       transform="matrix(0.26458333,0,0,0.26458333,0.7069416,3.8074396)"
+       transform="matrix(0.26458333,0,0,0.26458333,0.7069416,-59.692563)"
        xml:space="preserve"
        id="flowRoot12"
        style="font-style:normal;font-weight:normal;font-size:10px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"><flowRegion
@@ -770,7 +768,7 @@
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:9.33333px;font-family:Arial;-inkscape-font-specification:Arial"
          id="flowPara12">Choose Monster to stand in front of</flowPara></flowRoot>
     <flowRoot
-       transform="matrix(0.26458333,0,0,0.26458333,-1.9388919,0.63243943)"
+       transform="matrix(0.26458333,0,0,0.26458333,-1.9388919,-62.867564)"
        xml:space="preserve"
        id="flowRoot14"
        style="font-style:normal;font-weight:normal;font-size:10px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"><flowRegion
@@ -785,5 +783,46 @@
          id="flowPara14"><flowSpan
            style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:Arial;-inkscape-font-specification:'Arial Bold'"
            id="flowSpan13">Choose Position</flowSpan></flowPara></flowRoot>
+    <flowRoot
+       transform="matrix(0.26458333,0,0,0.26458333,-1.9388916,26.561603)"
+       xml:space="preserve"
+       id="flowRoot5"
+       style="font-style:normal;font-weight:normal;font-size:10px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"><flowRegion
+         id="flowRegion3"><rect
+           x="28.799999"
+           y="146"
+           width="180.10165"
+           height="149.34264"
+           id="rect3"
+           style="stroke-width:1px" /></flowRegion><flowPara
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:9.33333px;font-family:Arial;-inkscape-font-specification:Arial"
+         id="flowPara5">Based on the top card of the Tapestry deck:</flowPara></flowRoot>
+    <flowRoot
+       transform="matrix(0.26458333,0,0,0.26458333,-1.9388919,-30.059226)"
+       xml:space="preserve"
+       id="flowRoot6"
+       style="font-style:normal;font-weight:normal;font-size:10px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"><flowRegion
+         id="flowRegion5"><rect
+           x="28.799999"
+           y="146"
+           width="180.10165"
+           height="149.34264"
+           id="rect5"
+           style="stroke-width:1px" /></flowRegion><flowPara
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:10.6667px;font-family:Arial;-inkscape-font-specification:'Arial Bold'"
+         id="flowPara6">Draw Tapestry Card</flowPara></flowRoot>
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer3"
+     inkscape:label="Player Turn 2">
+    <rect
+       style="fill:none;stroke:#000000;stroke-width:0.4;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none"
+       id="rect10"
+       width="16.07766"
+       height="4.5784059"
+       x="66.505165"
+       y="7.7143607"
+       ry="2.2892029" />
   </g>
 </svg>
