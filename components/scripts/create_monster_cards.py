@@ -30,7 +30,7 @@ elem_map = {
 
 # Spell attributes
 monster_attributes = [
-	'element', 'pattern', 'image', 'id', 'weakness', 'attack', 'actions',
+	'element', 'pattern', 'image', 'id', 'attack', 'actions',
 ]
 
 symbols = [
@@ -48,6 +48,10 @@ attack_map = {
 	'**': "action-attack2",
 	'***': "action-attack3",
 }
+
+attack_hexes = ['center',
+				'top', 'bottom', 'top-left', 'top-right', 'bottom-left', 'bottom-right',
+				'center-triangle']
 
 # Spell description keys
 spell_desc_keys = {
@@ -146,8 +150,6 @@ class WovenMonsterCards():
 		
 		if not 'pattern' in attrs:
 			raise Exception(f"{name}: Missing 'pattern' attribute")
-		if not attrs['pattern'] in self.card_patterns:
-			raise Exception(f"{name}: Invalid pattern: {attrs['pattern']}")
 
 	#
 	# CARD GENERATION
@@ -192,21 +194,10 @@ class WovenMonsterCards():
 
 		# Validate attributes
 		self.validate_attrs(name, attrs)
-		pattern_id = attrs['pattern']
-		pattern = self.card_patterns[pattern_id]['pattern']
-		
-		# Verify pattern matches spell element
+		pattern = attrs['pattern']		
 		element = attrs['element']
-		pelem_data = self.card_patterns[pattern_id]['elements']
-		pelems = []
-		if pelem_data == "none":
-			pelems.append("none")
-		else:
-			pelems = [elem_map[p] for p in pelem_data]
-		if pattern_id != 'blank' and not element in pelems:
-			raise Exception(f"{name}: Spell pattern does not match element {element}")
 
-		border_types = ['outer', 'title', 'image', 'vertical', 'split', 'action']
+		border_types = ['outer', 'title', 'image', 'vertical', 'action']
 		
 		image = attrs['image']
 		attack = attrs['attack']
@@ -220,8 +211,8 @@ class WovenMonsterCards():
 		svg_ids.append('monster-name')
 		svg_ids.append(f'clip-image')
 		svg_ids.append(f'image-{image}')
-		svg_ids.extend([f'weakness-{n}' for n in ["i", "ii"]] )
-		svg_ids.extend([f'{sym}-clone' for sym in symbols] )
+		#svg_ids.extend([f'{sym}-clone' for sym in symbols] )
+		svg_ids.extend([f'hex-{n}' for n in attack_hexes] )
 		svg_ids.extend([f'action-attack{n}' for n in [1,2,3]] )
 		svg_ids.extend([f'attack-base{n}' for n in [1,2,3]] )
 		svg_ids.append(f'action-plus')
@@ -233,8 +224,8 @@ class WovenMonsterCards():
 		SVG.add_node(svg_group, g_masters)
 		for (e,elem) in elem_map.items():
 			svg.add_loaded_element(g_masters, f"element-{elem}")
-		for sym in symbols:
-			svg.add_loaded_element(g_masters, f"{sym}-clone")
+		#for sym in symbols:
+		#	svg.add_loaded_element(g_masters, f"{sym}-clone")
 
 		# Draw spell title.
 		title = svg.add_loaded_element(svg_group, 'monster-name')
@@ -245,19 +236,22 @@ class WovenMonsterCards():
 		clipid = svg.add_clip_path(id, clip)
 		img.set("clip-path", f"url(#{clipid})")
 		
-		for n in ["i", "ii"]:
-			svg.add_loaded_element(svg_group, f'weakness-{n}')
-		g_weak = SVG.group('weakness')
-		SVG.add_node(svg_group, g_weak)
-		self.draw_weaknesses(attrs['weakness'], g_weak)
+		#g_weak = SVG.group('weakness')
+		#SVG.add_node(svg_group, g_weak)
+		#self.draw_weaknesses(attrs['weakness'], g_weak)
+
+		g_attack_hex = SVG.group('attack-hex')
+		SVG.add_node(svg_group, g_attack_hex)
+		self.draw_attack_pattern(svg, g_attack_hex)
 
 		g_pattern_t = SVG.group('pattern_translate')
 		SVG.add_node(svg_group, g_pattern_t)
-		g_pattern_t.set_translate_transform(52,76)
-		g_pattern_r = SVG.group('pattern_rotate')
-		SVG.add_node(g_pattern_t, g_pattern_r)
-		g_pattern_r.set_rotate_transform(90)
-		self.draw_pattern(pattern_id, pattern, element, g_pattern_r)
+		#g_pattern_t.set_translate_transform(52,76)
+		g_pattern_t.set_translate_transform(47,78.7)
+		#g_pattern_r = SVG.group('pattern_rotate')
+		#SVG.add_node(g_pattern_t, g_pattern_r)
+		#g_pattern_r.set_rotate_transform(90)
+		self.draw_pattern(title, pattern, element, g_pattern_t)
 
 		g_actions = SVG.group('actions')
 		SVG.add_node(svg_group, g_actions)
@@ -267,6 +261,10 @@ class WovenMonsterCards():
 		SVG.add_node(svg_group, g_borders)
 		for t in border_types:
 			svg.add_loaded_element(g_borders, f'{t}-border')
+
+	def draw_attack_pattern(self, svg, svg_group):
+		for hex in attack_hexes:
+			svg.add_loaded_element(svg_group, f"hex-{hex}")
 
 	def draw_weaknesses(self, weaknesses, svg_group):
 		x0 = 3
@@ -298,13 +296,13 @@ class WovenMonsterCards():
 			if actions[x]:
 				action = svg.add_loaded_element(g_action, attack_map[actions[x]])
 		
-	def draw_pattern(self, id, pattern_raw, element, svg_group):		
+	def draw_pattern(self, monster_name, pattern_raw, element, svg_group):		
 		pattern = [x.split() for x in pattern_raw]
 		pheight = len(pattern)
 		if pheight == 0:
-			raise Exception(f"Missing pattern for {id}")
-		if pheight > 4:
-			raise Exception(f"Pattern too tall for {id}")
+			raise Exception(f"Missing pattern for {monster_name}")
+		if pheight > 6:
+			raise Exception(f"Pattern too tall for {monster_name}")
 		pwidth = len(pattern[0])
 
 		# Size and spacing for each box in pattern.
@@ -391,7 +389,8 @@ def export_5up_pdf(name):
 	Inkscape.run_actions(os.path.join(PDF_5UP_DIR, f'{name}.svg'), actions)
 
 def export_5up_pdfs():
-	for x in range(1, 4):
+	num_pdfs = 5
+	for x in range(1, (num_pdfs+1)):
 		export_5up_pdf(f"5up-page{x}")
 
 	# gs -dBATCH -dNOPAUSE -q -sDEVICE=pdfwrite -sOutputFile=temp.pdf ../spell-academy-cards/8up/8up*.pdf
@@ -404,7 +403,7 @@ def export_5up_pdfs():
 	cmd.append("-sDEVICE=pdfwrite")
 	cmd.append(f"-sOutputFile={OUTPUT_DIR}/combined.pdf")
 
-	for x in range(1, 4):
+	for x in range(1, (num_pdfs+1)):
 		cmd.append(f"{PDF_5UP_DIR}/5up-page{x}.pdf")
 	#subprocess.run(cmd, stdout = subprocess.DEVNULL)
 	subprocess.run(cmd)
