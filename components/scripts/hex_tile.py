@@ -19,7 +19,7 @@ from math_utils import (feq, fge, fle, scale, clamp,
 NUM_SIDES = 6
 
 SINGLE_EDGE_TYPES = ['1s', '2f', '2s', '3f', '3s']
-NEW_SINGLE_EDGE_TYPES = ['0s', '1s', '2f', '2s', '3f', '3s']
+NEW_SINGLE_EDGE_TYPES = ['0s', '1f', '1s', '2f', '2s']
 
 # EdgeRegionInfo:
 # Each dict entry contains an array of region heights, one per region on this
@@ -37,11 +37,12 @@ EDGE_REGION_INFO = {
 }
 NEW_EDGE_REGION_INFO = {
     '0s': ['l', 'l'],                          # l - l
-    '1s': ['l', 'l', 'm'],                     # l - l
-    '2f': ['m', 'l', 'l', 'm'],                # l - m, m - h
-    #'2s': ['m', 'l', 'l', 'm'],                # m - m
-    '3f': ['m', 'm', 'h', 'm', 'h'],           # m - h, h - m
-    '3s': ['h', 'h', 'm', 'h', 'h'],           # h - h
+    '1f': ['l', 'm', 'm'],                     # l - m, m - l
+    '1s': ['m', 'm', 'm'],                     # m - m
+    '2f': ['m', 'm', 'h', 'h'],                # m - h
+    '2s': ['h', 'm', 'm', 'h'],                # h - h
+    #'3f': ['m', 'm', 'h', 'm', 'h'],           # m - h, h - m
+    #'3s': ['h', 'h', 'm', 'h', 'h'],           # h - h
 }
 
 # Edge seed info.
@@ -58,18 +59,19 @@ EDGE_SEED_INFO = {
 }
 NEW_EDGE_SEED_INFO = {
     '0s': [],
+    '1f': [[0.45, 0.05]],
     '1s': [[0.50, 0]],
     '2f': [[0.33, 0.04],  [0.71, -0.03]],
     '2s': [[1/3, 0.04],   [2/3, -0.04]],
-    '3f': [[0.26, -0.04], [0.55, 0],      [0.77, 0.03]],
-    '3s': [[0.28, -0.05], [0.50, 0],      [0.72, 0.05]],
+    #'3f': [[0.26, -0.04], [0.55, 0],      [0.77, 0.03]],
+    #'3s': [[0.28, -0.05], [0.50, 0],      [0.72, 0.05]],
 }
 
 # Minimum seed distance based on terrain type.
 # These are also used as weights for each type.
-MIN_DISTANCE_L = 0.30 #0.22
-MIN_DISTANCE_M = 0.24 #0.19
-MIN_DISTANCE_H = 0.20 #0.16
+MIN_DISTANCE_L = 0.37 #0.30 #0.22
+MIN_DISTANCE_M = 0.28 #0.24 #0.19
+MIN_DISTANCE_H = 0.20 #0.20 #0.16
 
 MIN_RIDGE_LEN = 0.08
 MIN_RIDGE_LEN_EDGE = 0.04
@@ -112,7 +114,7 @@ class VoronoiHexTile():
         # This is used to position the exterior seeds around the outside of the
         # tile. These seed regions constrain the regions in the hex tile and
         # allow us to ignore the outer edges (that go off to infinity).
-        self.outerScale = 1.4
+        self.outerScale = 1.8 # 1.4
 
         # np.array of x,y coords.
         self.seeds = None
