@@ -482,6 +482,15 @@ class VoronoiHexTile():
         activeSeedIds = [x for x in range(0, len(startSeeds))]
         allSeeds = startSeeds.tolist()
         newSeeds = []
+        
+        # Force a seed at the center
+        if (self.options['center-seed']):
+            seed = [0,0]
+            activeSeedIds.append(len(allSeeds))
+            allSeeds.append(seed)
+            newSeeds.append(seed)
+            seed2minDistance.append(self.calcSeedWeight(seed))
+
         while len(activeSeedIds) > 0:
             # Choose a random active seed.
             i = self.rng.randint(len(activeSeedIds))
@@ -500,6 +509,7 @@ class VoronoiHexTile():
                     pt, radius = mz
                     if near(pt, seed, radius):
                         seed = None
+                        numAttempts -= 1
                         break
                 if not seed:
                     continue

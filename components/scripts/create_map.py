@@ -17,6 +17,8 @@ OPTIONS = {
               'desc': "Create output for printing (with bleed and no tile outline)"},
     'center': {'type': 'string', 'default': None,
                'desc': "Terrain type for center of tile: l, m, h"},
+    'center-seed': {'type': 'bool', 'default': False,
+                    'desc': "Force a seed at the center of the tile"},
     'debug': {'type': 'int', 'default': -1,
               'desc': "Log debug info for given region id"},
     'export-3d': {'type': 'bool', 'default': False,
