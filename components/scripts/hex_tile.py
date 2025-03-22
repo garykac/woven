@@ -70,10 +70,12 @@ EDGE_SEED_INFO = {
 # Minimum seed distance based on terrain type.
 # These are also used as weights for each type.
 MIN_DISTANCE_L = 0.40 #0.30 #0.22
-MIN_DISTANCE_M = 0.28 #0.24 #0.19
-MIN_DISTANCE_H = 0.20 #0.20 #0.16
+MIN_DISTANCE_M = 0.30 #0.24 #0.19
+MIN_DISTANCE_H = 0.24 #0.20 #0.16
 
-MIN_RIDGE_LEN = 0.08
+# Scale applied to min seed distance.
+MIN_RIDGE_LEN_SCALE = 0.45
+# Scale applied to standard min ridge len.
 MIN_RIDGE_LEN_EDGE_SCALE = 0.5
 
 # Min allowed radius for circle inscribed within region.
@@ -136,7 +138,7 @@ class VoronoiHexTile():
         # Margin scale of 1.0 means that voronoi ridges that cross the hex tile
         # edge can end exactly at the tile edge (which we don't want). Use a
         # value > 1.0 to enforce min length for these ridge segments.
-        self.edgeMarginScale = 1.3
+        self.edgeMarginScale = 1.2
 
         self.edgeSeedInfo = EDGE_SEED_INFO
         self.edgeRegionInfo = EDGE_REGION_INFO
@@ -147,7 +149,8 @@ class VoronoiHexTile():
         self.minInscribedCircleRadius = MIN_INSCRIBED_CIRCLE_RADIUS
         
         # Min distance between 2 voronoi vertices along a ridge.
-        self.minRidgeLength = MIN_RIDGE_LEN
+        # This scale is applied to the minDistance for the seeds for this ridge.
+        self.minRidgeLengthScale = MIN_RIDGE_LEN_SCALE
         self.minRidgeLengthEdgeScale = MIN_RIDGE_LEN_EDGE_SCALE
 
         # Voronoi object has following attributes:
@@ -724,6 +727,21 @@ class VoronoiHexTile():
                 sides.append([vid1, sid])
         return sides
 
+    def calcMinRidgeLengthForSeed(self, sid):
+        return self.seed2minDistance[sid] * self.minRidgeLengthScale
+    
+    # Calc the min ridge length for the edge defined by the 2 vertices.
+    # This is the average of the min ridge length for the seeds on either side of the
+    # edge.
+    def calcMinRidgeLength(self, vid0, vid1):
+        # Get the seed ids for the seeds on either side of this edge.
+        sids = [x[1] for x in self.calcSideRegions(vid0, vid1)]
+        rlen = 0
+        for sid in sids:
+            rlen += self.calcMinRidgeLengthForSeed(sid)
+        rlen /= 2  # Calc average of the values for the 2 seeds.
+        return rlen
+
     # Calc adjustment of |sid| to move it toward |vMod| by |lerp_t|.
     def calcAdjustment(self, sid, vMod, lerp_t):
         # Don't adjust the fixed seeds along the edge.
@@ -1052,12 +1070,12 @@ class VoronoiHexTile():
                 v1 = self.vertices[vid1]
 
                 # Determin min edge length.
-                minDistance = self.minRidgeLength * self.size
+                minDistance = self.calcMinRidgeLength(vid0, vid1)
                 # Ignore edges along the hex tile boundary (we can't adjust them).
                 if self.isEdgeVertex(vid0) and self.isEdgeVertex(vid1):
                     continue
                 # If this is one of the edges that is clipped by the hex tile
-                # boundary, then enforce a smaller min edge length (1/2).
+                # boundary, then scale down the min edge length (by 1/2).
                 if self.isEdgeVertex(vid0) or self.isEdgeVertex(vid1):
                     # Scale min ridge len for ridges that cross the tile edge.
                     minDistance *= self.minRidgeLengthEdgeScale
