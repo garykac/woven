@@ -69,8 +69,8 @@ EDGE_SEED_INFO = {
 
 # Minimum seed distance based on terrain type.
 # These are also used as weights for each type.
-MIN_DISTANCE_L = 0.40 #0.30 #0.22
-MIN_DISTANCE_M = 0.30 #0.24 #0.19
+MIN_DISTANCE_L = 0.38 #0.30 #0.22
+MIN_DISTANCE_M = 0.29 #0.24 #0.19
 MIN_DISTANCE_H = 0.24 #0.20 #0.16
 
 # Scale applied to min seed distance.
