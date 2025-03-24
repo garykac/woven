@@ -308,7 +308,7 @@ class RidgeBuilder():
                     break
 
             if not found:
-                raise Exception(f"Unable to find match for seed {currSeed} from vertex {currV}")
+                raise Exception(f"Unable to find match for seed {currSeed} from vertex {currV} (seed {oppositeSeed}) - missing segment?")
         
         return seedList
 
@@ -450,7 +450,10 @@ class RidgeBuilder():
 
     # Remove all overrides for the given vertex.    
     def _removeVertexOverride(self, vid):
+        if vid not in self.vertexOverride:
+            return False
         del self.vertexOverride[vid]
+        return True
 
     def _getVertexForRegion(self, vid, sid):
         if vid in self.vertexOverride:

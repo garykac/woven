@@ -30,7 +30,8 @@ class CliffBuilder(RidgeBuilder):
                         # Found the ridge were we just turned around a cliff end.
                         # Remove the vertex override for the last vertex of the cliff.
                         self.logger.log(f"Found cliff end - removing vert {verts[0]}")
-                        self._removeVertexOverride(verts[0])
+                        if not self._removeVertexOverride(verts[0]):
+                            raise Exception(f"Cliff ridge {ridgeKey}: unable to find vertex override. Is cliff at least 2 segments long?")
         self.logger.outdent()
 
     def _regionLoopReverseCheck(self, ridgeKey, currV):
