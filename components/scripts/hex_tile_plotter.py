@@ -1224,9 +1224,14 @@ class VoronoiHexTilePlotter():
         if "bridge" in self.overlayData:
             for bridge in self.overlayData['bridge']:
                 if bridge:
-                    m = re.match(r"^(\d+\-\d+)$", bridge)
+                    m = re.match(r"^(\d+\-\d+)(\((\d\d)\%\))?$", bridge)
+                    # The position of the bridge on the ridge. By default this is on
+                    # the midpoint, but it can be shifted over.
+                    position = 0.50
                     if m:
                         seedIds = m.group(1)
+                        if m.group(2):
+                            position = float(m.group(3))/100.0
                     else:
                         raise Exception(f"Unrecognized bridge data: {bridge}")
 
@@ -1238,7 +1243,7 @@ class VoronoiHexTilePlotter():
                     pathRotate = 90 + (rTheta * 180 / math.pi);
                     
                     edge_vertices = self.getEdgeRidgeVertices(startId, endId)
-                    center = lerp(edge_vertices[0], edge_vertices[1], 0.5)
+                    center = lerp(edge_vertices[0], edge_vertices[1], position)
 
                     x = center[0]
                     y = -center[1]
