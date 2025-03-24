@@ -22,6 +22,8 @@ GENERATE_PLOT = True   # As PNG file.
 PLOT_CELL_IDS = True   # Add cell ids to png output file.
 DRAW_PUZZLE_BORDER = False
 
+TILE_VERSION = 5
+
 # NOTE: Default units for SVG is mm.
 
 STROKE_WIDTH = 0.3
@@ -868,7 +870,7 @@ class VoronoiHexTilePlotter():
             self._addAnnotationText("rng seed RANDOM")
 
         pattern = self.options['pattern']
-        self._addAnnotationText(f"pattern {pattern}")
+        self._addAnnotationText(f"pattern {pattern} (v{TILE_VERSION})")
         self._addAnnotationText(f"seed attempts: {self.tile.seedAttempts}")
         self._addAnnotationText(f"seed distance: "
                 f"l {self.tile.minDistanceL:.03g}; "
