@@ -321,7 +321,7 @@ class VoronoiHexTile():
             if not pattern in TILE_PATTERN_IDS:
                 cPattern = self.findCanonicalEdgePattern(pattern)
                 if cPattern:
-                    p, i = cPattern
+                    p, rot, id = cPattern
                     raise Exception(f"Non canonical pattern. Use {p} ({TILE_PATTERN_IDS[p]}) instead of {pattern}.")
                 raise Exception("Invalid pattern: {pattern}")
                     
