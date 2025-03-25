@@ -651,7 +651,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.2268076"
-     inkscape:cx="87.625804"
+     inkscape:cx="87.625802"
      inkscape:cy="125.93662"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
@@ -660,7 +660,7 @@
      inkscape:window-width="1208"
      inkscape:window-height="993"
      inkscape:window-x="520"
-     inkscape:window-y="68"
+     inkscape:window-y="40"
      inkscape:window-maximized="0"
      inkscape:snap-page="true"
      inkscape:showpageshadow="2"
@@ -1630,20 +1630,16 @@
          id="flowPara4">Line6</flowPara><flowPara
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'Slabo 27px';-inkscape-font-specification:'Slabo 27px, '"
          id="flowPara5">Line7</flowPara></flowRoot>
-    <rect
-       style="display:inline;fill:none;stroke:#000000;stroke-width:0.5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+    <path
        id="spell-pattern-border"
-       width="44.64484"
-       height="29.728304"
-       x="9.4275799"
-       y="11.164503" />
-    <rect
-       style="display:inline;fill:none;stroke:#000000;stroke-width:0.5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       style="display:inline;fill:none;stroke:#000000;stroke-width:0.5;stroke-linecap:round;stroke-linejoin:round"
+       d="M 7.8400799,11.164503 H 55.65992 V 40.892807 H 7.8400799 Z"
+       sodipodi:nodetypes="ccccc" />
+    <path
        id="spell-pattern-border-4"
-       width="44.64484"
-       height="38.264217"
-       x="9.4275799"
-       y="11.164503" />
+       style="display:inline;fill:none;stroke:#000000;stroke-width:0.5;stroke-linecap:round;stroke-linejoin:round"
+       d="M 7.8400799,11.164503 H 55.65992 V 49.42872 H 7.8400799 Z"
+       sodipodi:nodetypes="ccccc" />
     <flowRoot
        transform="matrix(0.26458333,0,0,0.26458333,1.8072589,43.09905)"
        xml:space="preserve"

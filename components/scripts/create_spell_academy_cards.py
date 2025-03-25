@@ -12,8 +12,12 @@ from svg_card_gen import SVGCardGen
 
 from svg import SVG, Style, Node
 
-from data_spell_academy_cards import spell_card_data
+#from data_spell_academy_cards import spell_card_data
 from data_spell_academy_cards import spell_card_revision
+from data_spell_academy_cards import ae_e1_spells
+from data_spell_academy_cards import ae_e2_spells
+from data_spell_academy_cards import fw_e1_spells
+from data_spell_academy_cards import fw_e2_spells
 
 from data_spell_patterns import spell_card_patterns
 
@@ -36,6 +40,37 @@ SYMBOLS = "acefgwy"
 OUTPUT_DIR = os.path.join('..', 'spell-academy-cards')
 CARD_TEMPLATE = os.path.join(OUTPUT_DIR, 'spell-template.svg')
 PDF_8UP_DIR = os.path.join(OUTPUT_DIR, '8up')
+
+# Initialize the spell card data.
+spell_card_data = []
+for sid in ae_e1_spells:
+    spell = [f"E1-{sid} Air", {'element': 'air', 'pattern': f'E1-{sid}'}]
+    spell_card_data.append(spell)
+for sid in ae_e2_spells:
+    spell = [f"E2-{sid} Air", {'element': 'air', 'pattern': f'E2-{sid}'}]
+    spell_card_data.append(spell)
+
+for sid in ae_e1_spells:
+    spell = [f"E1-{sid} Earth", {'element': 'earth', 'pattern': f'E1-{sid}'}]
+    spell_card_data.append(spell)
+for sid in ae_e2_spells:
+    spell = [f"E2-{sid} Earth", {'element': 'earth', 'pattern': f'E2-{sid}'}]
+    spell_card_data.append(spell)
+
+for sid in fw_e1_spells:
+    spell = [f"E1-{sid} Fire", {'element': 'fire', 'pattern': f'E1-{sid}'}]
+    spell_card_data.append(spell)
+for sid in fw_e2_spells:
+    spell = [f"E2-{sid} Fire", {'element': 'fire', 'pattern': f'E2-{sid}'}]
+    spell_card_data.append(spell)
+
+for sid in fw_e1_spells:
+    spell = [f"E1-{sid} Water", {'element': 'water', 'pattern': f'E1-{sid}'}]
+    spell_card_data.append(spell)
+for sid in fw_e2_spells:
+    spell = [f"E2-{sid} Water", {'element': 'water', 'pattern': f'E2-{sid}'}]
+    spell_card_data.append(spell)
+
 
 class WovenSpellCards():
     
@@ -67,7 +102,6 @@ class WovenSpellCards():
         self.card_patterns = spell_card_patterns
         self.validate_patterns()
 
-        
     #
     # DATA VALIDATION
     #
@@ -291,6 +325,8 @@ class WovenSpellCards():
         if pheight > 4:
             raise Exception("Tall pattern for {0}".format(id))
         pwidth = len(pattern[0])
+        if pwidth > 5:
+            raise Exception("Wide pattern for {0}".format(id))
 
         # Size and spacing for each box in pattern.
         box_size = 7.5
