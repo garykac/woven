@@ -923,7 +923,7 @@ class VoronoiHexTilePlotter():
         # Add corner terrain labels.
         for i in range(0, self.tile.numSides):
             t = self.options['pattern'][i]
-            label = Text(None, -1.5, -(self.size + 2), t.upper())
+            label = Text(None, -1.5, -(self.size + 5), t.upper())
             if i != 0:
                 label.set_transform(f"rotate({60 * i})")
             SVG.add_node(layer_edge_annotations, label)
@@ -940,7 +940,7 @@ class VoronoiHexTilePlotter():
                 x = lerp(-self.size/2, self.size/2, t)
 
                 type = self.edgeRegionInfo[edgeType][j+1]
-                label = Text(None, x - 1.5, -(self.xMax + 3), type.upper())
+                label = Text(None, x - 1.5, -(self.xMax + 6), type.upper())
                 SVG.add_node(g, label)
 
         # Add river info.
