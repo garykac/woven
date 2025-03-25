@@ -891,6 +891,7 @@ class VoronoiHexTilePlotter():
         # Add 15mm circle (for mana size).
         self._drawCircle('mana', [50,110], '7.5',
                          Style(fill="#000000"), self.layer_text)
+        SVG.add_node(self.layer_text, Text(None, 44, 122, "15mm"))
         
         # Add terrain swatches.
         y_start = 90
