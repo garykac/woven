@@ -70,6 +70,10 @@ REGION_COLOR_MIRROR = {
 # Mark where rivers are located on edges using an '*' to note the regions that
 # the river flows between.
 EDGE_RIVER_INFO = {
+    '2f': ['l', '*', 'l', 'l', 'm'],           # l - m, m - h
+    '2s': ['m', 'm', '*', 'm', 'm'],           # m - m
+}
+NEW_EDGE_RIVER_INFO = {
     '1f': ['l', '*', 'l', 'm'],           # l - m, m - l
     '2f': ['m', 'm', '*', 'm', 'h'],      # m - h, h - m
 }
@@ -87,7 +91,7 @@ EDGE_CLIFF_INFO = {
 EDGE_PUZZLE_INFO = {
     '0s': [[0.16, 0.05, -0.05], [0.84, 0.05, 0.05]],    # l-l
     '1s': [[0.16, 0.05, -0.05], [0.84, 0.05, 0.05]],    # l-l-l
-    '1f': [[0.16, 0.05, -0.05], [0.84, 0.05, 0.05]],    # l-l-l
+    '1f': [[0.16, 0.05, -0.05], [0.84, 0.05, 0.05]],    # l-l-l  TODO - needs to be different from 1s
     '2f': [[0.36, 0.05,  0.05]],                        # l-l-l-m
     '2s': [[ 1/3, 0.04,  0.05], [ 2/3, 0.04, -0.05]],   # m-m-m-m
     '3f': [[0.28, 0.03, -0.05], [0.78, 0.03, -0.05]],   # m-m-h-m-h
