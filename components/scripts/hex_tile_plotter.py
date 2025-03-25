@@ -70,8 +70,8 @@ REGION_COLOR_MIRROR = {
 # Mark where rivers are located on edges using an '*' to note the regions that
 # the river flows between.
 EDGE_RIVER_INFO = {
-    '2f': ['l', '*', 'l', 'l', 'm'],           # l - m, m - h
-    '2s': ['m', 'm', '*', 'm', 'm'],           # m - m
+    '1f': ['l', '*', 'l', 'm'],           # l - m, m - l
+    '2f': ['m', 'm', '*', 'm', 'h'],      # m - h, h - m
 }
 
 # Mark where cliffs are located on edges using an '*' to note the regions that
