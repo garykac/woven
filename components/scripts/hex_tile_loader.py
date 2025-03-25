@@ -98,6 +98,8 @@ class VoronoiHexTileLoader():
                 if header:
                     header = False
                     continue
+                if line.startswith('#'):
+                    continue
                 # Id, RowType
                 data = line.rstrip().split(',')
                 id = int(data.pop(0))
