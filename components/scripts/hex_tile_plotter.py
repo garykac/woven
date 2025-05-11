@@ -22,8 +22,6 @@ GENERATE_PLOT = True   # As PNG file.
 PLOT_CELL_IDS = True   # Add cell ids to png output file.
 DRAW_PUZZLE_BORDER = False
 
-TILE_VERSION = 5
-
 # NOTE: Default units for SVG is mm.
 
 STROKE_WIDTH = 0.3
@@ -73,10 +71,6 @@ EDGE_RIVER_INFO = {
     '2f': ['l', '*', 'l', 'l', 'm'],           # l - m, m - h
     '2s': ['m', 'm', '*', 'm', 'm'],           # m - m
 }
-NEW_EDGE_RIVER_INFO = {
-    '1f': ['l', '*', 'l', 'm'],           # l - m, m - l
-    '2f': ['m', 'm', '*', 'm', 'h'],      # m - h, h - m
-}
 
 # Mark where cliffs are located on edges using an '*' to note the regions that
 # are separated by a cliff.
@@ -91,7 +85,6 @@ EDGE_CLIFF_INFO = {
 EDGE_PUZZLE_INFO = {
     '0s': [[0.16, 0.05, -0.05], [0.84, 0.05, 0.05]],    # l-l
     '1s': [[0.16, 0.05, -0.05], [0.84, 0.05, 0.05]],    # l-l-l
-    '1f': [[0.16, 0.05, -0.05], [0.84, 0.05, 0.05]],    # l-l-l  TODO - needs to be different from 1s
     '2f': [[0.36, 0.05,  0.05]],                        # l-l-l-m
     '2s': [[ 1/3, 0.04,  0.05], [ 2/3, 0.04, -0.05]],   # m-m-m-m
     '3f': [[0.28, 0.03, -0.05], [0.78, 0.03, -0.05]],   # m-m-h-m-h
@@ -874,7 +867,7 @@ class VoronoiHexTilePlotter():
             self._addAnnotationText("rng seed RANDOM")
 
         pattern = self.options['pattern']
-        self._addAnnotationText(f"pattern {pattern} (v{TILE_VERSION})")
+        self._addAnnotationText(f"pattern {pattern}")
         self._addAnnotationText(f"seed attempts: {self.tile.seedAttempts}")
         self._addAnnotationText(f"seed distance: "
                 f"l {self.tile.minDistanceL:.03g}; "
@@ -886,7 +879,7 @@ class VoronoiHexTilePlotter():
             center = self.options['center']
         self._addAnnotationText(f"center: ({center}) {self.tile.centerWeight / self.size:.03g}")
 
-        self._addAnnotationText(f"min ridge length: {int(100*self.tile.minRidgeLengthScale)}%; at edge: x{int(100*self.tile.minRidgeLengthEdgeScale)}%")
+        self._addAnnotationText(f"min ridge length: {self.tile.minRidgeLength:.02g}; at edge: {self.tile.minRidgeLengthEdge:.02g}")
         self._addAnnotationText(f"edge margin exclusion zone scale: {self.tile.edgeMarginScale:.02g}")
         self._addAnnotationText(f"iterations: {self.tile.iteration-1}")
         self._addAnnotationText(f"adjustments: side {self.tile.adjustmentSide:.03g}, neighbor {self.tile.adjustmentNeighbor:.03g}")
@@ -895,7 +888,6 @@ class VoronoiHexTilePlotter():
         # Add 15mm circle (for mana size).
         self._drawCircle('mana', [50,110], '7.5',
                          Style(fill="#000000"), self.layer_text)
-        SVG.add_node(self.layer_text, Text(None, 44, 122, "15mm"))
         
         # Add terrain swatches.
         y_start = 90
@@ -927,7 +919,7 @@ class VoronoiHexTilePlotter():
         # Add corner terrain labels.
         for i in range(0, self.tile.numSides):
             t = self.options['pattern'][i]
-            label = Text(None, -1.5, -(self.size + 5), t.upper())
+            label = Text(None, -1.5, -(self.size + 2), t.upper())
             if i != 0:
                 label.set_transform(f"rotate({60 * i})")
             SVG.add_node(layer_edge_annotations, label)
@@ -944,7 +936,7 @@ class VoronoiHexTilePlotter():
                 x = lerp(-self.size/2, self.size/2, t)
 
                 type = self.edgeRegionInfo[edgeType][j+1]
-                label = Text(None, x - 1.5, -(self.xMax + 6), type.upper())
+                label = Text(None, x - 1.5, -(self.xMax + 3), type.upper())
                 SVG.add_node(g, label)
 
         # Add river info.
@@ -1229,14 +1221,9 @@ class VoronoiHexTilePlotter():
         if "bridge" in self.overlayData:
             for bridge in self.overlayData['bridge']:
                 if bridge:
-                    m = re.match(r"^(\d+\-\d+)(\((\d\d)\%\))?$", bridge)
-                    # The position of the bridge on the ridge. By default this is on
-                    # the midpoint, but it can be shifted over.
-                    position = 0.50
+                    m = re.match(r"^(\d+\-\d+)$", bridge)
                     if m:
                         seedIds = m.group(1)
-                        if m.group(2):
-                            position = float(m.group(3))/100.0
                     else:
                         raise Exception(f"Unrecognized bridge data: {bridge}")
 
@@ -1248,7 +1235,7 @@ class VoronoiHexTilePlotter():
                     pathRotate = 90 + (rTheta * 180 / math.pi);
                     
                     edge_vertices = self.getEdgeRidgeVertices(startId, endId)
-                    center = lerp(edge_vertices[0], edge_vertices[1], position)
+                    center = lerp(edge_vertices[0], edge_vertices[1], 0.5)
 
                     x = center[0]
                     y = -center[1]

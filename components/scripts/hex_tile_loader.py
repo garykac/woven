@@ -86,7 +86,6 @@ class VoronoiHexTileLoader():
             pattern = None
             seed = None
             center = None
-            center_seed = False
             terrainData = None
             riverData = None
             cliffData = None
@@ -97,8 +96,6 @@ class VoronoiHexTileLoader():
             for line in f:
                 if header:
                     header = False
-                    continue
-                if line.startswith('#'):
                     continue
                 # Id, RowType
                 data = line.rstrip().split(',')
@@ -120,7 +117,6 @@ class VoronoiHexTileLoader():
                     self.options['pattern'] = pattern
                     self.options['seed'] = seed
                     self.options['center'] = center
-                    self.options['center-seed'] = center_seed
                     if active:
                         self.processTile(terrainData, riverData, cliffData, overlayData)
 
@@ -142,7 +138,6 @@ class VoronoiHexTileLoader():
                     center = data.pop(0)
                     if center == "AVG":
                         center = None
-                    center_seed = True if (data.pop(0) == "CS") else False
                 elif rowType == "TERRAIN":
                     # |terrainData| is an array of 'l', 'm', 'h'.
                     terrainData = data
@@ -192,7 +187,6 @@ class VoronoiHexTileLoader():
             self.options['pattern'] = pattern
             self.options['seed'] = seed
             self.options['center'] = center
-            self.options['center-seed'] = center_seed
             if active:
                 self.processTile(terrainData, riverData, cliffData, overlayData)
 
@@ -211,10 +205,8 @@ class VoronoiHexTileLoader():
         id = tile.options['id']
         if id is None:
             id = TILE_PATTERN_IDS[tile.options['pattern']]
-        center_seed = tile.options['center-seed']
-        cs = "CS" if center_seed else "_"
 
-        print(f"{id},INFO,_,{tile.options['pattern']},{tile.options['seed']},{center},{cs}")
+        print(f"{id},INFO,_,{tile.options['pattern']},{tile.options['seed']},{center}")
         print(f"{id},TERRAIN,", end='')
 
         terrain = ','.join(tile.seed2terrain)

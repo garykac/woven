@@ -19,7 +19,7 @@ from math_utils import (feq, fge, fle, scale, clamp,
 NUM_SIDES = 6
 
 SINGLE_EDGE_TYPES = ['1s', '2f', '2s', '3f', '3s']
-NEW_SINGLE_EDGE_TYPES = ['0s', '1f', '1s', '2f', '2s']
+NEW_SINGLE_EDGE_TYPES = ['0s', '1s', '2f', '2s', '3f', '3s']
 
 # EdgeRegionInfo:
 # Each dict entry contains an array of region heights, one per region on this
@@ -27,7 +27,7 @@ NEW_SINGLE_EDGE_TYPES = ['0s', '1f', '1s', '2f', '2s']
 # # = number of seeds between the corners
 # 's' = self symmetric
 # 'f' = forward edge, mirror pairs
-# 'r' = reverse edge, not listed here since they are auto-calculated from 'f' edge
+# 'r' = reverse edge, auto-calculated from 'f' edge
 EDGE_REGION_INFO = {
     '1s': ['l', 'l', 'l'],                     # l - l
     '2f': ['l', 'l', 'l', 'm'],                # l - m, m - h
@@ -37,10 +37,11 @@ EDGE_REGION_INFO = {
 }
 NEW_EDGE_REGION_INFO = {
     '0s': ['l', 'l'],                          # l - l
-    '1f': ['l', 'l', 'm'],                     # l - m, m - l
-    '1s': ['m', 'm', 'm'],                     # m - m
-    '2f': ['m', 'm', 'm', 'h'],                # m - h
-    '2s': ['h', 'm', 'm', 'h'],                # h - h
+    '1s': ['l', 'l', 'm'],                     # l - l
+    '2f': ['m', 'l', 'l', 'm'],                # l - m, m - h
+    #'2s': ['m', 'l', 'l', 'm'],                # m - m
+    '3f': ['m', 'm', 'h', 'm', 'h'],           # m - h, h - m
+    '3s': ['h', 'h', 'm', 'h', 'h'],           # h - h
 }
 
 # Edge seed info.
@@ -57,22 +58,21 @@ EDGE_SEED_INFO = {
 }
 NEW_EDGE_SEED_INFO = {
     '0s': [],
-    '1f': [[0.58, 0.05]],
     '1s': [[0.50, 0]],
-    '2f': [[0.42, 0.04],  [0.77, -0.03]],
+    '2f': [[0.33, 0.04],  [0.71, -0.03]],
     '2s': [[1/3, 0.04],   [2/3, -0.04]],
+    '3f': [[0.26, -0.04], [0.55, 0],      [0.77, 0.03]],
+    '3s': [[0.28, -0.05], [0.50, 0],      [0.72, 0.05]],
 }
 
 # Minimum seed distance based on terrain type.
 # These are also used as weights for each type.
-MIN_DISTANCE_L = 0.30 #0.38 #0.30 #0.22
-MIN_DISTANCE_M = 0.24 #0.29 #0.24 #0.19
-MIN_DISTANCE_H = 0.20 #0.24 #0.20 #0.16
+MIN_DISTANCE_L = 0.30 #0.22
+MIN_DISTANCE_M = 0.24 #0.19
+MIN_DISTANCE_H = 0.20 #0.16
 
-# Scale applied to min seed distance.
-MIN_RIDGE_LEN_SCALE = 0.45
-# Scale applied to standard min ridge len.
-MIN_RIDGE_LEN_EDGE_SCALE = 0.5
+MIN_RIDGE_LEN = 0.08
+MIN_RIDGE_LEN_EDGE = 0.04
 
 # Min allowed radius for circle inscribed within region.
 # Should be at least 7.5 so that 15mm diameter pieces fit well in the region.
@@ -104,7 +104,10 @@ class VoronoiHexTile():
         self.size = self.options['size']
         self.xMax = (math.sqrt(3) * self.size) / 2
 
-        self.singleEdgeTypes = SINGLE_EDGE_TYPES
+        if options['new-edge']:
+            self.singleEdgeTypes = NEW_SINGLE_EDGE_TYPES
+        else:
+            self.singleEdgeTypes = SINGLE_EDGE_TYPES
         
         # This is used to position the exterior seeds around the outside of the
         # tile. These seed regions constrain the regions in the hex tile and
@@ -136,8 +139,13 @@ class VoronoiHexTile():
         # value > 1.0 to enforce min length for these ridge segments.
         self.edgeMarginScale = 1.1
 
-        self.edgeSeedInfo = EDGE_SEED_INFO
-        self.edgeRegionInfo = EDGE_REGION_INFO
+        if options['new-edge']:
+            self.edgeSeedInfo = NEW_EDGE_SEED_INFO
+            self.edgeRegionInfo = NEW_EDGE_REGION_INFO
+        else:
+            self.edgeSeedInfo = EDGE_SEED_INFO
+            self.edgeRegionInfo = EDGE_REGION_INFO
+        
         self.minDistanceL = MIN_DISTANCE_L
         self.minDistanceM = MIN_DISTANCE_M
         self.minDistanceH = MIN_DISTANCE_H
@@ -145,9 +153,9 @@ class VoronoiHexTile():
         self.minInscribedCircleRadius = MIN_INSCRIBED_CIRCLE_RADIUS
         
         # Min distance between 2 voronoi vertices along a ridge.
-        # This scale is applied to the minDistance for the seeds for this ridge.
-        self.minRidgeLengthScale = MIN_RIDGE_LEN_SCALE
-        self.minRidgeLengthEdgeScale = MIN_RIDGE_LEN_EDGE_SCALE
+        self.minRidgeLength = MIN_RIDGE_LEN
+        # Min ridge length along tile edge.
+        self.minRidgeLengthEdge = MIN_RIDGE_LEN_EDGE
 
         # Voronoi object has following attributes:
         # .points : array of seed values used to create the Voronoi
@@ -317,7 +325,7 @@ class VoronoiHexTile():
             if not pattern in TILE_PATTERN_IDS:
                 cPattern = self.findCanonicalEdgePattern(pattern)
                 if cPattern:
-                    p, rot, id = cPattern
+                    p, i = cPattern
                     raise Exception(f"Non canonical pattern. Use {p} ({TILE_PATTERN_IDS[p]}) instead of {pattern}.")
                 raise Exception("Invalid pattern: {pattern}")
                     
@@ -420,7 +428,7 @@ class VoronoiHexTile():
             self.seeds = self.vHex
 
     # Initialize the margin exclusion zones.
-    # These zones prevent seeds from getting too close to the tile boundary where
+    # These zone prevent seeds from getting too close to the tile boundary where
     # they would cause voronoi ridges that are too small, or cause the region to
     # be clipped by the hex boundary.
     def initEdgeMarginZone(self):
@@ -478,15 +486,6 @@ class VoronoiHexTile():
         activeSeedIds = [x for x in range(0, len(startSeeds))]
         allSeeds = startSeeds.tolist()
         newSeeds = []
-        
-        # Force a seed at the center
-        if (self.options['center-seed']):
-            seed = [0,0]
-            activeSeedIds.append(len(allSeeds))
-            allSeeds.append(seed)
-            newSeeds.append(seed)
-            seed2minDistance.append(self.calcSeedWeight(seed))
-
         while len(activeSeedIds) > 0:
             # Choose a random active seed.
             i = self.rng.randint(len(activeSeedIds))
@@ -505,7 +504,6 @@ class VoronoiHexTile():
                     pt, radius = mz
                     if near(pt, seed, radius):
                         seed = None
-                        numAttempts -= 1
                         break
                 if not seed:
                     continue
@@ -732,22 +730,6 @@ class VoronoiHexTile():
             if not sid in self.vid2sids[vid0]:
                 sides.append([vid1, sid])
         return sides
-
-    def calcMinRidgeLengthForSeed(self, sid):
-        return self.seed2minDistance[sid] * self.minRidgeLengthScale
-    
-    # Calc the min ridge length for the edge defined by the 2 vertices.
-    # This is the average of the min ridge length for the seeds on either side of the
-    # edge.
-    def calcMinRidgeLength(self, vid0, vid1):
-        return 0.08 * self.size
-        # Get the seed ids for the seeds on either side of this edge.
-        sids = [x[1] for x in self.calcSideRegions(vid0, vid1)]
-        rlen = 0
-        for sid in sids:
-            rlen += self.calcMinRidgeLengthForSeed(sid)
-        rlen /= 2  # Calc average of the values for the 2 seeds.
-        return rlen
 
     # Calc adjustment of |sid| to move it toward |vMod| by |lerp_t|.
     def calcAdjustment(self, sid, vMod, lerp_t):
@@ -1076,16 +1058,13 @@ class VoronoiHexTile():
                 v0 = self.vertices[vid0]
                 v1 = self.vertices[vid1]
 
-                # Determin min edge length.
-                minDistance = self.calcMinRidgeLength(vid0, vid1)
-                # Ignore edges along the hex tile boundary (we can't adjust them).
+                # If this is one of the edges that is clipped by the hex
+                # boundary, then enforce a smaller min edge
+                minDistance = self.minRidgeLength * self.size
                 if self.isEdgeVertex(vid0) and self.isEdgeVertex(vid1):
                     continue
-                # If this is one of the edges that is clipped by the hex tile
-                # boundary, then scale down the min edge length (by 1/2).
                 if self.isEdgeVertex(vid0) or self.isEdgeVertex(vid1):
-                    # Scale min ridge len for ridges that cross the tile edge.
-                    minDistance *= self.minRidgeLengthEdgeScale
+                    minDistance = self.minRidgeLengthEdge * self.size
 
                 if near(v0, v1, minDistance):
                     edgeInfo = [vid0, vid1, sid]
